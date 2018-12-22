@@ -1,14 +1,4 @@
-import React, { Component } from 'react';
-import Log from './login.js';
+import Login from './login';
+import Registration from './registration';
 
-class Login extends Component{
-    render (){
-        return(
-            <div>
-                <Log />
-            </div>
-        );
-    }
-}
-
-export default Login;
+export {Login, Registration};
