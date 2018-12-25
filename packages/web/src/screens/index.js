@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
-import Login from './home/auth/login';
-import Registration from './home/auth/registration';
-class Index extends Component {
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+import HomePage, {Login,Registration} from './home';
+
+class Home extends Component {
     render() {
         return(
             <Router>
-                <div className="screen-home">
+                <div className="home-screen">
+                    <Route exact path="/" component={HomePage} />
                     <Route exact path="/login" component={Login} />
                     <Route exact path="/register" component={Registration}/>
                 </div>
@@ -15,4 +16,4 @@ class Index extends Component {
     }
 }
 
-export default Index;
+export default Home;

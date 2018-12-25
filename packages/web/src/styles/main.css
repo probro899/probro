@@ -1,0 +1,23 @@
+.slider { margin-top: 1px; height: 500px; display: flex; flex-direction: column; justify-content: center; background-image: linear-gradient(#4eb9ff, white); }
+
+.search-box-container { display: flex; flex-direction: row; justify-content: center; }
+
+/* this is navbar 
+there is navigation fixing
+top attachment etc. 
+*/
+.navbar { top: 0; display: flex; position: fixed; margin: auto; width: 100%; height: 60px; justify-content: space-between; background-color: #4eb9ff; background-image: linear-gradient(#1e6eff, #4eb9ff); box-shadow: 0 1px 3px #1e6eff; }
+
+.navbar .navbar-left { display: flex; flex-direction: row; }
+.navbar .navbar-right { display: flex; flex-direction: row; }
+.navbar .navbar-item { font-size: 20px; padding: 10px; color: white; }
+.navbar a:link { display: flex; flex-direction: column; justify-content: center; text-decoration: none; }
+.navbar a:hover { background-image: linear-gradient(#1e6edc, #4eb9f0); }
+
+.o-log-or-reg { display: flex; justify-content: space-around; }
+
+.log-or-reg { width: 400px; }
+
+body { margin: 0; padding: 0; }
+
+.home-screen { margin: 0; padding: 0; }
