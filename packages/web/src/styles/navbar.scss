@@ -13,7 +13,8 @@ top attachment etc.
     justify-content: space-between;
     background-color: $primary;
     background-image: linear-gradient($dropPrimary,$primary);
-    box-shadow: 0 1px 3px $dropPrimary;
+    box-shadow: 0 1px 5px $dropPrimary;
+    z-index: 3; // above all putting navbar at the top of the heap.
 }
 .navbar {
     .navbar-left {

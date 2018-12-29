@@ -1,7 +1,6 @@
 import React from 'react';
 import { InputGroup,Icon } from '@blueprintjs/core';
 import { IconNames } from '@blueprintjs/icons';
-import { SEARCH } from '@blueprintjs/icons/lib/esm/generated/iconContents';
 
 export default ({placeholder,class_,iconName}) => {
     if (iconName == 'Search'){
