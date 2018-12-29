@@ -1,0 +1,8 @@
+{
+  "presets": [
+    "env", "import-export"
+  ],
+  "plugins": [
+    "transfrom-object-rest-spread"
+  ]
+}
