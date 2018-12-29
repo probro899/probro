@@ -1,0 +1,26 @@
+.slider-container { position: relative; height: 500px; }
+
+.slider { top: 0; left: 0; bottom: 0; right: 0; position: absolute; z-index: 1; }
+
+.search-box-container { top: 50%; /* this to center the box w.r.t to parent */ left: 50%; /* this to center the box w.r.t to parent */ /* Above 2 lines wont fully center it, the next line internally
+centers it, buy moving itself 50% left and top */ transform: translate(-50%, -50%); margin: auto; position: absolute; z-index: 2; }
+
+/* this is navbar 
+there is navigation fixing
+top attachment etc. 
+*/
+.navbar { top: 0; display: flex; position: fixed; margin: auto; width: 100%; height: 60px; justify-content: space-between; background-color: #4eb9ff; background-image: linear-gradient(#1e6eff, #4eb9ff); box-shadow: 0 1px 5px #1e6eff; z-index: 3; }
+
+.navbar .navbar-left { display: flex; flex-direction: row; }
+.navbar .navbar-right { display: flex; flex-direction: row; }
+.navbar .navbar-item { font-size: 20px; padding: 10px; color: white; }
+.navbar a:link { display: flex; flex-direction: column; justify-content: center; text-decoration: none; }
+.navbar a:hover { background-image: linear-gradient(#1e6edc, #4eb9f0); }
+
+.o-log-or-reg { display: flex; justify-content: space-around; }
+
+.log-or-reg { width: 400px; }
+
+body { margin: 0; padding: 0; }
+
+.home-screen { margin: 0; padding: 0; }
