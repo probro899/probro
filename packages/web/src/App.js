@@ -7,16 +7,7 @@ class App extends Component {
 
   render() {
     return (
-<<<<<<< HEAD
-      <div className="App">
-        this value return from common package
-        {
-        add(10, 100)
-          }
-      </div>
-=======
       <Home />
->>>>>>> 00e640db61465abfeae941ca21fc7bbb3cb18563
     );
   }
 }
