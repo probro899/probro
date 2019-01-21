@@ -2,9 +2,13 @@
 @import './slider.scss';
 @import './navbar.scss';
 @import './regLog.scss';
+@import './posts.scss';
+@import './banner.scss';
+@import './popular.scss';
 body {
     margin: 0;
     padding: 0;
+    background-color: $backgroundColor;
 }
 .home-screen {
     margin: 0;

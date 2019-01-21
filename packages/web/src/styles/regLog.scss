@@ -2,7 +2,24 @@
 .o-log-or-reg {
     display: flex;
     justify-content: space-around;
+  .log-or-reg {
+    .reg-box-header {
+      padding: 40px 10px 20px 10px;
+      p {
+        font-size: 34px;
+        font-weight: 700;
+      }
+    }
+    div div label {
+      padding: 10px 10px 10px 10px;
+      .label-text {
+        font-size: 18px;
+        font-weight: 300;
+      }
+    }
+    div div .btn-group {
+      padding: 10px 10px 10px 10px;
+    }
+  }
 }
-.log-or-reg {
-    width: 400px;
-}
+

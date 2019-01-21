@@ -1,16 +1,13 @@
-.slider-container { position: relative; height: 500px; }
-
-.slider { top: 0; left: 0; bottom: 0; right: 0; position: absolute; z-index: 1; }
-
-.search-box-container { top: 50%; /* this to center the box w.r.t to parent */ left: 50%; /* this to center the box w.r.t to parent */ /* Above 2 lines wont fully center it, the next line internally
+.slider-container { position: relative; height: 500px; margin-left: 1px; margin-right: 1px; }
+.slider-container .slider { top: 0; left: 0; bottom: 0; right: 0; position: absolute; z-index: 1; }
+.slider-container .search-box-container { top: 50%; /* this to center the box w.r.t to parent */ left: 50%; /* this to center the box w.r.t to parent */ /* Above 2 lines wont fully center it, the next line internally
 centers it, buy moving itself 50% left and top */ transform: translate(-50%, -50%); margin: auto; position: absolute; z-index: 2; }
 
 /* this is navbar 
 there is navigation fixing
 top attachment etc. 
 */
-.navbar { top: 0; display: flex; position: fixed; margin: auto; width: 100%; height: 60px; justify-content: space-between; background-color: #4eb9ff; background-image: linear-gradient(#1e6eff, #4eb9ff); box-shadow: 0 1px 5px #1e6eff; z-index: 3; }
-
+.navbar { top: 0; display: flex; position: fixed; margin: auto; width: 100%; height: 60px; justify-content: space-between; flex-wrap: nowrap; background-color: #4eb9ff; background-image: linear-gradient(#1e6eff, #4eb9ff); box-shadow: 0 1px 5px #1e6eff; z-index: 3; }
 .navbar .navbar-left { display: flex; flex-direction: row; }
 .navbar .navbar-right { display: flex; flex-direction: row; }
 .navbar .navbar-item { font-size: 20px; padding: 10px; color: white; }
@@ -18,9 +15,36 @@ top attachment etc.
 .navbar a:hover { background-image: linear-gradient(#1e6edc, #4eb9f0); }
 
 .o-log-or-reg { display: flex; justify-content: space-around; }
+.o-log-or-reg .log-or-reg .reg-box-header { padding: 40px 10px 20px 10px; }
+.o-log-or-reg .log-or-reg .reg-box-header p { font-size: 34px; font-weight: 700; }
+.o-log-or-reg .log-or-reg div div label { padding: 10px 10px 10px 10px; }
+.o-log-or-reg .log-or-reg div div label .label-text { font-size: 18px; font-weight: 300; }
+.o-log-or-reg .log-or-reg div div .btn-group { padding: 10px 10px 10px 10px; }
 
-.log-or-reg { width: 400px; }
+.post-container { width: 100%; }
+.post-container .posts { width: 100%; display: flex; justify-content: center; padding: 10px; }
+.post-container .posts .post-box .post-header { width: 100%; }
+.post-container .posts .post-box .post-header p { font-size: 25px; text-decoration: underline; color: #1e6eff; }
+.post-container .posts .post-box .desc-image { display: flex; justify-content: space-between; }
+.post-container .posts .post-box .desc-image .post-desc { padding: 5px; }
+.post-container .posts .post-box .desc-image .post-desc p { font-size: 18px; }
+.post-container .posts .post-box .desc-image .post-image { display: flex; padding: 5px; border: 1px solid rgba(16, 22, 26, 0.15); }
 
-body { margin: 0; padding: 0; }
+.banner-container { display: flex; flex-direction: row; justify-content: space-around; flex-wrap: wrap; padding: 5px; }
+.banner-container .banner-image { padding: 5px; display: flex; flex-direction: column; align-items: center; }
+.banner-container .banner-image img { height: 175px; }
+.banner-container .banner-image p { font-size: 28px; font-weight: 500; color: #1e6eff; }
+
+.popularContainer .popularHeader { display: flex; justify-content: space-around; padding: 3% 10% 3% 10%; }
+.popularContainer .popularHeader p { font-size: 45px; font-weight: 600; }
+.popularContainer .popularCover { display: flex; justify-content: space-between; flex-wrap: wrap; padding: 0 10% 0 10%; }
+.popularContainer .popularCover .popular { display: flex; justify-content: flex-start; padding: 10px; }
+.popularContainer .popularCover .popular .popularImage { height: 150px; width: 150px; overflow: hidden; padding: 10px; border: 1px solid #fff; border-radius: 75px; }
+.popularContainer .popularCover .popular .popularImage img { height: 150px; }
+.popularContainer .popularCover .popular .popularDesc { display: flex; flex-direction: column; justify-content: center; align-items: flex-start; padding-left: 10px; }
+.popularContainer .popularCover .popular .popularDesc .popularName { font-size: 20px; font-weight: 550; }
+.popularContainer .popularCover .popular .popularDesc .popularExpertize { color: #757575; font-weight: 550; }
+
+body { margin: 0; padding: 0; background-color: #f6f6f6; }
 
 .home-screen { margin: 0; padding: 0; }

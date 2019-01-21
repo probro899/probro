@@ -1,8 +1,14 @@
 import React from 'react';
-import { Button,Intent } from '@blueprintjs/core';
+import PropTypes from 'prop-types';
+import { Button, Intent } from '@blueprintjs/core';
 
-export default ({text}) => {
-    return (
-        <Button text={text} intent={Intent.PRIMARY} fill/>
-    );
-}
+const CustomButton = ({ text }) => (
+  <div className="btn-group">
+    <Button text={text} intent={Intent.PRIMARY} fill large />
+  </div>
+);
+
+CustomButton.propTypes = {
+  text: PropTypes.string.isRequired,
+};
+export default CustomButton;
