@@ -1,10 +1,12 @@
 @import './config.scss';
-@import './slider.scss';
+@import './main-page/slider.scss';
 @import './navbar.scss';
-@import './regLog.scss';
-@import './posts.scss';
-@import './banner.scss';
-@import './popular.scss';
+@import './login-or-reg/regLog.scss';
+@import './main-page/posts.scss';
+@import './main-page/banner.scss';
+@import './main-page/popular.scss';
+@import './bro/sideNav.scss';
+@import './bro/profile.scss';
 body {
     margin: 0;
     padding: 0;

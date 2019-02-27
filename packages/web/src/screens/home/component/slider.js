@@ -32,7 +32,15 @@ class Slider extends Component {
       animations.push(animationName);
     }
     this.setState({ animationName: animations });
-    setInterval(this.changeBackGround, 5000);
+  }
+
+  componentDidMount() {
+    this.setState({ timer: setInterval(this.changeBackGround, 5000) });
+  }
+
+  componentWillUnmount() {
+    const { timer } = this.state;
+    clearInterval(timer);
   }
 
   changeBackGround = () => {
@@ -64,7 +72,7 @@ class Slider extends Component {
       <div className="slider-container">
         <div className="slider" style={styles} />
         <div className="search-box-container">
-          <Input placeholder="Enter a Keyword" iconName="Search" />
+          <Input placeholder="Enter a Keyword" iconName="Search" class_="f-element-class" value="" schema="registerForm" />
         </div>
       </div>
     );

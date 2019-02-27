@@ -1,28 +1,147 @@
 {
-  "user":[{"name": "nabin", "id": "1"}],
-  "posts":[{"id": "post1",
-            "title": "Begineer Guide for programmers",
-            "image": "https://media.istockphoto.com/photos/software-engineer-picture-id519161592?k=6&m=519161592&s=612x612&w=0&h=xjkplQQxI3MdP3ASlbn1tEBn1UnwmS1gdIbBJAuGSjc=",
-            "description": "This is the basic article for the proframmers."}],
-  "image":{"image_url":"https://image.flaticon.com/icons/svg/201/201818.svg"},
-  "popular":[{"id": "1",
-              "name":"Nabin Bhusal",
-              "expertize":"Fullstack developer",
-              "photo":"https://image.flaticon.com/icons/png/512/163/163815.png"},
-            { "id":"2",
-              "name":"Nabin Bhusal",
-            "expertize":"Fullstack developer",
-            "photo":"http://pngimg.com/uploads/mr_bean/mr_bean_PNG7.png"},
-            {"id":"3",
-              "name":"Bhagya Bhusal",
-              "expertize":"Fullstack developer",
-              "photo":"https://image.flaticon.com/icons/png/512/163/163815.png"},
-            {"id":"4",
-              "name":"Nabin Shah",
-              "expertize":"Fullstack developer",
-              "photo":"http://pngimg.com/uploads/mr_bean/mr_bean_PNG7.png"},
-            {"id":"5",
-              "name":"Bhagya Shah",
-              "expertize":"Fullstack developer",
-              "photo":"https://image.flaticon.com/icons/png/512/163/163815.png"}]
+  "user": [
+    {
+      "name": "nabin",
+      "id": "1"
+    },
+    {
+      "firstName": "a",
+      "middleName": "a",
+      "lastName": "a",
+      "email": "a@g.com",
+      "password": "aa",
+      "confirmPassword": "aa",
+      "id": "sNfxgfy"
+    },
+    {
+      "email": "fdasf",
+      "password": "",
+      "id": "xY5wSkd"
+    },
+    {
+      "email": "fdasf",
+      "password": "",
+      "id": "Q__3XAC"
+    },
+    {
+      "email": "fdasf",
+      "password": "",
+      "id": "H8I3U0r"
+    },
+    {
+      "email": "fdasf",
+      "password": "afdasf",
+      "id": "GihheN1"
+    },
+    {
+      "email": "fdasf",
+      "password": "afdasf",
+      "id": "fmESc2N"
+    },
+    {
+      "email": "fdasf",
+      "password": "afdasf",
+      "id": "lV1uBX0"
+    },
+    {
+      "email": "",
+      "password": "",
+      "id": "wwEZ3t-"
+    },
+    {
+      "email": "",
+      "password": "",
+      "id": "CrwRnSx"
+    },
+    {
+      "email": "adfaf",
+      "password": "",
+      "id": "KpfMJC7"
+    },
+    {
+      "email": "",
+      "password": "adfasf",
+      "id": "rY7Qu_H"
+    },
+    {
+      "email": "fadsf",
+      "password": "fads",
+      "id": "ybVSMcH"
+    },
+    {
+      "email": "gfsdg",
+      "password": "gsfdgsdg",
+      "id": "hJHOo8Z"
+    },
+    {
+      "firstName": "asdfdasf",
+      "middleName": "fadsdfas",
+      "lastName": "adsfasd",
+      "email": "fdasfs@g.vom",
+      "password": "a",
+      "confirmPassword": "a",
+      "id": "q6wYF33"
+    },
+    {
+      "firstName": "adsfasdff",
+      "middleName": "fdasfas",
+      "lastName": "fasdfdas",
+      "email": "asdfasf@gm.com",
+      "password": "a",
+      "confirmPassword": "a",
+      "id": "lqQid0C"
+    },
+    {
+      "firstName": "asfsadf",
+      "middleName": "adfasf",
+      "lastName": "afdsfd",
+      "email": "a@gmail.com",
+      "password": "abcdEf7*910",
+      "confirmPassword": "abcdEf7*910",
+      "id": "yw9vEaB"
+    }
+  ],
+  "posts": [
+    {
+      "id": "post1",
+      "title": "Begineer Guide for programmers",
+      "image": "https://media.istockphoto.com/photos/software-engineer-picture-id519161592?k=6&m=519161592&s=612x612&w=0&h=xjkplQQxI3MdP3ASlbn1tEBn1UnwmS1gdIbBJAuGSjc=",
+      "description": "This is the basic article for the proframmers."
+    }
+  ],
+  "image": {
+    "image_url": "https://image.flaticon.com/icons/svg/201/201818.svg"
+  },
+  "popular": [
+    {
+      "id": "1",
+      "name": "Nabin Bhusal",
+      "expertize": "Fullstack developer",
+      "photo": "https://image.flaticon.com/icons/png/512/163/163815.png"
+    },
+    {
+      "id": "2",
+      "name": "Nabin Bhusal",
+      "expertize": "Fullstack developer",
+      "photo": "http://pngimg.com/uploads/mr_bean/mr_bean_PNG7.png"
+    },
+    {
+      "id": "3",
+      "name": "Bhagya Bhusal",
+      "expertize": "Fullstack developer",
+      "photo": "https://image.flaticon.com/icons/png/512/163/163815.png"
+    },
+    {
+      "id": "4",
+      "name": "Nabin Shah",
+      "expertize": "Fullstack developer",
+      "photo": "http://pngimg.com/uploads/mr_bean/mr_bean_PNG7.png"
+    },
+    {
+      "id": "5",
+      "name": "Bhagya Shah",
+      "expertize": "Fullstack developer",
+      "photo": "https://image.flaticon.com/icons/png/512/163/163815.png"
+    }
+  ]
 }

@@ -1,9 +1,10 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { InputGroup, Icon, Label, Tooltip, Button, Position } from '@blueprintjs/core';
+import { InputGroup, Icon, Label, Tooltip, Position } from '@blueprintjs/core';
 import { IconNames } from '@blueprintjs/icons';
 
-const customIcon = (iconName, handleLockClick, showPassword) => {
+const customIcon = (iconName, handleLockClick, password) => {
   if (iconName === 'Search') {
     return (
       { leftIcon: <Icon icon={IconNames.SEARCH} iconSize={Icon.SIZE_LARGE} />, rightIcon: null }
@@ -11,10 +12,10 @@ const customIcon = (iconName, handleLockClick, showPassword) => {
   }
   if (iconName === 'Lock') {
     const rightIcon = (
-      <Tooltip content={showPassword ? 'Hide' : 'Show'} position={Position.RIGHT}>
+      <Tooltip content={password ? 'Hide' : 'Show'} position={Position.RIGHT}>
         <Icon
           style={{ marginTop: 3, marginRight: 5, color: '#757575' }}
-          icon={!showPassword ? IconNames.EYE_OFF : IconNames.EYE_OPEN}
+          icon={password ? IconNames.EYE_OFF : IconNames.EYE_OPEN}
           onClick={handleLockClick}
           iconSize="20"
         />
@@ -28,9 +29,8 @@ const customIcon = (iconName, handleLockClick, showPassword) => {
 };
 
 class CustomInput extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { showPassword: false };
+  state = {
+    showPassword: true,
   }
 
   handleLockClick = () => {
@@ -39,18 +39,23 @@ class CustomInput extends React.Component {
   }
 
   render() {
-    const { placeholder, iconName, class_, label_ } = this.props;
+    const {
+      placeholder, iconName, class_, label_, value, form, schema, password, updateFormValue,
+    } = this.props;
     const { showPassword } = this.state;
     const { leftIcon, rightIcon } = customIcon(iconName, this.handleLockClick, showPassword);
     return (
       <Label>
         <span className="label-text">{label_}</span>
         <InputGroup
+          // [value] is just a convention to use the name of the variable transfered.
+          onChange={e => updateFormValue(schema, { [value]: e.target.value })}
           placeholder={placeholder}
+          value={form[schema][value]}
           className={class_}
           leftIcon={leftIcon}
           rightElement={rightIcon}
-          type={showPassword ? 'text' : 'password'}
+          type={password && showPassword ? 'password' : 'text'}
           large
         />
       </Label>
@@ -58,12 +63,23 @@ class CustomInput extends React.Component {
   }
 }
 CustomInput.defaultProps = {
+  password: false,
+  iconName: null,
+  updateFormValue: null,
+  label_: null,
   class_: 'input',
 };
 CustomInput.propTypes = {
   placeholder: PropTypes.string.isRequired,
-  iconName: PropTypes.string.isRequired,
+  iconName: PropTypes.string,
   class_: PropTypes.string,
-  label_: PropTypes.string.isRequired,
+  schema: PropTypes.string.isRequired,
+  updateFormValue: PropTypes.func,
+  label_: PropTypes.string,
+  password: PropTypes.bool,
+  value: PropTypes.string.isRequired,
+  form: PropTypes.objectOf(PropTypes.any).isRequired,
 };
-export default CustomInput;
+
+const mapStateToProps = (state, ownprops) => ({ ...state, ...ownprops });
+export default connect(mapStateToProps)(CustomInput);

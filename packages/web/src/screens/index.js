@@ -1,6 +1,9 @@
 import React from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
-import HomePage, { Login, Registration } from './home';
+import HomePage from './home';
+import Login from './home/auth/login';
+import Registration from './home/auth/registration';
+import BroHome from './users/bro';
 
 export default () => (
   <Router>
@@ -8,6 +11,7 @@ export default () => (
       <Route exact path="/" component={HomePage} />
       <Route exact path="/login" component={Login} />
       <Route exact path="/register" component={Registration} />
+      <Route exact path="/user-id" component={BroHome} />
     </div>
   </Router>
 );

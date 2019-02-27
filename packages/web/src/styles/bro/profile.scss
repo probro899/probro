@@ -1,0 +1,26 @@
+@import '../config.scss';
+
+.profile {
+  flex: 0.7;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding-top: 20px;
+  .profilePic {
+    img {
+      height: 100px;
+      width: 100px;
+      border: 2px solid  #a4a5a6;
+      border-radius: 15%;
+    }
+  }
+  .profileDetails {
+    padding-top: 20px;
+    .detailElement{
+      width: 300px;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+    }
+  }
+}

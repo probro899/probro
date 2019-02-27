@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-// import axios from 'axios';
-import { Login, Registration } from './auth';
 import { Navbar, Slider, Post, Banner, Popular } from './component';
 
 
@@ -21,4 +19,3 @@ class HomePage extends Component {
 }
 
 export default HomePage;
-export { Login, Registration, Navbar };

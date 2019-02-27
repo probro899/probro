@@ -15,11 +15,13 @@ top attachment etc.
 .navbar a:hover { background-image: linear-gradient(#1e6edc, #4eb9f0); }
 
 .o-log-or-reg { display: flex; justify-content: space-around; }
+.o-log-or-reg .log-or-reg { max-width: 40%; }
 .o-log-or-reg .log-or-reg .reg-box-header { padding: 40px 10px 20px 10px; }
 .o-log-or-reg .log-or-reg .reg-box-header p { font-size: 34px; font-weight: 700; }
+.o-log-or-reg .log-or-reg .footer { padding: 0 0 0 10px; }
 .o-log-or-reg .log-or-reg div div label { padding: 10px 10px 10px 10px; }
 .o-log-or-reg .log-or-reg div div label .label-text { font-size: 18px; font-weight: 300; }
-.o-log-or-reg .log-or-reg div div .btn-group { padding: 10px 10px 10px 10px; }
+.o-log-or-reg .log-or-reg div div .btn-group { padding: 0 10px 0 10px; }
 
 .post-container { width: 100%; }
 .post-container .posts { width: 100%; display: flex; justify-content: center; padding: 10px; }
@@ -44,6 +46,19 @@ top attachment etc.
 .popularContainer .popularCover .popular .popularDesc { display: flex; flex-direction: column; justify-content: center; align-items: flex-start; padding-left: 10px; }
 .popularContainer .popularCover .popular .popularDesc .popularName { font-size: 20px; font-weight: 550; }
 .popularContainer .popularCover .popular .popularDesc .popularExpertize { color: #757575; font-weight: 550; }
+
+.broWrapper { display: flex; margin-top: 60px; }
+
+.sideNav { flex: 0.2; padding: 50px 20px 0 50px; display: flex; align-items: center; flex-direction: column; }
+.sideNav .sideNavElement { padding: 10px 10px 10px 10px; align-self: stretch; }
+.sideNav .sideNavElement span { font-size: 18px; font-weight: 500; color: #4eb9ff; }
+.sideNav .sideNavElement:hover { background-color: #757575; }
+.sideNav .active { background-color: #cee8f4; }
+
+.profile { flex: 0.7; display: flex; align-items: center; flex-direction: column; padding-top: 20px; }
+.profile .profilePic img { height: 100px; width: 100px; border: 2px solid  #a4a5a6; border-radius: 15%; }
+.profile .profileDetails { padding-top: 20px; }
+.profile .profileDetails .detailElement { width: 300px; display: flex; flex-direction: row; justify-content: space-between; }
 
 body { margin: 0; padding: 0; background-color: #f6f6f6; }
 
