@@ -8,6 +8,7 @@
     "@probro/common": "1.0.0",
     "axios": "^0.18.0",
     "email-validator": "^2.0.4",
+    "marked": "^0.6.1",
     "prop-types": "^15.6.2",
     "react": "^16.6.3",
     "react-app-rewire-yarn-workspaces": "^1.0.3",
@@ -38,5 +39,5 @@
     "json-server": "^0.14.2",
     "react-app-rewired": "^1.6.2"
   },
-  "proxy": "http://localhost: 4000"
+  "proxy": "http://192.168.1.66:4001"
 }

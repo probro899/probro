@@ -1,17 +1,26 @@
 @import '../config.scss';
 
 .profile {
-  flex: 0.7;
+  flex: 0.8;
   display: flex;
   align-items: center;
   flex-direction: column;
   padding-top: 20px;
   .profilePic {
+    position: relative;
     img {
+      border: 1px solid  #a4a5a6;
+      border-radius: 1000px;
       height: 100px;
-      width: 100px;
-      border: 2px solid  #a4a5a6;
-      border-radius: 15%;
+    }
+    span {
+      position: absolute;
+      top: 65px;
+      left: 40px;
+    }
+    svg {
+      border-radius: 100px;
+      background-color: $primary;
     }
   }
   .profileDetails {

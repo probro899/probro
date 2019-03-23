@@ -15,12 +15,13 @@ class Log extends Component {
 
   render() {
     const { form } = this.props;
+    const id = sessionStorage.getItem('SESSION_ID');
     return (
       <FormGroup>
         <Input label_="Email" placeholder="Eg, alex@gmail.com " class_="f-element-class" value="email" {...this.props} schema="loginForm" />
         <Input label_="Password" placeholder="Eg, ........" class_="f-element-class" value="password" {...this.props} schema="loginForm" password iconName="Lock" />
         <Button text="Submit" class_="f-element-class" {...this.props} schema="loginForm" />
-        {form.loginForm.success && <Redirect push to="/user-id" />}
+        {form.loginForm.success && id && <Redirect push to={`${id}/me`} />}
       </FormGroup>
     );
   }

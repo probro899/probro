@@ -11,7 +11,7 @@ export default () => (
       <Route exact path="/" component={HomePage} />
       <Route exact path="/login" component={Login} />
       <Route exact path="/register" component={Registration} />
-      <Route exact path="/user-id" component={BroHome} />
+      <Route exact path="/:id/me" component={BroHome} />
     </div>
   </Router>
 );

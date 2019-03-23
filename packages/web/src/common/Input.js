@@ -63,6 +63,7 @@ class CustomInput extends React.Component {
   }
 }
 CustomInput.defaultProps = {
+  placeholder: '',
   password: false,
   iconName: null,
   updateFormValue: null,
@@ -70,7 +71,7 @@ CustomInput.defaultProps = {
   class_: 'input',
 };
 CustomInput.propTypes = {
-  placeholder: PropTypes.string.isRequired,
+  placeholder: PropTypes.string,
   iconName: PropTypes.string,
   class_: PropTypes.string,
   schema: PropTypes.string.isRequired,

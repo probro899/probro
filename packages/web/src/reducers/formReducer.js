@@ -12,14 +12,41 @@ const initialState = {
     success: null,
     loading: false,
   },
-  loginForm:
-    {
-      email: '',
-      password: '',
-      error: null,
-      success: null,
-      loading: false,
-    },
+  loginForm: {
+    email: '',
+    password: '',
+    error: null,
+    success: null,
+    loading: false,
+  },
+  basicForm: {
+    firstName: '',
+    middleName: '',
+    lastName: '',
+    email: '',
+    error: null,
+    success: null,
+    loading: false,
+  },
+  additionalForm: {
+    phoneNumber: '',
+    gender: '',
+    degree: '',
+    field: '',
+    profilePicture: '',
+    skills: [],
+    error: null,
+    success: null,
+    loading: false,
+  },
+  advancedForm: {
+    experience: [],
+    products: [],
+    onlinePortals: [],
+    error: null,
+    success: null,
+    loading: false,
+  },
 };
 
 export default (state = initialState, action) => {

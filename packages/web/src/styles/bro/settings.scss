@@ -1,0 +1,31 @@
+.settings {
+  display: flex;
+  flex: 0.8;
+  flex-direction: column;
+  .title {
+    display: flex;
+    padding: 20px;
+    justify-content: center;
+    span {
+      font-size: 20px;
+    } 
+  }
+  .account-details {
+    .setting-types {
+      background-color: #ffffff;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+      div {
+        padding: 10px;
+        background-color: #93b5c2;
+      }
+      .active {
+        background-color: red;
+      }
+    }
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+  }
+}

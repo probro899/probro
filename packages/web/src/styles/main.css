@@ -13,6 +13,7 @@ top attachment etc.
 .navbar .navbar-item { font-size: 20px; padding: 10px; color: white; }
 .navbar a:link { display: flex; flex-direction: column; justify-content: center; text-decoration: none; }
 .navbar a:hover { background-image: linear-gradient(#1e6edc, #4eb9f0); }
+.navbar a.active { background-image: linear-gradient(#1e6edc, #4eb9f0) !important; }
 
 .o-log-or-reg { display: flex; justify-content: space-around; }
 .o-log-or-reg .log-or-reg { max-width: 40%; }
@@ -55,10 +56,29 @@ top attachment etc.
 .sideNav .sideNavElement:hover { background-color: #757575; }
 .sideNav .active { background-color: #cee8f4; }
 
-.profile { flex: 0.7; display: flex; align-items: center; flex-direction: column; padding-top: 20px; }
-.profile .profilePic img { height: 100px; width: 100px; border: 2px solid  #a4a5a6; border-radius: 15%; }
+.profile { flex: 0.8; display: flex; align-items: center; flex-direction: column; padding-top: 20px; }
+.profile .profilePic { position: relative; }
+.profile .profilePic img { border: 1px solid  #a4a5a6; border-radius: 1000px; height: 100px; }
+.profile .profilePic span { position: absolute; top: 65px; left: 40px; }
+.profile .profilePic svg { border-radius: 100px; background-color: #4eb9ff; }
 .profile .profileDetails { padding-top: 20px; }
 .profile .profileDetails .detailElement { width: 300px; display: flex; flex-direction: row; justify-content: space-between; }
+
+.classes { display: flex; flex: 0.8; justify-content: center; }
+
+.settings { display: flex; flex: 0.8; flex-direction: column; }
+.settings .title { display: flex; padding: 20px; justify-content: center; }
+.settings .title span { font-size: 20px; }
+.settings .account-details { display: flex; flex-direction: column; padding: 10px; }
+.settings .account-details .setting-types { background-color: #ffffff; display: flex; flex-direction: row; justify-content: space-around; }
+.settings .account-details .setting-types div { padding: 10px; background-color: #93b5c2; }
+.settings .account-details .setting-types .active { background-color: red; }
+
+div[contenteditable]:focus { outline: 0px solid transparent; }
+
+[contenteditable]:empty::before { content: attr(datatext); color: grey; }
+
+#editor { font-size: 16px; }
 
 body { margin: 0; padding: 0; background-color: #f6f6f6; }
 

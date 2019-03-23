@@ -13,6 +13,7 @@ export default async (dispatch, getState) => {
     const res = await axios.post(`${ENDPOINT}/auth/login`, { email, password });
     const { data } = res;
     if (res.status === 200 && data.token) {
+      sessionStorage.setItem('SESSION_ID', data.token);
       dispatch(updateFormValue('loginForm', {
         loading: false,
         error: null,
@@ -20,7 +21,6 @@ export default async (dispatch, getState) => {
         email: '',
         password: '',
       }));
-      sessionStorage.setItem('SESSION_ID', data.token);
     }
   } catch {
     dispatch(updateFormValue('loginForm', { loading: false, error: 'Invalid Username or Password' }));

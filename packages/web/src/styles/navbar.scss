@@ -38,4 +38,7 @@ top attachment etc.
     a:hover {
         background-image: linear-gradient($dropPrimaryHover,$primaryHover);
     }
+    a.active {
+      background-image: linear-gradient($dropPrimaryHover,$primaryHover) !important;
+    }
 }

@@ -29,10 +29,13 @@ const CustomButton = (props) => {
     </div>
   );
 };
+CustomButton.defaultProps = {
+  class_: null,
+};
 
 CustomButton.propTypes = {
   text: PropTypes.string.isRequired,
-  class_: PropTypes.string.isRequired,
+  class_: PropTypes.string,
   mainFormHandler: PropTypes.func.isRequired,
   schema: PropTypes.string.isRequired,
   form: PropTypes.objectOf(PropTypes.any).isRequired,

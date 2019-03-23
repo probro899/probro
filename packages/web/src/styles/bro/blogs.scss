@@ -1,0 +1,12 @@
+div[contenteditable]:focus {
+  outline: 0px solid transparent;
+}
+
+[contenteditable]:empty::before {
+  content: attr(datatext);
+  color: grey;
+}
+
+#editor {
+  font-size: 16px;
+}
