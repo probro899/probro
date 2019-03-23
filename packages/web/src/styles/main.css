@@ -64,7 +64,18 @@ top attachment etc.
 .profile .profileDetails { padding-top: 20px; }
 .profile .profileDetails .detailElement { width: 300px; display: flex; flex-direction: row; justify-content: space-between; }
 
-.classes { display: flex; flex: 0.8; justify-content: center; }
+.classes { display: flex; flex: 0.8; align-items: center; flex-direction: column; }
+
+.columns { display: flex; flex-direction: row; }
+
+.column-container { width: 200px; margin: 8px; border: 1px solid lightgray; border-radius: 2px; padding: 8px; background-color: #f6f6f6; }
+
+.column-title { padding: 8px; background-color: #4eb9ff; }
+.column-title span { font-size: 20px; font-weight: 600; }
+
+.task-container { margin: 8px; padding: 5px; background-color: white; border: 1px solid lightgray; border-radius: 2px; flex-grow: 1; }
+
+.task-list { min-height: 150px; }
 
 .settings { display: flex; flex: 0.8; flex-direction: column; }
 .settings .title { display: flex; padding: 20px; justify-content: center; }

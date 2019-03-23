@@ -1,5 +1,37 @@
 .classes {
   display: flex;
   flex: 0.8;
-  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.columns {
+  display: flex;
+  flex-direction: row;
+}
+.column-container {
+  width: 200px;
+  margin: 8px;
+  border: 1px solid lightgray;
+  border-radius: 2px;
+  padding: 8px;
+  background-color: $backgroundColor;
+}
+.column-title {
+  padding: 8px;
+  background-color: $primary;
+  span {
+    font-size: 20px;
+    font-weight: 600;
+  }
+}
+.task-container {
+  margin: 8px;
+  padding: 5px;
+  background-color: white;
+  border: 1px solid lightgray;
+  border-radius: 2px;
+  flex-grow: 1;
+}
+.task-list {
+  min-height: 150px;
 }
