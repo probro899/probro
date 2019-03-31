@@ -66,16 +66,16 @@ top attachment etc.
 
 .classes { display: flex; flex: 0.8; align-items: center; flex-direction: column; }
 
-.columns { display: flex; flex-direction: row; }
-
-.column-container { width: 200px; margin: 8px; border: 1px solid lightgray; border-radius: 2px; padding: 8px; background-color: #f6f6f6; }
-
-.column-title { padding: 8px; background-color: #4eb9ff; }
-.column-title span { font-size: 20px; font-weight: 600; }
-
-.task-container { margin: 8px; padding: 5px; background-color: white; border: 1px solid lightgray; border-radius: 2px; flex-grow: 1; }
-
-.task-list { min-height: 150px; }
+.classWrapper { margin-top: 60px; }
+.classWrapper .columns { display: flex; flex-direction: row; overflow-x: scroll; }
+.classWrapper .columns .column-container { min-width: 250px; max-width: 250px; margin: 8px; border: 1px solid lightgray; border-radius: 2px; padding: 8px; background-color: #f6f6f6; }
+.classWrapper .columns .column-container .column-title { padding: 8px; background-color: #4eb9ff; }
+.classWrapper .columns .column-container .column-title span { font-size: 20px; font-weight: 600; }
+.classWrapper .columns .column-container .task-list { min-height: 150px; }
+.classWrapper .columns .column-container .task-list .task-container { margin: 8px; padding: 5px; background-color: white; border: 1px solid lightgray; border-radius: 2px; flex-grow: 1; }
+.classWrapper .columns .column-container .column-footer { background-color: green; cursor: pointer; }
+.classWrapper .columns .add-new-column .title { padding: 8px; margin: 8px; background-color: lightgray; width: 200px; border: 1px solid lightgray; border-radius: 2px; cursor: pointer; }
+.classWrapper .columns .add-new-column .title span { font-size: 16px; font-weight: 500; }
 
 .settings { display: flex; flex: 0.8; flex-direction: column; }
 .settings .title { display: flex; padding: 20px; justify-content: center; }
@@ -85,11 +85,16 @@ top attachment etc.
 .settings .account-details .setting-types div { padding: 10px; background-color: #93b5c2; }
 .settings .account-details .setting-types .active { background-color: red; }
 
-div[contenteditable]:focus { outline: 0px solid transparent; }
-
-[contenteditable]:empty::before { content: attr(datatext); color: grey; }
-
-#editor { font-size: 16px; }
+.blogs { margin-top: 60px; }
+.blogs div[contenteditable]:focus { outline: 0px solid transparent; }
+.blogs [contenteditable]:empty::before { content: attr(datatext); color: grey; }
+.blogs .blog-top { padding: 10px; text-align: center; }
+.blogs .blog-top span { font-size: 25px; font-weight: 600; }
+.blogs .toolbar { display: flex; margin: 2px; padding: 10px; background-color: #DFDCDC; justify-content: center; }
+.blogs .toolbar button { margin: 0px 3px 0px 3px; }
+.blogs .title { margin: 10px; }
+.blogs .editor-container { padding: 5px 10px 5px 10px; }
+.blogs .editor-container #editor { background-color: white; font-size: 16px; min-height: 500px; padding: 10px; }
 
 body { margin: 0; padding: 0; background-color: #f6f6f6; }
 

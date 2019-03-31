@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
 import Task from './Task';
+import NewTask from './NewTask';
 
 class Column extends Component {
   state = {};
@@ -43,6 +44,7 @@ class Column extends Component {
               )}
             </Droppable>
             {provided.placeholder}
+            <NewTask columnId={column.id} />
           </div>
         )}
       </Draggable>

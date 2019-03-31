@@ -1,37 +1,64 @@
+// styling the class component here
 .classes {
   display: flex;
   flex: 0.8;
   align-items: center;
   flex-direction: column;
 }
-.columns {
-  display: flex;
-  flex-direction: row;
-}
-.column-container {
-  width: 200px;
-  margin: 8px;
-  border: 1px solid lightgray;
-  border-radius: 2px;
-  padding: 8px;
-  background-color: $backgroundColor;
-}
-.column-title {
-  padding: 8px;
-  background-color: $primary;
-  span {
-    font-size: 20px;
-    font-weight: 600;
+
+//styling the classManager component. 
+.classWrapper {
+  margin-top: $navbarHeight;
+  .columns {
+    display: flex;
+    flex-direction: row;
+    overflow-x: scroll;
+    .column-container {
+      min-width: 250px;
+      max-width: 250px;
+      margin: 8px;
+      border: 1px solid lightgray;
+      border-radius: 2px;
+      padding: 8px;
+      background-color: $backgroundColor;
+      .column-title {
+        padding: 8px;
+        background-color: $primary;
+        span {
+          font-size: 20px;
+          font-weight: 600;
+        }
+      }
+      .task-list {
+        min-height: 150px;
+        .task-container {
+          margin: 8px;
+          padding: 5px;
+          background-color: white;
+          border: 1px solid lightgray;
+          border-radius: 2px;
+          flex-grow: 1;
+        }
+      }
+      .column-footer {
+        background-color: green;
+        cursor: pointer;
+      }
+    }
+    .add-new-column {
+      .title {
+        padding: 8px;
+        margin: 8px;
+        background-color: lightgray;
+        width: 200px;
+        border: 1px solid lightgray;
+        border-radius: 2px;
+        cursor: pointer;
+        span {
+          font-size: 16px;
+          font-weight: 500;
+        }
+      }
+    }
   }
-}
-.task-container {
-  margin: 8px;
-  padding: 5px;
-  background-color: white;
-  border: 1px solid lightgray;
-  border-radius: 2px;
-  flex-grow: 1;
-}
-.task-list {
-  min-height: 150px;
 }
