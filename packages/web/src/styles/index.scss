@@ -1,10 +1,20 @@
 @import './config.scss';
-@import './slider.scss';
+@import './main-page/slider.scss';
 @import './navbar.scss';
-@import './regLog.scss';
+@import './login-or-reg/regLog.scss';
+@import './main-page/posts.scss';
+@import './main-page/banner.scss';
+@import './main-page/popular.scss';
+@import './bro/sideNav.scss';
+@import './bro/profile.scss';
+@import './bro/classes.scss';
+@import './bro/settings.scss';
+@import './bro/blogs.scss';
+
 body {
     margin: 0;
     padding: 0;
+    background-color: $backgroundColor;
 }
 .home-screen {
     margin: 0;

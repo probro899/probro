@@ -1,0 +1,35 @@
+@import '../config.scss';
+
+.profile {
+  flex: 0.8;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding-top: 20px;
+  .profilePic {
+    position: relative;
+    img {
+      border: 1px solid  #a4a5a6;
+      border-radius: 1000px;
+      height: 100px;
+    }
+    span {
+      position: absolute;
+      top: 65px;
+      left: 40px;
+    }
+    svg {
+      border-radius: 100px;
+      background-color: $primary;
+    }
+  }
+  .profileDetails {
+    padding-top: 20px;
+    .detailElement{
+      width: 300px;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+    }
+  }
+}

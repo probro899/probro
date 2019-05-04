@@ -1,26 +1,21 @@
 import React, { Component } from 'react';
-import axios from 'axios';
-import { Login, Registration } from './auth';
-import { Navbar, Slider } from './component';
+import { Navbar, Slider, Post, Banner, Popular } from './component';
 
 
 class HomePage extends Component {
   state = {};
-
-  componentWillMount() {
-    const response = axios.get('http://localhost:3000/user');
-    console.log(response);
-  }
 
   render() {
     return (
       <div>
         <Navbar />
         <Slider />
+        <Banner />
+        <Post />
+        <Popular />
       </div>
     );
   }
 }
 
 export default HomePage;
-export { Login, Registration, Navbar };
