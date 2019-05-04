@@ -3,7 +3,30 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
+  "scripts": {
+    "test": "jest",
+    "server-mon": "nodemon --exec ../../node_modules/.bin/babel-node -- src/index.js"
+  },
   "dependencies": {
-    "@probro/common": "1.0.0"
+    "@probro/common": "1.0.0",
+    "app-node": "^0.2.6",
+    "bcrypt": "^3.0.3",
+    "bluebird": "^3.5.3",
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "lru-cache": "^5.1.1",
+    "sqlite": "^3.0.0",
+    "uuid": "^3.3.2"
+  },
+  "devDependencies": {
+    "axios": "^0.18.0",
+    "babel-jest": "^23.6.0",
+    "babel-preset-import-export": "^1.0.2",
+    "copy": "^0.3.2",
+    "jest": "^23.6.0",
+    "qs": "^6.6.0"
+  },
+  "jest": {
+    "testEnvironment": "node"
   }
 }
