@@ -12,7 +12,7 @@ class NewTask extends Component {
     const taskId = Math.random().toString(36).substring(7);
     const newTasks = {
       ...tasks,
-      [taskId]: { id: taskId, content: 'New Task just Assigned' },
+      [taskId]: { id: taskId, title: 'New Task just Assigned', description: 'Sample description', comments: [] },
     };
     const columnTasks = columns[columnId].taskIds;
     columnTasks.push(taskId);

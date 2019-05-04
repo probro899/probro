@@ -60,7 +60,10 @@ class Classes extends Component {
     return (
       <div>
         <Navbar />
-        <div className="classWrapper">
+        <div
+          className="classWrapper"
+          style={{ height: window.innerHeight }}
+        >
           <DragDropContext
             onDragEnd={this.onDragEnd}
           >

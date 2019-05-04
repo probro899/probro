@@ -15,7 +15,9 @@ class Task extends Component {
       {
         isOpen: true,
         taskId: tasks[task.id].id,
-        taskContent: tasks[task.id].content,
+        taskTitle: tasks[task.id].title,
+        taskDescription: tasks[task.id].description,
+        comments: tasks[task.id].comments,
       }
     );
   };
@@ -38,7 +40,7 @@ class Task extends Component {
             role="menuitem"
             tabIndex={0}
           >
-            {task.content}
+            {task.title}
           </div>
         )}
       </Draggable>

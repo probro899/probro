@@ -66,16 +66,31 @@ top attachment etc.
 
 .classes { display: flex; flex: 0.8; align-items: center; flex-direction: column; }
 
-.classWrapper { margin-top: 60px; }
-.classWrapper .columns { display: flex; flex-direction: row; overflow-x: scroll; }
-.classWrapper .columns .column-container { min-width: 250px; max-width: 250px; margin: 8px; border: 1px solid lightgray; border-radius: 2px; padding: 8px; background-color: #f6f6f6; }
-.classWrapper .columns .column-container .column-title { padding: 8px; background-color: #4eb9ff; }
-.classWrapper .columns .column-container .column-title span { font-size: 20px; font-weight: 600; }
-.classWrapper .columns .column-container .task-list { min-height: 150px; }
-.classWrapper .columns .column-container .task-list .task-container { margin: 8px; padding: 5px; background-color: white; border: 1px solid lightgray; border-radius: 2px; flex-grow: 1; }
-.classWrapper .columns .column-container .column-footer { background-color: green; cursor: pointer; }
+.classWrapper .columns { height: 100%; padding-top: 60px; display: flex; flex-direction: row; align-items: flex-start; }
+.classWrapper .columns .column-container { height: 100%; padding-bottom: 18px; }
+.classWrapper .columns .column-container .column-inner-container { display: flex; flex-direction: column; min-width: 300px; max-width: 300px; max-height: 100%; margin: 8px 8px 8px 8px; border-radius: 3px; background-color: #88e0e9; }
+.classWrapper .columns .column-container .column-inner-container .column-title { padding: 8px; }
+.classWrapper .columns .column-container .column-inner-container .column-title span { font-size: 20px; font-weight: 600; }
+.classWrapper .columns .column-container .column-inner-container .task-list { min-height: 200px; max-height: 100%; overflow-y: scroll; }
+.classWrapper .columns .column-container .column-inner-container .task-list .task-container { margin: 8px; padding: 5px; background-color: white; border: 1px solid lightgray; border-radius: 2px; flex-grow: 1; }
+.classWrapper .columns .column-container .column-inner-container .column-footer { padding: 10px; cursor: pointer; }
 .classWrapper .columns .add-new-column .title { padding: 8px; margin: 8px; background-color: lightgray; width: 200px; border: 1px solid lightgray; border-radius: 2px; cursor: pointer; }
 .classWrapper .columns .add-new-column .title span { font-size: 16px; font-weight: 500; }
+
+.overlay-container { padding: 0; }
+.overlay-container .task-detail-overlay .overlay-title { padding: 7px; background-color: #75757575; }
+.overlay-container .task-detail-overlay .overlay-title .head { display: inline; }
+.overlay-container .task-detail-overlay .overlay-title .head span.title { font-size: 20px; font-weight: bold; }
+.overlay-container .task-detail-overlay .left .overlay-description { padding: 5px; }
+.overlay-container .task-detail-overlay .left .overlay-description .desc-head u { font-weight: bold; font-size: 17px; }
+.overlay-container .task-detail-overlay .left .overlay-description .desc { padding: 5px; font-size: 15px; font-weight: 400; }
+.overlay-container .task-detail-overlay .left .edit-button { margin-left: 10px; vertical-align: inherit !important; }
+.overlay-container .task-detail-overlay .left textarea { background: transparent; border: none; border-color: transparent; resize: none; }
+.overlay-container .task-detail-overlay .left .comment-container { padding: 5px; display: flex; justify-content: stretch; }
+.overlay-container .task-detail-overlay .left .comments { padding: 5px; }
+.overlay-container .task-detail-overlay .left .comments .s-comment { display: flex; justify-content: stretch; }
+.overlay-container .task-detail-overlay .left .comments .s-comment div img { border: 1px solid white; border-radius: 45px; padding: 3px; }
+.overlay-container .task-detail-overlay .left .comments .s-comment .com-con { margin-left: 10px; display: flex; flex-direction: column; align-items: flex-start; }
 
 .settings { display: flex; flex: 0.8; flex-direction: column; }
 .settings .title { display: flex; padding: 20px; justify-content: center; }

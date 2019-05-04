@@ -55,7 +55,8 @@ class Navbar extends Component {
     const { main } = this.props;
     const { showProfile } = this.state;
     // eslint-disable-next-line no-undef
-    const id = sessionStorage.getItem('SESSION_ID');
+    // const id = sessionStorage.getItem('SESSION_ID');
+    const id = 'Abc4343kasdklfjas';
     return (
       <div className="navbar">
         <div className="navbar-left">

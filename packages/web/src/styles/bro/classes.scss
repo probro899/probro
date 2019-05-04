@@ -8,41 +8,49 @@
 
 //styling the classManager component. 
 .classWrapper {
-  margin-top: $navbarHeight;
   .columns {
+    height: 100%;
+    padding-top: $navbarHeight;
     display: flex;
     flex-direction: row;
-    overflow-x: scroll;
+    align-items: flex-start;
     .column-container {
-      min-width: 250px;
-      max-width: 250px;
-      margin: 8px;
-      border: 1px solid lightgray;
-      border-radius: 2px;
-      padding: 8px;
-      background-color: $backgroundColor;
-      .column-title {
-        padding: 8px;
-        background-color: $primary;
-        span {
-          font-size: 20px;
-          font-weight: 600;
+      height: 100%;
+      // this 18px value has been calculated according to margins 18 px * 2
+      padding-bottom: 18px;
+      .column-inner-container {
+        display: flex;
+        flex-direction: column;
+        min-width: 300px;
+        max-width: 300px;
+        max-height: 100%;
+        margin: 8px 8px 8px 8px;
+        border-radius: 3px;
+        background-color: $boardColor;
+        .column-title {
+          padding: 8px;
+          span {
+            font-size: 20px;
+            font-weight: 600;
+          }
         }
-      }
-      .task-list {
-        min-height: 150px;
-        .task-container {
-          margin: 8px;
-          padding: 5px;
-          background-color: white;
-          border: 1px solid lightgray;
-          border-radius: 2px;
-          flex-grow: 1;
+        .task-list {
+          min-height: 200px;
+          max-height: 100%; // to set task list a scrollview
+          overflow-y: scroll;
+          .task-container {
+            margin: 8px;
+            padding: 5px;
+            background-color: white;
+            border: 1px solid lightgray;
+            border-radius: 2px;
+            flex-grow: 1;
+          }
         }
-      }
-      .column-footer {
-        background-color: green;
-        cursor: pointer;
+        .column-footer {
+          padding: 10px;
+          cursor: pointer;
+        }
       }
     }
     .add-new-column {
@@ -57,6 +65,80 @@
         span {
           font-size: 16px;
           font-weight: 500;
+        }
+      }
+    }
+  }
+}
+// contains the details of the task.
+.overlay-container {
+  padding: 0;
+  .task-detail-overlay {
+    .overlay-title {
+      padding: 7px;
+      background-color: #75757575;
+      .head {
+        display: inline;
+        span.title {
+          font-size: 20px;
+          font-weight: bold;
+        }
+      }
+    }
+    .left {
+      .overlay-description {
+        padding: 5px;
+        .desc-head {
+          u {
+            font-weight: bold;
+            font-size: 17px;
+          }
+        }
+        .desc {
+          padding: 5px;
+          font-size: 15px;
+          font-weight: 400;
+        }
+      }
+      .edit-button {
+        margin-left: 10px;
+        vertical-align: inherit !important;
+      }
+      textarea {
+        background: transparent;
+        border: none;
+        border-color: transparent;
+        resize: none;
+      }
+      .comment-container {
+        padding: 5px;
+        display: flex;
+        justify-content: stretch;
+      }
+      .comments {
+        padding: 5px;
+        .s-comment {
+          display: flex;
+          justify-content: stretch;
+          div {
+            img {
+              border: 1px solid white;
+              border-radius: 45px;
+              padding: 3px;
+            }
+          }
+          .com-con {
+            margin-left: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            .com-auth {
+
+            }
+            .com-desc {
+
+            }
+          }
         }
       }
     }

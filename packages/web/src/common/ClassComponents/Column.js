@@ -20,31 +20,33 @@ class Column extends Component {
             ref={provided.innerRef}
             {...provided.draggableProps}
           >
-            <div
-              className="column-title"
-              {...provided.dragHandleProps}
-            >
-              <span>
-                {column.title}
-              </span>
+            <div className="column-inner-container">
+              <div
+                className="column-title"
+                {...provided.dragHandleProps}
+              >
+                <span>
+                  {column.title}
+                </span>
+              </div>
+              <Droppable
+                droppableId={column.id}
+                type="task"
+              >
+                {provided => (
+                  <div
+                    className="task-list"
+                    ref={provided.innerRef}
+                    {...provided.droppableProps}
+                  >
+                    {tasks.map((task, index) => <Task key={task.id} task={task} index={index} />)}
+                    {provided.placeholder}
+                  </div>
+                )}
+              </Droppable>
+              {provided.placeholder}
+              <NewTask columnId={column.id} />
             </div>
-            <Droppable
-              droppableId={column.id}
-              type="task"
-            >
-              {provided => (
-                <div
-                  className="task-list"
-                  ref={provided.innerRef}
-                  {...provided.droppableProps}
-                >
-                  {tasks.map((task, index) => <Task key={task.id} task={task} index={index} />)}
-                  {provided.placeholder}
-                </div>
-              )}
-            </Droppable>
-            {provided.placeholder}
-            <NewTask columnId={column.id} />
           </div>
         )}
       </Draggable>
