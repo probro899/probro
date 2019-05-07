@@ -10,13 +10,23 @@
   "dependencies": {
     "@probro/common": "1.0.0",
     "app-node": "^0.2.6",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "bcrypt": "^3.0.3",
     "bluebird": "^3.5.3",
     "body-parser": "^1.18.3",
+    "concat-stream": "^2.0.0",
+    "dotenv": "^6.2.0",
     "express": "^4.16.4",
+    "jimp": "^0.6.0",
+    "lodash": "^4.17.11",
     "lru-cache": "^5.1.1",
+    "mkdirp": "^0.5.1",
+    "multer": "^1.4.1",
     "sqlite": "^3.0.0",
-    "uuid": "^3.3.2"
+    "streamifier": "^0.1.1",
+    "url-pattern": "^1.0.3",
+    "uuid": "^3.3.2",
+    "ws": "^7.0.0"
   },
   "devDependencies": {
     "axios": "^0.18.0",

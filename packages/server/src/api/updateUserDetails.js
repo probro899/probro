@@ -1,6 +1,6 @@
 import db from '../db';
 
-export default async (record, user) => {
+export default async function updateUserDetails(record, user) {
   console.log(record, user);
   try {
     const result = await db.execute(async ({ findOne, update, insert }) => {
@@ -10,7 +10,7 @@ export default async (record, user) => {
         if (updateRes) {
           return 'User details updated successfully';
         }
-        throw 'update Faild';
+        throw new Error('update Faild');
       }
       const insertRes = await insert('UserDetail', record);
       if (insertRes) {

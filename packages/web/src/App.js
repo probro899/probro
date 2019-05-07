@@ -1,22 +1,16 @@
 import React, { Component } from 'react';
-import add from '@probro/common';
-import SocketClient from './socket';
+import { Provider } from 'react-redux';
+import store from './store';
+import Home from './screens';
 
 class App extends Component {
   state ={};
 
-  componentDidMount() {
-    SocketClient('ws:localhost:4001');
-  }
-
   render() {
     return (
-      <div className="App">
-        this value return from common package
-        {
-        add(10, 100)
-          }
-      </div>
+      <Provider store={store}>
+        <Home />
+      </Provider>
     );
   }
 }

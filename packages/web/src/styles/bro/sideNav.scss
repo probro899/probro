@@ -1,0 +1,27 @@
+@import '../config.scss';
+.broWrapper {
+  display: flex;
+  margin-top: $navbarHeight;
+}
+.sideNav {
+  flex: 0.2;
+  padding: 50px 20px 0 50px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  .sideNavElement {
+    padding: 10px 10px 10px 10px;
+    align-self: stretch;
+    span {
+      font-size: 18px;
+      font-weight: 500;
+      color: $primary;
+    }
+    &:hover {
+      background-color: #757575;
+    }
+  }
+  .active {
+    background-color: #cee8f4;
+  }
+}

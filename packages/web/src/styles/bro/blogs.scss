@@ -1,0 +1,40 @@
+.blogs {
+  margin-top: $navbarHeight;
+  div[contenteditable]:focus {
+    outline: 0px solid transparent;
+  }
+  [contenteditable]:empty::before {
+    content: attr(datatext);
+    color: grey;
+  }
+  .blog-top {
+    padding: 10px;
+    text-align: center;
+    span {
+      font-size: 25px;
+      font-weight: 600;
+    }
+  }
+  .toolbar {
+    display: flex;
+    margin: 2px;
+    padding: 10px;
+    background-color: #DFDCDC;
+    justify-content: center;
+    button {
+      margin: 0px 3px 0px 3px;
+    }
+  }
+  .title {
+    margin: 10px;
+  }
+  .editor-container {
+    padding: 5px 10px 5px 10px;
+    #editor {
+      background-color: white;
+      font-size: 16px;
+      min-height: 500px;
+      padding: 10px;
+    } 
+  } 
+}
