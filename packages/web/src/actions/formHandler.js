@@ -15,7 +15,8 @@ export const updateFormValue = (schema, data) => (
   }
 );
 
-export const mainFormHandler = (schema) => {
+export const mainFormHandler = (schema, apis) => {
+  console.log('apis in main form handler', apis);
   return async (dispatch, getState) => {
     switch (schema) {
       case 'registerForm':
@@ -28,7 +29,7 @@ export const mainFormHandler = (schema) => {
         basicFormHandler(dispatch, getState);
         break;
       case 'additionalForm':
-        additionalFormHandler(dispatch, getState);
+        additionalFormHandler(dispatch, getState, apis);
         break;
       case 'advancedForm':
         advancedFormHandler(dispatch, getState);

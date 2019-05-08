@@ -32,7 +32,7 @@ class Form extends React.Component {
   state = {}
 
   render() {
-    const { data, schema } = this.props;
+    const { data, schema, apis } = this.props;
     const formKeys = Object.keys(data);
     const dataKeys = formKeys.filter((obj) => {
       return (

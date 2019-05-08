@@ -1,7 +1,7 @@
 import db from '../db';
 
 export default async function updateUserDetails(record, user) {
-  console.log(record, user);
+  console.log('update userDetails called', record, user);
   try {
     const result = await db.execute(async ({ findOne, update, insert }) => {
       const findOneRes = await findOne('UserDetail', { userId: record.userId });

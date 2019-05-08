@@ -3,23 +3,25 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Form } from '../../../common';
 import * as actions from '../../../actions';
+import client from '../../../socket';
 
-const detailForm = (activeTab, form) => {
+const detailForm = (activeTab, form, apis) => {
   switch (activeTab) {
     case 'basic':
-      return (<Form data={form.basicForm} schema="basicForm" />);
+      return (<Form data={form.basicForm} schema="basicForm" apis={apis} />);
     case 'additional':
-      return (<Form data={form.additionalForm} schema="additionalForm" />);
+      return (<Form data={form.additionalForm} schema="additionalForm" apis={apis} />);
     case 'advanced':
-      return (<Form data={form.advancedForm} schema="advancedForm" />);
+      return (<Form data={form.advancedForm} schema="advancedForm" apis={apis} />);
     default:
-      return ('hello');
+      return null;
   }
 };
 
 class Settings extends Component {
   state = {
     activeTab: 'basic',
+    apis: {},
   }
 
   componentWillMount() {
@@ -28,12 +30,17 @@ class Settings extends Component {
     // action from props dispatch and getstate are automatically passed.
   }
 
+  async componentDidMount() {
+    const apis = await client.scope('Mentee');
+    this.setState({ apis });
+  }
+
   handleClick = (name) => {
     this.setState({ activeTab: name });
   };
 
   render() {
-    const { activeTab } = this.state;
+    const { activeTab, apis } = this.state;
     const { form } = this.props;
     return (
       <div className="settings">
@@ -48,7 +55,7 @@ class Settings extends Component {
             <button type="button">Switch to Expert</button>
           </div>
         </div>
-        {detailForm(activeTab, form)}
+        {detailForm(activeTab, form, apis)}
       </div>
     );
   }

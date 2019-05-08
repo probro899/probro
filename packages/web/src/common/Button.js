@@ -9,6 +9,7 @@ const CustomButton = (props) => {
     mainFormHandler,
     schema,
     form,
+    apis
   } = props;
 
   return (
@@ -22,7 +23,7 @@ const CustomButton = (props) => {
         intent={Intent.PRIMARY}
         fill
         large
-        onClick={() => mainFormHandler(schema)}
+        onClick={() => mainFormHandler(schema, apis)}
         className={class_}
         disabled={form[schema].loading}
       />
