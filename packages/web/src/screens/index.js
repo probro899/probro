@@ -4,6 +4,7 @@ import HomePage from './home';
 import Login from './home/auth/login';
 import Registration from './home/auth/registration';
 import { BroHome, ClassManager } from './users/bro';
+import Forgot from './home/auth/forgot-password';
 import CreateBlog from './users/pro';
 
 export default () => (
@@ -15,6 +16,7 @@ export default () => (
       <Route exact path="/:id/me" component={BroHome} />
       <Route exact path="/write-blog/:id/me" component={CreateBlog} />
       <Route exact path="/class-work/:id/me" component={ClassManager} />
+      <Route exact path="/forgot-password" component={Forgot} />
     </div>
   </Router>
 );

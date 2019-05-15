@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import Register from './registration';
 
 class Registration extends Component {
@@ -10,6 +11,7 @@ class Registration extends Component {
         <div className="log-or-reg">
           <div className="reg-box-header">
             <p> Create a Proper Class Account </p>
+            <Link to="/login"><u>or login to your account</u></Link>
           </div>
           <Register />
         </div>

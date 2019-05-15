@@ -1,70 +1,91 @@
 import React from 'react';
-import { FormGroup } from '@blueprintjs/core';
-import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import * as actions from '../actions';
-import { keyToLabel } from '../config';
+import { FormGroup } from '@blueprintjs/core';
 import Input from './Input';
 import Button from './Button';
-import FileInput from './FileInput';
 
 const Element = (props) => {
-  const {
-    label,
-    type,
-    value,
-    schema,
-    form,
-  } = props;
-  switch (type) {
+  const { data } = props;
+  if (!data.fieldtype) {
+    return null;
+  }
+  switch (data.fieldtype) {
     case 'input':
-      return (<Input label_={keyToLabel[label]} value={value} schema={schema} {...props} />);
+      return (<Input {...props} />);
     case 'button':
-      return (<Button text={label} form={form} schema={schema} {...props} />);
-    case 'fileInput':
-      return (<FileInput label_={keyToLabel[label]} value={value} schema={schema} {...props} />);
+      return (<Button {...props} />);
     default:
-      return (<div>error</div>);
+      return null;
   }
 };
 
 class Form extends React.Component {
-  state = {}
+  state = {
+    error: null,
+    loading: false,
+    fields: {},
+  };
+
+  componentWillMount = () => {
+    const { data } = this.props;
+    const fields = data.filter((obj) => {
+      if (obj.fieldtype === 'input') {
+        return { [obj.id]: '' };
+      }
+    }).map((obj) => {
+      if (obj.fieldtype === 'input') {
+        return { [obj.id]: '' };
+      }
+    });
+    this.setState({
+      fields: { ...fields },
+    });
+  }
+
+  onChange = (key, value) => {
+    const { fields } = this.state;
+    this.setState({ fields: { ...fields, [key]: value } });
+  }
+
+  onSubmit = async () => {
+    const { callback } = this.props;
+    const { fields } = this.state;
+    this.setState({ loading: true });
+    const res = await callback(fields);
+    if (res.response === 200) {
+      this.setState({ loading: false, error: null });
+    } else {
+      this.setState({ loading: false, error: res.error });
+    }
+  }
 
   render() {
-    const { data, schema, apis } = this.props;
-    const formKeys = Object.keys(data);
-    const dataKeys = formKeys.filter((obj) => {
-      return (
-        (obj !== 'success' && obj !== 'loading' && obj !== 'error') ? obj : null
-      );
-    });
-    // const dataValues = Object.values(data);
+    const { data } = this.props;
+    const { fields } = this.state;
     return (
-      <FormGroup
-        helperText="Please fill the above form to update the details."
-        labelFor="text-input"
-        labelInfo="(required)"
-      >
-        {
-          dataKeys.map((obj, idx) => {
-            const type = 'input';
-            // obj === 'profilePicture' ? 'fileInput' : 'input';
-            return (
-              <Element key={idx} label={obj} type={type} schema={schema} value={obj} {...this.props} />
-            );
-          })
-        }
-        <Element label="Submit" type="button" schema={schema} {...this.props} />
-      </FormGroup>
+      <form>
+        <FormGroup>
+          {
+            data.map((obj, idx) => (
+              <Element
+                key={idx}
+                data={obj}
+                onChange={this.onChange}
+                onSubmit={this.onSubmit}
+                value={fields[obj.id]}
+                state={this.state}
+              />
+            ))
+          }
+        </FormGroup>
+      </form>
     );
   }
 }
 
 Form.propTypes = {
-  data: PropTypes.objectOf(PropTypes.any).isRequired,
-  schema: PropTypes.string.isRequired,
+  data: PropTypes.arrayOf(PropTypes.any).isRequired,
+  callback: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = state => state;
-export default connect(mapStateToProps, { ...actions })(Form);
+export default Form;

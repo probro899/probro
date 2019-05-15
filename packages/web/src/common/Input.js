@@ -1,21 +1,23 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { InputGroup, Icon, Label, Tooltip, Position } from '@blueprintjs/core';
-import { IconNames } from '@blueprintjs/icons';
 
-const customIcon = (iconName, handleLockClick, password) => {
-  if (iconName === 'Search') {
+const customIcon = (icon, handleLockClick, hidden) => {
+  if (icon.side === 'left') {
     return (
-      { leftIcon: <Icon icon={IconNames.SEARCH} iconSize={Icon.SIZE_LARGE} />, rightIcon: null }
+      {
+        leftIcon:
+  <Icon onClick={handleLockClick} iconName={icon.name} iconSize={Icon.SIZE_LARGE} />,
+        rightIcon: null,
+      }
     );
   }
-  if (iconName === 'Lock') {
+  if (icon.side === 'right') {
     const rightIcon = (
-      <Tooltip content={password ? 'Hide' : 'Show'} position={Position.RIGHT}>
+      <Tooltip content={hidden === true ? 'show' : 'hide'} position={Position.RIGHT}>
         <Icon
           style={{ marginTop: 3, marginRight: 5, color: '#757575' }}
-          icon={password ? IconNames.EYE_OFF : IconNames.EYE_OPEN}
+          icon={icon.name}
           onClick={handleLockClick}
           iconSize="20"
         />
@@ -30,57 +32,49 @@ const customIcon = (iconName, handleLockClick, password) => {
 
 class CustomInput extends React.Component {
   state = {
-    showPassword: true,
+    hidden: false,
+  }
+
+  componentWillMount = () => {
+    const { data } = this.props;
+    this.setState({ hidden: data.hidden });
   }
 
   handleLockClick = () => {
-    const { showPassword } = this.state;
-    this.setState({ showPassword: !showPassword });
+    const { hidden } = this.state;
+    this.setState({ hidden: !hidden });
   }
 
   render() {
-    const {
-      placeholder, iconName, class_, label_, value, form, schema, password, updateFormValue,
-    } = this.props;
-    const { showPassword } = this.state;
-    const { leftIcon, rightIcon } = customIcon(iconName, this.handleLockClick, showPassword);
+    const { hidden } = this.state;
+    const { data, onChange, value } = this.props;
+    let icons = {};
+    if (data.icon) {
+      icons = customIcon(data.icon, this.handleLockClick, hidden);
+    }
     return (
       <Label>
-        <span className="label-text">{label_}</span>
+        <span className="label-text">{data.name}</span>
         <InputGroup
-          // [value] is just a convention to use the name of the variable transfered.
-          onChange={e => updateFormValue(schema, { [value]: e.target.value })}
-          placeholder={placeholder}
-          value={form[schema][value]}
-          className={class_}
-          leftIcon={leftIcon}
-          rightElement={rightIcon}
-          type={password && showPassword ? 'password' : 'text'}
-          large
+          onChange={e => onChange(data.id, e.target.value)}
+          value={value}
+          type={hidden ? 'password' : 'text'}
+          leftIcon={icons.leftIcon}
+          rightElement={icons.rightIcon}
+          {...data}
         />
       </Label>
     );
   }
 }
 CustomInput.defaultProps = {
-  placeholder: '',
-  password: false,
-  iconName: null,
-  updateFormValue: null,
-  label_: null,
-  class_: 'input',
-};
-CustomInput.propTypes = {
-  placeholder: PropTypes.string,
-  iconName: PropTypes.string,
-  class_: PropTypes.string,
-  schema: PropTypes.string.isRequired,
-  updateFormValue: PropTypes.func,
-  label_: PropTypes.string,
-  password: PropTypes.bool,
-  value: PropTypes.string.isRequired,
-  form: PropTypes.objectOf(PropTypes.any).isRequired,
+  value: '',
 };
 
-const mapStateToProps = (state, ownprops) => ({ ...state, ...ownprops });
-export default connect(mapStateToProps)(CustomInput);
+CustomInput.propTypes = {
+  onChange: PropTypes.func.isRequired,
+  value: PropTypes.string,
+  data: PropTypes.objectOf(PropTypes.any).isRequired,
+};
+
+export default CustomInput;

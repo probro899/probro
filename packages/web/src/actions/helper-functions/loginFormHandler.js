@@ -15,7 +15,6 @@ export default async (dispatch, getState) => {
     const { data } = res;
     if (res.status === 200 && data.token) {
       connect(data);
-      sessionStorage.setItem('SESSION_ID', data.token);
       dispatch(updateFormValue('loginForm', {
         loading: false,
         error: null,
