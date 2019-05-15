@@ -1,8 +1,10 @@
+import express from 'express';
+import path from 'path';
 import login from './request-handler/login';
+import resetPassword from './request-handler/resetPassword';
+import forgotPassword from './request-handler/forgotPassword';
 import userRegistration from './request-handler/userRegistration';
-import userVerification from './request-handler/userVerification';
-import updateUserDetails from './request-handler/updateUserDetails';
-import fetchInitialData from './request-handler/fetchInitialData';
+import emailVerification from './request-handler/emailVerification';
 
 export default function (app) {
   app.use((req, res, next) => {
@@ -12,8 +14,13 @@ export default function (app) {
   });
 
   app.post('/auth/login', login);
-  app.post('/auth/verification', userVerification);
+  app.get('/auth/reset', resetPassword);
+  app.get('/auth/forgot', forgotPassword);
+  app.get('/auth/email-verification', emailVerification);
   app.post('/auth/user-registration', userRegistration);
-  app.post('/web/update-user-details', updateUserDetails);
-  app.get('/web/fetch-initial-data', fetchInitialData);
+
+  app.use(express.static(path.resolve(__dirname, '..', 'public')));
+  app.get('/reset/:token', (req, res) => {
+    res.sendFile(path.resolve(__dirname, '..', 'public', 'index.html'));
+  });
 }

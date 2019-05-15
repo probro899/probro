@@ -37,6 +37,7 @@ export default async (dispatch, getState) => {
         email,
         password,
       });
+    console.log('resgistration response', res.data);
     if (res.status === 200) {
       dispatch(updateFormValue('registerForm',
         {

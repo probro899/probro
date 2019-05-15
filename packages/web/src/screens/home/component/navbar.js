@@ -8,7 +8,6 @@ import client from '../../../socket';
 
 const profileIcon = require('../../../assets/imageUploadIcon.png');
 
-
 const DropDownMenu = (onclick, apis) => {
   return (
     <Menu>
@@ -36,10 +35,10 @@ class Navbar extends Component {
     mainNav: 'properClass',
   };
 
-  async componentDidMount() {
-    const apis = await client.scope('Mentee');
-    this.setState({ apis });
-  }
+  // async componentDidMount() {
+  //   const apis = await client.scope('Mentee');
+  //   this.setState({ apis });
+  // }
 
   onClick = (value) => {
     this.setState({ mainNav: value });

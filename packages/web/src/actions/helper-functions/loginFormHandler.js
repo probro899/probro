@@ -2,6 +2,7 @@ import axios from 'axios';
 import { updateFormValue } from '../index';
 import { ENDPOINT } from '../../config';
 import connect from '../../socket/connect';
+import { updateMainValue } from '../mainHandler';
 
 export default async (dispatch, getState) => {
   dispatch(updateFormValue('loginForm', { loading: true, error: null, success: null }));

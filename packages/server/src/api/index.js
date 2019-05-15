@@ -2,7 +2,8 @@ import { createScope } from '../socket';
 import userRegistration from './userRegistration';
 import logout from './logout';
 import updateUserDetails from './updateUserDetails';
-import switchUser from './switchUser';
+import initUser from './initUser';
+import findBoardDetail from './findBoradDetail';
 
 const mentor = createScope('Mentor', () => {
 
@@ -18,4 +19,4 @@ mentor(updateUserDetails);
 mentee(logout);
 mentee(updateUserDetails);
 
-export { updateUserDetails, logout, switchUser, userRegistration };
+export { updateUserDetails, logout, initUser, userRegistration, findBoardDetail };
