@@ -19,15 +19,16 @@ class HomePage extends Component {
     updateFormValue('loginForm', { success: false });
   }
 
-  async componentDidMount() {
-    const apis = await client.scope('Mentee');
-    console.log('apis for this scope', apis);
-  }
+  // async componentDidMount() {
+  //   const apis = await client.scope('Mentee');
+  //   // console.log('apis for this scope', apis);
+  // }
 
   render() {
     const { main } = this.props;
     const { error } = this.state;
     let activeBar;
+    console.log('activeNav value', main.activeNav);
     switch (main.activeNav.name) {
       case ('Profile'):
         activeBar = <Profile />;

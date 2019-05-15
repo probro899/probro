@@ -9,7 +9,6 @@ import client from '../../../socket';
 
 const profileIcon = require('../../../assets/imageUploadIcon.png');
 
-
 const dropDownMenu = (props, onclick, apis) => {
   const { main } = props;
   const active = main.activeNav.name === 'Profile';
@@ -40,10 +39,10 @@ dropDownMenu.propTypes = {
 class Navbar extends Component {
   state = { showProfile: false, apis: {} };
 
-  async componentDidMount() {
-    const apis = await client.scope('Mentee');
-    this.setState({ apis });
-  }
+  // async componentDidMount() {
+  //   const apis = await client.scope('Mentee');
+  //   this.setState({ apis });
+  // }
 
   onClick = (value) => {
     const { updateMainValue } = this.props;
@@ -61,9 +60,11 @@ class Navbar extends Component {
   render() {
     const { main } = this.props;
     const { showProfile, apis } = this.state;
-    console.log('api available', apis);
+    console.log(main);
+    // console.log('api available', apis);
     // eslint-disable-next-line no-undef
     const id = sessionStorage.getItem('SESSION_ID');
+    console.log('showprofle and id', showProfile, id);
     // const id = 'Abc4343kasdklfjas';
     return (
       <div className="navbar">
@@ -153,7 +154,7 @@ class Navbar extends Component {
             )
           }
         </div>
-        {showProfile && id && <Redirect push to={`/${id}/me`} />}
+        { showProfile && id && <Redirect push to={`/${id}/me`} />}
       </div>
     );
   }

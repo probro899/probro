@@ -6,7 +6,7 @@ import authExpress from './express';
 import { init as dbinit } from './db';
 import { start } from './socket';
 import validateToken from './auth/validateToken';
-import { switchUser } from './api';
+import { initUser } from './api';
 
 const port = process.env.PORT || 4001;
 const app = express();
@@ -29,7 +29,7 @@ run(async (nodeApp) => {
 
         // set the user in session
         session.set('user', user);
-        // await switchUser({ session }, 1);
+        await initUser({ session }, user.id);
         // send data to client loginSuccess
         session.dispatch({ type: 'LOGIN', payload: user });
 

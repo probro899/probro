@@ -2,6 +2,7 @@ import axios from 'axios';
 import { updateFormValue } from '../index';
 import { ENDPOINT } from '../../config';
 import connect from '../../socket/connect';
+import { updateMainValue } from '../mainHandler';
 
 export default async (dispatch, getState) => {
   dispatch(updateFormValue('loginForm', { loading: true, error: null, success: null }));
@@ -13,9 +14,11 @@ export default async (dispatch, getState) => {
   try {
     const res = await axios.post(`${ENDPOINT}/auth/login`, { email, password });
     const { data } = res;
+    console.log(data);
     if (res.status === 200 && data.token) {
-      connect(data);
+      // connect(data);
       sessionStorage.setItem('SESSION_ID', data.token);
+      // dispatch(updateMainValue('activeNav', { name: 'Profile' }));
       dispatch(updateFormValue('loginForm', {
         loading: false,
         error: null,

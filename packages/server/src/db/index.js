@@ -5,8 +5,12 @@ import insert from './insert';
 import find from './find';
 import findOne from './findOne';
 import update from './update';
+import deleteQuery from './deleteQuery';
+import exec from './exec';
+import query from './query';
+import upsert from './upsert';
 
-export const dbPromise = sqlite.open('redirector.sqlite', { Promise });
+export const dbPromise = sqlite.open('properclass.sqlite', { Promise });
 
 let dbInstance = null;
 const getInstance = async () => {
@@ -21,6 +25,10 @@ const getInstance = async () => {
     find: find.bind(null, db),
     findOne: findOne.bind(null, db),
     update: update.bind(null, db),
+    deleteQuery: deleteQuery.bind(null, db),
+    exec: exec.bind(null, db),
+    query: query.bind(null, db),
+    upsert: upsert.bind(null, db),
   };
   return dbInstance;
 };

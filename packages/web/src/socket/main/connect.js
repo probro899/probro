@@ -10,6 +10,7 @@ const noop = () => { };
 const connect = (url, store) => {
   // console.log('connect socket is called', url, store);
 
+  // eslint-disable-next-line
   const Socket = WebSocket;
   const newtwork = null;
 
@@ -124,7 +125,7 @@ const connect = (url, store) => {
 
   // Handle Remote procedure call response
   parser.onRpcResponse = (tracker, success, result) => {
-    console.log('onRpc resposnse', tracker,success, result);
+    console.log('onRpc resposnse', tracker, success, result);
     const rpcTracker = slicedToArray(rpcs[tracker], 2);
     const resolve = rpcTracker[0];
     const reject = rpcTracker[1];

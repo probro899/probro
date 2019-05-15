@@ -1,16 +1,16 @@
 import { userRegistration } from '../../api';
 
 export default async (req, res) => {
-  console.log('userRegisteration handler called', req.body);
   try {
     const resFinal = await userRegistration(req.body);
+    console.log('final response', resFinal);
     if (resFinal) {
-      res.statusCode = 200;
-      res.send(resFinal);
+      res.status = 200;
+      res.send(JSON.stringify(resFinal));
     }
   } catch (e) {
-    res.statusCode = 201;
-    res.send(e);
+    res.status = 201;
+    res.send(JSON.stringify(e.message));
     throw e;
   }
 };

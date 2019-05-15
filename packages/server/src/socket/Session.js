@@ -118,7 +118,6 @@ class Session {
       if (manifest) {
         return this.send(PKT_SCOPE_RESPONSE(tracker, true, Object.keys(scope.apis)));
       }
-
       return this.send(PKT_SCOPE_RESPONSE(tracker, true, null));
     };
 
