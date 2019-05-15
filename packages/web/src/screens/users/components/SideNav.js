@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import { Icon } from '@blueprintjs/core';
-import { connect } from 'react-redux';
 import { IconNames } from '@blueprintjs/icons';
 import PropTypes from 'prop-types';
-import * as actions from '../../../actions';
 
 const NavElement = (props) => {
   const {
@@ -42,9 +40,9 @@ NavElement.propTypes = {
 class SideNav extends Component {
   state = {}
 
-  onClick = (_name) => {
-    const { updateMainValue } = this.props;
-    updateMainValue('activeNav', { name: _name });
+  onClick = (name) => {
+    const { changeSideNav } = this.props;
+    changeSideNav(name);
   }
 
   // jus to handle the eslint error we have to pass a keyboard event handler for div
@@ -60,7 +58,7 @@ class SideNav extends Component {
       { iconName: 'COG', name: 'Settings' },
       { iconName: 'PARAGRAPH', name: 'Blogs' },
     ];
-    const { main } = this.props;
+    const { activeNav } = this.props;
     return (
       <div className="sideNav">
         {
@@ -73,7 +71,7 @@ class SideNav extends Component {
                 name={obj.name}
                 key={obj.name}
                 iconName={obj.iconName}
-                active={main.activeNav.name === obj.name ? true: false}
+                active={activeNav === obj.name ? true: false}
               />
             );
           })
@@ -84,10 +82,8 @@ class SideNav extends Component {
 }
 
 SideNav.propTypes = {
-  updateMainValue: PropTypes.func.isRequired,
-  main: PropTypes.objectOf(PropTypes.any).isRequired,
+  changeSideNav: PropTypes.func.isRequired,
+  activeNav: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
-const mapStateToProps = state => state;
-
-export default connect(mapStateToProps, { ...actions })(SideNav);
+export default SideNav;

@@ -1,22 +1,19 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Link, Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { Icon, Menu, MenuItem, Popover, Position, Intent } from '@blueprintjs/core';
 import { IconNames } from '@blueprintjs/icons';
-import * as actions from '../../../actions';
 import client from '../../../socket';
 
 const profileIcon = require('../../../assets/imageUploadIcon.png');
 
-const dropDownMenu = (props, onclick, apis) => {
-  const { main } = props;
-  const active = main.activeNav.name === 'Profile';
+const DropDownMenu = (onclick, apis) => {
   return (
     <Menu>
       <MenuItem
         icon="user"
-        active={active}
+        active
         intent={Intent.PRIMARY}
         text="My Profile"
         onClick={onclick}
@@ -31,13 +28,12 @@ const dropDownMenu = (props, onclick, apis) => {
   );
 };
 
-dropDownMenu.propTypes = {
-  main: PropTypes.objectOf(PropTypes.any).isRequired,
-  mainHandler: PropTypes.func.isRequired,
-};
-
 class Navbar extends Component {
-  state = { showProfile: false, apis: {} };
+  state = {
+    apis: {},
+    // this is to indicate which navigation item is active at the moment
+    mainNav: 'properClass',
+  };
 
   // async componentDidMount() {
   //   const apis = await client.scope('Mentee');
@@ -45,33 +41,22 @@ class Navbar extends Component {
   // }
 
   onClick = (value) => {
-    const { updateMainValue } = this.props;
-    updateMainValue('mainNav', { active: value });
+    this.setState({ mainNav: value });
   };
 
   onClickHandler = () => {
-    const { updateMainValue } = this.props;
-    updateMainValue('activeNav', { name: 'Profile' });
-    this.setState({
-      showProfile: true,
-    });
+    console.log('onclick handler');
   }
 
   render() {
-    const { main } = this.props;
-    const { showProfile, apis } = this.state;
-    console.log(main);
-    // console.log('api available', apis);
-    // eslint-disable-next-line no-undef
-    const id = sessionStorage.getItem('SESSION_ID');
-    console.log('showprofle and id', showProfile, id);
-    // const id = 'Abc4343kasdklfjas';
+    const { account } = this.props;
+    const { apis, mainNav } = this.state;
     return (
       <div className="navbar">
         <div className="navbar-left">
           <Link
             to="/"
-            className={main.mainNav.active === 'properClass' ? 'active' : null}
+            className={mainNav === 'properClass' ? 'active' : null}
             onClick={() => this.onClick('properClass')}
           >
             <div className="navbar-item">
@@ -82,7 +67,7 @@ class Navbar extends Component {
           </Link>
           <Link
             to="#"
-            className={main.mainNav.active === 'blogs' ? 'active' : null}
+            className={mainNav === 'blogs' ? 'active' : null}
             onClick={() => this.onClick('blogs')}
           >
             <div className="navbar-item">
@@ -94,7 +79,7 @@ class Navbar extends Component {
           </Link>
           <Link
             to="#"
-            className={main.mainNav.active === 'help' ? 'active' : null}
+            className={mainNav === 'help' ? 'active' : null}
             onClick={() => this.onClick('help')}
           >
             <div className="navbar-item">
@@ -108,7 +93,7 @@ class Navbar extends Component {
         <div className="navbar-right">
           <Link
             to="#"
-            className={main.mainNav.active === 'tour' ? 'active' : null}
+            className={mainNav === 'tour' ? 'active' : null}
             onClick={() => this.onClick('tour')}
           >
             <div className="navbar-item">
@@ -118,15 +103,15 @@ class Navbar extends Component {
               </span>
             </div>
           </Link>
-          { id
+          { account.sessionId
             ? (
               <Link
                 to="#"
-                className={main.mainNav.active === 'profileIcon' ? 'active' : null}
+                className={mainNav === 'profileIcon' ? 'active' : null}
                 onClick={() => this.onClick('profileIcon')}
               >
                 <Popover
-                  content={dropDownMenu(this.props, this.onClickHandler, apis)}
+                  content={DropDownMenu(this.onClickHandler, apis)}
                   minimal
                   position={Position.BOTTOM}
                 >
@@ -144,7 +129,7 @@ class Navbar extends Component {
             : (
               <Link
                 to="/login"
-                className={main.mainNav.active === 'login' ? 'active' : null}
+                className={mainNav === 'login' ? 'active' : null}
                 onClick={() => this.onClick('login')}
               >
                 <div className="navbar-item">
@@ -154,16 +139,14 @@ class Navbar extends Component {
             )
           }
         </div>
-        { showProfile && id && <Redirect push to={`/${id}/me`} />}
       </div>
     );
   }
 }
 
 Navbar.propTypes = {
-  main: PropTypes.objectOf(PropTypes.any).isRequired,
-  updateMainValue: PropTypes.func.isRequired,
+  account: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 const mapStateToProps = (state, ownprops) => ({ ...state, ...ownprops });
-export default connect(mapStateToProps, { ...actions })(Navbar);
+export default connect(mapStateToProps)(Navbar);

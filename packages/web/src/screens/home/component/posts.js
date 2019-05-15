@@ -18,7 +18,8 @@ const Posts = (props) => {
           <img src={post.image} alt={post.id} />
         </div>
       </div>
-    </Card>);
+    </Card>
+  );
 };
 Posts.propTypes = {
   post: PropTypes.objectOf(PropTypes.any).isRequired,

@@ -46,7 +46,7 @@ class Profile extends Component {
             })
           }
         </div>
-        {!main.user.token && <Redirect push to="/" />}
+        {/* {!main.user.token && <Redirect push to="/" />} */}
       </div>
     );
   }

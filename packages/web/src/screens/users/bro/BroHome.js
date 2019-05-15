@@ -4,32 +4,30 @@ import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 import { Navbar } from '../../home/component/index';
 import { SideNav, Profile, Blogs, Classes, Settings } from '../components';
-import * as actions from '../../../actions';
-import client from '../../../socket';
 
 class HomePage extends Component {
-  state = {};
+  state = {
+    activeNav: 'Profile',
+  };
 
   componentWillMount() {
-    const { updateFormValue, match } = this.props;
+    const { account, match } = this.props;
     // this is to prevent hitting people
-    if (match.params.id !== sessionStorage.getItem('SESSION_ID')) {
+    if (match.params.id !== account.sessionId) {
       this.setState({ error: true });
     }
-    updateFormValue('loginForm', { success: false });
   }
 
-  // async componentDidMount() {
-  //   const apis = await client.scope('Mentee');
-  //   // console.log('apis for this scope', apis);
-  // }
+  changeSideNav = (name) => {
+    this.setState({
+      activeNav: name,
+    });
+  }
 
   render() {
-    const { main } = this.props;
-    const { error } = this.state;
+    const { activeNav, error } = this.state;
     let activeBar;
-    console.log('activeNav value', main.activeNav);
-    switch (main.activeNav.name) {
+    switch (activeNav) {
       case ('Profile'):
         activeBar = <Profile />;
         break;
@@ -51,7 +49,7 @@ class HomePage extends Component {
           <div>
             <Navbar />
             <div className="broWrapper">
-              <SideNav />
+              <SideNav activeNav={activeNav} changeSideNav={this.changeSideNav} />
               {activeBar}
             </div>
           </div>
@@ -61,10 +59,9 @@ class HomePage extends Component {
 }
 
 HomePage.propTypes = {
-  updateFormValue: PropTypes.func.isRequired,
-  main: PropTypes.objectOf(PropTypes.any).isRequired,
+  account: PropTypes.objectOf(PropTypes.any).isRequired,
   match: PropTypes.objectOf(PropTypes.any).isRequired,
 };
-const mapStateToProps = state => state;
 
-export default connect(mapStateToProps, { ...actions })(HomePage);
+const mapStateToProps = (state, ownprops) => ({ ...state, ...ownprops });
+export default connect(mapStateToProps)(HomePage);

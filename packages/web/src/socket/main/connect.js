@@ -81,11 +81,11 @@ const connect = (url, store) => {
       rpcs = {};
       scopeCalls = {};
       console.log('rejections', rejections);
-      rejections.forEach((ref) => {
-        const ref2 = slicedToArray(ref, 2);
-        const reject = ref2[1];
-        reject(new Error('Connection terminated'));
-      });
+      // rejections.forEach((ref) => {
+      //   const ref2 = slicedToArray(ref, 2);
+      //   const reject = ref2[1];
+      //   reject(new Error('Connection terminated'));
+      // });
 
       // Clear all the scope manifests
       scopeManifests = {};

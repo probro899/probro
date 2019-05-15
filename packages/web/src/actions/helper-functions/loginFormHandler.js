@@ -14,11 +14,8 @@ export default async (dispatch, getState) => {
   try {
     const res = await axios.post(`${ENDPOINT}/auth/login`, { email, password });
     const { data } = res;
-    console.log(data);
     if (res.status === 200 && data.token) {
-      // connect(data);
-      sessionStorage.setItem('SESSION_ID', data.token);
-      // dispatch(updateMainValue('activeNav', { name: 'Profile' }));
+      connect(data);
       dispatch(updateFormValue('loginForm', {
         loading: false,
         error: null,

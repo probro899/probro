@@ -1,22 +1,30 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import Log from './login';
 
 class Login extends Component {
   state = {}
 
   render() {
+    const { account } = this.props;
+    const id = account.sessionId;
     return (
       <div className="o-log-or-reg">
         <div className="log-or-reg">
           <div className="reg-box-header">
             <p>Login to Proper Class</p>
+            <Link to="/register"><u>or create an account</u></Link>
           </div>
-          <Log />
+          {/* just trying to redirect incase of logged in */}
+          {
+            account.sessionId ? <Redirect push to={`/${id}/me`} /> : <Log />
+          }
           <div className="footer">
             <p>
-              Do not have an account?
-              <Link to="/register"> Register</Link>
+              <br />
+              <Link to="/forgot-password"><u>Forgot your password?</u></Link>
             </p>
           </div>
         </div>
@@ -25,4 +33,9 @@ class Login extends Component {
   }
 }
 
-export default Login;
+Login.propTypes = {
+  account: PropTypes.objectOf(PropTypes.any).isRequired,
+};
+
+const mapStateToProps = (state, ownprops) => ({ ...state, ...ownprops });
+export default connect(mapStateToProps)(Login);
