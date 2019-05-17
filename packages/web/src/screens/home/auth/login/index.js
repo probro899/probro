@@ -9,7 +9,6 @@ class Login extends Component {
 
   render() {
     const { account } = this.props;
-    const id = account.sessionId;
     return (
       <div className="o-log-or-reg">
         <div className="log-or-reg">
@@ -19,7 +18,7 @@ class Login extends Component {
           </div>
           {/* just trying to redirect incase of logged in */}
           {
-            account.sessionId ? <Redirect push to={`/${id}/me`} /> : <Log />
+            account.online ? <Redirect push to={`/${account.sessionId}/me`} /> : <Log />
           }
           <div className="footer">
             <p>

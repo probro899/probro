@@ -26,6 +26,7 @@ export default function schemaReducer(...schemes) {
           [schema]: action.payload.reduce((res, item) => {
             res.byId[item.id] = item;
             res.allIds.push(item.id);
+            return res;
           }, { byId: {}, allIds: [] }),
         };
 
