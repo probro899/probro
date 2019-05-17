@@ -27,7 +27,7 @@ class HomePage extends Component {
   render() {
     const { activeNav, error } = this.state;
     let activeBar;
-    const { account } = this.state;
+    const { account } = this.props;
     switch (activeNav) {
       case ('Profile'):
         activeBar = <Profile />;

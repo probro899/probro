@@ -21,11 +21,14 @@ export default function schemaReducer(...schemes) {
 
       // Initialise the reducer with initial value
       case schemaRedux.init.TYPE:
+        console.log('schema initcalled', action);
         return {
           ...state,
           [schema]: action.payload.reduce((res, item) => {
+            console.log(res, item);
             res.byId[item.id] = item;
             res.allIds.push(item.id);
+            return res;
           }, { byId: {}, allIds: [] }),
         };
 
