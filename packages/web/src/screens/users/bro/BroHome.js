@@ -27,6 +27,7 @@ class HomePage extends Component {
   render() {
     const { activeNav, error } = this.state;
     let activeBar;
+    const { account } = this.state;
     switch (activeNav) {
       case ('Profile'):
         activeBar = <Profile />;
@@ -47,7 +48,8 @@ class HomePage extends Component {
       error ? <Redirect push to="/login" />
         : (
           <div>
-            <Navbar />
+            {/* redirect to home page if not logged in  */}
+            {account ? <Navbar /> : <Redirect to="/" />}
             <div className="broWrapper">
               <SideNav activeNav={activeNav} changeSideNav={this.changeSideNav} />
               {activeBar}

@@ -4,13 +4,13 @@ import { InputGroup, Icon, Label, Tooltip, Position } from '@blueprintjs/core';
 
 const customIcon = (icon, handleLockClick, hidden) => {
   if (icon.side === 'left') {
-    return (
-      {
-        leftIcon:
-  <Icon onClick={handleLockClick} iconName={icon.name} iconSize={Icon.SIZE_LARGE} />,
-        rightIcon: null,
-      }
+    const leftIcon = (
+      <Icon onClick={handleLockClick} icon={icon.name} iconSize={Icon.SIZE_LARGE} />
     );
+    return ({
+      leftIcon,
+      rightIcon: null,
+    });
   }
   if (icon.side === 'right') {
     const rightIcon = (
