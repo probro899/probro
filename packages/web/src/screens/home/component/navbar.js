@@ -45,7 +45,7 @@ class Navbar extends Component {
   };
 
   onClickHandler = () => {
-    console.log('onclick handler');
+    console.log('this is to be handled');
   }
 
   render() {

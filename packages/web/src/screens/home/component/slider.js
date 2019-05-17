@@ -4,10 +4,11 @@ import { Input } from '../../../common';
 const elems = ['red', 'blue', 'yellow', 'green'];
 let background = 1;
 class Slider extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { animationName: [], animationIndex: 0 };
-  }
+  state = {
+    animationName: [],
+    animationIndex: 0,
+    search: '',
+  };
 
   componentWillMount() {
     const styleSheet = document.styleSheets[0]; //eslint-disable-line
@@ -61,18 +62,31 @@ class Slider extends Component {
     }
   }
 
+  searchChange = (id, value) => {
+    this.setState({ [id]: value });
+  }
+
   render() {
-    const { animationName, animationIndex } = this.state;
+    const { animationName, animationIndex, search } = this.state;
     const styles = {
       animationName: animationName[animationIndex],
       animationDuration: '3s',
       backgroundColor: elems[background],
     };
+    const data = {
+      id: 'search',
+      fieldtype: 'input',
+      placeholder: 'Eg, ........',
+      icon: {
+        side: 'left',
+        name: 'search',
+      },
+    };
     return (
       <div className="slider-container">
         <div className="slider" style={styles} />
         <div className="search-box-container">
-          <Input placeholder="Enter a Keyword" iconName="Search" class_="f-element-class" value="" schema="registerForm" />
+          <Input data={data} value={search} onChange={this.searchChange} />
         </div>
       </div>
     );
