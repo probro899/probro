@@ -1,13 +1,31 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import * as actions from '../../../actions';
 import { Column, NewColumn, TaskOverlay } from '../../../common/ClassComponents';
 import { Navbar } from '../../home/component';
+import client from '../../../socket';
 
 
 class Classes extends Component {
-  state = {};
+  state = {
+    // true if the id in the url doesn't match
+    redirectionError: false,
+    api: {},
+  };
+
+  async componentWillMount() {
+    const { match, account } = this.props;
+    const api = await client.scope('Mentee');
+    // checking if the user's sessionid is real
+    if (match.params.id !== account.sessionId) {
+      this.setState({
+        redirectionError: true,
+        api,
+      });
+    }
+  }
 
   onDragEnd = (result) => {
     const { source, destination, draggableId, type } = result;
@@ -57,8 +75,10 @@ class Classes extends Component {
   render() {
     const { _class } = this.props;
     const { tasks, columns, columnOrder } = _class;
+    const { redirectionError } = this.state;
     return (
       <div>
+        {redirectionError && <Redirect to="/" />}
         <Navbar />
         <div
           className="classWrapper"

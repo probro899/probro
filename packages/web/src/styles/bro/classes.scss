@@ -2,8 +2,54 @@
 .classes {
   display: flex;
   flex: 0.8;
-  align-items: center;
   flex-direction: column;
+  padding: 10px;
+  .header {
+    font-size: 25px;
+    font-weight: 500px;
+    padding: 10px;
+  }
+  .content-list {
+    padding: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    .content-link {
+      margin: 10px;
+      min-height: 150px;
+      min-width: 200px;
+      display: flex;
+      cursor: pointer;
+      background-color: lightgray;
+      text-decoration: none;
+      -webkit-box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.56);
+      -moz-box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.56);
+      box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.56);
+      border-radius: 5px;
+      -moz-border-radius: 5px;
+      -webkit-border-radius: 5px;
+      .class-repr {
+        border-radius: 5px 0px 0px 5px;
+        -moz-border-radius: 5px 0px 0px 5px;
+        -webkit-border-radius: 5px 0px 0px 5px;
+        display: flex;
+        flex: 0.4;
+        background: red;
+        align-items: center;
+        text-align: center;
+        span {
+          color: white;
+          font-size: 20px;
+        }
+      }
+      .class-detail {
+        border-radius: 0px 5px 5px 0px;
+        -moz-border-radius: 0px 5px 5px 0px;
+        -webkit-border-radius: 0px 5px 5px 0px;
+        flex: 0.6;
+        background: white;
+      }
+    }
+  }
 }
 
 //styling the classManager component. 

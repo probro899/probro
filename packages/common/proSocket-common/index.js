@@ -17,6 +17,7 @@ const METHOD_MAPS = {
 };
 
 export function PKT_RPC_REQUEST(tracker, scope, api, args) {
+  console.log('args in common', args);
   return JSON.stringify([TYPE_RPC_REQUEST, tracker, scope, api, args]);
 }
 

@@ -29,13 +29,14 @@ run(async (nodeApp) => {
 
         // set the user in session
         session.set('user', user);
-        // await initUser({ session }, user.id);
+        await initUser.call({ session }, user.id);
         // send data to client loginSuccess
         session.dispatch({ type: 'LOGIN', payload: user });
 
         // return socket to evrything is ok
         return true;
       } catch (err) {
+        console.log('error', err);
         session.dispatch({ type: 'LOGOUT' });
         session.emit('logout');
 

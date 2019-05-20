@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import * as actions from '../../../actions';
 import { FileInput } from '../../../common';
@@ -10,19 +9,18 @@ const file = require('../../../assets/imageUploadIcon.png');
 class Profile extends Component {
   state = {};
 
-  componentWillMount() {
-    const { mainHandler } = this.props;
-    mainHandler('user');
-  }
-
   onUploadImage = () => {
-    const { mainHandler } = this.props;
-    mainHandler('updateProfilePicture');
+    // this is to be handled
   };
 
   render() {
-    console.log('Main value in props', this.props);
-    const { main, updateMainValue } = this.props;
+    const { account, database } = this.props;
+    let details = {};
+    try {
+      details = database.User.byId[account.user.id];
+    } catch (e) {
+      console.log();
+    }
     const userAttributes = [
       { firstName: 'First Name' },
       { lastName: 'Last Name' },
@@ -32,7 +30,7 @@ class Profile extends Component {
       <div className="profile">
         <div className="profilePic">
           <img src={file} alt="profile of the user" />
-          <FileInput schema="user" field="profilePicture" _action={updateMainValue} lastAction={this.onUploadImage} {...this.props} />
+          <FileInput />
         </div>
         <div className="profileDetails">
           {
@@ -40,22 +38,20 @@ class Profile extends Component {
               return (
                 <div className="detailElement" key={Object.keys(obj)[0]}>
                   <span style={{ fontSize: 18, color: 'brown' }}>{Object.values(obj)[0]}</span>
-                  <span style={{ fontSize: 17 }}>{main.user[Object.keys(obj)[0]]}</span>
+                  <span style={{ fontSize: 17 }}>{details[Object.keys(obj)[0]]}</span>
                 </div>
               );
             })
           }
         </div>
-        {/* {!main.user.token && <Redirect push to="/" />} */}
       </div>
     );
   }
 }
 
 Profile.propTypes = {
-  main: PropTypes.objectOf(PropTypes.any).isRequired,
-  updateMainValue: PropTypes.func.isRequired,
-  mainHandler: PropTypes.func.isRequired,
+  account: PropTypes.objectOf(PropTypes.any).isRequired,
+  database: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 const mapStateToProps = state => state;

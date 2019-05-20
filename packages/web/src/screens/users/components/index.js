@@ -1,7 +1,7 @@
 import SideNav from './SideNav';
 import Profile from './Profile';
-import Classes from './Classes';
-import Settings from './Settings';
-import Blogs from './Blogs';
+import Class from './Class';
+import Setting from './Setting';
+import Blog from './Blog';
 
-export { SideNav, Classes, Settings, Blogs, Profile };
+export { SideNav, Class, Setting, Blog, Profile };

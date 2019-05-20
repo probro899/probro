@@ -30,15 +30,18 @@ class Form extends React.Component {
     const { data } = this.props;
     const fields = data.filter((obj) => {
       if (obj.fieldtype === 'input') {
-        return { [obj.id]: '' };
+        return obj;
       }
     }).map((obj) => {
       if (obj.fieldtype === 'input') {
         return { [obj.id]: '' };
       }
-    });
+    }).reduce((obj, e) => {
+      obj[Object.keys(e)[0]] = '';
+      return obj;
+    }, {});
     this.setState({
-      fields: { ...fields },
+      fields,
     });
   }
 

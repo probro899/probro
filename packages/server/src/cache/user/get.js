@@ -1,6 +1,6 @@
 import users from './cache';
-import db from '../../db';
 import { findBoardDetail } from '../../api';
+import db from '../../db';
 
 export default async function get(id) {
   const res = users.get(id);
@@ -8,11 +8,11 @@ export default async function get(id) {
     return res;
   }
 
-  const userData = await db.execute(async ({ findOne, find }) => {
+  const userData = await db.execute(async ({ find }) => {
 
-    const user = await findOne('User', { id });
+    const user = await find('User', { id });
 
-    const userDetail = await findOne('UserDetail', { userId: id });
+    const userDetail = await find('UserDetail', { userId: id });
 
     const board = await find('Board', { userId: id });
 

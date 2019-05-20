@@ -56,7 +56,7 @@ class SideNav extends Component {
     const navElements = [{ iconName: 'PERSON', name: 'Profile' },
       { iconName: 'HOME', name: 'Classes' },
       { iconName: 'COG', name: 'Settings' },
-      { iconName: 'PARAGRAPH', name: 'Blogs' },
+      { iconName: 'PARAGRAPH', name: 'Blog' },
     ];
     const { activeNav } = this.props;
     return (
@@ -83,7 +83,7 @@ class SideNav extends Component {
 
 SideNav.propTypes = {
   changeSideNav: PropTypes.func.isRequired,
-  activeNav: PropTypes.objectOf(PropTypes.any).isRequired,
+  activeNav: PropTypes.string.isRequired,
 };
 
 export default SideNav;
