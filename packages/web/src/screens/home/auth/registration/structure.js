@@ -6,6 +6,12 @@ export default [
     placeholder: '',
   },
   {
+    id: 'middleName',
+    fieldtype: 'input',
+    name: 'Middle Name',
+    placeholder: '',
+  },
+  {
     id: 'lastName',
     fieldtype: 'input',
     name: 'Last Name',

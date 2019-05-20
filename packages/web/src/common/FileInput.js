@@ -1,10 +1,9 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import { Icon, Intent } from '@blueprintjs/core';
 import { IconNames } from '@blueprintjs/icons';
 
-class _FileInput extends React.Component {
+class FileInput extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -12,9 +11,9 @@ class _FileInput extends React.Component {
   }
 
   onChange = (e) => {
-    const { _action, schema, field, lastAction } = this.props;
-    _action(schema, { [field]: e.target.files[0] });
-    lastAction();
+    // const { _action, schema, field, lastAction } = this.props;
+    // _action(schema, { [field]: e.target.files[0] });
+    // lastAction();
   };
 
   onClick = () => {
@@ -30,7 +29,6 @@ class _FileInput extends React.Component {
       // eslint-disable-next-line jsx-a11y/interactive-supports-focus
       <div
         onClick={this.onClick}
-        // tabIndex="0"
         onKeyDown={this.onClick}
         role="button"
         onMouseOver={e => this.changeStyle(e)}
@@ -49,16 +47,4 @@ class _FileInput extends React.Component {
   }
 }
 
-_FileInput.defaultProps = {
-  lastAction: null,
-};
-
-_FileInput.propTypes = {
-  field: PropTypes.string.isRequired,
-  schema: PropTypes.string.isRequired,
-  lastAction: PropTypes.func,
-  _action: PropTypes.func.isRequired,
-};
-
-const mapStateToProps = (state, ownprops) => ({ ...state, ...ownprops });
-export default connect(mapStateToProps)(_FileInput);
+export default FileInput;

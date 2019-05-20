@@ -1,6 +1,6 @@
 import users from './cache';
-import db from '../../db';
 import { findBoardDetail } from '../../api';
+import db from '../../db';
 
 export default async function get(id) {
   const res = users.get(id);

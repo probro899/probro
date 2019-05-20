@@ -25,6 +25,7 @@ const reducer = () => (state = INITIAL_STATE, action) => {
       return {
         ...state,
         user: null,
+        online: false,
         sessionId: null,
       };
     case 'CONNECT':

@@ -64,7 +64,7 @@ const connect = (url, store) => {
 
     // Listening all the incomming message
     sock.onmessage = (e) => {
-      console.log('data in socket from sever', e.data);
+      // console.log('data in socket from sever', e.data);
       parser.parse(e.data);
     };
 
@@ -75,8 +75,8 @@ const connect = (url, store) => {
       pending.length = 0;
 
       // Reject all rpcs and scopes with termination error
-      console.log('rpcs', Object.values(rpcs));
-      console.log('scopeCalls', Object.values(scopeCalls));
+      // console.log('rpcs', Object.values(rpcs));
+      // console.log('scopeCalls', Object.values(scopeCalls));
       const rejections = Object.values(rpcs).concat(Object.values(scopeCalls));
       rpcs = {};
       scopeCalls = {};
@@ -119,13 +119,13 @@ const connect = (url, store) => {
 
   // Handle action dispatch by server
   parser.onAction = (action) => {
-    console.log('action called', action);
+    // console.log('action called', action);
     store.dispatch(action);
   };
 
   // Handle Remote procedure call response
   parser.onRpcResponse = (tracker, success, result) => {
-    console.log('onRpc resposnse', tracker, success, result);
+    // console.log('onRpc resposnse', tracker, success, result);
     const rpcTracker = slicedToArray(rpcs[tracker], 2);
     const resolve = rpcTracker[0];
     const reject = rpcTracker[1];
@@ -140,7 +140,7 @@ const connect = (url, store) => {
 
   // Handle scope response
   parser.onScopeResponse = (tracker, success, result) => {
-    console.log('scope response called', tracker, success, result);
+    // console.log('scope response called', tracker, success, result);
     const scopeCallTracker = slicedToArray(scopeCalls[tracker], 4);
     const resolve = scopeCallTracker[0];
     const reject = scopeCallTracker[1];
@@ -183,7 +183,7 @@ const connect = (url, store) => {
 
     // reconnect the socket if connect failer
     reconnect: (...Arguments) => {
-      console.log('reconnect', Arguments);
+      // console.log('reconnect', Arguments);
       const remoteUrl = Arguments.length > 0 && Arguments[0] !== undefined ? Arguments[0] : null;
 
       // Cannnot connect without a remote url
@@ -263,8 +263,9 @@ const connect = (url, store) => {
       return new Promise((resolve, reject) => {
         serial += 1;
         rpcs[serial] = [resolve, reject];
-
-        const pkt = PKT_RPC_REQUEST(serial, scope, api, args);
+        
+        const pkt = PKT_RPC_REQUEST(serial, scope, api, ...Arguments);
+        console.log('packet', pkt);
 
         if (!client.isConnected()) {
           return deferSend(pkt);
@@ -275,7 +276,7 @@ const connect = (url, store) => {
     },
 
     scope: (name, ...Arguments) => {
-      console.log('scope', name, Arguments);
+      // console.log('scope', name, Arguments);
       const manifest = Arguments.length > 1 && Arguments[1] !== undefined ? Arguments[1] : null;
 
       return new Promise((resolve, reject) => {

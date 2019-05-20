@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { Icon, Menu, MenuItem, Popover, Position, Intent } from '@blueprintjs/core';
 import { IconNames } from '@blueprintjs/icons';
@@ -31,28 +31,30 @@ const DropDownMenu = (onclick, apis) => {
 class Navbar extends Component {
   state = {
     apis: {},
+    redirectDashboard: false,
     // this is to indicate which navigation item is active at the moment
     mainNav: 'properClass',
   };
 
-  // async componentDidMount() {
-  //   const apis = await client.scope('Mentee');
-  //   this.setState({ apis });
-  // }
+  async componentDidMount() {
+    const apis = await client.scope('Mentee');
+    this.setState({ apis });
+  }
 
   onClick = (value) => {
     this.setState({ mainNav: value });
   };
 
   onClickHandler = () => {
-    console.log('this is to be handled');
+    this.setState({ redirectDashboard: true });
   }
 
   render() {
     const { account } = this.props;
-    const { apis, mainNav } = this.state;
+    const { apis, redirectDashboard, mainNav } = this.state;
     return (
       <div className="navbar">
+        {redirectDashboard && <Redirect exact push to={`/${account.sessionId}/me`} />}
         <div className="navbar-left">
           <Link
             to="/"
