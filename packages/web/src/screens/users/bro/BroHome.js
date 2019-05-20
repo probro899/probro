@@ -49,7 +49,7 @@ class HomePage extends Component {
         : (
           <div>
             {/* redirect to home page if not logged in  */}
-            {account ? <Navbar /> : <Redirect to="/" />}
+            {account.online ? <Navbar /> : <Redirect to="/" />}
             <div className="broWrapper">
               <SideNav activeNav={activeNav} changeSideNav={this.changeSideNav} />
               {activeBar}
