@@ -253,7 +253,7 @@ const connect = (url, store) => {
     },
 
     rpc: (scope, api, ...Arguments) => {
-      console.log('rpc called', scope, api, Arguments);
+      // console.log('rpc called', scope, api, Arguments);
       const argLenth = Arguments.length;
       const args = Array(argLenth > 2 ? argLenth - 2 : 0);
       for (let key = 2; key < argLenth; key += 1) {
@@ -264,8 +264,7 @@ const connect = (url, store) => {
         serial += 1;
         rpcs[serial] = [resolve, reject];
         
-        const pkt = PKT_RPC_REQUEST(serial, scope, api, ...Arguments);
-        console.log('packet', pkt);
+        const pkt = PKT_RPC_REQUEST(serial, scope, api, Arguments);
 
         if (!client.isConnected()) {
           return deferSend(pkt);

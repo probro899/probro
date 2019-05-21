@@ -1,3 +1,4 @@
+@import '../config.scss';
 // styling the class component here
 .classes {
   display: flex;
@@ -13,6 +14,11 @@
     padding: 10px;
     display: flex;
     flex-wrap: wrap;
+    .more-button {
+      top: 10px;
+      right: 10px;
+      position: absolute;
+    }
     .content-link {
       margin: 10px;
       min-height: 150px;
@@ -21,9 +27,9 @@
       cursor: pointer;
       background-color: lightgray;
       text-decoration: none;
+      box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.56);
       -webkit-box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.56);
       -moz-box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.56);
-      box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.56);
       border-radius: 5px;
       -moz-border-radius: 5px;
       -webkit-border-radius: 5px;

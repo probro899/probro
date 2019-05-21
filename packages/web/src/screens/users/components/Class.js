@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
-import { Dialog } from '@blueprintjs/core';
+import { Dialog, Button, Menu, MenuItem, Popover } from '@blueprintjs/core';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { Form } from '../../../common';
-import { createNewClass } from '../helper-functions';
+import { Form, DeletePopOver } from '../../../common';
 import boardStructure from '../../../common/ClassComponents/structure';
 import client from '../../../socket';
 
@@ -19,10 +18,31 @@ const PopOver = ({isOpen, onClose, callback}) => {
   );
 };
 
+// more button popover here id holds the id of the board
+const SmallMenu = (onclick, id) => {
+  return (
+    <Menu>
+      <MenuItem
+        icon="edit"
+        text="Edit"
+        onClick={() => onclick('edit', id)}
+      />
+      <Menu.Divider />
+      <MenuItem
+        icon="delete"
+        intent="danger"
+        text="Delete"
+        onClick={() => onclick('delete', id)}
+      />
+    </Menu>
+  );
+};
+
 class Class extends Component {
   state = {
     create: false,
     api: {},
+    deletePopOver: false,
   };
 
   async componentWillMount() {
@@ -32,9 +52,13 @@ class Class extends Component {
     });
   }
 
-  handleSubmit = (data) => {
+  handleSubmit = async (arg) => {
+    const data = arg;
+    const { account } = this.props;
     const { api } = this.state;
-    createNewClass(data, api.addBoard);
+    data.userId = account.user.id;
+    data.timeStamp = Date.now();
+    const res = await api.addBoard(data);
     return { response: 200 };
   }
 
@@ -45,10 +69,21 @@ class Class extends Component {
     });
   }
 
+  // this is more button handle function
+  onMore = async (action, id) => {
+    const { api } = this.state;
+    if (action === 'delete') {
+      const res = await api.deleteBoard({ id });
+    }
+    if (action === 'edit') {
+      const res = await api.updateBoard([{ name: 'Okey done' }, { id }]);
+    }
+  }
+
   render() {
     const { account, database } = this.props;
     const { create } = this.state;
-    console.log(database.Board);
+    console.log(database.Board, this.state);
     return (
       <div className="classes">
         <div className="header">
@@ -58,17 +93,26 @@ class Class extends Component {
           {
             database.Board.allIds.map((id) => {
               return (
-                <Link push to={`/class-work/${account.sessionId}/me`} className="content-link">
-                  <div className="class-repr">
-                    <span>{database.Board.byId[id].name}</span>
-                  </div>
-                  <div className="class-detail">
-                    created-by:
-                    {database.Board.byId[id].userId}
-                    date:
-                    {database.Board.byId[id].timeStamp}
-                  </div>
-                </Link>
+                <div style={{ position: 'relative' }}>
+                  <Popover
+                    content={SmallMenu(this.onMore, id)}
+                    position="right"
+                    className="more-button"
+                  >
+                    <Button icon="more" minimal />
+                  </Popover>
+                  <Link push to={`/class-work/${account.sessionId}/me`} className="content-link">
+                    <div className="class-repr">
+                      <span>{database.Board.byId[id].name}</span>
+                    </div>
+                    <div className="class-detail">
+                      created-by:
+                      {database.Board.byId[id].userId}
+                      date:
+                      {database.Board.byId[id].timeStamp}
+                    </div>
+                  </Link>
+                </div>
               );
             })
           }
