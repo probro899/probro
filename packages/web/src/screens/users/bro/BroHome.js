@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 import { Navbar } from '../../home/component/index';
 import { SideNav, Profile, Blogs, Classes, Settings } from '../components';
+import client from '../../../socket';
 
 class HomePage extends Component {
   state = {
@@ -16,6 +17,11 @@ class HomePage extends Component {
     if (match.params.id !== account.sessionId) {
       this.setState({ error: true });
     }
+  }
+
+  async componentDidMount() {
+    const apis = await client.scope('Mentor');
+    console.log('apis in Brohome', apis);
   }
 
   changeSideNav = (name) => {

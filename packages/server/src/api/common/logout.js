@@ -1,5 +1,6 @@
+/* eslint-disable import/no-cycle */
 import * as actions from '@probro/common/src/actions';
-import cache from '../cache';
+import cache from '../../cache';
 
 export default function logout() {
   const { session } = this;
@@ -11,4 +12,4 @@ export default function logout() {
   session.emit('logout');
   // close the session on logout
   session.close();
-};
+}

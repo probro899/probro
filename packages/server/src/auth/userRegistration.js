@@ -1,6 +1,7 @@
+/* eslint-disable import/no-cycle */
 import uuid from 'uuid/v4';
 import db from '../db';
-import { genHashPassword } from '../auth/passwordHandler';
+import { genHashPassword } from './passwordHandler';
 import mailer from '../mailer';
 import htmlString from '../mailer/html/mailBody';
 import cache from '../cache';
@@ -33,7 +34,7 @@ export default async (record) => {
     });
     return result;
   } catch (e) {
-    console.log('error in api', e);
+    console.log('error in userRegistration api', e);
     throw e;
   }
 };

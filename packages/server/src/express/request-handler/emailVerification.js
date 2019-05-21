@@ -1,13 +1,15 @@
 import emailVerification from '../../auth/emailVerification';
 
 export default async (req, res) => {
-  const emaiVerificationEmail = await emailVerification(req.query.token);
-  if (emaiVerificationEmail) {
-    console.log('email verification email', emaiVerificationEmail);
-    res.statusCode = 200;
-    res.send(emaiVerificationEmail);
-  } else {
+  try {
+    const emaiVerificationEmail = await emailVerification(req.query.token);
+    if (emaiVerificationEmail) {
+      res.statusCode = 200;
+      res.send(emaiVerificationEmail);
+    }
+  } catch (e) {
+    console.log('email verification error', e);
     res.statusCode = 501;
-    res.send('Email not verified');
+    res.send(JSON.stringify(e.message));
   }
 };

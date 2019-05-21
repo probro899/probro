@@ -1,6 +1,7 @@
 import cache from '../cache';
 import db from '../db';
 
+
 export default function emailVerification(token) {
   const user = cache.users.get(token);
   if (!user) {

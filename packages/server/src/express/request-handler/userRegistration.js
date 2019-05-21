@@ -1,4 +1,4 @@
-import { userRegistration } from '../../api';
+import userRegistration from '../../auth/userRegistration';
 
 export default async (req, res) => {
   try {
@@ -9,7 +9,7 @@ export default async (req, res) => {
       res.send(JSON.stringify(resFinal));
     }
   } catch (e) {
-    res.status = 201;
+    res.status = 501;
     res.send(JSON.stringify(e.message));
     throw e;
   }

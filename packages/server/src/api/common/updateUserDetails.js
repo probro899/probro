@@ -1,5 +1,5 @@
 import schema from '@probro/common/src/schema';
-import db from '../db';
+import db from '../../db';
 
 export default async function updateUserDetails(record) {
   console.log('update userDetails called', record);

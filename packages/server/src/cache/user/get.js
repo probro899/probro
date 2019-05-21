@@ -1,6 +1,7 @@
+/* eslint-disable import/no-cycle */
 import users from './cache';
 import db from '../../db';
-import { findBoardDetail } from '../../api';
+import { findBoardDetail, findBlogDetail } from '../../api';
 
 export default async function get(id) {
   const res = users.get(id);
@@ -29,6 +30,20 @@ export default async function get(id) {
     const boardColumnCardComment = boardDetails.map(obj => obj.boardColumnCardComment).flat();
     const boardColumnCardDescription = boardDetails.map(obj => obj.boardColumnCardDescription);
 
+
+    const blog = await find('Blog', { userId: id });
+
+    const blogDetailsPromises = [];
+
+    blog.forEach((b) => {
+      blogDetailsPromises.push(findBlogDetail(b.id));
+    });
+
+    const blogDetails = await Promise.all(blogDetailsPromises);
+    const blogDetail = blogDetails.map(obj => obj.blogDetail).flat();
+    const blogComment = blogDetails.map(obj => obj.blogComment).flat();
+    const blogLike = blogDetails.map(obj => obj.blogLike).flat();
+
     const userDataRes = {
       user,
       userDetail,
@@ -38,6 +53,10 @@ export default async function get(id) {
       boardColumnCardAttachment,
       boardColumnCardComment,
       boardColumnCardDescription,
+      blog,
+      blogDetail,
+      blogComment,
+      blogLike,
     };
     return userDataRes;
   });

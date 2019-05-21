@@ -1,4 +1,4 @@
-import db from '../db';
+import db from '../../db';
 
 export default async (boardId) => {
   console.log('findBoard details board id', boardId);

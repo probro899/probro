@@ -121,3 +121,4 @@ CREATE TABLE IF NOT EXISTS BoardColumnCardComment(
 
 CREATE INDEX BoardColumnCardComment_ix_boardColumnCardId ON BoardColumnCardComment(boardColumnCardId);
 -- Down
+

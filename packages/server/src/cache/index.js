@@ -1,3 +1,4 @@
+/* eslint-disable import/no-cycle */
 import LRU from 'lru-cache';
 import user from './user';
 
