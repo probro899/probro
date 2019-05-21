@@ -99,9 +99,9 @@ class Session {
     const parser = createParser();
     // console.log('parser', parser);
     parser.onScopeRequest = (tracker, scopeId, manifest) => {
-      console.log('onScopeRequest', tracker, scopeId, manifest);
+      // console.log('onScopeRequest', tracker, scopeId, manifest);
       let scope = this.scopes[scopeId];
-      console.log('scope', scope, scopeId);
+      // console.log('scope', scope, scopeId);
       if (!scope) {
         scope = findScope(scopeId);
         if (!scope) {
@@ -142,6 +142,7 @@ class Session {
         // console.log('propmsie resolove in rpc request', res);
         this.send(PKT_RPC_RESPONSE(tracker, true, res));
       }).catch((err) => {
+        console.log('error in api', err);
         this.send(PKT_RPC_RESPONSE(tracker, false, err));
       });
     };

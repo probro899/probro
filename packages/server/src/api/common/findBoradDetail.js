@@ -1,7 +1,7 @@
 import db from '../../db';
 
 export default async (boardId) => {
-  console.log('findBoard details board id', boardId);
+  // console.log('findBoard details board id', boardId);
   const res = await db.execute(async ({ find }) => {
 
     const boardColumn = await find('BoardColumn', { boardId });

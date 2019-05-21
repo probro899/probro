@@ -1,16 +1,44 @@
 import update from './update';
 
-const updateBoard = records => update('Board', ...records);
-const updateBoardColumn = records => update('BoardColumn', ...records);
-const updateBoardColumnCard = records => update('BoardColumnCard', ...records);
-const updateBoardColumnCardAttachment = records => update('BoardColumnCardAttachment', ...records);
-const updateBoardColumnCardComment = records => update('BoardColumnCardComment', ...records);
-const updateBoardColumnCardDescription = records => update('BoardColumnCardDescription', ...records);
+function updateBoard(records) {
+  update.call(this, 'Board', ...records);
+}
 
-const updateBlog = records => update('Blog', ...records);
-const updateBlogDetail = records => update('BlogDetail', ...records);
-const updateBlogComment = records => update('BlogComment', ...records);
-const updateBlogLike = records => update('BlogLike', ...records);
+function updateBoardColumn(records) {
+  update.call(this, 'BoardColumn', ...records);
+}
+
+function updateBoardColumnCard(records) {
+  update.call(this, 'BoardColumnCard', ...records);
+}
+
+function updateBoardColumnCardAttachment(records) {
+  update.call(this, 'BoardColumnCardAttachment', ...records);
+}
+
+function updateBoardColumnCardComment(records) {
+  update.call(this, 'BoardColumnCardComment', ...records);
+}
+
+function updateBoardColumnCardDescription(records) {
+  update.call(this, 'BoardColumnCardDescription', ...records);
+}
+
+function updateBlog(records) {
+  update.call(this, 'Blog', ...records);
+}
+
+function updateBlogDetail(records) {
+  update.call(this, 'BlogDetail', ...records);
+}
+
+function updateBlogComment(records) {
+  update.call(this, 'BlogComment', ...records);
+}
+
+function updateBlogLike(records) {
+  update.call(this, 'BlogLike', ...records);
+}
 
 export default [
   updateBoard,

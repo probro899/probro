@@ -1,20 +1,44 @@
 import add from './add';
 
-function addBoard(test1, test2, record) {
-  console.log('add board', test1, test2, record);
-  return add('Board', record);
+function addBoard(record) {
+  add.call(this, 'Board', record);
 }
 
-const addBoardColumn = record => add('BoardColumn', record);
-const addBoardColumnCard = record => add('BoardColumnCard', record);
-const addBoardColumnCardAttachment = record => add('BoardColumnCardAttachment', record);
-const addBoardColumnCardComment = record => add('BoardColumnCardComment', record);
-const addBoardColumnCardDescription = record => add('BoardColumnCardDescription', record);
+function addBoardColumn(record) {
+  add.call(this, 'BoardColumn', record);
+}
 
-const addBlog = record => add('Blog', record);
-const addBlogDetail = record => add('BlogDetail', record);
-const addBlogComment = record => add('BlogComment', record);
-const addBlogLike = record => add('BlogLike', record);
+function addBoardColumnCard(record) {
+  add.call(this, 'BoardColumnCard', record);
+}
+
+function addBoardColumnCardAttachment(record) {
+  add.call(this, 'BoardColumnCardAttachment', record);
+}
+
+function addBoardColumnCardComment(record) {
+  add.call(this, 'BoardColumnCardComment', record);
+}
+
+function addBoardColumnCardDescription(record) {
+  add.call(this, 'BoardColumnCardDescription', record);
+}
+
+function addBlog(record) {
+  add.call(this, 'Blog', record);
+}
+
+function addBlogDetail(record) {
+  add.call(this, 'BlogDetail', record);
+}
+
+function addBlogComment(record) {
+  add.call(this, 'BlogComment', record);
+}
+
+function addBlogLike(record) {
+  add.call(this, 'BlogLike', record);
+}
 
 export default [
   addBoard,

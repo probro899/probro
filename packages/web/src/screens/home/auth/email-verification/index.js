@@ -1,24 +1,52 @@
 import React from 'react';
 import axios from 'axios';
+import PropTypes from 'prop-types';
+import { Spinner } from '@blueprintjs/core';
+import Login from '../login';
+import NotifyBar from '../../../../common/NotifyBar';
 
 class VerifyEmail extends React.Component {
-  state={ emailVerification: null };
+  state={
+    emailVerification: null,
+    loading: true,
+  };
 
   async componentWillMount() {
-    const token = this.props.match.params.token;
-    const res = await axios.get(`http://192.168.1.66:4001/auth/email-verification?token=${token}`);
-    if (res.status === 200) {
-      this.setState({ emailVerification: res.data });
+    const { match } = this.props;
+    try {
+      const res = await axios.get(`http://192.168.1.66:4001/auth/email-verification?token=${match.params.token}`);
+      if (res.status === 200) {
+        this.setState({ emailVerification: true, loading: false });
+      }
+    } catch (e) {
+      this.setState({ emailVerification: false, loading: false });
     }
   }
 
   render() {
-    // console.log('emailVerification status', this.state.emailVerification);
+    const { emailVerification, loading } = this.state;
     return (
       <div>
-        <h1>Email verification Component goes here</h1>
+        {loading ? <Spinner size={30} />
+          : (
+            <div>
+              <NotifyBar
+                message={emailVerification ? 'You have been verified' : 'Verification failed'}
+                intent={emailVerification ? 'success' : 'danger'}
+              />
+              <div style={{ marginTop: 50 }}>
+                {emailVerification && <Login />}
+              </div>
+            </div>
+          )
+        }
       </div>
     );
   }
 }
+
+VerifyEmail.propTypes = {
+  match: PropTypes.objectOf(PropTypes.any).isRequired,
+};
+
 export default VerifyEmail;

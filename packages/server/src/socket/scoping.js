@@ -1,7 +1,7 @@
 const scopes = {};
 
 export function createScope(name, initFn) {
-  console.log('create scope called', name, initFn);
+  // console.log('create scope called', name, initFn);
   if (scopes[name]) {
     throw new Error(`A scope with the name ${name} has already been created`);
   }
@@ -16,7 +16,7 @@ export function createScope(name, initFn) {
   return (api, apiName) => {
 
     const apiId = apiName || api.name;
-    console.log('api info', apiId);
+    // console.log('api info', apiId);
     if (!apiId) {
       throw new Error(`Invalid api name under ${name} scope`);
     }

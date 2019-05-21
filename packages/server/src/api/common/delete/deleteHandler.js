@@ -4,17 +4,46 @@ import deleteBoardColumnHelper from './helper-functions/board/deleteColumn';
 import deleteBoardColumnCardHelper from './helper-functions/board/deleteBoardColumnCard';
 import deleteBlogHelper from './helper-functions/blog/deleteBlogAll';
 
-const deleteBoard = record => deleteBoardHelper(Delete, record);
-const deleteBoardColumn = record => deleteBoardColumnHelper(Delete, record);
-const deleteBoardColumnCard = record => deleteBoardColumnCardHelper(Delete, [record]);
-const deleteBoardColumnCardAttachment = record => Delete('BoardColumnCardAttachment', record);
-const deleteBoardColumnCardComment = record => Delete('BoardColumnCardComment', record);
-const deleteBordColumnDescription = record => Delete('BoardColumnCardDescription', record);
+function deleteBoard(record) {
+  deleteBoardHelper.call(Delete.bind(this), record);
+}
 
-const deleteBlog = record => deleteBlogHelper(Delete, record);
-const deleteBlogDetail = record => Delete('BlogDetail', record);
-const deleteBlogComment = record => Delete('BlogComment', record);
-const deleteBlogLike = record => Delete('BlogLike', record);
+function deleteBoardColumn(record) {
+  deleteBoardColumnHelper.call(Delete.bind(this), record);
+}
+
+function deleteBoardColumnCard(record) {
+  deleteBoardColumnCardHelper.call(Delete.bind(this), [record]);
+}
+
+
+function deleteBoardColumnCardAttachment(record) {
+  Delete.call(this, 'BoardColumnCardAttachment', record);
+}
+
+function deleteBoardColumnCardComment(record) {
+  Delete.call(this, 'BoardColumnCardComment', record);
+}
+
+function deleteBordColumnDescription(record) {
+  Delete.call(this, 'BoardColumnCardDescription', record);
+}
+
+function deleteBlog(record) {
+  deleteBlogHelper.call(Delete.bind(this), record);
+}
+
+function deleteBlogDetail(record) {
+  Delete.call(this, 'BlogDetail', record);
+}
+
+function deleteBlogComment(record) {
+  Delete.call(this, 'BlogComment', record);
+}
+
+function deleteBlogLike(record) {
+  Delete.call(this, 'BlogLike', record);
+}
 
 export default [
   deleteBoard,

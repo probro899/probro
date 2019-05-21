@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 import { Navbar } from '../../home/component/index';
-import { SideNav, Profile, Blogs, Classes, Settings } from '../components';
+import { SideNav, Profile, Blog, Class, Setting } from '../components';
 import client from '../../../socket';
 
 class HomePage extends Component {
@@ -39,23 +39,23 @@ class HomePage extends Component {
         activeBar = <Profile />;
         break;
       case ('Settings'):
-        activeBar = <Settings />;
+        activeBar = <Setting />;
         break;
       case ('Classes'):
-        activeBar = <Classes />;
+        activeBar = <Class />;
         break;
-      case ('Blogs'):
-        activeBar = <Blogs />;
+      case ('Blog'):
+        activeBar = <Blog />;
         break;
       default:
         activeBar = <Profile />;
     }
     return (
-      error ? <Redirect push to="/login" />
+      error ? <Redirect push to="/" />
         : (
           <div>
             {/* redirect to home page if not logged in  */}
-            {account ? <Navbar /> : <Redirect to="/" />}
+            {account.online ? <Navbar /> : <Redirect to="/" />}
             <div className="broWrapper">
               <SideNav activeNav={activeNav} changeSideNav={this.changeSideNav} />
               {activeBar}
