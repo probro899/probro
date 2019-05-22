@@ -6,23 +6,26 @@ class DeletePopOver extends React.Component {
   state = {};
 
   render() {
-    const { yesAction, noAction, isOpen, name } = this.props;
+    const { action, isOpen, name } = this.props;
     return (
       <Dialog
         isOpen={isOpen}
+        onClose={() => action('cancle')}
       >
         <div className="container-delete-popover">
-          {`Are you sure to delete ?${name}`}
+          Are you sure you want to delete
+          <span style={{ color: 'red' }}>{name}</span>
+          ?
         </div>
         <div>
           <Button
             text="Delete"
             intent="danger"
-            onClick={yesAction}
+            onClick={() => action('confirm')}
           />
           <Button
             text="Cancle"
-            onClick={noAction}
+            onClick={() => action('cancle')}
           />
         </div>
       </Dialog>
@@ -31,8 +34,7 @@ class DeletePopOver extends React.Component {
 }
 
 DeletePopOver.propTypes = {
-  yesAction: PropTypes.func.isRequired,
-  noAction: PropTypes.func.isRequired,
+  action: PropTypes.func.isRequired,
   isOpen: PropTypes.bool.isRequired,
   name: PropTypes.string.isRequired,
 };
