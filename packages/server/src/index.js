@@ -36,7 +36,7 @@ run(async (nodeApp) => {
         // return socket to evrything is ok
         return true;
       } catch (err) {
-        console.log('error', err);
+        // console.log('error', err);
         session.dispatch({ type: 'LOGOUT' });
         session.emit('logout');
 

@@ -2,7 +2,6 @@ import uuid from 'uuid/v4';
 import db from '../db';
 import cache from '../cache';
 import mailer from '../mailer';
-import mailBody from '../mailer/html/mailBody';
 
 const RESET_TOKEN_AGE = 1 * 60 * 60 * 1000; // 1 hour
 
@@ -10,7 +9,7 @@ const domain = process.env.RESTRO_DOMAIN || 'http://localhost:3000';
 
 export default async function forgot(username) {
 
-  const user = await db.execute(({ findOne }) => findOne('User', { username }));
+  const user = await db.execute(({ findOne }) => findOne('User', { email: username }));
 
   if (!user) {
     throw new Error('Unknown username');
@@ -23,8 +22,9 @@ export default async function forgot(username) {
   cache.users.set(resetToken, user.id, RESET_TOKEN_AGE);
   mailer({
     from: 'ProperClass<noreply@properclass.com>',
-    to: user.username,
+    to: user.email,
     subject: 'Password reset',
-    text: `Please use the following link to reset your password ${domain}/reset/${resetToken}`,
+    text: `Please use the following link to reset your password ${domain}/reset/${resetToken}`
   });
+  return user;
 }

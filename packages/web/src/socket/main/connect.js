@@ -263,8 +263,9 @@ const connect = (url, store) => {
       return new Promise((resolve, reject) => {
         serial += 1;
         rpcs[serial] = [resolve, reject];
-        
+
         const pkt = PKT_RPC_REQUEST(serial, scope, api, Arguments);
+        console.log('packet', pkt);
 
         if (!client.isConnected()) {
           return deferSend(pkt);

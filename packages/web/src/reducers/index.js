@@ -15,7 +15,11 @@ export default combineReducers({
     'BoardColumnCard',
     'BoardColumnCardAttachment',
     'BoardColumnCardComment',
-    'BoardColumnCardDescription'
+    'BoardColumnCardDescription',
+    'Blog',
+    'BlogDetail',
+    'BlogComment',
+    'BlogLike'
   ),
   form: formReducer,
   main: mainReducer,

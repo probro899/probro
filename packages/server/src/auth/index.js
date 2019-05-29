@@ -5,6 +5,7 @@ import changePassword from './changePassword';
 import reset from './reset';
 import validateToken from './validateToken';
 import emailVerification from './emailVerification';
+import userRegistration from './userRegistration';
 
 export default {
   forgot,
@@ -14,4 +15,5 @@ export default {
   reset,
   validateToken,
   emailVerification,
+  userRegistration,
 };

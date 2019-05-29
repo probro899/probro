@@ -35,7 +35,7 @@ CREATE INDEX UserDetail_ix_userId ON UserDetail(userId);
 
 CREATE TABLE IF NOT EXISTS Board(
   id INTEGER PRIMARY KEY,
-  timeStamp TEXT NOT NULL,
+  timeStamp INTEGER NOT NULL,
   name TEXT NOT NULL,
   userId INTEGER NOT NULL,
   image TEXT,
@@ -50,7 +50,7 @@ CREATE TABLE IF NOT EXISTS BoardColumn(
   id INTEGER PRIMARY KEY,
   boardId INTEGER NOT NULL,
   name TEXT NOT NULL,
-  timeStamp TEXT NOT NULL,
+  timeStamp INTEGER NOT NULL,
   userId INTEGER NOT NULL,
 
   -- Constraints
@@ -64,11 +64,11 @@ CREATE TABLE IF  NOT EXISTS BoardColumnCard(
   id INTEGER PRIMARY KEY,
   userId INTEGER NOT NULL,
   boardColumnId NOT NULL,
-  timeStamp TEXT NOT NULL,
+  timeStamp INTEGER NOT NULL,
   name TEXT NOT NULL,
   position INTEGER NOT NULL,
-  description TEXT NOT NULL,
-  attachment TEXT NOT NULL,
+  description TEXT,
+  attachment TEXT,
 
   -- CONSTRAINTS
   CONSTRAINT Board_Column_Creator_Task_UserId FOREIGN KEY (userId) REFERENCES User(id),
@@ -77,13 +77,12 @@ CREATE TABLE IF  NOT EXISTS BoardColumnCard(
 
 CREATE INDEX BoardColumnCard_ix_boardColumnId ON BoardColumnCard(boardColumnId);
 
-
 CREATE TABLE IF NOT EXISTS BoardColumnCardDescription(
   id INTEGER PRIMARY KEY,
   userId INTEGER NOT NULL,
   boardColumnCardId INTEGER NOT NULL,
   title TEXT NOT NULL,
-  timeStamp TEXT NOT NULL,
+  timeStamp INTEGER NOT NULL,
 
   -- CONSTRAINTS
   CONSTRAINT Board_Column_Card_Creator_UserId FOREIGN KEY (userId) REFERENCES User(id),
@@ -121,3 +120,4 @@ CREATE TABLE IF NOT EXISTS BoardColumnCardComment(
 
 CREATE INDEX BoardColumnCardComment_ix_boardColumnCardId ON BoardColumnCardComment(boardColumnCardId);
 -- Down
+
