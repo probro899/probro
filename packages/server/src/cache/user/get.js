@@ -24,12 +24,13 @@ export default async function get(id) {
     });
 
     const boardDetails = await Promise.all(boardDetailsPromises);
+    // console.log('boardDetails', JSON.stringify(boardDetails));
     const boardColumn = boardDetails.map(obj => obj.boardColumn).flat();
-    const boardColumnCard = boardDetails.map(obj => obj.boardColumnCard).flat();
-    const boardColumnCardAttachment = boardDetails.map(obj => obj.boardColumnCardAttachment).flat();
-    const boardColumnCardComment = boardDetails.map(obj => obj.boardColumnCardComment).flat();
-    const boardColumnCardDescription = boardDetails.map(obj => obj.boardColumnCardDescription);
-
+    const boardColumnCard = boardDetails.map(obj => obj.boardColumnCard).flat().flat();
+    const boardColumnCardAttachment = boardDetails.map(obj => obj.boardColumnCardAttachment).flat().flat();
+    const boardColumnCardComment = boardDetails.map(obj => obj.boardColumnCardComment).flat().flat();
+    // console.log('board columnCardAttachment', boardColumnCardComment);
+    const boardColumnCardDescription = boardDetails.map(obj => obj.boardColumnCardDescription).flat().flat();
 
     const blog = await find('Blog', { userId: id });
 

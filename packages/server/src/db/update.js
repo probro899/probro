@@ -1,4 +1,5 @@
 export default async function update(db, table, values, condition) {
+  console.log('update core method', table, values, condition);
   const fields = Object.keys(values);
   const set = fields.map(f => `[${f}]=?`).join(',');
   const fieldParams = fields.map(f => values[f]);

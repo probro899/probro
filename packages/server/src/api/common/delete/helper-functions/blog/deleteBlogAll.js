@@ -4,4 +4,3 @@ export default async function deleteBlogDetail(Delete, blogId) {
   await Delete('BlogComment', { blogId });
   await Delete('BlogLike', { blogId });
 }
-

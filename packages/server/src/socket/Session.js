@@ -177,6 +177,7 @@ class Session {
   }
 
   dispatch(action) {
+    // console.log('api distapch ', action);
     this.send(PKT_ACTION(action));
   }
 

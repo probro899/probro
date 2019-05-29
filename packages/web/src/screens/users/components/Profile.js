@@ -15,6 +15,7 @@ class Profile extends Component {
 
   render() {
     const { account, database } = this.props;
+    console.log('databse', database);
     let details = {};
     try {
       details = database.User.byId[account.user.id];

@@ -5,7 +5,9 @@ import deleteBoardColumnCardHelper from './helper-functions/board/deleteBoardCol
 import deleteBlogHelper from './helper-functions/blog/deleteBlogAll';
 
 function deleteBoard(record) {
-  deleteBoardHelper.call(Delete.bind(this), record);
+  // console.log('delete board handler', record);
+  const dbDelete = Delete.bind(this);
+  deleteBoardHelper(dbDelete, record);
 }
 
 function deleteBoardColumn(record) {

@@ -8,6 +8,7 @@ export default async (boardId) => {
     const columnCardPromise = [];
     boardColumn.forEach(b => columnCardPromise.push(find('BoardColumnCard', { boardColumnId: b.id })));
     const boardColumnCard = await Promise.all(columnCardPromise);
+    // console.log('boardColumnCard data', boardColumnCard);
     const boardColumnCardMap = boardColumnCard.map(a => a.map(o => o.id)).flat();
 
     const boardColumnCardAttachmentPromises = [];
@@ -17,7 +18,7 @@ export default async (boardId) => {
     boardColumnCardMap.forEach((id) => {
       boardColumnCardAttachmentPromises.push(find('BoardColumnCardAttachment', { boardColumnCardId: id }));
       boardColumnCardCommentPromises.push(find('BoardColumnCardComment', { boardColumnCardId: id }));
-      boardColumnCardDescriptionPromises.push(find('BoardColunCardDescription', { boardColumnCardId: id }));
+      boardColumnCardDescriptionPromises.push(find('BoardColumnCardDescription', { boardColumnCardId: id }));
     });
 
     const boardColumnCardAttachment = await Promise.all(boardColumnCardAttachmentPromises);

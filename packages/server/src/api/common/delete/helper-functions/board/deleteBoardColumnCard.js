@@ -1,7 +1,7 @@
 import db from '../../../../../db';
 
 export default async function deleteBoardColumnCard(Delete, record) {
-
+//  console.log('deleteBoardColumnCard', record);
   await db.execute(async ({ find }) => {
     const allboardColumnCardPromises = [];
     record.forEach((e) => {
