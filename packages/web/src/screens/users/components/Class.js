@@ -1,22 +1,12 @@
 import React, { Component } from 'react';
-import { Dialog, Button, Menu, MenuItem, Popover } from '@blueprintjs/core';
+import { Button, Menu, MenuItem, Popover } from '@blueprintjs/core';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { Form, DeletePopOver } from '../../../common';
+import { DeletePopOver } from '../../../common';
 import boardStructure from '../../../common/ClassComponents/structure';
 import client from '../../../socket';
-
-const PopOver = ({isOpen, onClose, callback}) => {
-  return (
-    <Dialog
-      isOpen={isOpen}
-      onClose={onClose}
-    >
-      <Form data={boardStructure} callback={callback} />
-    </Dialog>
-  );
-};
+import { PopoverForm } from '../../../components';
 
 // more button popover here id holds the id of the board
 const SmallMenu = (onclick, id) => {
@@ -42,10 +32,14 @@ class Class extends Component {
   state = {
     // create holds bool for the add new class popover
     createBool: false,
-    classDelete: {
+    deleteClass: {
       id: '',
       name: '',
       deletePopOverBool: false,
+    },
+    updateClass: {
+      id: '',
+      updateClassBool: false,
     },
     api: {},
   };
@@ -79,55 +73,84 @@ class Class extends Component {
 
   // this is more button handle function
   onMore = async (action, id) => {
-    const { classDelete } = this.state;
+    const { deleteClass, updateClass } = this.state;
     const { database } = this.props;
     if (action === 'delete') {
       this.setState({
-        classDelete: {
+        deleteClass: {
           id,
           name: database.Board.byId[id].name,
-          deletePopOverBool: !classDelete.deletePopOverBool,
+          deletePopOverBool: !deleteClass.deletePopOverBool,
         },
       });
     }
     if (action === 'edit') {
-      // const res = await api.updateBoard([{ name: 'Okey done' }, { id }]);
+      this.setState({
+        updateClass: {
+          id,
+          updateClassBool: !updateClass.updateClassBool,
+        },
+      });
     }
   }
 
   // handle delete of the boards
   deleteClass = async (type) => {
-    const { classDelete, api } = this.state;
+    const { deleteClass, api } = this.state;
     if (type === 'confirm') {
-      await api.deleteBoard({ id: classDelete.id });
+      await api.deleteBoard({ id: deleteClass.id });
     }
     this.setState({
-      classDelete: {
+      deleteClass: {
         id: '',
         name: '',
-        deletePopOverBool: !classDelete.deletePopOverBool,
+        deletePopOverBool: !deleteClass.deletePopOverBool,
+      },
+    });
+  }
+
+  // handle the edit of the board name
+  updateClass = async (data) => {
+    const { updateClass, api } = this.state;
+    await api.updateBoard([data, { id: updateClass.id }]);
+    this.setState({
+      updateClass: {
+        id: '',
+        updateClassBool: false,
+      },
+    });
+    return { response: 200 };
+  }
+
+  // zoom out popover
+  cancleUpdate = () => {
+    const { updateClass } = this.state;
+    this.setState({
+      updateClass: {
+        id: '',
+        updateClassBool: !updateClass.updateClassBool,
       },
     });
   }
 
   render() {
     const { account, database } = this.props;
-    const { createBool, classDelete } = this.state;
+    const { createBool, deleteClass, updateClass } = this.state;
     return (
       <div className="classes">
         <DeletePopOver
-          isOpen={classDelete.deletePopOverBool}
+          isOpen={deleteClass.deletePopOverBool}
           action={this.deleteClass}
-          name={classDelete.name}
+          name={deleteClass.name}
         />
         <div className="header">
           Classes
         </div>
         <div className="content-list">
           {
-            database.Board.allIds.map((id) => {
+            database.Board.allIds.map((id, index) => {
               return (
-                <div style={{ position: 'relative' }}>
+                <div style={{ position: 'relative' }} key={index}>
                   {/* more button popover */}
                   <Popover
                     content={SmallMenu(this.onMore, id)}
@@ -136,9 +159,11 @@ class Class extends Component {
                   >
                     <Button icon="more" minimal />
                   </Popover>
-                  <Link push to={`/class-work/${account.sessionId}/me`} className="content-link">
+                  <Link push to={`/class-work/${account.sessionId}/${id}`} className="content-link">
                     <div className="class-repr">
-                      <span>{database.Board.byId[id].name}</span>
+                      <span>
+                        {database.Board.byId[id].name}
+                      </span>
                     </div>
                     <div className="class-detail">
                       created-by:
@@ -163,7 +188,18 @@ class Class extends Component {
           </div>
         </div>
         {/* create new class popover */}
-        <PopOver isOpen={createBool} onClose={this.newClass} callback={this.createNewBoard} />
+        <PopoverForm
+          isOpen={createBool}
+          onClose={this.newClass}
+          callback={this.createNewBoard}
+          structure={boardStructure}
+        />
+        <PopoverForm
+          isOpen={updateClass.updateClassBool}
+          onClose={this.cancleUpdate}
+          callback={this.updateClass}
+          structure={boardStructure}
+        />
       </div>
     );
   }

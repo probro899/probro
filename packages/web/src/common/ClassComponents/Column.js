@@ -1,17 +1,24 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
 import Task from './Task';
 import NewTask from './NewTask';
+import sorting from '../../screens/users/utility-functions';
 
 class Column extends Component {
   state = {};
 
   render() {
-    const { column, tasks, index } = this.props;
+    const {
+      column,
+      columnId,
+      index,
+      cards,
+    } = this.props;
     return (
       <Draggable
-        draggableId={column.id}
+        draggableId={`${column.id}`}
         index={index}
       >
         {provided => (
@@ -26,11 +33,11 @@ class Column extends Component {
                 {...provided.dragHandleProps}
               >
                 <span>
-                  {column.title}
+                  {column.name}
                 </span>
               </div>
               <Droppable
-                droppableId={column.id}
+                droppableId={`${column.id}`}
                 type="task"
               >
                 {provided => (
@@ -39,7 +46,12 @@ class Column extends Component {
                     ref={provided.innerRef}
                     {...provided.droppableProps}
                   >
-                    {tasks.map((task, index) => <Task key={task.id} task={task} index={index} />)}
+                    {cards.map((obj, index) => {
+                      if (obj.boardColumnId === columnId) {
+                        const task = obj;
+                        return <Task key={task.id} task={task} index={index} />;
+                      }
+                    })}
                     {provided.placeholder}
                   </div>
                 )}
@@ -56,8 +68,15 @@ class Column extends Component {
 
 Column.propTypes = {
   column: PropTypes.objectOf(PropTypes.any).isRequired,
-  tasks: PropTypes.arrayOf(PropTypes.any).isRequired,
+  cards: PropTypes.arrayOf(PropTypes.any).isRequired,
   index: PropTypes.number.isRequired,
 };
 
-export default Column;
+const mapStateToProps = (state) => {
+  const { database } = state;
+  const cards = Object.values(database.BoardColumnCard.byId)
+    .sort(sorting);
+  return { cards };
+};
+
+export default connect(mapStateToProps)(Column);

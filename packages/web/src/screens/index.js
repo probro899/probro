@@ -17,7 +17,7 @@ export default () => (
       <Route exact path="/register" component={Registration} />
       <Route exact path="/:id/me" component={BroHome} />
       <Route exact path="/write-blog/:id/me" component={CreateBlog} />
-      <Route exact path="/class-work/:id/me" component={ClassManager} />
+      <Route exact path="/class-work/:id/:classId" component={ClassManager} />
       <Route exact path="/forgot-password" component={Forgot} />
       <Route exact path="/email-verification/:token" component={EmailVerification} />
       <Route exact path="/reset/:token" component={Reset} />

@@ -26,21 +26,21 @@ class Task extends Component {
     const { task, index } = this.props;
     return (
       <Draggable
-        draggableId={task.id}
+        draggableId={`${task.id}`}
         index={index}
       >
         {provided => (
           <div
-            className="task-container"
+            ref={provided.innerRef}
             {...provided.draggableProps}
             {...provided.dragHandleProps}
-            ref={provided.innerRef}
+            className="task-container"
             onClick={this.onClick}
             onKeyDown={this.onClick}
             role="menuitem"
             tabIndex={0}
           >
-            {task.title}
+            {task.name}
           </div>
         )}
       </Draggable>
