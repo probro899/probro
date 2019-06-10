@@ -6,7 +6,7 @@ const protocol = process.env.REACT_APP_SOCKET_PROTOCOL || (window.location.proto
 const host = process.env.REACT_APP_SOCKET_HOST || window.location.hostname;
 const port = 4001;
 // const port = process.env.REACT_APP_SOCKET_PORT || window.location.port;
-const temp = '192.168.1.66';
+const temp = 'localhost';
 
 export default () => {
   const { sessionId } = store.getState().account;

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Dialog, Button, TextArea, Intent } from '@blueprintjs/core';
 import PropTypes from 'prop-types';
-import * as actions from '../../actions';
+import { timeStampSorting } from '../../screens/users/utility-functions';
 
 const profileIcon = require('../../assets/imageUploadIcon.png');
 
@@ -11,12 +11,53 @@ class TaskOverlay extends Component {
     editHead: false,
     editDesc: false,
     commentText: '',
+    task: { },
+    comments: [],
+    description: {},
+    attachments: [],
   };
+
+  componentWillReceiveProps(nextProps) {
+    const {
+      taskId,
+      tasks,
+      comments,
+      attachments,
+      descriptions,
+    } = nextProps;
+    const commentsCard = comments.filter((obj) => {
+      if (taskId === obj.boardColumnCardId) {
+        return obj;
+      }
+    });
+    const attachmentsCard = attachments.filter((obj) => {
+      if (taskId === obj.boardColumnCardId) {
+        return obj;
+      }
+    });
+    // finding the latest description
+    const latestDesription = descriptions.filter((obj) => {
+      if (taskId === obj.boardColumnCardId) {
+        return obj;
+      }
+    }).sort(timeStampSorting)[0];
+
+    tasks.map((obj) => {
+      if (obj.id === taskId) {
+        this.setState({
+          comments: commentsCard,
+          attachments: attachmentsCard,
+          task: obj,
+          description: latestDesription,
+        });
+      }
+    });
+  }
 
   // on overlay close
   onClose = () => {
-    const { _class, updateClassValue } = this.props;
-    updateClassValue('overLayContent', { ..._class.overLayContent, isOpen: false });
+    const { onClose, taskId } = this.props;
+    onClose(taskId);
     this.setState({
       editHead: false,
       editDesc: false,
@@ -134,9 +175,17 @@ class TaskOverlay extends Component {
   }
 
   render() {
-    const { _class } = this.props;
-    const { isOpen, taskTitle, taskDescription, comments } = _class.overLayContent;
-    const { editHead, editDesc, commentText } = this.state;
+    const { isOpen, taskId, tasks, _class } = this.props;
+    const { taskTitle, taskDescription } = _class.overLayContent;
+    const {
+      editHead,
+      editDesc,
+      commentText,
+      task,
+      comments,
+      attachments,
+      description,
+    } = this.state;
     return (
       <Dialog
         isOpen={isOpen}
@@ -145,21 +194,22 @@ class TaskOverlay extends Component {
       >
         <div className="task-detail-overlay">
           <div className="overlay-title">
-            {editHead ? <TextArea value={taskTitle} onChange={e => this.titleChange(e)} />
+            {editHead ? <TextArea value={task.name} onChange={e => this.titleChange(e)} />
               : (
                 <div className="head">
                   <span className="title">
-                    {taskTitle}
+                    {task.name}
                   </span>
                 </div>
               )
             }
             {editHead
-              ? (<Button
-                text="Save"
-                onClick={this.toggleElemTitle}
-                className="edit-button"
-              />
+              ? (
+                <Button
+                  text="Save"
+                  onClick={this.toggleElemTitle}
+                  className="edit-button"
+                />
               )
               : (
                 <Button
@@ -181,12 +231,13 @@ class TaskOverlay extends Component {
               <div className="desc-head">
                 <u>Description</u>
                 {editDesc
-                  ? (<Button
-                    text="Save"
-                    onClick={this.toggleElemDesc}
-                    small
-                    className="edit-button"
-                  />
+                  ? (
+                    <Button
+                      text="Save"
+                      onClick={this.toggleElemDesc}
+                      small
+                      className="edit-button"
+                    />
                   )
                   : (
                     <Button
@@ -199,7 +250,14 @@ class TaskOverlay extends Component {
                 }
               </div>
               <div className="desc">
-                {editDesc ? <TextArea value={taskDescription} onChange={this.descChange} /> : <span>{taskDescription}</span>}
+                {editDesc
+                  ? <TextArea value={task.description} onChange={this.descChange} />
+                  : (
+                    <span>
+                      {!description
+                        ? task.description : description.title}
+                    </span>
+                  )}
               </div>
             </div>
             <div className="comment-container">
@@ -220,7 +278,7 @@ class TaskOverlay extends Component {
               <h3>History</h3>
               {comments.map((comment) => {
                 return (
-                  <div className="s-comment" key={comment.commentId}>
+                  <div className="s-comment" key={comment.id}>
                     <div>
                       <img
                         src={profileIcon}
@@ -230,11 +288,11 @@ class TaskOverlay extends Component {
                     </div>
                     <div className="com-con">
                       <div className="com-auth">
-                        <span style={{ fontSize: '16px', fontWeight: 'bold', padding: '3px' }}>{comment.user.userName}</span>
-                        <small>{comment.timestamp}</small>
+                        <span style={{ fontSize: '16px', fontWeight: 'bold', padding: '3px' }}>{comment.userId}</span>
+                        <small>{comment.timeStamp}</small>
                       </div>
                       <div className="com-desc" style={{ padding: '3px' }}>
-                        {comment.text}
+                        {comment.comment}
                       </div>
                     </div>
                   </div>
@@ -252,10 +310,11 @@ class TaskOverlay extends Component {
 }
 
 TaskOverlay.propTypes = {
-  _class: PropTypes.objectOf(PropTypes.any).isRequired,
-  updateClassValue: PropTypes.func.isRequired,
-  main: PropTypes.objectOf(PropTypes.any).isRequired,
+  onClose: PropTypes.func.isRequired,
+  isOpen: PropTypes.bool.isRequired,
+  taskId: PropTypes.number.isRequired,
+  tasks: PropTypes.arrayOf(PropTypes.any).isRequired,
 };
 
-const mapStateToProps = (state, ownprops) => ({ ...state, ...ownprops });
-export default connect(mapStateToProps, { ...actions })(TaskOverlay);
+const mapStateToProps = state => state;
+export default connect(mapStateToProps)(TaskOverlay);

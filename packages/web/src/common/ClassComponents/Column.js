@@ -1,24 +1,76 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
 import Task from './Task';
 import NewTask from './NewTask';
-import sorting from '../../screens/users/utility-functions';
+import { MoreButton, PopoverForm } from '../../components';
+import { DeletePopOver } from '../index';
+import UpdateColumnStructure from './structure';
 
 class Column extends Component {
-  state = {};
+  state = {
+    columnDeletePopOver: false,
+    id: '',
+    columnEditPopOver: false,
+  };
+
+  // this is more button handle function
+  onMore = async (action, id) => {
+    if (action === 'delete') {
+      this.setState({
+        id,
+        columnDeletePopOver: true,
+      });
+    }
+    if (action === 'edit') {
+      this.setState({
+        id,
+        columnEditPopOver: true,
+      });
+    }
+  }
+
+  deleteColumn = async (type) => {
+    const { api } = this.props;
+    const { id } = this.state;
+    if (type === 'confirm') {
+      await api.deleteBoardColumn({ id });
+    }
+    this.setState({
+      id: '',
+      columnDeletePopOver: false,
+    });
+  }
+
+  updateColumnName = async (data) => {
+    const { api } = this.props;
+    const { id } = this.state;
+    await api.updateBoardColumn([data, { id }]);
+    this.setState({
+      id: '',
+      columnEditPopOver: false,
+    });
+    return { response: 200 };
+  }
+
+  closeUpdatePopOver = () => {
+    const { columnEditPopOver } = this.state;
+    this.setState({
+      columnEditPopOver: !columnEditPopOver,
+    });
+  }
 
   render() {
     const {
       column,
       columnId,
       index,
-      cards,
+      onTaskClick,
     } = this.props;
+    const { columnDeletePopOver, columnEditPopOver } = this.state;
     return (
       <Draggable
-        draggableId={`${column.id}`}
+        draggableId={`column${column.id}`}
         index={index}
       >
         {provided => (
@@ -28,10 +80,22 @@ class Column extends Component {
             {...provided.draggableProps}
           >
             <div className="column-inner-container">
+              <PopoverForm
+                onClose={this.closeUpdatePopOver}
+                callback={this.updateColumnName}
+                isOpen={columnEditPopOver}
+                structure={UpdateColumnStructure}
+              />
+              <DeletePopOver
+                isOpen={columnDeletePopOver}
+                action={this.deleteColumn}
+                name={column.name}
+              />
               <div
                 className="column-title"
                 {...provided.dragHandleProps}
               >
+                <MoreButton id={columnId} onMore={this.onMore} />
                 <span>
                   {column.name}
                 </span>
@@ -46,11 +110,16 @@ class Column extends Component {
                     ref={provided.innerRef}
                     {...provided.droppableProps}
                   >
-                    {cards.map((obj, index) => {
-                      if (obj.boardColumnId === columnId) {
-                        const task = obj;
-                        return <Task key={task.id} task={task} index={index} />;
-                      }
+                    {column.tasks.map((obj, index) => {
+                      const task = obj;
+                      return (
+                        <Task
+                          key={task.id}
+                          task={task}
+                          index={index}
+                          onClick={onTaskClick}
+                        />
+                      );
                     })}
                     {provided.placeholder}
                   </div>
@@ -68,15 +137,10 @@ class Column extends Component {
 
 Column.propTypes = {
   column: PropTypes.objectOf(PropTypes.any).isRequired,
-  cards: PropTypes.arrayOf(PropTypes.any).isRequired,
+  api: PropTypes.objectOf(PropTypes.any).isRequired,
   index: PropTypes.number.isRequired,
+  columnId: PropTypes.number.isRequired,
+  onTaskClick: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = (state) => {
-  const { database } = state;
-  const cards = Object.values(database.BoardColumnCard.byId)
-    .sort(sorting);
-  return { cards };
-};
-
-export default connect(mapStateToProps)(Column);
+export default Column;

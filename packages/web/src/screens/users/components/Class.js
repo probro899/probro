@@ -1,44 +1,23 @@
 import React, { Component } from 'react';
-import { Button, Menu, MenuItem, Popover } from '@blueprintjs/core';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { DeletePopOver } from '../../../common';
 import boardStructure from '../../../common/ClassComponents/structure';
 import client from '../../../socket';
-import { PopoverForm } from '../../../components';
-
-// more button popover here id holds the id of the board
-const SmallMenu = (onclick, id) => {
-  return (
-    <Menu>
-      <MenuItem
-        icon="edit"
-        text="Edit"
-        onClick={() => onclick('edit', id)}
-      />
-      <Menu.Divider />
-      <MenuItem
-        icon="delete"
-        intent="danger"
-        text="Delete"
-        onClick={() => onclick('delete', id)}
-      />
-    </Menu>
-  );
-};
+import { PopoverForm, MoreButton } from '../../../components';
 
 class Class extends Component {
   state = {
     // create holds bool for the add new class popover
     createBool: false,
     deleteClass: {
-      id: '',
+      id: 0,
       name: '',
       deletePopOverBool: false,
     },
     updateClass: {
-      id: '',
+      id: 0,
       updateClassBool: false,
     },
     api: {},
@@ -102,7 +81,7 @@ class Class extends Component {
     }
     this.setState({
       deleteClass: {
-        id: '',
+        id: 0,
         name: '',
         deletePopOverBool: !deleteClass.deletePopOverBool,
       },
@@ -115,7 +94,7 @@ class Class extends Component {
     await api.updateBoard([data, { id: updateClass.id }]);
     this.setState({
       updateClass: {
-        id: '',
+        id: 0,
         updateClassBool: false,
       },
     });
@@ -127,7 +106,7 @@ class Class extends Component {
     const { updateClass } = this.state;
     this.setState({
       updateClass: {
-        id: '',
+        id: 0,
         updateClassBool: !updateClass.updateClassBool,
       },
     });
@@ -152,14 +131,8 @@ class Class extends Component {
               return (
                 <div style={{ position: 'relative' }} key={index}>
                   {/* more button popover */}
-                  <Popover
-                    content={SmallMenu(this.onMore, id)}
-                    position="right"
-                    className="more-button"
-                  >
-                    <Button icon="more" minimal />
-                  </Popover>
-                  <Link push to={`/class-work/${account.sessionId}/${id}`} className="content-link">
+                  <MoreButton onMore={this.onMore} id={id} />
+                  <Link to={`/class-work/${account.sessionId}/${id}`} className="content-link">
                     <div className="class-repr">
                       <span>
                         {database.Board.byId[id].name}

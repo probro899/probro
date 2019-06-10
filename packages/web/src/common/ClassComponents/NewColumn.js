@@ -32,10 +32,10 @@ class NewColumn extends Component {
     const pos = Object.keys(database.BoardColumn.byId).reduce((count, obj) => {
       if (database.BoardColumn.byId[obj].boardId === classId) {
         // eslint-disable-next-line no-param-reassign
-        count += 1;
+        count += 16384;
       }
       return count;
-    }, 0);
+    }, 16384);
     await api.addBoardColumn({
       userId: account.user.id,
       timeStamp: Date.now(),

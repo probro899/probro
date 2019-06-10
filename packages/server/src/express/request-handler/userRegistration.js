@@ -5,12 +5,12 @@ export default async (req, res) => {
     const resFinal = await userRegistration(req.body);
     console.log('final response', resFinal);
     if (resFinal) {
-      res.status = 200;
+      res.status(200);
       res.send(JSON.stringify(resFinal));
     }
   } catch (e) {
-    res.status = 501;
-    res.send(JSON.stringify(e.message));
+    res.status(501);
+    res.send(e);
     throw e;
   }
 };

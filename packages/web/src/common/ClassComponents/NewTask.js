@@ -32,10 +32,10 @@ class NewTask extends Component {
     const pos = Object.keys(database.BoardColumnCard.byId).reduce((count, obj) => {
       if (database.BoardColumnCard.byId[obj].boardColumnId === columnId) {
         // eslint-disable-next-line no-param-reassign
-        count += 1;
+        count += 16384;
       }
       return count;
-    }, 0);
+    }, 16384);
     await api.addBoardColumnCard({
       userId: account.user.id,
       timeStamp: Date.now(),
