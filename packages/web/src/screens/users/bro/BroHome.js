@@ -3,12 +3,12 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 import { Navbar } from '../../home/component/index';
-import { SideNav, Profile, Blog, Class, Setting } from '../components';
+import { SideNav, Profile, Blog, Class, Setting, Communication } from '../components';
 import client from '../../../socket';
 
 class HomePage extends Component {
   state = {
-    activeNav: 'Profile',
+    activeNav: 'Communication',
   };
 
   componentWillMount() {
@@ -47,8 +47,11 @@ class HomePage extends Component {
       case ('Blog'):
         activeBar = <Blog />;
         break;
+      case 'Communication':
+        activeBar = <Communication />;
+        break;
       default:
-        activeBar = <Profile />;
+        activeBar = <Communication />;
     }
     return (
       error ? <Redirect push to="/" />

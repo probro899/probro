@@ -5,12 +5,13 @@ class Channel {
     this.id = id;
   }
 
-  dispatch(action) {
-    return Channel.provider.publish(this.id, PKT_ACTION(action));
+  dispatch(action, userList) {
+    return Channel.provider.publish(this.id, PKT_ACTION(action), userList);
   }
 
-  emit(event, data) {
-    return Channel.provider.publish(this.id, PKT_EVENT(event, data));
+  emit(event, data, userList) {
+    console.log(' Channel emit called', event, data, userList);
+    return Channel.provider.publish(this.id, PKT_EVENT(event, data), userList);
   }
 }
 

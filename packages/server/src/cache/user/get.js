@@ -15,7 +15,7 @@ export default async function get(id) {
 
     const userDetail = await find('UserDetail', { userId: id });
 
-    const board = await find('Board', { userId: id });
+    const board = await find('Board', { userId: id, joinStatus: '1' });
 
     const boardDetailsPromises = [];
 

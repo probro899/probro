@@ -14,6 +14,7 @@ export default async function initUser(id) {
   }
 
   session.set('user', u);
+  session.subscribe('Board');
 
   session.dispatch(schema.init('User', u.user));
   session.dispatch(schema.init('UserDetail', u.userDetail));

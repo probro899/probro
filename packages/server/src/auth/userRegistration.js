@@ -15,7 +15,7 @@ export default async (record) => {
       const findUserEmailRes = await findOne('User', { email: record.email });
       const htmlStringValue = await htmlString(token);
       if (findUserEmailRes) {
-        throw new Error('Email is already taken');
+        throw new Error('Emailisalreadytaken');
       }
       const hasPassword = await genHashPassword(record.password);
       const insertRes = await insert('User', { ...record, password: hasPassword, verify: false, verificationToken: token });
@@ -26,7 +26,7 @@ export default async (record) => {
           to: `<${record.email}>`,
           subject: 'User email confirmation',
           text: 'No reply',
-          html: htmlStringValue,
+          html: htmlStringValue.registrationHtmlString,
         });
         return insertRes;
       }
@@ -35,6 +35,6 @@ export default async (record) => {
     return result;
   } catch (e) {
     console.log('error in userRegistration api', e);
-    throw e;
+    throw new Error(e.message);
   }
 };

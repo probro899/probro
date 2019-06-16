@@ -57,6 +57,7 @@ class SideNav extends Component {
       { iconName: 'HOME', name: 'Classes' },
       { iconName: 'COG', name: 'Settings' },
       { iconName: 'PARAGRAPH', name: 'Blog' },
+      { iconName: 'PERSON', name: 'Communication' },
     ];
     const { activeNav } = this.props;
     return (

@@ -3,6 +3,17 @@
  * For production use consider something like shocked-channel-redis
  */
 
+function presentorTestor(obj, userList) {
+  let p = false;
+  userList.forEach((e) => {
+    if (obj.id === e.userId) {
+      p = true;
+      return p;
+    }
+  });
+  return p;
+}
+
 export default function createDefaultProvider() {
   const channels = {};
 
@@ -10,10 +21,13 @@ export default function createDefaultProvider() {
     // TODO: Make sure the session is not added more than once
     subscribe: (channelId, session) => {
       const list = channels[channelId];
+      // console.log('subcripbe preslist channel', list);
       if (!list) {
         channels[channelId] = [session];
+        // console.log('channel data after subscription', channels.Board);
       } else {
         list.push(session);
+        // console.log('chanel record after another user login', channels.Board[0].scopes);
       }
       return true;
     },
@@ -38,9 +52,13 @@ export default function createDefaultProvider() {
       return true;
     },
 
-    publish: (channelId, message) => {
+    publish: (channelId, message, userList) => {
       const list = channels[channelId];
-      if (list) {
+      if (userList) {
+        console.log('default Channel data', list[0].values.user.user, userList);
+        const shortedUserList = list.filter(session => presentorTestor(session.values.user.user[0], userList));
+        shortedUserList.forEach(session => session.send(message));
+      } else if (!userList && list) {
         list.forEach(session => session.send(message));
       }
     },
