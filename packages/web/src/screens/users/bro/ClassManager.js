@@ -14,7 +14,7 @@ class Classes extends Component {
     // true if the id in the url doesn't match
     redirectionError: false,
     api: {},
-    classId: null,
+    classId: 0,
     columns: [],
     tasks: [],
     comments: [],
@@ -257,7 +257,7 @@ class Classes extends Component {
       <div style={{ position: 'relative' }}>
         {redirectionError && <Redirect to="/" />}
         <Navbar />
-        <ToolBar boardId={classId} />
+        <ToolBar boardId={classId} api={api} />
         <div
           className="class-wrapper"
           style={{ height: window.innerHeight }}

@@ -4,9 +4,10 @@ import { Link, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { Icon, Menu, MenuItem, Popover, Position, Intent } from '@blueprintjs/core';
 import { IconNames } from '@blueprintjs/icons';
-import client from '../../../socket';
+import client from '../../../../socket';
+import Notifications from './Notifications';
 
-const profileIcon = require('../../../assets/imageUploadIcon.png');
+const profileIcon = require('../../../../assets/imageUploadIcon.png');
 
 const DropDownMenu = (onclick, apis) => {
   return (
@@ -22,7 +23,7 @@ const DropDownMenu = (onclick, apis) => {
         icon="log-out"
         intent={Intent.DANGER}
         text="Logout"
-        onClick={async () =>  await apis.logout()}
+        onClick={async () => await apis.logout()}
       />
     </Menu>
   );
@@ -39,6 +40,14 @@ class Navbar extends Component {
   async componentDidMount() {
     const apis = await client.scope('Mentee');
     this.setState({ apis });
+    // eslint-disable-next-line no-undef
+    window.addEventListener('resize', this.screenResize);
+  }
+
+  // checks for the resize of window
+  screenResize = (e) => {
+    // eslint-disable-next-line no-console
+    console.log('to be done for it to be responsive', e.currentTarget.innerWidth);
   }
 
   onClick = (value) => {
@@ -105,6 +114,8 @@ class Navbar extends Component {
               </span>
             </div>
           </Link>
+          {/* Notifications in navigation */}
+          {account.sessionId && <Notifications />}
           { account.sessionId
             ? (
               <Link

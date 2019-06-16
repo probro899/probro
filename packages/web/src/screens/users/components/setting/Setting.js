@@ -1,18 +1,17 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
-import { Form } from '../../../common';
-import * as actions from '../../../actions';
-import client from '../../../socket';
+import client from '../../../../socket';
+import AdditionalForm from './AdditionalForm';
+import BasicForm from './BasicForm';
+import AdvancedForm from './AdvancedForm';
 
-const detailForm = (activeTab, form, apis) => {
+const detailForm = (activeTab, apis) => {
   switch (activeTab) {
     case 'basic':
-      return (<Form data={form.basicForm} schema="basicForm" apis={apis} />);
+      return (<BasicForm apis={apis} />);
     case 'additional':
-      return (<Form data={form.additionalForm} schema="additionalForm" apis={apis} />);
+      return (<AdditionalForm apis={apis} />);
     case 'advanced':
-      return (<Form data={form.advancedForm} schema="advancedForm" apis={apis} />);
+      return (<AdvancedForm apis={apis} />);
     default:
       return null;
   }
@@ -22,12 +21,6 @@ class Setting extends Component {
   state = {
     activeTab: 'basic',
     apis: {},
-  }
-
-  componentWillMount() {
-    const { mainFormHandler } = this.props;
-    mainFormHandler('initSettingForms', {}); // when we call
-    // action from props dispatch and getstate are automatically passed.
   }
 
   async componentDidMount() {
@@ -41,7 +34,6 @@ class Setting extends Component {
 
   render() {
     const { activeTab, apis } = this.state;
-    const { form } = this.props;
     return (
       <div className="settings">
         <div className="title">
@@ -55,17 +47,10 @@ class Setting extends Component {
             <button type="button">Switch to Expert</button>
           </div>
         </div>
-        {detailForm(activeTab, form, apis)}
+        {detailForm(activeTab, apis)}
       </div>
     );
   }
 }
 
-Setting.propTypes = {
-  form: PropTypes.objectOf(PropTypes.any).isRequired,
-  mainFormHandler: PropTypes.func.isRequired,
-};
-
-const mapStateToProps = state => state;
-
-export default connect(mapStateToProps, { ...actions })(Setting);
+export default Setting;

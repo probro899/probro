@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css?family=Noto+Sans|Oxygen|Roboto:100,300,400,500,900&display=swap");
 .slider-container {
   position: relative;
   height: 500px;
@@ -22,9 +23,9 @@
     position: absolute;
     z-index: 2; }
 
-/* this is navbar 
+/* this is navbar
 there is navigation fixing
-top attachment etc. 
+top attachment etc.
 */
 .navbar {
   top: 0;
@@ -39,6 +40,9 @@ top attachment etc.
   background-image: linear-gradient(#1e6eff, #4eb9ff);
   box-shadow: 0 1px 5px #1e6eff;
   z-index: 3; }
+  @media screen and (max-width: 650px) {
+    .navbar {
+      height: 40px; } }
   .navbar .navbar-left {
     display: flex;
     flex-direction: row; }
@@ -49,6 +53,10 @@ top attachment etc.
     font-size: 20px;
     padding: 10px;
     color: white; }
+    @media screen and (max-width: 650px) {
+      .navbar .navbar-item {
+        font-size: 15px;
+        padding: 2px; } }
   .navbar a:link {
     display: flex;
     flex-direction: column;
@@ -436,7 +444,8 @@ top attachment etc.
 body {
   margin: 0;
   padding: 0;
-  background-color: #f6f6f6; }
+  background-color: #f6f6f6;
+  font-family: 'Noto Sans', sans-serif; }
 
 .home-screen {
   margin: 0;
