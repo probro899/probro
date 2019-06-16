@@ -1,46 +1,75 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import * as actions from '../../actions';
+import client from '../../socket';
+import { PopoverForm } from '../../components';
+import TaskFormStructure from './structure';
 
 class NewTask extends Component {
-  state = {};
+  state = {
+    // if to open the popover to add the title to the new task.
+    popOpen: false,
+    api: {},
+  };
 
-  onClick = () => {
-    const { _class, updateClassValue, columnId } = this.props;
-    const { tasks, columns } = _class;
-    const taskId = Math.random().toString(36).substring(7);
-    const newTasks = {
-      ...tasks,
-      [taskId]: { id: taskId, title: 'New Task just Assigned', description: 'Sample description', comments: [] },
-    };
-    const columnTasks = columns[columnId].taskIds;
-    columnTasks.push(taskId);
-    const newColumns = {
-      ...columns,
-      [columnId]: {
-        ...columns[columnId],
-        taskIds: columnTasks,
-      },
-    };
-    updateClassValue('tasks', newTasks);
-    updateClassValue('columns', newColumns);
+  async componentWillMount() {
+    const api = await client.scope('Mentee');
+    this.setState({
+      api,
+    });
+  }
+
+  handlePopOverForm = () => {
+    const { popOpen } = this.state;
+    this.setState({
+      popOpen: !popOpen,
+    });
+  }
+
+  addNewTask = async (data) => {
+    const { columnId, account, database } = this.props;
+    const { api } = this.state;
+    const pos = Object.keys(database.BoardColumnCard.byId).reduce((count, obj) => {
+      if (database.BoardColumnCard.byId[obj].boardColumnId === columnId) {
+        // eslint-disable-next-line no-param-reassign
+        count += 16384;
+      }
+      return count;
+    }, 16384);
+    await api.addBoardColumnCard({
+      userId: account.user.id,
+      timeStamp: Date.now(),
+      name: data.name,
+      position: pos,
+      boardColumnId: columnId,
+    });
+    this.handlePopOverForm();
+    return { response: 200 };
   };
 
   render() {
+    const { popOpen } = this.state;
     return (
-      <div className="column-footer" role="button" tabIndex={0} onKeyDown={this.onClick} onClick={this.onClick}>
-        + New Task
+      <div>
+        <PopoverForm
+          isOpen={popOpen}
+          onClose={this.handlePopOverForm}
+          callback={this.addNewTask}
+          structure={TaskFormStructure}
+        />
+        <div className="column-footer" role="button" tabIndex={0} onKeyDown={this.handlePopOverForm} onClick={this.handlePopOverForm}>
+          + New Task
+        </div>
       </div>
     );
   }
 }
 
 NewTask.propTypes = {
-  _class: PropTypes.objectOf(PropTypes.any).isRequired,
-  updateClassValue: PropTypes.func.isRequired,
-  columnId: PropTypes.string.isRequired,
+  columnId: PropTypes.number.isRequired,
+  account: PropTypes.objectOf(PropTypes.any).isRequired,
+  database: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
-const mapStateToProps = (state, ownprops) => ({ ...state, ...ownprops });
-export default connect(mapStateToProps, { ...actions })(NewTask);
+const mapStateToProps = state => state;
+export default connect(mapStateToProps)(NewTask);

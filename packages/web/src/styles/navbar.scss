@@ -1,6 +1,6 @@
-/* this is navbar 
+/* this is navbar
 there is navigation fixing
-top attachment etc. 
+top attachment etc.
 */
 
 .navbar {
@@ -16,6 +16,9 @@ top attachment etc.
     background-image: linear-gradient($dropPrimary,$primary);
     box-shadow: 0 1px 5px $dropPrimary;
     z-index: 3; // above all putting navbar at the top of the heap.
+    @media screen and (max-width: 650px){
+      height: $navbarHeightSmall;
+    }
     .navbar-left {
         display: flex;
         flex-direction: row;
@@ -28,6 +31,10 @@ top attachment etc.
         font-size: 20px;
         padding: 10px;
         color: white;
+        @media screen and (max-width: 650px){
+          font-size: 15px;
+          padding: 2px;
+        }
     }
     a:link {
         display: flex;

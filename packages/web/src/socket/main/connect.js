@@ -253,7 +253,7 @@ const connect = (url, store) => {
     },
 
     rpc: (scope, api, ...Arguments) => {
-      console.log('rpc called', scope, api, Arguments);
+      // console.log('rpc called', scope, api, Arguments);
       const argLenth = Arguments.length;
       const args = Array(argLenth > 2 ? argLenth - 2 : 0);
       for (let key = 2; key < argLenth; key += 1) {

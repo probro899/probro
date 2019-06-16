@@ -1,28 +1,63 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import * as actions from '../../actions';
+import client from '../../socket';
+import { PopoverForm } from '../../components';
+import ColumnFormStructure from './structure';
 
 class NewColumn extends Component {
-  state = {};
+  state = {
+    // if to open the popover to add the title to the new column.
+    popOpen: false,
+    api: {},
+  };
 
-  onClick = () => {
-    const { _class, updateClassValue } = this.props;
-    const { columns, columnOrder } = _class;
-    const colId = Math.random().toString(36).substring(7);
-    const newColumns = {
-      ...columns,
-      [colId]: { id: colId, title: 'New Column', taskIds: [] },
-    };
-    columnOrder.push(colId);
-    updateClassValue('columns', newColumns);
-    updateClassValue('columnOrder', columnOrder);
+  async componentWillMount() {
+    const api = await client.scope('Mentee');
+    this.setState({
+      api,
+    });
+  }
+
+  handlePopOverForm = () => {
+    const { popOpen } = this.state;
+    this.setState({
+      popOpen: !popOpen,
+    });
+  }
+
+  addNewColumn = async (data) => {
+    const { classId, account, database } = this.props;
+    const { api } = this.state;
+    const pos = Object.keys(database.BoardColumn.byId).reduce((count, obj) => {
+      if (database.BoardColumn.byId[obj].boardId === classId) {
+        // eslint-disable-next-line no-param-reassign
+        count += 16384;
+      }
+      return count;
+    }, 16384);
+    await api.addBoardColumn({
+      userId: account.user.id,
+      timeStamp: Date.now(),
+      name: data.name,
+      position: pos,
+      boardId: classId,
+    });
+    this.handlePopOverForm();
+    return { response: 200 };
   };
 
   render() {
+    const { popOpen } = this.state;
     return (
       <div className="add-new-column">
-        <div role="button" tabIndex={0} onKeyDown={this.onClick} className="title" onClick={this.onClick}>
+        <PopoverForm
+          isOpen={popOpen}
+          onClose={this.handlePopOverForm}
+          callback={this.addNewColumn}
+          structure={ColumnFormStructure}
+        />
+        <div role="button" tabIndex={0} onKeyDown={this.handlePopOverForm} className="title" onClick={this.handlePopOverForm}>
           <span>+ New Column</span>
         </div>
       </div>
@@ -30,10 +65,15 @@ class NewColumn extends Component {
   }
 }
 
-NewColumn.propTypes = {
-  _class: PropTypes.objectOf(PropTypes.any).isRequired,
-  updateClassValue: PropTypes.func.isRequired,
+NewColumn.defaultProps = {
+  classId: '',
 };
 
-const mapStateToProps = (state, ownprops) => ({ ...state, ...ownprops });
-export default connect(mapStateToProps, { ...actions })(NewColumn);
+NewColumn.propTypes = {
+  account: PropTypes.objectOf(PropTypes.any).isRequired,
+  database: PropTypes.objectOf(PropTypes.any).isRequired,
+  classId: PropTypes.number,
+};
+
+const mapStateToProps = state => state;
+export default connect(mapStateToProps)(NewColumn);
