@@ -10,6 +10,7 @@ const CustomButton = (props) => {
       <div style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', alignItems: 'center' }}>
         {state.loading && <Spinner intent={Intent.PRIMARY} size={40} /> }
         {state.error && <Label style={{ fontSize: 16, color: 'red' }}>{state.error}</Label>}
+        {state.message && <Label style={{ fontSize: 16, color: 'green' }}>{state.message}</Label>}
       </div>
       <Button
         fill

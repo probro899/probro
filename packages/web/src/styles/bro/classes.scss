@@ -1,3 +1,4 @@
+@import '../config.scss';
 // styling the class component here
 .classes {
   display: flex;
@@ -13,6 +14,11 @@
     padding: 10px;
     display: flex;
     flex-wrap: wrap;
+    .more-button {
+      top: 10px;
+      right: 10px;
+      position: absolute;
+    }
     .content-link {
       margin: 10px;
       min-height: 150px;
@@ -21,9 +27,9 @@
       cursor: pointer;
       background-color: lightgray;
       text-decoration: none;
+      box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.56);
       -webkit-box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.56);
       -moz-box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.56);
-      box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.56);
       border-radius: 5px;
       -moz-border-radius: 5px;
       -webkit-border-radius: 5px;
@@ -53,13 +59,37 @@
 }
 
 //styling the classManager component. 
-.classWrapper {
+.tool-bar {
+  top: $navbarHeight;
+  height: $toolbarHeight;
+  position: absolute;
+  width: 100%;
+  padding: 5px 0px 0px 0px;
+  .toolbar-container {
+    height: 100%;
+    padding: 2px;
+    display: flex;
+    justify-content: space-between;
+    background: $primaryHover;
+    .left-tools {
+      span {
+        color: white;
+        font-weight: 600;
+        font-size: 16px;
+      }
+    }
+    .right-tools {
+    }
+  }
+}
+.class-wrapper {
   .columns {
     height: 100%;
-    padding-top: $navbarHeight;
+    padding-top: $navbarHeight + $toolbarHeight;
     display: flex;
     flex-direction: row;
     align-items: flex-start;
+    overflow-y: scroll;
     .column-container {
       height: 100%;
       // this 18px value has been calculated according to margins 18 px * 2
@@ -75,9 +105,15 @@
         background-color: $boardColor;
         .column-title {
           padding: 8px;
+          position: relative;
           span {
             font-size: 20px;
             font-weight: 600;
+          }
+          .more-button {
+            top: 5px;
+            right: 7px;
+            position: absolute;
           }
         }
         .task-list {

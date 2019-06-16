@@ -1,7 +1,7 @@
 import SideNav from './SideNav';
 import Profile from './Profile';
 import Class from './Class';
-import Setting from './Setting';
+import Setting from './setting/Setting';
 import Blog from './Blog';
 import Communication from './communication';
 

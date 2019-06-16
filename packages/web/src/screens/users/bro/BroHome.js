@@ -19,9 +19,8 @@ class HomePage extends Component {
     }
   }
 
-  async componentDidMount() {
-    const apis = await client.scope('Mentor');
-    console.log('apis in Brohome', apis);
+  componentDidMount() {
+    client.scope('Mentor');
   }
 
   changeSideNav = (name) => {

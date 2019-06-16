@@ -40,6 +40,7 @@ export default function start(options, validateSession, pulseRate = 30000) {
   const wss = new WebSocket.Server(wsOptions);
   // console.log('wss', wss);
   wss.on('connection', (ws, req) => {
+    // console.log('try to connect', req.params);
     // Create a new session object, in transmit mode, until validated
     const session = new Session(req, req.params, ws);
     // console.log('session', session);

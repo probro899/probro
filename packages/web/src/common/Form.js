@@ -19,10 +19,15 @@ const Element = (props) => {
   }
 };
 
+Element.propTypes = {
+  data: PropTypes.objectOf(PropTypes.any).isRequired,
+};
+
 class Form extends React.Component {
   state = {
     error: null,
     loading: false,
+    message: null,
     fields: {},
   };
 
@@ -56,7 +61,7 @@ class Form extends React.Component {
     this.setState({ loading: true });
     const res = await callback(fields);
     if (res.response === 200) {
-      this.setState({ loading: false, error: null });
+      this.setState({ loading: false, error: null, message: res.message });
     } else {
       this.setState({ loading: false, error: res.error });
     }
