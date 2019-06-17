@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { Icon, Menu, MenuItem, Popover, Position, Intent } from '@blueprintjs/core';
 import { IconNames } from '@blueprintjs/icons';
 import client from '../../../../socket';
-import Notifications from './Notifications';
+import Notifications from '../notification';
 
 const profileIcon = require('../../../../assets/imageUploadIcon.png');
 
@@ -115,7 +115,7 @@ class Navbar extends Component {
             </div>
           </Link>
           {/* Notifications in navigation */}
-          {account.sessionId && <Notifications />}
+          {account.sessionId && <Notifications apis={apis} />}
           { account.sessionId
             ? (
               <Link

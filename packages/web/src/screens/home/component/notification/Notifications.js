@@ -1,14 +1,9 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { Drawer, Icon } from '@blueprintjs/core';
+import NotificationContainer from './NotificationContainer';
 
-const Container = () => {
-  return (
-    <div>
-      To be done.
-    </div>
-  );
-};
 
 class Notifications extends React.Component {
   state = { drawerOpen: false };
@@ -22,6 +17,7 @@ class Notifications extends React.Component {
 
   render() {
     const { drawerOpen } = this.state;
+    const { apis } = this.props;
     return (
       <Link to="#" onClick={this.onDrawerToggle}>
         <div className="navbar-item">
@@ -35,12 +31,16 @@ class Notifications extends React.Component {
             transitionDuration={200}
             hasBackdrop={false}
           >
-            <Container />
+            <NotificationContainer apis={apis} />
           </Drawer>
         </div>
       </Link>
     );
   }
 }
+
+Notifications.propTypes = {
+  apis: PropTypes.objectOf(PropTypes.any).isRequired,
+};
 
 export default Notifications;

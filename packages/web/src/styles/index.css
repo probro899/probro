@@ -441,6 +441,21 @@ top attachment etc.
       min-height: 500px;
       padding: 10px; }
 
+.notification-list {
+  padding: 5px;
+  background: white; }
+  .notification-list .notification-wrapper {
+    padding: 2px;
+    cursor: pointer; }
+    .notification-list .notification-wrapper .ntvwd {
+      border: 0.4px solid rgba(0, 0, 0, 0.4);
+      background: rgba(0, 0, 0, 0.077);
+      padding: 5px; }
+    .notification-list .notification-wrapper .vwd {
+      border: 0.4px solid rgba(0, 0, 0, 0.4);
+      background: rgba(255, 255, 255, 0);
+      padding: 5px; }
+
 body {
   margin: 0;
   padding: 0;

@@ -20,9 +20,23 @@ PopoverContent.propTypes = {
 class ToolBar extends React.Component {
   state = {};
 
-  addUserToBoardHandler = (data) => {
-    const { api } = this.props;
-    console.log('to be handled', data, api);
+  addUserToBoardHandler = async (data) => {
+    const { api, boards, boardId } = this.props;
+    const obj = {
+      ...data,
+      joinStatus: false,
+      userType: 'normal',
+      Bid: boardId,
+      timeStamp: Date.now(),
+    };
+    boards.allIds.map((i) => {
+      if (boardId === i) {
+        obj.name = boards.byId[i].name;
+      }
+    });
+    console.log(obj);
+    const res = await api.addBoardMember(obj);
+    console.log('error to be handled', res);
     return { response: 200, message: 'Congratulations! You have added a new user' };
   }
 
