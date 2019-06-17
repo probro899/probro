@@ -50,11 +50,17 @@ async function addBoardMember(record) {
 
   await db.execute(async ({ findOne, insert }) => {
     const user = await findOne('User', { email: record.email });
-    delete record.email;
     const htmlStringValue = await mailBody();
     if (user) {
       await insert('Board', { ...record, userId: user.id });
-
+      await mailer({
+        from: 'ProperClass<probro899@gmail.com>',
+        to: `<${record.email}>`,
+        subject: 'Board inivitation',
+        text: 'No reply',
+        html: htmlStringValue.boardMemberInvitationHtmlString,
+      });
+      delete record.email;
       const notiData = {
         userId: user.id,
         boardId: record.id,
@@ -65,19 +71,10 @@ async function addBoardMember(record) {
         viewStatus: false,
         imageUrl: null,
       };
-      await insert('Notification', notiData);
-
+      const notiId = await insert('Notification', notiData);
+      const notiDetails = await findOne('Notification', { id: notiId });
       const channel = session.channel('Board');
-
-      channel.dispatch(schema.add('Notification', notiData), [{ userId: user.id }]);
-
-      await mailer({
-        from: 'ProperClass<probro899@gmail.com>',
-        to: `<${record.email}>`,
-        subject: 'Board inivitation',
-        text: 'No reply',
-        html: htmlStringValue.boardMemberInvitationHtmlString,
-      });
+      channel.dispatch(schema.add('Notification', notiDetails), [{ userId: user.id }]);
     } else {
       throw new Error('User Not Found');
     }

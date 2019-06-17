@@ -12,7 +12,6 @@ export default async function initUser(id) {
     console.error(err);
     throw err;
   }
-
   session.set('user', u);
   session.subscribe('Board');
 
