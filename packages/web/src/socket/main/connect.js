@@ -26,10 +26,12 @@ const connect = (url, store) => {
 
   const fire = (event, data) => {
     const eventListeners = listeners[event];
+    // console.log('event listter value', eventListeners);
     if (eventListeners) {
       // Call the listeners with client as `this` instance
       // eslint-disable-next-line no-use-before-define
       eventListeners.forEach((element) => {
+        // console.log('element', element);
         return element.call(client, data);
       });
     }
@@ -80,7 +82,7 @@ const connect = (url, store) => {
       const rejections = Object.values(rpcs).concat(Object.values(scopeCalls));
       rpcs = {};
       scopeCalls = {};
-      console.log('rejections', rejections);
+      // console.log('rejections', rejections);
       // rejections.forEach((ref) => {
       //   const ref2 = slicedToArray(ref, 2);
       //   const reject = ref2[1];
@@ -220,6 +222,7 @@ const connect = (url, store) => {
     },
 
     on: (event, listener) => {
+      // console.log('on event listner called', event, listener);
       // Keep track of event listeners
       const eventListeners = listeners[event];
 
@@ -265,7 +268,7 @@ const connect = (url, store) => {
         rpcs[serial] = [resolve, reject];
 
         const pkt = PKT_RPC_REQUEST(serial, scope, api, Arguments);
-        console.log('packet', pkt);
+        // console.log('packet', pkt);
 
         if (!client.isConnected()) {
           return deferSend(pkt);

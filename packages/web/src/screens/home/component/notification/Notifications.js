@@ -16,6 +16,7 @@ class Notifications extends React.Component {
 
   render() {
     const { drawerOpen } = this.state;
+    const { apis } = this.props;
     return (
       <Link to="#" onClick={this.onDrawerToggle}>
         <div className="navbar-item">
@@ -29,7 +30,7 @@ class Notifications extends React.Component {
             transitionDuration={200}
             hasBackdrop={false}
           >
-            <NotificationContainer />
+            <NotificationContainer apis={apis} />
           </Drawer>
         </div>
       </Link>

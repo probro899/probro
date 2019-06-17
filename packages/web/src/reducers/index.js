@@ -19,7 +19,8 @@ export default combineReducers({
     'Blog',
     'BlogDetail',
     'BlogComment',
-    'BlogLike'
+    'BlogLike',
+    'Notification'
   ),
   form: formReducer,
   main: mainReducer,

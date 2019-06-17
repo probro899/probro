@@ -115,7 +115,7 @@ class Navbar extends Component {
             </div>
           </Link>
           {/* Notifications in navigation */}
-          {account.sessionId && <Notifications />}
+          {account.sessionId && <Notifications apis={apis} />}
           { account.sessionId
             ? (
               <Link

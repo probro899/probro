@@ -3,12 +3,9 @@ import React from 'react';
 class NotificationContainer extends React.Component {
   state = {};
 
-  async componentWillMount() {
-    const stream = await navigator.mediaDevices.getUserMedia({
-      audio: true,
-      video: true,
-    });
-    console.log(stream);
+  componentWillMount() {
+    const { apis } = this.props;
+    console.log(apis);  
   }
 
   render() {

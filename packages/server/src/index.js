@@ -39,7 +39,6 @@ run(async (nodeApp) => {
         console.log('error', err);
         session.dispatch({ type: 'LOGOUT' });
         session.emit('logout');
-
         // return socket user not validated
         return false;
       }

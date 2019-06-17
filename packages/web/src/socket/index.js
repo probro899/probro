@@ -14,6 +14,7 @@ client.on('connect', () => {
   });
 });
 
+
 const reconnect = () => {
   if (retryTimer) {
     return;
