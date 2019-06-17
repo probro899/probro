@@ -11,11 +11,12 @@ class NotificationContainer extends React.Component {
 
   render() {
     const { database } = this.props;
+    console.log(database);
     return (
       <div className="notification-list">
         {
-          database.Notifications.allIds.map((noti) => {
-            const notification = database.Notifications.byId[noti];
+          database.Notification.allIds.map((noti) => {
+            const notification = database.Notification.byId[noti];
             return (
               <div className="notification-wrapper">
                 <div className={notification.viewStatus ? 'vwd' : 'ntvwd'}>
