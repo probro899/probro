@@ -52,6 +52,7 @@ async function addBoardMember(record) {
     const user = await findOne('User', { email: record.email });
     const htmlStringValue = await mailBody();
     if (user) {
+      delete record.email;
       await insert('Board', { ...record, userId: user.id });
       await mailer({
         from: 'ProperClass<probro899@gmail.com>',
@@ -60,7 +61,6 @@ async function addBoardMember(record) {
         text: 'No reply',
         html: htmlStringValue.boardMemberInvitationHtmlString,
       });
-      delete record.email;
       const notiData = {
         userId: user.id,
         boardId: record.id,
