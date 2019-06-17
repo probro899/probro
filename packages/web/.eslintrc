@@ -4,6 +4,11 @@
       "components": [ ],
       "specialLink": [ "hrefLeft", "hrefRight" ],
       "aspects": [ "noHref", "invalidHref", "preferButton" ]
-    }]
+    }],
+    "prefer-destructuring": ["error", {"object": true, "array": false}]
+  },
+  "env": {
+    "browser": true
   }
+
 }

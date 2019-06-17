@@ -47,7 +47,7 @@ class Navbar extends Component {
   // checks for the resize of window
   screenResize = (e) => {
     // eslint-disable-next-line no-console
-    console.log('to be done for it to be responsive', e.currentTarget.innerWidth);
+    // console.log('to be done for it to be responsive', e.currentTarget.innerWidth);
   }
 
   onClick = (value) => {
