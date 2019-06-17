@@ -13,6 +13,8 @@ export default async function get(id) {
 
     const user = await find('User', { id });
 
+    const notification = await find('Notification', { userId: id });
+
     const userDetail = await find('UserDetail', { userId: id });
 
     const board = await find('Board', { userId: id, joinStatus: '1' });
@@ -58,6 +60,7 @@ export default async function get(id) {
       blogDetail,
       blogComment,
       blogLike,
+      notification,
     };
     return userDataRes;
   });
