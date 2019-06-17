@@ -50,6 +50,7 @@ async function addBoardMember(record) {
 
   await db.execute(async ({ findOne, insert }) => {
     const user = await findOne('User', { email: record.email });
+    delete record.email;
     const htmlStringValue = await mailBody();
     if (user) {
       await insert('Board', { ...record, userId: user.id });

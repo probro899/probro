@@ -2,6 +2,7 @@ import { connect } from './main';
 import getRemoteUrl from './getRemoteUrl';
 import store from '../store';
 
+
 const client = connect(getRemoteUrl(), store);
 
 let retryConnect = true;
@@ -44,6 +45,8 @@ client.on('logout', () => {
 client.on('error', (err) => {
   console.error('socket Error', err);
 });
+
+
 
 export { getRemoteUrl };
 export default client;

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { Drawer, Icon } from '@blueprintjs/core';
 import NotificationContainer from './NotificationContainer';
@@ -37,5 +38,9 @@ class Notifications extends React.Component {
     );
   }
 }
+
+Notifications.propTypes = {
+  apis: PropTypes.objectOf(PropTypes.any).isRequired,
+};
 
 export default Notifications;
