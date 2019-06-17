@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, Intent, Tooltip } from '@blueprintjs/core';
 import client from '../../../../socket';
-import { main } from './helper-functions';
+import main from '../../../../webrtc/main';
 
 class Index extends React.Component {
   state={ apis: null, pc: null, offers: [], answers: [], callType: null, recording: null, chat: null, microphone: null };

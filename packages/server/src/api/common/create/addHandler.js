@@ -52,15 +52,15 @@ async function addBoardMember(record) {
     const user = await findOne('User', { email: record.email });
     const htmlStringValue = await mailBody();
     if (user) {
-      await insert('Board', record);
+      await insert('Board', { ...record, userId: user.id });
 
       const notiData = {
         userId: user.id,
         boardId: record.id,
         timeStamp: Date.now(),
-        body: 'Board Invitation',
-        title: 'Please join click join button to join board',
-        type: 'board_invitaion',
+        body: `You have been invited to ${record.name}`,
+        title: 'Board Invitation',
+        type: 'board',
         viewStatus: false,
         imageUrl: null,
       };
