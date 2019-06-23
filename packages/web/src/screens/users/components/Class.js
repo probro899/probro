@@ -114,6 +114,7 @@ class Class extends Component {
 
   render() {
     const { account, database } = this.props;
+    console.log('Store database value', database);
     const { createBool, deleteClass, updateClass } = this.state;
     return (
       <div className="classes">

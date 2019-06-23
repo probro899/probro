@@ -21,19 +21,21 @@ class ToolBar extends React.Component {
   state = {};
 
   addUserToBoardHandler = async (data) => {
-    const { api, boards, boardId } = this.props;
+    const { api, boards, boardId, user } = this.props;
+    console.log('user in Toolbar', user);
     const obj = {
       ...data,
-      joinStatus: false,
+      joinStatus: true,
       userType: 'normal',
-      Bid: boardId,
+      fuserId: user.byId[user.allIds[0]].id,
+      boardId,
       timeStamp: Date.now(),
     };
-    boards.allIds.map((i) => {
-      if (boardId === i) {
-        obj.name = boards.byId[i].name;
-      }
-    });
+    // boards.allIds.map((i) => {
+    //   if (boardId === i) {
+    //     obj.name = boards.byId[i].name;
+    //   }
+    // });
     console.log(obj);
     const res = await api.addBoardMember(obj);
     console.log('error to be handled', res);
@@ -82,8 +84,10 @@ ToolBar.propTypes = {
 const mapStateToProps = (state) => {
   const { database } = state;
   const boards = database.Board;
+  const user = database.User;
   return {
     boards,
+    user,
   };
 };
 export default connect(mapStateToProps)(ToolBar);

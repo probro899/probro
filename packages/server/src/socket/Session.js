@@ -221,6 +221,10 @@ class Session {
     return new Channel(id);
   }
 
+  getChannel(channelId) {
+    return Channel.getChannel(channelId, this);
+  }
+
   set(name, value, onClear) {
     // If there is a previous value, clear that first
     if (this.values[name]) {

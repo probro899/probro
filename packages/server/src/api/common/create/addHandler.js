@@ -3,10 +3,10 @@ import add from './add';
 import db from '../../../db';
 import mailBody from '../../../mailer/html/mailBody';
 import mailer from '../../../mailer';
-
+import findBoardDetails from '../findBoradDetail';
 
 function addBoard(record) {
-  add.call(this, 'Board', { ...record, joinStatus: true, userType: 'creator' });
+  add.call(this, 'Board', record);
 }
 
 function addBoardColumn(record) {
@@ -47,34 +47,52 @@ function addBlogLike(record) {
 
 async function addBoardMember(record) {
   const { session } = this;
+  const { email } = record;
 
   await db.execute(async ({ findOne, insert }) => {
-    const user = await findOne('User', { email: record.email });
+    const user = await findOne('User', { email });
+    const fuser = await findOne('User', { id: record.fuserId });
+    const board = await findOne('Board', { id: record.boardId });
     const htmlStringValue = await mailBody();
     if (user) {
-      delete record.email;
-      await insert('Board', { ...record, userId: user.id });
-      await mailer({
-        from: 'ProperClass<probro899@gmail.com>',
-        to: `<${record.email}>`,
-        subject: 'Board inivitation',
-        text: 'No reply',
-        html: htmlStringValue.boardMemberInvitationHtmlString,
-      });
-      const notiData = {
-        userId: user.id,
-        boardId: record.id,
-        timeStamp: Date.now(),
-        body: `You have been invited to ${record.name}`,
-        title: 'Board Invitation',
-        type: 'board',
-        viewStatus: false,
-        imageUrl: null,
-      };
-      const notiId = await insert('Notification', notiData);
-      const notiDetails = await findOne('Notification', { id: notiId });
-      const channel = session.channel('Board');
-      channel.dispatch(schema.add('Notification', notiDetails), [{ userId: user.id }]);
+      const boardMember = await findOne('BoardMember', { boardId: record.boardId });
+      if (boardMember) {
+        throw new Error('User is already added to this board');
+      } else {
+        delete record.email;
+        await insert('BoardMember', { ...record, tuserId: user.id });
+        await mailer({
+          from: 'ProperClass<probro899@gmail.com>',
+          to: `<${email}>`,
+          subject: `Board inivitation from ${fuser.firstName} `,
+          text: 'No reply',
+          html: htmlStringValue.boardMemberInvitationHtmlString,
+        });
+        const notiData = {
+          userId: user.id,
+          boardId: record.boardId,
+          timeStamp: Date.now(),
+          body: `You have been invited from ${fuser.firstName} to join the board ${board.name}`,
+          title: 'Board Invitation',
+          type: 'board',
+          viewStatus: false,
+          imageUrl: null,
+        };
+        const notiId = await insert('Notification', notiData);
+        const notiDetails = await findOne('Notification', { id: notiId });
+        const channel = session.channel('Board');
+        const boardDetail = await findOne('Board', { id: record.boardId });
+        const boardDetails = await findBoardDetails(record.boardId);
+        console.log('boardDetails to be dispatch in user', boardDetails);
+
+        channel.dispatch(schema.add('Board', boardDetail), [{ userId: user.id }]);
+        channel.dispatch(schema.add('BoardColumn', boardDetails.boardColumn.flat()), [{ userId: user.id }]);
+        channel.dispatch(schema.add('BoardColumnCard', boardDetails.boardColumnCard.flat().flat()), [{ userId: user.id }]);
+        channel.dispatch(schema.add('BoardColumnCardAttachment', boardDetails.boardColumnCardAttachment.flat().flat()), [{ userId: user.id }]);
+        channel.dispatch(schema.add('BoardColumnCardComment', boardDetails.boardColumnCardComment.flat().flat()), [{ userId: user.id }]);
+        channel.dispatch(schema.add('BoardColumnCardDescription', boardDetails.boardColumnCardDescription.flat().flat()), [{ userId: user.id }]);
+        channel.dispatch(schema.add('Notification', notiDetails), [{ userId: user.id }]);
+      }
     } else {
       throw new Error('User Not Found');
     }
