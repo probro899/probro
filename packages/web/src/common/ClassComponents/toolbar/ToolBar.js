@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Button, Popover } from '@blueprintjs/core';
-import Form from '../Form';
-import { addUserToBoard } from './structure';
+import { Button, Popover, Divider } from '@blueprintjs/core';
+import Form from '../../Form';
+import { addUserToBoard } from '../structure';
+import UserList from './UserList';
 
 const PopoverContent = ({ callback }) => {
   return (
@@ -46,7 +47,7 @@ class ToolBar extends React.Component {
       <div className="tool-bar">
         <div className="toolbar-container">
           <div className="left-tools">
-            <span>
+            <div className="class-name each-item">
               {
                 boards.allIds.map((id) => {
                   if (id === boardId) {
@@ -54,7 +55,9 @@ class ToolBar extends React.Component {
                   }
                 })
               }
-            </span>
+            </div>
+            <Divider />
+            <UserList />
           </div>
           <div className="right-tools">
             <Popover

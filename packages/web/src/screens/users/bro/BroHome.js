@@ -3,12 +3,12 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 import { Navbar } from '../../home/component/index';
-import { SideNav, Profile, Blog, Class, Setting, Communication } from '../components';
-import client from '../../../socket';
+import { SideNav, Profile, Class, Setting, Communication } from '../components';
+import { Blog } from '../pro/blog';
 
 class HomePage extends Component {
   state = {
-    activeNav: 'Communication',
+    activeNav: 'Blog',
   };
 
   componentWillMount() {
@@ -17,10 +17,6 @@ class HomePage extends Component {
     if (match.params.id !== account.sessionId) {
       this.setState({ error: true });
     }
-  }
-
-  componentDidMount() {
-    client.scope('Mentor');
   }
 
   changeSideNav = (name) => {

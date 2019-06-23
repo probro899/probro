@@ -11,7 +11,6 @@ class NotificationContainer extends React.Component {
 
   render() {
     const { database } = this.props;
-    console.log(database);
     return (
       <div className="notification-list">
         {

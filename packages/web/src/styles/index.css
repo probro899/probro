@@ -279,10 +279,34 @@ top attachment etc.
     display: flex;
     justify-content: space-between;
     background: #4eb9f0; }
-    .tool-bar .toolbar-container .left-tools span {
-      color: white;
-      font-weight: 600;
-      font-size: 16px; }
+    .tool-bar .toolbar-container .left-tools {
+      display: flex;
+      flex-direction: row; }
+      .tool-bar .toolbar-container .left-tools .each-item {
+        padding: 0px 5px 0px 5px;
+        display: flex;
+        align-items: center; }
+      .tool-bar .toolbar-container .left-tools .class-name {
+        color: white;
+        font-weight: 600;
+        font-size: 16px; }
+      .tool-bar .toolbar-container .left-tools .user-list .i-user {
+        position: relative;
+        padding: 4px;
+        border-radius: 50%;
+        font-weight: 500;
+        cursor: pointer;
+        background: rgba(255, 255, 255, 0.9); }
+        .tool-bar .toolbar-container .left-tools .user-list .i-user:hover {
+          background: rgba(255, 255, 255, 0.5); }
+        .tool-bar .toolbar-container .left-tools .user-list .i-user .green-dot {
+          position: absolute;
+          height: 10px;
+          width: 10px;
+          background-color: #71f971;
+          border-radius: 50%;
+          top: 20px;
+          left: 15px; }
 
 .class-wrapper .columns {
   height: 100%;
@@ -410,36 +434,64 @@ top attachment etc.
       .settings .account-details .setting-types .active {
         background-color: red; }
 
-.blogs {
+.create-blog {
   margin-top: 60px; }
-  .blogs div[contenteditable]:focus {
+  .create-blog div[contenteditable]:focus {
     outline: 0px solid transparent; }
-  .blogs [contenteditable]:empty::before {
+  .create-blog [contenteditable]:empty::before {
     content: attr(datatext);
     color: grey; }
-  .blogs .blog-top {
+  .create-blog .blog-top {
     padding: 10px;
     text-align: center; }
-    .blogs .blog-top span {
+    .create-blog .blog-top span {
       font-size: 25px;
       font-weight: 600; }
-  .blogs .toolbar {
+  .create-blog .toolbar {
     display: flex;
     margin: 2px;
     padding: 10px;
     background-color: #DFDCDC;
-    justify-content: center; }
-    .blogs .toolbar button {
+    justify-content: space-between; }
+    .create-blog .toolbar button {
       margin: 0px 3px 0px 3px; }
-  .blogs .title {
+  .create-blog .title {
     margin: 10px; }
-  .blogs .editor-container {
+  .create-blog .editor-container {
     padding: 5px 10px 5px 10px; }
-    .blogs .editor-container #editor {
+    .create-blog .editor-container #editor {
       background-color: white;
       font-size: 16px;
       min-height: 500px;
       padding: 10px; }
+
+.blogs {
+  padding: 5px;
+  width: 100%; }
+  .blogs .header {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between; }
+    .blogs .header span.title {
+      font-size: 22px;
+      font-weight: 600; }
+    .blogs .header small {
+      color: #8e8e8e; }
+  .blogs .blog-list {
+    margin-top: 10px;
+    display: flex; }
+    .blogs .blog-list .blog-container .detail-container .blog-title span {
+      font-size: 18px;
+      font-weight: 600; }
+    .blogs .blog-list .blog-container .detail-container .blog-title small {
+      color: #8e8e8e; }
+    .blogs .blog-list .blog-container .detail-container .blog-author {
+      display: flex;
+      justify-content: flex-end; }
+      .blogs .blog-list .blog-container .detail-container .blog-author span {
+        font-size: 16px;
+        font-weight: 500; }
 
 .notification-list {
   padding: 5px;
@@ -465,3 +517,30 @@ body {
 .home-screen {
   margin: 0;
   padding: 0; }
+
+.communicate {
+  position: fixed;
+  width: 500px;
+  bottom: 0;
+  right: 20px;
+  background: #f6f6f6;
+  z-index: 2;
+  border: 1px solid #d2cfcf; }
+  .communicate .header {
+    height: 20px;
+    background: black;
+    display: flex;
+    color: white;
+    justify-content: space-between; }
+  .communicate .content {
+    height: 500px; }
+@keyframes slideDown {
+  from {
+    height: 500px; }
+  to {
+    height: 0px; } }
+@keyframes slideUp {
+  from {
+    height: 0px; }
+  to {
+    height: 500px; } }

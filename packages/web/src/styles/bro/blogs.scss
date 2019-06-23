@@ -1,8 +1,9 @@
-.blogs {
+.create-blog {
   margin-top: $navbarHeight;
   div[contenteditable]:focus {
     outline: 0px solid transparent;
   }
+  // just to put the default placeholder
   [contenteditable]:empty::before {
     content: attr(datatext);
     color: grey;
@@ -20,7 +21,7 @@
     margin: 2px;
     padding: 10px;
     background-color: #DFDCDC;
-    justify-content: center;
+    justify-content: space-between;
     button {
       margin: 0px 3px 0px 3px;
     }
@@ -37,4 +38,49 @@
       padding: 10px;
     } 
   } 
+}
+.blogs {
+  padding: 5px;
+  width: 100%;
+  .header {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    span.title {
+      font-size: 22px;
+      font-weight: 600;
+    }
+    small {
+      color: rgb(142, 142, 142);
+    }
+    display: flex;
+    justify-content: space-between;
+  }
+  .blog-list {
+    margin-top: 10px;
+    display: flex;
+    .blog-container {
+      .img-container {
+
+      }
+      .detail-container {
+        .blog-title {
+          span {
+            font-size: 18px;
+            font-weight: 600;
+          }
+          small {
+            color: rgb(142, 142, 142); 
+          }
+        }
+        .blog-author {
+          display: flex;
+          justify-content: flex-end;
+          span {
+            font-size: 16px;
+            font-weight: 500;
+          }
+        }
+      }
+    }
+  }
 }
