@@ -5,10 +5,17 @@ export default async function Delete(table, record) {
   // console.log('db delete called', table, record, this.session);
   try {
     const { session } = this;
+    const { broadCastId } = record;
+    delete record.broadCastId;
+
     const res = db.execute(async ({ deleteQuery }) => {
       const delRes = await deleteQuery(table, record);
-      session.dispatch(schema.remove(table, { id: record.id }));
-
+      if (broadCastId) {
+        const channel = session.channel(broadCastId);
+        channel.dispatch(schema.remove(table, { id: record.id }));
+      } else {
+        session.dispatch(schema.remove(table, { id: record.id }));
+      }
       return delRes;
     });
     return res;

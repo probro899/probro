@@ -34,7 +34,7 @@ export default async function initUser(id) {
   const boardSessions = [];
   u.board.forEach(b => boardSessions.push(session.getChannel(`Board-${b.id}`)));
   // console.log('Sessiosn user Details', boardSessions.flat()[0].values.user);
-  const finalUserList = userPresentorHelper(boardSessions.flat(), u.user);
+  const finalUserList = u.board.length === 0 ? [{ ...u.user[0], activeStatus: true }] : userPresentorHelper(boardSessions.flat(), u.user);
   console.log('finalUSerlist', finalUserList);
 
   // boardSessions.forEach(s => console.log(JSON.stringify(s.id)));
@@ -42,7 +42,7 @@ export default async function initUser(id) {
   u.board.map(b => ({ channel: session.channel(`Board-${b.id}`), board: b })).forEach(obj => obj.channel.dispatch(schema.update('User', { id, activeStatus: true })));
 
   session.subscribe('Board');
-
+  console.log('board member', u.boardMember);
   session.dispatch(schema.init('User', finalUserList));
   session.dispatch(schema.init('UserDetail', u.userDetail));
   session.dispatch(schema.init('Board', u.board));

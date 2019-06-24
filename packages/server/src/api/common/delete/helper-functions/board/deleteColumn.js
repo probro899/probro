@@ -4,7 +4,7 @@ import db from '../../../../../db';
 export default async function deleteColumn(Delete, record) {
   // console.log('deleteColumn', record);
   const boardColumnId = await db.execute(async ({ find }) => {
-    const boardColumn = await find('BoardColumn', { boardId: record.id });
+    const boardColumn = await find('BoardColumn', { boardId: record.boardId });
     // console.log('boardColumn data', boardColumn);
     return boardColumn.map(obj => ({ boardColumnId: obj.id }));
   });
@@ -15,4 +15,5 @@ export default async function deleteColumn(Delete, record) {
   } else {
     return true;
   }
+  return true;
 }

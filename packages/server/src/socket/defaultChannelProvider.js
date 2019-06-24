@@ -3,10 +3,10 @@
  * For production use consider something like shocked-channel-redis
  */
 
-function presentorTestor(obj, userList) {
+function presentorTestor(id, userList) {
   let p = false;
   userList.forEach((e) => {
-    if (obj.id === e.userId) {
+    if (id === e.userId) {
       p = true;
       return p;
     }
@@ -57,7 +57,7 @@ export default function createDefaultProvider() {
       const list = channels[channelId];
       if (userList) {
         // console.log('default Channel data', list[0].values.user.user, userList);
-        const shortedUserList = list.filter(session => presentorTestor(session.values.user.user[0], userList));
+        const shortedUserList = list.filter(session => presentorTestor(session.values.user.id, userList));
         shortedUserList.forEach(session => session.send(message));
       } else if (!userList && list) {
         list.forEach(session => session.send(message));
