@@ -13,7 +13,12 @@ class PopoverForm extends React.Component {
         isOpen={isOpen}
         onClose={onClose}
       >
-        <Form data={structure} callback={callback} />
+        <div className="popover-form">
+          <div className="top">
+            Enter the Credentials
+          </div>
+          <Form data={structure} callback={callback} />
+        </div>
       </Dialog>
     );
   }

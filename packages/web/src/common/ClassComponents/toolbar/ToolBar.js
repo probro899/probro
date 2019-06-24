@@ -22,27 +22,21 @@ class ToolBar extends React.Component {
   state = {};
 
   addUserToBoardHandler = async (data) => {
-    const { api, boards, boardId } = this.props;
+    const { api, boardId, account } = this.props;
     const obj = {
       ...data,
-      joinStatus: false,
+      joinStatus: true,
       userType: 'normal',
-      Bid: boardId,
+      fuserId: account.user.id,
+      boardId,
       timeStamp: Date.now(),
     };
-    boards.allIds.map((i) => {
-      if (boardId === i) {
-        obj.name = boards.byId[i].name;
-      }
-    });
-    console.log(obj);
-    const res = await api.addBoardMember(obj);
-    console.log('error to be handled', res);
+    await api.addBoardMember(obj);
     return { response: 200, message: 'Congratulations! You have added a new user' };
   }
 
   render() {
-    const { boards, boardId } = this.props;
+    const { boards, boardId, users, boardMembers } = this.props;
     return (
       <div className="tool-bar">
         <div className="toolbar-container">
@@ -57,7 +51,7 @@ class ToolBar extends React.Component {
               }
             </div>
             <Divider />
-            <UserList />
+            <UserList userList={users} boardId={boardId} boardMembers={boardMembers} />
           </div>
           <div className="right-tools">
             <Popover
@@ -78,15 +72,19 @@ class ToolBar extends React.Component {
 }
 ToolBar.propTypes = {
   boards: PropTypes.objectOf(PropTypes.any).isRequired,
+  account: PropTypes.objectOf(PropTypes.any).isRequired,
   boardId: PropTypes.number.isRequired,
   api: PropTypes.objectOf(PropTypes.any).isRequired,
+  users: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 const mapStateToProps = (state) => {
-  const { database } = state;
-  const boards = database.Board;
+  const { database, account } = state;
   return {
-    boards,
+    boards: database.Board,
+    users: database.User,
+    boardMembers: database.BoardMember,
+    account,
   };
 };
 export default connect(mapStateToProps)(ToolBar);

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Popover, Icon } from '@blueprintjs/core';
 
 const CallButton = () => {
@@ -29,7 +30,8 @@ const VideoCallButton = () => {
   );
 };
 
-const UserDetail = () => {
+const UserDetail = (props) => {
+  const { detail } = props;
   return (
     <div
       style={{ padding: '10px 5px 5px 5px' }}
@@ -37,7 +39,7 @@ const UserDetail = () => {
       <div
         style={{ fontWeight: 600, padding: '2px' }}
       >
-        Nabin Bhusal
+        {`${detail.firstName} ${detail.lastName}`}
       </div>
       <div
         style={{ padding: '5px', display: 'flex', justifyContent: 'space-around' }}
@@ -96,17 +98,43 @@ class UserList extends React.Component {
   state = {};
 
   render() {
+    const { userList, boardMembers, boardId } = this.props;
+    let creator;
+    Object.values(boardMembers.byId).map((obj) => {
+      if (!obj.boardId && obj.id === boardId) {
+        creator = obj;
+      }
+    });
     return (
       <div className="each-item user-list">
         <Popover
           position="bottom"
-          content={<UserDetail />}
+          content={<UserDetail detail={creator && userList.byId[creator.userId]} />}
         >
           <div className="i-user">
-            NB
-            <span className="green-dot" />
+            {creator && userList.byId[creator.userId].firstName[0].toUpperCase()}
+            {creator && userList.byId[creator.userId].lastName[0].toUpperCase()}
+            {creator && userList.byId[creator.userId].activeStatus && <span className="green-dot" />}
           </div>
         </Popover>
+        {
+          Object.values(boardMembers.byId).map((o) => {
+            if (o.boardId === boardId) {
+              return (
+                <Popover
+                  position="bottom"
+                  content={<UserDetail detail={userList.byId[o.tuserId]} />}
+                >
+                  <div className="i-user">
+                    {userList.byId[o.tuserId].firstName[0].toUpperCase()}
+                    {userList.byId[o.tuserId].lastName[0].toUpperCase()}
+                    {userList.byId[o.tuserId].activeStatus && <span className="green-dot" />}
+                  </div>
+                </Popover>
+              );
+            }
+          })
+        }
         <Popover
           position="right-top"
           content={<AllUsers />}
@@ -119,5 +147,9 @@ class UserList extends React.Component {
     );
   }
 }
+
+UserList.propTypes = {
+  boardMembers: PropTypes.objectOf(PropTypes.any).isRequired,
+};
 
 export default UserList;

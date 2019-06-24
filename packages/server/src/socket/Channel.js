@@ -24,6 +24,8 @@ Channel.setProvider = (provider) => {
   Channel.provider = provider;
 };
 
+Channel.getChannel = channelId => Channel.provider.getChannel(channelId);
+
 Channel.get = id => new Channel(id);
 //  console.log('Channel', Channel.get());
 export default Channel;

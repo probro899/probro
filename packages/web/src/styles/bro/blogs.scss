@@ -60,7 +60,12 @@
     display: flex;
     .blog-container {
       .img-container {
-
+        position: relative;
+        .more-button {
+          position: absolute;
+          top: 0;
+          right: 0;
+        }
       }
       .detail-container {
         .blog-title {

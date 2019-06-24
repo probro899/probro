@@ -326,18 +326,14 @@ Classes.propTypes = {
 
 const mapStateToProps = (state) => {
   const { database, account } = state;
-  const columns = database.BoardColumn;
-  const tasks = database.BoardColumnCard;
-  const comments = database.BoardColumnCardComment;
-  const descriptions = database.BoardColumnCardDescription;
-  const attachments = database.BoardColumnCardAttachment;
   return {
     account,
-    columns,
-    tasks,
-    comments,
-    descriptions,
-    attachments,
+    columns: database.BoardColumn,
+    tasks: database.BoardColumnCard,
+    comments: database.BoardColumnCardComment,
+    descriptions: database.BoardColumnCardDescription,
+    attachments: database.BoardColumnCardAttachment,
+    boardUsers: database.User,
   };
 };
 export default connect(mapStateToProps)(Classes);

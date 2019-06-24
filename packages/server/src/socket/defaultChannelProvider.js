@@ -29,6 +29,7 @@ export default function createDefaultProvider() {
         list.push(session);
         // console.log('chanel record after another user login', channels.Board[0].scopes);
       }
+      // console.log('ALll channels', channels);
       return true;
     },
 
@@ -55,12 +56,14 @@ export default function createDefaultProvider() {
     publish: (channelId, message, userList) => {
       const list = channels[channelId];
       if (userList) {
-        console.log('default Channel data', list[0].values.user.user, userList);
+        // console.log('default Channel data', list[0].values.user.user, userList);
         const shortedUserList = list.filter(session => presentorTestor(session.values.user.user[0], userList));
         shortedUserList.forEach(session => session.send(message));
       } else if (!userList && list) {
         list.forEach(session => session.send(message));
       }
     },
+
+    getChannel: channelId => channels[channelId],
   };
 }

@@ -34,11 +34,24 @@ export default function schemaReducer(...schemes) {
 
       // Add the data according to schema
       case schemaRedux.add.TYPE:
-        return {
+        console.log('payload type', typeof action.payload, action.payload);
+        return !Array.isArray(action.payload) ? {
           ...state,
           [schema]: {
             byId: { ...state[schema].byId, [action.payload.id]: action.payload },
             allIds: state[schema].allIds.concat(action.payload.id),
+          },
+        } : {
+          ...state,
+          [schema]: {
+            allIds: [...state[schema].allIds, ...action.payload.map(obj => obj.id)],
+            byId: {
+              ...state[schema].byId,
+              ...action.payload.reduce((mainObj, obj) => {
+                mainObj[obj.id] = obj;
+                return mainObj;
+              }, {}),
+            },
           },
         };
 

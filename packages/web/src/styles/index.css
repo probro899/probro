@@ -481,6 +481,12 @@ top attachment etc.
   .blogs .blog-list {
     margin-top: 10px;
     display: flex; }
+    .blogs .blog-list .blog-container .img-container {
+      position: relative; }
+      .blogs .blog-list .blog-container .img-container .more-button {
+        position: absolute;
+        top: 0;
+        right: 0; }
     .blogs .blog-list .blog-container .detail-container .blog-title span {
       font-size: 18px;
       font-weight: 600; }
@@ -507,6 +513,14 @@ top attachment etc.
       border: 0.4px solid rgba(0, 0, 0, 0.4);
       background: rgba(255, 255, 255, 0);
       padding: 5px; }
+
+.popover-form {
+  padding: 5px 5px 0px 5px; }
+  .popover-form div.top {
+    font-size: 18px;
+    font-weight: 600;
+    padding-bottom: 10px;
+    text-align: center; }
 
 body {
   margin: 0;

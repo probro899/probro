@@ -27,7 +27,7 @@ export default async function login(record) {
       ...userDetails,
     };
     cache.users.set(token, user, SESSION_AGE);
-    return { token };
+    return { id: rec.id, token };
   });
   return res;
 }
