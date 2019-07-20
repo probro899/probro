@@ -1,3 +1,3 @@
-export * from './formHandler';
-export * from './mainHandler';
-export * from './classHandler';
+import { updateNav } from './navigate';
+
+export { updateNav };

@@ -35,6 +35,12 @@ top attachment etc.
         font-size: 15px;
         padding: 2px;
       }
+      img.profile-icon {
+        height: 50px;
+        border-radius: 50%;
+        padding: 1px;
+        border: 1px solid white;
+      }
   }
   a:link {
       display: flex;

@@ -9,9 +9,9 @@ function updateBoardColumn(records) {
 }
 
 function updateBoardColumnCard(records) {
-  const record = records[0];
-  records.shift();
-  update.call(this, 'BoardColumnCard', ...record);
+  // const record = records[0];
+  // records.shift();
+  update.call(this, 'BoardColumnCard', ...records);
 }
 
 function updateBoardColumnCardAttachment(records) {

@@ -42,6 +42,7 @@ class NewColumn extends Component {
       name: data.name,
       position: pos,
       boardId: classId,
+      broadCastId: `Board-${classId}`,
     });
     this.handlePopOverForm();
     return { response: 200 };

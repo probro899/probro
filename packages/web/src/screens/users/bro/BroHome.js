@@ -1,15 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Redirect } from 'react-router-dom';
+import { Redirect, Route } from 'react-router-dom';
 import { Navbar } from '../../home/component/index';
-import { SideNav, Profile, Class, Setting, Communication } from '../components';
+import { SideNav, Profile, Class, Setting } from '../components';
 import { Blog } from '../pro/blog';
 
 class HomePage extends Component {
-  state = {
-    activeNav: 'Blog',
-  };
+  state = {};
 
   componentWillMount() {
     const { account, match } = this.props;
@@ -19,35 +17,9 @@ class HomePage extends Component {
     }
   }
 
-  changeSideNav = (name) => {
-    this.setState({
-      activeNav: name,
-    });
-  }
-
   render() {
-    const { activeNav, error } = this.state;
-    let activeBar;
-    const { account } = this.props;
-    switch (activeNav) {
-      case ('Profile'):
-        activeBar = <Profile />;
-        break;
-      case ('Settings'):
-        activeBar = <Setting />;
-        break;
-      case ('Classes'):
-        activeBar = <Class />;
-        break;
-      case ('Blog'):
-        activeBar = <Blog />;
-        break;
-      case 'Communication':
-        activeBar = <Communication />;
-        break;
-      default:
-        activeBar = <Communication />;
-    }
+    const { error } = this.state;
+    const { account, match } = this.props;
     return (
       error ? <Redirect push to="/" />
         : (
@@ -55,8 +27,11 @@ class HomePage extends Component {
             {/* redirect to home page if not logged in  */}
             {account.online ? <Navbar /> : <Redirect to="/" />}
             <div className="broWrapper">
-              <SideNav activeNav={activeNav} changeSideNav={this.changeSideNav} />
-              {activeBar}
+              <SideNav match={match} />
+              <Route exact path={`${match.path}/profile`} component={Profile} />
+              <Route exact path={`${match.path}/classes`} component={Class} />
+              <Route exact path={`${match.path}/blog`} component={Blog} />
+              <Route exact path={`${match.path}/settings`} component={Setting} />
             </div>
           </div>
         )

@@ -18,7 +18,7 @@ class Login extends Component {
           </div>
           {/* just trying to redirect incase of logged in */}
           {
-            account.online ? <Redirect push to={`/${account.sessionId}/me`} /> : <Log />
+            account.online ? <Redirect push to={`/${account.sessionId}/profile`} /> : <Log />
           }
           <div className="footer">
             <p>

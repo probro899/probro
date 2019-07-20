@@ -5,31 +5,141 @@
   display: flex;
   align-items: center;
   flex-direction: column;
-  padding-top: 20px;
+  padding: 5px 3px;
+  position: relative;
+  .cover-pic {
+    height: 250px;
+    width: 100%;
+    background: linear-gradient(to right, rgba(155,225,243,1) 0%, rgba(67,192,223,1) 100%);
+  }
   .profilePic {
-    position: relative;
+    position: absolute;
+    top: 100px;
+    left: 10px;
     img {
-      border: 1px solid  #a4a5a6;
-      border-radius: 1000px;
-      height: 100px;
+      border: 1px solid rgba(226,234,235,1);
+      box-shadow: 0px 0px 5px 1px rgba(226,234,235,1);
+      border-radius: 50%;
+      height: 150px;
+      padding: 2px;
     }
     span {
       position: absolute;
-      top: 65px;
-      left: 40px;
+      top: 70px;
+      left: 110px;
     }
     svg {
       border-radius: 100px;
       background-color: $primary;
     }
   }
-  .profileDetails {
-    padding-top: 20px;
-    .detailElement{
-      width: 300px;
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
+  .top-details {
+    width: 100%;
+    background: white;
+    padding: 5px;
+    .name {
+      font-size: 20px;
+      font-weight: bold;
+    }
+    .designation {
+      font-size: 16px;
+      font-weight: bold;
+      color: rgba(20, 18, 18, 0.596);
+    }
+  }
+  .bio {
+    margin-top: 5px;
+    background: white;
+    text-align: center;
+    width: 100%;
+    p {
+      font-family: 'Oxygen', sans-serif;
+      font-weight: bold;
+      font-style: italic;
+      font-size: 16px;
+    }
+  }
+  .education {
+    margin-top: 5px;
+    width: 100%;
+    background: white;
+    p.p-top {
+      font-size: 20px;
+      font-weight: bold;
+    }
+    .p-edu-list {
+      .p-edu-list-i {
+        display: flex;
+        padding: 2px;
+        img {
+          height: 45px;
+          padding: 2px;
+        }
+        p {
+          padding: 0px 0px 0px 10px;
+          span.p-name-i {
+            font-size: 18px;
+            font-weight: bold;
+          }
+          span.p-timeline {
+            font-weight: bold;
+            color: #757575;
+          }
+        }
+      }
+    }
+  }
+  .experience {
+    margin-top: 5px;
+    width: 100%;
+    background: white;
+    p.p-top {
+      font-size: 20px;
+      font-weight: bold;
+    }
+    .p-exp-list {
+      .p-exp-list-i {
+        display: flex;
+        padding: 2px;
+        img {
+          height: 45px;
+          padding: 2px;
+        }
+        p {
+          padding: 0px 0px 0px 10px;
+          span.p-title-i {
+            font-size: 18px;
+            font-weight: bold;
+          }
+          span.p-company-i {
+            font-size: 16px;
+            font-weight: bold;
+            color: #757575;
+          }
+          span.p-timeline {
+            font-weight: bold;
+            color: #757575;
+          }
+        }
+      }
+    }
+  }
+  .skills {
+    margin-top: 5px;
+    width: 100%;
+    background: white;
+    p.p-top {
+      font-size: 20px;
+      font-weight: bold;
+    }
+    .skills-container {
+      padding: 5px 5px 5px 0px;
+      span {
+        margin: 5px;
+        padding: 5px;
+        color: white;
+        background: rgba(19, 124, 189, 1);
+      }
     }
   }
 }

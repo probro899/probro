@@ -3,6 +3,7 @@ import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Button } from '@blueprintjs/core';
+import * as actions from '../../../../actions';
 import { DeletePopOver } from '../../../../common';
 import { MoreButton } from '../../../../components';
 
@@ -11,6 +12,14 @@ class Blogs extends Component {
     createBlog: false,
     deletePopOverIsOpen: false,
   };
+
+  componentWillMount() {
+    const { updateNav } = this.props;
+    updateNav({
+      schema: 'sideNav',
+      data: { name: 'Blog' },
+    });
+  }
 
   deleteBlog = () => {
 
@@ -54,7 +63,7 @@ class Blogs extends Component {
         <div className="blog-list">
           <div className="blog-container">
             <div className="img-container">
-              <MoreButton onMore={this.onMore} id="1" />
+              <MoreButton onMore={this.onMore} id={1} />
               <img
                 alt="test"
                 src="https://images.unsplash.com/photo-1425082661705-1834bfd09dca?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2555&q=80"
@@ -80,7 +89,8 @@ class Blogs extends Component {
 Blogs.propTypes = {
   database: PropTypes.objectOf(PropTypes.any).isRequired,
   account: PropTypes.objectOf(PropTypes.any).isRequired,
+  updateNav: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => state;
-export default connect(mapStateToProps)(Blogs);
+export default connect(mapStateToProps, { ...actions })(Blogs);

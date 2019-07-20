@@ -10,3 +10,30 @@
     text-align: center;
   }
 }
+
+// styling the delete popover container
+.delete-popover {
+  padding: 5px 0px;
+  .top {
+    padding: 15px 0px;
+    text-align: center;
+    font-size: 16px;
+  }
+  .popover-button {
+    text-align: center;
+    button {
+      margin-right: 10px;
+    }
+  }
+}
+
+// styling the bp3 popover 
+.bp3-menu {
+  background: $backgroundColor;
+}
+.bp3-popover-content {
+  background: $backgroundColor !important;
+}
+.bp3-popover-arrow-fill {
+  fill: $backgroundColor !important;
+}

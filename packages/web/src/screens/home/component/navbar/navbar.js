@@ -7,7 +7,7 @@ import { IconNames } from '@blueprintjs/icons';
 import client from '../../../../socket';
 import Notifications from '../notification';
 
-const profileIcon = require('../../../../assets/imageUploadIcon.png');
+const profileIcon = require('../../../../assets/icons/64w/uploadicon64.png');
 
 const DropDownMenu = (onclick, apis) => {
   return (
@@ -33,8 +33,6 @@ class Navbar extends Component {
   state = {
     apis: {},
     redirectDashboard: false,
-    // this is to indicate which navigation item is active at the moment
-    mainNav: 'properClass',
   };
 
   async componentDidMount() {
@@ -50,25 +48,20 @@ class Navbar extends Component {
     // console.log('to be done for it to be responsive', e.currentTarget.innerWidth);
   }
 
-  onClick = (value) => {
-    this.setState({ mainNav: value });
-  };
-
   onClickHandler = () => {
     this.setState({ redirectDashboard: true });
   }
 
   render() {
-    const { account } = this.props;
-    const { apis, redirectDashboard, mainNav } = this.state;
+    const { account, navigate } = this.props;
+    const { apis, redirectDashboard } = this.state;
     return (
       <div className="navbar">
-        {redirectDashboard && <Redirect exact push to={`/${account.sessionId}/me`} />}
+        {redirectDashboard && <Redirect exact push to={`/${account.sessionId}/profile`} />}
         <div className="navbar-left">
           <Link
             to="/"
-            className={mainNav === 'properClass' ? 'active' : null}
-            onClick={() => this.onClick('properClass')}
+            className={navigate.mainNav.name === 'properClass' ? 'active' : null}
           >
             <div className="navbar-item">
               <span>
@@ -77,21 +70,18 @@ class Navbar extends Component {
             </div>
           </Link>
           <Link
-            to="#"
-            className={mainNav === 'blogs' ? 'active' : null}
-            onClick={() => this.onClick('blogs')}
+            to="/archive"
+            className={navigate.mainNav.name === 'archive' ? 'active' : null}
           >
             <div className="navbar-item">
               <span>
-                Blogs
-                <Icon icon={IconNames.CARET_DOWN} iconSize={Icon.SIZE_LARGE} />
+                Archive
               </span>
             </div>
           </Link>
           <Link
             to="#"
-            className={mainNav === 'help' ? 'active' : null}
-            onClick={() => this.onClick('help')}
+            className={navigate.mainNav === 'help' ? 'active' : null}
           >
             <div className="navbar-item">
               <span>
@@ -104,8 +94,7 @@ class Navbar extends Component {
         <div className="navbar-right">
           <Link
             to="#"
-            className={mainNav === 'tour' ? 'active' : null}
-            onClick={() => this.onClick('tour')}
+            className={navigate.mainNav.name === 'tour' ? 'active' : null}
           >
             <div className="navbar-item">
               <span>
@@ -120,8 +109,7 @@ class Navbar extends Component {
             ? (
               <Link
                 to="#"
-                className={mainNav === 'profileIcon' ? 'active' : null}
-                onClick={() => this.onClick('profileIcon')}
+                className={navigate.mainNav.name === 'profileIcon' ? 'active' : null}
               >
                 <Popover
                   content={DropDownMenu(this.onClickHandler, apis)}
@@ -131,9 +119,8 @@ class Navbar extends Component {
                   <div className="navbar-item">
                     <img
                       src={profileIcon}
-                      height="45px"
+                      className="profile-icon"
                       alt="profile or blank profile"
-                      style={{ border: '1px solid white', borderRadius: '425px', padding: '3px' }}
                     />
                   </div>
                 </Popover>
@@ -142,8 +129,7 @@ class Navbar extends Component {
             : (
               <Link
                 to="/login"
-                className={mainNav === 'login' ? 'active' : null}
-                onClick={() => this.onClick('login')}
+                className={navigate.mainNav.name === 'login' ? 'active' : null}
               >
                 <div className="navbar-item">
                   <span>Login</span>
@@ -159,7 +145,8 @@ class Navbar extends Component {
 
 Navbar.propTypes = {
   account: PropTypes.objectOf(PropTypes.any).isRequired,
+  navigate: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
-const mapStateToProps = (state, ownprops) => ({ ...state, ...ownprops });
+const mapStateToProps = state => state;
 export default connect(mapStateToProps)(Navbar);

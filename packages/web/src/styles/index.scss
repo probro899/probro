@@ -12,6 +12,8 @@
 @import './bro/blogs.scss';
 @import './notification.scss';
 @import './components.scss';
+@import './communication.scss';
+@import './archive.scss';
 @import url('https://fonts.googleapis.com/css?family=Noto+Sans|Oxygen|Roboto:100,300,400,500,900&display=swap');
 body {
     margin: 0;
@@ -24,33 +26,4 @@ body {
 .home-screen {
     margin: 0;
     padding: 0;
-}
-// styling the communication window here
-.communicate {
-  position: fixed;
-  width: 500px;
-  bottom: 0;
-  right: 20px;
-  background: $backgroundColor;
-  z-index: 2;
-  border: 1px solid rgb(210, 207, 207);
-  .header {
-    height: 20px;
-    background: black;
-    display: flex;
-    color: white;
-    justify-content: space-between;
-  }
-  .content {
-    height: 500px;
-  }
-  @keyframes slideDown {
-    from { height: 500px; }
-    to { height: 0px; }
-  }
-
-  @keyframes slideUp {
-    from { height: 0px; }
-    to { height: 500px; }
-  }
 }

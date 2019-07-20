@@ -191,69 +191,79 @@
     .overlay-title {
       padding: 7px;
       background-color: #75757575;
+      display: flex;
+      justify-content: space-between;
       .head {
-        display: inline;
-        span.title {
-          font-size: 20px;
-          font-weight: bold;
-        }
+        display: flex;
+        flex-direction: row;
+        font-size: 20px;
+        font-weight: bold;
       }
     }
-    .left {
-      .overlay-description {
-        padding: 5px;
-        .desc-head {
-          u {
-            font-weight: bold;
-            font-size: 17px;
+    .overlay-body {
+      display: flex;
+      .left {
+        flex: 0.7;
+        .overlay-description {
+          padding: 5px;
+          .desc-head {
+            u {
+              font-weight: bold;
+              font-size: 17px;
+            }
+          }
+          .desc {
+            padding: 5px;
+            font-size: 15px;
+            font-weight: 400;
           }
         }
-        .desc {
-          padding: 5px;
-          font-size: 15px;
-          font-weight: 400;
+        .edit-button {
+          margin-left: 10px;
+          vertical-align: inherit !important;
         }
-      }
-      .edit-button {
-        margin-left: 10px;
-        vertical-align: inherit !important;
-      }
-      textarea {
-        background: transparent;
-        border: none;
-        border-color: transparent;
-        resize: none;
-      }
-      .comment-container {
-        padding: 5px;
-        display: flex;
-        justify-content: stretch;
-      }
-      .comments {
-        padding: 5px;
-        .s-comment {
+        textarea {
+          background: transparent;
+          border: none;
+          border-color: transparent;
+          resize: none;
+        }
+        .comment-container {
+          padding: 5px;
           display: flex;
           justify-content: stretch;
-          div {
-            img {
-              border: 1px solid white;
-              border-radius: 45px;
-              padding: 3px;
-            }
-          }
-          .com-con {
-            margin-left: 10px;
+        }
+        .comments {
+          padding: 5px;
+          .s-comment {
             display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            .com-auth {
-
+            justify-content: stretch;
+            div {
+              img {
+                border: 1px solid white;
+                border-radius: 45px;
+                padding: 3px;
+              }
             }
-            .com-desc {
+            .com-con {
+              margin-left: 10px;
+              display: flex;
+              flex-direction: column;
+              align-items: flex-start;
+              .com-auth {
 
+              }
+              .com-desc {
+
+              }
             }
           }
         }
+      }
+      .right {
+        flex: 0.3;
+        padding: 5px;
+        text-align: center;
       }
     }
   }

@@ -51,7 +51,11 @@ const UserDetail = (props) => {
   );
 };
 
-const AllUsers = () => {
+UserDetail.propTypes = {
+  detail: PropTypes.objectOf(PropTypes.any).isRequired,
+};
+
+const AllUsers = ({ userList, boardMembers, boardId }) => {
   return (
     <div
       style={{
@@ -71,27 +75,34 @@ const AllUsers = () => {
           padding: '5px',
         }}
       >
-        <div
-          style={{
-            padding: '10px',
-          }}
-        >
-          <span>Nabin Bhusal</span>
-          <CallButton />
-          <VideoCallButton />
-        </div>
-        <div
-          style={{
-            padding: '5px',
-          }}
-        >
-          <span>Bhagya Sah</span>
-          <CallButton />
-          <VideoCallButton />
-        </div>
+        {
+          Object.values(boardMembers.byId).map((o) => {
+            if (o.boardId === boardId) {
+              return (
+                <div
+                  style={{
+                    padding: '10px',
+                  }}
+                >
+                  <span>
+                    {`${userList.byId[o.tuserId].firstName} ${userList.byId[o.tuserId].lastName}`}
+                  </span>
+                  <CallButton />
+                  <VideoCallButton />
+                </div>
+              );
+            }
+          })
+        }
       </div>
     </div>
   );
+};
+
+AllUsers.propTypes = {
+  boardMembers: PropTypes.objectOf(PropTypes.any).isRequired,
+  userList: PropTypes.objectOf(PropTypes.any).isRequired,
+  boardId: PropTypes.number.isRequired,
 };
 
 class UserList extends React.Component {
@@ -99,31 +110,17 @@ class UserList extends React.Component {
 
   render() {
     const { userList, boardMembers, boardId } = this.props;
-    let creator;
-    Object.values(boardMembers.byId).map((obj) => {
-      if (!obj.boardId && obj.id === boardId) {
-        creator = obj;
-      }
-    });
     return (
       <div className="each-item user-list">
-        <Popover
-          position="bottom"
-          content={<UserDetail detail={creator && userList.byId[creator.userId]} />}
-        >
-          <div className="i-user">
-            {creator && userList.byId[creator.userId].firstName[0].toUpperCase()}
-            {creator && userList.byId[creator.userId].lastName[0].toUpperCase()}
-            {creator && userList.byId[creator.userId].activeStatus && <span className="green-dot" />}
-          </div>
-        </Popover>
         {
-          Object.values(boardMembers.byId).map((o) => {
+          Object.values(boardMembers.byId).map((o, index) => {
             if (o.boardId === boardId) {
               return (
                 <Popover
                   position="bottom"
                   content={<UserDetail detail={userList.byId[o.tuserId]} />}
+                  // eslint-disable-next-line react/no-array-index-key
+                  key={index}
                 >
                   <div className="i-user">
                     {userList.byId[o.tuserId].firstName[0].toUpperCase()}
@@ -137,7 +134,15 @@ class UserList extends React.Component {
         }
         <Popover
           position="right-top"
-          content={<AllUsers />}
+          content={
+            (
+              <AllUsers
+                userList={userList}
+                boardMembers={boardMembers}
+                boardId={boardId}
+              />
+          )
+        }
         >
           <div className="i-user">
             ...
@@ -150,6 +155,8 @@ class UserList extends React.Component {
 
 UserList.propTypes = {
   boardMembers: PropTypes.objectOf(PropTypes.any).isRequired,
+  userList: PropTypes.objectOf(PropTypes.any).isRequired,
+  boardId: PropTypes.number.isRequired,
 };
 
 export default UserList;

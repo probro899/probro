@@ -6,7 +6,7 @@ import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import { Column, NewColumn, TaskOverlay, ToolBar } from '../../../common/ClassComponents';
 import { Navbar } from '../../home/component';
 import client from '../../../socket';
-import posSorting from '../utility-functions';
+import posSorting, { timeStampSorting } from '../utility-functions';
 
 
 class Classes extends Component {
@@ -74,7 +74,8 @@ class Classes extends Component {
     this.setState({
       tasks: Object.values(tasks.byId),
       columns: wholeColumns.sort(posSorting),
-      comments: Object.values(comments.byId),
+      // comments are sorted in descending order of timestamp
+      comments: Object.values(comments.byId).sort(timeStampSorting),
       attachments: Object.values(attachments.byId),
       descriptions: Object.values(descriptions.byId),
     });
@@ -301,6 +302,7 @@ class Classes extends Component {
           </DragDropContext>
         </div>
         <TaskOverlay
+          apis={api}
           isOpen={taskOverlayIsOpen}
           taskId={taskIdInOverlay}
           tasks={tasks}
@@ -308,6 +310,7 @@ class Classes extends Component {
           comments={comments}
           attachments={attachments}
           descriptions={descriptions}
+          boardId={classId}
         />
       </div>
     );

@@ -11,6 +11,7 @@ class FileInput extends React.Component {
   }
 
   onChange = (e) => {
+    console.log('photo upload', e.target.files[0]);
     // const { _action, schema, field, lastAction } = this.props;
     // _action(schema, { [field]: e.target.files[0] });
     // lastAction();
@@ -31,8 +32,8 @@ class FileInput extends React.Component {
         onClick={this.onClick}
         onKeyDown={this.onClick}
         role="button"
-        onMouseOver={e => this.changeStyle(e)}
-        onFocus={e => this.changeStyle(e)}
+        onMouseOver={this.changeStyle}
+        onFocus={this.changeStyle}
         className="image-upload-icon"
       >
         <Icon icon={IconNames.PLUS} intent={Intent.PRIMARY} iconSize="30" color="white" />
@@ -40,7 +41,7 @@ class FileInput extends React.Component {
           ref={this.fileInputRef}
           type="file"
           style={{ display: 'none' }}
-          onChange={e => this.onChange(e)}
+          onChange={this.onChange}
         />
       </div>
     );
