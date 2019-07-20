@@ -10,6 +10,9 @@ export default async (args) => {
       connect(data);
       return { response: 200 };
     }
+    if (res.status === 201) {
+      return { error: res.data };
+    }
   } catch (e) {
     return { error: e.message };
   }

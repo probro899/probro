@@ -8,9 +8,11 @@ class NotifyBar extends React.Component {
   };
 
   onDismiss = () => {
+    const { onClose } = this.props;
     this.setState({
       dismiss: true,
     });
+    onClose();
   }
 
   render() {
@@ -38,6 +40,7 @@ class NotifyBar extends React.Component {
 NotifyBar.propTypes = {
   message: PropTypes.string.isRequired,
   intent: PropTypes.string.isRequired,
+  onClose: PropTypes.func.isRequired,
 };
 
 export default NotifyBar;
