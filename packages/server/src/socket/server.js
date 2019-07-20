@@ -74,6 +74,7 @@ export default function start(options, validateSession, pulseRate = 30000) {
   function keepAlive() {
     wss.clients.forEach((ws) => {
       if (!ws.isAlive) {
+        console.log('conneciton failed');
         return ws.terminate();
       }
 

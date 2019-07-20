@@ -75,7 +75,6 @@ const connect = (url, store) => {
     sock.onclose = () => {
       // Clear all pending as they will be rejected from below
       pending.length = 0;
-
       // Reject all rpcs and scopes with termination error
       // console.log('rpcs', Object.values(rpcs));
       // console.log('scopeCalls', Object.values(scopeCalls));
@@ -309,7 +308,7 @@ const connect = (url, store) => {
   if (newtwork) {
     newtwork.on('online', () => {
       // Establish a connection as soon as we are online
-
+      console.log('socket online');
       if (socket !== null) {
         client.reconnect();
       }
@@ -317,7 +316,7 @@ const connect = (url, store) => {
 
     newtwork.on('offline', () => {
       // close the socket as soon as we go offline
-
+      console.log('offline');
       if (socket !== null) {
         socket.close();
       }
