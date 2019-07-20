@@ -14,11 +14,17 @@ class Registration extends Component {
     });
   }
 
+  closeNotify = () => {
+    this.setState({
+      notify: false,
+    });
+  }
+
   render() {
     const { notify } = this.state;
     return (
       <div className="o-log-or-reg">
-        {notify && <NotifyBar message="Please verify your email" intent="success" />}
+        {notify && <NotifyBar onClose={this.closeNotify} message="Please verify your email" intent="success" />}
         <div className="log-or-reg">
           <div className="reg-box-header">
             <p> Create a Proper Class Account </p>

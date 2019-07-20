@@ -3,6 +3,7 @@ import axios from 'axios';
 import PropTypes from 'prop-types';
 import { Spinner } from '@blueprintjs/core';
 import Login from '../login';
+import { ENDPOINT } from '../../../../config';
 import NotifyBar from '../../../../common/NotifyBar';
 
 class VerifyEmail extends React.Component {
@@ -14,7 +15,7 @@ class VerifyEmail extends React.Component {
   async componentWillMount() {
     const { match } = this.props;
     try {
-      const res = await axios.get(`http://192.168.1.66:4001/auth/email-verification?token=${match.params.token}`);
+      const res = await axios.get(`${ENDPOINT}/auth/email-verification?token=${match.params.token}`);
       if (res.status === 200) {
         this.setState({ emailVerification: true, loading: false });
       }
