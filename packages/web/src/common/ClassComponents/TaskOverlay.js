@@ -10,11 +10,13 @@ class TaskOverlay extends Component {
   state = {
     editHead: false,
     editDesc: false,
-    commentText: '',
-    task: { },
+    task: {},
     comments: [],
     description: {},
     attachments: [],
+    title: '',
+    desc: '',
+    comment: '',
   };
 
   componentWillReceiveProps(nextProps) {
@@ -41,7 +43,10 @@ class TaskOverlay extends Component {
         return obj;
       }
     }).sort(timeStampSorting)[0];
-
+    let desc = '';
+    if (latestDesription) {
+      desc = latestDesription.title;
+    }
     tasks.map((obj) => {
       if (obj.id === taskId) {
         this.setState({
@@ -49,6 +54,8 @@ class TaskOverlay extends Component {
           attachments: attachmentsCard,
           task: obj,
           description: latestDesription,
+          title: obj.name,
+          desc,
         });
       }
     });
@@ -61,164 +68,134 @@ class TaskOverlay extends Component {
     this.setState({
       editHead: false,
       editDesc: false,
-      commentText: '',
+      comment: '',
     });
   };
 
   // toggle between the element of title
   toggleElemTitle = () => {
     const { editHead } = this.state;
-    const { _class, updateClassValue } = this.props;
-    if (editHead && _class.overLayContent.taskTitle !== '') {
-      const newTasks = { ..._class.tasks };
-      newTasks[_class.overLayContent.taskId] = {
-        id: _class.overLayContent.taskId,
-        title: _class.overLayContent.taskTitle,
-        description: _class.overLayContent.taskDescription,
-        comments: _class.overLayContent.comments,
-      };
-      updateClassValue('tasks', {
-        ...newTasks,
-      });
-    }
     this.setState({ editHead: !editHead });
-  };
-
-  // toggle between the element of description
-  toggleElemDesc = () => {
-    const { editDesc } = this.state;
-    const { _class, updateClassValue } = this.props;
-    if (editDesc && _class.overLayContent.taskTitle !== '') {
-      const newTasks = { ..._class.tasks };
-      newTasks[_class.overLayContent.taskId] = {
-        id: _class.overLayContent.taskId,
-        title: _class.overLayContent.taskTitle,
-        description: _class.overLayContent.taskDescription,
-        comments: _class.overLayContent.comments,
-      };
-      updateClassValue('tasks', {
-        ...newTasks,
-      });
-    }
-    this.setState({ editDesc: !editDesc });
   };
 
   // changing title of the task
   titleChange = (e) => {
-    const { _class, updateClassValue } = this.props;
-    const {
-      isOpen, taskId, taskDescription, comments,
-    } = _class.overLayContent;
-    updateClassValue('overLayContent', {
-      isOpen,
-      taskId,
-      taskTitle: e.target.value,
-      taskDescription,
-      comments,
+    this.setState({
+      title: e.target.value,
     });
   }
+
+  saveTitle = async () => {
+    const { apis, boardId } = this.props;
+    const { task, title } = this.state;
+    await apis.updateBoardColumnCard([{
+      name: title,
+      broadCastId: `Board-${boardId}`,
+    }, { id: task.id }]);
+    this.toggleElemTitle();
+  }
+
+  // toggle between the element of description
+  toggleElemDesc = () => {
+    const { editDesc } = this.state;
+    this.setState({ editDesc: !editDesc });
+  };
 
   // description change of the task
   descChange = (e) => {
-    const { _class, updateClassValue } = this.props;
-    const {
-      isOpen, taskId, taskTitle, comments,
-    } = _class.overLayContent;
-    updateClassValue('overLayContent', {
-      isOpen,
-      taskId,
-      taskTitle,
-      taskDescription: e.target.value,
-      comments,
+    this.setState({
+      desc: e.target.value,
     });
   }
 
-  putComment = (e) => {
-    this.setState({ commentText: e.target.value });
+  saveDesc = async () => {
+    const { apis, account, boardId } = this.props;
+    const { task, desc } = this.state;
+    await apis.addBoardColumnCardDescription({
+      boardColumnCardId: task.id,
+      title: desc,
+      timeStamp: Date.now(),
+      userId: account.user.id,
+      broadCastId: `Board-${boardId}`,
+    });
+    this.toggleElemDesc();
   }
 
-  // submitting comment here and change the state in both overlaycontent and in the task
-  // in stores
-  submitComment = () => {
-    const { commentText } = this.state;
-    if (commentText !== '') {
-      const { _class, main, updateClassValue } = this.props;
-      const {
-        isOpen, taskId, taskTitle, taskDescription, comments,
-      } = _class.overLayContent;
-      const newComment = [{
-        commentId: Math.random().toString(36).substring(7),
-        user: {
-          userId: main.user.id,
-          userName: `${main.user.firstName} ${main.user.middleName} ${main.user.lastName}`,
-          profilePic: 'www.google.com',
-        },
-        text: commentText,
-        timestamp: Date.now(),
-      }, ...comments];
-      updateClassValue('overLayContent', {
-        isOpen,
-        taskId,
-        taskTitle,
-        taskDescription,
-        comments: newComment,
-      });
-      updateClassValue('tasks', {
-        ..._class.tasks,
-        [taskId]: {
-          ..._class.tasks[taskId],
-          comments: newComment,
-        },
-      });
-      this.setState({ commentText: '' });
-    }
+  commentChange = (e) => {
+    this.setState({ comment: e.target.value });
+  }
+
+  saveComment = async () => {
+    const { comment, task } = this.state;
+    const { apis, account, boardId } = this.props;
+    await apis.addBoardColumnCardComment({
+      boardColumnCardId: task.id,
+      comment,
+      timeStamp: Date.now(),
+      userId: account.user.id,
+      broadCastId: `Board-${boardId}`,
+    });
+    this.setState({
+      comment: '',
+    });
   }
 
   render() {
-    const { isOpen, taskId, tasks, _class } = this.props;
-    const { taskTitle, taskDescription } = _class.overLayContent;
+    const { isOpen } = this.props;
     const {
       editHead,
       editDesc,
-      commentText,
       task,
       comments,
-      attachments,
+      // attachments,
+      title,
       description,
+      desc,
+      comment,
     } = this.state;
+    const { userList } = this.props;
     return (
       <Dialog
         isOpen={isOpen}
         onClose={this.onClose}
         className="overlay-container"
+        style={{ width: '600px' }}
       >
         <div className="task-detail-overlay">
           <div className="overlay-title">
-            {editHead ? <TextArea value={task.name} onChange={e => this.titleChange(e)} />
-              : (
-                <div className="head">
-                  <span className="title">
-                    {task.name}
-                  </span>
-                </div>
-              )
-            }
-            {editHead
-              ? (
-                <Button
-                  text="Save"
-                  onClick={this.toggleElemTitle}
-                  className="edit-button"
-                />
-              )
-              : (
-                <Button
-                  text="Edit"
-                  onClick={this.toggleElemTitle}
-                  className="edit-button"
-                />
-              )
-            }
+            <div className="head">
+              {editHead ? <TextArea value={title} onChange={e => this.titleChange(e)} />
+                : (
+                  <div>
+                    <span className="title">
+                      {task.name}
+                    </span>
+                  </div>
+                )
+              }
+              {editHead
+                ? (
+                  <div className="buttons-group">
+                    <Button
+                      text="save"
+                      onClick={this.saveTitle}
+                    />
+                    <Button
+                      text="cancle"
+                      onClick={this.toggleElemTitle}
+                    />
+                  </div>
+                )
+                : (
+                  <div className="buttons-group">
+                    <Button
+                      text="Edit"
+                      onClick={this.toggleElemTitle}
+                    />
+                  </div>
+                )
+              }
+            </div>
             <Button
               icon="cross"
               style={{ float: 'right' }}
@@ -226,18 +203,27 @@ class TaskOverlay extends Component {
               onClick={this.onClose}
             />
           </div>
-          <div className="left">
+          <div className="overlay-body">
+            <div className="left">
             <div className="overlay-description">
               <div className="desc-head">
                 <u>Description</u>
                 {editDesc
                   ? (
-                    <Button
-                      text="Save"
-                      onClick={this.toggleElemDesc}
-                      small
-                      className="edit-button"
-                    />
+                    <div className="buttons-group">
+                      <Button
+                        text="save"
+                        onClick={this.saveDesc}
+                        small
+                        className="edit-button"
+                      />
+                      <Button
+                        text="cancle"
+                        onClick={this.toggleElemDesc}
+                        small
+                        className="edit-button"
+                      />
+                    </div>  
                   )
                   : (
                     <Button
@@ -251,11 +237,10 @@ class TaskOverlay extends Component {
               </div>
               <div className="desc">
                 {editDesc
-                  ? <TextArea value={task.description} onChange={this.descChange} />
+                  ? <TextArea value={desc} onChange={this.descChange} />
                   : (
                     <span>
-                      {!description
-                        ? task.description : description.title}
+                      { description && description.title }
                     </span>
                   )}
               </div>
@@ -264,21 +249,21 @@ class TaskOverlay extends Component {
               <TextArea
                 fill
                 placeholder="Put your comments."
-                value={commentText}
-                onChange={e => this.putComment(e)}
+                value={comment}
+                onChange={e => this.commentChange(e)}
               />
               <Button
                 style={{ marginLeft: '5px' }}
-                text="Submit"
+                text="submit"
                 intent={Intent.PRIMARY}
-                onClick={this.submitComment}
+                onClick={this.saveComment}
               />
             </div>
             <div className="comments">
               <h3>History</h3>
-              {comments.map((comment) => {
+              {comments.map((com) => {
                 return (
-                  <div className="s-comment" key={comment.id}>
+                  <div className="s-comment" key={com.id}>
                     <div>
                       <img
                         src={profileIcon}
@@ -288,11 +273,19 @@ class TaskOverlay extends Component {
                     </div>
                     <div className="com-con">
                       <div className="com-auth">
-                        <span style={{ fontSize: '16px', fontWeight: 'bold', padding: '3px' }}>{comment.userId}</span>
-                        <small>{comment.timeStamp}</small>
+                        <span style={{ fontSize: '16px', fontWeight: 'bold', padding: '3px' }}>
+                          {
+                            Object.values(userList.byId).map((obj) => {
+                              if (obj.id === com.userId) {
+                                return `${obj.firstName} ${obj.lastName}`;
+                              }
+                            })
+                          }
+                        </span>
+                        <small>{new Date(com.timeStamp).toDateString()}</small>
                       </div>
                       <div className="com-desc" style={{ padding: '3px' }}>
-                        {comment.comment}
+                        {com.comment}
                       </div>
                     </div>
                   </div>
@@ -300,8 +293,34 @@ class TaskOverlay extends Component {
               })}
             </div>
           </div>
-          <div className="right">
-              Hello
+            <div className="right">
+              <div><h3>Extras</h3></div>
+              <div>
+                <Button
+                  icon="cross"
+                  text="Labels"
+                  fill
+                />
+                <Button
+                  icon="cross"
+                  fill
+                  text="attachments"
+                />
+              </div>
+              <div><h3>Advance Actions</h3></div>
+              <div>
+                <Button
+                  icon="cross"
+                  text="Move card"
+                  fill
+                />
+                <Button
+                  icon="cross"
+                  fill
+                  text="delete"
+                />
+              </div>
+            </div>
           </div>
         </div>
       </Dialog>
@@ -316,5 +335,8 @@ TaskOverlay.propTypes = {
   tasks: PropTypes.arrayOf(PropTypes.any).isRequired,
 };
 
-const mapStateToProps = state => state;
+const mapStateToProps = (state) => {
+  const { database, account } = state;
+  return { userList: database.User, account };
+};
 export default connect(mapStateToProps)(TaskOverlay);

@@ -46,14 +46,10 @@ const additionalForm = [
     name: 'Field',
   },
   {
-    id: 'profilePicture',
-    fieldtype: 'input',
-    name: 'Profile Picture',
-  },
-  {
     id: 'skills',
-    fieldtype: 'input',
+    fieldtype: 'tagInput',
     name: 'Skills',
+    values: ['hi', 'hello', 'hey'],
   },
   // profilePicuture
   // skills

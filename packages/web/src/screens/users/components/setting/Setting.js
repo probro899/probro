@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import client from '../../../../socket';
+import * as actions from '../../../../actions';
 import AdditionalForm from './AdditionalForm';
 import BasicForm from './BasicForm';
 import AdvancedForm from './AdvancedForm';
@@ -24,8 +27,13 @@ class Setting extends Component {
   }
 
   async componentDidMount() {
+    const { updateNav } = this.props;
     const apis = await client.scope('Mentee');
     this.setState({ apis });
+    updateNav({
+      schema: 'sideNav',
+      data: { name: 'Settings' },
+    });
   }
 
   handleClick = (name) => {
@@ -53,4 +61,8 @@ class Setting extends Component {
   }
 }
 
-export default Setting;
+Setting.propTypes = {
+  updateNav: PropTypes.func.isRequired,
+};
+const mapStateToProps = state => state;
+export default connect(mapStateToProps, { ...actions })(Setting);

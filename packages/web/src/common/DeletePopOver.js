@@ -12,21 +12,24 @@ class DeletePopOver extends React.Component {
         isOpen={isOpen}
         onClose={() => action('cancle')}
       >
-        <div className="container-delete-popover">
-          Are you sure you want to delete
-          <span style={{ color: 'red' }}>{name}</span>
-          ?
-        </div>
-        <div>
-          <Button
-            text="Delete"
-            intent="danger"
-            onClick={() => action('confirm')}
-          />
-          <Button
-            text="Cancle"
-            onClick={() => action('cancle')}
-          />
+        <div className="delete-popover">
+          <div className="top">
+            Are you sure you want to delete
+            {' '}
+            <span style={{ color: 'red' }}>{name}</span>
+            ?
+          </div>
+          <div className="popover-button">
+            <Button
+              text="Delete"
+              intent="danger"
+              onClick={() => action('confirm')}
+            />
+            <Button
+              text="Cancle"
+              onClick={() => action('cancle')}
+            />
+          </div>
         </div>
       </Dialog>
     );

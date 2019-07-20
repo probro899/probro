@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { FormGroup } from '@blueprintjs/core';
 import Input from './Input';
 import Button from './Button';
+import Taginput from './Taginput';
 
 const Element = (props) => {
   const { data } = props;
@@ -14,6 +15,8 @@ const Element = (props) => {
       return (<Input {...props} />);
     case 'button':
       return (<Button {...props} />);
+    case 'tagInput':
+      return (<Taginput {...props} />);
     default:
       return null;
   }

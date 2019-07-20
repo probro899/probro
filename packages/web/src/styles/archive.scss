@@ -1,0 +1,54 @@
+@import './config.scss';
+.archive {
+  margin-top: $navbarHeight;
+  padding: 5px;
+  .ar-top {
+    span {
+      opacity: 0.5;
+      font-weight: bold;
+    }
+  }
+  .ar-content {
+    padding: 3px 0px;
+    display: flex;
+    .ar-left {
+      flex: 0.7;
+      .ar-left-i {
+        padding: 3px 0px;
+        display: flex;
+        .ar-i-detail {
+          flex: 0.7;
+          span.ar-i-title {
+            font-size: 20px;
+            font-weight: bold;
+          }
+          p.ar-i-sm-desc {
+            padding: 3px 0px;
+          }
+          p.ar-i-btn-group {
+            display: flex;
+            justify-content: flex-end;
+            padding-right: 6%;
+            button {
+              margin-right: 3px;
+              background: transparent;
+            }
+          }
+        }
+        .ar-i-img {
+          flex: 0.3;
+        }
+      }
+    }
+    .ar-right {
+      flex: 0.3;
+      p.ar-right-top {
+        font-size: 20px;
+        font-weight: bold;
+      }
+      hr {
+        border: 0.5px solid rgb(186, 186, 186);
+      }
+    }
+  }
+}

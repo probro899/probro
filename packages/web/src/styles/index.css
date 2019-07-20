@@ -57,6 +57,11 @@ top attachment etc.
       .navbar .navbar-item {
         font-size: 15px;
         padding: 2px; } }
+    .navbar .navbar-item img.profile-icon {
+      height: 50px;
+      border-radius: 50%;
+      padding: 1px;
+      border: 1px solid white; }
   .navbar a:link {
     display: flex;
     flex-direction: column;
@@ -186,7 +191,8 @@ top attachment etc.
       font-weight: 500;
       color: #4eb9ff; }
     .sideNav .sideNavElement:hover {
-      background-color: #757575; }
+      background-color: #757575;
+      text-decoration: none; }
   .sideNav .active {
     background-color: #cee8f4; }
 
@@ -195,27 +201,110 @@ top attachment etc.
   display: flex;
   align-items: center;
   flex-direction: column;
-  padding-top: 20px; }
+  padding: 5px 3px;
+  position: relative; }
+  .profile .cover-pic {
+    height: 250px;
+    width: 100%;
+    background: linear-gradient(to right, #9be1f3 0%, #43c0df 100%); }
   .profile .profilePic {
-    position: relative; }
+    position: absolute;
+    top: 100px;
+    left: 10px; }
     .profile .profilePic img {
-      border: 1px solid  #a4a5a6;
-      border-radius: 1000px;
-      height: 100px; }
+      border: 1px solid #e2eaeb;
+      box-shadow: 0px 0px 5px 1px #e2eaeb;
+      border-radius: 50%;
+      height: 150px;
+      padding: 2px; }
     .profile .profilePic span {
       position: absolute;
-      top: 65px;
-      left: 40px; }
+      top: 70px;
+      left: 110px; }
     .profile .profilePic svg {
       border-radius: 100px;
       background-color: #4eb9ff; }
-  .profile .profileDetails {
-    padding-top: 20px; }
-    .profile .profileDetails .detailElement {
-      width: 300px;
+  .profile .top-details {
+    width: 100%;
+    background: white;
+    padding: 5px; }
+    .profile .top-details .name {
+      font-size: 20px;
+      font-weight: bold; }
+    .profile .top-details .designation {
+      font-size: 16px;
+      font-weight: bold;
+      color: rgba(20, 18, 18, 0.596); }
+  .profile .bio {
+    margin-top: 5px;
+    background: white;
+    text-align: center;
+    width: 100%; }
+    .profile .bio p {
+      font-family: 'Oxygen', sans-serif;
+      font-weight: bold;
+      font-style: italic;
+      font-size: 16px; }
+  .profile .education {
+    margin-top: 5px;
+    width: 100%;
+    background: white; }
+    .profile .education p.p-top {
+      font-size: 20px;
+      font-weight: bold; }
+    .profile .education .p-edu-list .p-edu-list-i {
       display: flex;
-      flex-direction: row;
-      justify-content: space-between; }
+      padding: 2px; }
+      .profile .education .p-edu-list .p-edu-list-i img {
+        height: 45px;
+        padding: 2px; }
+      .profile .education .p-edu-list .p-edu-list-i p {
+        padding: 0px 0px 0px 10px; }
+        .profile .education .p-edu-list .p-edu-list-i p span.p-name-i {
+          font-size: 18px;
+          font-weight: bold; }
+        .profile .education .p-edu-list .p-edu-list-i p span.p-timeline {
+          font-weight: bold;
+          color: #757575; }
+  .profile .experience {
+    margin-top: 5px;
+    width: 100%;
+    background: white; }
+    .profile .experience p.p-top {
+      font-size: 20px;
+      font-weight: bold; }
+    .profile .experience .p-exp-list .p-exp-list-i {
+      display: flex;
+      padding: 2px; }
+      .profile .experience .p-exp-list .p-exp-list-i img {
+        height: 45px;
+        padding: 2px; }
+      .profile .experience .p-exp-list .p-exp-list-i p {
+        padding: 0px 0px 0px 10px; }
+        .profile .experience .p-exp-list .p-exp-list-i p span.p-title-i {
+          font-size: 18px;
+          font-weight: bold; }
+        .profile .experience .p-exp-list .p-exp-list-i p span.p-company-i {
+          font-size: 16px;
+          font-weight: bold;
+          color: #757575; }
+        .profile .experience .p-exp-list .p-exp-list-i p span.p-timeline {
+          font-weight: bold;
+          color: #757575; }
+  .profile .skills {
+    margin-top: 5px;
+    width: 100%;
+    background: white; }
+    .profile .skills p.p-top {
+      font-size: 20px;
+      font-weight: bold; }
+    .profile .skills .skills-container {
+      padding: 5px 5px 5px 0px; }
+      .profile .skills .skills-container span {
+        margin: 5px;
+        padding: 5px;
+        color: white;
+        background: #137cbd; }
 
 .classes {
   display: flex;
@@ -279,10 +368,34 @@ top attachment etc.
     display: flex;
     justify-content: space-between;
     background: #4eb9f0; }
-    .tool-bar .toolbar-container .left-tools span {
-      color: white;
-      font-weight: 600;
-      font-size: 16px; }
+    .tool-bar .toolbar-container .left-tools {
+      display: flex;
+      flex-direction: row; }
+      .tool-bar .toolbar-container .left-tools .each-item {
+        padding: 0px 5px 0px 5px;
+        display: flex;
+        align-items: center; }
+      .tool-bar .toolbar-container .left-tools .class-name {
+        color: white;
+        font-weight: 600;
+        font-size: 16px; }
+      .tool-bar .toolbar-container .left-tools .user-list .i-user {
+        position: relative;
+        padding: 4px;
+        border-radius: 50%;
+        font-weight: 500;
+        cursor: pointer;
+        background: rgba(255, 255, 255, 0.9); }
+        .tool-bar .toolbar-container .left-tools .user-list .i-user:hover {
+          background: rgba(255, 255, 255, 0.5); }
+        .tool-bar .toolbar-container .left-tools .user-list .i-user .green-dot {
+          position: absolute;
+          height: 10px;
+          width: 10px;
+          background-color: #71f971;
+          border-radius: 50%;
+          top: 20px;
+          left: 15px; }
 
 .class-wrapper .columns {
   height: 100%;
@@ -343,47 +456,57 @@ top attachment etc.
   padding: 0; }
   .overlay-container .task-detail-overlay .overlay-title {
     padding: 7px;
-    background-color: #75757575; }
-    .overlay-container .task-detail-overlay .overlay-title .head {
-      display: inline; }
-      .overlay-container .task-detail-overlay .overlay-title .head span.title {
-        font-size: 20px;
-        font-weight: bold; }
-  .overlay-container .task-detail-overlay .left .overlay-description {
-    padding: 5px; }
-    .overlay-container .task-detail-overlay .left .overlay-description .desc-head u {
-      font-weight: bold;
-      font-size: 17px; }
-    .overlay-container .task-detail-overlay .left .overlay-description .desc {
-      padding: 5px;
-      font-size: 15px;
-      font-weight: 400; }
-  .overlay-container .task-detail-overlay .left .edit-button {
-    margin-left: 10px;
-    vertical-align: inherit !important; }
-  .overlay-container .task-detail-overlay .left textarea {
-    background: transparent;
-    border: none;
-    border-color: transparent;
-    resize: none; }
-  .overlay-container .task-detail-overlay .left .comment-container {
-    padding: 5px;
+    background-color: #75757575;
     display: flex;
-    justify-content: stretch; }
-  .overlay-container .task-detail-overlay .left .comments {
-    padding: 5px; }
-    .overlay-container .task-detail-overlay .left .comments .s-comment {
+    justify-content: space-between; }
+    .overlay-container .task-detail-overlay .overlay-title .head {
       display: flex;
-      justify-content: stretch; }
-      .overlay-container .task-detail-overlay .left .comments .s-comment div img {
-        border: 1px solid white;
-        border-radius: 45px;
-        padding: 3px; }
-      .overlay-container .task-detail-overlay .left .comments .s-comment .com-con {
+      flex-direction: row;
+      font-size: 20px;
+      font-weight: bold; }
+  .overlay-container .task-detail-overlay .overlay-body {
+    display: flex; }
+    .overlay-container .task-detail-overlay .overlay-body .left {
+      flex: 0.7; }
+      .overlay-container .task-detail-overlay .overlay-body .left .overlay-description {
+        padding: 5px; }
+        .overlay-container .task-detail-overlay .overlay-body .left .overlay-description .desc-head u {
+          font-weight: bold;
+          font-size: 17px; }
+        .overlay-container .task-detail-overlay .overlay-body .left .overlay-description .desc {
+          padding: 5px;
+          font-size: 15px;
+          font-weight: 400; }
+      .overlay-container .task-detail-overlay .overlay-body .left .edit-button {
         margin-left: 10px;
+        vertical-align: inherit !important; }
+      .overlay-container .task-detail-overlay .overlay-body .left textarea {
+        background: transparent;
+        border: none;
+        border-color: transparent;
+        resize: none; }
+      .overlay-container .task-detail-overlay .overlay-body .left .comment-container {
+        padding: 5px;
         display: flex;
-        flex-direction: column;
-        align-items: flex-start; }
+        justify-content: stretch; }
+      .overlay-container .task-detail-overlay .overlay-body .left .comments {
+        padding: 5px; }
+        .overlay-container .task-detail-overlay .overlay-body .left .comments .s-comment {
+          display: flex;
+          justify-content: stretch; }
+          .overlay-container .task-detail-overlay .overlay-body .left .comments .s-comment div img {
+            border: 1px solid white;
+            border-radius: 45px;
+            padding: 3px; }
+          .overlay-container .task-detail-overlay .overlay-body .left .comments .s-comment .com-con {
+            margin-left: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start; }
+    .overlay-container .task-detail-overlay .overlay-body .right {
+      flex: 0.3;
+      padding: 5px;
+      text-align: center; }
 
 .settings {
   display: flex;
@@ -410,36 +533,71 @@ top attachment etc.
       .settings .account-details .setting-types .active {
         background-color: red; }
 
-.blogs {
+.create-blog {
   margin-top: 60px; }
-  .blogs div[contenteditable]:focus {
+  .create-blog div[contenteditable]:focus {
     outline: 0px solid transparent; }
-  .blogs [contenteditable]:empty::before {
+  .create-blog [contenteditable]:empty::before {
     content: attr(datatext);
     color: grey; }
-  .blogs .blog-top {
+  .create-blog .blog-top {
     padding: 10px;
     text-align: center; }
-    .blogs .blog-top span {
+    .create-blog .blog-top span {
       font-size: 25px;
       font-weight: 600; }
-  .blogs .toolbar {
+  .create-blog .toolbar {
     display: flex;
     margin: 2px;
     padding: 10px;
     background-color: #DFDCDC;
-    justify-content: center; }
-    .blogs .toolbar button {
+    justify-content: space-between; }
+    .create-blog .toolbar button {
       margin: 0px 3px 0px 3px; }
-  .blogs .title {
+  .create-blog .title {
     margin: 10px; }
-  .blogs .editor-container {
+  .create-blog .editor-container {
     padding: 5px 10px 5px 10px; }
-    .blogs .editor-container #editor {
+    .create-blog .editor-container #editor {
       background-color: white;
       font-size: 16px;
       min-height: 500px;
       padding: 10px; }
+
+.blogs {
+  flex: 0.8;
+  padding: 5px;
+  width: 100%; }
+  .blogs .header {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between; }
+    .blogs .header span.title {
+      font-size: 22px;
+      font-weight: 600; }
+    .blogs .header small {
+      color: #8e8e8e; }
+  .blogs .blog-list {
+    margin-top: 10px;
+    display: flex; }
+    .blogs .blog-list .blog-container .img-container {
+      position: relative; }
+      .blogs .blog-list .blog-container .img-container .more-button {
+        position: absolute;
+        top: 0;
+        right: 0; }
+    .blogs .blog-list .blog-container .detail-container .blog-title span {
+      font-size: 18px;
+      font-weight: 600; }
+    .blogs .blog-list .blog-container .detail-container .blog-title small {
+      color: #8e8e8e; }
+    .blogs .blog-list .blog-container .detail-container .blog-author {
+      display: flex;
+      justify-content: flex-end; }
+      .blogs .blog-list .blog-container .detail-container .blog-author span {
+        font-size: 16px;
+        font-weight: 500; }
 
 .notification-list {
   padding: 5px;
@@ -455,6 +613,182 @@ top attachment etc.
       border: 0.4px solid rgba(0, 0, 0, 0.4);
       background: rgba(255, 255, 255, 0);
       padding: 5px; }
+
+.popover-form {
+  padding: 5px 5px 0px 5px; }
+  .popover-form div.top {
+    font-size: 18px;
+    font-weight: 600;
+    padding-bottom: 10px;
+    text-align: center; }
+
+.delete-popover {
+  padding: 5px 0px; }
+  .delete-popover .top {
+    padding: 15px 0px;
+    text-align: center;
+    font-size: 16px; }
+  .delete-popover .popover-button {
+    text-align: center; }
+    .delete-popover .popover-button button {
+      margin-right: 10px; }
+
+.bp3-menu {
+  background: #f6f6f6; }
+
+.bp3-popover-content {
+  background: #f6f6f6 !important; }
+
+.bp3-popover-arrow-fill {
+  fill: #f6f6f6 !important; }
+
+.communicate {
+  position: fixed;
+  width: 500px;
+  bottom: 0;
+  right: 20px;
+  background: #f6f6f6;
+  z-index: 2;
+  border: 1px solid #d2cfcf; }
+  .communicate .header {
+    height: 30px;
+    font-size: 18px;
+    background: black;
+    display: flex;
+    color: white;
+    justify-content: space-between; }
+    .communicate .header .win-title {
+      display: flex;
+      flex-direction: column;
+      justify-content: center; }
+  .communicate .content {
+    height: 500px; }
+    .communicate .content .chat-list {
+      padding: 5px 0px; }
+      .communicate .content .chat-list .i-chat {
+        border: 1px solid #b3b3b3;
+        margin: 3px 0px;
+        padding: 5px; }
+        .communicate .content .chat-list .i-chat.unseen {
+          background: #b8b8b8; }
+        .communicate .content .chat-list .i-chat:hover {
+          box-shadow: 1px 1px 10px 0px #9b9fa3; }
+        .communicate .content .chat-list .i-chat .name {
+          color: #0B5BC8;
+          font-weight: bold;
+          font-size: 16px; }
+        .communicate .content .chat-list .i-chat .short-msg {
+          opacity: 0.8; }
+    .communicate .content .chat-history {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between; }
+      .communicate .content .chat-history .top {
+        display: flex;
+        justify-content: space-between;
+        padding: 5px 0px;
+        border-bottom: 1px solid #d2cfcf; }
+        .communicate .content .chat-history .top .op-name {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          color: #0B5BC8;
+          font-weight: bold;
+          font-size: 16px; }
+      .communicate .content .chat-history .chats {
+        padding: 5px;
+        height: 100%; }
+        .communicate .content .chat-history .chats .i-chat {
+          display: flex; }
+          .communicate .content .chat-history .chats .i-chat .img-wrap img {
+            border-radius: 50%;
+            border: 1px solid black; }
+          .communicate .content .chat-history .chats .i-chat .text {
+            margin: 0px 10px;
+            border: 1px solid #0B5BC8;
+            border-radius: 5px; }
+      .communicate .content .chat-history .chat-box {
+        display: flex;
+        margin-bottom: 2px; }
+        .communicate .content .chat-history .chat-box textarea {
+          flex: 0.8;
+          resize: none; }
+        .communicate .content .chat-history .chat-box button {
+          flex: 0.2; }
+    .communicate .content .call-screen .top {
+      display: flex;
+      justify-content: space-between;
+      padding: 5px 0px;
+      border-bottom: 1px solid #d2cfcf; }
+      .communicate .content .call-screen .top .op-name {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        color: #0B5BC8;
+        font-weight: bold;
+        font-size: 16px; }
+    .communicate .content .call-screen .video-container {
+      display: flex;
+      width: 100%;
+      justify-content: center;
+      padding: 5px; }
+      .communicate .content .call-screen .video-container video {
+        height: 300px;
+        width: 350px; }
+    .communicate .content .call-screen .controllers {
+      padding: 5px;
+      display: flex;
+      justify-content: center; }
+      .communicate .content .call-screen .controllers button {
+        margin-left: 5px; }
+@keyframes slideDown {
+  from {
+    height: 500px; }
+  to {
+    height: 0px; } }
+@keyframes slideUp {
+  from {
+    height: 0px; }
+  to {
+    height: 500px; } }
+.archive {
+  margin-top: 60px;
+  padding: 5px; }
+  .archive .ar-top span {
+    opacity: 0.5;
+    font-weight: bold; }
+  .archive .ar-content {
+    padding: 3px 0px;
+    display: flex; }
+    .archive .ar-content .ar-left {
+      flex: 0.7; }
+      .archive .ar-content .ar-left .ar-left-i {
+        padding: 3px 0px;
+        display: flex; }
+        .archive .ar-content .ar-left .ar-left-i .ar-i-detail {
+          flex: 0.7; }
+          .archive .ar-content .ar-left .ar-left-i .ar-i-detail span.ar-i-title {
+            font-size: 20px;
+            font-weight: bold; }
+          .archive .ar-content .ar-left .ar-left-i .ar-i-detail p.ar-i-sm-desc {
+            padding: 3px 0px; }
+          .archive .ar-content .ar-left .ar-left-i .ar-i-detail p.ar-i-btn-group {
+            display: flex;
+            justify-content: flex-end;
+            padding-right: 6%; }
+            .archive .ar-content .ar-left .ar-left-i .ar-i-detail p.ar-i-btn-group button {
+              margin-right: 3px;
+              background: transparent; }
+        .archive .ar-content .ar-left .ar-left-i .ar-i-img {
+          flex: 0.3; }
+    .archive .ar-content .ar-right {
+      flex: 0.3; }
+      .archive .ar-content .ar-right p.ar-right-top {
+        font-size: 20px;
+        font-weight: bold; }
+      .archive .ar-content .ar-right hr {
+        border: 0.5px solid #bababa; }
 
 body {
   margin: 0;

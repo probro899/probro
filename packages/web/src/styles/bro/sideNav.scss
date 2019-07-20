@@ -19,6 +19,7 @@
     }
     &:hover {
       background-color: #757575;
+      text-decoration: none; // to remove the underline from link
     }
   }
   .active {

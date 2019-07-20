@@ -1,8 +1,8 @@
 import SideNav from './SideNav';
-import Profile from './Profile';
 import Class from './Class';
 import Setting from './setting/Setting';
-import Blog from './Blog';
 import Communication from './communication';
+import Archive from './archive';
+import Profile from './profile';
 
-export { SideNav, Class, Setting, Blog, Profile, Communication };
+export { SideNav, Class, Setting, Profile, Communication, Archive };

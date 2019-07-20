@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import * as actions from '../../../actions';
 import { DeletePopOver } from '../../../common';
 import boardStructure from '../../../common/ClassComponents/structure';
 import client from '../../../socket';
@@ -24,9 +25,14 @@ class Class extends Component {
   };
 
   async componentWillMount() {
+    const { updateNav } = this.props;
     const api = await client.scope('Mentee');
     this.setState({
       api,
+    });
+    updateNav({
+      schema: 'sideNav',
+      data: { name: 'Classes' },
     });
   }
 
@@ -114,7 +120,6 @@ class Class extends Component {
 
   render() {
     const { account, database } = this.props;
-    console.log('Store database value', database);
     const { createBool, deleteClass, updateClass } = this.state;
     return (
       <div className="classes">
@@ -130,6 +135,7 @@ class Class extends Component {
           {
             database.Board.allIds.map((id, index) => {
               return (
+                // eslint-disable-next-line react/no-array-index-key
                 <div style={{ position: 'relative' }} key={index}>
                   {/* more button popover */}
                   <MoreButton onMore={this.onMore} id={id} />
@@ -182,7 +188,8 @@ class Class extends Component {
 Class.propTypes = {
   account: PropTypes.objectOf(PropTypes.any).isRequired,
   database: PropTypes.objectOf(PropTypes.any).isRequired,
+  updateNav: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => state;
-export default connect(mapStateToProps)(Class);
+export default connect(mapStateToProps, { ...actions })(Class);

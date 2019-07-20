@@ -34,7 +34,10 @@ class MoreButton extends React.Component {
         position="right"
         className="more-button"
       >
-        <Button icon="more" minimal />
+        <Button
+          icon="more"
+          minimal
+        />
       </Popover>
     );
   }
