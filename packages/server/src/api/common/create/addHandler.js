@@ -51,9 +51,13 @@ function addBlogLike(record) {
 async function addBoardMember(record) {
   const { session } = this;
   const { email } = record;
+  let currentBoardChannel = null;
 
   await db.execute(async ({ findOne, insert, find }) => {
     const user = await findOne('User', { email });
+    delete user.password;
+    delete user.verificationToken;
+    delete user.verify;
     const fuser = await findOne('User', { id: record.fuserId });
     const board = await findOne('Board', { id: record.boardId });
     const htmlStringValue = await mailBody();
@@ -64,7 +68,7 @@ async function addBoardMember(record) {
       } else {
         delete record.email;
         await insert('BoardMember', { ...record, tuserId: user.id });
-        await mailer({
+        mailer({
           from: 'ProperClass<probro899@gmail.com>',
           to: `<${email}>`,
           subject: `Board inivitation from ${fuser.firstName} `,
@@ -81,49 +85,55 @@ async function addBoardMember(record) {
           viewStatus: false,
           imageUrl: null,
         };
+
         const notiId = await insert('Notification', notiData);
         const notiDetails = await findOne('Notification', { id: notiId });
-        const channel = session.channel('Board');
-        const boardDetail = await findOne('Board', { id: record.boardId });
-        const boardDetails = await findBoardDetails(record.boardId);
-        // console.log('boardDetails to be dispatch in user', boardDetails);
+        const mainchannel = session.getChannel('Main');
 
-        const boardMembers = await find('BoardMember', { boardId: record.boardId });
-        const boardMemberPromises = [];
+        const remoteUserSession = mainchannel.find(s => s.values.user.id === user.id);
+        console.log('remote User session', remoteUserSession);
+        currentBoardChannel = session.channel(`Board-${board.id}`);
+        if (remoteUserSession) {
+          remoteUserSession.subscribe(`Board-${board.id}`);
+          const boardDetail = await findOne('Board', { id: record.boardId });
+          const boardDetails = await findBoardDetails(record.boardId);
+          // console.log('boardDetails to be dispatch in user', boardDetails);
 
-        boardMembers.forEach(b => boardMemberPromises.push(findOne('User', { id: b.userId || b.tuserId })));
-        const allBoardUsers = await Promise.all(boardMemberPromises);
+          const boardMembers = await find('BoardMember', { boardId: record.boardId });
+          const boardMemberPromises = [];
 
-        const allBoardMemberDetailPromises = [];
+          boardMembers.forEach(b => boardMemberPromises.push(findOne('User', { id: b.userId || b.tuserId })));
+          const allBoardUsers = await Promise.all(boardMemberPromises);
 
-        allBoardUsers.forEach(u => allBoardMemberDetailPromises.push(findOne('UserDetail', { userId: u.id })));
+          const boardChannel = session.getChannel(`Board-${record.boardId}`);
 
-        const allBoardUserDetails = await Promise.all(allBoardMemberDetailPromises);
-
-        const boardChannel = session.getChannel(`Board-${record.boardId}`);
-
-        const finalUserList = allBoardUsers.map((u) => {
-          for (let i = 0; i < boardChannel.length; i += 1) {
-            if (boardChannel[i].values.user.id === u.id) {
-              return { ...u, activeStatus: true };
+          const finalUserList = allBoardUsers.map((u) => {
+            for (let i = 0; i < boardChannel.length; i += 1) {
+              if (boardChannel[i].values.user.id === u.id) {
+                return { ...u, activeStatus: true };
+              }
             }
-          }
-          return { ...u, activeStatus: false };
-        });
+            return { ...u, activeStatus: false };
+          });
 
-        console.log('Final User list', finalUserList);
-        finalUserList.forEach(u => allBoardMemberDetailPromises.push(findOne('UserDetail', { userId: u.id })));
-
-        channel.dispatch(schema.add('Board', boardDetail), [{ userId: user.id }]);
-        channel.dispatch(schema.add('BoardColumn', boardDetails.boardColumn.flat()), [{ userId: user.id }]);
-        channel.dispatch(schema.add('BoardColumnCard', boardDetails.boardColumnCard.flat().flat()), [{ userId: user.id }]);
-        channel.dispatch(schema.add('BoardColumnCardAttachment', boardDetails.boardColumnCardAttachment.flat().flat()), [{ userId: user.id }]);
-        channel.dispatch(schema.add('BoardColumnCardComment', boardDetails.boardColumnCardComment.flat().flat()), [{ userId: user.id }]);
-        channel.dispatch(schema.add('BoardColumnCardDescription', boardDetails.boardColumnCardDescription.flat().flat()), [{ userId: user.id }]);
-        channel.dispatch(schema.add('BoardMember', boardMembers), [{ userId: user.id }]);
-        channel.dispatch(schema.add('User', finalUserList), [{ userId: user.id }]);
-        channel.dispatch(schema.add('UserDetail', allBoardUserDetails), [{ userId: user.id }]);
-        channel.dispatch(schema.add('Notification', notiDetails));
+          const allBoardMemberDetailPromises = [];
+          finalUserList.forEach(u => allBoardMemberDetailPromises.push(findOne('UserDetail', { userId: u.id })));
+          const allBoardUserDetails = await Promise.all(allBoardMemberDetailPromises);
+          remoteUserSession.dispatch(schema.add('Board', boardDetail));
+          remoteUserSession.dispatch(schema.add('BoardColumn', boardDetails.boardColumn.flat()));
+          remoteUserSession.dispatch(schema.add('BoardColumnCard', boardDetails.boardColumnCard.flat().flat()));
+          remoteUserSession.dispatch(schema.add('BoardColumnCardAttachment', boardDetails.boardColumnCardAttachment.flat().flat()));
+          remoteUserSession.dispatch(schema.add('BoardColumnCardComment', boardDetails.boardColumnCardComment.flat().flat()));
+          remoteUserSession.dispatch(schema.add('BoardColumnCardDescription', boardDetails.boardColumnCardDescription.flat().flat()));
+          remoteUserSession.dispatch(schema.add('BoardMember', boardMembers));
+          remoteUserSession.dispatch(schema.add('User', finalUserList));
+          remoteUserSession.dispatch(schema.add('UserDetail', allBoardUserDetails));
+          currentBoardChannel.dispatch(schema.add('Notification', notiDetails));
+          currentBoardChannel.dispatch(schema.add('User', { ...user, activeStatus: true }));
+        } else {
+          currentBoardChannel.dispatch(schema.add('Notification', notiDetails));
+          currentBoardChannel.dispatch(schema.add('User', { ...user, activeStatus: false }));
+        }
       }
     } else {
       throw new Error('User Not Found');

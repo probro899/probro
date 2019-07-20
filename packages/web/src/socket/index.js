@@ -2,7 +2,6 @@ import { connect } from './main';
 import getRemoteUrl from './getRemoteUrl';
 import store from '../store';
 
-
 const client = connect(getRemoteUrl(), store);
 
 let retryConnect = true;
@@ -15,7 +14,6 @@ client.on('connect', () => {
   });
 });
 
-
 const reconnect = () => {
   if (retryTimer) {
     return;
@@ -23,11 +21,13 @@ const reconnect = () => {
 
   retryTimer = setTimeout(() => {
     retryTimer = null;
+    console.log('reconnect try');
     client.reconnect();
   }, 1000);
 };
 
 client.on('disconnect', () => {
+  console.log('disconnetct called');
   store.dispatch({
     type: 'DISSCONNECT',
   });
@@ -45,8 +45,6 @@ client.on('logout', () => {
 client.on('error', (err) => {
   console.error('socket Error', err);
 });
-
-
 
 export { getRemoteUrl };
 export default client;
