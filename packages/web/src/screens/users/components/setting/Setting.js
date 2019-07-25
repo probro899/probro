@@ -3,22 +3,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import client from '../../../../socket';
 import * as actions from '../../../../actions';
-import AdditionalForm from './AdditionalForm';
-import BasicForm from './BasicForm';
-import AdvancedForm from './AdvancedForm';
-
-const detailForm = (activeTab, apis) => {
-  switch (activeTab) {
-    case 'basic':
-      return (<BasicForm apis={apis} />);
-    case 'additional':
-      return (<AdditionalForm apis={apis} />);
-    case 'advanced':
-      return (<AdvancedForm apis={apis} />);
-    default:
-      return null;
-  }
-};
+import BasicSettings from './BasicSettings';
+import AdvancedSettings from './AdvancedSetting';
 
 class Setting extends Component {
   state = {
@@ -44,18 +30,28 @@ class Setting extends Component {
     const { activeTab, apis } = this.state;
     return (
       <div className="settings">
-        <div className="title">
-          <span>Settings Page</span>
-        </div>
-        <div className="account-details">
-          <div className="setting-types">
-            <div onClick={() => this.handleClick('basic')} tabIndex={0} onKeyDown={() => this.handleClick('basic')} role="menuitem" className={activeTab === 'basic' ? 'active' : ''}>Basic Details</div>
-            <div onClick={() => this.handleClick('additional')} tabIndex={0} onKeyDown={() => this.handleClick('additional')} role="menuitem" className={activeTab === 'additional' ? 'active' : ''}>Additional Details</div>
-            <div onClick={() => this.handleClick('advanced')} tabIndex={0} onKeyDown={() => this.handleClick('advanced')} role="menuitem" className={activeTab === 'advanced' ? 'active' : ''}>Advanced settings</div>
-            <button type="button">Switch to Expert</button>
+        <div className="setting-types">
+          <div
+            onClick={() => this.handleClick('basic')}
+            tabIndex={0}
+            onKeyDown={() => this.handleClick('basic')}
+            role="menuitem"
+            className={activeTab === 'basic' ? 'active' : 'i-setting'}
+          >
+            General
+          </div>
+          <div
+            onClick={() => this.handleClick('advanced')}
+            tabIndex={0}
+            onKeyDown={() => this.handleClick('advanced')}
+            role="menuitem"
+            className={activeTab === 'advanced' ? 'active' : 'i-setting'}
+          >
+            Advanced
           </div>
         </div>
-        {detailForm(activeTab, apis)}
+        {activeTab === 'basic' && <BasicSettings apis={apis} />}
+        {activeTab === 'advanced' && <AdvancedSettings apis={apis} />}
       </div>
     );
   }

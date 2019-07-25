@@ -10,7 +10,7 @@ class Channel {
   }
 
   emit(event, data, userList) {
-    console.log(' Channel emit called', event, data, userList);
+    // console.log(' Channel emit called', event, data, userList);
     return Channel.provider.publish(this.id, PKT_EVENT(event, data), userList);
   }
 }

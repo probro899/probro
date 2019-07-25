@@ -22,38 +22,38 @@ export default async function initUser(id) {
   try {
     u = await user.get(id);
   } catch (err) {
-    console.error(err);
+    console.error('error in getUser data from cache', err);
     throw err;
   }
 
   // 9840749589
+  // setting data in the cache
   session.set('userData', u);
-
-  u.board.forEach(b => session.subscribe(`Board-${b.id}`));
+  u.Board.forEach(b => session.subscribe(`Board-${b.id}`));
 
   const boardSessions = [];
-  u.board.forEach(b => boardSessions.push(session.getChannel(`Board-${b.id}`)));
+  u.Board.forEach(b => boardSessions.push(session.getChannel(`Board-${b.id}`)));
   // console.log('Sessiosn user Details', boardSessions.flat()[0].values.user);
-  const finalUserList = u.board.length === 0 ? [{ ...u.user[0], activeStatus: true }] : userPresentorHelper(boardSessions.flat(), u.user);
-  console.log('finalUSerlist', finalUserList);
+  const finalUserList = u.Board.length === 0 ? [{ ...u.User[0], activeStatus: true }] : userPresentorHelper(boardSessions.flat(), u.User);
+  // console.log('finalUSerlist', finalUserList);
 
   // boardSessions.forEach(s => console.log(JSON.stringify(s.id)));
 
-  u.board.map(b => ({ channel: session.channel(`Board-${b.id}`), board: b })).forEach(obj => obj.channel.dispatch(schema.update('User', { id, activeStatus: true })));
+  u.Board.map(b => ({ channel: session.channel(`Board-${b.id}`), board: b })).forEach(obj => obj.channel.dispatch(schema.update('User', { id, activeStatus: true })));
 
   session.subscribe('Main');
-  console.log('board member', u.boardMember);
+  // console.log('board member', u.BoardMember);
   session.dispatch(schema.init('User', finalUserList));
-  session.dispatch(schema.init('UserDetail', u.userDetail));
-  session.dispatch(schema.init('Board', u.board));
-  session.dispatch(schema.init('BoardColumn', u.boardColumn));
-  session.dispatch(schema.init('BoardColumnCard', u.boardColumnCard));
-  session.dispatch(schema.init('BoardColumnCardAttachment', u.boardColumnCardAttachment));
-  session.dispatch(schema.init('BoardColumnCardComment', u.boardColumnCardComment));
-  session.dispatch(schema.init('BoardColumnCardDescription', u.boardColumnCardDescription));
-  session.dispatch(schema.init('Blog', u.blog));
-  session.dispatch(schema.init('BlogDetail', u.blogDetail));
-  session.dispatch(schema.init('BlogComment', u.blogComment));
-  session.dispatch(schema.init('BlogLike', u.blogLike));
-  session.dispatch(schema.init('BoardMember', u.boardMember));
+  session.dispatch(schema.init('UserDetail', u.UserDetail));
+  session.dispatch(schema.init('Board', u.Board));
+  session.dispatch(schema.init('BoardColumn', u.BoardColumn));
+  session.dispatch(schema.init('BoardColumnCard', u.BoardColumnCard));
+  session.dispatch(schema.init('BoardColumnCardAttachment', u.BoardColumnCardAttachment));
+  session.dispatch(schema.init('BoardColumnCardComment', u.BoardColumnCardComment));
+  session.dispatch(schema.init('BoardColumnCardDescription', u.BoardColumnCardDescription));
+  session.dispatch(schema.init('Blog', u.Blog));
+  session.dispatch(schema.init('BlogDetail', u.BlogDetail));
+  session.dispatch(schema.init('BlogComment', u.BlogComment));
+  session.dispatch(schema.init('BlogLike', u.BlogLike));
+  session.dispatch(schema.init('BoardMember', u.BoardMember));
 }
