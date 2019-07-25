@@ -1,11 +1,12 @@
-@import '../config.scss';
+@import './config.scss';
 
-.profile {
+.public-profile {
+  margin-top: $navbarHeight;
   flex: 0.8;
   display: flex;
   align-items: center;
   flex-direction: column;
-  padding: 5px 3px;
+  padding: 1px 3px;
   position: relative;
   .cover-pic {
     height: 250px;

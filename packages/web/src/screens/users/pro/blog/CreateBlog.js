@@ -1,19 +1,39 @@
 import React, { Component } from 'react';
-import { Button, TextArea, Intent } from '@blueprintjs/core';
-import { IconNames } from '@blueprintjs/icons';
+import PropTypes from 'prop-types';
+import { Button, TextArea, Intent, Popover, FileInput } from '@blueprintjs/core';
 import { Navbar } from '../../../home/component';
 import client from '../../../../socket';
 import { addBlog, updateBlog } from './helper-functions';
+
+const PopoverContent = ({ imgName, callback }) => {
+  return (
+    <div style={{ padding: '5px' }}>
+      <FileInput
+        webkitdirectory
+        text={imgName}
+        onInputChange={callback}
+        large
+      />
+    </div>
+  );
+};
+
+PopoverContent.propTypes = {
+  callback: PropTypes.func.isRequired,
+  imgName: PropTypes.string.isRequired,
+};
 
 class Blogs extends Component {
   state = {
     bold: false,
     italic: false,
     underline: false,
+    h2: false,
     apis: {},
     title: '',
     description: '',
     blogId: '',
+    imgName: 'Choose an image...',
   };
 
   async componentWillMount() {
@@ -40,6 +60,7 @@ class Blogs extends Component {
     let bold = false;
     let italic = false;
     let underline = false;
+    let h2 = false;
     if (window.getSelection) {
       sel = window.getSelection();
       // just to avoid the first case that has null in focusNode
@@ -59,6 +80,9 @@ class Blogs extends Component {
             case ('i'):
               italic = true;
               break;
+            case ('h2'):
+              h2 = true;
+              break;
             default:
               return;
           }
@@ -70,15 +94,24 @@ class Blogs extends Component {
       bold,
       italic,
       underline,
+      h2,
     });
   }
 
   onClick = (type) => {
-    let { bold, italic, underline } = this.state;
     // eslint-disable-next-line no-undef
-    document.execCommand(type, false, '');
+    if (type === 'h2') {
+      document.execCommand('formatblock', false, 'h2');
+    } else {
+      document.execCommand(type, false, '');
+    }
     // eslint-disable-next-line no-undef
     document.getElementById('editor').focus();
+    this.toggleButtons(type);
+  }
+
+  toggleButtons = (type) => {
+    let { bold, italic, underline, h2 } = this.state;
     switch (type) {
       case 'bold':
         bold = !bold;
@@ -89,11 +122,14 @@ class Blogs extends Component {
       case 'underline':
         underline = !underline;
         break;
+      case 'h2':
+        h2 = !h2;
+        break;
       default:
         return;
     }
     this.setState({
-      bold, italic, underline,
+      bold, italic, underline, h2,
     });
   }
 
@@ -101,6 +137,9 @@ class Blogs extends Component {
     if ((e.ctrlKey === true || e.metaKey === true) && e.keyCode === 83) {
       e.preventDefault();
       this.saveBlog();
+      return;
+    }
+    if (e.keyCode !== 46 || e.keyCode !== 8) {
       return;
     }
     const content = e.target.innerText;
@@ -140,8 +179,21 @@ class Blogs extends Component {
     });
   }
 
+  uploadImg = (e) => {
+    console.log(e.target.files);
+    this.setState({ imgName: e.target.files[0].name });
+    document.execCommand('insertImage', false, e.target.files[0].mozFullPath);
+  }
+
   render() {
-    const { bold, italic, underline, title } = this.state;
+    const {
+      bold,
+      italic,
+      underline,
+      title,
+      h2,
+      imgName,
+    } = this.state;
     return (
       <div>
         <Navbar />
@@ -154,22 +206,36 @@ class Blogs extends Component {
             <div className="center">
               <Button
                 type="button"
-                icon={IconNames.BOLD}
+                icon="bold"
                 intent={bold ? Intent.PRIMARY : null}
                 onClick={() => this.onClick('bold')}
               />
               <Button
                 type="button"
-                icon={IconNames.ITALIC}
+                icon="italic"
                 intent={italic ? Intent.PRIMARY : null}
                 onClick={() => this.onClick('italic')}
               />
               <Button
                 type="button"
-                icon={IconNames.UNDERLINE}
+                icon="underline"
                 intent={underline ? Intent.PRIMARY : null}
                 onClick={() => this.onClick('underline')}
               />
+              <Button
+                type="button"
+                icon="header"
+                intent={h2 ? 'primary' : null}
+                onClick={() => this.onClick('h2')}
+              />
+              <Popover
+                content={<PopoverContent imgName={imgName} callback={this.uploadImg} />}
+              >
+                <Button
+                  type="button"
+                  icon="upload"
+                />
+              </Popover>
             </div>
             <div className="right">
               <Button
@@ -194,7 +260,6 @@ class Blogs extends Component {
                 overflowX: 'hidden',
                 overflowWrap: 'break-word',
                 maxHeight: '97px',
-                fontSize: '30px',
               }}
             />
           </div>

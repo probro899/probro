@@ -10,6 +10,7 @@ import { CreateBlog } from './users/pro/blog';
 import EmailVerification from './home/auth/email-verification';
 import { Communication } from '../common';
 import { Archive } from './users/components';
+import { PublicProfile } from './home/component';
 
 export default () => (
   <Router>
@@ -23,6 +24,7 @@ export default () => (
         <Route path="/write-blog/:id" component={CreateBlog} />
         <Route path="/reset/:token" component={Reset} />
         <Route path="/email-verification/:token" component={EmailVerification} />
+        <Route path="/user/:userId" component={PublicProfile} />
         <Route path="/:id" component={BroHome} />
         <Route exact path="/" component={HomePage} />
       </Switch>

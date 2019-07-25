@@ -188,13 +188,23 @@ top attachment etc.
     align-self: stretch; }
     .sideNav .sideNavElement span {
       font-size: 18px;
-      font-weight: 500;
-      color: #4eb9ff; }
+      font-weight: bold;
+      color: #137cbd; }
+      .sideNav .sideNavElement span svg {
+        fill: #137cbd; }
     .sideNav .sideNavElement:hover {
-      background-color: #757575;
+      background-color: #a7b6c2;
       text-decoration: none; }
+      .sideNav .sideNavElement:hover span {
+        color: white; }
+        .sideNav .sideNavElement:hover span svg {
+          fill: white; }
   .sideNav .active {
-    background-color: #cee8f4; }
+    background-color: #137cbd; }
+    .sideNav .active span {
+      color: white; }
+      .sideNav .active span svg {
+        fill: white; }
 
 .profile {
   flex: 0.8;
@@ -205,8 +215,23 @@ top attachment etc.
   position: relative; }
   .profile .cover-pic {
     height: 250px;
+    position: relative;
     width: 100%;
     background: linear-gradient(to right, #9be1f3 0%, #43c0df 100%); }
+    .profile .cover-pic .edit-cover {
+      padding: 5px;
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      color: white; }
+      .profile .cover-pic .edit-cover .edit-icon {
+        vertical-align: text-top; }
+      .profile .cover-pic .edit-cover:hover {
+        text-decoration: underline;
+        cursor: pointer;
+        color: #137cbd; }
+        .profile .cover-pic .edit-cover:hover svg {
+          fill: #137cbd; }
   .profile .profilePic {
     position: absolute;
     top: 100px;
@@ -251,7 +276,12 @@ top attachment etc.
     background: white; }
     .profile .education p.p-top {
       font-size: 20px;
-      font-weight: bold; }
+      font-weight: bold;
+      display: flex;
+      justify-content: space-between;
+      padding-right: 5px; }
+      .profile .education p.p-top svg {
+        fill: #137cbd; }
     .profile .education .p-edu-list .p-edu-list-i {
       display: flex;
       padding: 2px; }
@@ -266,13 +296,20 @@ top attachment etc.
         .profile .education .p-edu-list .p-edu-list-i p span.p-timeline {
           font-weight: bold;
           color: #757575; }
+        .profile .education .p-edu-list .p-edu-list-i p svg {
+          fill: #137cbd; }
   .profile .experience {
     margin-top: 5px;
     width: 100%;
     background: white; }
     .profile .experience p.p-top {
       font-size: 20px;
-      font-weight: bold; }
+      font-weight: bold;
+      display: flex;
+      justify-content: space-between;
+      padding-right: 5px; }
+      .profile .experience p.p-top svg {
+        fill: #137cbd; }
     .profile .experience .p-exp-list .p-exp-list-i {
       display: flex;
       padding: 2px; }
@@ -291,13 +328,20 @@ top attachment etc.
         .profile .experience .p-exp-list .p-exp-list-i p span.p-timeline {
           font-weight: bold;
           color: #757575; }
+        .profile .experience .p-exp-list .p-exp-list-i p svg {
+          fill: #137cbd; }
   .profile .skills {
     margin-top: 5px;
     width: 100%;
     background: white; }
     .profile .skills p.p-top {
       font-size: 20px;
-      font-weight: bold; }
+      font-weight: bold;
+      display: flex;
+      justify-content: space-between;
+      padding-right: 5px; }
+      .profile .skills p.p-top svg {
+        fill: #137cbd; }
     .profile .skills .skills-container {
       padding: 5px 5px 5px 0px; }
       .profile .skills .skills-container span {
@@ -314,7 +358,8 @@ top attachment etc.
   .classes .header {
     font-size: 25px;
     font-weight: 500px;
-    padding: 10px; }
+    padding: 10px;
+    border-bottom: 1px solid lightgray; }
   .classes .content-list {
     padding: 10px;
     display: flex;
@@ -327,22 +372,27 @@ top attachment etc.
       margin: 10px;
       min-height: 150px;
       min-width: 200px;
+      max-width: 250px;
       display: flex;
       cursor: pointer;
-      background-color: lightgray;
       text-decoration: none;
       box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.56);
-      -webkit-box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.56);
-      -moz-box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.56);
-      border-radius: 5px;
-      -moz-border-radius: 5px;
-      -webkit-border-radius: 5px; }
-      .classes .content-list .content-link .class-repr {
-        border-radius: 5px 0px 0px 5px;
-        -moz-border-radius: 5px 0px 0px 5px;
-        -webkit-border-radius: 5px 0px 0px 5px;
+      border-radius: 5px; }
+      .classes .content-list .content-link.add-new {
         display: flex;
-        flex: 0.4;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        box-shadow: inset 0px 0px 2px 0px rgba(0, 0, 0, 0.56); }
+        .classes .content-list .content-link.add-new button {
+          box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.56); }
+          .classes .content-list .content-link.add-new button:hover {
+            box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.56); }
+      .classes .content-list .content-link .class-repr {
+        padding: 5px;
+        border-radius: 5px 0px 0px 5px;
+        display: flex;
+        flex: 0.5;
         background: red;
         align-items: center;
         text-align: center; }
@@ -350,11 +400,21 @@ top attachment etc.
           color: white;
           font-size: 20px; }
       .classes .content-list .content-link .class-detail {
+        padding: 5px;
         border-radius: 0px 5px 5px 0px;
-        -moz-border-radius: 0px 5px 5px 0px;
-        -webkit-border-radius: 0px 5px 5px 0px;
-        flex: 0.6;
+        flex: 0.5;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
         background: white; }
+        .classes .content-list .content-link .class-detail span {
+          text-align: center; }
+          .classes .content-list .content-link .class-detail span.name {
+            font-weight: bold; }
+          .classes .content-list .content-link .class-detail span.date {
+            color: black;
+            opacity: 0.7; }
 
 .tool-bar {
   top: 60px;
@@ -396,6 +456,12 @@ top attachment etc.
           border-radius: 50%;
           top: 20px;
           left: 15px; }
+    .tool-bar .toolbar-container .right-tools {
+      display: flex; }
+      .tool-bar .toolbar-container .right-tools button {
+        color: white; }
+        .tool-bar .toolbar-container .right-tools button svg {
+          fill: white; }
 
 .class-wrapper .columns {
   height: 100%;
@@ -456,14 +522,33 @@ top attachment etc.
   padding: 0; }
   .overlay-container .task-detail-overlay .overlay-title {
     padding: 7px;
-    background-color: #75757575;
     display: flex;
-    justify-content: space-between; }
+    justify-content: space-between;
+    background: rgba(133, 145, 133, 0.14); }
     .overlay-container .task-detail-overlay .overlay-title .head {
       display: flex;
       flex-direction: row;
       font-size: 20px;
-      font-weight: bold; }
+      font-weight: bold;
+      width: 100%; }
+      .overlay-container .task-detail-overlay .overlay-title .head textarea {
+        width: 100%;
+        resize: none;
+        padding: 0px 3px;
+        overflow-y: scroll;
+        font-size: 18px;
+        font-weight: bold;
+        background: transparent; }
+      .overlay-container .task-detail-overlay .overlay-title .head .buttons-group {
+        display: flex;
+        justify-content: center;
+        align-items: center; }
+        .overlay-container .task-detail-overlay .overlay-title .head .buttons-group button {
+          margin-left: 5px; }
+        .overlay-container .task-detail-overlay .overlay-title .head .buttons-group .edit-title {
+          margin-left: 5px; }
+          .overlay-container .task-detail-overlay .overlay-title .head .buttons-group .edit-title svg {
+            fill: #137cbd; }
   .overlay-container .task-detail-overlay .overlay-body {
     display: flex; }
     .overlay-container .task-detail-overlay .overlay-body .left {
@@ -477,6 +562,8 @@ top attachment etc.
           padding: 5px;
           font-size: 15px;
           font-weight: 400; }
+          .overlay-container .task-detail-overlay .overlay-body .left .overlay-description .desc textarea {
+            width: 100%; }
       .overlay-container .task-detail-overlay .overlay-body .left .edit-button {
         margin-left: 10px;
         vertical-align: inherit !important; }
@@ -496,8 +583,8 @@ top attachment etc.
           justify-content: stretch; }
           .overlay-container .task-detail-overlay .overlay-body .left .comments .s-comment div img {
             border: 1px solid white;
-            border-radius: 45px;
-            padding: 3px; }
+            border-radius: 50%;
+            padding: 1px; }
           .overlay-container .task-detail-overlay .overlay-body .left .comments .s-comment .com-con {
             margin-left: 10px;
             display: flex;
@@ -512,26 +599,58 @@ top attachment etc.
   display: flex;
   flex: 0.8;
   flex-direction: column; }
-  .settings .title {
+  .settings .setting-types {
     display: flex;
-    padding: 20px;
-    justify-content: center; }
-    .settings .title span {
-      font-size: 20px; }
-  .settings .account-details {
-    display: flex;
-    flex-direction: column;
-    padding: 10px; }
-    .settings .account-details .setting-types {
-      background-color: #ffffff;
+    flex-direction: row;
+    justify-content: space-around;
+    font-size: 18px;
+    font-weight: bold;
+    border-bottom: 1px solid #a7b6c2; }
+    .settings .setting-types .i-setting {
+      width: 100%;
+      padding: 10px;
+      text-align: center; }
+    .settings .setting-types .active {
+      color: #137cbd;
+      border-bottom: 5px solid #137cbd;
+      text-align: center;
+      width: 100%;
+      padding: 10px; }
+  .settings .container-settings {
+    padding-top: 5px; }
+    .settings .container-settings p .label {
+      font-size: 16px;
+      font-weight: bold; }
+      .settings .container-settings p .label:hover {
+        text-decoration: underline; }
+    .settings .container-settings p .value {
+      margin-left: 5px;
+      padding: 2px;
+      font-size: 15px; }
+    .settings .container-settings p .edit-icon {
+      margin-left: 5px;
+      vertical-align: text-top; }
+      .settings .container-settings p .edit-icon:hover svg {
+        fill: #137cbd; }
+    .settings .container-settings p ul {
+      display: flex; }
+      .settings .container-settings p ul li {
+        color: white;
+        padding: 5px;
+        margin-left: 2px;
+        background-color: #137cbd;
+        list-style-type: none; }
+    .settings .container-settings .switch-adv-con {
       display: flex;
-      flex-direction: row;
-      justify-content: space-around; }
-      .settings .account-details .setting-types div {
-        padding: 10px;
-        background-color: #93b5c2; }
-      .settings .account-details .setting-types .active {
-        background-color: red; }
+      flex-direction: column;
+      align-items: center; }
+      .settings .container-settings .switch-adv-con p {
+        text-align: center;
+        color: #5c7080;
+        line-height: 18px; }
+      .settings .container-settings .switch-adv-con button.switch-button {
+        background: #0f9960;
+        color: white; }
 
 .create-blog {
   margin-top: 60px; }
@@ -556,13 +675,17 @@ top attachment etc.
       margin: 0px 3px 0px 3px; }
   .create-blog .title {
     margin: 10px; }
+    .create-blog .title textarea {
+      font-size: 30px;
+      font-weight: bold; }
   .create-blog .editor-container {
     padding: 5px 10px 5px 10px; }
     .create-blog .editor-container #editor {
       background-color: white;
       font-size: 16px;
       min-height: 500px;
-      padding: 10px; }
+      padding: 10px;
+      font-size: 21px; }
 
 .blogs {
   flex: 0.8;
@@ -789,6 +912,151 @@ top attachment etc.
         font-weight: bold; }
       .archive .ar-content .ar-right hr {
         border: 0.5px solid #bababa; }
+
+.public-profile {
+  margin-top: 60px;
+  flex: 0.8;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding: 1px 3px;
+  position: relative; }
+  .public-profile .cover-pic {
+    height: 250px;
+    position: relative;
+    width: 100%;
+    background: linear-gradient(to right, #9be1f3 0%, #43c0df 100%); }
+    .public-profile .cover-pic .edit-cover {
+      padding: 5px;
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      color: white; }
+      .public-profile .cover-pic .edit-cover .edit-icon {
+        vertical-align: text-top; }
+      .public-profile .cover-pic .edit-cover:hover {
+        text-decoration: underline;
+        cursor: pointer;
+        color: #137cbd; }
+        .public-profile .cover-pic .edit-cover:hover svg {
+          fill: #137cbd; }
+  .public-profile .profilePic {
+    position: absolute;
+    top: 100px;
+    left: 10px; }
+    .public-profile .profilePic img {
+      border: 1px solid #e2eaeb;
+      box-shadow: 0px 0px 5px 1px #e2eaeb;
+      border-radius: 50%;
+      height: 150px;
+      padding: 2px; }
+    .public-profile .profilePic span {
+      position: absolute;
+      top: 70px;
+      left: 110px; }
+    .public-profile .profilePic svg {
+      border-radius: 100px;
+      background-color: #4eb9ff; }
+  .public-profile .top-details {
+    width: 100%;
+    background: white;
+    padding: 5px; }
+    .public-profile .top-details .name {
+      font-size: 20px;
+      font-weight: bold; }
+    .public-profile .top-details .designation {
+      font-size: 16px;
+      font-weight: bold;
+      color: rgba(20, 18, 18, 0.596); }
+  .public-profile .bio {
+    margin-top: 5px;
+    background: white;
+    text-align: center;
+    width: 100%; }
+    .public-profile .bio p {
+      font-family: 'Oxygen', sans-serif;
+      font-weight: bold;
+      font-style: italic;
+      font-size: 16px; }
+  .public-profile .education {
+    margin-top: 5px;
+    width: 100%;
+    background: white; }
+    .public-profile .education p.p-top {
+      font-size: 20px;
+      font-weight: bold;
+      display: flex;
+      justify-content: space-between;
+      padding-right: 5px; }
+      .public-profile .education p.p-top svg {
+        fill: #137cbd; }
+    .public-profile .education .p-edu-list .p-edu-list-i {
+      display: flex;
+      padding: 2px; }
+      .public-profile .education .p-edu-list .p-edu-list-i img {
+        height: 45px;
+        padding: 2px; }
+      .public-profile .education .p-edu-list .p-edu-list-i p {
+        padding: 0px 0px 0px 10px; }
+        .public-profile .education .p-edu-list .p-edu-list-i p span.p-name-i {
+          font-size: 18px;
+          font-weight: bold; }
+        .public-profile .education .p-edu-list .p-edu-list-i p span.p-timeline {
+          font-weight: bold;
+          color: #757575; }
+        .public-profile .education .p-edu-list .p-edu-list-i p svg {
+          fill: #137cbd; }
+  .public-profile .experience {
+    margin-top: 5px;
+    width: 100%;
+    background: white; }
+    .public-profile .experience p.p-top {
+      font-size: 20px;
+      font-weight: bold;
+      display: flex;
+      justify-content: space-between;
+      padding-right: 5px; }
+      .public-profile .experience p.p-top svg {
+        fill: #137cbd; }
+    .public-profile .experience .p-exp-list .p-exp-list-i {
+      display: flex;
+      padding: 2px; }
+      .public-profile .experience .p-exp-list .p-exp-list-i img {
+        height: 45px;
+        padding: 2px; }
+      .public-profile .experience .p-exp-list .p-exp-list-i p {
+        padding: 0px 0px 0px 10px; }
+        .public-profile .experience .p-exp-list .p-exp-list-i p span.p-title-i {
+          font-size: 18px;
+          font-weight: bold; }
+        .public-profile .experience .p-exp-list .p-exp-list-i p span.p-company-i {
+          font-size: 16px;
+          font-weight: bold;
+          color: #757575; }
+        .public-profile .experience .p-exp-list .p-exp-list-i p span.p-timeline {
+          font-weight: bold;
+          color: #757575; }
+        .public-profile .experience .p-exp-list .p-exp-list-i p svg {
+          fill: #137cbd; }
+  .public-profile .skills {
+    margin-top: 5px;
+    width: 100%;
+    background: white; }
+    .public-profile .skills p.p-top {
+      font-size: 20px;
+      font-weight: bold;
+      display: flex;
+      justify-content: space-between;
+      padding-right: 5px; }
+      .public-profile .skills p.p-top svg {
+        fill: #137cbd; }
+    .public-profile .skills .skills-container {
+      padding: 5px 5px 5px 0px; }
+      .public-profile .skills .skills-container span {
+        margin: 5px;
+        padding: 5px;
+        color: white;
+        background: #137cbd; }
 
 body {
   margin: 0;

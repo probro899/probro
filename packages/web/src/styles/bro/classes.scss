@@ -9,6 +9,7 @@
     font-size: 25px;
     font-weight: 500px;
     padding: 10px;
+    border-bottom: 1px solid lightgray;
   }
   .content-list {
     padding: 10px;
@@ -23,22 +24,31 @@
       margin: 10px;
       min-height: 150px;
       min-width: 200px;
+      max-width: 250px;
       display: flex;
       cursor: pointer;
-      background-color: lightgray;
       text-decoration: none;
       box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.56);
-      -webkit-box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.56);
-      -moz-box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.56);
       border-radius: 5px;
-      -moz-border-radius: 5px;
-      -webkit-border-radius: 5px;
-      .class-repr {
-        border-radius: 5px 0px 0px 5px;
-        -moz-border-radius: 5px 0px 0px 5px;
-        -webkit-border-radius: 5px 0px 0px 5px;
+      // styling the adding new class 
+      &.add-new {
         display: flex;
-        flex: 0.4;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        box-shadow: inset 0px 0px 2px 0px rgba(0,0,0,0.56);
+        button {
+          box-shadow: 0px 0px 3px 0px rgba(0,0,0,0.56);
+          &:hover {
+            box-shadow: 0px 0px 6px 0px rgba(0,0,0,0.56);
+          }
+        }
+      }
+      .class-repr {
+        padding: 5px;
+        border-radius: 5px 0px 0px 5px;
+        display: flex;
+        flex: 0.5;
         background: red;
         align-items: center;
         text-align: center;
@@ -48,11 +58,24 @@
         }
       }
       .class-detail {
+        padding: 5px;
         border-radius: 0px 5px 5px 0px;
-        -moz-border-radius: 0px 5px 5px 0px;
-        -webkit-border-radius: 0px 5px 5px 0px;
-        flex: 0.6;
+        flex: 0.5;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
         background: white;
+        span {
+          text-align: center;
+          &.name {
+            font-weight: bold;
+          }
+          &.date {
+            color: black;
+            opacity: 0.7;
+          }
+        }
       }
     }
   }
@@ -111,10 +134,18 @@
       }
     }
     .right-tools {
+      display: flex;
+      button {
+        color: white;
+        svg {
+          fill: white;
+        }
+      }
     }
   }
 }
 .class-wrapper {
+  // background: orange;
   .columns {
     height: 100%;
     padding-top: $navbarHeight + $toolbarHeight;
@@ -190,14 +221,38 @@
   .task-detail-overlay {
     .overlay-title {
       padding: 7px;
-      background-color: #75757575;
       display: flex;
       justify-content: space-between;
+      background: rgba(133, 145, 133, 0.14);
       .head {
         display: flex;
         flex-direction: row;
         font-size: 20px;
         font-weight: bold;
+        width: 100%;
+        textarea {
+          width: 100%;
+          resize: none;
+          padding: 0px 3px;
+          overflow-y: scroll;
+          font-size: 18px;
+          font-weight: bold;
+          background: transparent;
+        }
+        .buttons-group {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          button {
+            margin-left: 5px;
+          }
+          .edit-title {
+            margin-left: 5px;
+            svg {
+              fill: rgba(19, 124, 189, 1);
+            }
+          }
+        }
       }
     }
     .overlay-body {
@@ -213,6 +268,9 @@
             }
           }
           .desc {
+            textarea {
+              width: 100%;
+            }
             padding: 5px;
             font-size: 15px;
             font-weight: 400;
@@ -241,8 +299,8 @@
             div {
               img {
                 border: 1px solid white;
-                border-radius: 45px;
-                padding: 3px;
+                border-radius: 50%;
+                padding: 1px;
               }
             }
             .com-con {

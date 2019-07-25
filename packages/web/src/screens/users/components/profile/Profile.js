@@ -34,7 +34,12 @@ class Profile extends Component {
     }
     return (
       <div className="profile">
-        <div className="cover-pic" />
+        <div className="cover-pic">
+          <div className="edit-cover">
+            <span>Edit </span>
+            <Icon icon="edit" color="white" className="edit-icon" />
+          </div>
+        </div>
         <div className="profilePic">
           <img src={file} alt="profile of the user" />
           <FileInput />
@@ -55,7 +60,10 @@ class Profile extends Component {
           </p>
         </div>
         <div className="education">
-          <p className="p-top">Education</p>
+          <p className="p-top">
+            <span>Education</span>
+            <Icon icon="plus" />
+          </p>
           <div className="p-edu-list">
             <div className="p-edu-list-i">
               <img src={school} alt="school icon" />
@@ -66,11 +74,15 @@ class Profile extends Component {
                 <br />
                 <span className="p-timeline">2012-2018</span>
               </p>
+              <p><Icon icon="edit" /></p>
             </div>
           </div>
         </div>
         <div className="experience">
-          <p className="p-top">Experience</p>
+          <p className="p-top">
+            <span>Experience</span>
+            <Icon icon="plus" />
+          </p>
           <div className="p-exp-list">
             <div className="p-exp-list-i">
               <img src={office} alt="school icon" />
@@ -83,11 +95,15 @@ class Profile extends Component {
                 <br />
                 <span>Place Kathmandu</span>
               </p>
+              <p><Icon icon="edit" /></p>
             </div>
           </div>
         </div>
         <div className="skills">
-          <p className="p-top">Skills</p>
+          <p className="p-top">
+            <span>Skills</span>
+            <Icon icon="plus" />
+          </p>
           <div className="skills-container">
             <span>
               Python

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { Button } from '@blueprintjs/core';
 import * as actions from '../../../actions';
 import { DeletePopOver } from '../../../common';
 import boardStructure from '../../../common/ClassComponents/structure';
@@ -120,6 +121,7 @@ class Class extends Component {
 
   render() {
     const { account, database } = this.props;
+    console.log(this.props);
     const { createBool, deleteClass, updateClass } = this.state;
     return (
       <div className="classes">
@@ -129,7 +131,7 @@ class Class extends Component {
           name={deleteClass.name}
         />
         <div className="header">
-          Classes
+          Classrooms
         </div>
         <div className="content-list">
           {
@@ -146,10 +148,8 @@ class Class extends Component {
                       </span>
                     </div>
                     <div className="class-detail">
-                      created-by:
-                      {database.Board.byId[id].userId}
-                      date:
-                      {database.Board.byId[id].timeStamp}
+                      <span className="name">Nabin Bhusal</span>
+                      <span className="date">{new Date(database.Board.byId[id].timeStamp).toDateString()}</span>
                     </div>
                   </Link>
                 </div>
@@ -158,13 +158,14 @@ class Class extends Component {
           }
           {/* this is add new board button down from here */}
           <div
-            className="content-link"
-            onClick={this.newClass}
-            onKeyDown={this.newClass}
-            role="button"
-            tabIndex={0}
+            className="content-link add-new"
           >
-            <span>Create a New class</span>
+            <Button
+              intent="primary"
+              icon="plus"
+              onClick={this.newClass}
+              text="Add New"
+            />
           </div>
         </div>
         {/* create new class popover */}

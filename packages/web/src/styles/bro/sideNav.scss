@@ -14,15 +14,30 @@
     align-self: stretch;
     span {
       font-size: 18px;
-      font-weight: 500;
-      color: $primary;
+      font-weight: bold;
+      color: rgba(19, 124, 189, 1);
+      svg {
+        fill: rgba(19, 124, 189, 1);
+      }
     }
     &:hover {
-      background-color: #757575;
+      background-color: rgba(167, 182, 194, 1);
+      span {
+        color: white;
+        svg {
+          fill: white;
+        }
+      }
       text-decoration: none; // to remove the underline from link
     }
   }
   .active {
-    background-color: #cee8f4;
+    span {
+      color: white;
+      svg {
+        fill: white;
+      }
+    }
+    background-color: rgba(19, 124, 189, 1);
   }
 }

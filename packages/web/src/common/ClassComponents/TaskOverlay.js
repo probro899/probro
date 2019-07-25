@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Dialog, Button, TextArea, Intent } from '@blueprintjs/core';
+import { Dialog, Button, TextArea, Intent, Icon } from '@blueprintjs/core';
 import PropTypes from 'prop-types';
 import { timeStampSorting } from '../../screens/users/utility-functions';
 
-const profileIcon = require('../../assets/imageUploadIcon.png');
+const profileIcon = require('../../assets/icons/64w/uploadicon64.png');
 
 class TaskOverlay extends Component {
   state = {
@@ -159,37 +159,37 @@ class TaskOverlay extends Component {
         isOpen={isOpen}
         onClose={this.onClose}
         className="overlay-container"
-        style={{ width: '600px' }}
+        style={{ width: '800px' }}
       >
         <div className="task-detail-overlay">
           <div className="overlay-title">
             <div className="head">
               {editHead ? <TextArea value={title} onChange={e => this.titleChange(e)} />
                 : (
-                  <div>
-                    <span className="title">
-                      {task.name}
-                    </span>
-                  </div>
+                  <span className="title">
+                    {task.name}
+                  </span>
                 )
               }
               {editHead
                 ? (
                   <div className="buttons-group">
                     <Button
-                      text="save"
+                      icon="tick"
+                      intent="success"
                       onClick={this.saveTitle}
                     />
                     <Button
-                      text="cancle"
+                      icon="cross"
                       onClick={this.toggleElemTitle}
                     />
                   </div>
                 )
                 : (
                   <div className="buttons-group">
-                    <Button
-                      text="Edit"
+                    <Icon
+                      className="edit-title"
+                      icon="edit"
                       onClick={this.toggleElemTitle}
                     />
                   </div>
@@ -205,47 +205,47 @@ class TaskOverlay extends Component {
           </div>
           <div className="overlay-body">
             <div className="left">
-            <div className="overlay-description">
-              <div className="desc-head">
-                <u>Description</u>
-                {editDesc
-                  ? (
-                    <div className="buttons-group">
-                      <Button
-                        text="save"
-                        onClick={this.saveDesc}
-                        small
-                        className="edit-button"
-                      />
-                      <Button
-                        text="cancle"
+              <div className="overlay-description">
+                <div className="desc-head">
+                  <u>Description</u>
+                  {editDesc
+                    ? (
+                      <span className="buttons-group">
+                        <Button
+                          icon="tick"
+                          onClick={this.saveDesc}
+                          intent="success"
+                          small
+                          className="edit-button"
+                        />
+                        <Button
+                          icon="cross"
+                          onClick={this.toggleElemDesc}
+                          small
+                          className="edit-button"
+                        />
+                      </span>
+                    )
+                    : (
+                      <Icon
+                        icon="edit"
                         onClick={this.toggleElemDesc}
-                        small
                         className="edit-button"
                       />
-                    </div>  
-                  )
-                  : (
-                    <Button
-                      text="Edit"
-                      onClick={this.toggleElemDesc}
-                      small
-                      className="edit-button"
-                    />
-                  )
-                }
+                    )
+                  }
+                </div>
+                <div className="desc">
+                  {editDesc
+                    ? <TextArea value={desc} onChange={this.descChange} />
+                    : (
+                      <span>
+                        { description && description.title }
+                      </span>
+                    )}
+                </div>
               </div>
-              <div className="desc">
-                {editDesc
-                  ? <TextArea value={desc} onChange={this.descChange} />
-                  : (
-                    <span>
-                      { description && description.title }
-                    </span>
-                  )}
-              </div>
-            </div>
-            <div className="comment-container">
+              <div className="comment-container">
               <TextArea
                 fill
                 placeholder="Put your comments."
@@ -259,40 +259,40 @@ class TaskOverlay extends Component {
                 onClick={this.saveComment}
               />
             </div>
-            <div className="comments">
-              <h3>History</h3>
-              {comments.map((com) => {
-                return (
-                  <div className="s-comment" key={com.id}>
-                    <div>
-                      <img
-                        src={profileIcon}
-                        height="45px"
-                        alt="profile or blank profile"
-                      />
-                    </div>
-                    <div className="com-con">
-                      <div className="com-auth">
-                        <span style={{ fontSize: '16px', fontWeight: 'bold', padding: '3px' }}>
-                          {
-                            Object.values(userList.byId).map((obj) => {
-                              if (obj.id === com.userId) {
-                                return `${obj.firstName} ${obj.lastName}`;
-                              }
-                            })
-                          }
-                        </span>
-                        <small>{new Date(com.timeStamp).toDateString()}</small>
+              <div className="comments">
+                <h3>History</h3>
+                {comments.map((com) => {
+                  return (
+                    <div className="s-comment" key={com.id}>
+                      <div>
+                        <img
+                          src={profileIcon}
+                          height="45px"
+                          alt="profile or blank profile"
+                        />
                       </div>
-                      <div className="com-desc" style={{ padding: '3px' }}>
-                        {com.comment}
+                      <div className="com-con">
+                        <div className="com-auth">
+                          <span style={{ fontSize: '16px', fontWeight: 'bold', padding: '3px' }}>
+                            {
+                              Object.values(userList.byId).map((obj) => {
+                                if (obj.id === com.userId) {
+                                  return `${obj.firstName} ${obj.lastName}`;
+                                }
+                              })
+                            }
+                          </span>
+                          <small>{new Date(com.timeStamp).toDateString()}</small>
+                        </div>
+                        <div className="com-desc" style={{ padding: '3px' }}>
+                          {com.comment}
+                        </div>
                       </div>
                     </div>
-                  </div>
-                );
-              })}
+                  );
+                })}
+              </div>
             </div>
-          </div>
             <div className="right">
               <div><h3>Extras</h3></div>
               <div>

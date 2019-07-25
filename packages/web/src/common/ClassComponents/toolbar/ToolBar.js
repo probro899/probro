@@ -54,6 +54,7 @@ class ToolBar extends React.Component {
             <UserList userList={users} boardId={boardId} boardMembers={boardMembers} />
           </div>
           <div className="right-tools">
+            <Divider />
             <Popover
               content={<PopoverContent callback={this.addUserToBoardHandler} />}
               position="left-top"
