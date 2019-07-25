@@ -4,6 +4,7 @@ import db from '../../db';
 import { findBoardDetail, findBlogDetail } from '../../api';
 
 export default async function get(id) {
+  // console.log('id in getUser', id);
   const res = users.get(id);
   if (res) {
     return res;
@@ -13,13 +14,13 @@ export default async function get(id) {
 
     const user = await find('User', { id });
     delete user[0].password;
-    const notification = await find('Notification', { userId: id });
+    const Notification = await find('Notification', { userId: id });
 
     const userDetail = await find('UserDetail', { userId: id });
 
     const boardMember = await find('BoardMember', { tuserId: id });
 
-    const board = await find('Board', { userId: id });
+    const Board = await find('Board', { userId: id });
 
     const boardPromises = [];
 
@@ -27,7 +28,7 @@ export default async function get(id) {
 
     const allBoards = await Promise.all(boardPromises);
 
-    console.log('all board', allBoards);
+    // console.log('all board', allBoards);
 
     const boardDetailsPromises = [];
 
@@ -81,41 +82,41 @@ export default async function get(id) {
     // console.log('uniqUser and BoarUserDetails', uniqUsers, allBoardUserDetails);
     const boardDetails = await Promise.all(boardDetailsPromises);
     // console.log('boardDetails', JSON.stringify(boardDetails));
-    const boardColumn = boardDetails.map(obj => obj.boardColumn).flat();
-    const boardColumnCard = boardDetails.map(obj => obj.boardColumnCard).flat().flat();
-    const boardColumnCardAttachment = boardDetails.map(obj => obj.boardColumnCardAttachment).flat().flat();
-    const boardColumnCardComment = boardDetails.map(obj => obj.boardColumnCardComment).flat().flat();
+    const BoardColumn = boardDetails.map(obj => obj.boardColumn).flat();
+    const BoardColumnCard = boardDetails.map(obj => obj.boardColumnCard).flat().flat();
+    const BoardColumnCardAttachment = boardDetails.map(obj => obj.boardColumnCardAttachment).flat().flat();
+    const BoardColumnCardComment = boardDetails.map(obj => obj.boardColumnCardComment).flat().flat();
     // console.log('board columnCardAttachment', boardColumnCardComment);
-    const boardColumnCardDescription = boardDetails.map(obj => obj.boardColumnCardDescription).flat().flat();
+    const BoardColumnCardDescription = boardDetails.map(obj => obj.boardColumnCardDescription).flat().flat();
 
-    const blog = await find('Blog', { userId: id });
+    const Blog = await find('Blog', { userId: id });
 
     const blogDetailsPromises = [];
 
-    blog.forEach((b) => {
+    Blog.forEach((b) => {
       blogDetailsPromises.push(findBlogDetail(b.id));
     });
 
     const blogDetails = await Promise.all(blogDetailsPromises);
-    const blogDetail = blogDetails.map(obj => obj.blogDetail).flat();
-    const blogComment = blogDetails.map(obj => obj.blogComment).flat();
-    const blogLike = blogDetails.map(obj => obj.blogLike).flat();
+    const BlogDetail = blogDetails.map(obj => obj.blogDetail).flat();
+    const BlogComment = blogDetails.map(obj => obj.blogComment).flat();
+    const BlogLike = blogDetails.map(obj => obj.blogLike).flat();
 
     const userDataRes = {
-      user: allUser,
-      userDetail: allBoardUserDetails,
-      board: allBoards,
-      boardMember: allBoardMembers.flat(),
-      boardColumn,
-      boardColumnCard,
-      boardColumnCardAttachment,
-      boardColumnCardComment,
-      boardColumnCardDescription,
-      blog,
-      blogDetail,
-      blogComment,
-      blogLike,
-      notification,
+      User: allUser,
+      UserDetail: allBoardUserDetails,
+      Board: allBoards,
+      BoardMember: allBoardMembers.flat(),
+      BoardColumn,
+      BoardColumnCard,
+      BoardColumnCardAttachment,
+      BoardColumnCardComment,
+      BoardColumnCardDescription,
+      Blog,
+      BlogDetail,
+      BlogComment,
+      BlogLike,
+      Notification,
     };
     return userDataRes;
   });

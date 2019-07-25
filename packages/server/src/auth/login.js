@@ -10,24 +10,28 @@ export default async function login(record) {
   const { password } = record;
   const res = await db.execute(async ({ findOne }) => {
     const rec = await findOne('User', { email: record.email });
-    const checkPasswordStatus = await checkPassword(password, rec.password);
-    if (!rec || !checkPasswordStatus) {
-      throw new Error('Invalid username/password');
+    if (rec) {
+      const checkPasswordStatus = await checkPassword(password, rec.password);
+      if (!rec || !checkPasswordStatus) {
+        throw new Error('Invalid username/password');
+      }
+      if (rec.verify === '0') { throw new Error(' Your email is not verified. Please verify your email.'); }
+      const userDetails = await findOne('UserDetail', { userId: rec.id });
+      const token = uuid();
+      const user = {
+        id: rec.id,
+        firstName: rec.firstName,
+        lastName: rec.lastName,
+        middleName: rec.middleName,
+        email: rec.email,
+        type: rec.type,
+        token,
+        ...userDetails,
+      };
+      cache.users.set(token, user, SESSION_AGE);
+      return { id: rec.id, token };
     }
-    const userDetails = await findOne('UserDetail', { userId: rec.id });
-    const token = uuid();
-    const user = {
-      id: rec.id,
-      firstName: rec.firstName,
-      lastName: rec.lastName,
-      middleName: rec.middleName,
-      email: rec.email,
-      type: rec.type,
-      token,
-      ...userDetails,
-    };
-    cache.users.set(token, user, SESSION_AGE);
-    return { id: rec.id, token };
+    throw new Error('You are not register. Please register first.');
   });
   return res;
 }

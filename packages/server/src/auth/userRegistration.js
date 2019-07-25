@@ -21,7 +21,7 @@ export default async (record) => {
       const insertRes = await insert('User', { ...record, password: hasPassword, verify: false, verificationToken: token });
       if (insertRes) {
         cache.users.set(token, record.email, RESET_TOKEN_AGE);
-        await mailer({
+        mailer({
           from: 'ProperClass<probro899@gmail.com>',
           to: `<${record.email}>`,
           subject: 'User email confirmation',

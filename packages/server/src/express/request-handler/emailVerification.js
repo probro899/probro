@@ -1,6 +1,7 @@
 import emailVerification from '../../auth/emailVerification';
 
 export default async (req, res) => {
+  console.log('email verification handler', req.query);
   try {
     const emaiVerificationEmail = await emailVerification(req.query.token);
     if (emaiVerificationEmail) {
