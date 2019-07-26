@@ -1,16 +1,18 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import axios from 'axios';
 import { Button, TextArea, Intent, Popover, FileInput } from '@blueprintjs/core';
 import { Navbar } from '../../../home/component';
 import client from '../../../../socket';
 import { addBlog, updateBlog } from './helper-functions';
+import { ENDPOINT } from '../../../../config';
 
-const PopoverContent = ({ imgName, callback }) => {
+const PopoverContent = ({ imageSource, callback }) => {
   return (
     <div style={{ padding: '5px' }}>
       <FileInput
         webkitdirectory
-        text={imgName}
+        text={imageSource ? imageSource.name : 'Choose image...'}
         onInputChange={callback}
         large
       />
@@ -20,7 +22,7 @@ const PopoverContent = ({ imgName, callback }) => {
 
 PopoverContent.propTypes = {
   callback: PropTypes.func.isRequired,
-  imgName: PropTypes.string.isRequired,
+  imageSource: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 class Blogs extends Component {
@@ -33,7 +35,8 @@ class Blogs extends Component {
     title: '',
     description: '',
     blogId: '',
-    imgName: 'Choose an image...',
+    imageSource: null,
+    imageUrl: null,
   };
 
   async componentWillMount() {
@@ -179,10 +182,32 @@ class Blogs extends Component {
     });
   }
 
-  uploadImg = (e) => {
+  uploadImg = async (e) => {
     console.log(e.target.files);
-    this.setState({ imgName: e.target.files[0].name });
-    document.execCommand('insertImage', false, e.target.files[0].mozFullPath);
+    this.setState({ imageSource: e.target.files[0] });
+
+    try {
+      const formData = new FormData(); //eslint-disable-line
+      formData.append('image', e.target.files[0]);
+      const uploadRes = await axios({
+        config: {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        },
+        method: 'post',
+        url: `${ENDPOINT}/web/upload-file`,
+        data: formData,
+      });
+      console.log('upload Response', uploadRes.data);
+      if (uploadRes.status === 200) {
+        this.setState({ imageUrl: uploadRes.data });
+      }
+    } catch (err) {
+      console.log('update profile error', err);
+    }
+
+    // document.execCommand('insertImage', false, e.target.files[0].mozFullPath);
   }
 
   render() {
@@ -192,8 +217,10 @@ class Blogs extends Component {
       underline,
       title,
       h2,
-      imgName,
+      imageSource,
+      imageUrl,
     } = this.state;
+    console.log('image source', imageSource, imageUrl);
     return (
       <div>
         <Navbar />
@@ -229,7 +256,7 @@ class Blogs extends Component {
                 onClick={() => this.onClick('h2')}
               />
               <Popover
-                content={<PopoverContent imgName={imgName} callback={this.uploadImg} />}
+                content={<PopoverContent imgName={imageSource} callback={this.uploadImg} />}
               >
                 <Button
                   type="button"

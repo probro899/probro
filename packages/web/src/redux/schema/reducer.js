@@ -10,7 +10,6 @@ export default function schemaReducer(...schemes) {
   }, {});
 
   return (state = structure, action) => {
-
     const { schema } = action;
     // Only process actions that have schema
     if (!schema || !state[schema]) {
@@ -18,7 +17,6 @@ export default function schemaReducer(...schemes) {
     }
 
     switch (action.type) {
-
       // Initialise the reducer with initial value
       case schemaRedux.init.TYPE:
         // console.log('schema initcalled', action);
