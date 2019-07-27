@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import axios from 'axios';
 import { Button, TextArea, Intent, Popover, FileInput } from '@blueprintjs/core';
 import { Navbar } from '../../../home/component';
 import client from '../../../../socket';
 import { addBlog, updateBlog } from './helper-functions';
 import { ENDPOINT } from '../../../../config';
+
 
 const PopoverContent = ({ imageSource, callback }) => {
   return (
@@ -183,11 +185,14 @@ class Blogs extends Component {
   }
 
   uploadImg = async (e) => {
+    console.log('upload image props', this.props);
+    const { account } = this.props;
     console.log(e.target.files);
     this.setState({ imageSource: e.target.files[0] });
 
     try {
       const formData = new FormData(); //eslint-disable-line
+      formData.append('data', JSON.stringify({ token: account.sessionId, fileType: 'file', content: 'blog' }));
       formData.append('image', e.target.files[0]);
       const uploadRes = await axios({
         config: {
@@ -310,5 +315,6 @@ class Blogs extends Component {
     );
   }
 }
+const mapStateToProps = state => ({account: state.account});
+export default connect(mapStateToProps)(Blogs);
 
-export default Blogs;
