@@ -215,6 +215,12 @@ class Blogs extends Component {
     // document.execCommand('insertImage', false, e.target.files[0].mozFullPath);
   }
 
+  deleteFileHandler = async () => {
+    const { account } = this.props;
+    const res = await axios.post(`${ENDPOINT}/web/delete-file`, { token: account.sessionId, content: 'blog', fileName: 'image-1564206339130.png' });
+    console.log('deleteRes', res);
+  }
+
   render() {
     const {
       bold,
@@ -276,6 +282,7 @@ class Blogs extends Component {
                 text="save"
                 onClick={this.saveBlog}
               />
+              <Button text="deleteFileTest" intent="danger" onClick={this.deleteFileHandler} />
             </div>
           </div>
           <div className="title">
@@ -315,6 +322,6 @@ class Blogs extends Component {
     );
   }
 }
-const mapStateToProps = state => ({account: state.account});
+const mapStateToProps = state => ({ account: state.account });
 export default connect(mapStateToProps)(Blogs);
 
