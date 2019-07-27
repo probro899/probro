@@ -217,7 +217,7 @@ class Blogs extends Component {
 
   deleteFileHandler = async () => {
     const { account } = this.props;
-    const res = await axios.post(`${ENDPOINT}/web/delete-file`, { token: account.sessionId, content: 'blog', fileName: 'image-1564206339130.png' });
+    const res = await axios.post(`${ENDPOINT}/web/delete-file`, { token: account.sessionId, content: 'blog', fileName: 'IMPDiagramAll.pdf1564207317384.pdf'});
     console.log('deleteRes', res);
   }
 
