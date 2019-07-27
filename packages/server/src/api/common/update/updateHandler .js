@@ -30,10 +30,6 @@ function updateBlog(records) {
   update.call(this, 'Blog', ...records);
 }
 
-function updateBlogDetail(records) {
-  update.call(this, 'BlogDetail', ...records);
-}
-
 function updateBlogComment(records) {
   update.call(this, 'BlogComment', ...records);
 }
@@ -69,7 +65,6 @@ export default [
   updateBoardColumnCardDescription,
   updateBlog,
   updateBlogComment,
-  updateBlogDetail,
   updateBlogLike,
   updateUserEducation,
   updateUserSkill,

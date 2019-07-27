@@ -32,11 +32,8 @@ function deleteBordColumnDescription(record) {
 }
 
 function deleteBlog(record) {
-  deleteBlogHelper.call(Delete.bind(this), record);
-}
-
-function deleteBlogDetail(record) {
-  Delete.call(this, 'BlogDetail', record);
+  const dbDelete = Delete.bind(this);
+  deleteBlogHelper(dbDelete, record);
 }
 
 function deleteBlogComment(record) {
@@ -73,7 +70,6 @@ export default [
   deleteBordColumnDescription,
   deleteBlog,
   deleteBlogComment,
-  deleteBlogDetail,
   deleteBlogLike,
   deleteUserEducation,
   deleteUserPortal,
