@@ -41,6 +41,10 @@
       min-height: 500px;
       padding: 10px;
       font-size: 21px;
+      img {
+        max-width: 100%;
+        // object-fit: contain;
+      }
     } 
   } 
 }

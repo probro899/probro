@@ -686,6 +686,8 @@ top attachment etc.
       min-height: 500px;
       padding: 10px;
       font-size: 21px; }
+      .create-blog .editor-container #editor img {
+        max-width: 100%; }
 
 .blogs {
   flex: 0.8;

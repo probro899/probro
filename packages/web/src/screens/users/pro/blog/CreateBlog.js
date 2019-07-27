@@ -2,19 +2,17 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import axios from 'axios';
-import { Button, TextArea, Intent, Popover, FileInput } from '@blueprintjs/core';
+import { Button, TextArea, Intent, Popover, FileInput, HTMLSelect } from '@blueprintjs/core';
 import { Navbar } from '../../../home/component';
 import client from '../../../../socket';
 import { addBlog, updateBlog } from './helper-functions';
 import { ENDPOINT } from '../../../../config';
 
-
-const PopoverContent = ({ imageSource, callback }) => {
+const PopoverContent = ({ imgName, callback }) => {
   return (
     <div style={{ padding: '5px' }}>
       <FileInput
-        webkitdirectory
-        text={imageSource ? imageSource.name : 'Choose image...'}
+        text={imgName}
         onInputChange={callback}
         large
       />
@@ -24,7 +22,7 @@ const PopoverContent = ({ imageSource, callback }) => {
 
 PopoverContent.propTypes = {
   callback: PropTypes.func.isRequired,
-  imageSource: PropTypes.objectOf(PropTypes.any).isRequired,
+  imgName: PropTypes.string.isRequired,
 };
 
 class Blogs extends Component {
@@ -32,13 +30,11 @@ class Blogs extends Component {
     bold: false,
     italic: false,
     underline: false,
-    h2: false,
     apis: {},
     title: '',
     description: '',
     blogId: '',
-    imageSource: null,
-    imageUrl: null,
+    imageSource: 'Choose a picture...',
   };
 
   async componentWillMount() {
@@ -46,6 +42,29 @@ class Blogs extends Component {
     this.setState({
       apis,
     });
+  }
+
+  componentDidMount() {
+    const config = { attributes: true, childList: true, subtree: true };
+    const targetNode = document.getElementById('editor');
+    const mutationObserver = new MutationObserver(this.observeMutation);
+    mutationObserver.observe(targetNode, config);
+  }
+
+  observeMutation = (mutationsList, observer) => {
+    const fileNames = [];
+    for (let i = 0; i < mutationsList.length; i += 1) {
+      const removeNodes = mutationsList[i].removedNodes;
+      for (let j = 0; j < removeNodes.length; j += 1) {
+        if (removeNodes[j].localName === 'img') {
+          const sp = removeNodes[j].src.split('/');
+          fileNames.push(sp[sp.length - 1]);
+        }
+      }
+    }
+    if (fileNames.length !== 0) {
+      this.deleteFileHandler(fileNames);
+    }
   }
 
   onChangeDesc = (e) => {
@@ -60,12 +79,12 @@ class Blogs extends Component {
     });
   }
 
+  // also to focus the active tool in the toolbar
   onEditorFocus = () => {
     let sel;
     let bold = false;
     let italic = false;
     let underline = false;
-    let h2 = false;
     if (window.getSelection) {
       sel = window.getSelection();
       // just to avoid the first case that has null in focusNode
@@ -85,9 +104,6 @@ class Blogs extends Component {
             case ('i'):
               italic = true;
               break;
-            case ('h2'):
-              h2 = true;
-              break;
             default:
               return;
           }
@@ -99,22 +115,18 @@ class Blogs extends Component {
       bold,
       italic,
       underline,
-      h2,
     });
   }
 
-  onClick = (type) => {
+  onClick = (cmd, val) => {
     // eslint-disable-next-line no-undef
-    if (type === 'h2') {
-      document.execCommand('formatblock', false, 'h2');
-    } else {
-      document.execCommand(type, false, '');
-    }
+    document.execCommand(cmd, false, val);
     // eslint-disable-next-line no-undef
     document.getElementById('editor').focus();
-    this.toggleButtons(type);
+    // this.toggleButtons();
   }
 
+  // hightlighting the active tool in the toolbar
   toggleButtons = (type) => {
     let { bold, italic, underline, h2 } = this.state;
     switch (type) {
@@ -185,13 +197,10 @@ class Blogs extends Component {
   }
 
   uploadImg = async (e) => {
-    console.log('upload image props', this.props);
     const { account } = this.props;
-    console.log(e.target.files);
-    this.setState({ imageSource: e.target.files[0] });
-
+    this.setState({ imageSource: e.target.files[0].name });
     try {
-      const formData = new FormData(); //eslint-disable-line
+      const formData = new FormData();
       formData.append('data', JSON.stringify({ token: account.sessionId, fileType: 'image', content: 'blog' }));
       formData.append('image', e.target.files[0]);
       const uploadRes = await axios({
@@ -204,21 +213,19 @@ class Blogs extends Component {
         url: `${ENDPOINT}/web/upload-file`,
         data: formData,
       });
-      console.log('upload Response', uploadRes.data);
       if (uploadRes.status === 200) {
-        this.setState({ imageUrl: uploadRes.data });
+        // eslint-disable-next-line no-undef
+        document.getElementById('editor').focus();
+        document.execCommand('insertImage', false, `${ENDPOINT}/user/${10000000 + parseInt(account.user.id, 10)}/blog/${uploadRes.data}`);
       }
     } catch (err) {
       console.log('update profile error', err);
     }
-
-    // document.execCommand('insertImage', false, e.target.files[0].mozFullPath);
   }
 
-  deleteFileHandler = async () => {
+  deleteFileHandler = async (fileList) => {
     const { account } = this.props;
-    const res = await axios.post(`${ENDPOINT}/web/delete-file`, { token: account.sessionId, content: 'blog', fileName: 'IMPDiagramAll.pdf1564207317384.pdf'});
-    console.log('deleteRes', res);
+    await axios.post(`${ENDPOINT}/web/delete-file`, { token: account.sessionId, content: 'blog', fileName: fileList });
   }
 
   render() {
@@ -227,11 +234,8 @@ class Blogs extends Component {
       italic,
       underline,
       title,
-      h2,
       imageSource,
-      imageUrl,
     } = this.state;
-    console.log('image source', imageSource, imageUrl);
     return (
       <div>
         <Navbar />
@@ -242,36 +246,55 @@ class Blogs extends Component {
           <div className="toolbar">
             <div className="left" />
             <div className="center">
+              <HTMLSelect
+                options={[
+                  { label: 'Normal', value: 'p' },
+                  { value: 'h1', label: 'Heading 1' },
+                  { value: 'h2', label: 'Heading 2' },
+                  { value: 'h3', label: 'Heading 3' },
+                  { label: 'Code', value: 'pre' },
+                ]}
+                onChange={e => this.onClick('formatBlock', e.target.value)}
+              />
               <Button
                 type="button"
                 icon="bold"
                 intent={bold ? Intent.PRIMARY : null}
-                onClick={() => this.onClick('bold')}
+                onClick={() => this.onClick('bold', '')}
               />
               <Button
                 type="button"
                 icon="italic"
                 intent={italic ? Intent.PRIMARY : null}
-                onClick={() => this.onClick('italic')}
+                onClick={() => this.onClick('italic', '')}
               />
               <Button
                 type="button"
                 icon="underline"
                 intent={underline ? Intent.PRIMARY : null}
-                onClick={() => this.onClick('underline')}
+                onClick={() => this.onClick('underline', '')}
               />
               <Button
                 type="button"
-                icon="header"
-                intent={h2 ? 'primary' : null}
-                onClick={() => this.onClick('h2')}
+                icon="align-left"
+                onClick={() => this.onClick('justifyLeft', '')}
+              />
+              <Button
+                type="button"
+                icon="align-center"
+                onClick={() => this.onClick('justifyCenter', '')}
+              />
+              <Button
+                type="button"
+                icon="align-right"
+                onClick={() => this.onClick('justifyRight', '')}
               />
               <Popover
                 content={<PopoverContent imgName={imageSource} callback={this.uploadImg} />}
               >
                 <Button
                   type="button"
-                  icon="upload"
+                  icon="media"
                 />
               </Popover>
             </div>
@@ -282,7 +305,6 @@ class Blogs extends Component {
                 text="save"
                 onClick={this.saveBlog}
               />
-              <Button text="deleteFileTest" intent="danger" onClick={this.deleteFileHandler} />
             </div>
           </div>
           <div className="title">
@@ -322,6 +344,10 @@ class Blogs extends Component {
     );
   }
 }
+
+Blogs.propTypes = {
+  account: PropTypes.objectOf(PropTypes.any).isRequired,
+};
+
 const mapStateToProps = state => ({ account: state.account });
 export default connect(mapStateToProps)(Blogs);
-
