@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import axios from 'axios';
 import { Button, TextArea, Intent, Popover, FileInput, HTMLSelect } from '@blueprintjs/core';
 import { Navbar } from '../../../home/component';
@@ -192,9 +193,14 @@ class Blogs extends Component {
   }
 
   uploadImg = async (e) => {
-    this.setState({ imageSource: e.target.files[0].name });
+    console.log('upload image props', this.props);
+    const { account } = this.props;
+    console.log(e.target.files);
+    this.setState({ imageSource: e.target.files[0] });
+
     try {
       const formData = new FormData(); //eslint-disable-line
+      formData.append('data', JSON.stringify({ token: account.sessionId, fileType: 'file', content: 'blog' }));
       formData.append('image', e.target.files[0]);
       const uploadRes = await axios({
         config: {
@@ -213,6 +219,12 @@ class Blogs extends Component {
     } catch (err) {
       console.log('update profile error', err);
     }
+  }
+
+  deleteFileHandler = async () => {
+    const { account } = this.props;
+    const res = await axios.post(`${ENDPOINT}/web/delete-file`, { token: account.sessionId, content: 'blog', fileName: 'image-1564206339130.png' });
+    console.log('deleteRes', res);
   }
 
   render() {
@@ -292,6 +304,7 @@ class Blogs extends Component {
                 text="save"
                 onClick={this.saveBlog}
               />
+              <Button text="deleteFileTest" intent="danger" onClick={this.deleteFileHandler} />
             </div>
           </div>
           <div className="title">
@@ -332,5 +345,6 @@ class Blogs extends Component {
     );
   }
 }
+const mapStateToProps = state => ({ account: state.account });
+export default connect(mapStateToProps)(Blogs);
 
-export default Blogs;

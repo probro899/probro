@@ -1,61 +1,91 @@
 import path from 'path';
+import getFolderSize from 'get-folder-size';
 import multer from 'multer';
-import updateUserProfile from '../../api/uploadFile';
+import fs from 'fs';
 import validateToken from '../../auth/validateToken';
 import uploadFile from '../../api/uploadFile';
 
 const storage = multer.diskStorage({
-  destination: (request, file, cb) => cb(null, path.join(__dirname, '..', '..', 'public', 'images')),
-  filename: (request, file, cb) => cb(null, `${file.fieldname}-${Date.now()}${path.extname(file.originalname)}`),
+  destination: async (request, file, cb) => {
+    const { token, content } = JSON.parse(request.body.data);
+    const user = validateToken(token);
+    if (!fs.existsSync(path.join(__dirname, '..', '..', 'public', 'user', `${10000000 + parseInt(user.id, 10)}`))) {
+      fs.mkdirSync(path.join(__dirname, '..', '..', 'public', 'user', `${10000000 + parseInt(user.id, 10)}`));
+    }
+    if (!fs.existsSync(path.join(__dirname, '..', '..', 'public', 'user', `${10000000 + parseInt(user.id, 10)}`, content))) {
+      fs.mkdirSync(path.join(__dirname, '..', '..', 'public', 'user', `${10000000 + parseInt(user.id, 10)}`, content));
+    }
+    return cb(null, path.join(__dirname, '..', '..', 'public', 'user', `${10000000 + parseInt(user.id, 10)}`, content));
+  },
+  filename: (request, file, cb) => {
+    const { fileType } = JSON.parse(request.body.data);
+    return cb(null, `${fileType}-${Date.now()}${path.extname(file.originalname)}`);
+  },
 });
 
-const checkFileType = (file, cb) => {
-// check file type
-  const fileType = /jpeg|jpg|gif|png/;
-  // check ext
-  const extname = fileType.test(path.extname(file.originalname).toLocaleLowerCase());
-  // check mime type
-  const mimetype = fileType.test(file.mimetype);
-  if (mimetype && extname) {
-    return cb(null, true);
+const checkFileType = (req, file, cb) => {
+  const { token, fileType } = JSON.parse(req.body.data);
+  // console.log(data);
+  // check file type
+
+  const user = validateToken(token);
+
+  // calculating per user space exist or not
+  getFolderSize(path.join(__dirname, '..', '..', 'public', 'user', `${10000000 + parseInt(user.id, 10)}`), (err, size) => {
+    if (err) { throw err; }
+    // console.log((size / 1000 / 1000).toFixed(2), 'mb');
+    if ((size / 1000 / 1000 / 1000).toFixed(2) > 5) {
+      return cb({ Error: 'No file slected', message: 'Your total upload file limit exit.' });
+    }
+  });
+
+  if (user) {
+    let checkFileReg = null;
+    switch (fileType) {
+      case 'image':
+        checkFileReg = /jpeg|jpg|gif|png|bmp/;
+        break;
+      case 'video':
+        checkFileReg = /avi|AVI|wmv|WMV|flv|FLV|mpg|MPG|mp4|MP4|webm|mkv|MKV|WEBM|x-matroska/;
+        break;
+      case 'file':
+        checkFileReg = /pdf|txt/;
+        break;
+      default:
+        break;
+    }
+    // check ext
+    const extname = checkFileReg.test(path.extname(file.originalname).toLocaleLowerCase());
+    // check mime type
+    const mimetype = checkFileReg.test(file.mimetype);
+    if (mimetype && extname) {
+      return cb(null, true);
+    }
+    return cb({ Error: 'No file slected', message: 'Invalid file format' });
   }
-  return cb({ Error: 'No file slected', message: 'No File selected' });
+  return cb({ Error: 'User verification Faild', message: 'User verification faild' });
 };
 
 const upload = multer({
   storage,
-  limits: { fileSize: 10000000 },
-  fileFilter: (req, file, cb) => checkFileType(file, cb),
+  limits: { fileSize: 1000000000 },
+  fileFilter: (req, file, cb) => checkFileType(req, file, cb),
 }).single('image');
 
 export default async (req, res) => {
-  console.log('upload file handler called', req.body);
   try {
     upload(req, res, async (err) => {
-      console.log('inside upload', res.body);
       if (err) {
-        res.statusCode = 500;
+        res.statusCode = 201;
         res.send(err.message);
       } else {
-        const { token } = req.body;
-        // const user = validateToken(token);
-        if (true) {
-          if (req.file) {
-            delete req.body.token;
-            const updateRes = await uploadFile({ ...req.body, image: req.file.filename });
-            if (updateRes) {
-              res.statusCode = 200;
-              res.send(JSON.stringify(updateRes));
-            } else {
-              throw new Error('User validation faild');
-            }
-          } else {
-            res.statusCode = 500;
-            res.send('Image upload faild');
-          }
+        delete req.body.token;
+        const updateRes = await uploadFile({ ...req.body, image: req.file.filename });
+        if (updateRes) {
+          res.statusCode = 200;
+          res.send(JSON.stringify(updateRes));
         } else {
-          res.statusCode = 500;
-          res.send('Invalid User');
+          throw new Error('User validation faild');
         }
       }
     });
