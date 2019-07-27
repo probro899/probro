@@ -98,7 +98,7 @@ export default async function get(id) {
     });
 
     const blogDetails = await Promise.all(blogDetailsPromises);
-    const BlogDetail = blogDetails.map(obj => obj.blogDetail).flat();
+    // const BlogDetail = blogDetails.map(obj => obj.blogDetail).flat();
     const BlogComment = blogDetails.map(obj => obj.blogComment).flat();
     const BlogLike = blogDetails.map(obj => obj.blogLike).flat();
 
@@ -113,7 +113,7 @@ export default async function get(id) {
       BoardColumnCardComment,
       BoardColumnCardDescription,
       Blog,
-      BlogDetail,
+      // BlogDetail,
       BlogComment,
       BlogLike,
       Notification,

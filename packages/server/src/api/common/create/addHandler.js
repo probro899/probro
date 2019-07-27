@@ -36,10 +36,6 @@ function addBlog(record) {
   add.call(this, 'Blog', record);
 }
 
-function addBlogDetail(record) {
-  add.call(this, 'BlogDetail', record);
-}
-
 function addBlogComment(record) {
   add.call(this, 'BlogComment', record);
 }
@@ -141,6 +137,22 @@ async function addBoardMember(record) {
   });
 }
 
+function addUserWorkExperience(record) {
+  add.call(this, 'UserWorkExperience', record);
+}
+
+function addUserEducation(record) {
+  add.call(this, 'UserEducation', record);
+}
+
+function addUserSkill(record) {
+  add.call(this, 'UserSkill', record);
+}
+
+function addUserPortal(record) {
+  add.call(this, 'UserPortal', record);
+}
+
 export default [
   addBoard,
   addBoardColumn,
@@ -150,7 +162,10 @@ export default [
   addBoardColumnCardDescription,
   addBlog,
   addBlogComment,
-  addBlogDetail,
   addBlogLike,
   addBoardMember,
+  addUserEducation,
+  addUserWorkExperience,
+  addUserSkill,
+  addUserPortal,
 ];

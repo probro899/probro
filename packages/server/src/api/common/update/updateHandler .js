@@ -42,6 +42,24 @@ function updateBlogLike(records) {
   update.call(this, 'BlogLike', ...records);
 }
 
+
+function updateUserWorkExperience(record) {
+  update.call(this, 'UserWorkExperience', record);
+}
+
+function updateUserEducation(record) {
+  update.call(this, 'UserEducation', record);
+}
+
+function updateUserSkill(record) {
+  update.call(this, 'UserSkill', record);
+}
+
+function updateUserPortal(record) {
+  update.call(this, 'UserPortal', record);
+}
+
+
 export default [
   updateBoard,
   updateBoardColumn,
@@ -53,4 +71,8 @@ export default [
   updateBlogComment,
   updateBlogDetail,
   updateBlogLike,
+  updateUserEducation,
+  updateUserSkill,
+  updateUserWorkExperience,
+  updateUserPortal,
 ];

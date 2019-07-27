@@ -9,9 +9,18 @@ export default async function add(table, record) {
   const { broadCastId } = record;
   delete record.broadCastId;
   const res = await db.execute(async ({ insert, findOne }) => {
-    const boardId = await insert(table, record);
-    if (boardId) {
-      const boardDetails = await findOne(table, { id: boardId });
+    let boardId = null;
+    let boardDetails = null;
+    if (Array.isArray(record)) {
+      const promises = record.map(obj => insert(table, obj));
+      const skillIds = await Promise.all(promises);
+      const findOneAllRes = skillIds.map(id => findOne(table, { id }));
+      boardDetails = await Promise.all(findOneAllRes);
+    } else {
+      boardId = await insert(table, record);
+      boardDetails = await findOne(table, { id: boardId });
+    }
+    if (boardDetails) {
       if (broadCastId) {
         const channel = session.channel(broadCastId);
         channel.dispatch(schema.add(table, boardDetails));
