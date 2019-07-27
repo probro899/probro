@@ -192,7 +192,7 @@ class Blogs extends Component {
 
     try {
       const formData = new FormData(); //eslint-disable-line
-      formData.append('data', JSON.stringify({ token: account.sessionId, fileType: 'file', content: 'blog' }));
+      formData.append('data', JSON.stringify({ token: account.sessionId, fileType: 'image', content: 'blog' }));
       formData.append('image', e.target.files[0]);
       const uploadRes = await axios({
         config: {
