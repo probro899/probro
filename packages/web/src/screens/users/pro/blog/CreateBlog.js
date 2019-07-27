@@ -52,14 +52,18 @@ class Blogs extends Component {
   }
 
   observeMutation = (mutationsList, observer) => {
+    const fileNames = [];
     for (let i = 0; i < mutationsList.length; i += 1) {
       const removeNodes = mutationsList[i].removedNodes;
       for (let j = 0; j < removeNodes.length; j += 1) {
         if (removeNodes[j].localName === 'img') {
           const sp = removeNodes[j].src.split('/');
-          console.log(sp[sp.length - 1]);
+          fileNames.push(sp[sp.length - 1]);
         }
       }
+    }
+    if (fileNames.length !== 0) {
+      this.deleteFileHandler(fileNames);
     }
   }
 
@@ -193,14 +197,11 @@ class Blogs extends Component {
   }
 
   uploadImg = async (e) => {
-    console.log('upload image props', this.props);
     const { account } = this.props;
-    console.log(e.target.files);
-    this.setState({ imageSource: e.target.files[0] });
-
+    this.setState({ imageSource: e.target.files[0].name });
     try {
-      const formData = new FormData(); //eslint-disable-line
-      formData.append('data', JSON.stringify({ token: account.sessionId, fileType: 'file', content: 'blog' }));
+      const formData = new FormData();
+      formData.append('data', JSON.stringify({ token: account.sessionId, fileType: 'image', content: 'blog' }));
       formData.append('image', e.target.files[0]);
       const uploadRes = await axios({
         config: {
@@ -213,18 +214,18 @@ class Blogs extends Component {
         data: formData,
       });
       if (uploadRes.status === 200) {
-        document.execCommand('insertImage', false, `${ENDPOINT}/images/${uploadRes.data}`);
-        this.setState({ imageSource: 'Choose a picture...' });
+        // eslint-disable-next-line no-undef
+        document.getElementById('editor').focus();
+        document.execCommand('insertImage', false, `${ENDPOINT}/user/${10000000 + parseInt(account.user.id, 10)}/blog/${uploadRes.data}`);
       }
     } catch (err) {
       console.log('update profile error', err);
     }
   }
 
-  deleteFileHandler = async () => {
+  deleteFileHandler = async (fileList) => {
     const { account } = this.props;
-    const res = await axios.post(`${ENDPOINT}/web/delete-file`, { token: account.sessionId, content: 'blog', fileName: 'image-1564206339130.png' });
-    console.log('deleteRes', res);
+    await axios.post(`${ENDPOINT}/web/delete-file`, { token: account.sessionId, content: 'blog', fileName: fileList });
   }
 
   render() {
@@ -304,7 +305,6 @@ class Blogs extends Component {
                 text="save"
                 onClick={this.saveBlog}
               />
-              <Button text="deleteFileTest" intent="danger" onClick={this.deleteFileHandler} />
             </div>
           </div>
           <div className="title">
@@ -337,7 +337,6 @@ class Blogs extends Component {
               onFocus={this.onEditorFocus}
               onClick={this.onEditorFocus}
               onInput={this.onChangeDesc}
-              onCut={e => console.log(e.target)}
             />
           </div>
         </div>
@@ -345,6 +344,10 @@ class Blogs extends Component {
     );
   }
 }
+
+Blogs.propTypes = {
+  account: PropTypes.objectOf(PropTypes.any).isRequired,
+};
+
 const mapStateToProps = state => ({ account: state.account });
 export default connect(mapStateToProps)(Blogs);
-
