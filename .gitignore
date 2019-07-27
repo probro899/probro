@@ -24,3 +24,4 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 .sqlite
+/packages/server/src/public
