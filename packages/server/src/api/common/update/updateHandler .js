@@ -30,10 +30,6 @@ function updateBlog(records) {
   update.call(this, 'Blog', ...records);
 }
 
-function updateBlogDetail(records) {
-  update.call(this, 'BlogDetail', ...records);
-}
-
 function updateBlogComment(records) {
   update.call(this, 'BlogComment', ...records);
 }
@@ -41,6 +37,24 @@ function updateBlogComment(records) {
 function updateBlogLike(records) {
   update.call(this, 'BlogLike', ...records);
 }
+
+
+function updateUserWorkExperience(record) {
+  update.call(this, 'UserWorkExperience', record);
+}
+
+function updateUserEducation(record) {
+  update.call(this, 'UserEducation', record);
+}
+
+function updateUserSkill(record) {
+  update.call(this, 'UserSkill', record);
+}
+
+function updateUserPortal(record) {
+  update.call(this, 'UserPortal', record);
+}
+
 
 export default [
   updateBoard,
@@ -51,6 +65,9 @@ export default [
   updateBoardColumnCardDescription,
   updateBlog,
   updateBlogComment,
-  updateBlogDetail,
   updateBlogLike,
+  updateUserEducation,
+  updateUserSkill,
+  updateUserWorkExperience,
+  updateUserPortal,
 ];

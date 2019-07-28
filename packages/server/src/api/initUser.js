@@ -52,8 +52,12 @@ export default async function initUser(id) {
   session.dispatch(schema.init('BoardColumnCardComment', u.BoardColumnCardComment));
   session.dispatch(schema.init('BoardColumnCardDescription', u.BoardColumnCardDescription));
   session.dispatch(schema.init('Blog', u.Blog));
-  session.dispatch(schema.init('BlogDetail', u.BlogDetail));
+  // session.dispatch(schema.init('BlogDetail', u.BlogDetail));
   session.dispatch(schema.init('BlogComment', u.BlogComment));
   session.dispatch(schema.init('BlogLike', u.BlogLike));
   session.dispatch(schema.init('BoardMember', u.BoardMember));
+  session.dispatch(schema.init('UserEducation', u.UserEducation));
+  session.dispatch(schema.init('UserWorkExperience', u.UserWorkExperience));
+  session.dispatch(schema.init('UserPortal', u.UserPortal));
+  session.dispatch(schema.init('UserSkill', u.UserSkill));
 }

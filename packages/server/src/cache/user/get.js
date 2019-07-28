@@ -20,6 +20,11 @@ export default async function get(id) {
 
     const boardMember = await find('BoardMember', { tuserId: id });
 
+    const UserWorkExperience = await find('UserWorkExperience', { userId: id });
+    const UserEducation = await find('UserEducation', { userId: id });
+    const UserSkill = await find('UserSkill', { userId: id });
+    const UserPortal = await find('UserPortal', { userId: id });
+
     const Board = await find('Board', { userId: id });
 
     const boardPromises = [];
@@ -98,7 +103,7 @@ export default async function get(id) {
     });
 
     const blogDetails = await Promise.all(blogDetailsPromises);
-    const BlogDetail = blogDetails.map(obj => obj.blogDetail).flat();
+    // const BlogDetail = blogDetails.map(obj => obj.blogDetail).flat();
     const BlogComment = blogDetails.map(obj => obj.blogComment).flat();
     const BlogLike = blogDetails.map(obj => obj.blogLike).flat();
 
@@ -113,10 +118,14 @@ export default async function get(id) {
       BoardColumnCardComment,
       BoardColumnCardDescription,
       Blog,
-      BlogDetail,
+      // BlogDetail,
       BlogComment,
       BlogLike,
       Notification,
+      UserEducation,
+      UserWorkExperience,
+      UserPortal,
+      UserSkill,
     };
     return userDataRes;
   });

@@ -32,11 +32,8 @@ function deleteBordColumnDescription(record) {
 }
 
 function deleteBlog(record) {
-  deleteBlogHelper.call(Delete.bind(this), record);
-}
-
-function deleteBlogDetail(record) {
-  Delete.call(this, 'BlogDetail', record);
+  const dbDelete = Delete.bind(this);
+  deleteBlogHelper(dbDelete, record);
 }
 
 function deleteBlogComment(record) {
@@ -45,6 +42,23 @@ function deleteBlogComment(record) {
 
 function deleteBlogLike(record) {
   Delete.call(this, 'BlogLike', record);
+}
+
+
+function deleteUserWorkExperience(record) {
+  Delete.call(this, 'UserWorkExperience', record);
+}
+
+function deleteUserEducation(record) {
+  Delete.call(this, 'UserEducation', record);
+}
+
+function deleteUserSkill(record) {
+  Delete.call(this, 'UserSkill', record);
+}
+
+function deleteUserPortal(record) {
+  Delete.call(this, 'UserPortal', record);
 }
 
 export default [
@@ -56,6 +70,9 @@ export default [
   deleteBordColumnDescription,
   deleteBlog,
   deleteBlogComment,
-  deleteBlogDetail,
   deleteBlogLike,
+  deleteUserEducation,
+  deleteUserPortal,
+  deleteUserWorkExperience,
+  deleteUserSkill,
 ];

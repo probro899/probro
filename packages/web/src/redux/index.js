@@ -20,7 +20,11 @@ const reducer = combineReducers({
     'BlogComment',
     'BlogLike',
     'Notification',
-    'BoardMember'
+    'BoardMember',
+    'UserEducation',
+    'UserWorkExperience',
+    'UserSkill',
+    'UserPortal'
   ),
 });
 

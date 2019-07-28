@@ -10,14 +10,14 @@ const storage = multer.diskStorage({
     const { token, content } = JSON.parse(request.body.data);
     const user = validateToken(token);
     if (!fs.existsSync(path.join(__dirname, '..', '..', 'public', 'user', `${10000000 + parseInt(user.id, 10)}`))) {
-      console.log('iniside making userid directory');
+      // console.log('iniside making userid directory');
       fs.mkdirSync(path.join(__dirname, '..', '..', 'public', 'user', `${10000000 + parseInt(user.id, 10)}`));
     }
     if (!fs.existsSync(path.join(__dirname, '..', '..', 'public', 'user', `${10000000 + parseInt(user.id, 10)}`, content))) {
-      console.log('iniside making content directory');
+      // console.log('iniside making content directory');
       fs.mkdirSync(path.join(__dirname, '..', '..', 'public', 'user', `${10000000 + parseInt(user.id, 10)}`, content));
     }
-    console.log('close to return');
+    // console.log('close to return');
     // calculating per user space exist or not
     getFolderSize(path.join(__dirname, '..', '..', 'public', 'user', `${10000000 + parseInt(user.id, 10)}`), (err, size) => {
       if (err) { throw err; }
