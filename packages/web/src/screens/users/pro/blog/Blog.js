@@ -5,24 +5,43 @@ import { connect } from 'react-redux';
 import { Button } from '@blueprintjs/core';
 import * as actions from '../../../../actions';
 import { DeletePopOver } from '../../../../common';
+import client from '../../../../socket';
 import { MoreButton } from '../../../../components';
 
 class Blogs extends Component {
   state = {
     createBlog: false,
+    editBlog: false,
     deletePopOverIsOpen: false,
+    blogId: null,
+    apis: {},
   };
 
-  componentWillMount() {
+  async componentWillMount() {
     const { updateNav } = this.props;
+    const apis = await client.scope('Mentor');
+    this.setState({
+      apis,
+    });
     updateNav({
       schema: 'sideNav',
       data: { name: 'Blog' },
     });
   }
 
-  deleteBlog = () => {
-
+  deleteBlog = async (type) => {
+    const { apis, blogId } = this.state;
+    if (type === 'confirm') {
+      await apis.deleteBlog({ id: blogId });
+      this.setState({
+        deletePopOverIsOpen: false,
+        blogId: '',
+      });
+      return;
+    }
+    this.setState({
+      deletePopOverIsOpen: false,
+    });
   }
 
   // handles the edit and delete of the blog
@@ -30,21 +49,28 @@ class Blogs extends Component {
     if (type === 'delete') {
       this.setState({
         deletePopOverIsOpen: true,
+        blogId: id,
+      });
+    } else if (type === 'edit') {
+      this.setState({
+        editBlog: true,
+        blogId: id,
       });
     }
   }
 
   render() {
-    const { createBlog, deletePopOverIsOpen } = this.state;
+    const { createBlog, deletePopOverIsOpen, blogId, editBlog } = this.state;
     const { account } = this.props;
     const { database } = this.props;
     return (
       <div className="blogs">
-        { createBlog && <Redirect push to={`/write-blog/${account.sessionId}`} /> }
+        { createBlog && <Redirect push to={`/create-blog/${account.sessionId}`} /> }
+        { blogId && editBlog && <Redirect push to={`/edit-blog/${account.sessionId}/${blogId}`} /> }
         <DeletePopOver
           isOpen={deletePopOverIsOpen}
           action={this.deleteBlog}
-          name="New Blog"
+          name={blogId ? database.Blog.byId[blogId].title : ''}
         />
         <div className="header">
           <div>
@@ -61,25 +87,39 @@ class Blogs extends Component {
           </div>
         </div>
         <div className="blog-list">
-          <div className="blog-container">
-            <div className="img-container">
-              <MoreButton onMore={this.onMore} id={1} />
-              <img
-                alt="test"
-                src="https://images.unsplash.com/photo-1425082661705-1834bfd09dca?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2555&q=80"
-                height="170px"
-              />
-            </div>
-            <div className="detail-container">
-              <div className="blog-title">
-                <span>Title of the Blog </span>
-                <small> 1st april 2016</small>
-              </div>
-              <div className="blog-author">
-                <span>-Blog Author</span>
-              </div>
-            </div>
-          </div>
+          {
+            database.Blog.allIds.map((id, index) => {
+              return (
+                // eslint-disable-next-line react/no-array-index-key
+                <div className="blog-container" key={index}>
+                  <div className="img-container">
+                    <MoreButton onMore={this.onMore} id={id} />
+                    <img
+                      alt="test"
+                      src="https://images.unsplash.com/photo-1425082661705-1834bfd09dca?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2555&q=80"
+                      height="170px"
+                    />
+                  </div>
+                  <div className="detail-container">
+                    <div className="blog-title">
+                      <p className="title">{database.Blog.byId[id].title}</p>
+                      <p style={{ textAlign: 'right' }}>
+                        <small>
+                          {new Date(database.Blog.byId[id].timeStamp).toDateString()}
+                        </small>
+                      </p>
+                    </div>
+                    <div className="blog-author">
+                      <span>
+                        {database.User.byId[database.Blog.byId[id].userId].middleName
+                          ? `${database.User.byId[database.Blog.byId[id].userId].firstName} ${database.User.byId[database.Blog.byId[id].userId].middleName} ${database.User.byId[database.Blog.byId[id].userId].lastName}` : `${database.User.byId[database.Blog.byId[id].userId].firstName} ${database.User.byId[database.Blog.byId[id].userId].lastName}`}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              );
+            })
+          }
         </div>
       </div>
     );

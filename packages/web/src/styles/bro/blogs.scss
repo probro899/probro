@@ -55,7 +55,7 @@
   .header {
     margin-top: 10px;
     margin-bottom: 10px;
-    span.title {
+    p.title {
       font-size: 22px;
       font-weight: 600;
     }
@@ -79,7 +79,7 @@
       }
       .detail-container {
         .blog-title {
-          span {
+          p.title {
             font-size: 18px;
             font-weight: 600;
           }

@@ -21,7 +21,8 @@ export default () => (
         <Route path="/register" component={Registration} />
         <Route path="/forgot-password" component={Forgot} />
         <Route path="/class-work/:id/:classId" component={ClassManager} />
-        <Route path="/write-blog/:id" component={CreateBlog} />
+        <Route path="/edit-blog/:id/:blogId" component={CreateBlog} />
+        <Route path="/create-blog/:id" component={CreateBlog} />
         <Route path="/reset/:token" component={Reset} />
         <Route path="/email-verification/:token" component={EmailVerification} />
         <Route path="/user/:userId" component={PublicProfile} />

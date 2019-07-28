@@ -698,7 +698,7 @@ top attachment etc.
     margin-bottom: 10px;
     display: flex;
     justify-content: space-between; }
-    .blogs .header span.title {
+    .blogs .header p.title {
       font-size: 22px;
       font-weight: 600; }
     .blogs .header small {
@@ -712,7 +712,7 @@ top attachment etc.
         position: absolute;
         top: 0;
         right: 0; }
-    .blogs .blog-list .blog-container .detail-container .blog-title span {
+    .blogs .blog-list .blog-container .detail-container .blog-title p.title {
       font-size: 18px;
       font-weight: 600; }
     .blogs .blog-list .blog-container .detail-container .blog-title small {

@@ -45,6 +45,16 @@ class Blogs extends Component {
   }
 
   componentDidMount() {
+    const { match, database } = this.props;
+    console.log(database);
+    if (match.params.blogId) {
+      document.getElementById('editor').innerHTML = database.Blog.byId[parseInt(match.params.blogId, 10)].content;
+      this.setState({
+        blogId: match.params.blogId,
+        title: database.Blog.byId[match.params.blogId].title,
+        description: database.Blog.byId[parseInt(match.params.blogId, 10)].content,
+      });
+    }
     const config = { attributes: true, childList: true, subtree: true };
     const targetNode = document.getElementById('editor');
     const mutationObserver = new MutationObserver(this.observeMutation);
@@ -178,14 +188,15 @@ class Blogs extends Component {
   // saving the blog from here
   saveBlog = async () => {
     const { apis, title, description, blogId } = this.state;
+    const { account } = this.props;
     if (blogId === '') {
       await addBlog(apis.addBlog,
         {
-          userId: '',
+          userId: account.user.id,
           timeStamp: Date.now(),
           saveStatus: 'draft',
-          blogHeader: title,
-          blogContent: description,
+          title,
+          content: description,
         });
       return;
     }
@@ -236,6 +247,7 @@ class Blogs extends Component {
       title,
       imageSource,
     } = this.state;
+    console.log(this.state);
     return (
       <div>
         <Navbar />
@@ -349,5 +361,5 @@ Blogs.propTypes = {
   account: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
-const mapStateToProps = state => ({ account: state.account });
+const mapStateToProps = state => ({ account: state.account, database: state.database });
 export default connect(mapStateToProps)(Blogs);

@@ -1,5 +1,5 @@
 const addBlog = async (api, data) => {
-  if (data.blogHeader.replace(/\s/g, '').length === 0) {
+  if (data.title.replace(/\s/g, '').length === 0) {
     return;
   }
   try {
@@ -10,7 +10,7 @@ const addBlog = async (api, data) => {
 };
 
 const updateBlog = async (data, api) => {
-  if (data.blogHeader.replace(/\s/g, '').length === 0) {
+  if (data.title.replace(/\s/g, '').length === 0) {
     return;
   }
   try {
