@@ -33,7 +33,8 @@ function addBoardColumnCardDescription(record) {
 }
 
 function addBlog(record) {
-  add.call(this, 'Blog', record);
+  const res = add.call(this, 'Blog', record);
+  return res;
 }
 
 function addBlogComment(record) {
