@@ -1,7 +1,5 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
-import { Icon, Intent } from '@blueprintjs/core';
-import { IconNames } from '@blueprintjs/icons';
+import PropTypes from 'prop-types';
 
 class FileInput extends React.Component {
   constructor(props) {
@@ -11,10 +9,8 @@ class FileInput extends React.Component {
   }
 
   onChange = (e) => {
-    console.log('photo upload', e.target.files[0]);
-    // const { _action, schema, field, lastAction } = this.props;
-    // _action(schema, { [field]: e.target.files[0] });
-    // lastAction();
+    const { fileOnchange } = this.props;
+    fileOnchange(e.target.files[0]);
   };
 
   onClick = () => {
@@ -26,6 +22,7 @@ class FileInput extends React.Component {
   }
 
   render() {
+    const { fileComponent } = this.props;
     return (
       // eslint-disable-next-line jsx-a11y/interactive-supports-focus
       <div
@@ -36,7 +33,7 @@ class FileInput extends React.Component {
         onFocus={this.changeStyle}
         className="image-upload-icon"
       >
-        <Icon icon={IconNames.PLUS} intent={Intent.PRIMARY} iconSize="30" color="white" />
+        {fileComponent}
         <input
           ref={this.fileInputRef}
           type="file"
@@ -49,3 +46,7 @@ class FileInput extends React.Component {
 }
 
 export default FileInput;
+FileInput.propTypes = {
+  fileOnchange: PropTypes.func.isRequired,
+  fileComponent: PropTypes.element.isRequired,
+};

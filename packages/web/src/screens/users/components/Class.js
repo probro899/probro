@@ -120,8 +120,8 @@ class Class extends Component {
   }
 
   render() {
-    const { account, database } = this.props;
-    console.log(this.props);
+    const { account, database, updateWebRtc } = this.props;
+    // console.log(this.props);
     const { createBool, deleteClass, updateClass } = this.state;
     return (
       <div className="classes">

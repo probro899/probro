@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { Redirect, Route } from 'react-router-dom';
 import { Navbar } from '../../home/component/index';
 import { SideNav, Profile, Class, Setting } from '../components';
+import Communication from '../components/communication';
 import { Blog } from '../pro/blog';
 
 class HomePage extends Component {

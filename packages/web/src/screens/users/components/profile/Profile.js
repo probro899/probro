@@ -24,6 +24,10 @@ class Profile extends Component {
     // this is to be handled
   };
 
+  fileOnchange = (file) => {
+    console.log('file is here do what you want', file);
+  }
+
   render() {
     const { account, database } = this.props;
     let details = {};
@@ -42,7 +46,7 @@ class Profile extends Component {
         </div>
         <div className="profilePic">
           <img src={file} alt="profile of the user" />
-          <FileInput />
+          <FileInput fileComponent={<Icon icon="plus" intent="primary" iconSize="30" color="white" fileOnchange={this.fileOnchange} /> } />
         </div>
         <div className="top-details">
           <span className="name">

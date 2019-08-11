@@ -1,30 +1,34 @@
 import { onIceConnectionStateChange, mediaSelector } from '../helper-functions';
 
-function gotRemoteStream(e) {
-  const videoElement = document.getElementById('video1');
+function gotRemoteStream(e, userId) {
+  const videoElement = document.getElementById(`video-${userId}`);
+  console.log('gotRemoteStream called', e);
   if (videoElement.srcObject !== e.streams[0]) {
+    console.log('adding remote stream', e.streams[0]);
     videoElement.srcObject = e.streams[0];
   }
 }
 
-export default async (onIceCandidateHandler) => {
+export default async function main(onIceCandidateHandler, uid) {
   // server configuration
+  const userId = uid;
   const server = null;
   const offerOptions = {
     offerToRecieveAudio: 1,
     offerToRecieveVideo: 1,
   };
+
   // Initialize peerconnection
   const pc = new RTCPeerConnection(server);
 
   // Adding icecandidate listner
-  pc.addEventListener('icecandidate', onIceCandidateHandler);
+  pc.addEventListener('icecandidate', e => onIceCandidateHandler(e, userId));
 
   // Adding IceConnection State Change
-  pc.addEventListener('iceconnectionstatechange', e => onIceConnectionStateChange(e, pc));
+  pc.addEventListener('iceconnectionstatechange', e => onIceConnectionStateChange(e, pc, userId));
 
   // Adding Ontrack listner
-  pc.addEventListener('track', gotRemoteStream);
+  pc.addEventListener('track', e => gotRemoteStream(e, userId));
 
   // seting Local Description
   const setLocalDescription = (data) => {
@@ -37,6 +41,7 @@ export default async (onIceCandidateHandler) => {
 
   // seting Remote Description
   const setRemoteDescription = (data) => {
+    console.log('setRemote description called for anser', data);
     pc.setRemoteDescription(data);
   };
 
@@ -65,4 +70,4 @@ export default async (onIceCandidateHandler) => {
   };
 
   return { pc, createOffer, createAnswer, addIceCandidate, setRemoteDescription, addCandidate };
-};
+}
