@@ -31,7 +31,7 @@ const UserView = (pc, idx) => {
             <span>{`${pc.user.firstName} ${pc.user.lastName}`}</span>
           </div>
           <div style={{ background: 'white', width: '100%', height: 'auto', paddingBottom: 5, paddingLeft: 5 }}>
-            <span>Connecting...</span>
+            <span>{pc.iceCandidateStatus}</span>
           </div>
         </div>
       </div>

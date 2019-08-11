@@ -33,7 +33,7 @@ class Index extends React.Component {
       const boardmembers = Object.values(database.BoardMember.byId).filter(bm => bm.boardId === boardId);
       const userListAll = boardmembers.map(bm => database.User.byId[bm.tuserId]);
       const userList = userListAll.filter(user => user.id !== account.user.id);
-      const peerConnectionPromises = userList.map(user => main(this.onIceCandidateHandler, user.id));
+      const peerConnectionPromises = userList.map(user => main(this.onIceCandidateHandler, user.id, this.gotRemoteStreamHandler, this.iceCandidateStatusHandler));
       const peerConnList = await Promise.all(peerConnectionPromises);
       const storeValue = userList.reduce((obj, user, idx) => {
         obj[user.id] = { pc: peerConnList[idx], user };
@@ -50,13 +50,16 @@ class Index extends React.Component {
     // Handle offer request
     client.on('offer', async (data) => {
       console.log('Offer arrived', data);
-      const { updateWebRtc, account, webRtc } = this.props;
+      const { updateWebRtc, webRtc } = this.props;
       const { apis } = this.state;
       if (webRtc.showCommunication) {
-        const { offer, uid, boardId } = data;
         updateWebRtc('currentOffer', data);
         updateWebRtc('pendingOffers', [...webRtc.pendingOffers, data]);
-        updateWebRtc('liveIncomingCall', true);
+        if (webRtc.isLive) {
+          this.answerHandler(apis, webRtc.outGoingCallType);
+        } else {
+          updateWebRtc('liveIncomingCall', true);
+        }
       } else {
         updateWebRtc('showIncommingCall', true);
         updateWebRtc('currentOffer', data);
@@ -99,6 +102,12 @@ class Index extends React.Component {
     });
   }
 
+  gotRemoteStreamHandler = (stream, userId) => {
+    console.log('remote sream handler', stream, userId);
+    const { updateWebRtc } = this.props;
+    updateWebRtc('isLive', true);
+  }
+
   answerHandler = async (apis, callType) => {
     // console.log('answer handler called', callType);
     try {
@@ -113,6 +122,7 @@ class Index extends React.Component {
       updateWebRtc('showIncommingCall', false);
       updateWebRtc('showCommunication', boardId);
       updateWebRtc('communicationContainer', 'connecting');
+      updateWebRtc('showOutgoingCall', true);
       const previousOffers = webRtc.pendingOffers;
       // console.log('pending offers', previousOffers);
       const pcs = Object.values(webRtc.peerConnections);
@@ -165,11 +175,35 @@ class Index extends React.Component {
     // eslint-disable-next-line
     webRtc = this.props.webRtc;
     updateWebRtc('communicationContainer', 'connecting');
+    updateWebRtc('showOutgoingCall', true);
     const pcs = Object.values(webRtc.peerConnections);
     const users = Object.keys(webRtc.peerConnections);
     const pcsPromises = pcs.map(pc => pc.pc.createOffer(callType));
     const allOffers = await Promise.all(pcsPromises);
     allOffers.forEach((offer, idx) => apis.createOffer({ offerDetail: { offer, uid: account.user.id, boardId: webRtc.showCommunication }, userList: [{ userId: parseInt(users[idx], 10) }] }));
+  }
+
+  closeHandler = () => {
+    console.log('close handler called');
+    const { webRtc, updateWebRtc } = this.props;
+    const pcs = Object.values(webRtc.peerConnections);
+    pcs.forEach(pc => pc.pc.pc.close());
+    updateWebRtc('communicationContainer', 'chat');
+    updateWebRtc('outGoingCallType', null);
+    updateWebRtc('showOutgoingCall', false);
+    updateWebRtc('peerConnections', {});
+    updateWebRtc('pendingOffers', []);
+    updateWebRtc('remoteStream', {});
+    updateWebRtc('currentOffer', null);
+    updateWebRtc('iceCandidates', {});
+    updateWebRtc('liveIncomingCall', false);
+    updateWebRtc('isLive', false);
+  }
+
+  iceCandidateStatusHandler = (e, state, userId) => {
+    console.log('ice candidate status handler called', userId, state.iceConnectionState);
+    const { webRtc, updateWebRtc } = this.props;
+    updateWebRtc('peerConnections', { ...webRtc.peerConnections, [userId]: { ...webRtc.peerConnections[userId], iceCandidateStatus: state.iceConnectionState } });
   }
 
   render() {
@@ -182,14 +216,14 @@ class Index extends React.Component {
           <div style={{ height: windowHeight, width: windowWidth }}>
             <div>
               <MenuBar {...this.props} />
-              <Content {...this.props} callType={callType} apis={apis} _callHandler={this.callHandler} answerHandler={this.answerHandler} />
+              <Content {...this.props} callType={callType} apis={apis} _callHandler={this.callHandler} answerHandler={this.answerHandler} closeHandler={this.closeHandler} />
             </div>
           </div>
         </Dialog>
         <Dialog isOpen={webRtc.showIncommingCall} style={{ zIndex: 12, height: 'auto', width: 'auto', padding: 0 }}>
           <div style={{ border: 'solid', borderWidth: 1, borderColor: 'white', borderRadius: 5 }}>
             {/* <MenuBar {...this.props} /> */}
-            <IncommingCall {...this.props} answerHandler={this.answerHandler} apis={apis} />
+            <IncommingCall {...this.props} answerHandler={this.answerHandler} apis={apis} closeHandler={this.closeHandler} />
           </div>
         </Dialog>
       </div>

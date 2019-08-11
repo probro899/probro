@@ -1,6 +1,7 @@
-import { onIceConnectionStateChange, mediaSelector } from '../helper-functions';
+import { mediaSelector } from '../helper-functions';
 
-function gotRemoteStream(e, userId) {
+function gotRemoteStream(e, userId, gotRemoteStreamHandler) {
+  gotRemoteStreamHandler(e, userId);
   const videoElement = document.getElementById(`video-${userId}`);
   console.log('gotRemoteStream called', e);
   if (videoElement.srcObject !== e.streams[0]) {
@@ -9,7 +10,7 @@ function gotRemoteStream(e, userId) {
   }
 }
 
-export default async function main(onIceCandidateHandler, uid) {
+export default async function main(onIceCandidateHandler, uid, gotRemoteStreamHandler, onIceConnectionStateChange) {
   // server configuration
   const userId = uid;
   const server = null;
@@ -28,7 +29,7 @@ export default async function main(onIceCandidateHandler, uid) {
   pc.addEventListener('iceconnectionstatechange', e => onIceConnectionStateChange(e, pc, userId));
 
   // Adding Ontrack listner
-  pc.addEventListener('track', e => gotRemoteStream(e, userId));
+  pc.addEventListener('track', e => gotRemoteStream(e, userId, gotRemoteStreamHandler));
 
   // seting Local Description
   const setLocalDescription = (data) => {

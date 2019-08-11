@@ -15,6 +15,7 @@ const initialState = {
   currentOffer: null,
   iceCandidates: {},
   liveIncomingCall: false,
+  isLive: false,
 };
 
 export default (state, action) => {
