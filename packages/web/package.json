@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@blueprintjs/core": "^3.10.0",
+    "@blueprintjs/datetime": "^3.11.0",
     "@blueprintjs/icons": "^3.4.0",
     "@probro/common": "1.0.0",
     "axios": "^0.18.0",

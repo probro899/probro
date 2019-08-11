@@ -10,8 +10,12 @@
   .cover-pic {
     height: 250px;
     position: relative;
+    overflow: hidden;
     width: 100%;
     background: linear-gradient(to right, rgba(155,225,243,1) 0%, rgba(67,192,223,1) 100%);
+    img {
+      width: 100%;
+    }
     .edit-cover {
       padding: 5px;
       position: absolute;
@@ -71,11 +75,19 @@
     background: white;
     text-align: center;
     width: 100%;
+    display: flex;
+    justify-content: space-between;
     p {
       font-family: 'Oxygen', sans-serif;
       font-weight: bold;
       font-style: italic;
       font-size: 16px;
+      &.edit {
+        padding-right: 5px;
+        svg {
+          fill: rgba(19, 124, 189, 1);
+        }
+      }
     }
   }
   .education {

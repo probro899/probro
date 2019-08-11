@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Redirect } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Button } from '@blueprintjs/core';
@@ -97,23 +97,22 @@ class Blogs extends Component {
                     <img
                       alt="test"
                       src="https://images.unsplash.com/photo-1425082661705-1834bfd09dca?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2555&q=80"
-                      height="170px"
                     />
                   </div>
                   <div className="detail-container">
                     <div className="blog-title">
                       <p className="title">{database.Blog.byId[id].title}</p>
-                      <p style={{ textAlign: 'right' }}>
-                        <small>
+                      <p style={{ textAlign: 'right', width: '100%' }}>
+                        <span>
                           {new Date(database.Blog.byId[id].timeStamp).toDateString()}
-                        </small>
+                        </span>
                       </p>
                     </div>
                     <div className="blog-author">
-                      <span>
+                      <Link to="#">
                         {database.User.byId[database.Blog.byId[id].userId].middleName
                           ? `${database.User.byId[database.Blog.byId[id].userId].firstName} ${database.User.byId[database.Blog.byId[id].userId].middleName} ${database.User.byId[database.Blog.byId[id].userId].lastName}` : `${database.User.byId[database.Blog.byId[id].userId].firstName} ${database.User.byId[database.Blog.byId[id].userId].lastName}`}
-                      </span>
+                      </Link>
                     </div>
                   </div>
                 </div>

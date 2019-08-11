@@ -19,6 +19,7 @@ export default [
   {
     id: 'submit',
     fieldtype: 'button',
+    type: 'submit',
     text: 'Submit',
     fill: 'fill',
     intent: 'primary',

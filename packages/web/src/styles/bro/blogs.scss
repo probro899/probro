@@ -22,6 +22,15 @@
     padding: 10px;
     background-color: #DFDCDC;
     justify-content: space-between;
+    .left {
+      .switch {
+        span {
+          margin-top: 3px;
+        }
+        font-size: 18px;
+        font-weight: bold;
+      }
+    }
     button {
       margin: 0px 3px 0px 3px;
     }
@@ -37,7 +46,6 @@
     padding: 5px 10px 5px 10px;
     #editor {
       background-color: white;
-      font-size: 16px;
       min-height: 500px;
       padding: 10px;
       font-size: 21px;
@@ -68,29 +76,45 @@
   .blog-list {
     margin-top: 10px;
     display: flex;
+    flex-wrap: wrap;
     .blog-container {
+      padding: 5px;
+      margin: 1px;
+      max-width: 250px;
+      overflow: hidden;
       .img-container {
+        width: 100%;
         position: relative;
         .more-button {
           position: absolute;
           top: 0;
           right: 0;
         }
+        img {
+          height: 250px;
+          object-fit: cover;
+        }
       }
       .detail-container {
         .blog-title {
-          p.title {
-            font-size: 18px;
-            font-weight: 600;
-          }
-          small {
-            color: rgb(142, 142, 142); 
+          p {
+            margin-bottom: 0;
+            &.title {
+              overflow: hidden;
+              text-overflow: ellipsis;
+              white-space: nowrap;
+              font-size: 18px;
+              font-weight: 600;
+            }
+            small {
+              color: rgb(142, 142, 142); 
+            }
           }
         }
         .blog-author {
           display: flex;
           justify-content: flex-end;
-          span {
+          a {
             font-size: 16px;
             font-weight: 500;
           }

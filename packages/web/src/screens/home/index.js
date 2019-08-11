@@ -36,4 +36,3 @@ HomePage.propTypes = {
 
 const mapStateToProps = state => state;
 export default connect(mapStateToProps, { ...actions })(HomePage);
-

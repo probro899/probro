@@ -8,6 +8,7 @@ export default [
   {
     id: 'submit',
     fieldtype: 'button',
+    type: 'submit',
     text: 'Submit',
     fill: 'fill',
     intent: 'success',
@@ -25,6 +26,7 @@ const addUserToBoard = [
   {
     id: 'submit',
     fieldtype: 'button',
+    type: 'submit',
     text: 'Send Request',
     fill: 'fill',
     intent: 'success',

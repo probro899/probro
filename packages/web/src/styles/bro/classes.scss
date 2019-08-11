@@ -22,9 +22,8 @@
     }
     .content-link {
       margin: 10px;
-      min-height: 150px;
-      min-width: 200px;
-      max-width: 250px;
+      height: 150px;
+      width: 250px;
       display: flex;
       cursor: pointer;
       text-decoration: none;
@@ -296,6 +295,8 @@
           .s-comment {
             display: flex;
             justify-content: stretch;
+            padding-bottom: 10px;
+            padding-top: 10px;
             div {
               img {
                 border: 1px solid white;
@@ -308,20 +309,44 @@
               display: flex;
               flex-direction: column;
               align-items: flex-start;
-              .com-auth {
-
-              }
-              .com-desc {
-
+              .com-config {
+                small {
+                  cursor: pointer;
+                  color: #696969;
+                  margin-right: 5px;
+                  &.danger u {
+                    &:hover {
+                      color: red;
+                    }
+                  }
+                  &.primary u {
+                    &:hover {
+                      color: rgba(19, 124, 189, 1);
+                    }
+                  }
+                }
               }
             }
           }
         }
       }
       .right {
+        display: flex;
         flex: 0.3;
-        padding: 5px;
-        text-align: center;
+        justify-content: flex-end;
+        .rt-in {
+          padding: 5px 5px 5px 5px;
+          display: flex;
+          flex-direction: column;
+          .rt-tools {
+            display: flex;
+            flex-direction: column;
+          }
+          .rt-actions {
+            display: flex;
+            flex-direction: column;
+          }
+        }
       }
     }
   }

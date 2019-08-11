@@ -4,6 +4,7 @@ export default [
     fieldtype: 'input',
     name: 'First Name',
     placeholder: '',
+    required: true,
   },
   {
     id: 'middleName',
@@ -16,12 +17,14 @@ export default [
     fieldtype: 'input',
     name: 'Last Name',
     placeholder: '',
+    required: true,
   },
   {
     id: 'email',
     fieldtype: 'input',
     name: 'Email',
     placeholder: 'Eg, alex@gmail.com',
+    required: true,
   },
   {
     id: 'password',
@@ -33,6 +36,7 @@ export default [
       side: 'right',
       name: 'eye-open',
     },
+    required: true,
   },
   {
     id: 'confirmPassword',
@@ -44,10 +48,12 @@ export default [
       side: 'right',
       name: 'eye-open',
     },
+    required: true,
   },
   {
     id: 'submit',
     fieldtype: 'button',
+    type: 'submit',
     text: 'Submit',
     fill: 'fill',
     intent: 'primary',

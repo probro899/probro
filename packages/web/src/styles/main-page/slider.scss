@@ -17,8 +17,36 @@
     /* Above 2 lines wont fully center it, the next line internally
     centers it, buy moving itself 50% left and top */
     transform:translate(-50%,-50%);
-    margin: auto;
+    // margin: auto;
     position: absolute;
     z-index: 2;
+    padding: 5px;
+    input {
+      padding: 4px;
+      height: 40px;
+      line-height: 40px;
+      font-size: 16px;
+      border-width: 1px;
+      vertical-align: middle;
+      border-color: white;
+    }
+    button {
+      background: rgba(19, 124, 189, 1);
+      border-color: rgba(19, 124, 189, 1);
+      color: white;
+      font-weight: 450;
+      vertical-align: middle;
+      height: 40px;
+      padding: 3px;
+      font-size: 16px;
+      &.adv-search {
+        margin-top: 3px;
+        width: 100%;
+      }
+      &:hover {
+        box-shadow: 1px 1px 3px 0px rgba(19,124,189,1);
+        text-shadow: 0.2px 0.2px white;
+      }
+    }
   }
 }

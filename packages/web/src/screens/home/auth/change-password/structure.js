@@ -24,6 +24,7 @@ export const forgetForm = [
   },
   {
     id: 'submit',
+    type: 'submit',
     fieldtype: 'button',
     text: 'Submit',
     fill: 'fill',
@@ -70,6 +71,7 @@ export const changeForm = [
   {
     id: 'submit',
     fieldtype: 'button',
+    type: 'submit',
     text: 'Submit',
     fill: 'fill',
     intent: 'primary',

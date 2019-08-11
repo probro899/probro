@@ -19,9 +19,32 @@
     /* Above 2 lines wont fully center it, the next line internally
     centers it, buy moving itself 50% left and top */
     transform: translate(-50%, -50%);
-    margin: auto;
     position: absolute;
-    z-index: 2; }
+    z-index: 2;
+    padding: 5px; }
+    .slider-container .search-box-container input {
+      padding: 4px;
+      height: 40px;
+      line-height: 40px;
+      font-size: 16px;
+      border-width: 1px;
+      vertical-align: middle;
+      border-color: white; }
+    .slider-container .search-box-container button {
+      background: #137cbd;
+      border-color: #137cbd;
+      color: white;
+      font-weight: 450;
+      vertical-align: middle;
+      height: 40px;
+      padding: 3px;
+      font-size: 16px; }
+      .slider-container .search-box-container button.adv-search {
+        margin-top: 3px;
+        width: 100%; }
+      .slider-container .search-box-container button:hover {
+        box-shadow: 1px 1px 3px 0px #137cbd;
+        text-shadow: 0.2px 0.2px white; }
 
 /* this is navbar
 there is navigation fixing
@@ -216,8 +239,11 @@ top attachment etc.
   .profile .cover-pic {
     height: 250px;
     position: relative;
+    overflow: hidden;
     width: 100%;
     background: linear-gradient(to right, #9be1f3 0%, #43c0df 100%); }
+    .profile .cover-pic img {
+      width: 100%; }
     .profile .cover-pic .edit-cover {
       padding: 5px;
       position: absolute;
@@ -264,12 +290,18 @@ top attachment etc.
     margin-top: 5px;
     background: white;
     text-align: center;
-    width: 100%; }
+    width: 100%;
+    display: flex;
+    justify-content: space-between; }
     .profile .bio p {
       font-family: 'Oxygen', sans-serif;
       font-weight: bold;
       font-style: italic;
       font-size: 16px; }
+      .profile .bio p.edit {
+        padding-right: 5px; }
+        .profile .bio p.edit svg {
+          fill: #137cbd; }
   .profile .education {
     margin-top: 5px;
     width: 100%;
@@ -370,9 +402,8 @@ top attachment etc.
       position: absolute; }
     .classes .content-list .content-link {
       margin: 10px;
-      min-height: 150px;
-      min-width: 200px;
-      max-width: 250px;
+      height: 150px;
+      width: 250px;
       display: flex;
       cursor: pointer;
       text-decoration: none;
@@ -580,7 +611,9 @@ top attachment etc.
         padding: 5px; }
         .overlay-container .task-detail-overlay .overlay-body .left .comments .s-comment {
           display: flex;
-          justify-content: stretch; }
+          justify-content: stretch;
+          padding-bottom: 10px;
+          padding-top: 10px; }
           .overlay-container .task-detail-overlay .overlay-body .left .comments .s-comment div img {
             border: 1px solid white;
             border-radius: 50%;
@@ -590,10 +623,28 @@ top attachment etc.
             display: flex;
             flex-direction: column;
             align-items: flex-start; }
+            .overlay-container .task-detail-overlay .overlay-body .left .comments .s-comment .com-con .com-config small {
+              cursor: pointer;
+              color: #696969;
+              margin-right: 5px; }
+              .overlay-container .task-detail-overlay .overlay-body .left .comments .s-comment .com-con .com-config small.danger u:hover {
+                color: red; }
+              .overlay-container .task-detail-overlay .overlay-body .left .comments .s-comment .com-con .com-config small.primary u:hover {
+                color: #137cbd; }
     .overlay-container .task-detail-overlay .overlay-body .right {
+      display: flex;
       flex: 0.3;
-      padding: 5px;
-      text-align: center; }
+      justify-content: flex-end; }
+      .overlay-container .task-detail-overlay .overlay-body .right .rt-in {
+        padding: 5px 5px 5px 5px;
+        display: flex;
+        flex-direction: column; }
+        .overlay-container .task-detail-overlay .overlay-body .right .rt-in .rt-tools {
+          display: flex;
+          flex-direction: column; }
+        .overlay-container .task-detail-overlay .overlay-body .right .rt-in .rt-actions {
+          display: flex;
+          flex-direction: column; }
 
 .settings {
   display: flex;
@@ -618,23 +669,23 @@ top attachment etc.
       padding: 10px; }
   .settings .container-settings {
     padding-top: 5px; }
-    .settings .container-settings p .label {
+    .settings .container-settings .basic .label {
       font-size: 16px;
       font-weight: bold; }
-      .settings .container-settings p .label:hover {
+      .settings .container-settings .basic .label:hover {
         text-decoration: underline; }
-    .settings .container-settings p .value {
+    .settings .container-settings .basic .value {
       margin-left: 5px;
       padding: 2px;
       font-size: 15px; }
-    .settings .container-settings p .edit-icon {
+    .settings .container-settings .basic .edit-icon {
       margin-left: 5px;
       vertical-align: text-top; }
-      .settings .container-settings p .edit-icon:hover svg {
+      .settings .container-settings .basic .edit-icon:hover svg {
         fill: #137cbd; }
-    .settings .container-settings p ul {
+    .settings .container-settings .basic ul {
       display: flex; }
-      .settings .container-settings p ul li {
+      .settings .container-settings .basic ul li {
         color: white;
         padding: 5px;
         margin-left: 2px;
@@ -671,6 +722,11 @@ top attachment etc.
     padding: 10px;
     background-color: #DFDCDC;
     justify-content: space-between; }
+    .create-blog .toolbar .left .switch {
+      font-size: 18px;
+      font-weight: bold; }
+      .create-blog .toolbar .left .switch span {
+        margin-top: 3px; }
     .create-blog .toolbar button {
       margin: 0px 3px 0px 3px; }
   .create-blog .title {
@@ -682,7 +738,6 @@ top attachment etc.
     padding: 5px 10px 5px 10px; }
     .create-blog .editor-container #editor {
       background-color: white;
-      font-size: 16px;
       min-height: 500px;
       padding: 10px;
       font-size: 21px; }
@@ -705,24 +760,39 @@ top attachment etc.
       color: #8e8e8e; }
   .blogs .blog-list {
     margin-top: 10px;
-    display: flex; }
-    .blogs .blog-list .blog-container .img-container {
-      position: relative; }
-      .blogs .blog-list .blog-container .img-container .more-button {
-        position: absolute;
-        top: 0;
-        right: 0; }
-    .blogs .blog-list .blog-container .detail-container .blog-title p.title {
-      font-size: 18px;
-      font-weight: 600; }
-    .blogs .blog-list .blog-container .detail-container .blog-title small {
-      color: #8e8e8e; }
-    .blogs .blog-list .blog-container .detail-container .blog-author {
-      display: flex;
-      justify-content: flex-end; }
-      .blogs .blog-list .blog-container .detail-container .blog-author span {
-        font-size: 16px;
-        font-weight: 500; }
+    display: flex;
+    flex-wrap: wrap; }
+    .blogs .blog-list .blog-container {
+      padding: 5px;
+      margin: 1px;
+      max-width: 250px;
+      overflow: hidden; }
+      .blogs .blog-list .blog-container .img-container {
+        width: 100%;
+        position: relative; }
+        .blogs .blog-list .blog-container .img-container .more-button {
+          position: absolute;
+          top: 0;
+          right: 0; }
+        .blogs .blog-list .blog-container .img-container img {
+          height: 250px;
+          object-fit: cover; }
+      .blogs .blog-list .blog-container .detail-container .blog-title p {
+        margin-bottom: 0; }
+        .blogs .blog-list .blog-container .detail-container .blog-title p.title {
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          font-size: 18px;
+          font-weight: 600; }
+        .blogs .blog-list .blog-container .detail-container .blog-title p small {
+          color: #8e8e8e; }
+      .blogs .blog-list .blog-container .detail-container .blog-author {
+        display: flex;
+        justify-content: flex-end; }
+        .blogs .blog-list .blog-container .detail-container .blog-author a {
+          font-size: 16px;
+          font-weight: 500; }
 
 .notification-list {
   padding: 5px;
@@ -741,6 +811,8 @@ top attachment etc.
 
 .popover-form {
   padding: 5px 5px 0px 5px; }
+  .popover-form.bio .bp3-form-group {
+    margin-bottom: 2px; }
   .popover-form div.top {
     font-size: 18px;
     font-weight: 600;
@@ -766,6 +838,11 @@ top attachment etc.
 
 .bp3-popover-arrow-fill {
   fill: #f6f6f6 !important; }
+
+.tag-input {
+  display: flex !important; }
+  .tag-input div {
+    margin-top: 0px; }
 
 .communicate {
   position: fixed;
@@ -893,11 +970,10 @@ top attachment etc.
         display: flex; }
         .archive .ar-content .ar-left .ar-left-i .ar-i-detail {
           flex: 0.7; }
-          .archive .ar-content .ar-left .ar-left-i .ar-i-detail span.ar-i-title {
+          .archive .ar-content .ar-left .ar-left-i .ar-i-detail .ar-i-title {
+            color: black;
             font-size: 20px;
             font-weight: bold; }
-          .archive .ar-content .ar-left .ar-left-i .ar-i-detail p.ar-i-sm-desc {
-            padding: 3px 0px; }
           .archive .ar-content .ar-left .ar-left-i .ar-i-detail p.ar-i-btn-group {
             display: flex;
             justify-content: flex-end;
@@ -914,6 +990,64 @@ top attachment etc.
         font-weight: bold; }
       .archive .ar-content .ar-right hr {
         border: 0.5px solid #bababa; }
+
+.public-blog {
+  padding-top: 60px; }
+  .public-blog .public-blog-title {
+    padding-top: 10px; }
+    .public-blog .public-blog-title p {
+      width: 100%;
+      text-align: center;
+      font-size: 30px;
+      font-weight: bold; }
+    .public-blog .public-blog-title .author-user {
+      display: flex;
+      justify-content: center; }
+      .public-blog .public-blog-title .author-user .auth-con {
+        display: flex; }
+        .public-blog .public-blog-title .author-user .auth-con .author-detail {
+          display: flex;
+          justify-content: center;
+          align-items: flex-start;
+          flex-direction: column; }
+      .public-blog .public-blog-title .author-user img {
+        margin: 5px; }
+  .public-blog .public-blog-content {
+    width: 100%;
+    font-size: 21px;
+    display: flex; }
+    .public-blog .public-blog-content .left {
+      flex: 0.1; }
+    .public-blog .public-blog-content #blogContent {
+      flex: 0.8; }
+      .public-blog .public-blog-content #blogContent img {
+        max-width: 100%; }
+    .public-blog .public-blog-content .right {
+      flex: 0.1; }
+  .public-blog .response {
+    display: flex; }
+    .public-blog .response .left {
+      flex: 0.1; }
+    .public-blog .response .comment-section {
+      flex: 0.8;
+      display: flex;
+      flex-direction: column; }
+      .public-blog .response .comment-section .comment-area {
+        display: flex; }
+        .public-blog .response .comment-section .comment-area textarea {
+          font-size: 21px;
+          flex: 0.8;
+          height: 80px;
+          resize: none; }
+        .public-blog .response .comment-section .comment-area button {
+          font-size: 21px;
+          flex: 0.2; }
+      .public-blog .response .comment-section .responses .i-response {
+        display: flex; }
+        .public-blog .response .comment-section .responses .i-response .comment-content {
+          padding: 5px; }
+    .public-blog .response .right {
+      flex: 0.1; }
 
 .public-profile {
   margin-top: 60px;
@@ -961,15 +1095,31 @@ top attachment etc.
       background-color: #4eb9ff; }
   .public-profile .top-details {
     width: 100%;
+    display: flex;
+    justify-content: space-between;
     background: white;
     padding: 5px; }
-    .public-profile .top-details .name {
-      font-size: 20px;
-      font-weight: bold; }
-    .public-profile .top-details .designation {
-      font-size: 16px;
-      font-weight: bold;
-      color: rgba(20, 18, 18, 0.596); }
+    .public-profile .top-details .connect-btns {
+      flex: 0.3;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center; }
+      .public-profile .top-details .connect-btns .con {
+        display: flex; }
+      .public-profile .top-details .connect-btns button {
+        margin-left: 10px;
+        font-size: 16px;
+        font-weight: 400; }
+    .public-profile .top-details .desc {
+      flex: 0.7; }
+      .public-profile .top-details .desc .name {
+        font-size: 20px;
+        font-weight: bold; }
+      .public-profile .top-details .desc .designation {
+        font-size: 16px;
+        font-weight: bold;
+        color: rgba(20, 18, 18, 0.596); }
   .public-profile .bio {
     margin-top: 5px;
     background: white;
@@ -1059,6 +1209,53 @@ top attachment etc.
         padding: 5px;
         color: white;
         background: #137cbd; }
+
+.search-result {
+  margin-top: 60px; }
+  .search-result .filter-toolbar {
+    min-height: 40px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background: white;
+    padding: 5px;
+    box-shadow: 1px 1px 3px 0px #9b9ca1; }
+    .search-result .filter-toolbar .set {
+      display: flex;
+      justify-content: center;
+      align-items: center; }
+    .search-result .filter-toolbar .filter-label {
+      font-size: 20px;
+      font-weight: bold;
+      opacity: 0.8; }
+    .search-result .filter-toolbar .btn-group {
+      padding-top: 6px;
+      margin-left: 50px;
+      vertical-align: middle; }
+      .search-result .filter-toolbar .btn-group button {
+        min-height: 0; }
+  .search-result .result-list {
+    padding: 5px;
+    flex: 0.7; }
+    .search-result .result-list .label {
+      opacity: 0.7;
+      font-weight: bold; }
+    .search-result .result-list .i-result {
+      margin-top: 5px;
+      width: 100%;
+      display: flex; }
+      .search-result .result-list .i-result .img-con {
+        padding: 3px; }
+      .search-result .result-list .i-result .desc-con {
+        padding-left: 5px; }
+        .search-result .result-list .i-result .desc-con .name {
+          font-size: 16px;
+          font-weight: bold; }
+        .search-result .result-list .i-result .desc-con .location {
+          opacity: 0.8;
+          font-weight: bold; }
+      .search-result .result-list .i-result img {
+        border-radius: 50%; }
 
 body {
   margin: 0;

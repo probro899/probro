@@ -5,16 +5,19 @@ import { TagInput, Label } from '@blueprintjs/core';
 class Taginput extends React.Component {
   state = {};
 
-  onChange = (e) => {
-    console.log('tag input', e);
-  };
-
   render() {
-    const { data } = this.props;
+    const { data, onChange, value } = this.props;
     return (
       <Label>
         <span className="label-text">{data.name}</span>
-        <TagInput {...data} />
+        {data.required && <span style={{ color: 'red' }}> *</span>}
+        <TagInput
+          onAdd={e => onChange(data.id, e)}
+          onChange={e => onChange(data.id, e)}
+          {...data}
+          className="tag-input"
+          values={value}
+        />
       </Label>
     );
   }
@@ -22,6 +25,8 @@ class Taginput extends React.Component {
 
 Taginput.propTypes = {
   data: PropTypes.objectOf(PropTypes.any).isRequired,
+  onChange: PropTypes.func.isRequired,
+  value: PropTypes.arrayOf(PropTypes.any).isRequired,
 };
 
 export default Taginput;

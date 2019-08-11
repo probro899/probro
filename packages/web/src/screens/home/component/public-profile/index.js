@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Icon } from '@blueprintjs/core';
+import { Icon, Button } from '@blueprintjs/core';
 import * as actions from '../../../../actions';
 import Navbar from '../navbar';
 
@@ -37,14 +37,22 @@ class PublicProfile extends React.Component {
             <img src={file} alt="profile of the user" />
           </div>
           <div className="top-details">
-            <span className="name">
-              {details.middleName ? `${details.firstName} ${details.middleName} ${details.lastName}` : `${details.firstName} ${details.lastName}`}
-            </span>
-            <br />
-            <span className="designation">Software Engineer at Somewhere</span>
-            <br />
-            <Icon icon="locate" />
-            <span className="country"> Nepal</span>
+            <div className="desc">
+              <span className="name">
+                {details.middleName ? `${details.firstName} ${details.middleName} ${details.lastName}` : `${details.firstName} ${details.lastName}`}
+              </span>
+              <br />
+              <span className="designation">Software Engineer at Somewhere</span>
+              <br />
+              <Icon icon="locate" />
+              <span className="country"> Nepal</span>
+            </div>
+            <div className="connect-btns">
+              <div className="con">
+                <Button text="Connect" large fill intent="primary" icon="new-person" />
+                <Button text="Follow" fill large />
+              </div>
+            </div>
           </div>
           <div className="bio">
             <p>

@@ -1,51 +1,35 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
-import { Icon, Intent } from '@blueprintjs/core';
-import { IconNames } from '@blueprintjs/icons';
+import PropTypes from 'prop-types';
+import { FileInput, Label } from '@blueprintjs/core';
 
-class FileInput extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-    this.fileInputRef = React.createRef();
-  }
-
-  onChange = (e) => {
-    console.log('photo upload', e.target.files[0]);
-    // const { _action, schema, field, lastAction } = this.props;
-    // _action(schema, { [field]: e.target.files[0] });
-    // lastAction();
-  };
-
-  onClick = () => {
-    this.fileInputRef.current.click();
-  };
-
-  changeStyle = (e) => {
-    e.target.style.cursor = 'pointer';
-  }
+class Fileinput extends React.Component {
+  state = {};
 
   render() {
+    const { data, onChange, value } = this.props;
     return (
-      // eslint-disable-next-line jsx-a11y/interactive-supports-focus
-      <div
-        onClick={this.onClick}
-        onKeyDown={this.onClick}
-        role="button"
-        onMouseOver={this.changeStyle}
-        onFocus={this.changeStyle}
-        className="image-upload-icon"
-      >
-        <Icon icon={IconNames.PLUS} intent={Intent.PRIMARY} iconSize="30" color="white" />
-        <input
-          ref={this.fileInputRef}
-          type="file"
-          style={{ display: 'none' }}
-          onChange={this.onChange}
+      <Label>
+        <span className="label-text">{data.name}</span>
+        {data.required && <span style={{ color: 'red' }}> *</span>}
+        <br />
+        <FileInput
+          onInputChange={e => onChange(data.id, e.target.files[0])}
+          value={value}
+          options={data.options}
+          {...data}
         />
-      </div>
+      </Label>
     );
   }
 }
+Fileinput.defaultProps = {
+  value: {},
+};
 
-export default FileInput;
+Fileinput.propTypes = {
+  onChange: PropTypes.func.isRequired,
+  value: PropTypes.objectOf(PropTypes.any),
+  data: PropTypes.objectOf(PropTypes.any).isRequired,
+};
+
+export default Fileinput;
