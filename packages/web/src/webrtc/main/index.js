@@ -1,11 +1,20 @@
 import { mediaSelector } from '../helper-functions';
+import store from '../../store';
+
+function setLocalStream(stream) {
+  // console.log('stream in local stream', stream);
+  const videoElement = document.getElementById(`video-${store.getState().account.user.id}`);
+  if (stream) {
+    videoElement.srcObject = stream;
+  }
+}
 
 function gotRemoteStream(e, userId, gotRemoteStreamHandler) {
+  console.log('got remote stream', e, userId);
   gotRemoteStreamHandler(e, userId);
   const videoElement = document.getElementById(`video-${userId}`);
-  console.log('gotRemoteStream called', e);
+  // console.log('gotRemoteStream called', e);
   if (videoElement.srcObject !== e.streams[0]) {
-    console.log('adding remote stream', e.streams[0]);
     videoElement.srcObject = e.streams[0];
   }
 }
@@ -49,6 +58,7 @@ export default async function main(onIceCandidateHandler, uid, gotRemoteStreamHa
   // creating offer for list of users
   const createOffer = async (mediaType) => {
     const stream = await mediaSelector(mediaType);
+    setLocalStream(stream);
     stream.getTracks().forEach(track => pc.addTrack(track, stream));
     const offer = await pc.createOffer(offerOptions);
     setLocalDescription(offer);
@@ -59,6 +69,7 @@ export default async function main(onIceCandidateHandler, uid, gotRemoteStreamHa
   const createAnswer = async (data, mediaType) => {
     const stream = await mediaSelector(mediaType);
     stream.getTracks().forEach(track => pc.addTrack(track, stream));
+    setLocalStream(stream);
     setRemoteDescription(data);
     const answer = await pc.createAnswer();
     setLocalDescription(answer);
