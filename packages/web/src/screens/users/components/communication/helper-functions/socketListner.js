@@ -1,5 +1,4 @@
 import client from '../../../../../socket';
-import answerHandler from './answerHandler';
 import store from '../../../../../store';
 
 export default (props, state) => {
@@ -7,13 +6,25 @@ export default (props, state) => {
   client.on('offer', async (data) => {
     console.log('Offer arrived', data);
     const { updateWebRtc } = props;
-    const { webRtc } = store.getState();
+    const { webRtc, account } = store.getState();
     const { apis } = state;
     if (webRtc.showCommunication) {
       updateWebRtc('currentOffer', data);
       updateWebRtc('pendingOffers', [...webRtc.pendingOffers, data]);
       if (webRtc.isLive) {
-        answerHandler(apis, webRtc.outGoingCallType);
+        try {
+          const { uid, offer, boardId } = data;
+          const { pc, iceCandidateStatus } = webRtc.peerConnections[data.uid];
+          let answer = null;
+          if (iceCandidateStatus === 'connected') {
+            answer = await pc.createAnswer(offer, null);
+          } else {
+            answer = await pc.createAnswer(offer, webRtc.outGoingCallType);
+          }
+          apis.createAnswer({ answerDetail: { answer, uid: account.user.id, boardId }, userList: [{ userId: uid }] });
+        } catch (e) {
+          console.error('erro in answerHandler', e);
+        }
       } else {
         updateWebRtc('liveIncomingCall', true);
       }

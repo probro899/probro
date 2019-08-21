@@ -24,7 +24,7 @@ const UserView = (pc, idx) => {
         <div style={{ width: '100%', height: '80%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
           {/* <img src={UserImage} alt=" user profile pic" style={{ width: 100, height: 100, borderRadius: '50%' }} /> */}
           {/* eslint-disable-next-line */}
-          <video controls muted="muted" id={`video-${pc.user.id}`} playsInline autoPlay style={{ height: '100%', width: '100%', background: 'black' }} />
+          <video controls  id={`video-${pc.user.id}`} playsInline autoPlay style={{ height: '100%', width: '100%', background: 'black' }} />
         </div>
         <div>
           <div style={{ background: 'white', width: '100%', height: 'auto', padding: 5 }}>

@@ -1,8 +1,8 @@
-import { mediaSelector } from '../helper-functions';
 import store from '../../store';
 
-function setLocalStream(stream) {
-  // console.log('stream in local stream', stream);
+function setLocalStream(stream, userId, onLocalStream) {
+  console.log('stream in local stream', stream);
+  onLocalStream(stream, userId);
   const videoElement = document.getElementById(`video-${store.getState().account.user.id}`);
   if (stream) {
     videoElement.srcObject = stream;
@@ -19,14 +19,10 @@ function gotRemoteStream(e, userId, gotRemoteStreamHandler) {
   }
 }
 
-export default async function main(onIceCandidateHandler, uid, gotRemoteStreamHandler, onIceConnectionStateChange) {
+export default async function main(onIceCandidateHandler, uid, gotRemoteStreamHandler, onIceConnectionStateChange, offerHandler, onLocalStream) {
   // server configuration
   const userId = uid;
   const server = null;
-  const offerOptions = {
-    offerToRecieveAudio: 1,
-    offerToRecieveVideo: 1,
-  };
 
   // Initialize peerconnection
   const pc = new RTCPeerConnection(server);
@@ -56,20 +52,24 @@ export default async function main(onIceCandidateHandler, uid, gotRemoteStreamHa
   };
 
   // creating offer for list of users
-  const createOffer = async (mediaType) => {
-    const stream = await mediaSelector(mediaType);
-    setLocalStream(stream);
+  const createOffer = async (stream) => {
+    setLocalStream(stream, userId, onLocalStream);
     stream.getTracks().forEach(track => pc.addTrack(track, stream));
-    const offer = await pc.createOffer(offerOptions);
-    setLocalDescription(offer);
-    return offer;
+    pc.createOffer((offer) => {
+      setLocalDescription(offer);
+      offerHandler(offer, userId);
+    }, (error) => {
+      console.error('error in create offer', error);
+    }, { mandatory: { OfferToReceiveAudio: true, OfferToReceiveVideo: true } });
   };
 
   // creating Answer for offer
-  const createAnswer = async (data, mediaType) => {
-    const stream = await mediaSelector(mediaType);
-    stream.getTracks().forEach(track => pc.addTrack(track, stream));
-    setLocalStream(stream);
+  const createAnswer = async (data, stream) => {
+    console.log('createAnswer called', data, stream);
+    if (stream) {
+      stream.getTracks().forEach(track => pc.addTrack(track, stream));
+      setLocalStream(stream, userId, onLocalStream);
+    }
     setRemoteDescription(data);
     const answer = await pc.createAnswer();
     setLocalDescription(answer);

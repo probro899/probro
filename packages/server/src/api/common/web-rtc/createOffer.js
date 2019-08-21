@@ -1,3 +1,4 @@
+
 export default async function createOffer(data) {
   const { session } = this;
   const channel = session.channel(`Board-${data.offerDetail.boardId}`);
