@@ -1,90 +1,60 @@
 import React from 'react';
-import { Button, Intent, Tooltip } from '@blueprintjs/core';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { Dialog } from '@blueprintjs/core';
+import Sound from 'react-sound';
+import ringtone from '../../../../assets/ringtone.mp3';
+import * as actions from '../../../../actions';
 import client from '../../../../socket';
-import main from '../../../../webrtc/main';
+import MenuBar from './components/menuBar';
+import Content from './components/content';
+import IncommingCall from './components/incomming-call';
+import { socketListner, closeHandler, callHandler, answerHandler } from './helper-functions';
 
 class Index extends React.Component {
-  state={ apis: null, pc: null, offers: [], answers: [], callType: null, recording: null, chat: null, microphone: null };
+  state = {
+    apis: null,
+    callType: null,
+    windowHeight: window.innerHeight * 0.85,
+    windowWidth: window.innerWidth * 0.85,
+  };
 
   async componentWillMount() {
     const apisRes = await client.scope('Mentee');
     this.setState({ apis: apisRes });
-    await this.socketEventListner();
-  }
-
-  socketEventListner = async () => {
-    const pcMain = await main(this.onIceCandidateHandler);
-    this.setState({ pc: pcMain });
-    const { pc, apis } = this.state;
-    client.on('offer', async (data) => {
-      console.log('Offer arrived', data);
-      const { answers } = this.state;
-      const { offer, userId } = data;
-      this.setState({ answers: [...answers, { userId }] });
-      const answer = await pc.createAnswer(offer, 'video');
-      apis.createAnswer([answer, [{ userId: 2 }]]);
-    });
-
-    client.on('answer', (data) => {
-      console.log('answer arrived', data);
-      pc.setRemoteDescription(data);
-    });
-
-    client.on('icecandidate', (data) => {
-      console.log('icecandidate Arrived', data);
-      pc.addCandidate(data);
-    });
-  }
-
-  onIceCandidateHandler = async (e) => {
-    console.log('ice candidate called', e);
-    const { apis, offers, answers } = this.state;
-    const offer = offers.length !== 0;
-    try {
-      await apis.addIceCandidate([JSON.stringify(e.candidate), offer ? offers : answers]);
-    } catch (err) {
-      console.error('Error in add local iCe candidate', err);
-    }
-  }
-
-  _callHandler = async (apis, callType) => {
-    console.log('call handler called', apis);
-    this.setState({ callType });
-    const { pc, offers } = this.state;
-    this.setState({ offers: [...offers, { userId: 3 }] });
-    const offer = await pc.createOffer(callType);
-    apis.createOffer([{ offer, userId: 2 }, [{ userId: 3 }]]);
+    socketListner(this.props, this.state);
+    // console.log('state data', this.state);
   }
 
   render() {
-    const { apis, callType } = this.state;
+    const { apis, callType, windowHeight, windowWidth } = this.state;
+    const { webRtc } = this.props;
     return (
-      <div style={{ marginTop: 100, marginLeft: 100 }}>
-        {/* eslint-disable-next-line */}
-        <video controls id="video1" playsInline autoPlay style={{ height: 300, width: 400, background: 'black'}} />
-        <div style={{ marginTop: 5 }}>
-          <Tooltip content="Audio Call" position="top">
-            <Button onClick={() => this._callHandler(apis, 'audio')} text="" style={{ marginLeft: 10 }} icon="phone" intent={(callType === 'audio' || callType === 'video') ? Intent.DANGER : Intent.SUCCESS} />
-          </Tooltip>
-          <Tooltip content="Video Call" position="top">
-            <Button onClick={() => this._callHandler(apis, 'video')} text="" style={{ marginLeft: 10 }} icon="mobile-video" intent={Intent.SUCCESS} />
-          </Tooltip>
-          <Tooltip content="Screen Sharing" position="top">
-            <Button onClick={() => this._callHandler(apis, 'screenshare')} text="" style={{ marginLeft: 10 }} icon="duplicate" intent={Intent.SUCCESS} />
-          </Tooltip>
-          <Tooltip content="Chatting" position="top">
-            <Button onClick={() => this._callHandler(apis, 'chat')} text="" style={{ marginLeft: 10 }} icon="chat" intent={Intent.SUCCESS} />
-          </Tooltip>
-          <Tooltip content="Recording" position="top">
-            <Button onClick={() => this._callHandler(apis)} text="" style={{ marginLeft: 10 }} icon="record" intent={Intent.SUCCESS} />
-          </Tooltip>
-          <Tooltip content="Microphone" position="top">
-            <Button onClick={() => this._callHandler(apis)} text="" style={{ marginLeft: 10 }} icon="headset" intent={Intent.SUCCESS} />
-          </Tooltip>
-
-        </div>
+      <div>
+        {webRtc.liveIncomingCall && <Sound url={ringtone} playStatus={Sound.status.PLAYING} playFromPosition={0} loop /> }
+        <Dialog isOpen={webRtc.showCommunication || webRtc.communicationContainer === 'connecting'} style={{ width: 'auto', height: 'auto', justifyContent: 'center', alignItems: 'center' }}>
+          <div style={{ height: windowHeight, width: windowWidth }}>
+            <div>
+              <MenuBar {...this.props} />
+              <Content {...this.props} callType={callType} apis={apis} _callHandler={callHandler(this.props, this.state)} answerHandler={answerHandler(this.props, this.state)} closeHandler={closeHandler(this.props, this.state)} />
+            </div>
+          </div>
+        </Dialog>
+        <Dialog isOpen={webRtc.showIncommingCall} style={{ zIndex: 12, height: 'auto', width: 'auto', padding: 0 }}>
+          <div style={{ border: 'solid', borderWidth: 1, borderColor: 'white', borderRadius: 5 }}>
+            {/* <MenuBar {...this.props} /> */}
+            <IncommingCall {...this.props} answerHandler={answerHandler(this.props, this.state)} apis={apis} closeHandler={closeHandler(this.props, this.state)} />
+          </div>
+        </Dialog>
       </div>
     );
   }
 }
-export default Index;
+
+const mapStateToProps = state => state;
+export default connect(mapStateToProps, { ...actions })(Index);
+
+Index.propTypes = {
+  webRtc: PropTypes.objectOf(PropTypes.any).isRequired,
+  updateWebRtc: PropTypes.objectOf(PropTypes.any).isRequired,
+};

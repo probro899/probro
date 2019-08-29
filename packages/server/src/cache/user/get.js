@@ -18,7 +18,7 @@ export default async function get(id) {
 
     const userDetail = await find('UserDetail', { userId: id });
 
-    const boardMember = await find('BoardMember', { tuserId: id });
+    const BoardMember = await find('BoardMember', { tuserId: id });
 
     const UserWorkExperience = await find('UserWorkExperience', { userId: id });
     const UserEducation = await find('UserEducation', { userId: id });
@@ -29,14 +29,17 @@ export default async function get(id) {
 
     const boardPromises = [];
 
-    boardMember.forEach(bm => boardPromises.push(findOne('Board', { id: bm.boardId })));
+    BoardMember.forEach(bm => boardPromises.push(findOne('Board', { id: bm.boardId })));
 
     const allBoards = await Promise.all(boardPromises);
+ // console.log('all board', allBoards);
 
-    // console.log('all board', allBoards);
+    const boardMessagePromises = [];
+    allBoards.forEach(b  => boardMessagePromises.push(find('BoardMessage', { boardId: b.id })));
+    const BoardMessage = await Promise.all(boardMessagePromises);
+    console.log('BoardMessage', BoardMessage);
 
     const boardDetailsPromises = [];
-
     allBoards.forEach((b) => {
       boardDetailsPromises.push(findBoardDetail(b.id));
     });
@@ -45,7 +48,7 @@ export default async function get(id) {
 
     allBoards.forEach((b) => {
       boardUserPromises.push(find('BoardMember', { boardId: b.id }));
-      boardUserPromises.push(find('Board', { id: b.id }));
+      // boardUserPromises.push(find('Board', { id: b.id }));
     });
 
     const allBoardMembers = await Promise.all(boardUserPromises);
@@ -53,7 +56,7 @@ export default async function get(id) {
     // console.log('all Board Member', allBoardMembers.flat());
 
     const allBoardUserPromises = [];
-    allBoardMembers.flat().forEach(bm => allBoardUserPromises.push(findOne('User', { id: bm.tuserId || bm.userId })));
+    allBoardMembers.flat().forEach(bm => allBoardUserPromises.push(findOne('User', { id: bm.tuserId })));
 
     const allBoardUser = await Promise.all(allBoardUserPromises);
 
@@ -126,6 +129,7 @@ export default async function get(id) {
       UserWorkExperience,
       UserPortal,
       UserSkill,
+      BoardMessage: BoardMessage.flat(),
     };
     return userDataRes;
   });

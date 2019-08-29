@@ -1,35 +1,52 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FileInput, Label } from '@blueprintjs/core';
 
-class Fileinput extends React.Component {
-  state = {};
+class FileInput extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
+    this.fileInputRef = React.createRef();
+  }
+
+  onChange = (e) => {
+    const { fileOnchange } = this.props;
+    fileOnchange(e.target.files[0]);
+  };
+
+  onClick = () => {
+    this.fileInputRef.current.click();
+  };
+
+  changeStyle = (e) => {
+    e.target.style.cursor = 'pointer';
+  }
 
   render() {
-    const { data, onChange, value } = this.props;
+    const { fileComponent } = this.props;
     return (
-      <Label>
-        <span className="label-text">{data.name}</span>
-        {data.required && <span style={{ color: 'red' }}> *</span>}
-        <br />
-        <FileInput
-          onInputChange={e => onChange(data.id, e.target.files[0])}
-          value={value}
-          options={data.options}
-          {...data}
+      // eslint-disable-next-line jsx-a11y/interactive-supports-focus
+      <div
+        onClick={this.onClick}
+        onKeyDown={this.onClick}
+        role="button"
+        onMouseOver={this.changeStyle}
+        onFocus={this.changeStyle}
+        className="image-upload-icon"
+      >
+        {fileComponent}
+        <input
+          ref={this.fileInputRef}
+          type="file"
+          style={{ display: 'none' }}
+          onChange={this.onChange}
         />
-      </Label>
+      </div>
     );
   }
 }
-Fileinput.defaultProps = {
-  value: {},
-};
 
-Fileinput.propTypes = {
-  onChange: PropTypes.func.isRequired,
-  value: PropTypes.objectOf(PropTypes.any),
-  data: PropTypes.objectOf(PropTypes.any).isRequired,
+export default FileInput;
+FileInput.propTypes = {
+  fileOnchange: PropTypes.func.isRequired,
+  fileComponent: PropTypes.element.isRequired,
 };
-
-export default Fileinput;

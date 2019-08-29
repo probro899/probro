@@ -4,6 +4,7 @@ import { Link, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { Icon, Menu, MenuItem, Popover, Position, Intent } from '@blueprintjs/core';
 import { IconNames } from '@blueprintjs/icons';
+import Communication from '../../../users/components/communication';
 import client from '../../../../socket';
 import Notifications from '../notification';
 

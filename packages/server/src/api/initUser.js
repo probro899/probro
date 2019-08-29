@@ -36,7 +36,6 @@ export default async function initUser(id) {
   // console.log('Sessiosn user Details', boardSessions.flat()[0].values.user);
   const finalUserList = u.Board.length === 0 ? [{ ...u.User[0], activeStatus: true }] : userPresentorHelper(boardSessions.flat(), u.User);
   // console.log('finalUSerlist', finalUserList);
-
   // boardSessions.forEach(s => console.log(JSON.stringify(s.id)));
 
   u.Board.map(b => ({ channel: session.channel(`Board-${b.id}`), board: b })).forEach(obj => obj.channel.dispatch(schema.update('User', { id, activeStatus: true })));
@@ -60,4 +59,5 @@ export default async function initUser(id) {
   session.dispatch(schema.init('UserWorkExperience', u.UserWorkExperience));
   session.dispatch(schema.init('UserPortal', u.UserPortal));
   session.dispatch(schema.init('UserSkill', u.UserSkill));
+  session.dispatch(schema.init('BoardMessage', u.BoardMessage));
 }

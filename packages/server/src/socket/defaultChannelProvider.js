@@ -63,7 +63,6 @@ export default function createDefaultProvider() {
         list.forEach(session => session.send(message));
       }
     },
-
     getChannel: channelId => channels[channelId],
   };
 }

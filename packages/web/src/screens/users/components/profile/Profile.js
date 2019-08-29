@@ -37,6 +37,10 @@ class Profile extends Component {
     }
   }
 
+  fileOnchange = (file) => {
+    console.log('file is here do what you want', file);
+  }
+
   render() {
     const { account, database } = this.props;
     const { skillsEditPopover, apis } = this.state;

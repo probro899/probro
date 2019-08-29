@@ -1,4 +1,4 @@
 
-export default function onIceConnectionStateChange(e, pc) {
-  console.log('ICE state', pc.iceConnectionState);
+export default function onIceConnectionStateChange(e, pc, uid) {
+  console.log(`ICE state ${uid}`, pc.iceConnectionState);
 }
