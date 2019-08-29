@@ -32,11 +32,14 @@ export default async function get(id) {
     BoardMember.forEach(bm => boardPromises.push(findOne('Board', { id: bm.boardId })));
 
     const allBoards = await Promise.all(boardPromises);
+ // console.log('all board', allBoards);
 
-    // console.log('all board', allBoards);
+    const boardMessagePromises = [];
+    allBoards.forEach(b  => boardMessagePromises.push(find('BoardMessage', { boardId: b.id })));
+    const BoardMessage = await Promise.all(boardMessagePromises);
+    console.log('BoardMessage', BoardMessage);
 
     const boardDetailsPromises = [];
-
     allBoards.forEach((b) => {
       boardDetailsPromises.push(findBoardDetail(b.id));
     });
@@ -126,6 +129,7 @@ export default async function get(id) {
       UserWorkExperience,
       UserPortal,
       UserSkill,
+      BoardMessage: BoardMessage.flat(),
     };
     return userDataRes;
   });

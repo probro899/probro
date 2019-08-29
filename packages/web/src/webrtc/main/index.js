@@ -1,7 +1,7 @@
 import store from '../../store';
 
 function setLocalStream(stream, userId, onLocalStream) {
-  console.log('stream in local stream', stream);
+  // console.log('stream in local stream', stream);
   onLocalStream(stream, userId);
   const videoElement = document.getElementById(`video-${store.getState().account.user.id}`);
   if (stream) {
@@ -11,7 +11,7 @@ function setLocalStream(stream, userId, onLocalStream) {
 
 function gotRemoteStream(e, userId, gotRemoteStreamHandler) {
   console.log('got remote stream', e, userId);
-  gotRemoteStreamHandler(e, userId);
+  gotRemoteStreamHandler(e.streams[0], userId);
   const videoElement = document.getElementById(`video-${userId}`);
   // console.log('gotRemoteStream called', e);
   if (videoElement.srcObject !== e.streams[0]) {

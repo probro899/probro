@@ -154,6 +154,10 @@ function addUserPortal(record) {
   add.call(this, 'UserPortal', record);
 }
 
+function addBoardMessage(record) {
+  add.call(this, 'BoardMessage', record);
+}
+
 export default [
   addBoard,
   addBoardColumn,
@@ -169,4 +173,5 @@ export default [
   addUserWorkExperience,
   addUserSkill,
   addUserPortal,
+  addBoardMessage,
 ];

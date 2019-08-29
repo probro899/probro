@@ -49,6 +49,7 @@ chaneMessage = (e) => {
 
 render() {
   const  { message } = this.state;
+  console.log('props in sender', this.props);
   return (
     <div style={{ display: 'flex', width: '100%', maxHeight: 200, marginTop: 5 }}>
       <div style={{ width: '100%' }}>

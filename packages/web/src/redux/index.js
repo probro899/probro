@@ -26,7 +26,8 @@ const reducer = combineReducers({
     'UserEducation',
     'UserWorkExperience',
     'UserSkill',
-    'UserPortal'
+    'UserPortal',
+    'BoardMessage'
   ),
 });
 

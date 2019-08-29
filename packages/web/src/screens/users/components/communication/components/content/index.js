@@ -7,6 +7,7 @@ class Index extends React.Component {
   state={};
 
   render() {
+    console.log('props in content', this.props);
     return (
       <div style={{ display: 'flex', width: '100%', height: '100%' }}>
         <div style={{ background: 'white', width: '20%' }}>

@@ -11,11 +11,13 @@ const initialState = {
   messages,
   peerConnections: {},
   pendingOffers: [],
-  remoteStream: {},
+  streams: {},
   currentOffer: null,
   iceCandidates: {},
   liveIncomingCall: false,
   isLive: false,
+  mediaRecording: null,
+  recordedBlobs: [],
 };
 
 export default (state, action) => {

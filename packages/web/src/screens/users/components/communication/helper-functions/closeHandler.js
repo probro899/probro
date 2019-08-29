@@ -6,6 +6,11 @@ export default props => async () => {
   const { webRtc } = store.getState();
   const pcs = Object.values(webRtc.peerConnections);
   if (webRtc.showCommunication) {
+    if (webRtc.mediaRecording) {
+      webRtc.mediaRecording.stopRecording();
+      updateWebRtc('mediaRecording', null);
+    }
+
     pcs.forEach(pc => pc.pc.pc.close());
     updateWebRtc('communicationContainer', 'chat');
     updateWebRtc('outGoingCallType', null);

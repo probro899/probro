@@ -1,5 +1,7 @@
+import store from '../../../../../store';
+
 export default props => (stream, userId) => {
-  console.log('local sream handler', stream, userId);
+  console.log('local stream handler', stream, userId);
   const { updateWebRtc } = props;
-  // updateWebRtc('isLive', true);
+  updateWebRtc('streams', { ...store.getState().webRtc.streams, [userId]: stream });
 };

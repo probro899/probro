@@ -7,6 +7,7 @@ class Index extends React.Component {
 
   render() {
     const { webRtc } = this.props;
+    console.log('props in messanger', this.props);
     return (
       <div style={{ background: 'white', display: 'flex', justifyContent: 'space-between', flex: 1, flexDirection: 'column', width: '100%' }}>
         <div style={{ display: 'flex', flex: 0.8 }}>

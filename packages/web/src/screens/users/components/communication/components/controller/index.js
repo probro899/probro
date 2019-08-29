@@ -3,11 +3,10 @@ import { Button, Intent } from '@blueprintjs/core';
 import PropTypes from 'prop-types';
 import ReactTooltip from 'react-tooltip';
 import mediaSelector from './mediaSelector';
-
-// ((incomming || webRtc.liveIncomingCall) ? answerHandler(apis, 'audio') : _callHandler(apis, 'audio'))
+import { mediaRecorder } from '../../helper-functions';
 
 class Controller extends React.Component {
-  state={};
+  state={ startRecording: false };
 
   callHandler = async (mediaType) => {
     const { _callHandler, answerHandler, incomming, apis, webRtc } = this.props;
@@ -19,12 +18,23 @@ class Controller extends React.Component {
     }
   }
 
-  recordingHandler = () => {
-    console.log('recording handling stuff');
+  recordingHandler = async () => {
+    const { startRecording } = this.state;
+    const { updateWebRtc, webRtc } = this.props;
+    if (!startRecording) {
+      const mediaRecording = await mediaRecorder(2, this.props);
+      updateWebRtc('mediaRecording', mediaRecording);
+      this.setState({ startRecording: true });
+    } else {
+      webRtc.mediaRecording.stopRecording();
+      updateWebRtc('mediaRecording', null);
+      this.setState({ startRecording: false });
+    }
   }
 
   render() {
-    const { _callHandler, apis, callType, incomming, webRtc, closeHandler } = this.props;
+    const { callType, incomming, webRtc, closeHandler } = this.props;
+    const { startRecording } = this.state;
     return (
       <div style={{ cursor: 'pointer', display: 'flex' }}>
         <ReactTooltip />
@@ -35,7 +45,7 @@ class Controller extends React.Component {
         <div style={{ display: 'flex' }}>
           <ReactTooltip />
           <Button data-tip="Share Screen" onClick={() => this.callHandler('screenshare')} text="" style={{ marginLeft: 10, marginRight: 5 }} icon="duplicate" intent={Intent.SUCCESS} />
-          <Button data-tip="Recording" onClick={() => this.recordingHandler()} text="" style={{ marginLeft: 10, marginRight: 5 }} icon="record" intent={Intent.SUCCESS} />
+          <Button data-tip="Recording" onClick={() => this.recordingHandler()} text="" style={{ marginLeft: 10, marginRight: 5 }} icon="record" intent={!startRecording ? Intent.SUCCESS : Intent.DANGER} />
         </div>
         )
         }

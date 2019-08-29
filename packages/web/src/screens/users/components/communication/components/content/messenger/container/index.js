@@ -38,12 +38,15 @@ communicationContainerHandler = () => {
 }
 
 render() {
-  const { updateWebRtc } = this.props;
+  const { updateWebRtc, webRtc } = this.props;
   return (
     <div style={{ width: '100%' }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: 'solid', borderWidth: 1, borderColor: '#f5f5f5' }}>
         <div style={{ width: 'auto', marginTop: 10, padding: 2, borderTopRightRadius: 10, borderBottomRightRadius: 10, background: 'green', display: 'flex' }}>
           <Button data-tip="Add Board Member" onClick={() => updateWebRtc('addUser', true)} text="" style={{ marginLeft: 5, marginRight: 5 }} icon="new-person" intent="success" />
+        </div>
+        <div style={{ display: 'flex', flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+          {webRtc.recordedBlobs.map(a => Object.values(a)[0])}
         </div>
         <div style={{ width: 'auto', marginTop: 10, padding: 2, borderTopLeftRadius: 10, borderBottomLeftRadius: 10, background: 'green' }}>
           <Controller {...this.props} />
