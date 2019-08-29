@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Navbar from '../../../home/component/navbar';
 import Comment from './Comment';
+import Footer from '../../../../common/footer';
 
 const file = require('../../../../assets/icons/64w/uploadicon64.png');
 
@@ -71,6 +72,7 @@ class PublicBlog extends React.Component {
           </div>
           <Comment />
         </div>
+        <Footer />
       </div>
     );
   }

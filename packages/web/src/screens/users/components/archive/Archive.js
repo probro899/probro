@@ -5,6 +5,7 @@ import { Button } from '@blueprintjs/core';
 import { Link } from 'react-router-dom';
 import * as actions from '../../../../actions';
 import Navbar from '../../../home/component/navbar';
+import Footer from '../../../../common/footer';
 
 class Archive extends React.Component {
   state = {};
@@ -74,6 +75,7 @@ class Archive extends React.Component {
             </div>
           </div>
         </div>
+        <Footer />
       </div>
     );
   }

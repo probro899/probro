@@ -4,6 +4,9 @@
     justify-content: space-around;
   .log-or-reg {
     max-width: 40%;
+    @media screen and (max-width: 800px){
+      max-width: 90%;
+    }
     .reg-box-header {
       padding: 40px 10px 20px 10px;
       p {
@@ -11,7 +14,7 @@
         font-weight: 700;
       }
     }
-    .footer {
+    .auth-footer {
       padding: 0 0 0 10px;
     }
     div div label {
@@ -23,6 +26,16 @@
     }
     div div .btn-group {
       padding: 0 10px 0 10px;
+    }
+  }
+  .auth-with-others {
+    padding: 0px 10px;
+    .linkedin-default {
+      background-repeat: no-repeat;
+      background-size: contain;
+    }
+    button.google-default {
+      width: 100%;
     }
   }
 }

@@ -1,0 +1,36 @@
+@import './config.scss';
+
+.footer {
+  margin-top: 20px;
+  min-height: 100px;
+  padding: 5px;
+  border-top: 1px solid #90A3A8;
+  .pc-logo {
+    padding: 5px;
+    font-size: 18px;
+    font-weight: bold;
+  }
+  .left-right-container {
+    display: flex;
+    .footer-left {
+      flex: 0.8;
+      display: flex;
+      justify-content: flex-start;
+      .foot-left-one {
+        .one-content {
+          padding: 5px;
+          font-weight: bold;
+        }
+      }
+    }
+    .footer-right {
+      flex: 0.2;
+      display: flex;
+      justify-content: flex-end;
+      .right-content {
+        padding: 5px;
+        font-weight: bold;
+      }
+    }
+  }
+}

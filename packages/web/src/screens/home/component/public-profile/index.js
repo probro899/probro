@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { Icon, Button } from '@blueprintjs/core';
 import * as actions from '../../../../actions';
 import Navbar from '../navbar';
+import Footer from '../../../../common/footer';
 
 const file = require('../../../../assets/icons/512h/uploadicon512.png');
 const school = require('../../../../assets/icons/64w/school64.png');
@@ -115,7 +116,8 @@ class PublicProfile extends React.Component {
             </div>
           </div>
         </div>
-      </div>  
+        <Footer />
+      </div>
     );
   }
 }

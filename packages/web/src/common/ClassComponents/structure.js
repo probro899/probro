@@ -2,6 +2,7 @@ export default [
   {
     id: 'name',
     fieldtype: 'input',
+    required: true,
     name: 'Name',
     placeholder: '',
   },
@@ -21,6 +22,7 @@ const addUserToBoard = [
     id: 'email',
     fieldtype: 'input',
     name: 'Email',
+    required: true,
     placeholder: 'Example: nabin@properclass.com',
   },
   {

@@ -6,7 +6,6 @@ import { DateInput } from '@blueprintjs/datetime';
 const calendarIcon = () => (
   <Icon
     icon="calendar"
-    large
     intent="primary"
   />
 );

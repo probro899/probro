@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Dialog, Button, TextArea, Intent, Icon } from '@blueprintjs/core';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { timeStampSorting } from '../../screens/users/utility-functions';
 import TaskComment from './TaskComment';
@@ -245,6 +246,29 @@ class TaskOverlay extends Component {
                     )}
                 </div>
               </div>
+              <div className="attach-container">
+                <u>Attachments</u>
+                <div className="attach-list">
+                  <ul>
+                    <li>
+                      <div className="file-type">
+                        <span>
+                          txt
+                        </span>
+                      </div>
+                      <div className="file-detail">
+                        <span className="attach-title">
+                          Project Report.pdf
+                        </span>
+                        <span>
+                          oct 27 2019 -
+                          <Link to=""> Nabin Bhusal</Link>
+                        </span>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
               <div className="comment-container">
                 <TextArea
                   fill
@@ -261,7 +285,7 @@ class TaskOverlay extends Component {
               </div>
               <TaskComment comments={comments} userList={userList} />
             </div>
-            <TaskDetailRight />
+            <TaskDetailRight task={task} />
           </div>
         </div>
       </Dialog>

@@ -1,0 +1,48 @@
+@import './config.scss';
+
+.drawing-board {
+  flex: 0.8;
+  padding: 5px;
+  .draw-title {
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 18px;
+    color: $lightTextColor;
+    padding: 3px;
+  }
+  .draw-tools {
+    display: flex;
+    padding: 5px 0px;
+    .tool-label {
+      clip-path: polygon(0 0, 0 100%, 65% 100%, 100% 50%, 65% 0);
+      font-size: 18px;
+      background: $boardColor;
+      color: white;
+      padding: 3px 15px 3px 2px;
+      display: flex;
+      align-items: center;
+      flex-direction: row;
+    }
+    .tool-container {
+      padding: 3px;
+      margin-left: 5px;
+      border: 1px solid $borderColor;
+      display: flex;
+      justify-content: center;
+      width: 100%;
+      .i-tool {
+        margin: 0px 5px;
+      }
+    }
+  }
+  .draw-canvas {
+    display: flex;
+    justify-content: center;
+    #mainCanvas {
+      object-fit: contain;
+      background: white;
+      border: 2px solid black;
+    }
+  }
+}

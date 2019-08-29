@@ -3,12 +3,14 @@ export default [
     id: 'email',
     fieldtype: 'input',
     name: 'Email',
+    required: true,
     placeholder: 'Eg, alex@gmail.com',
   },
   {
     id: 'password',
     fieldtype: 'input',
     hidden: true,
+    required: true,
     name: 'Password',
     placeholder: 'Eg, ........',
     icon: {

@@ -4,5 +4,6 @@ import Setting from './setting/Setting';
 import Communication from './communication';
 import Archive from './archive';
 import Profile from './profile';
+import DrawingBoard from './drawing-board';
 
-export { SideNav, Class, Setting, Profile, Communication, Archive };
+export { SideNav, Class, Setting, Profile, DrawingBoard, Communication, Archive };

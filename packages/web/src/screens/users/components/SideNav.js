@@ -12,9 +12,10 @@ const NavElement = (props) => {
     name,
     active,
     match,
+    url,
   } = props;
   return (
-    <Link to={`${match.url}/${name.toLowerCase()}`} className={active ? 'sideNavElement active' : 'sideNavElement'}>
+    <Link to={`${match.url}/${url}`} className={active ? 'sideNavElement active' : 'sideNavElement'}>
       <Icon icon={IconNames[iconName]} iconSize="15" color="rgba(78, 185, 255, 1)" style={{ verticalAlign: 'baseline' }} />
       <span>
       &nbsp;&nbsp;
@@ -31,6 +32,7 @@ NavElement.defaultProps = {
 NavElement.propTypes = {
   iconName: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
+  url: PropTypes.string.isRequired,
   match: PropTypes.objectOf(PropTypes.any).isRequired,
   active: PropTypes.bool,
 };
@@ -47,10 +49,11 @@ class SideNav extends Component {
   }
 
   render() {
-    const navElements = [{ iconName: 'PERSON', name: 'Profile' },
-      { iconName: 'HOME', name: 'Classes' },
-      { iconName: 'PARAGRAPH', name: 'Blog' },
-      { iconName: 'COG', name: 'Settings' },
+    const navElements = [{ iconName: 'PERSON', name: 'Profile', url: 'profile' },
+      { iconName: 'PROJECTS', name: 'Classes', url: 'classes' },
+      { iconName: 'PARAGRAPH', name: 'Blog', url: 'blog' },
+      { iconName: 'COG', name: 'Settings', url: 'settings' },
+      { iconName: 'DRAW', name: 'Drawing Board', url: 'drawing-board' },
     ];
     const { match, navigate } = this.props;
     return (
@@ -60,6 +63,7 @@ class SideNav extends Component {
             return (
               <NavElement
                 match={match}
+                url={obj.url}
                 name={obj.name}
                 key={obj.name}
                 iconName={obj.iconName}
