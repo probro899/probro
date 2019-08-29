@@ -7,7 +7,7 @@ import Taginput from './Taginput';
 import Select from './Select';
 import DateField from './DateField';
 import Textarea from './Textarea';
-import Fileinput from './Fileinput';
+import Fileinput from './FormFileInput';
 
 const Element = (props) => {
   const { data } = props;

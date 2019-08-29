@@ -1,6 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Button, Popover, Tag } from '@blueprintjs/core';
-import Fileinput from '../Fileinput';
+import Fileinput from '../FormFileInput';
 import Form from '../Form';
 import DeletePopOver from '../DeletePopOver';
 
@@ -17,6 +18,10 @@ const PopoverContent = ({ callback }) => {
       <Fileinput onChange={callback} value={{}} data={data} />
     </div>
   );
+};
+
+PopoverContent.propTypes = {
+  callback: PropTypes.func.isRequired,
 };
 
 const TagPopover = () => {
@@ -82,6 +87,10 @@ const DeadLinePopOver = ({ callback }) => {
       <Form callback={callback} data={structure} />
     </div>
   );
+};
+
+DeadLinePopOver.propTypes = {
+  callback: PropTypes.func.isRequired,
 };
 
 class TaskDetailRight extends React.Component {
@@ -172,6 +181,10 @@ class TaskDetailRight extends React.Component {
       </div>
     );
   }
+}
+
+TaskDetailRight.propTypes = {
+  task: PropTypes.objectOf(PropTypes.any).isRequired,
 }
 
 export default TaskDetailRight;
