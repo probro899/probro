@@ -2,10 +2,14 @@ import axios from 'axios';
 import { ENDPOINT } from '../../../../config';
 
 export default async (args) => {
-  delete args.confirmPassword;
   try {
-    const res = await axios.post(`${ENDPOINT}/auth/user-registration`, args);
-    console.log('response', res.data);
+    const res = await axios.post(`${ENDPOINT}/auth/user-registration`, {
+      firstName: args.firstName,
+      middleName: args.middleName,
+      lastName: args.lastName,
+      email: args.email,
+      password: args.password,
+    });
     if (res.status === 200) {
       return { response: 200 };
     }

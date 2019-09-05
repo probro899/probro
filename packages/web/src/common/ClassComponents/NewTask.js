@@ -21,6 +21,13 @@ class NewTask extends Component {
 
   handlePopOverForm = () => {
     const { popOpen } = this.state;
+    if (!popOpen) {
+      TaskFormStructure.map((obj) => {
+        if (obj.id === 'name') {
+          obj.val = '';
+        }
+      });
+    }
     this.setState({
       popOpen: !popOpen,
     });

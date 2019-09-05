@@ -21,6 +21,11 @@ class NewColumn extends Component {
 
   handlePopOverForm = () => {
     const { popOpen } = this.state;
+    ColumnFormStructure.map((obj) => {
+      if (obj.id === 'name') {
+        obj.val = '';
+      }
+    });
     this.setState({
       popOpen: !popOpen,
     });

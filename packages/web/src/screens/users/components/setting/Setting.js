@@ -6,6 +6,7 @@ import * as actions from '../../../../actions';
 import BasicSettings from './BasicSettings';
 import AdvancedSettings from './AdvancedSetting';
 
+
 class Setting extends Component {
   state = {
     activeTab: 'basic',

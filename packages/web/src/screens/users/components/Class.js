@@ -52,6 +52,11 @@ class Class extends Component {
   // toggle the create new class popover
   newClass = () => {
     const { createBool } = this.state;
+    boardStructure.map((obj) => {
+      if (obj.id === 'name') {
+        obj.val = '';
+      }
+    });
     this.setState({
       createBool: !createBool,
     });
@@ -71,6 +76,11 @@ class Class extends Component {
       });
     }
     if (action === 'edit') {
+      boardStructure.map((obj) => {
+        if (obj.id === 'name') {
+          obj.val = database.Board.byId[id].name;
+        }
+      });
       this.setState({
         updateClass: {
           id,
@@ -120,8 +130,7 @@ class Class extends Component {
   }
 
   render() {
-    const { account, database, updateWebRtc } = this.props;
-    // console.log(this.props);
+    const { account, database } = this.props;
     const { createBool, deleteClass, updateClass } = this.state;
     return (
       <div className="classes">
@@ -144,7 +153,10 @@ class Class extends Component {
                   <Link to={`/class-work/${account.sessionId}/${id}`} className="content-link">
                     <div className="class-repr">
                       <span>
-                        {database.Board.byId[id].name}
+                        { database.Board.byId[id].name.length > 40
+                          ? `${database.Board.byId[id].name.substring(0, 40)} ...`
+                          : database.Board.byId[id].name
+                        }
                       </span>
                     </div>
                     <div className="class-detail">

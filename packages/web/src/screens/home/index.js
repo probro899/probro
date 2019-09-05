@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import * as actions from '../../actions';
 import { Navbar, Slider, Post, Banner, Popular } from './component';
-
+import Footer from '../../common/footer';
 
 class HomePage extends Component {
   state = {};
@@ -24,6 +24,7 @@ class HomePage extends Component {
         <Banner />
         <Post />
         <Popular />
+        <Footer />
       </div>
     );
   }
@@ -36,4 +37,3 @@ HomePage.propTypes = {
 
 const mapStateToProps = state => state;
 export default connect(mapStateToProps, { ...actions })(HomePage);
-

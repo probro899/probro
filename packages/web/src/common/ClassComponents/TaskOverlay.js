@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Dialog, Button, TextArea, Intent, Icon } from '@blueprintjs/core';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { timeStampSorting } from '../../screens/users/utility-functions';
-
-const profileIcon = require('../../assets/icons/64w/uploadicon64.png');
+import TaskComment from './TaskComment';
+import TaskDetailRight from './TaskDetailRight';
 
 class TaskOverlay extends Component {
   state = {
@@ -245,82 +246,46 @@ class TaskOverlay extends Component {
                     )}
                 </div>
               </div>
+              <div className="attach-container">
+                <u>Attachments</u>
+                <div className="attach-list">
+                  <ul>
+                    <li>
+                      <div className="file-type">
+                        <span>
+                          txt
+                        </span>
+                      </div>
+                      <div className="file-detail">
+                        <span className="attach-title">
+                          Project Report.pdf
+                        </span>
+                        <span>
+                          oct 27 2019 -
+                          <Link to=""> Nabin Bhusal</Link>
+                        </span>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
               <div className="comment-container">
-              <TextArea
-                fill
-                placeholder="Put your comments."
-                value={comment}
-                onChange={e => this.commentChange(e)}
-              />
-              <Button
-                style={{ marginLeft: '5px' }}
-                text="submit"
-                intent={Intent.PRIMARY}
-                onClick={this.saveComment}
-              />
-            </div>
-              <div className="comments">
-                <h3>History</h3>
-                {comments.map((com) => {
-                  return (
-                    <div className="s-comment" key={com.id}>
-                      <div>
-                        <img
-                          src={profileIcon}
-                          height="45px"
-                          alt="profile or blank profile"
-                        />
-                      </div>
-                      <div className="com-con">
-                        <div className="com-auth">
-                          <span style={{ fontSize: '16px', fontWeight: 'bold', padding: '3px' }}>
-                            {
-                              Object.values(userList.byId).map((obj) => {
-                                if (obj.id === com.userId) {
-                                  return `${obj.firstName} ${obj.lastName}`;
-                                }
-                              })
-                            }
-                          </span>
-                          <small>{new Date(com.timeStamp).toDateString()}</small>
-                        </div>
-                        <div className="com-desc" style={{ padding: '3px' }}>
-                          {com.comment}
-                        </div>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-            <div className="right">
-              <div><h3>Extras</h3></div>
-              <div>
-                <Button
-                  icon="cross"
-                  text="Labels"
+                <TextArea
                   fill
+                  placeholder="Put your comments."
+                  value={comment}
+                  onChange={e => this.commentChange(e)}
                 />
                 <Button
-                  icon="cross"
-                  fill
-                  text="attachments"
+                  style={{ marginLeft: '5px' }}
+                  text="submit"
+                  intent={Intent.PRIMARY}
+                  onClick={this.saveComment}
                 />
               </div>
-              <div><h3>Advance Actions</h3></div>
-              <div>
-                <Button
-                  icon="cross"
-                  text="Move card"
-                  fill
-                />
-                <Button
-                  icon="cross"
-                  fill
-                  text="delete"
-                />
-              </div>
+              <TaskComment comments={comments} userList={userList} />
             </div>
+            <TaskDetailRight task={task} />
           </div>
         </div>
       </Dialog>

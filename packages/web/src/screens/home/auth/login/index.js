@@ -3,9 +3,10 @@ import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Log from './login';
+import GoogleLogin from './GoogleLogin';
 
 class Login extends Component {
-  state = {}
+  state = {};
 
   render() {
     const { account } = this.props;
@@ -20,7 +21,10 @@ class Login extends Component {
           {
             account.online ? <Redirect push to={`/${account.sessionId}/profile`} /> : <Log />
           }
-          <div className="footer">
+          <div className="auth-with-others">
+            <GoogleLogin />
+          </div>
+          <div className="auth-footer">
             <p>
               <br />
               <Link to="/forgot-password"><u>Forgot your password?</u></Link>

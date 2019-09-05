@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button } from '@blueprintjs/core';
+import { Switch } from '@blueprintjs/core';
 
 class AdvancedSettings extends React.Component {
   state={};
@@ -15,9 +15,11 @@ class AdvancedSettings extends React.Component {
             <br />
             Be a part to educate the world.
           </p>
-          <Button
+          <Switch
             className="switch-button"
-            text="Switch to Mentor"
+            checked={false}
+            large
+            innerLabel="Mentor"
           />
         </div>
       </div>

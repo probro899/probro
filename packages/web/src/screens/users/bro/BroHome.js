@@ -3,8 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Redirect, Route } from 'react-router-dom';
 import { Navbar } from '../../home/component/index';
-import { SideNav, Profile, Class, Setting } from '../components';
-import Communication from '../components/communication';
+import { SideNav, Profile, Class, Setting, DrawingBoard } from '../components';
 import { Blog } from '../pro/blog';
 
 class HomePage extends Component {
@@ -33,6 +32,7 @@ class HomePage extends Component {
               <Route exact path={`${match.path}/classes`} component={Class} />
               <Route exact path={`${match.path}/blog`} component={Blog} />
               <Route exact path={`${match.path}/settings`} component={Setting} />
+              <Route exact path={`${match.path}/drawing-board`} component={DrawingBoard} />
             </div>
           </div>
         )

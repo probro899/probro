@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
-import { Input } from '../../../common';
+import SearchElement from './search/SearchElement';
 
 const elems = ['red', 'blue', 'yellow', 'green'];
 let background = 1;
+
 class Slider extends Component {
   state = {
     animationName: [],
     animationIndex: 0,
-    search: '',
   };
 
   componentWillMount() {
@@ -67,27 +67,16 @@ class Slider extends Component {
   }
 
   render() {
-    const { animationName, animationIndex, search } = this.state;
+    const { animationName, animationIndex } = this.state;
     const styles = {
       animationName: animationName[animationIndex],
       animationDuration: '3s',
       backgroundColor: elems[background],
     };
-    const data = {
-      id: 'search',
-      fieldtype: 'input',
-      placeholder: 'Eg, ........',
-      icon: {
-        side: 'left',
-        name: 'search',
-      },
-    };
     return (
       <div className="slider-container">
         <div className="slider" style={styles} />
-        <div className="search-box-container">
-          <Input data={data} value={search} onChange={this.searchChange} />
-        </div>
+        <SearchElement />
       </div>
     );
   }

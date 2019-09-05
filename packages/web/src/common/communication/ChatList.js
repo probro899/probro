@@ -10,7 +10,8 @@ class ChatList extends React.Component {
   }
 
   render() {
-    const { style } = this.props;
+    const { style, database } = this.props;
+    console.log(database);
     return (
       <div
         style={style}

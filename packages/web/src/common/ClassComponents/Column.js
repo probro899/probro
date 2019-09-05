@@ -16,6 +16,7 @@ class Column extends Component {
 
   // this is more button handle function
   onMore = async (action, id) => {
+    const { column } = this.props;
     if (action === 'delete') {
       this.setState({
         id,
@@ -23,6 +24,11 @@ class Column extends Component {
       });
     }
     if (action === 'edit') {
+      UpdateColumnStructure.map((obj) => {
+        if (obj.id === 'name') {
+          obj.val = column.name;
+        }
+      });
       this.setState({
         id,
         columnEditPopOver: true,

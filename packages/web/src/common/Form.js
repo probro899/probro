@@ -4,6 +4,10 @@ import { FormGroup } from '@blueprintjs/core';
 import Input from './Input';
 import Button from './Button';
 import Taginput from './Taginput';
+import Select from './Select';
+import DateField from './DateField';
+import Textarea from './Textarea';
+import Fileinput from './FormFileInput';
 
 const Element = (props) => {
   const { data } = props;
@@ -17,6 +21,14 @@ const Element = (props) => {
       return (<Button {...props} />);
     case 'tagInput':
       return (<Taginput {...props} />);
+    case 'select':
+      return (<Select {...props} />);
+    case 'date':
+      return (<DateField {...props} />);
+    case 'textarea':
+      return (<Textarea {...props} />);
+    case 'image':
+      return (<Fileinput {...props} />);
     default:
       return null;
   }
@@ -32,24 +44,37 @@ class Form extends React.Component {
     loading: false,
     message: null,
     fields: {},
+    data: [],
   };
 
   componentWillMount = () => {
     const { data } = this.props;
     const fields = data.filter((obj) => {
-      if (obj.fieldtype === 'input') {
+      if (obj.fieldtype === 'input'
+      || obj.fieldtype === 'select'
+      || obj.fieldtype === 'tagInput'
+      || obj.fieldtype === 'textarea'
+      || obj.fieldtype === 'date') {
         return obj;
       }
     }).map((obj) => {
-      if (obj.fieldtype === 'input') {
-        return { [obj.id]: '' };
+      if (obj.fieldtype === 'tagInput') {
+        return { [obj.id]: obj.val ? obj.val : [] };
       }
+      if (obj.fieldtype === 'date') {
+        return { [obj.id]: obj.val ? obj.val : new Date() };
+      }
+      if (obj.fieldtype === 'image') {
+        return { [obj.id]: obj.val ? obj.val : {} };
+      }
+      return { [obj.id]: obj.val ? obj.val : '' };
     }).reduce((obj, e) => {
-      obj[Object.keys(e)[0]] = '';
+      obj[Object.keys(e)[0]] = Object.values(e)[0];
       return obj;
     }, {});
     this.setState({
       fields,
+      data,
     });
   }
 
@@ -58,9 +83,23 @@ class Form extends React.Component {
     this.setState({ fields: { ...fields, [key]: value } });
   }
 
-  onSubmit = async () => {
+  onSubmit = async (e) => {
+    e.preventDefault();
     const { callback } = this.props;
-    const { fields } = this.state;
+    const { fields, data } = this.state;
+    let err = false;
+    data.map((obj) => {
+      if (obj.required && fields[obj.id].replace(/\s/g, '').length === 0) {
+        err = true;
+        this.setState({
+          error: 'Fill the required field(*)',
+        });
+      }
+      return obj;
+    });
+    if (err) {
+      return;
+    }
     this.setState({ loading: true });
     const res = await callback(fields);
     if (res.response === 200) {
@@ -71,10 +110,11 @@ class Form extends React.Component {
   }
 
   render() {
-    const { data } = this.props;
-    const { fields } = this.state;
+    const { data, fields } = this.state;
     return (
-      <form>
+      <form
+        onSubmit={this.onSubmit}
+      >
         <FormGroup>
           {
             data.map((obj, idx) => (

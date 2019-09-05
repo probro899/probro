@@ -3,6 +3,11 @@
 // styling the popover form in here
 .popover-form {
   padding: 5px 5px 0px 5px;
+  &.bio {
+    .bp3-form-group {
+      margin-bottom: 2px;
+    }
+  }
   div.top {
     font-size: 18px;
     font-weight: 600;
@@ -36,4 +41,11 @@
 }
 .bp3-popover-arrow-fill {
   fill: $backgroundColor !important;
+}
+
+.tag-input {
+  display: flex !important;
+  div {
+    margin-top: 0px;
+  }
 }

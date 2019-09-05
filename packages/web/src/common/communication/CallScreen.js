@@ -39,6 +39,7 @@ class CallScreen extends React.Component {
         <div className="controllers">
           <Button icon="phone" intent="success" />
           <Button icon="mobile-video" intent="success" />
+          <Button icon="cross" intent="danger" />
           <Button icon="duplicate" intent="success" />
           <Button icon="record" intent="success" />
           <Button icon="headset" intent="success" />

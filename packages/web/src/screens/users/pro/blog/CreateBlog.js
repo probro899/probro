@@ -2,23 +2,21 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import axios from 'axios';
-import { Button, TextArea, Intent, Popover, FileInput, HTMLSelect } from '@blueprintjs/core';
+import { Button, TextArea, Intent, Popover, FileInput, HTMLSelect, Switch } from '@blueprintjs/core';
 import { Navbar } from '../../../home/component';
 import client from '../../../../socket';
 import { addBlog, updateBlog } from './helper-functions';
 import { ENDPOINT } from '../../../../config';
 
-const PopoverContent = ({ imgName, callback }) => {
-  return (
-    <div style={{ padding: '5px' }}>
-      <FileInput
-        text={imgName}
-        onInputChange={callback}
-        large
-      />
-    </div>
-  );
-};
+const PopoverContent = ({ imgName, callback }) => (
+  <div style={{ padding: '5px' }}>
+    <FileInput
+      text={imgName}
+      onInputChange={callback}
+      large
+    />
+  </div>
+);
 
 PopoverContent.propTypes = {
   callback: PropTypes.func.isRequired,
@@ -30,6 +28,7 @@ class Blogs extends Component {
     bold: false,
     italic: false,
     underline: false,
+    publish: 'draft',
     apis: {},
     title: '',
     description: '',
@@ -45,13 +44,23 @@ class Blogs extends Component {
   }
 
   componentDidMount() {
+    const { match, database } = this.props;
+    if (match.params.blogId) {
+      document.getElementById('editor').innerHTML = database.Blog.byId[parseInt(match.params.blogId, 10)].content;
+      this.setState({
+        blogId: match.params.blogId,
+        publish: database.Blog.byId[match.params.blogId].saveStatus,
+        title: database.Blog.byId[match.params.blogId].title,
+        description: database.Blog.byId[parseInt(match.params.blogId, 10)].content,
+      });
+    }
     const config = { attributes: true, childList: true, subtree: true };
     const targetNode = document.getElementById('editor');
     const mutationObserver = new MutationObserver(this.observeMutation);
     mutationObserver.observe(targetNode, config);
   }
 
-  observeMutation = (mutationsList, observer) => {
+  observeMutation = (mutationsList) => {
     const fileNames = [];
     for (let i = 0; i < mutationsList.length; i += 1) {
       const removeNodes = mutationsList[i].removedNodes;
@@ -178,22 +187,55 @@ class Blogs extends Component {
   // saving the blog from here
   saveBlog = async () => {
     const { apis, title, description, blogId } = this.state;
+    const { account } = this.props;
     if (blogId === '') {
-      await addBlog(apis.addBlog,
+      const res = await addBlog(apis.addBlog,
         {
-          userId: '',
+          userId: account.user.id,
           timeStamp: Date.now(),
           saveStatus: 'draft',
-          blogHeader: title,
-          blogContent: description,
+          title,
+          content: description,
         });
+      this.setState({
+        blogId: res,
+        publish: 'draft',
+      });
       return;
     }
-    await updateBlog(apis.updateBlog, {
-      blogId: '',
-      blogHeader: title,
-      blogContent: description,
-    });
+    await updateBlog(apis.updateBlog, [
+      {
+        title,
+        content: description,
+      },
+      {
+        id: blogId,
+      },
+    ]);
+  }
+
+  publish = async (e) => {
+    const {
+      description,
+      title,
+      apis,
+      blogId,
+    } = this.state;
+    if (blogId !== '') {
+      this.setState({
+        publish: e.target.checked ? 'publish' : 'draft',
+      });
+      await updateBlog(apis.updateBlog, [
+        {
+          title,
+          content: description,
+          saveStatus: e.target.checked ? 'publish' : 'draft',
+        },
+        {
+          id: blogId,
+        },
+      ]);
+    }
   }
 
   uploadImg = async (e) => {
@@ -235,6 +277,7 @@ class Blogs extends Component {
       underline,
       title,
       imageSource,
+      publish,
     } = this.state;
     return (
       <div>
@@ -244,7 +287,18 @@ class Blogs extends Component {
             <span>Proper Blogging Experience</span>
           </div>
           <div className="toolbar">
-            <div className="left" />
+            <div className="left">
+              <Switch
+                innerLabel="Draft"
+                innerLabelChecked="Live"
+                alignIndicator="right"
+                large
+                label="Status"
+                checked={publish === 'publish'}
+                className="switch"
+                onChange={this.publish}
+              />
+            </div>
             <div className="center">
               <HTMLSelect
                 options={[
@@ -347,7 +401,9 @@ class Blogs extends Component {
 
 Blogs.propTypes = {
   account: PropTypes.objectOf(PropTypes.any).isRequired,
+  match: PropTypes.objectOf(PropTypes.any).isRequired,
+  database: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
-const mapStateToProps = state => ({ account: state.account });
+const mapStateToProps = state => ({ account: state.account, database: state.database });
 export default connect(mapStateToProps)(Blogs);

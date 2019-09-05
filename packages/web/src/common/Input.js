@@ -54,7 +54,10 @@ class CustomInput extends React.Component {
     }
     return (
       <Label>
-        <span className="label-text">{data.name}</span>
+        <span className="label-text">
+          {data.name}
+        </span>
+        {data.required && <span style={{ color: 'red' }}> *</span>}
         <InputGroup
           onChange={e => onChange(data.id, e.target.value)}
           value={value}

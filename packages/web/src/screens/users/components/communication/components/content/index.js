@@ -1,5 +1,4 @@
 import React from 'react';
-import Media from './media';
 import SideMenu from './side-menu';
 import Messenger from './messenger';
 
