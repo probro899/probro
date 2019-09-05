@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Icon } from '@blueprintjs/core';
 
 const menuStyle = color => ({
@@ -14,7 +15,7 @@ const menuStyle = color => ({
   margin: 2,
 });
 
-export default (props) => {
+const MenuBar = (props) => {
   console.log('props in menu bar', props);
   const { updateWebRtc, webRtc, database } = props;
   return (
@@ -38,10 +39,15 @@ export default (props) => {
           <Icon icon="maximize" style={{ color: 'white' }} iconSize={10} />
         </div>
         <div style={menuStyle('red')}>
-          <Icon icon="cross" style={{ color: 'white' }} onClick={() => updateWebRtc('showCommunication', false)} />
+          <Icon icon="cross" style={{ color: 'white' }} onClick={() => updateWebRtc('showCommunication', null)} />
         </div>
       </div>
     </div>
   );
 };
-
+export default MenuBar;
+MenuBar.propTypes = {
+  updateWebRtc: PropTypes.func.isRequired,
+  webRtc: PropTypes.objectOf(PropTypes.any).isRequired,
+  database: PropTypes.objectOf(PropTypes.any).isRequired,
+};

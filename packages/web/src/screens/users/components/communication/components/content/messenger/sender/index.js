@@ -7,18 +7,15 @@ import FileInput from '../../../../../../../../common/FileInput';
 class Sender extends React.Component {
 state = { message: '' };
 
-handleKeyPress = (e) => {
+handleKeyPress = async (e) => {
   if (e.key === 'Enter') {
     const { message } = this.state;
-    const { updateWebRtc, webRtc } = this.props;
-    updateWebRtc('messages', [...webRtc.messages,
-      {
-        timeStamp: 1564478946313,
-        userId: 1,
-        name: 'Bhagya Sah',
-        text: message,
-      },
-    ]);
+    const { webRtc, apis, account } = this.props;
+    try {
+      await apis.addBoardMessage({ boardId: webRtc.showCommunication, message, userId: account.user.id, timeStamp: Date.now(), url: null, remarks: null, broadCastId: `Board-${webRtc.showCommunication}` });
+    } catch (err) {
+      console.error('Error in sending message', err);
+    }
     this.setState({ message: '' });
   }
 }
@@ -27,18 +24,14 @@ fileOnchange = (e) => {
   console.log('file onchange local called', e);
 }
 
-sendMessage = () => {
+sendMessage = async () => {
   const { message } = this.state;
-  const { updateWebRtc, webRtc } = this.props;
-  console.log('send message called', updateWebRtc, webRtc);
-  updateWebRtc('messages', [...webRtc.messages,
-    {
-      timeStamp: 1564478946313,
-      userId: 1,
-      name: 'Bhagya Sah',
-      text: message,
-    },
-  ]);
+  const { webRtc, account, apis } = this.props;
+  try {
+    await apis.addBoardMessage({ boardId: webRtc.showCommunication, message, userId: account.user.id, timeStamp: Date.now(), url: null, remarks: null, broadCastId: `Board-${webRtc.showCommunication}` });
+  } catch (err) {
+    console.error('Error in sending message', err);
+  }
   this.setState({ message: '' });
 }
 
@@ -48,7 +41,7 @@ chaneMessage = (e) => {
 }
 
 render() {
-  const  { message } = this.state;
+  const { message } = this.state;
   console.log('props in sender', this.props);
   return (
     <div style={{ display: 'flex', width: '100%', maxHeight: 200, marginTop: 5 }}>
@@ -86,6 +79,5 @@ render() {
 }
 export default Sender;
 Sender.propTypes = {
-  updateWebRtc: PropTypes.func.isRequired,
   webRtc: PropTypes.objectOf(PropTypes.any).isRequired,
 };

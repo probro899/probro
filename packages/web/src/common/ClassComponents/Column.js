@@ -144,3 +144,4 @@ Column.propTypes = {
 };
 
 export default Column;
+
