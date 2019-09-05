@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTtypes from 'prop-types';
+import PropTypes from 'prop-types';
 import { Button } from '@blueprintjs/core';
 import ScrollToBottom from 'react-scroll-to-bottom';
 import { css } from 'glamor';
@@ -61,5 +61,5 @@ render() {
 
 export default Container;
 Container.propTypes = {
-  webRtc: PropTtypes.objectOf(PropTtypes.any).isRequired,
+  webRtc: PropTypes.objectOf(PropTypes.any).isRequired,
 };

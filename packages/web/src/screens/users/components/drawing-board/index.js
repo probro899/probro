@@ -12,7 +12,6 @@ class DrawingBoard extends Component {
   state = {
     apis: {},
     canvas: {},
-    draw: false,
     anyObjectActive: false,
     color: 'black',
   }

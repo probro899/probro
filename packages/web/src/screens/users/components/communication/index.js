@@ -28,11 +28,11 @@ class Index extends React.Component {
 
   render() {
     const { apis, callType, windowHeight, windowWidth } = this.state;
-    const { webRtc } = this.props;
+    const { webRtc, updateWebRtc } = this.props;
     return (
       <div>
-        {webRtc.liveIncomingCall && <Sound url={ringtone} playStatus={Sound.status.PLAYING} playFromPosition={0} loop /> }
-        <Dialog isOpen={webRtc.showCommunication || webRtc.communicationContainer === 'connecting'} style={{ width: 'auto', height: 'auto', justifyContent: 'center', alignItems: 'center' }}>
+        {webRtc.liveIncomingCall && <Sound url={ringtone} playStatus={Sound.status.PLAYING} playFromPosition={0} loop />}
+        <Dialog onClose={() => updateWebRtc('showCommuication', null)} isOpen={webRtc.showCommunication || webRtc.communicationContainer === 'connecting'} style={{ width: 'auto', height: 'auto', justifyContent: 'center', alignItems: 'center',  }}>
           <div style={{ height: windowHeight, width: windowWidth }}>
             <div>
               <MenuBar {...this.props} />

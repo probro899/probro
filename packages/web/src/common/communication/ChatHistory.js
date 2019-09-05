@@ -1,6 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button, TextArea } from '@blueprintjs/core';
+import { Button } from '@blueprintjs/core';
+import ScrollToBottom from 'react-scroll-to-bottom';
+import mediaSelector from './mediaSelector';
+import { ChatElement, Message } from './components';
 
 const file = require('../../assets/imageUploadIcon.png');
 
@@ -12,13 +15,15 @@ class ChatHistory extends React.Component {
     change('list');
   }
 
-  toCallScreen = () => {
-    const { change } = this.props;
+  toCallScreen = async (mediaType) => {
+    const { _callHandler, apis, change } = this.props;
+    const stream = await mediaSelector(mediaType);
+    _callHandler(apis, stream);
     change('call');
   }
 
   render() {
-    const { style } = this.props;
+    const { style, webRtc, account, apis } = this.props;
     return (
       <div
         style={style}
@@ -37,30 +42,27 @@ class ChatHistory extends React.Component {
           <div className="op-name">
             Conor Mcgregor
           </div>
-          <div>
-            <Button icon="phone" intent="success" onClick={this.toCallScreen} />
+          <div className="call-control">
+            <Button icon="phone" intent="success" onClick={() => this.toCallScreen('audio')} />
+            <Button icon="mobile-video" intent="danger" onClick={() => this.toCallScreen('video')} />
           </div>
         </div>
-        <div className="chats">
-          <div className="i-chat left">
-            <div className="img-wrap">
-              <img src={file} height="50px" width="50px" alt="profile of the user" />
-            </div>
-            <div className="text">
-              Hello how are you buddy?
-            </div>
-          </div>
-        </div>
-        <div className="chat-box">
-          <TextArea
-            placeholder="Type here something..."
-          />
-          <Button
-            icon="send-to"
-            intent="primary"
-            text="send"
-          />
-        </div>
+        <ScrollToBottom className="chats">
+          {
+            webRtc.messages.map((obj, index) => {
+              const own = account.user && obj.userId === account.user.id;
+              return (
+                <Message
+                  key={index}
+                  own={own}
+                  file={file}
+                  obj={obj}
+                />
+              );
+            })
+          }
+        </ScrollToBottom>
+        <ChatElement apis={apis} account={account} />
       </div>
     );
   }
@@ -68,6 +70,11 @@ class ChatHistory extends React.Component {
 
 ChatHistory.propTypes = {
   style: PropTypes.objectOf(PropTypes.any).isRequired,
+  _callHandler: PropTypes.func.isRequired,
+  change: PropTypes.func.isRequired,
+  apis: PropTypes.objectOf(PropTypes.any).isRequired,
+  webRtc: PropTypes.objectOf(PropTypes.any).isRequired,
+  account: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 export default ChatHistory;

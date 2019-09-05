@@ -1,5 +1,5 @@
-import client from '../../../../../socket';
-import store from '../../../../../store';
+import client from '../../../socket';
+import store from '../../../store';
 
 export default (props, state) => {
   // Handle offer request
@@ -41,15 +41,13 @@ export default (props, state) => {
     const { apis } = state;
     const { updateWebRtc } = props;
     const { webRtc, account } = store.getState();
-    if (webRtc.isLive) {
-      const { uid, answer, boardId } = data;
-      const { pc } = webRtc.peerConnections[uid];
-      const iceCandidate = webRtc.iceCandidates[uid];
-      if (data) {
-        pc.setRemoteDescription(answer);
-        await apis.addIceCandidate({ iceCandidateDetail: { iceCandidate: JSON.stringify(iceCandidate.e.candidate), uid: account.user.id, boardId: webRtc.currentOffer ? webRtc.currentOffer.boardId : webRtc.showCommunication }, userList: [{ userId: uid }] });
-        updateWebRtc('iceCandidates', { ...webRtc.iceCandidates, [uid]: { ...webRtc.iceCandidates[uid], sendStatus: true } });
-      }
+    const { uid, answer, boardId } = data;
+    const { pc } = webRtc.peerConnections[uid];
+    const iceCandidate = webRtc.iceCandidates[uid];
+    if (data) {
+      pc.setRemoteDescription(answer);
+      await apis.addIceCandidate({ iceCandidateDetail: { iceCandidate: JSON.stringify(iceCandidate.e.candidate), uid: account.user.id, boardId: webRtc.currentOffer ? webRtc.currentOffer.boardId : webRtc.showCommunication }, userList: [{ userId: uid }] });
+      updateWebRtc('iceCandidates', { ...webRtc.iceCandidates, [uid]: { ...webRtc.iceCandidates[uid], sendStatus: true } });
     }
   });
 

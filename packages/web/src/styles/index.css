@@ -263,24 +263,33 @@ top attachment etc.
 .tag-input { display: flex !important; }
 .tag-input div { margin-top: 0px; }
 
-.communicate { position: fixed; width: 500px; bottom: 0; right: 20px; background: #f6f6f6; z-index: 2; border: 1px solid #d2cfcf; }
+.communicate { position: fixed; width: 35%; bottom: 0; right: 20px; background: #f6f6f6; z-index: 2; border: 1px solid #d2cfcf; }
+@media screen and (min-width: 500px) and (max-width: 800px) { .communicate { width: 60%; } }
+@media screen and (min-width: 800px) and (max-width: 1000px) { .communicate { width: 50%; } }
+@media screen and (max-width: 500px) { .communicate { width: 90%; } }
 .communicate .header { height: 30px; font-size: 18px; background: black; display: flex; color: white; justify-content: space-between; }
 .communicate .header .win-title { display: flex; flex-direction: column; justify-content: center; }
-.communicate .content { height: 500px; }
-.communicate .content .chat-list { padding: 5px 0px; }
+.communicate .content { height: -webkit-calc(100% - 30px); height: -moz-calc(100% - 30px); height: calc(100% - 30px); }
+.communicate .content .chat-list { padding: 5px 0px; overflow-y: scroll; }
 .communicate .content .chat-list .i-chat { border: 1px solid #b3b3b3; margin: 3px 0px; padding: 5px; }
 .communicate .content .chat-list .i-chat.unseen { background: #b8b8b8; }
 .communicate .content .chat-list .i-chat:hover { box-shadow: 1px 1px 10px 0px #9b9fa3; }
 .communicate .content .chat-list .i-chat .name { color: #0B5BC8; font-weight: bold; font-size: 16px; }
 .communicate .content .chat-list .i-chat .short-msg { opacity: 0.8; }
-.communicate .content .chat-history { height: 100%; display: flex; flex-direction: column; justify-content: space-between; }
+.communicate .content .chat-history { display: flex; flex-direction: column; justify-content: space-between; height: 100%; }
 .communicate .content .chat-history .top { display: flex; justify-content: space-between; padding: 5px 0px; border-bottom: 1px solid #d2cfcf; }
 .communicate .content .chat-history .top .op-name { display: flex; flex-direction: column; justify-content: center; color: #0B5BC8; font-weight: bold; font-size: 16px; }
-.communicate .content .chat-history .chats { padding: 5px; height: 100%; }
-.communicate .content .chat-history .chats .i-chat { display: flex; }
+.communicate .content .chat-history .top .call-control button { margin: 0px 1px; }
+.communicate .content .chat-history .chats { padding: 5px 5px 0px 5px; overflow-y: scroll; height: 100%; }
+.communicate .content .chat-history .chats .i-chat { margin: 5px 5px 20px 5px; display: flex; }
+.communicate .content .chat-history .chats .i-chat time { margin: 0px 10px; font-size: 12px; color: #696969; font-weight: bold; }
 .communicate .content .chat-history .chats .i-chat .img-wrap img { border-radius: 50%; border: 1px solid black; }
-.communicate .content .chat-history .chats .i-chat .text { margin: 0px 10px; border: 1px solid #0B5BC8; border-radius: 5px; }
-.communicate .content .chat-history .chat-box { display: flex; margin-bottom: 2px; }
+.communicate .content .chat-history .chats .i-chat.left { margin-right: 12%; flex-direction: row; }
+.communicate .content .chat-history .chats .i-chat.left .text { margin: 0px 10px; border: 1px solid #0B5BC8; padding: 2px; border-top-right-radius: 10px; border-bottom-right-radius: 10px; border-bottom-left-radius: 10px; }
+.communicate .content .chat-history .chats .i-chat.right { margin-left: 12%; flex-direction: row-reverse; }
+.communicate .content .chat-history .chats .i-chat.right .text-contain { display: flex; flex-direction: column; align-items: flex-end; }
+.communicate .content .chat-history .chats .i-chat.right .text { margin: 0px 10px; padding: 2px; border: 1px solid #0B5BC8; border-top-left-radius: 10px; border-bottom-right-radius: 10px; border-bottom-left-radius: 10px; }
+.communicate .content .chat-history .chat-box { display: flex; }
 .communicate .content .chat-history .chat-box textarea { flex: 0.8; resize: none; }
 .communicate .content .chat-history .chat-box button { flex: 0.2; }
 .communicate .content .call-screen .top { display: flex; justify-content: space-between; padding: 5px 0px; border-bottom: 1px solid #d2cfcf; }
@@ -289,10 +298,14 @@ top attachment etc.
 .communicate .content .call-screen .video-container video { height: 300px; width: 350px; }
 .communicate .content .call-screen .controllers { padding: 5px; display: flex; justify-content: center; }
 .communicate .content .call-screen .controllers button { margin-left: 5px; }
-@keyframes slideDown { from { height: 500px; }
-  to { height: 0px; } }
-@keyframes slideUp { from { height: 0px; }
-  to { height: 500px; } }
+.communicate .content .incoming-call-screen { margin: 1px; height: 100%; flex-direction: column; overflow: hidden; align-items: center; justify-content: center; background: rgba(32, 33, 38, 0.7); }
+.communicate .content .incoming-call-screen .person-icon-container { flex-direction: column; }
+.communicate .content .incoming-call-screen .person-icon-container img { border-radius: 50%; border: 3px solid #d6d9d9; }
+.communicate .content .incoming-call-screen .person-icon-container .controllers { padding: 10px 0px; display: flex; justify-content: space-around; }
+@keyframes slideDown { from { height: 75%; }
+  to { height: 31px; } }
+@keyframes slideUp { from { height: 31px; }
+  to { height: 075%; } }
 .archive { margin-top: 60px; padding: 5px; }
 .archive .ar-top span { opacity: 0.5; font-weight: bold; }
 .archive .ar-content { padding: 3px 0px; display: flex; }

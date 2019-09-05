@@ -7,7 +7,7 @@ import Taginput from './Taginput';
 import Select from './Select';
 import DateField from './DateField';
 import Textarea from './Textarea';
-import FileInput from './FileInput';
+import Fileinput from './FormFileInput';
 
 const Element = (props) => {
   const { data } = props;
@@ -28,7 +28,7 @@ const Element = (props) => {
     case 'textarea':
       return (<Textarea {...props} />);
     case 'image':
-      return (<FileInput {...props} />);
+      return (<Fileinput {...props} />);
     default:
       return null;
   }
