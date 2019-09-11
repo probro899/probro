@@ -6,8 +6,9 @@ import { user } from '../../../cache';
 export default async function add(table, record) {
   // console.log('add api called', table, record);
   const { session } = this;
-  const { broadCastId } = record;
+  const { broadCastId, broadCastUserList } = record;
   delete record.broadCastId;
+  delete record.broadCastUserList;
   const res = await db.execute(async ({ insert, findOne }) => {
     let boardId = null;
     let boardDetails = null;
@@ -22,9 +23,15 @@ export default async function add(table, record) {
     }
     if (boardDetails) {
       if (broadCastId) {
-        const channel = session.channel(broadCastId);
-        channel.dispatch(schema.add(table, boardDetails));
-        user.update(schema.add(table, boardDetails), session);
+        if (broadCastUserList) {
+          const channel = session.channel(broadCastId);
+          channel.dispatch(schema.add(table, boardDetails), broadCastUserList);
+          user.update(schema.add(table, boardDetails), session);
+        } else {
+          const channel = session.channel(broadCastId);
+          channel.dispatch(schema.add(table, boardDetails));
+          user.update(schema.add(table, boardDetails), session);
+        }
       } else {
         session.dispatch(schema.add(table, boardDetails));
         user.update(schema.add(table, boardDetails), session);

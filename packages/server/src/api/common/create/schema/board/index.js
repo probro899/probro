@@ -1,9 +1,10 @@
+/* eslint-disable import/no-cycle */
 import schema from '@probro/common/src/schema';
-import add from './add';
-import db from '../../../db';
-import mailBody from '../../../mailer/html/mailBody';
-import mailer from '../../../mailer';
-import findBoardDetails from '../findBoradDetail';
+import add from '../../add';
+import db from '../../../../../db';
+import mailBody from '../../../../../mailer/html/mailBody';
+import mailer from '../../../../../mailer';
+import findBoardDetails from '../../../findBoradDetail';
 
 async function addBoard(record) {
   const { session } = this;
@@ -30,19 +31,6 @@ function addBoardColumnCardComment(record) {
 
 function addBoardColumnCardDescription(record) {
   add.call(this, 'BoardColumnCardDescription', record);
-}
-
-function addBlog(record) {
-  const res = add.call(this, 'Blog', record);
-  return res;
-}
-
-function addBlogComment(record) {
-  add.call(this, 'BlogComment', record);
-}
-
-function addBlogLike(record) {
-  add.call(this, 'BlogLike', record);
 }
 
 async function addBoardMember(record) {
@@ -138,22 +126,6 @@ async function addBoardMember(record) {
   });
 }
 
-function addUserWorkExperience(record) {
-  add.call(this, 'UserWorkExperience', record);
-}
-
-function addUserEducation(record) {
-  add.call(this, 'UserEducation', record);
-}
-
-function addUserSkill(record) {
-  add.call(this, 'UserSkill', record);
-}
-
-function addUserPortal(record) {
-  add.call(this, 'UserPortal', record);
-}
-
 function addBoardMessage(record) {
   add.call(this, 'BoardMessage', record);
 }
@@ -165,13 +137,6 @@ export default [
   addBoardColumnCardAttachment,
   addBoardColumnCardComment,
   addBoardColumnCardDescription,
-  addBlog,
-  addBlogComment,
-  addBlogLike,
   addBoardMember,
-  addUserEducation,
-  addUserWorkExperience,
-  addUserSkill,
-  addUserPortal,
   addBoardMessage,
 ];

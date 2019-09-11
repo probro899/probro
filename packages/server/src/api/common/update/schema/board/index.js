@@ -1,4 +1,4 @@
-import update from './update';
+import update from '../../update';
 
 function updateBoard(records) {
   update.call(this, 'Board', ...records);
@@ -26,36 +26,6 @@ function updateBoardColumnCardDescription(records) {
   update.call(this, 'BoardColumnCardDescription', ...records);
 }
 
-function updateBlog(records) {
-  update.call(this, 'Blog', ...records);
-}
-
-function updateBlogComment(records) {
-  update.call(this, 'BlogComment', ...records);
-}
-
-function updateBlogLike(records) {
-  update.call(this, 'BlogLike', ...records);
-}
-
-
-function updateUserWorkExperience(record) {
-  update.call(this, 'UserWorkExperience', record);
-}
-
-function updateUserEducation(record) {
-  update.call(this, 'UserEducation', record);
-}
-
-function updateUserSkill(record) {
-  update.call(this, 'UserSkill', record);
-}
-
-function updateUserPortal(record) {
-  update.call(this, 'UserPortal', record);
-}
-
-
 export default [
   updateBoard,
   updateBoardColumn,
@@ -63,11 +33,4 @@ export default [
   updateBoardColumnCardAttachment,
   updateBoardColumnCardComment,
   updateBoardColumnCardDescription,
-  updateBlog,
-  updateBlogComment,
-  updateBlogLike,
-  updateUserEducation,
-  updateUserSkill,
-  updateUserWorkExperience,
-  updateUserPortal,
 ];

@@ -11,14 +11,16 @@ export default async function updateUserDetails(record) {
       if (findOneRes) {
         const updateRes = await update('UserDetail', record, { userId: record.userId });
         if (updateRes) {
-          session.dispatch(schema.update('UserDetail', record));
+          console.log('updateRes', updateRes);
+          const newRecord = findOne('UserDetail', { userId: record.userId });
+          session.dispatch(schema.update('UserDetail', newRecord));
           return 'User details updated successfully';
         }
         throw new Error('update Faild');
       }
       const insertRes = await insert('UserDetail', record);
       if (insertRes) {
-        const userRes = await findOne('User', { id: insertRes });
+        const userRes = await findOne('UserDetail', { userId: insertRes });
         session.dispatch(schema.add('UserDetail', userRes));
         return 'User details inserted successfully';
       }
