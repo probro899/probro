@@ -30,10 +30,10 @@ class Archive extends React.Component {
           <div className="ar-content">
             <div className="ar-left">
               {
-                database.Blog.allIds.map((obj) => {
+                database.Blog.allIds.map((obj, index) => {
                   const usr = database.Blog.byId[obj].userId;
                   return (
-                    <div className="ar-left-i">
+                    <div className="ar-left-i" key={index}>
                       <div className="ar-i-detail">
                         <Link to={`/archive/${obj}/`} className="ar-i-title">
                           {database.Blog.byId[obj].title}

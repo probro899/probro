@@ -187,12 +187,15 @@
       overflow: hidden;
       align-items: center;
       justify-content: center;
-      background: rgba(32, 33, 38, 0.7);
+      background: rgba(17, 4, 12, 0.7);
       .person-icon-container {
         flex-direction: column;
         img {
           border-radius: 50%;
-          border: 3px solid $borderColor; 
+          border-width: 2px;
+          border-style: solid;
+          border-color: white;
+		      animation: rotate 2s ease infinite;
         }
         .controllers {
           padding: 10px 0px;
@@ -202,6 +205,21 @@
       }
     }
   }
+
+  @keyframes rotate {
+    0%   {border-color: #ff0000;}
+    10%  {border-color: #ff0080;}
+    20%  {border-color: #ff00ff;}
+    30% {border-color: #8000ff;}
+    40% {border-color: #0080ff;}
+    50% {border-color: #0000ff;}
+    60% {border-color: #00ffbf;}
+    70% {border-color: #00ff00;}
+    80% {border-color: #bfff00;}
+    90% {border-color: #ffff00;}
+    100% {border-color: #ff8000;}
+  }
+
   @keyframes slideDown {
     from { height: 75%; }
     to { height: 31px; }

@@ -120,7 +120,7 @@ class Column extends Component {
                       const task = obj;
                       return (
                         <Task
-                          key={task.id}
+                          key={`task${task.id}`}
                           task={task}
                           index={index}
                           onClick={onTaskClick}

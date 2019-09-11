@@ -2,6 +2,7 @@
 there is navigation fixing
 top attachment etc.
 */
+@import './config.scss';
 
 .navbar {
   top: 0;
@@ -12,10 +13,13 @@ top attachment etc.
   height: $navbarHeight;
   justify-content: space-between;
   flex-wrap: nowrap;
-  background-color: $primary;
-  background-image: linear-gradient($dropPrimary,$primary);
-  box-shadow: 0 1px 5px $dropPrimary;
+  background-color: $backgroundColor;
+  box-shadow: 0px 1px 2px 0px $shadowColor;
   z-index: 3; // above all putting navbar at the top of the heap.
+  &.pcm-nav {
+    box-shadow: none;
+    border: 1px solid $normalBorder;
+  }
   @media screen and (max-width: 650px){
     height: $navbarHeightSmall;
   }
@@ -28,9 +32,11 @@ top attachment etc.
       flex-direction: row;
   }
   .navbar-item {
-      font-size: 20px;
+      font-size: 14px;
+      font-weight: bold;
       padding: 10px;
-      color: white;
+      color: $navTextColor;
+      text-transform: uppercase;
       @media screen and (max-width: 650px){
         font-size: 15px;
         padding: 2px;
@@ -39,19 +45,29 @@ top attachment etc.
         height: 50px;
         border-radius: 50%;
         padding: 1px;
-        border: 1px solid white;
+        border: 1px solid $navTextColor;
       }
   }
   a:link {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-decoration: none;
   }
   a:hover {
-      background-image: linear-gradient($dropPrimaryHover,$primaryHover);
+    .navbar-item {
+      color: $skyBlueMain;
+      img {
+        border: 2px solid $skyBlueMain;
+      }
+    }
   }
   a.active {
-    background-image: linear-gradient($dropPrimaryHover,$primaryHover) !important;
+    .navbar-item {
+      color: $skyBlueMain;
+      img {
+        border: 2px solid $skyBlueMain;
+      }
+    }
   }
 }

@@ -1,20 +1,28 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Icon, Button } from '@blueprintjs/core';
+import { Icon } from '@blueprintjs/core';
 import * as actions from '../../../../actions';
 import Navbar from '../navbar';
 import Footer from '../../../../common/footer';
+import Connections from './connections';
+import client from '../../../../socket';
 
 const file = require('../../../../assets/icons/512h/uploadicon512.png');
 const school = require('../../../../assets/icons/64w/school64.png');
 const office = require('../../../../assets/icons/64w/office64.png');
 
 class PublicProfile extends React.Component {
-  state = {};
+  state = {
+    apis: {},
+  };
 
-  componentWillMount() {
+  async componentWillMount() {
     const { updateNav } = this.props;
+    const apis = await client.scope('Mentee');
+    this.setState({
+      apis,
+    });
     updateNav({
       schema: 'mainNav',
       data: { name: '' },
@@ -22,14 +30,21 @@ class PublicProfile extends React.Component {
   }
 
   render() {
-    const { account, database } = this.props;
-    let details = {};
+    const { account, database, match, updateWebRtc } = this.props;
+    let details = null;
+    let moreDetails = null;
     try {
-      details = database.User.byId[account.user.id];
+      details = database.User.byId[parseInt(match.params.userId, 10)];
+      database.UserDetail.allIds.map((obj) => {
+        if (parseInt(match.params.userId, 10) === database.UserDetail.byId[obj].userId) {
+          moreDetails = database.UserDetail.byId[obj];
+        }
+      });
     } catch (e) {
       console.log(e);
     }
-    return (
+    const { apis } = this.state;
+    return (!account.user || !details) ? <div /> : (
       <div>
         <Navbar />
         <div className="public-profile">
@@ -49,10 +64,9 @@ class PublicProfile extends React.Component {
               <span className="country"> Nepal</span>
             </div>
             <div className="connect-btns">
-              <div className="con">
-                <Button text="Connect" large fill intent="primary" icon="new-person" />
-                <Button text="Follow" fill large />
-              </div>
+              { account.user.id !== details.id && (account.user.userDetails.type !== 'mentee' || moreDetails.type !== 'mentee')
+                && <Connections apis={apis} updateWebRtc={updateWebRtc} database={database} details={details} moreDetails={moreDetails} account={account} />
+              }
             </div>
           </div>
           <div className="bio">
@@ -126,6 +140,8 @@ PublicProfile.propTypes = {
   account: PropTypes.objectOf(PropTypes.any).isRequired,
   database: PropTypes.objectOf(PropTypes.any).isRequired,
   updateNav: PropTypes.func.isRequired,
+  updateWebRtc: PropTypes.func.isRequired,
+  match: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 const mapStateToProps = state => state;

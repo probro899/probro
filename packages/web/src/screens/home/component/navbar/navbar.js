@@ -2,9 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { Icon, Menu, MenuItem, Popover, Position, Intent } from '@blueprintjs/core';
-import { IconNames } from '@blueprintjs/icons';
-import Communication from '../../../users/components/communication';
+import { Menu, MenuItem, Popover, Position, Intent } from '@blueprintjs/core';
 import client from '../../../../socket';
 import Notifications from '../notification';
 
@@ -54,10 +52,10 @@ class Navbar extends Component {
   }
 
   render() {
-    const { account, navigate } = this.props;
+    const { account, navigate, className } = this.props;
     const { apis, redirectDashboard } = this.state;
     return (
-      <div className="navbar">
+      <div className={`navbar ${className}`}>
         {redirectDashboard && <Redirect exact push to={`/${account.sessionId}/profile`} />}
         <div className="navbar-left">
           <Link
@@ -87,7 +85,6 @@ class Navbar extends Component {
             <div className="navbar-item">
               <span>
                 Get Help
-                <Icon icon={IconNames.CARET_DOWN} iconSize={Icon.SIZE_LARGE} />
               </span>
             </div>
           </Link>
@@ -100,7 +97,6 @@ class Navbar extends Component {
             <div className="navbar-item">
               <span>
                 Take a Tour
-                <Icon icon={IconNames.CARET_DOWN} iconSize={Icon.SIZE_LARGE} />
               </span>
             </div>
           </Link>
@@ -144,7 +140,12 @@ class Navbar extends Component {
   }
 }
 
+Navbar.defaultProps = {
+  className: '',
+};
+
 Navbar.propTypes = {
+  className: PropTypes.string,
   account: PropTypes.objectOf(PropTypes.any).isRequired,
   navigate: PropTypes.objectOf(PropTypes.any).isRequired,
 };

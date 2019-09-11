@@ -3,11 +3,32 @@ import PropTypes from 'prop-types';
 import { Button } from '@blueprintjs/core';
 import Sound from 'react-sound';
 import ringtone from '../../assets/ringtone.mp3';
+import mediaSelector from './mediaSelector';
 
 const callingPerson = require('../../assets/icons/128w/uploadicon128.png');
 
 class IncomingCallScreen extends React.Component {
   state = {};
+
+  callAccept = async (mediaType) => {
+    const {
+      answerHandler,
+      apis,
+      webRtc,
+      change,
+    } = this.props;
+    const stream = await mediaSelector(mediaType);
+    if (webRtc.liveIncomingCall) {
+      answerHandler(apis, stream);
+    }
+    change('call');
+  }
+
+  callReject = () => {
+    const { closeHandler, change } = this.props;
+    closeHandler();
+    change('list');
+  }
 
   render() {
     const { style, webRtc } = this.props;
@@ -23,9 +44,9 @@ class IncomingCallScreen extends React.Component {
         <div className="person-icon-container">
           <img src={callingPerson} alt="calling person" />
           <div className="controllers">
-            <Button icon="phone" large intent="success" />
-            <Button icon="mobile-video" large intent="success" />
-            <Button icon="cross" large intent="danger" />
+            <Button icon="phone" onClick={() => this.callAccept('audio')} large intent="success" />
+            <Button icon="mobile-video" onClick={() => this.callAccept('video')} large intent="success" />
+            <Button icon="cross" onClick={this.callReject} large intent="danger" />
           </div>
         </div>
       </div>
@@ -36,6 +57,10 @@ class IncomingCallScreen extends React.Component {
 IncomingCallScreen.propTypes = {
   style: PropTypes.objectOf(PropTypes.any).isRequired,
   webRtc: PropTypes.objectOf(PropTypes.any).isRequired,
+  answerHandler: PropTypes.func.isRequired,
+  apis: PropTypes.objectOf(PropTypes.any).isRequired,
+  change: PropTypes.func.isRequired,
+  closeHandler: PropTypes.func.isRequired,
 };
 
 export default IncomingCallScreen;
