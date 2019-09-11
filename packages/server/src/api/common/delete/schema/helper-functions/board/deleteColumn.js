@@ -1,5 +1,5 @@
 import deleteBoardColumnCard from './deleteBoardColumnCard';
-import db from '../../../../../db';
+import db from '../../../../../../db';
 
 export default async function deleteColumn(Delete, record) {
   // console.log('deleteColumn', record);

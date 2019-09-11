@@ -1,3 +1,3 @@
-import deleteHandler from './deleteHandler';
+import deleteHandler from './schema';
 
 export default deleteHandler;
