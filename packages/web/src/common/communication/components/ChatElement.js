@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { TextArea, Button } from '@blueprintjs/core';
+import { connect } from 'react-redux';
+import * as actions from '../../../actions';
 
 class ChatElement extends React.Component {
   state = {
@@ -76,6 +78,11 @@ class ChatElement extends React.Component {
     }
   }
 
+  addDatabase = () => {
+    const { addDatabaseSchema } = this.props;
+    addDatabaseSchema('UserSkill', { id: 1, skill: 'JavaSrcipt', userId: 12343 });
+  }
+
   sendMessage = async () => {
     const { message } = this.state;
     if (message.replace(/\s/g, '').length === 0) {
@@ -139,6 +146,7 @@ class ChatElement extends React.Component {
 
   render() {
     const { message } = this.state;
+    console.log('props in chatelemnt', this.props);
     return (
       <div className="chat-box">
         <TextArea
@@ -153,6 +161,7 @@ class ChatElement extends React.Component {
           text="send"
           onClick={this.sendMessage}
         />
+        <Button text="AddData" onClick={this.addDatabase} />
       </div>
     );
   }
