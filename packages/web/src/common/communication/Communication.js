@@ -41,7 +41,7 @@ class Communication extends React.Component {
 
   render() {
     const { minimize, apis } = this.state;
-    const { webRtc, database, account } = this.props;
+    const { webRtc, database, account, updateWebRtc } = this.props;
     return (
       <div
         className="communicate"
@@ -73,6 +73,9 @@ class Communication extends React.Component {
             style={webRtc.communicationContainer === 'list' ? { display: 'block' } : { display: 'none' }}
             change={this.switchScreen}
             database={database}
+            account={account}
+            webRtc={webRtc}
+            updateWebRtc={updateWebRtc}
           />
           <ChatHistory
             style={webRtc.communicationContainer === 'history' ? { display: 'flex' } : { display: 'none' }}

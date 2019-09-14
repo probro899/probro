@@ -16,13 +16,22 @@ class ToolBar extends React.Component {
     });
   }
 
+  onChat = () => {
+    const {
+      updateWebRtc,
+      boardId,
+    } = this.props;
+    updateWebRtc('showCommunication', boardId);
+    updateWebRtc('peerType', 'board');
+    updateWebRtc('communicationContainer', 'history');
+  }
+
   render() {
     const {
       boards,
       boardId,
       users,
       boardMembers,
-      updateWebRtc,
       account,
       apis,
     } = this.props;
@@ -47,7 +56,7 @@ class ToolBar extends React.Component {
             <Button
               minimal
               icon="chat"
-              onClick={() => updateWebRtc('showCommunication', boardId)}
+              onClick={this.onChat}
             />
             <AddUser
               apis={apis}

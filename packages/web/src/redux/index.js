@@ -28,7 +28,8 @@ const reducer = combineReducers({
     'UserSkill',
     'UserPortal',
     'BoardMessage',
-    'UserConnection'
+    'UserConnection',
+    'UserMessage'
   ),
 });
 
