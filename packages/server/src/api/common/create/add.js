@@ -4,7 +4,7 @@ import db from '../../../db';
 import { user } from '../../../cache';
 
 export default async function add(table, record) {
-  // console.log('add api called', table, record);
+  console.log('add api called', table, record);
   const { session } = this;
   const { broadCastId, broadCastUserList } = record;
   delete record.broadCastId;
@@ -22,8 +22,11 @@ export default async function add(table, record) {
       boardDetails = await findOne(table, { id: boardId });
     }
     if (boardDetails) {
+      console.log('inisside borad detils', boardDetails);
       if (broadCastId) {
+        console.log('inside baordcaseid', broadCastId);
         if (broadCastUserList) {
+          console.log('inside boardcastUserliSt', broadCastUserList);
           const channel = session.channel(broadCastId);
           channel.dispatch(schema.add(table, boardDetails), broadCastUserList);
           user.update(schema.add(table, boardDetails), session);
