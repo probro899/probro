@@ -17,6 +17,12 @@ export default async function get(id) {
     const Notification = await find('Notification', { userId: id });
     const userDetail = await find('UserDetail', { userId: id });
 
+    // ******************* User Messages *****************************************************************
+    const tuserMessage = await find('UserMessage', { tuserId: id });
+    const fuserMessage = await find('UserMessage', { fuserId: id });
+    const userMessages = [...fuserMessage, ...tuserMessage];
+    // ************************************************************************************************
+
     // ******************* User ConnectionList **********************************************************
     let connectionListMid = [];
     let connectionListUserId = [];
@@ -115,6 +121,7 @@ export default async function get(id) {
       UserSkill,
       BoardMessage: BoardMessage.flat(),
       UserConnection: connectionList,
+      UserMessage: userMessages,
     };
     return userDataRes;
   });
