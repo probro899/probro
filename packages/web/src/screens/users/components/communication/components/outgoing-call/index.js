@@ -1,5 +1,4 @@
 import React from 'react';
-import UserImage from '../../../../../../assets/imageUploadIcon.png';
 
 const UserView = (pc, idx) => {
   console.log('pc in USerView', pc);

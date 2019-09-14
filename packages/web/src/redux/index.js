@@ -27,7 +27,8 @@ const reducer = combineReducers({
     'UserWorkExperience',
     'UserSkill',
     'UserPortal',
-    'BoardMessage'
+    'BoardMessage',
+    'UserConnection'
   ),
 });
 

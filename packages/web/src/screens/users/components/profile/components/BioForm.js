@@ -1,8 +1,8 @@
 import React from 'react';
-import { Dialog, Button, Card, Icon } from '@blueprintjs/core';
+import { Dialog, Button, Card, Icon, Portal } from '@blueprintjs/core';
 import PropTypes from 'prop-types';
 import { Form } from '../../../../../common';
-import { portalSchema } from '../structure';
+import { portalSchema, bioSchema } from '../structure';
 
 class BioForm extends React.Component {
   state = {
@@ -22,7 +22,7 @@ class BioForm extends React.Component {
   };
 
   render() {
-    const { isOpen, onClose, structure, callback } = this.props;
+    const { isOpen, onClose, callback } = this.props;
     const { portal } = this.state;
     return (
       <Dialog
@@ -31,11 +31,11 @@ class BioForm extends React.Component {
       >
         <div className="popover-form bio">
           <div className="top">
-            Enter the Credentials
+            {portal ? 'Fill Portal Details' : 'Fill Bio Details'}
           </div>
-          { portal
-            ? <Form data={portalSchema} callback={this.addPortal} />
-            : <Form data={structure} callback={callback} />
+          {portal
+            ? (<div><Form data={portalSchema} callback={this.addPortal} /></div>)
+            : <Form data={bioSchema} callback={callback} />
           }
         </div>
         <div style={{ display: 'flex', padding: '5px' }}>
@@ -82,7 +82,6 @@ class BioForm extends React.Component {
 BioForm.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
-  structure: PropTypes.arrayOf(PropTypes.any).isRequired,
   callback: PropTypes.func.isRequired,
 };
 

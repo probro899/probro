@@ -11,7 +11,7 @@ class CallScreen extends React.Component {
   }
 
   render() {
-    const { style } = this.props;
+    const { style, account } = this.props;
     return (
       <div
         className="call-screen"
@@ -34,7 +34,7 @@ class CallScreen extends React.Component {
         </div>
         <div className="video-container">
           {/* eslint-disable-next-line */}
-          <video controls id="video1" playsInline autoPlay />
+          <video controls  id={`video-${account.user && account.user.id}`} playsInline autoPlay />
         </div>
         <div className="controllers">
           <Button icon="phone" intent="success" />

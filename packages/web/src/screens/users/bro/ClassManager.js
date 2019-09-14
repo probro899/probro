@@ -131,12 +131,14 @@ class Classes extends Component {
       const dropable = Number(source.droppableId);
       const dragable = Number(draggableId.split('task')[1]);
       const newColumns = columns;
+      let columnIndex;
       let newColumn = {};
       let newTasks = [];
-      columns.map((obj) => {
+      columns.map((obj, index) => {
         if (obj.id === dropable) {
           newColumn = obj;
           newTasks = obj.tasks;
+          columnIndex = index;
         }
       });
       let newTask = {};
@@ -162,8 +164,8 @@ class Classes extends Component {
       newTasks.splice(source.index, 1);
       newTasks.splice(destination.index, 0, newTask);
       newColumn.tasks = newTasks;
-      newColumns.splice(dropable, 1);
-      newColumns.splice(dropable, 0, newColumn);
+      newColumns.splice(columnIndex, 1);
+      newColumns.splice(columnIndex, 0, newColumn);
       this.setState({
         columns: newColumns,
       });
@@ -257,8 +259,8 @@ class Classes extends Component {
     return (
       <div style={{ position: 'relative' }}>
         {redirectionError && <Redirect to="/" />}
-        <Navbar />
-        <ToolBar boardId={classId} api={api} />
+        <Navbar className="pcm-nav" />
+        <ToolBar boardId={classId} apis={api} />
         <div
           className="class-wrapper"
           style={{ height: window.innerHeight }}
@@ -282,7 +284,7 @@ class Classes extends Component {
                       if (column.boardId === classId) {
                         return (
                           <Column
-                            key={column.id}
+                            key={`column${column.id}`}
                             column={column}
                             columnId={column.id}
                             index={index}

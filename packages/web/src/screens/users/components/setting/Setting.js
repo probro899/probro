@@ -29,6 +29,7 @@ class Setting extends Component {
 
   render() {
     const { activeTab, apis } = this.state;
+    const { database, account } = this.props;
     return (
       <div className="settings">
         <div className="setting-types">
@@ -52,7 +53,7 @@ class Setting extends Component {
           </div>
         </div>
         {activeTab === 'basic' && <BasicSettings apis={apis} />}
-        {activeTab === 'advanced' && <AdvancedSettings apis={apis} />}
+        {activeTab === 'advanced' && <AdvancedSettings apis={apis} database={database} account={account} />}
       </div>
     );
   }
@@ -60,6 +61,8 @@ class Setting extends Component {
 
 Setting.propTypes = {
   updateNav: PropTypes.func.isRequired,
+  database: PropTypes.objectOf(PropTypes.any).isRequired,
+  account: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 const mapStateToProps = state => state;
 export default connect(mapStateToProps, { ...actions })(Setting);

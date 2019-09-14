@@ -1,15 +1,31 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Divider, Icon } from '@blueprintjs/core';
+import { Divider, Button } from '@blueprintjs/core';
 import * as actions from '../../../actions';
 import UserList from './UserList';
+import AddUser from './add-user';
 
 class ToolBar extends React.Component {
   state = {};
 
+  toggleAddUser = () => {
+    const { addUser } = this.state;
+    this.setState({
+      addUser: !addUser,
+    });
+  }
+
   render() {
-    const { boards, boardId, users, boardMembers, updateWebRtc } = this.props;
+    const {
+      boards,
+      boardId,
+      users,
+      boardMembers,
+      updateWebRtc,
+      account,
+      apis,
+    } = this.props;
 
     return (
       <div className="tool-bar">
@@ -28,7 +44,16 @@ class ToolBar extends React.Component {
             <UserList userList={users} boardId={boardId} boardMembers={boardMembers} />
           </div>
           <div className="right-tools">
-            <Icon icon="people" color="white" iconSize={30} style={{ marginBottom: 5, marginRight: 10, cursor: 'pointer' }} onClick={() => updateWebRtc('showCommunication', boardId)} />
+            <Button
+              minimal
+              icon="chat"
+              onClick={() => updateWebRtc('showCommunication', boardId)}
+            />
+            <AddUser
+              apis={apis}
+              account={account}
+              boardId={boardId}
+            />
           </div>
         </div>
       </div>
@@ -40,6 +65,10 @@ ToolBar.propTypes = {
   boards: PropTypes.objectOf(PropTypes.any).isRequired,
   boardId: PropTypes.number.isRequired,
   users: PropTypes.objectOf(PropTypes.any).isRequired,
+  boardMembers: PropTypes.objectOf(PropTypes.any).isRequired,
+  updateWebRtc: PropTypes.func.isRequired,
+  account: PropTypes.objectOf(PropTypes.any).isRequired,
+  apis: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 const mapStateToProps = (state) => {

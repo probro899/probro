@@ -57,7 +57,7 @@ class TaskComment extends React.Component {
               </div>
               <div className="com-con">
                 <div className="com-auth">
-                  <span style={{ fontSize: '16px', fontWeight: 'bold', padding: '3px' }}>
+                  <span style={{ fontSize: '16px', fontWeight: 'bold' }}>
                     {
                       Object.values(userList.byId).map((obj) => {
                         if (obj.id === com.userId) {

@@ -8,13 +8,11 @@ import ChatList from './ChatList';
 import ChatHistory from './ChatHistory';
 import CallScreen from './CallScreen';
 import IncomingCallScreen from './IncomingCallScreen';
-import { socketListner, callHandler } from './helper-functions';
+import { socketListner, callHandler, answerHandler, closeHandler } from './helper-functions';
 
 class Communication extends React.Component {
   state = {
-    minimize: true,
-    cut: false,
-    screen: 'incoming',
+    minimize: false,
     apis: {},
   };
 
@@ -32,19 +30,17 @@ class Communication extends React.Component {
   }
 
   cutWindow = () => {
-    this.setState({
-      cut: true,
-    });
+    const { updateWebRtc } = this.props;
+    updateWebRtc('showCommunication', false);
   }
 
   switchScreen = (target) => {
-    this.setState({
-      screen: target,
-    });
+    const { updateWebRtc } = this.props;
+    updateWebRtc('communicationContainer', target);
   }
 
   render() {
-    const { minimize, cut, screen, apis } = this.state;
+    const { minimize, apis } = this.state;
     const { webRtc, database, account } = this.props;
     return (
       <div
@@ -54,7 +50,7 @@ class Communication extends React.Component {
             height: minimize ? '31px' : '75%',
             animationName: minimize ? 'slideDown' : 'slideUp',
             animationDuration: '0.3s',
-            display: cut ? 'none' : 'block',
+            display: !webRtc.showCommunication ? 'none' : 'block',
           }
         }
       >
@@ -74,12 +70,12 @@ class Communication extends React.Component {
           className="content"
         >
           <ChatList
-            style={screen === 'list' ? { display: 'block' } : { display: 'none' }}
+            style={webRtc.communicationContainer === 'list' ? { display: 'block' } : { display: 'none' }}
             change={this.switchScreen}
             database={database}
           />
           <ChatHistory
-            style={screen === 'history' ? { display: 'flex' } : { display: 'none' }}
+            style={webRtc.communicationContainer === 'history' ? { display: 'flex' } : { display: 'none' }}
             change={this.switchScreen}
             _callHandler={callHandler(this.props, this.state)}
             apis={apis}
@@ -88,13 +84,18 @@ class Communication extends React.Component {
             database={database}
           />
           <CallScreen
-            style={screen === 'call' ? { display: 'block' } : { display: 'none' }}
-            change={this.switchScreen}
-          />
-          <IncomingCallScreen
-            style={screen === 'incoming' ? { display: 'flex' } : { display: 'none' }}
+            style={webRtc.communicationContainer === 'call' ? { display: 'block' } : { display: 'none' }}
             change={this.switchScreen}
             webRtc={webRtc}
+            account={account}
+          />
+          <IncomingCallScreen
+            style={webRtc.communicationContainer === 'incoming' ? { display: 'flex' } : { display: 'none' }}
+            change={this.switchScreen}
+            webRtc={webRtc}
+            answerHandler={answerHandler(this.props, this.state)}
+            apis={apis}
+            closeHandler={closeHandler(this.props, this.state)}
           />
         </div>
       </div>
@@ -106,6 +107,7 @@ Communication.propTypes = {
   webRtc: PropTypes.objectOf(PropTypes.any).isRequired,
   database: PropTypes.objectOf(PropTypes.any).isRequired,
   account: PropTypes.objectOf(PropTypes.any).isRequired,
+  updateWebRtc: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => state;

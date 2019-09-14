@@ -4,7 +4,6 @@ import { Button } from '@blueprintjs/core';
 import ScrollToBottom from 'react-scroll-to-bottom';
 import { css } from 'glamor';
 import Controller from '../../../controller';
-import Media from '../../media';
 import ChatElement from './chatElement';
 import OutgoingCall from '../../../outgoing-call';
 import AddUser from '../add-user';

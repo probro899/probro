@@ -86,13 +86,13 @@
   height: $toolbarHeight;
   position: absolute;
   width: 100%;
-  padding: 5px 0px 0px 0px;
+  padding: 5px 0px;
+  background: $fadedBackground;
   .toolbar-container {
     height: 100%;
     padding: 2px;
     display: flex;
     justify-content: space-between;
-    background: $primaryHover;
     .left-tools {
       display: flex;
       flex-direction: row;
@@ -104,7 +104,7 @@
       }
       // styling the name of the class in the toolbar
       .class-name {
-        color: white;
+        color: $textColor;
         font-weight: 600;
         font-size: 16px;
       }
@@ -116,15 +116,16 @@
           border-radius: 50%;
           font-weight: 500;
           cursor: pointer;
-          background: rgba(255, 255, 255, 0.9);
+          background: $skyBlueMain;
+          color: $backgroundColor;
           &:hover {
-            background:rgba(255, 255, 255, 0.5);
+            background: $darkBlue;
           }
           .green-dot {
             position: absolute;
             height: 10px;
             width: 10px;
-            background-color: rgb(113, 249, 113);
+            background-color: $pcGreen;
             border-radius: 50%;
             top: 20px;
             left: 15px;
@@ -135,9 +136,12 @@
     .right-tools {
       display: flex;
       button {
-        color: white;
+        margin: 0px 3px;
+        padding: 1px;
+        color: $textColor;
+        border: 1px solid $textColor;
         svg {
-          fill: white;
+          fill: $textColor;
         }
       }
     }
@@ -164,10 +168,11 @@
         max-height: 100%;
         margin: 8px 8px 8px 8px;
         border-radius: 3px;
-        background-color: $boardColor;
+        background-color: $darkBlue;
         .column-title {
           padding: 8px;
           position: relative;
+          color: $backgroundColor;
           span {
             font-size: 20px;
             font-weight: 600;
@@ -176,6 +181,9 @@
             top: 5px;
             right: 7px;
             position: absolute;
+            svg {
+              fill: $backgroundColor;
+            }
           }
         }
         .task-list {
@@ -185,13 +193,14 @@
           .task-container {
             margin: 8px;
             padding: 5px;
-            background-color: white;
-            border: 1px solid lightgray;
+            background-color: $backgroundColor;
+            border: 1px solid $normalBorder;
             border-radius: 2px;
             flex-grow: 1;
           }
         }
         .column-footer {
+          color: $backgroundColor;
           padding: 10px;
           cursor: pointer;
         }
@@ -201,9 +210,10 @@
       .title {
         padding: 8px;
         margin: 8px;
-        background-color: lightgray;
+        background-color: $fadedBackground;
         width: 200px;
-        border: 1px solid lightgray;
+        border: 1px solid $normalBorder;
+        box-shadow: 0px 1px 2px 0px $shadowColor;
         border-radius: 2px;
         cursor: pointer;
         span {
@@ -222,7 +232,12 @@
       padding: 7px;
       display: flex;
       justify-content: space-between;
-      background: rgba(133, 145, 133, 0.14);
+      background: $fadedBackground;
+      color: $textColor;
+      border: 1px solid $normalBorder;
+      svg {
+        fill: $textColor;
+      }
       .head {
         display: flex;
         flex-direction: row;
@@ -248,7 +263,7 @@
           .edit-title {
             margin-left: 5px;
             svg {
-              fill: rgba(19, 124, 189, 1);
+              fill: $skyBlueMain;
             }
           }
         }
@@ -256,6 +271,7 @@
     }
     .overlay-body {
       display: flex;
+      background: $backgroundColor;
       .left {
         flex: 0.7;
         .overlay-description {
@@ -295,9 +311,10 @@
                 font-size: 18px;
                 font-weight: bold;
                 align-items: center;
-                color: #6b778c;
-                background: rgba(9,30,66,.08);;
+                color: $textColor;
+                background: $fadedBackground;
                 text-transform: uppercase;
+                box-shadow: 0px 1px 2px 0px $shadowColor;
               }
               .file-detail {
                 padding-left: 10px;
@@ -316,7 +333,7 @@
           margin-left: 10px;
           vertical-align: inherit !important;
           svg {
-            fill: rgba(19, 124, 189, 1);
+            fill: $skyBlueMain;
           }
         }
         textarea {
@@ -352,7 +369,7 @@
               .com-config {
                 small {
                   cursor: pointer;
-                  color: #696969;
+                  color: $navTextColor;
                   margin-right: 5px;
                   &.danger u {
                     &:hover {
