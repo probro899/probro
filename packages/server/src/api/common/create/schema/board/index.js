@@ -38,7 +38,7 @@ async function addBoardMember(record) {
   const { email } = record;
   let currentBoardChannel = null;
 
-  await db.execute(async ({ findOne, insert, find }) => {
+  const res = await db.execute(async ({ findOne, insert, find }) => {
     const user = await findOne('User', { email });
     delete user.password;
     delete user.verificationToken;
@@ -49,81 +49,81 @@ async function addBoardMember(record) {
     if (user) {
       const boardMember = await findOne('BoardMember', { boardId: record.boardId, tuserId: user.id });
       if (boardMember) {
-        throw new Error('User is already added to this board');
-      } else {
-        delete record.email;
-        await insert('BoardMember', { ...record, tuserId: user.id });
-        mailer({
-          from: 'ProperClass<probro899@gmail.com>',
-          to: `<${email}>`,
-          subject: `Board inivitation from ${fuser.firstName} `,
-          text: 'No reply',
-          html: htmlStringValue.boardMemberInvitationHtmlString,
-        });
-        const notiData = {
-          userId: user.id,
-          boardId: record.boardId,
-          timeStamp: Date.now(),
-          body: `Added ${user.firstName} to the board ${board.name}`,
-          title: 'Board Invitation',
-          type: 'board',
-          viewStatus: false,
-          imageUrl: null,
-        };
+        return { status: 201, message: 'User is already added to this board' };
+      }
+      delete record.email;
+      await insert('BoardMember', { ...record, tuserId: user.id });
+      mailer({
+        from: 'ProperClass<probro899@gmail.com>',
+        to: `<${email}>`,
+        subject: `Board inivitation from ${fuser.firstName} `,
+        text: 'No reply',
+        html: htmlStringValue.boardMemberInvitationHtmlString,
+      });
+      const notiData = {
+        userId: user.id,
+        boardId: record.boardId,
+        timeStamp: Date.now(),
+        body: `Added ${user.firstName} to the board ${board.name}`,
+        title: 'Board Invitation',
+        type: 'board',
+        viewStatus: false,
+        imageUrl: null,
+      };
 
-        const notiId = await insert('Notification', notiData);
-        const notiDetails = await findOne('Notification', { id: notiId });
-        const mainchannel = session.getChannel('Main');
+      const notiId = await insert('Notification', notiData);
+      const notiDetails = await findOne('Notification', { id: notiId });
+      const mainchannel = session.getChannel('Main');
 
-        const remoteUserSession = mainchannel.find(s => s.values.user.id === user.id);
-        console.log('remote User session', remoteUserSession);
-        currentBoardChannel = session.channel(`Board-${board.id}`);
-        if (remoteUserSession) {
-          remoteUserSession.subscribe(`Board-${board.id}`);
-          const boardDetail = await findOne('Board', { id: record.boardId });
-          const boardDetails = await findBoardDetails(record.boardId);
-          // console.log('boardDetails to be dispatch in user', boardDetails);
+      const remoteUserSession = mainchannel.find(s => s.values.user.id === user.id);
+      console.log('remote User session', remoteUserSession);
+      currentBoardChannel = session.channel(`Board-${board.id}`);
+      if (remoteUserSession) {
+        remoteUserSession.subscribe(`Board-${board.id}`);
+        const boardDetail = await findOne('Board', { id: record.boardId });
+        const boardDetails = await findBoardDetails(record.boardId);
+        // console.log('boardDetails to be dispatch in user', boardDetails);
 
-          const boardMembers = await find('BoardMember', { boardId: record.boardId });
-          const boardMemberPromises = [];
+        const boardMembers = await find('BoardMember', { boardId: record.boardId });
+        const boardMemberPromises = [];
 
-          boardMembers.forEach(b => boardMemberPromises.push(findOne('User', { id: b.userId || b.tuserId })));
-          const allBoardUsers = await Promise.all(boardMemberPromises);
+        boardMembers.forEach(b => boardMemberPromises.push(findOne('User', { id: b.userId || b.tuserId })));
+        const allBoardUsers = await Promise.all(boardMemberPromises);
 
-          const boardChannel = session.getChannel(`Board-${record.boardId}`);
+        const boardChannel = session.getChannel(`Board-${record.boardId}`);
 
-          const finalUserList = allBoardUsers.map((u) => {
-            for (let i = 0; i < boardChannel.length; i += 1) {
-              if (boardChannel[i].values.user.id === u.id) {
-                return { ...u, activeStatus: true };
-              }
+        const finalUserList = allBoardUsers.map((u) => {
+          for (let i = 0; i < boardChannel.length; i += 1) {
+            if (boardChannel[i].values.user.id === u.id) {
+              return { ...u, activeStatus: true };
             }
-            return { ...u, activeStatus: false };
-          });
+          }
+          return { ...u, activeStatus: false };
+        });
 
-          const allBoardMemberDetailPromises = [];
-          finalUserList.forEach(u => allBoardMemberDetailPromises.push(findOne('UserDetail', { userId: u.id })));
-          const allBoardUserDetails = await Promise.all(allBoardMemberDetailPromises);
-          remoteUserSession.dispatch(schema.add('Board', boardDetail));
-          remoteUserSession.dispatch(schema.add('BoardColumn', boardDetails.boardColumn.flat()));
-          remoteUserSession.dispatch(schema.add('BoardColumnCard', boardDetails.boardColumnCard.flat().flat()));
-          remoteUserSession.dispatch(schema.add('BoardColumnCardAttachment', boardDetails.boardColumnCardAttachment.flat().flat()));
-          remoteUserSession.dispatch(schema.add('BoardColumnCardComment', boardDetails.boardColumnCardComment.flat().flat()));
-          remoteUserSession.dispatch(schema.add('BoardColumnCardDescription', boardDetails.boardColumnCardDescription.flat().flat()));
-          remoteUserSession.dispatch(schema.add('BoardMember', boardMembers));
-          remoteUserSession.dispatch(schema.add('User', finalUserList));
-          remoteUserSession.dispatch(schema.add('UserDetail', allBoardUserDetails));
-          currentBoardChannel.dispatch(schema.add('Notification', notiDetails));
-          currentBoardChannel.dispatch(schema.add('User', { ...user, activeStatus: true }));
-        } else {
-          currentBoardChannel.dispatch(schema.add('Notification', notiDetails));
-          currentBoardChannel.dispatch(schema.add('User', { ...user, activeStatus: false }));
-        }
+        const allBoardMemberDetailPromises = [];
+        finalUserList.forEach(u => allBoardMemberDetailPromises.push(findOne('UserDetail', { userId: u.id })));
+        const allBoardUserDetails = await Promise.all(allBoardMemberDetailPromises);
+        remoteUserSession.dispatch(schema.add('Board', boardDetail));
+        remoteUserSession.dispatch(schema.add('BoardColumn', boardDetails.boardColumn.flat()));
+        remoteUserSession.dispatch(schema.add('BoardColumnCard', boardDetails.boardColumnCard.flat().flat()));
+        remoteUserSession.dispatch(schema.add('BoardColumnCardAttachment', boardDetails.boardColumnCardAttachment.flat().flat()));
+        remoteUserSession.dispatch(schema.add('BoardColumnCardComment', boardDetails.boardColumnCardComment.flat().flat()));
+        remoteUserSession.dispatch(schema.add('BoardColumnCardDescription', boardDetails.boardColumnCardDescription.flat().flat()));
+        remoteUserSession.dispatch(schema.add('BoardMember', boardMembers));
+        remoteUserSession.dispatch(schema.add('User', finalUserList));
+        remoteUserSession.dispatch(schema.add('UserDetail', allBoardUserDetails));
+        currentBoardChannel.dispatch(schema.add('Notification', notiDetails));
+        currentBoardChannel.dispatch(schema.add('User', { ...user, activeStatus: true }));
+      } else {
+        currentBoardChannel.dispatch(schema.add('Notification', notiDetails));
+        currentBoardChannel.dispatch(schema.add('User', { ...user, activeStatus: false }));
       }
     } else {
       throw new Error('User Not Found');
     }
   });
+  return res;
 }
 
 function addBoardMessage(record) {

@@ -153,7 +153,7 @@ class DrawingBoard extends Component {
   render() {
     const { draw, anyObjectActive, color } = this.state;
     return (
-      <div className="drawing-board">
+      <div className="drawing-board bro-right">
         <div className="draw-title">
           <span>White Board</span>
         </div>

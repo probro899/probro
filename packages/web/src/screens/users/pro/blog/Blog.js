@@ -64,7 +64,7 @@ class Blogs extends Component {
     const { account } = this.props;
     const { database } = this.props;
     return (
-      <div className="blogs">
+      <div className="blogs bro-right">
         { createBlog && <Redirect push to={`/create-blog/${account.sessionId}`} /> }
         { blogId && editBlog && <Redirect push to={`/edit-blog/${account.sessionId}/${blogId}`} /> }
         <DeletePopOver

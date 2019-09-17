@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { TextArea, Button } from '@blueprintjs/core';
-import { connect } from 'react-redux';
-import * as actions from '../../../actions';
 
 class ChatElement extends React.Component {
   state = {
@@ -40,8 +38,9 @@ class ChatElement extends React.Component {
             broadCastId: `Board-${peerId}`,
             readStatus: 0,
           });
-          appendNewMessage(
+          appendNewMessage('BoardMessage',
             {
+              id: Date.now(),
               boardId: peerId,
               message,
               userId: account.user.id,
@@ -62,7 +61,8 @@ class ChatElement extends React.Component {
             broadCastId: `UserConnection-${account.user.id}`,
             broadCastUserList: [{ userId: peerId }],
           });
-          appendNewMessage({
+          appendNewMessage('UserMessage', {
+            id: Date.now(),
             tuserId: peerId,
             fuserId: account.user.id,
             timeStamp: Date.now(),
@@ -76,11 +76,6 @@ class ChatElement extends React.Component {
       }
       this.setState({ message: '' });
     }
-  }
-
-  addDatabase = () => {
-    const { addDatabaseSchema } = this.props;
-    addDatabaseSchema('UserSkill', { id: 1, skill: 'JavaSrcipt', userId: 12343 });
   }
 
   sendMessage = async () => {
@@ -107,8 +102,9 @@ class ChatElement extends React.Component {
           readStatus: 0,
           broadCastId: `Board-${peerId}`,
         });
-        appendNewMessage(
+        appendNewMessage('BoardMessage',
           {
+            id: Date.now(),
             boardId: peerId,
             message,
             userId: account.user.id,
@@ -116,8 +112,7 @@ class ChatElement extends React.Component {
             url: null,
             remarks: null,
             readStatus: 0,
-          }
-        );
+          });
       } else {
         await apis.addUserMessage({
           tuserId: peerId,
@@ -129,7 +124,8 @@ class ChatElement extends React.Component {
           broadCastId: `UserConnection-${account.user.id}`,
           broadCastUserList: [{ userId: peerId }],
         });
-        appendNewMessage({
+        appendNewMessage('UserMessage', {
+          id: Date.now(),
           tuserId: peerId,
           fuserId: account.user.id,
           timeStamp: Date.now(),
@@ -146,7 +142,6 @@ class ChatElement extends React.Component {
 
   render() {
     const { message } = this.state;
-    console.log('props in chatelemnt', this.props);
     return (
       <div className="chat-box">
         <TextArea
@@ -161,7 +156,6 @@ class ChatElement extends React.Component {
           text="send"
           onClick={this.sendMessage}
         />
-        <Button text="AddData" onClick={this.addDatabase} />
       </div>
     );
   }

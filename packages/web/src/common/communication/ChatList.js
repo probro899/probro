@@ -3,11 +3,9 @@ import PropTypes from 'prop-types';
 import { timeStampSorting } from '../../screens/users/utility-functions';
 
 class ChatList extends React.Component {
-  state = {
-    chatList: [],
-  };
+  state = {};
 
-  componentDidUpdate(prevState) {
+  getChatList = () => {
     const { database, webRtc, account } = this.props;
     const chats = [];
     if (webRtc.showCommunication) {
@@ -59,16 +57,8 @@ class ChatList extends React.Component {
         });
         if (!alt) chats.push({ type: 'board', id: message.boardId, timeStamp: message.timeStamp, message: message.message });
       });
-
-      // now preseve the chat list in the state of the component
-      if (database.UserMessage.allIds
-        !== prevState.database.UserMessage.allIds
-        || webRtc.showCommunication !== prevState.webRtc.showCommunication) {
-        this.setState({
-          chatList: chats,
-        });
-      }
     }
+    return chats;
   }
 
   onClick = (type, id) => {
@@ -80,13 +70,13 @@ class ChatList extends React.Component {
 
   render() {
     const { style, database } = this.props;
-    const { chatList } = this.state;
+    const chatList = this.getChatList();
     return (
       <div
         style={style}
         className="chat-list"
       >
-        {chatList.sort(timeStampSorting).map((obj) => {
+        {chatList.sort(timeStampSorting).map((obj, index) => {
           let fullName = '';
           if (obj.type === 'user') {
             database.User.allIds.map((id) => {
@@ -104,7 +94,7 @@ class ChatList extends React.Component {
           }
           return (
             <div
-              key={obj.id}
+              key={index}
               className="i-chat unseen"
               onClick={() => this.onClick(obj.type, obj.id)}
             >

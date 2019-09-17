@@ -51,7 +51,7 @@ class Profile extends Component {
       console.log(e);
     }
     return (
-      <div className="profile">
+      <div className="profile bro-right">
         <CoverPic account={account} />
         <ProfilePic account={account} />
         <div className="top-details">

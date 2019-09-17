@@ -27,8 +27,15 @@ const AddUser = (props) => {
       boardId,
       timeStamp: Date.now(),
     };
-    await apis.addBoardMember(obj);
-    return { response: 200, message: 'Congratulations! You have added a new user' };
+    try {
+      const res = await apis.addBoardMember(obj);
+      if (res.status === 200) {
+        return { response: 200, message: 'Congratulations! You have added a new user' };
+      }
+      return { response: 201, error: res.message };
+    } catch (e) {
+      return { response: 400, error: 'Network Error' };
+    }
   };
 
   return (

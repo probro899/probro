@@ -41,7 +41,14 @@ class Communication extends React.Component {
 
   render() {
     const { minimize, apis } = this.state;
-    const { webRtc, database, account, updateWebRtc } = this.props;
+    const {
+      webRtc,
+      database,
+      account,
+      updateWebRtc,
+      addDatabaseSchema,
+    } = this.props;
+    console.log(webRtc);
     return (
       <div
         className="communicate"
@@ -50,7 +57,7 @@ class Communication extends React.Component {
             height: minimize ? '31px' : '75%',
             animationName: minimize ? 'slideDown' : 'slideUp',
             animationDuration: '0.3s',
-            display: !webRtc.showCommunication ? 'none' : 'block',
+            display: !webRtc.showCommunication && !webRtc.showIncommingCall ? 'none' : 'block',
           }
         }
       >
@@ -70,7 +77,7 @@ class Communication extends React.Component {
           className="content"
         >
           <ChatList
-            style={webRtc.communicationContainer === 'list' ? { display: 'block' } : { display: 'none' }}
+            style={!webRtc.showIncommingCall && webRtc.communicationContainer === 'list' ? { display: 'block' } : { display: 'none' }}
             change={this.switchScreen}
             database={database}
             account={account}
@@ -78,26 +85,32 @@ class Communication extends React.Component {
             updateWebRtc={updateWebRtc}
           />
           <ChatHistory
-            style={webRtc.communicationContainer === 'history' ? { display: 'flex' } : { display: 'none' }}
+            style={!webRtc.showIncommingCall && webRtc.communicationContainer === 'history' ? { display: 'flex' } : { display: 'none' }}
             change={this.switchScreen}
             _callHandler={callHandler(this.props, this.state)}
             apis={apis}
             webRtc={webRtc}
             account={account}
             database={database}
+            addDatabaseSchema={addDatabaseSchema}
           />
           <CallScreen
-            style={webRtc.communicationContainer === 'call' ? { display: 'block' } : { display: 'none' }}
+            style={!webRtc.showIncommingCall && webRtc.communicationContainer === 'connecting' ? { display: 'block' } : { display: 'none' }}
             change={this.switchScreen}
             webRtc={webRtc}
             account={account}
+            apis={apis}
+            updateWebRtc={updateWebRtc}
+            closeHandler={closeHandler(this.props, this.state)}
+            _callHandler={callHandler(this.props, this.state)}
           />
           <IncomingCallScreen
-            style={webRtc.communicationContainer === 'incoming' ? { display: 'flex' } : { display: 'none' }}
+            style={webRtc.showIncommingCall ? { display: 'flex' } : { display: 'none' }}
             change={this.switchScreen}
             webRtc={webRtc}
             answerHandler={answerHandler(this.props, this.state)}
             apis={apis}
+            updateWebRtc={updateWebRtc}
             closeHandler={closeHandler(this.props, this.state)}
           />
         </div>
@@ -111,6 +124,7 @@ Communication.propTypes = {
   database: PropTypes.objectOf(PropTypes.any).isRequired,
   account: PropTypes.objectOf(PropTypes.any).isRequired,
   updateWebRtc: PropTypes.func.isRequired,
+  addDatabaseSchema: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => state;

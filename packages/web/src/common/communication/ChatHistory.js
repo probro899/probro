@@ -7,11 +7,9 @@ import { ChatElement, Message } from './components';
 import { normalTimeStampSorting } from '../../screens/users/utility-functions';
 
 class ChatHistory extends React.Component {
-  state = {
-    allMessages: [],
-  };
+  state = {};
 
-  componentDidUpdate(prevState) {
+  getMessages = () => {
     const { database, webRtc, account } = this.props;
     const messages = [];
     if (webRtc.showCommunication) {
@@ -32,12 +30,8 @@ class ChatHistory extends React.Component {
           }
         });
       }
-      if (database.UserMessage.allIds !== prevState.database.UserMessage.allIds || webRtc.showCommunication !== prevState.webRtc.showCommunication) {
-        this.setState({
-          allMessages: messages,
-        });
-      }
     }
+    return messages;
   }
 
   goBack = () => {
@@ -49,15 +43,12 @@ class ChatHistory extends React.Component {
     const { _callHandler, apis, change } = this.props;
     const stream = await mediaSelector(mediaType);
     _callHandler(apis, stream);
-    change('call');
+    change('connecting');
   }
 
-  appendNewMessage = (obj) => {
-    const { allMessages } = this.state;
-    allMessages.push(obj);
-    this.setState({
-      allMessages,
-    });
+  appendNewMessage = (type, obj) => {
+    const { addDatabaseSchema } = this.props;
+    addDatabaseSchema(type, obj);
   }
 
   render() {
@@ -78,8 +69,8 @@ class ChatHistory extends React.Component {
         fullName = database.Board.byId[webRtc.showCommunication].name;
       }
     }
-    const { allMessages } = this.state;
-    return (
+    const allMessages = this.getMessages();
+    return !webRtc.showCommunication ? <div /> : (
       <div
         style={style}
         className="chat-history"
@@ -136,6 +127,7 @@ ChatHistory.propTypes = {
   webRtc: PropTypes.objectOf(PropTypes.any).isRequired,
   account: PropTypes.objectOf(PropTypes.any).isRequired,
   database: PropTypes.objectOf(PropTypes.any).isRequired,
+  addDatabaseSchema: PropTypes.func.isRequired,
 };
 
 export default ChatHistory;

@@ -14,7 +14,7 @@ top attachment etc.
   justify-content: space-between;
   flex-wrap: nowrap;
   background-color: $backgroundColor;
-  box-shadow: 0px 1px 2px 0px $shadowColor;
+  box-shadow: 0px 1px 2px $normalShadowColor;
   z-index: 3; // above all putting navbar at the top of the heap.
   &.pcm-nav {
     box-shadow: none;

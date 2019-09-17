@@ -16,12 +16,12 @@ class IncomingCallScreen extends React.Component {
       apis,
       webRtc,
       change,
+      updateWebRtc,
     } = this.props;
     const stream = await mediaSelector(mediaType);
-    if (webRtc.liveIncomingCall) {
-      answerHandler(apis, stream);
-    }
-    change('call');
+    console.log('answer handler called', webRtc);
+    await answerHandler(apis, stream);
+    updateWebRtc('showCommunication', 1);
   }
 
   callReject = () => {
@@ -38,7 +38,7 @@ class IncomingCallScreen extends React.Component {
         className="incoming-call-screen"
       >
         {
-          webRtc.liveIncomingCall
+          webRtc.showIncommingCall
           && <Sound url={ringtone} playStatus={Sound.status.PLAYING} playFromPosition={0} loop />
         }
         <div className="person-icon-container">
@@ -61,6 +61,7 @@ IncomingCallScreen.propTypes = {
   apis: PropTypes.objectOf(PropTypes.any).isRequired,
   change: PropTypes.func.isRequired,
   closeHandler: PropTypes.func.isRequired,
+  updateWebRtc: PropTypes.func.isRequired,
 };
 
 export default IncomingCallScreen;
