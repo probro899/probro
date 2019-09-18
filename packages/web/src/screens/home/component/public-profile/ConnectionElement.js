@@ -1,12 +1,13 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Button } from '@blueprintjs/core';
 
-export default (props) => {
+const ConnectionElement = (props) => {
   const { sendMessage, connectMentor, type } = props;
   switch (type) {
     case 'connected':
       return (
-        <div>
+        <div className="con-option">
           <Button
             text="Connected"
             large
@@ -54,3 +55,11 @@ export default (props) => {
       );
   }
 };
+
+ConnectionElement.propTypes = {
+  sendMessage: PropTypes.func.isRequired,
+  connectMentor: PropTypes.func.isRequired,
+  type: PropTypes.string.isRequired,
+};
+
+export default ConnectionElement;

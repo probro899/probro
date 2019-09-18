@@ -2,7 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Moment from 'react-moment';
 
-const Message = ({ own, obj, file }) => {
+const file = require('../../../assets/imageUploadIcon.png');
+
+const Message = ({ own, obj }) => {
   return (
     <div
       className={own ? 'i-chat right' : 'i-chat left'}
@@ -18,7 +20,7 @@ const Message = ({ own, obj, file }) => {
       <div className="text-contain">
         <Moment format="YYYY-MM-DD hh:mm">{obj.timeStamp}</Moment>
         <div className="text">
-          {obj.text}
+          {obj.message}
         </div>
       </div>
     </div>
@@ -32,7 +34,6 @@ Message.defaultProps = {
 Message.propTypes = {
   own: PropTypes.bool,
   obj: PropTypes.objectOf(PropTypes.any).isRequired,
-  file: PropTypes.string.isRequired,
 };
 
 export default Message;

@@ -28,6 +28,7 @@ class HomePage extends Component {
             {account.online ? <Navbar /> : <Redirect to="/" />}
             <div className="broWrapper">
               <SideNav match={match} />
+              <div className="fake-side-nav" />
               <Route exact path={`${match.path}/profile`} component={Profile} />
               <Route exact path={`${match.path}/classes`} component={Class} />
               <Route exact path={`${match.path}/blog`} component={Blog} />

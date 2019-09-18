@@ -6,6 +6,7 @@ const initialState = {
   showIncommingCall: false,
   showOutgoingCall: false,
   communicationContainer: 'list',
+  peerType: '',
   outGoingCallType: null,
   messages,
   peerConnections: {},
@@ -19,8 +20,7 @@ const initialState = {
   recordedBlobs: [],
 };
 
-export default (state, action) => {
-  // console.log('update webrtc reducer called', state, action);
+export default (state = initialState, action) => {
   switch (action.type) {
     case UPDATE_WEBRTC:
       return {
@@ -28,6 +28,6 @@ export default (state, action) => {
         [action.schema]: action.payload,
       };
     default:
-      return initialState;
+      return state;
   }
 };

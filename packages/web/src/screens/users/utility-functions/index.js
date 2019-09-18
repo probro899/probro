@@ -11,7 +11,6 @@ const posSorting = (a, b) => {
 export default posSorting;
 
 // for sorting timestamp reverse
-
 const timeStampSorting = (a, b) => {
   if (a.timeStamp < b.timeStamp) {
     return 1;
@@ -19,4 +18,12 @@ const timeStampSorting = (a, b) => {
   return -1;
 };
 
-export { timeStampSorting };
+// for normal timestamp (message type)
+const normalTimeStampSorting = (a, b) => {
+  if (a.timeStamp > b.timeStamp) {
+    return 1;
+  }
+  return -1;
+};
+
+export { timeStampSorting, normalTimeStampSorting };
