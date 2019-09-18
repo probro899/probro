@@ -36,7 +36,7 @@ export default async function add(table, record) {
           user.update(schema.add(table, boardDetails), session);
         }
       } else {
-        session.dispatch(schema.add(table, boardDetails));
+        // session.dispatch(schema.add(table, boardDetails));
         user.update(schema.add(table, boardDetails), session);
       }
     }

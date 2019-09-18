@@ -17,7 +17,7 @@ export default async function Update(table, value, condition) {
     channel.dispatch(schema.update(table, res));
     user.update(schema.update(table, res), session);
   } else {
-    session.dispatch(schema.update(table, res));
+    // session.dispatch(schema.update(table, res));
     user.update(schema.update(table, res), session);
   }
 }
