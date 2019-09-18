@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button } from '@blueprintjs/core';
+import PropTypes from 'prop-types';
 import ConnectionElement from './ConnectionElement';
 
 class Connections extends React.Component {
@@ -8,16 +9,17 @@ class Connections extends React.Component {
   };
 
   componentDidMount() {
-    this.checkConnection();
+    this.checkConnection(this.props);
   }
 
-  componentWillReceiveProps() {
-    this.checkConnection();
+  componentWillReceiveProps(nextProps) {
+    this.checkConnection(nextProps);
   }
 
-  sendMessage = () => {
-    const { updateWebRtc } = this.props;
-    updateWebRtc('showCommunication', true);
+  sendMessage = async () => {
+    const { updateWebRtc, details } = this.props;
+    updateWebRtc('showCommunication', details.id);
+    updateWebRtc('peerType', 'user');
     updateWebRtc('communicationContainer', 'history');
   }
 
@@ -28,19 +30,20 @@ class Connections extends React.Component {
     let existingCon = null;
     database.UserConnection.allIds.map((id) => {
       const obj = database.UserConnection.byId[id];
-      if ((userId === obj.userId || userId === obj.mId) && (guestId === obj.userId || guestId === obj.mId)) {
+      if ((userId === obj.userId
+        || userId === obj.mId)
+        && (guestId === obj.userId || guestId === obj.mId)) {
         existingCon = obj;
       }
     });
     switch (type) {
       case 'request':
         if (existingCon) {
-          await apis.updateUserConnection({
+          await apis.updateUserConnection([{
             userId: account.user.id,
             mid: details.id,
             status: 'pending',
-            id: existingCon.id,
-          });
+          }, { id: existingCon.id }]);
         } else {
           await apis.connectUser({
             userId: account.user.id,
@@ -62,18 +65,19 @@ class Connections extends React.Component {
         });
         break;
       default:
-        return;
     }
   }
 
-  checkConnection = () => {
-    const { database, details, account } = this.props;
+  checkConnection = (props) => {
+    const { database, details, account } = props;
     const userId = account.user.id;
     const guestId = details.id;
     let type = '';
     database.UserConnection.allIds.map((id) => {
       const obj = database.UserConnection.byId[id];
-      if ((userId === obj.userId || userId === obj.mId) && (guestId === obj.userId || guestId === obj.mId)) {
+      if ((userId === obj.userId
+        || userId === obj.mId)
+        && (guestId === obj.userId || guestId === obj.mId)) {
         if (obj.status === 'connected') {
           type = 'connected';
           return;
@@ -93,7 +97,6 @@ class Connections extends React.Component {
   render() {
     const { moreDetails } = this.props;
     const { type } = this.state;
-    console.log(this.props.database.UserConnection);
     return (
       <div className="con">
         {ConnectionElement({
@@ -114,5 +117,14 @@ class Connections extends React.Component {
     );
   }
 }
+
+Connections.propTypes = {
+  updateWebRtc: PropTypes.func.isRequired,
+  database: PropTypes.objectOf(PropTypes.any).isRequired,
+  details: PropTypes.objectOf(PropTypes.any).isRequired,
+  moreDetails: PropTypes.objectOf(PropTypes.any).isRequired,
+  account: PropTypes.objectOf(PropTypes.any).isRequired,
+  apis: PropTypes.objectOf(PropTypes.any).isRequired,
+};
 
 export default Connections;

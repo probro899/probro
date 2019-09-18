@@ -3,27 +3,26 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Navbar from '../../../home/component/navbar';
-import Comment from './Comment';
+import CommentContainer from './comment';
 import Footer from '../../../../common/footer';
+import client from '../../../../socket';
+import * as actions from '../../../../actions';
 
 const file = require('../../../../assets/icons/64w/uploadicon64.png');
 
 class PublicBlog extends React.Component {
   state={
-    blogId: '',
+    blogId: null,
+    apis: {},
   };
 
-  componentWillMount() {
+  async componentDidMount() {
+    const apis = await client.scope('Mentee');
     const { match } = this.props;
     this.setState({
-      blogId: match.params.blogId,
+      apis,
+      blogId: parseInt(match.params.blogId, 10),
     });
-  }
-
-  componentDidMount() {
-    const { blogId } = this.state;
-    const { database } = this.props;
-    document.getElementById('blogContent').innerHTML = database.Blog.byId[blogId].content;
   }
 
   createMarkup = (val) => {
@@ -31,10 +30,10 @@ class PublicBlog extends React.Component {
   }
 
   render() {
-    const { blogId } = this.state;
-    const { database } = this.props;
-    const usr = database.Blog.byId[blogId].userId;
-    return (
+    const { blogId, apis } = this.state;
+    const { database, account, addDatabaseSchema, deleteDatabaseSchema } = this.props;
+    const usr = blogId && database.Blog.byId[blogId].userId;
+    return !blogId && !usr ? <div /> : (
       <div>
         <Navbar />
         <div className="public-blog">
@@ -67,10 +66,21 @@ class PublicBlog extends React.Component {
             className="public-blog-content"
           >
             <div className="left" />
-            <div id="blogContent" />
+            <div
+              id="blogContent"
+              // eslint-disable-next-line react/no-danger
+              dangerouslySetInnerHTML={this.createMarkup(database.Blog.byId[blogId].content)}
+            />
             <div className="right" />
           </div>
-          <Comment />
+          <CommentContainer
+            account={account}
+            apis={apis}
+            database={database}
+            blogId={blogId}
+            addDatabaseSchema={addDatabaseSchema}
+            deleteDatabaseSchema={deleteDatabaseSchema}
+          />
         </div>
         <Footer />
       </div>
@@ -81,7 +91,9 @@ class PublicBlog extends React.Component {
 PublicBlog.propTypes = {
   match: PropTypes.objectOf(PropTypes.any).isRequired,
   database: PropTypes.objectOf(PropTypes.any).isRequired,
+  account: PropTypes.objectOf(PropTypes.any).isRequired,
+  addDatabaseSchema: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = state => ({ database: state.database });
-export default connect(mapStateToProps)(PublicBlog);
+const mapStateToProps = state => state;
+export default connect(mapStateToProps, { ...actions })(PublicBlog);

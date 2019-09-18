@@ -23,13 +23,12 @@
             font-size: 20px;
             font-weight: bold;
           }
-          p.ar-i-btn-group {
+          .ar-i-counts {
             display: flex;
             justify-content: flex-end;
             padding-right: 6%;
-            button {
-              margin-right: 3px;
-              background: transparent;
+            p {
+              margin: 0 5px;
             }
           }
         }

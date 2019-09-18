@@ -2,17 +2,17 @@
 // styling the class component here
 .classes {
   display: flex;
-  flex: 0.8;
+  // flex: 0.8;
   flex-direction: column;
   padding: 10px;
   .header {
     font-size: 25px;
     font-weight: 500px;
     padding: 10px;
-    border-bottom: 1px solid lightgray;
+    // border-bottom: 1px solid lightgray;
   }
   .content-list {
-    padding: 10px;
+    // padding: 10px;
     display: flex;
     flex-wrap: wrap;
     .more-button {
@@ -27,38 +27,39 @@
       display: flex;
       cursor: pointer;
       text-decoration: none;
-      box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.56);
-      border-radius: 5px;
+      box-shadow: 0px 1px 2px 1px $normalShadowColor;
+      // border-radius: 5px;
       // styling the adding new class 
       &.add-new {
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        box-shadow: inset 0px 0px 2px 0px rgba(0,0,0,0.56);
+        box-shadow: 0px 1px 2px 1px $normalShadowColor;
         button {
-          box-shadow: 0px 0px 3px 0px rgba(0,0,0,0.56);
+          box-shadow: 0px 1px 2px 1px $normalShadowColor;
           &:hover {
-            box-shadow: 0px 0px 6px 0px rgba(0,0,0,0.56);
+            box-shadow: 0px 1px 2px 1.5px $normalShadowColor;
           }
         }
       }
       .class-repr {
         padding: 5px;
-        border-radius: 5px 0px 0px 5px;
+        // border-radius: 5px 0px 0px 5px;
         display: flex;
         flex: 0.5;
-        background: red;
+        background: $darkBlue;
         align-items: center;
-        text-align: center;
         span {
+          width: 100%;
+          text-align: center;
           color: white;
           font-size: 20px;
         }
       }
       .class-detail {
         padding: 5px;
-        border-radius: 0px 5px 5px 0px;
+        // border-radius: 0px 5px 5px 0px;
         flex: 0.5;
         display: flex;
         flex-direction: column;
@@ -167,7 +168,7 @@
         max-width: 300px;
         max-height: 100%;
         margin: 8px 8px 8px 8px;
-        border-radius: 3px;
+        // border-radius: 3px;
         background-color: $darkBlue;
         .column-title {
           padding: 8px;
@@ -195,7 +196,7 @@
             padding: 5px;
             background-color: $backgroundColor;
             border: 1px solid $normalBorder;
-            border-radius: 2px;
+            // border-radius: 2px;
             flex-grow: 1;
           }
         }
@@ -212,9 +213,9 @@
         margin: 8px;
         background-color: $fadedBackground;
         width: 200px;
-        border: 1px solid $normalBorder;
-        box-shadow: 0px 1px 2px 0px $shadowColor;
-        border-radius: 2px;
+        // border: 1px solid $normalBorder;
+        box-shadow: 0px 1px 2px 1px $normalShadowColor;
+        // border-radius: 2px;
         cursor: pointer;
         span {
           font-size: 16px;

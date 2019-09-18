@@ -31,7 +31,7 @@ class Setting extends Component {
     const { activeTab, apis } = this.state;
     const { database, account } = this.props;
     return (
-      <div className="settings">
+      <div className="settings bro-right">
         <div className="setting-types">
           <div
             onClick={() => this.handleClick('basic')}

@@ -1,11 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Button } from '@blueprintjs/core';
 import { Link } from 'react-router-dom';
 import * as actions from '../../../../actions';
 import Navbar from '../../../home/component/navbar';
 import Footer from '../../../../common/footer';
+import { timeStampSorting } from '../../utility-functions';
 
 class Archive extends React.Component {
   state = {};
@@ -16,6 +16,17 @@ class Archive extends React.Component {
       schema: 'mainNav',
       data: { name: 'archive' },
     });
+  }
+
+  calculateLikeandComment = (id) => {
+    const { database } = this.props;
+    const likes = Object.values(database.BlogLike.byId).filter((obj) => {
+      return obj.blogId === id;
+    }).reduce(tot => tot + 1, 0);
+    const comments = Object.values(database.BlogComment.byId).filter((obj) => {
+      return obj.blogId === id;
+    }).reduce(tot => tot + 1, 0);
+    return { likes, comments };
   }
 
   render() {
@@ -30,13 +41,14 @@ class Archive extends React.Component {
           <div className="ar-content">
             <div className="ar-left">
               {
-                database.Blog.allIds.map((obj, index) => {
-                  const usr = database.Blog.byId[obj].userId;
+                Object.values(database.Blog.byId).map((obj, index) => {
+                  const usr = obj.userId;
+                  const counts = this.calculateLikeandComment(obj.id);
                   return (
                     <div className="ar-left-i" key={index}>
                       <div className="ar-i-detail">
-                        <Link to={`/archive/${obj}/`} className="ar-i-title">
-                          {database.Blog.byId[obj].title}
+                        <Link to={`/archive/${obj.id}/`} className="ar-i-title">
+                          {obj.title}
                         </Link>
                         <p>
                           <Link to={`/user/${usr}/`}>
@@ -46,14 +58,19 @@ class Archive extends React.Component {
                           </Link>
                           <br />
                           <small>
-                            {new Date(database.Blog.byId[obj].timeStamp).toDateString()}
+                            {new Date(obj.timeStamp).toDateString()}
                           </small>
                         </p>
-                        <p className="ar-i-btn-group">
-                          <Button icon="share" text="share" />
-                          <Button icon="thumbs-up" />
-                          <Button icon="thumbs-down" />
-                        </p>
+                        <div className="ar-i-counts">
+                          <p>
+                            Comments
+                            <span>{counts.comments}</span>
+                          </p>
+                          <p>
+                            Likes
+                            <span>{counts.likes}</span>
+                          </p>
+                        </div>
                       </div>
                       <div className="ar-i-img">
                         <img

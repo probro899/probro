@@ -67,6 +67,10 @@
       align-items: center;
       .con {
         display: flex;
+        .con-option {
+          display: flex;
+          flex-direction: row;
+        }
       }
       button {
         margin-left: 10px;

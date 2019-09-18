@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import { Button, TextArea, Intent, Popover, FileInput, HTMLSelect, Switch } from '@blueprintjs/core';
+import * as actions from '../../../../actions';
 import { Navbar } from '../../../home/component';
 import client from '../../../../socket';
 import { addBlog, updateBlog } from './helper-functions';
@@ -186,8 +187,14 @@ class Blogs extends Component {
 
   // saving the blog from here
   saveBlog = async () => {
-    const { apis, title, description, blogId } = this.state;
-    const { account } = this.props;
+    const {
+      apis,
+      title,
+      description,
+      blogId,
+      publish,
+    } = this.state;
+    const { account, addDatabaseSchema, updateDatabaseSchema } = this.props;
     if (blogId === '') {
       const res = await addBlog(apis.addBlog,
         {
@@ -201,40 +208,43 @@ class Blogs extends Component {
         blogId: res,
         publish: 'draft',
       });
+      addDatabaseSchema('Blog', {
+        id: Date.now(),
+        userId: account.user.id,
+        timeStamp: Date.now(),
+        saveStatus: 'draft',
+        title,
+        content: description,
+      });
       return;
     }
     await updateBlog(apis.updateBlog, [
       {
         title,
         content: description,
+        saveStatus: publish,
       },
       {
         id: blogId,
       },
     ]);
+    updateDatabaseSchema('Blog', {
+      id: blogId,
+      saveStatus: 'draft',
+      title,
+      content: description,
+    });
   }
 
   publish = async (e) => {
     const {
-      description,
-      title,
-      apis,
       blogId,
     } = this.state;
     if (blogId !== '') {
       this.setState({
         publish: e.target.checked ? 'publish' : 'draft',
       });
-      await updateBlog(apis.updateBlog, [
-        {
-          title,
-          content: description,
-          saveStatus: e.target.checked ? 'publish' : 'draft',
-        },
-        {
-          id: blogId,
-        },
-      ]);
+      this.saveBlog();
     }
   }
 
@@ -259,6 +269,7 @@ class Blogs extends Component {
         // eslint-disable-next-line no-undef
         document.getElementById('editor').focus();
         document.execCommand('insertImage', false, `${ENDPOINT}/user/${10000000 + parseInt(account.user.id, 10)}/blog/${uploadRes.data}`);
+        this.saveBlog();
       }
     } catch (err) {
       console.log('update profile error', err);
@@ -267,7 +278,12 @@ class Blogs extends Component {
 
   deleteFileHandler = async (fileList) => {
     const { account } = this.props;
-    await axios.post(`${ENDPOINT}/web/delete-file`, { token: account.sessionId, content: 'blog', fileName: fileList });
+    try {
+      await axios.post(`${ENDPOINT}/web/delete-file`, { token: account.sessionId, content: 'blog', fileName: fileList });
+      this.saveBlog();
+    } catch (e) {
+      console.log(e);
+    }
   }
 
   render() {
@@ -406,4 +422,4 @@ Blogs.propTypes = {
 };
 
 const mapStateToProps = state => ({ account: state.account, database: state.database });
-export default connect(mapStateToProps)(Blogs);
+export default connect(mapStateToProps, { ...actions })(Blogs);

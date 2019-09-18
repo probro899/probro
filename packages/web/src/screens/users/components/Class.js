@@ -133,7 +133,7 @@ class Class extends Component {
     const { account, database } = this.props;
     const { createBool, deleteClass, updateClass } = this.state;
     return (
-      <div className="classes">
+      <div className="classes bro-right">
         <DeletePopOver
           isOpen={deleteClass.deletePopOverBool}
           action={this.deleteClass}
