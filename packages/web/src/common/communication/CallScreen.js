@@ -64,9 +64,6 @@ class CallScreen extends React.Component {
           <div />
         </div>
         <div className="video-container">
-          {/* eslint-disable-next-line */}
-          {/* <video className="peer-video" controls id={`video-${webRtc.showCommunication}`} playsInline autoPlay />
-          <video className="own-video" controls id={`video-${account.user.id}`} playsInline autoPlay /> */}
           <MediaComponents account={account} webRtc={webRtc} />
         </div>
         <div className="controllers">

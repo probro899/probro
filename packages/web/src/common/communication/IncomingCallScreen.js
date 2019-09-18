@@ -7,6 +7,28 @@ import mediaSelector from './mediaSelector';
 
 const callingPerson = require('../../assets/icons/128w/uploadicon128.png');
 
+class SoundElement extends React.Component {
+  state = {};
+
+  componentWillMount() {
+    console.log('component will mount');
+  }
+
+  componentWillUnmount() {
+    console.log('sound unmount');
+  }
+
+  render() {
+    console.log('sound component render');
+    return (
+      <Sound
+        onError={e => console.log('error in sound', e)}
+        url={ringtone} playStatus={Sound.status.PLAYING} playFromPosition={0} loop />
+    );
+  }
+}
+
+// eslint-disable-next-line react/no-multi-comp
 class IncomingCallScreen extends React.Component {
   state = {};
 
@@ -32,14 +54,14 @@ class IncomingCallScreen extends React.Component {
 
   render() {
     const { style, webRtc } = this.props;
+    console.log('play hunxa ki nai', webRtc.showIncommingCall);
     return (
       <div
         style={style}
         className="incoming-call-screen"
       >
         {
-          webRtc.showIncommingCall
-          && <Sound url={ringtone} playStatus={Sound.status.PLAYING} playFromPosition={0} loop />
+          webRtc.showIncommingCall ? <SoundElement /> : <div />
         }
         <div className="person-icon-container">
           <img src={callingPerson} alt="calling person" />

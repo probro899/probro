@@ -126,8 +126,8 @@ top attachment etc.
 .classes .content-list .content-link.add-new { display: flex; flex-direction: column; align-items: center; justify-content: center; box-shadow: 0px 1px 2px 1px rgba(57, 73, 76, 0.35); }
 .classes .content-list .content-link.add-new button { box-shadow: 0px 1px 2px 1px rgba(57, 73, 76, 0.35); }
 .classes .content-list .content-link.add-new button:hover { box-shadow: 0px 1px 2px 1.5px rgba(57, 73, 76, 0.35); }
-.classes .content-list .content-link .class-repr { padding: 5px; display: flex; flex: 0.5; background: red; align-items: center; text-align: center; }
-.classes .content-list .content-link .class-repr span { color: white; font-size: 20px; }
+.classes .content-list .content-link .class-repr { padding: 5px; display: flex; flex: 0.5; background: #1d4354; align-items: center; }
+.classes .content-list .content-link .class-repr span { width: 100%; text-align: center; color: white; font-size: 20px; }
 .classes .content-list .content-link .class-detail { padding: 5px; flex: 0.5; display: flex; flex-direction: column; align-items: center; justify-content: center; background: white; }
 .classes .content-list .content-link .class-detail span { text-align: center; }
 .classes .content-list .content-link .class-detail span.name { font-weight: bold; }
@@ -330,8 +330,8 @@ top attachment etc.
 .archive .ar-content .ar-left .ar-left-i { padding: 3px 0px; display: flex; }
 .archive .ar-content .ar-left .ar-left-i .ar-i-detail { flex: 0.7; }
 .archive .ar-content .ar-left .ar-left-i .ar-i-detail .ar-i-title { color: black; font-size: 20px; font-weight: bold; }
-.archive .ar-content .ar-left .ar-left-i .ar-i-detail p.ar-i-btn-group { display: flex; justify-content: flex-end; padding-right: 6%; }
-.archive .ar-content .ar-left .ar-left-i .ar-i-detail p.ar-i-btn-group button { margin-right: 3px; background: transparent; }
+.archive .ar-content .ar-left .ar-left-i .ar-i-detail .ar-i-counts { display: flex; justify-content: flex-end; padding-right: 6%; }
+.archive .ar-content .ar-left .ar-left-i .ar-i-detail .ar-i-counts p { margin: 0 5px; }
 .archive .ar-content .ar-left .ar-left-i .ar-i-img { flex: 0.3; }
 .archive .ar-content .ar-right { flex: 0.3; }
 .archive .ar-content .ar-right p.ar-right-top { font-size: 20px; font-weight: bold; }
