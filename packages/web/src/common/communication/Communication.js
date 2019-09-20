@@ -105,8 +105,8 @@ class Communication extends React.Component {
             closeHandler={closeHandler(this.props, this.state)}
             _callHandler={callHandler(this.props, this.state)}
           />
-          <IncomingCallScreen
-            style={webRtc.showIncommingCall ? { display: 'flex' } : { display: 'none' }}
+       {webRtc.showIncommingCall &&  <IncomingCallScreen
+            // style={webRtc.showIncommingCall ? { display: 'flex' } : { display: 'none' }}
             change={this.switchScreen}
             webRtc={webRtc}
             answerHandler={answerHandler(this.props, this.state)}
@@ -114,6 +114,7 @@ class Communication extends React.Component {
             updateWebRtc={updateWebRtc}
             closeHandler={closeHandler(this.props, this.state)}
           />
+       }
         </div>
       </div>
     );

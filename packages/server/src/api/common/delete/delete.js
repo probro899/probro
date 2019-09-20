@@ -17,7 +17,7 @@ export default async function Delete(table, record) {
         channel.dispatch(schema.remove(table, { id: record.id }));
         user.update(schema.remove(table, { id: record.id }), session);
       } else {
-        session.dispatch(schema.remove(table, { id: record.id }));
+        // session.dispatch(schema.remove(table, { id: record.id }));
         user.update(schema.remove(table, { id: record.id }), session);
       }
       return delRes;
