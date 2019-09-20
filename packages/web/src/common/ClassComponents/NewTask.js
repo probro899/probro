@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import client from '../../socket';
+import * as actions from '../../actions';
 import { PopoverForm } from '../../components';
 import TaskFormStructure from './structure';
 
@@ -34,7 +35,7 @@ class NewTask extends Component {
   }
 
   addNewTask = async (data) => {
-    const { columnId, account, database } = this.props;
+    const { columnId, account, database, addDatabaseSchema } = this.props;
     const { api } = this.state;
     const pos = Object.keys(database.BoardColumnCard.byId).reduce((count, obj) => {
       if (database.BoardColumnCard.byId[obj].boardColumnId === columnId) {
@@ -44,6 +45,14 @@ class NewTask extends Component {
       return count;
     }, 16384);
     await api.addBoardColumnCard({
+      userId: account.user.id,
+      timeStamp: Date.now(),
+      name: data.name,
+      position: pos,
+      boardColumnId: columnId,
+    });
+    addDatabaseSchema('BoardColumnCard', {
+      id: Date.now(),
       userId: account.user.id,
       timeStamp: Date.now(),
       name: data.name,
@@ -76,7 +85,8 @@ NewTask.propTypes = {
   columnId: PropTypes.number.isRequired,
   account: PropTypes.objectOf(PropTypes.any).isRequired,
   database: PropTypes.objectOf(PropTypes.any).isRequired,
+  addDatabaseSchema: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => state;
-export default connect(mapStateToProps)(NewTask);
+export default connect(mapStateToProps, { ...actions })(NewTask);

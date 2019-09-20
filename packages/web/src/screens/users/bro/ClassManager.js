@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import { Column, NewColumn, TaskOverlay, ToolBar } from '../../../common/ClassComponents';
 import { Navbar } from '../../home/component';
+import * as actions from '../../../actions';
 import client from '../../../socket';
 import posSorting, { timeStampSorting } from '../utility-functions';
 
@@ -256,6 +257,7 @@ class Classes extends Component {
       attachments,
       descriptions,
     } = this.state;
+    const { addDatabaseSchema, updateDatabaseSchema, deleteDatabaseSchema } = this.props;
     return (
       <div style={{ position: 'relative' }}>
         {redirectionError && <Redirect to="/" />}
@@ -289,6 +291,9 @@ class Classes extends Component {
                             columnId={column.id}
                             index={index}
                             api={api}
+                            addDatabaseSchema={addDatabaseSchema}
+                            updateDatabaseSchema={updateDatabaseSchema}
+                            deleteDatabaseSchema={deleteDatabaseSchema}
                             // passing it for the task overlay open
                             onTaskClick={this.toggleTaskOverlay}
                           />
@@ -313,6 +318,9 @@ class Classes extends Component {
           attachments={attachments}
           descriptions={descriptions}
           boardId={classId}
+          addDatabaseSchema={addDatabaseSchema}
+          updateDatabaseSchema={updateDatabaseSchema}
+          deleteDatabaseSchema={deleteDatabaseSchema}
         />
       </div>
     );
@@ -327,6 +335,9 @@ Classes.propTypes = {
   comments: PropTypes.objectOf(PropTypes.any).isRequired,
   descriptions: PropTypes.objectOf(PropTypes.any).isRequired,
   attachments: PropTypes.objectOf(PropTypes.any).isRequired,
+  addDatabaseSchema: PropTypes.func.isRequired,
+  updateDatabaseSchema: PropTypes.func.isRequired,
+  deleteDatabaseSchema: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => {
@@ -341,4 +352,4 @@ const mapStateToProps = (state) => {
     boardUsers: database.User,
   };
 };
-export default connect(mapStateToProps)(Classes);
+export default connect(mapStateToProps, { ...actions })(Classes);

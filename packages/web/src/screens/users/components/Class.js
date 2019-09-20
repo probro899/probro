@@ -40,11 +40,12 @@ class Class extends Component {
   // create new class from here
   createNewBoard = async (arg) => {
     const data = arg;
-    const { account } = this.props;
+    const { account, addDatabaseSchema } = this.props;
     const { api } = this.state;
     data.userId = account.user.id;
     data.timeStamp = Date.now();
     await api.addBoard(data);
+    addDatabaseSchema('Board', { ...data, id: Date.now() });
     this.newClass();
     return { response: 200 };
   }
@@ -93,8 +94,10 @@ class Class extends Component {
   // handle delete of the boards
   deleteClass = async (type) => {
     const { deleteClass, api } = this.state;
+    const { deleteDatabaseSchema } = this.props;
     if (type === 'confirm') {
       await api.deleteBoard({ id: deleteClass.id });
+      deleteDatabaseSchema('Board', { id: deleteClass.id });
     }
     this.setState({
       deleteClass: {
@@ -108,7 +111,9 @@ class Class extends Component {
   // handle the edit of the board name
   updateClass = async (data) => {
     const { updateClass, api } = this.state;
+    const { updateDatabaseSchema } = this.props;
     await api.updateBoard([data, { id: updateClass.id }]);
+    updateDatabaseSchema('Board', { id: updateClass.id, ...data });
     this.setState({
       updateClass: {
         id: 0,
@@ -201,6 +206,9 @@ Class.propTypes = {
   account: PropTypes.objectOf(PropTypes.any).isRequired,
   database: PropTypes.objectOf(PropTypes.any).isRequired,
   updateNav: PropTypes.func.isRequired,
+  addDatabaseSchema: PropTypes.func.isRequired,
+  updateDatabaseSchema: PropTypes.func.isRequired,
+  deleteDatabaseSchema: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => state;

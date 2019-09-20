@@ -87,12 +87,13 @@ class TaskOverlay extends Component {
   }
 
   saveTitle = async () => {
-    const { apis, boardId } = this.props;
+    const { apis, boardId, updateDatabaseSchema } = this.props;
     const { task, title } = this.state;
     await apis.updateBoardColumnCard([{
       name: title,
       broadCastId: `Board-${boardId}`,
     }, { id: task.id }]);
+    updateDatabaseSchema('BoardColumnCard', { id: task.id, name: title });
     this.toggleElemTitle();
   }
 
@@ -110,7 +111,7 @@ class TaskOverlay extends Component {
   }
 
   saveDesc = async () => {
-    const { apis, account, boardId } = this.props;
+    const { apis, account, boardId, addDatabaseSchema } = this.props;
     const { task, desc } = this.state;
     await apis.addBoardColumnCardDescription({
       boardColumnCardId: task.id,
@@ -118,6 +119,13 @@ class TaskOverlay extends Component {
       timeStamp: Date.now(),
       userId: account.user.id,
       broadCastId: `Board-${boardId}`,
+    });
+    addDatabaseSchema('BoardColumnCard', {
+      boardColumnCardId: task.id,
+      title: desc,
+      timeStamp: Date.now(),
+      userId: account.user.id,
+      id: Date.now(),
     });
     this.toggleElemDesc();
   }
@@ -128,13 +136,20 @@ class TaskOverlay extends Component {
 
   saveComment = async () => {
     const { comment, task } = this.state;
-    const { apis, account, boardId } = this.props;
+    const { apis, account, boardId, addDatabaseSchema } = this.props;
     await apis.addBoardColumnCardComment({
       boardColumnCardId: task.id,
       comment,
       timeStamp: Date.now(),
       userId: account.user.id,
       broadCastId: `Board-${boardId}`,
+    });
+    addDatabaseSchema('BoardColumnCardComment', {
+      id: Date.now(),
+      boardColumnCardId: task.id,
+      comment,
+      timeStamp: Date.now(),
+      userId: account.user.id,
     });
     this.setState({
       comment: '',

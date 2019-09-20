@@ -37,10 +37,11 @@ class Column extends Component {
   }
 
   deleteColumn = async (type) => {
-    const { api } = this.props;
+    const { api, deleteDatabaseSchema } = this.props;
     const { id } = this.state;
     if (type === 'confirm') {
       await api.deleteBoardColumn({ id });
+      deleteDatabaseSchema('BoardColumn', { id });
     }
     this.setState({
       id: '',
@@ -49,9 +50,10 @@ class Column extends Component {
   }
 
   updateColumnName = async (data) => {
-    const { api } = this.props;
+    const { api, updateDatabaseSchema } = this.props;
     const { id } = this.state;
     await api.updateBoardColumn([data, { id }]);
+    updateDatabaseSchema('BoardColumn', { id, ...data });
     this.setState({
       id: '',
       columnEditPopOver: false,
@@ -147,7 +149,8 @@ Column.propTypes = {
   index: PropTypes.number.isRequired,
   columnId: PropTypes.number.isRequired,
   onTaskClick: PropTypes.func.isRequired,
+  updateDatabaseSchema: PropTypes.func.isRequired,
+  deleteDatabaseSchema: PropTypes.func.isRequired,
 };
 
 export default Column;
-

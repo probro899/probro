@@ -49,7 +49,6 @@ class Communication extends React.Component {
       updateWebRtc,
       addDatabaseSchema,
     } = this.props;
-    console.log(webRtc);
     return (
       <div
         className="communicate"
@@ -105,8 +104,8 @@ class Communication extends React.Component {
             closeHandler={closeHandler(this.props, this.state)}
             _callHandler={callHandler(this.props, this.state)}
           />
-       {webRtc.showIncommingCall &&  <IncomingCallScreen
-            // style={webRtc.showIncommingCall ? { display: 'flex' } : { display: 'none' }}
+          <IncomingCallScreen
+            style={webRtc.showIncommingCall ? { display: 'flex' } : { display: 'none' }}
             change={this.switchScreen}
             webRtc={webRtc}
             answerHandler={answerHandler(this.props, this.state)}

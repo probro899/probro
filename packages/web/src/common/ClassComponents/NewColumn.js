@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import * as actions from '../../actions';
 import client from '../../socket';
 import { PopoverForm } from '../../components';
 import ColumnFormStructure from './structure';
@@ -32,7 +33,7 @@ class NewColumn extends Component {
   }
 
   addNewColumn = async (data) => {
-    const { classId, account, database } = this.props;
+    const { classId, account, database, addDatabaseSchema } = this.props;
     const { api } = this.state;
     const pos = Object.keys(database.BoardColumn.byId).reduce((count, obj) => {
       if (database.BoardColumn.byId[obj].boardId === classId) {
@@ -42,6 +43,15 @@ class NewColumn extends Component {
       return count;
     }, 16384);
     await api.addBoardColumn({
+      userId: account.user.id,
+      timeStamp: Date.now(),
+      name: data.name,
+      position: pos,
+      boardId: classId,
+      broadCastId: `Board-${classId}`,
+    });
+    addDatabaseSchema('BoardColumn', {
+      id: Date.now(),
       userId: account.user.id,
       timeStamp: Date.now(),
       name: data.name,
@@ -79,7 +89,8 @@ NewColumn.propTypes = {
   account: PropTypes.objectOf(PropTypes.any).isRequired,
   database: PropTypes.objectOf(PropTypes.any).isRequired,
   classId: PropTypes.number,
+  addDatabaseSchema: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => state;
-export default connect(mapStateToProps)(NewColumn);
+export default connect(mapStateToProps, { ...actions })(NewColumn);
