@@ -145,6 +145,8 @@ class Class extends Component {
         <div className="content-list">
           {
             database.Board.allIds.map((id, index) => {
+              const len = database.Board.byId[id].name.length > 30;
+              const name = len ? database.Board.byId[id].name.substring(0, 29) : database.Board.byId[id].name;
               return (
                 // eslint-disable-next-line react/no-array-index-key
                 <div style={{ position: 'relative' }} key={index}>
@@ -153,10 +155,7 @@ class Class extends Component {
                   <Link to={`/class-work/${account.sessionId}/${id}`} className="content-link">
                     <div className="class-repr">
                       <span>
-                        { database.Board.byId[id].name.length > 40
-                          ? `${database.Board.byId[id].name.substring(0, 40)} ...`
-                          : database.Board.byId[id].name
-                        }
+                        {name}
                       </span>
                     </div>
                     <div className="class-detail">

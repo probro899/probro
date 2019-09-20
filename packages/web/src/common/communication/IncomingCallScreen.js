@@ -1,34 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Button } from '@blueprintjs/core';
-import Sound from 'react-sound';
-import ringtone from '../../assets/ringtone.mp3';
+// import Sound from 'react-sound';
+// import ringtone from '../../assets/ringtone.mp3';
 import mediaSelector from './mediaSelector';
+import { SoundComponent } from './components';
 
 const callingPerson = require('../../assets/icons/128w/uploadicon128.png');
 
-class SoundElement extends React.Component {
-  state = {};
-
-  componentWillMount() {
-    console.log('component will mount');
-  }
-
-  componentWillUnmount() {
-    console.log('sound unmount');
-  }
-
-  render() {
-    console.log('sound component render');
-    return (
-      <Sound
-        onError={e => console.log('error in sound', e)}
-        url={ringtone} playStatus={Sound.status.PLAYING} playFromPosition={0} loop />
-    );
-  }
-}
-
-// eslint-disable-next-line react/no-multi-comp
 class IncomingCallScreen extends React.Component {
   state = {};
 
@@ -36,12 +15,9 @@ class IncomingCallScreen extends React.Component {
     const {
       answerHandler,
       apis,
-      webRtc,
-      change,
       updateWebRtc,
     } = this.props;
     const stream = await mediaSelector(mediaType);
-    console.log('answer handler called', webRtc);
     await answerHandler(apis, stream);
     updateWebRtc('showCommunication', 1);
   }
@@ -54,15 +30,35 @@ class IncomingCallScreen extends React.Component {
 
   render() {
     const { style, webRtc } = this.props;
-    console.log('play hunxa ki nai', webRtc.showIncommingCall);
     return (
       <div
         style={style}
         className="incoming-call-screen"
       >
-        {
-          webRtc.showIncommingCall ? <SoundElement /> : <div />
-        }
+        <button id="justToClick">hello</button>
+        {webRtc.showIncommingCall && <SoundComponent />}
+        {/* {muted && (<Sound
+          url={ringtone}
+          autoPlay
+          playStatus={Sound.status.PLAYING}
+          playFromPosition={0}
+          loop
+        />)} */}
+        {/* <iframe
+          title="calling test"
+          src={ringtone}
+          allow="autoplay"
+          // style={{ display: 'none' }}
+          id="iframeAudio"
+        /> */}
+        {/* <audio
+          on
+          autoPlay
+          controls
+          // muted
+          src={ringtone}
+          loop
+        /> */}
         <div className="person-icon-container">
           <img src={callingPerson} alt="calling person" />
           <div className="controllers">
