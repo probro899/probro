@@ -32,6 +32,7 @@ class Communication extends React.Component {
   cutWindow = () => {
     const { updateWebRtc } = this.props;
     updateWebRtc('showCommunication', false);
+    updateWebRtc('showIncommingCall', false);
   }
 
   switchScreen = (target) => {
@@ -48,6 +49,7 @@ class Communication extends React.Component {
       updateWebRtc,
       addDatabaseSchema,
     } = this.props;
+    console.log(webRtc);
     return (
       <div
         className="communicate"
@@ -56,7 +58,7 @@ class Communication extends React.Component {
             height: minimize ? '31px' : '75%',
             animationName: minimize ? 'slideDown' : 'slideUp',
             animationDuration: '0.3s',
-            display: !webRtc.showCommunication && !webRtc.showIncommingCall ? 'none' : 'block',
+            display: webRtc.showCommunication || webRtc.showIncommingCall ? 'block' : 'none',
           }
         }
       >

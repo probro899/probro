@@ -42,6 +42,7 @@ class CommentContainer extends React.Component {
       comment,
       timeStamp: Date.now(),
       blogId,
+      broadCastId: `Blog-${blogId}`,
     });
     this.setState({
       comment: '',
@@ -68,6 +69,7 @@ class CommentContainer extends React.Component {
     if (liked) {
       await apis.deleteBlogLike({
         id: liked,
+        broadCastId: `Blog-${blogId}`,
       });
       deleteDatabaseSchema('BlogLike', { id: liked });
       this.setState({
@@ -79,6 +81,7 @@ class CommentContainer extends React.Component {
         userId: account.user.id,
         timeStamp: Date.now(),
         likeType: 'like',
+        broadCastId: `Blog-${blogId}`,
       });
       addDatabaseSchema('BlogLike', {
         id: Date.now(),
