@@ -37,19 +37,29 @@ export default async function get(id) {
 
     // ******************** all Blog details *************************************************************
     const Blog = await find('Blog', { userId: id });
+    const allLike = await find('BlogLike', { userId: id });
+    const allComments = await find('BlogComment', { userId: id });
     const BlogPublish = await find('Blog', { saveStatus: 'publish' });
-    const newBlogPublish = BlogPublish.filter(b => !Blog.find(bn => b.id === bn.id));
+    console.log('all blog data', Blog, allLike, allComments, BlogPublish);
+    const allAssociateBlogsId = lodash.uniq([...allComments.map(obj => obj.blogId), ...allLike.map(obj => obj.blogId), ...Blog.map(obj => obj.id), ...BlogPublish.map(obj => obj.id)]);
+    console.log('allAssociated Blog Ids', allAssociateBlogsId);
     const blogDetailsPromises = [];
-    Blog.forEach((b) => {
-      blogDetailsPromises.push(findBlogDetail(b.id));
+    const allBlogsPromises = [];
+    allAssociateBlogsId.forEach((bid) => {
+      blogDetailsPromises.push(findBlogDetail(bid));
+      allBlogsPromises.push(findOne('Blog', { id: bid }));
     });
 
     const blogDetails = await Promise.all(blogDetailsPromises);
+    const allBlogs = await Promise.all(allBlogsPromises);
+    console.log('allBlogs', allBlogs);
+
+    const newBlogPublish = BlogPublish.filter(b => !allBlogs.find(bn => b.id === bn.id));
     // const BlogDetail = blogDetails.map(obj => obj.blogDetail).flat();
     const BlogComment = blogDetails.map(obj => obj.blogComment).flat();
     const BlogLike = blogDetails.map(obj => obj.blogLike).flat();
-    const allBlogUsers = [...Blog, ...newBlogPublish, ...BlogLike, ...BlogComment].map(b => b.userId);
-    // console.log('allBlogUsers', allBlogUsers);
+    const allBlogUsers = [...allBlogs, ...newBlogPublish, ...BlogLike, ...BlogComment].map(b => b.userId);
+    // console.log('allBlogUsers', asllBlogUsers);
     // ***************************************************************************************************
 
     const BoardMember = await find('BoardMember', { tuserId: id });
@@ -65,7 +75,7 @@ export default async function get(id) {
     // console.log('all board', allBoards);
 
     const boardMessagePromises = [];
-    allBoards.forEach(b  => boardMessagePromises.push(find('BoardMessage', { boardId: b.id })));
+    allBoards.forEach(b => boardMessagePromises.push(find('BoardMessage', { boardId: b.id })));
     const BoardMessage = await Promise.all(boardMessagePromises);
     // console.log('BoardMessage', BoardMessage);
 
@@ -79,6 +89,7 @@ export default async function get(id) {
       boardUserPromises.push(find('BoardMember', { boardId: b.id }));
       // boardUserPromises.push(find('Board', { id: b.id }));
     });
+
     const allBoardMembers = await Promise.all(boardUserPromises);
     // console.log('all Board Member', allBoardMembers.flat());
     const allBoardUserList = lodash.uniq(allBoardMembers.flat().map(obj => obj.tuserId));
@@ -100,7 +111,7 @@ export default async function get(id) {
     const BoardColumnCardComment = boardDetails.map(obj => obj.boardColumnCardComment).flat().flat();
     // console.log('board columnCardAttachment', boardColumnCardComment);
     const BoardColumnCardDescription = boardDetails.map(obj => obj.boardColumnCardDescription).flat().flat();
-    console.log('connection list', connectionList);
+    // console.log('connection list', [allBlogs, newBlogPublish]);
     const userDataRes = {
       User: allUser,
       UserDetail: allUserDetailsList,
@@ -111,7 +122,7 @@ export default async function get(id) {
       BoardColumnCardAttachment,
       BoardColumnCardComment,
       BoardColumnCardDescription,
-      Blog: [...Blog, ...newBlogPublish],
+      Blog: [...allBlogs, ...newBlogPublish],
       BlogComment,
       BlogLike,
       Notification,
@@ -122,6 +133,8 @@ export default async function get(id) {
       BoardMessage: BoardMessage.flat(),
       UserConnection: connectionList,
       UserMessage: userMessages,
+      allAssociateBlogsId,
+
     };
     return userDataRes;
   });

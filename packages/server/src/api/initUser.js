@@ -32,6 +32,9 @@ export default async function initUser(id) {
   // subscribe to all Related board
   u.Board.forEach(b => session.subscribe(`Board-${b.id}`));
   lodash.uniq(u.UserConnection.map(obj => [obj.mId, obj.userId]).flat()).forEach(uid => session.subscribe(`UserConnection-${uid}`));
+
+  u.allAssociateBlogsId.forEach(blogId => session.subscribe(`Blog-${blogId}`));
+
   const boardSessions = [];
   u.Board.forEach(b => boardSessions.push(session.getChannel(`Board-${b.id}`) || []));
   // console.log('Sessiosn user Details', boardSessions.flat()[0].values.user);
