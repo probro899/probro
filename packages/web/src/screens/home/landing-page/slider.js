@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import SearchElement from './search/SearchElement';
+import SearchElement from '../component/search/SearchElement';
 
 const elems = ['red', 'blue', 'yellow', 'green'];
 let background = 1;

@@ -44,19 +44,24 @@ class Profile extends Component {
   render() {
     const { account, database } = this.props;
     const { skillsEditPopover, apis } = this.state;
-    let details = {};
-    try {
-      details = database.User.byId[account.user.id];
-    } catch (e) {
-      console.log(e);
+    console.log('profile', apis);
+    if (!account.user) {
+      return <div />;
     }
+    const { user } = account;
+    let userDetail;
+    Object.values(database.UserDetail.byId).map((obj) => {
+      if (obj.userId === user.id) {
+        userDetail = obj;
+      }
+    });
     return (
       <div className="profile bro-right">
         <CoverPic account={account} />
-        <ProfilePic account={account} />
+        <ProfilePic account={account} userDetail={userDetail} />
         <div className="top-details">
           <span className="name">
-            {details.middleName ? `${details.firstName} ${details.middleName} ${details.lastName}` : `${details.firstName} ${details.lastName}`}
+            {user.middleName ? `${user.firstName} ${user.middleName} ${user.lastName}` : `${user.firstName} ${user.lastName}`}
           </span>
           <br />
           <span className="designation">Software Engineer at Somewhere</span>

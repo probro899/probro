@@ -54,6 +54,8 @@ class SideNav extends Component {
       { iconName: 'PARAGRAPH', name: 'Blog', url: 'blog' },
       { iconName: 'COG', name: 'Settings', url: 'settings' },
       { iconName: 'DRAW', name: 'Drawing Board', url: 'drawing-board' },
+      { iconName: 'CHAT', name: 'Messages', url: 'messages' },
+      { iconName: 'PEOPLE', name: 'Connections', url: 'connection' },
     ];
     const { match, navigate } = this.props;
     return (

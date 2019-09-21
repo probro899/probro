@@ -8,7 +8,9 @@ import { ENDPOINT } from '../../../../../config';
 const file = require('../../../../../assets/icons/512h/uploadicon512.png');
 
 class ProfilePic extends React.Component {
-  state = {};
+  state = {
+    picUrl: file,
+  };
 
   uploadImage = async (data) => {
     const { account } = this.props;
@@ -28,6 +30,9 @@ class ProfilePic extends React.Component {
       });
       if (res.status === 200) {
         console.log(res);
+        this.setState({
+          picUrl: `${ENDPOINT}/user/${10000000 + parseInt(account.user.id, 10)}/profile/${res.data}`,
+        });
       }
     } catch (e) {
       console.log(e);
@@ -35,9 +40,11 @@ class ProfilePic extends React.Component {
   }
 
   render() {
+    const { picUrl } = this.state;
+    // console.log(this.props.userDetail);
     return (
       <div className="profilePic">
-        <img src={file} alt="profile of the user" />
+        <img src={picUrl} alt="profile of the user" />
         <FileInput onChange={this.uploadImage} />
       </div>
     );

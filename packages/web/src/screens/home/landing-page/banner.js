@@ -21,17 +21,20 @@ class Banner extends Component {
 
     return (
       <div className="banner-container">
-        <div className="banner-image">
-          <img src={image.image_url} alt="banner here" />
-          <p>Bro</p>
+        <div className="banner-head">
+          <p>How it works?</p>
         </div>
         <div className="banner-image">
           <img src={image.image_url} alt="banner here" />
-          <p>Pro</p>
+          <p>Connect</p>
         </div>
         <div className="banner-image">
           <img src={image.image_url} alt="banner here" />
-          <p>Legend</p>
+          <p>Mentorship</p>
+        </div>
+        <div className="banner-image">
+          <img src={image.image_url} alt="banner here" />
+          <p>Learning</p>
         </div>
       </div>
     );

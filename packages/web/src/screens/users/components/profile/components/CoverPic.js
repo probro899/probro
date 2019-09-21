@@ -31,6 +31,7 @@ class CoverPic extends React.Component {
       initialY: 0,
       left: 0,
       top: 0,
+      imgUrl: 'https://i.pinimg.com/originals/5e/80/a2/5e80a234fc2df7c84476283520dd6b18.jpg',
     };
     this.fileInputRef = React.createRef();
   }
@@ -118,7 +119,9 @@ class CoverPic extends React.Component {
         data: formData,
       });
       if (res.status === 200) {
-        console.log(res);
+        this.setState({
+          imgUrl: `${ENDPOINT}/user/${10000000 + parseInt(account.user.id, 10)}/profile/${res.data}`,
+        });
       }
     } catch (err) {
       console.log(err);
@@ -126,7 +129,7 @@ class CoverPic extends React.Component {
   }
 
   render() {
-    const { left, top, drag } = this.state;
+    const { left, top, drag, imgUrl } = this.state;
     return (
       <div
         className="cover-pic"
@@ -146,7 +149,7 @@ class CoverPic extends React.Component {
           onMouseUp={this.mouseUp}
           onMouseOut={this.mouseOut}
           alt="profile cover"
-          src="https://i.pinimg.com/originals/5e/80/a2/5e80a234fc2df7c84476283520dd6b18.jpg"
+          src={imgUrl}
         />
         <div className="edit-cover">
           { drag ? (
