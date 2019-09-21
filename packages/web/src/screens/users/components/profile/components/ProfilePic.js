@@ -8,12 +8,10 @@ import { ENDPOINT } from '../../../../../config';
 const file = require('../../../../../assets/icons/512h/uploadicon512.png');
 
 class ProfilePic extends React.Component {
-  state = {
-    picUrl: file,
-  };
+  state = {};
 
   uploadImage = async (data) => {
-    const { account } = this.props;
+    const { account, apis } = this.props;
     const formData = new FormData();
     formData.append('data', JSON.stringify({ token: account.sessionId, fileType: 'image', content: 'profile' }));
     formData.append('image', data);
@@ -29,9 +27,9 @@ class ProfilePic extends React.Component {
         data: formData,
       });
       if (res.status === 200) {
-        console.log(res);
-        this.setState({
-          picUrl: `${ENDPOINT}/user/${10000000 + parseInt(account.user.id, 10)}/profile/${res.data}`,
+        await apis.updateUserDetails({
+          userId: account.user.id,
+          image: res.data,
         });
       }
     } catch (e) {
@@ -40,11 +38,15 @@ class ProfilePic extends React.Component {
   }
 
   render() {
-    const { picUrl } = this.state;
+    const { userDetail, account } = this.props;
+    const imgUrl = userDetail.image ? `${ENDPOINT}/user/${10000000 + parseInt(account.user.id, 10)}/profile/${userDetail.image}` : file;
     // console.log(this.props.userDetail);
     return (
       <div className="profilePic">
-        <img src={picUrl} alt="profile of the user" />
+        <img
+          src={imgUrl}
+          alt="profile of the user"
+        />
         <FileInput onChange={this.uploadImage} />
       </div>
     );
@@ -53,6 +55,8 @@ class ProfilePic extends React.Component {
 
 ProfilePic.propTypes = {
   account: PropTypes.objectOf(PropTypes.any).isRequired,
+  userDetail: PropTypes.objectOf(PropTypes.any).isRequired,
+  apis: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 export default ProfilePic;

@@ -31,9 +31,16 @@ class CoverPic extends React.Component {
       initialY: 0,
       left: 0,
       top: 0,
-      imgUrl: 'https://i.pinimg.com/originals/5e/80/a2/5e80a234fc2df7c84476283520dd6b18.jpg',
     };
     this.fileInputRef = React.createRef();
+  }
+
+  componentDidMount() {
+    const { userDetail } = this.props;
+    this.setState({
+      top: userDetail.coverImagrY ? userDetail.coverImagrY : 0,
+      left: userDetail.coverImageX ? userDetail.coverImageX : 0,
+    });
   }
 
   mouseDown = (e) => {
@@ -91,9 +98,17 @@ class CoverPic extends React.Component {
     }
   }
 
-  clickEditCover = (type) => {
-    const { drag } = this.state;
+  clickEditCover = async (type) => {
+    const { drag, top, left } = this.state;
+    const { apis, account } = this.props;
     if (type === 'reposition') {
+      if (drag) {
+        await apis.updateUserDetails({
+          userId: account.user.id,
+          coverImageX: left,
+          coverImagrY: top,
+        });
+      }
       this.setState({
         drag: !drag,
       });
@@ -103,7 +118,7 @@ class CoverPic extends React.Component {
   }
 
   coverChange = async (e) => {
-    const { account } = this.props;
+    const { account, apis } = this.props;
     const formData = new FormData();
     formData.append('data', JSON.stringify({ token: account.sessionId, fileType: 'image', content: 'profile' }));
     formData.append('image', e.target.files[0]);
@@ -119,8 +134,11 @@ class CoverPic extends React.Component {
         data: formData,
       });
       if (res.status === 200) {
-        this.setState({
-          imgUrl: `${ENDPOINT}/user/${10000000 + parseInt(account.user.id, 10)}/profile/${res.data}`,
+        await apis.updateUserDetails({
+          userId: account.user.id,
+          coverImage: res.data,
+          coverImageX: 0,
+          coverImagrY: 0,
         });
       }
     } catch (err) {
@@ -129,7 +147,9 @@ class CoverPic extends React.Component {
   }
 
   render() {
-    const { left, top, drag, imgUrl } = this.state;
+    const { userDetail, account } = this.props;
+    const { left, top, drag } = this.state;
+    const imgUrl = userDetail.coverImage ? `${ENDPOINT}/user/${10000000 + parseInt(account.user.id, 10)}/profile/${userDetail.coverImage}` : 'https://i.pinimg.com/originals/5e/80/a2/5e80a234fc2df7c84476283520dd6b18.jpg';
     return (
       <div
         className="cover-pic"
@@ -183,6 +203,8 @@ class CoverPic extends React.Component {
 
 CoverPic.propTypes = {
   account: PropTypes.objectOf(PropTypes.any).isRequired,
+  userDetail: PropTypes.objectOf(PropTypes.any).isRequired,
+  apis: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 export default CoverPic;

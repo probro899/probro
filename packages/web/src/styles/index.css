@@ -82,8 +82,8 @@ top attachment etc.
 .profile .cover-pic .edit-cover .edit-icon { vertical-align: text-top; }
 .profile .cover-pic .edit-cover:hover { text-decoration: underline; cursor: pointer; color: #137cbd; }
 .profile .cover-pic .edit-cover:hover svg { fill: #137cbd; }
-.profile .profilePic { position: absolute; top: 100px; left: 10px; }
-.profile .profilePic img { border: 1px solid #e2eaeb; box-shadow: 0px 0px 5px 1px #e2eaeb; border-radius: 50%; height: 150px; padding: 2px; }
+.profile .profilePic { position: absolute; top: 100px; left: 10px; border: 1px solid #e0e0e0; box-shadow: 0px 0px 5px 1px rgba(57, 73, 76, 0.35); border-radius: 50%; width: 150px; height: 150px; overflow: hidden; }
+.profile .profilePic img { max-width: 100%; max-height: 100%; object-fit: cover; }
 .profile .profilePic span { position: absolute; top: 70px; left: 110px; }
 .profile .profilePic svg { border-radius: 100px; background-color: #2572D1; }
 .profile .top-details { width: 100%; background: white; padding: 5px; }

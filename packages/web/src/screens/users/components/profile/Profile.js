@@ -25,7 +25,7 @@ class Profile extends Component {
   }
 
   editSkills = (data) => {
-    console.log(data);
+    // console.log(data);
   }
 
   togglePopovers = (type) => {
@@ -38,13 +38,12 @@ class Profile extends Component {
   }
 
   fileOnchange = (file) => {
-    console.log('file is here do what you want', file);
+    // console.log('file is here do what you want', file);
   }
 
   render() {
     const { account, database } = this.props;
     const { skillsEditPopover, apis } = this.state;
-    console.log('profile', apis);
     if (!account.user) {
       return <div />;
     }
@@ -57,8 +56,8 @@ class Profile extends Component {
     });
     return (
       <div className="profile bro-right">
-        <CoverPic account={account} />
-        <ProfilePic account={account} userDetail={userDetail} />
+        <CoverPic account={account} userDetail={userDetail} apis={apis} />
+        <ProfilePic account={account} apis={apis} userDetail={userDetail} />
         <div className="top-details">
           <span className="name">
             {user.middleName ? `${user.firstName} ${user.middleName} ${user.lastName}` : `${user.firstName} ${user.lastName}`}
