@@ -32,7 +32,7 @@ export default async function add(table, record) {
           user.update(schema.add(table, boardDetails), session);
         } else {
           const channel = session.channel(broadCastId);
-          channel.dispatch(schema.add(table, boardDetails));
+          channel.dispatch(schema.add(table, boardDetails), null, session.values.user.id);
           user.update(schema.add(table, boardDetails), session);
         }
       } else {

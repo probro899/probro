@@ -53,14 +53,14 @@ export default function createDefaultProvider() {
       return true;
     },
 
-    publish: (channelId, message, userList) => {
+    publish: (channelId, message, userList, userId) => {
       const list = channels[channelId];
       if (userList) {
         // console.log('default Channel data', list[0].values.user.user, userList);
         const shortedUserList = list.filter(session => presentorTestor(session.values.user.id, userList));
         shortedUserList.forEach(session => session.send(message));
       } else if (!userList && list) {
-        list.forEach(session => session.send(message));
+        list.filter(session => session.values.user.id !== userId).forEach(session => session.send(message));
       }
     },
     getChannel: channelId => channels[channelId],

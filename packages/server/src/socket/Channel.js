@@ -5,8 +5,8 @@ class Channel {
     this.id = id;
   }
 
-  dispatch(action, userList) {
-    return Channel.provider.publish(this.id, PKT_ACTION(action), userList);
+  dispatch(action, userList, userId) {
+    return Channel.provider.publish(this.id, PKT_ACTION(action), userList, userId);
   }
 
   emit(event, data, userList) {
