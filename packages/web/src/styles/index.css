@@ -1,6 +1,5 @@
 @import url("https://fonts.googleapis.com/css?family=Noto+Sans|Oxygen|Roboto:100,300,400,500,900&display=swap");
-.slider-container { position: relative; height: 500px; margin-left: 1px; margin-right: 1px; }
-.slider-container .slider { top: 0; left: 0; bottom: 0; right: 0; position: absolute; z-index: 1; }
+.slider-container { position: relative; margin-top: 60px; height: 600px; margin-left: 1px; margin-right: 1px; overflow: hidden; }
 .slider-container .search-box-container { top: 50%; /* this to center the box w.r.t to parent */ left: 50%; /* this to center the box w.r.t to parent */ /* Above 2 lines wont fully center it, the next line internally
 centers it, buy moving itself 50% left and top */ transform: translate(-50%, -50%); position: absolute; z-index: 2; padding: 5px; }
 .slider-container .search-box-container input { background-color: #fff; padding: 4px; height: 40px; line-height: 40px; font-size: 16px; border-width: 1px; vertical-align: middle; border-color: #e0e0e0; }

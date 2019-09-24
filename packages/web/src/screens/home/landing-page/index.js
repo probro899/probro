@@ -25,7 +25,6 @@ class HomePage extends Component {
     });
     try {
       const res = await axios.get(`${ENDPOINT}/web/get-index`);
-      console.log(res.data);
       this.setState({
         data: res.data,
         loading: false,

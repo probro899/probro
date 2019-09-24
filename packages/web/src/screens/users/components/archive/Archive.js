@@ -7,12 +7,15 @@ import * as actions from '../../../../actions';
 import Navbar from '../../../home/component/navbar';
 import Footer from '../../../../common/footer';
 import { ENDPOINT } from '../../../../config';
-// import { timeStampSorting } from '../../utility-functions';
+import { Spinner } from '../../../../common';
 
 class Archive extends React.Component {
-  state = {};
+  state = {
+    loading: true,
+    data: [],
+  };
 
-  async componentWillMount() {
+  async componentDidMount() {
     const { updateNav } = this.props;
     updateNav({
       schema: 'mainNav',
@@ -20,26 +23,18 @@ class Archive extends React.Component {
     });
     try {
       const res = await axios.get(`${ENDPOINT}/web/get-index`);
-      console.log(res);
+      this.setState({
+        data: res.data.archive,
+        loading: false,
+      });
     } catch (e) {
       console.log('Eror: ', e);
     }
   }
 
-  calculateLikeandComment = (id) => {
-    const { database } = this.props;
-    const likes = Object.values(database.BlogLike.byId).filter((obj) => {
-      return obj.blogId === id;
-    }).reduce(tot => tot + 1, 0);
-    const comments = Object.values(database.BlogComment.byId).filter((obj) => {
-      return obj.blogId === id;
-    }).reduce(tot => tot + 1, 0);
-    return { likes, comments };
-  }
-
   render() {
-    const { database } = this.props;
-    return (
+    const { loading, data } = this.state;
+    return loading ? <Spinner /> : (
       <div>
         <Navbar />
         <div className="archive">
@@ -49,10 +44,14 @@ class Archive extends React.Component {
           <div className="ar-content">
             <div className="ar-left">
               {
-                Object.values(database.Blog.byId).map((obj, index) => {
-                  const usr = obj.userId;
-                  const counts = this.calculateLikeandComment(obj.id);
-                  const description = obj.content.replace(/<[^>]+>/g, '').replace('&nbsp;', ' ').substring(0, 300);
+                data.map((obj, index) => {
+                  const description = obj.blog.content.replace(/<[^>]+>/g, '').replace('&nbsp;', ' ').substring(0, 300);
+                  let user;
+                  obj.userDetails.map((u) => {
+                    if (u.user.id === obj.blog.userId) {
+                      user = u;
+                    }
+                  });
                   return (
                     <div className="ar-left-i" key={index}>
                       <div className="ar-i-img">
@@ -63,19 +62,19 @@ class Archive extends React.Component {
                         />
                       </div>
                       <div className="ar-i-detail">
-                        <Link to={`/archive/${obj.id}/`} className="ar-i-title">
-                          {obj.title}
+                        <Link to={`/archive/${obj.blog.id}/`} className="ar-i-title">
+                          {obj.blog.title}
                         </Link>
                         <p>
                           <span>Author-</span>
-                          <Link to={`/user/${usr}/`}>
+                          <Link to={`/user/${user.user.id}/`}>
                             {
-                              ` ${database.User.byId[usr].firstName} ${database.User.byId[usr].middleName ? `${database.User.byId[usr].middleName} ` : ''}${database.User.byId[usr].lastName}`
+                              ` ${user.user.firstName} ${user.user.middleName ? `${user.user.middleName} ` : ''}${user.user.lastName}`
                             }
                           </Link>
                           <br />
                           <small className="pc-date">
-                            {new Date(obj.timeStamp).toDateString()}
+                            {new Date(obj.blog.timeStamp).toDateString()}
                           </small>
                         </p>
                         <div className="pc-blog-desc">
@@ -84,11 +83,11 @@ class Archive extends React.Component {
                         <div className="ar-i-counts">
                           <p className="label">
                             Comments
-                            <span className="count">{counts.comments}</span>
+                            <span className="count">{obj.blogComment.length}</span>
                           </p>
                           <p className="label">
                             Likes
-                            <span className="count">{counts.likes}</span>
+                            <span className="count">{obj.blogLike.length}</span>
                           </p>
                         </div>
                       </div>
@@ -113,7 +112,6 @@ class Archive extends React.Component {
 
 Archive.propTypes = {
   updateNav: PropTypes.func.isRequired,
-  database: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 const mapStateToProps = state => state;

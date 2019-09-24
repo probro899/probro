@@ -1,17 +1,11 @@
 @import '../config.scss';
 .slider-container {
   position: relative;
-  height: 500px;
+  margin-top: $navbarHeight;
+  height: 600px;
   margin-left: 1px;
   margin-right: 1px;
-  .slider {
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    position: absolute;
-    z-index: 1;
-  }
+  overflow: hidden;
   .search-box-container {
     top:50%;  /* this to center the box w.r.t to parent */
     left: 50%;/* this to center the box w.r.t to parent */
