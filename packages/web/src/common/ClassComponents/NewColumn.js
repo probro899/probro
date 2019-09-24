@@ -42,7 +42,8 @@ class NewColumn extends Component {
       }
       return count;
     }, 16384);
-    await api.addBoardColumn({
+    console.log('add column', classId);
+    const res = await api.addBoardColumn({
       userId: account.user.id,
       timeStamp: Date.now(),
       name: data.name,
@@ -50,6 +51,7 @@ class NewColumn extends Component {
       boardId: classId,
       broadCastId: `Board-${classId}`,
     });
+    console.log(res);
     addDatabaseSchema('BoardColumn', {
       id: Date.now(),
       userId: account.user.id,
@@ -57,7 +59,6 @@ class NewColumn extends Component {
       name: data.name,
       position: pos,
       boardId: classId,
-      broadCastId: `Board-${classId}`,
     });
     this.handlePopOverForm();
     return { response: 200 };
@@ -65,6 +66,7 @@ class NewColumn extends Component {
 
   render() {
     const { popOpen } = this.state;
+    console.log('new column', this.props);
     return (
       <div className="add-new-column">
         <PopoverForm

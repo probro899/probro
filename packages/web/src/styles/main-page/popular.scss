@@ -1,46 +1,48 @@
+@import '../config.scss';
 .popularContainer {
   .popularHeader {
     display: flex;
     justify-content: space-around;
-    padding: 3% 10% 3% 10%;
+    padding: 3%;
     p {
-      font-size: 45px;
+      color: $darkBlue;
+      font-size: 40px;
       font-weight: 600;
     }
   }
   .popularCover {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     flex-wrap: wrap;
-    padding: 0 10% 0 10%;
+    padding: 10px;
     .popular {
       display: flex;
-      justify-content: flex-start;
       padding: 10px;
       .popularImage {
         height: 150px;
         width: 150px;
         overflow: hidden;
-        padding: 10px;
-        border: 1px solid #fff;
-        border-radius: 75px;
-        img {
-          height: 150px;
+        // border: 1px solid $normalBorder;
+        border-radius: 50%;
+        img.landscape {
+          height: 100%;
+          width: auto;
+        }
+        img.portrait {
+          width: 100%;
+          height: auto;
         }
       }
       .popularDesc {
-        // here the concept of alinment is invested using flexbox. worth notice. 
         display: flex;
         flex-direction: column;
         justify-content: center;
-        align-items: flex-start;
-        padding-left: 10px;
+        padding: 10px;
         .popularName {
           font-size: 20px;
-          font-weight: 550;
         }
         .popularExpertize {
-          color: #757575;
+          color: $lightTextColor;
           font-weight: 550;
         }
       }

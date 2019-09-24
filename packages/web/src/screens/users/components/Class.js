@@ -145,7 +145,10 @@ class Class extends Component {
           name={deleteClass.name}
         />
         <div className="header">
-          Classrooms
+          <div>
+            <span className="title">Classrooms </span>
+            <small>Your class management</small>
+          </div>
         </div>
         <div className="content-list">
           {

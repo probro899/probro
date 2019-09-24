@@ -37,10 +37,10 @@ class Column extends Component {
   }
 
   deleteColumn = async (type) => {
-    const { api, deleteDatabaseSchema } = this.props;
+    const { api, deleteDatabaseSchema, boardId } = this.props;
     const { id } = this.state;
     if (type === 'confirm') {
-      await api.deleteBoardColumn({ id });
+      await api.deleteBoardColumn({ id, boardId });
       deleteDatabaseSchema('BoardColumn', { id });
     }
     this.setState({
@@ -50,9 +50,9 @@ class Column extends Component {
   }
 
   updateColumnName = async (data) => {
-    const { api, updateDatabaseSchema } = this.props;
+    const { api, updateDatabaseSchema, boardId } = this.props;
     const { id } = this.state;
-    await api.updateBoardColumn([data, { id }]);
+    await api.updateBoardColumn([{ ...data, boardId }, { id }]);
     updateDatabaseSchema('BoardColumn', { id, ...data });
     this.setState({
       id: '',
@@ -74,6 +74,7 @@ class Column extends Component {
       columnId,
       index,
       onTaskClick,
+      boardId,
     } = this.props;
     const { columnDeletePopOver, columnEditPopOver } = this.state;
     return (
@@ -134,7 +135,7 @@ class Column extends Component {
                 )}
               </Droppable>
               {provided.placeholder}
-              <NewTask columnId={column.id} />
+              <NewTask columnId={column.id} boardId={boardId} />
             </div>
           </div>
         )}
@@ -151,6 +152,7 @@ Column.propTypes = {
   onTaskClick: PropTypes.func.isRequired,
   updateDatabaseSchema: PropTypes.func.isRequired,
   deleteDatabaseSchema: PropTypes.func.isRequired,
+  boardId: PropTypes.number.isRequired,
 };
 
 export default Column;

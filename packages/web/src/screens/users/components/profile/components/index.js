@@ -4,5 +4,6 @@ import Bio from './Bio';
 import FileInput from './FileInput';
 import CoverPic from './CoverPic';
 import ProfilePic from './ProfilePic';
+import Skills from './Skills';
 
-export { Education, Experience, Bio, FileInput, CoverPic, ProfilePic };
+export { Education, Experience, Bio, FileInput, CoverPic, ProfilePic, Skills };

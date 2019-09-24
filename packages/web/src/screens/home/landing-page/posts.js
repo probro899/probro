@@ -31,13 +31,6 @@ class Post extends Component {
     this.state = { posts: [] };
   }
 
-  componentDidMount() {
-    axios.get('http://localhost:3000/posts')
-      .then((response) => {
-        this.setState({ posts: response.data });
-      });
-  }
-
   render() {
     const { posts } = this.state;
 

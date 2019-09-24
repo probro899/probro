@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import axios from 'axios';
 import * as actions from '../../../actions';
 import { Navbar } from '../component';
 import Slider from './slider';
@@ -8,11 +9,13 @@ import Banner from './banner';
 import Popular from './popular';
 import Post from './posts';
 import Footer from '../../../common/footer';
-import axios from 'axios';
 import { ENDPOINT } from '../../../config';
 
 class HomePage extends Component {
-  state = {};
+  state = {
+    data: {},
+    loading: true,
+  };
 
   async componentWillMount() {
     const { updateNav } = this.props;
@@ -20,15 +23,24 @@ class HomePage extends Component {
       schema: 'mainNav',
       data: { name: 'properClass' },
     });
-    const indexDataRes = await axios.get(`${ENDPOINT}/web/get-index`);
-    console.log('indexRes', indexDataRes);
+    try {
+      const res = await axios.get(`${ENDPOINT}/web/get-index`);
+      this.setState({
+        data: res.data,
+        loading: false,
+      });
+    } catch (e) {
+      console.log('Eror: ', e);
+    }
+
   }
 
   render() {
-    return (
+    const { data, loading } = this.state;
+    return loading ? <div /> : (
       <div>
         <Navbar />
-        <Slider />
+        <Slider data={data.sliderImages} />
         <Banner />
         <Post />
         <Popular />

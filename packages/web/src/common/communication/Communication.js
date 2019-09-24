@@ -113,7 +113,6 @@ class Communication extends React.Component {
             updateWebRtc={updateWebRtc}
             closeHandler={closeHandler(this.props, this.state)}
           />
-       }
         </div>
       </div>
     );

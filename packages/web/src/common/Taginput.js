@@ -7,6 +7,7 @@ class Taginput extends React.Component {
 
   render() {
     const { data, onChange, value } = this.props;
+    // const separator = /[\s]/;
     return (
       <Label>
         <span className="label-text">{data.name}</span>
@@ -14,6 +15,7 @@ class Taginput extends React.Component {
         <TagInput
           onAdd={e => onChange(data.id, e)}
           onChange={e => onChange(data.id, e)}
+          // separator={separator}
           {...data}
           className="tag-input"
           values={value}
