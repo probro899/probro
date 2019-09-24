@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 import PropTypes from 'prop-types';
 
 const Candidate = (props) => {
@@ -7,7 +6,7 @@ const Candidate = (props) => {
   return (
     <div className="popular">
       <div className="popularImage">
-        <img src={candidate.photo} alt={`candidate ${candidate.id}`} />
+        <img className={candidate.imgClass} src={candidate.photo} alt={`candidate ${candidate.id}`} />
       </div>
       <div className="popularDesc">
         <p className="popularName">
@@ -31,16 +30,10 @@ class Popular extends Component {
     super(props);
     this.state = {
       popular: [
-        { id: 1, name: 'Nabin Bhusal', expertize: 'Business', photo: 'https://images.unsplash.com/photo-1518806118471-f28b20a1d79d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=700&q=80' },
-        { id: 2, name: 'Bhagya Sah', expertize: 'Software Engineer', photo: 'https://images.unsplash.com/photo-1529665253569-6d01c0eaf7b6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1276&q=80' },
+        { id: 1, imgClass: 'portrait', name: 'Nabin Bhusal', expertize: 'Business', photo: 'https://images.unsplash.com/photo-1518806118471-f28b20a1d79d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=700&q=80' },
+        { id: 2, imgClass: 'landscape', name: 'Bhagya Sah', expertize: 'Software Engineer', photo: 'https://images.unsplash.com/photo-1529665253569-6d01c0eaf7b6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1276&q=80' },
       ],
     };
-  }
-
-  componentWillMount() {
-    axios.get('http://localhost:3000/popular').then((response) => {
-      this.setState({ popular: response.data });
-    });
   }
 
   render() {
@@ -49,7 +42,7 @@ class Popular extends Component {
     return (
       <div className="popularContainer">
         <div className="popularHeader">
-          <p>Connect with the best Mentors in the Planet.</p>
+          <p>Connect with the best Mentors in the Planet</p>
         </div>
         <div className="popularCover">
           {

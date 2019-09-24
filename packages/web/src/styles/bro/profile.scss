@@ -14,7 +14,7 @@
     width: 100%;
     background: linear-gradient(to right, rgba(155,225,243,1) 0%, rgba(67,192,223,1) 100%);
     img {
-      width: 100%;
+      width: 110%;
     }
     .edit-cover {
       padding: 5px;
@@ -45,10 +45,13 @@
     width: 150px;
     height: 150px;
     overflow: hidden;
-    img {
-      max-width: 100%;
-      max-height: 100%;
-      object-fit: cover;
+    img.portrait {
+      width: 100%;
+      height: auto;
+    }
+    img.landscape {
+      height: 100%;
+      width: auto;
     }
     span {
       position: absolute;

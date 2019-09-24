@@ -1,3 +1,4 @@
+@import '../config.scss';
 .slider-container {
   position: relative;
   height: 500px;
@@ -22,30 +23,37 @@
     z-index: 2;
     padding: 5px;
     input {
+      background-color: $backgroundColor; 
       padding: 4px;
       height: 40px;
       line-height: 40px;
       font-size: 16px;
       border-width: 1px;
       vertical-align: middle;
-      border-color: white;
+      border-color: $normalBorder;
     }
     button {
-      background: rgba(19, 124, 189, 1);
-      border-color: rgba(19, 124, 189, 1);
-      color: white;
+      background: $darkBlue;
+      border-color: $darkBlue;
+      color: $backgroundColor;
       font-weight: 450;
       vertical-align: middle;
       height: 40px;
       padding: 3px;
       font-size: 16px;
       &.adv-search {
+        background: $pcGreen;
+        border-color: $pcGreen;
+        color: $darkBlue;
         margin-top: 3px;
         width: 100%;
+        // box-shadow: 0px 1px 2px 1px $pcGreen;
+        &:hover {
+          box-shadow: 1px 1px 3px 0px $pcGreen;
+        }
       }
       &:hover {
-        box-shadow: 1px 1px 3px 0px rgba(19,124,189,1);
-        text-shadow: 0.2px 0.2px white;
+        box-shadow: 1px 1px 3px 0px $darkBlue;
       }
     }
   }

@@ -4,13 +4,10 @@ import PropTypes from 'prop-types';
 import { Icon } from '@blueprintjs/core';
 import client from '../../../../socket';
 import * as actions from '../../../../actions';
-import { Education, Experience, Bio, CoverPic, ProfilePic } from './components';
-import { PopoverForm } from '../../../../components';
-import { skillsSchema } from './structure';
+import { Education, Experience, Skills, Bio, CoverPic, ProfilePic } from './components';
 
 class Profile extends Component {
   state = {
-    skillsEditPopover: false,
     apis: {},
   };
 
@@ -24,10 +21,6 @@ class Profile extends Component {
     });
   }
 
-  editSkills = (data) => {
-    // console.log(data);
-  }
-
   togglePopovers = (type) => {
     const { skillsEditPopover } = this.state;
     if (type === 'skills') {
@@ -37,18 +30,14 @@ class Profile extends Component {
     }
   }
 
-  fileOnchange = (file) => {
-    // console.log('file is here do what you want', file);
-  }
-
   render() {
-    const { account, database } = this.props;
-    const { skillsEditPopover, apis } = this.state;
+    const { account, database, updateDatabaseSchema, addDatabaseSchema } = this.props;
+    const { apis } = this.state;
     if (!account.user) {
       return <div />;
     }
     const { user } = account;
-    let userDetail;
+    let userDetail = {};
     Object.values(database.UserDetail.byId).map((obj) => {
       if (obj.userId === user.id) {
         userDetail = obj;
@@ -56,8 +45,20 @@ class Profile extends Component {
     });
     return (
       <div className="profile bro-right">
-        <CoverPic account={account} userDetail={userDetail} apis={apis} />
-        <ProfilePic account={account} apis={apis} userDetail={userDetail} />
+        <CoverPic
+          account={account}
+          userDetail={userDetail}
+          apis={apis}
+          updateDatabaseSchema={updateDatabaseSchema}
+          addDatabaseSchema={addDatabaseSchema}
+        />
+        <ProfilePic
+          account={account}
+          apis={apis}
+          userDetail={userDetail}
+          updateDatabaseSchema={updateDatabaseSchema}
+          addDatabaseSchema={addDatabaseSchema}
+        />
         <div className="top-details">
           <span className="name">
             {user.middleName ? `${user.firstName} ${user.middleName} ${user.lastName}` : `${user.firstName} ${user.lastName}`}
@@ -71,32 +72,13 @@ class Profile extends Component {
         <Bio apis={apis} />
         <Education apis={apis} />
         <Experience apis={apis} />
-        <div className="skills">
-          <PopoverForm
-            isOpen={skillsEditPopover}
-            structure={skillsSchema}
-            callback={this.editSkills}
-            onClose={() => this.togglePopovers('skills')}
-          />
-          <p className="p-top">
-            <span>Skills</span>
-            <Icon icon="plus" onClick={() => this.togglePopovers('skills')} />
-          </p>
-          <div className="skills-container">
-            <span>
-              Python
-            </span>
-            <span>
-              Javascript
-            </span>
-            <span>
-              React
-            </span>
-            <span>
-              Node
-            </span>
-          </div>
-        </div>
+        <Skills
+          account={account}
+          apis={apis}
+          skills={database.UserSkill}
+          updateDatabaseSchema={updateDatabaseSchema}
+          addDatabaseSchema={addDatabaseSchema}
+        />
       </div>
     );
   }
@@ -106,6 +88,8 @@ Profile.propTypes = {
   account: PropTypes.objectOf(PropTypes.any).isRequired,
   database: PropTypes.objectOf(PropTypes.any).isRequired,
   updateNav: PropTypes.func.isRequired,
+  updateDatabaseSchema: PropTypes.func.isRequired,
+  addDatabaseSchema: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => state;

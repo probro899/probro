@@ -103,7 +103,7 @@ class Blogs extends Component {
                     <div className="blog-title">
                       <p className="title">{database.Blog.byId[id].title}</p>
                       <p style={{ textAlign: 'right', width: '100%' }}>
-                        <span>
+                        <span className="pc-date">
                           {new Date(database.Blog.byId[id].timeStamp).toDateString()}
                         </span>
                       </p>

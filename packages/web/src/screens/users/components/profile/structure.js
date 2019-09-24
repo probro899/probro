@@ -84,25 +84,6 @@ const experienceSchema = [
   },
 ];
 
-const skillsSchema = [
-  {
-    id: 'skills',
-    fieldtype: 'tagInput',
-    name: 'Skills',
-    placeholder: 'Ex, Management',
-    values: [],
-  },
-  {
-    id: 'submit',
-    fieldtype: 'button',
-    text: 'Submit',
-    type: 'submit',
-    fill: 'fill',
-    intent: 'primary',
-    large: 'large',
-  },
-];
-
 const portalSchema = [
   {
     id: 'title',
@@ -139,4 +120,4 @@ const portalSchema = [
   },
 ];
 
-export { bioSchema, skillsSchema, educationSchema, experienceSchema, portalSchema };
+export { bioSchema, educationSchema, experienceSchema, portalSchema };

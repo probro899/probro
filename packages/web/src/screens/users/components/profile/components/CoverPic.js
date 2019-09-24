@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/mouse-events-have-key-events */
@@ -7,7 +8,7 @@ import PropTypes from 'prop-types';
 import { Icon, Popover, MenuItem, Menu } from '@blueprintjs/core';
 import { ENDPOINT } from '../../../../../config';
 
-const SmallMenu = onClick => (
+const SmallMenu = (onClick, userDetail) => (
   <Menu>
     <MenuItem
       text="Upload New"
@@ -15,6 +16,7 @@ const SmallMenu = onClick => (
     />
     <Menu.Divider />
     <MenuItem
+      disabled={!userDetail.coverImage}
       text="Reposition"
       onClick={() => onClick('reposition')}
     />
@@ -38,8 +40,8 @@ class CoverPic extends React.Component {
   componentDidMount() {
     const { userDetail } = this.props;
     this.setState({
-      top: userDetail.coverImagrY ? userDetail.coverImagrY : 0,
-      left: userDetail.coverImageX ? userDetail.coverImageX : 0,
+      top: userDetail.coverImagrY ? Number(userDetail.coverImagrY) : 0,
+      left: userDetail.coverImageX ? Number(userDetail.coverImageX) : 0,
     });
   }
 
@@ -100,11 +102,16 @@ class CoverPic extends React.Component {
 
   clickEditCover = async (type) => {
     const { drag, top, left } = this.state;
-    const { apis, account } = this.props;
+    const { apis, account, userDetail, updateDatabaseSchema } = this.props;
     if (type === 'reposition') {
       if (drag) {
         await apis.updateUserDetails({
           userId: account.user.id,
+          coverImageX: left,
+          coverImagrY: top,
+        });
+        updateDatabaseSchema('UserDetail', {
+          id: userDetail.id,
           coverImageX: left,
           coverImagrY: top,
         });
@@ -118,7 +125,13 @@ class CoverPic extends React.Component {
   }
 
   coverChange = async (e) => {
-    const { account, apis } = this.props;
+    const {
+      account,
+      apis,
+      userDetail,
+      updateDatabaseSchema,
+      addDatabaseSchema,
+    } = this.props;
     const formData = new FormData();
     formData.append('data', JSON.stringify({ token: account.sessionId, fileType: 'image', content: 'profile' }));
     formData.append('image', e.target.files[0]);
@@ -140,6 +153,22 @@ class CoverPic extends React.Component {
           coverImageX: 0,
           coverImagrY: 0,
         });
+        if (userDetail.id) {
+          updateDatabaseSchema('UserDetail', {
+            id: userDetail.id,
+            coverImage: res.data,
+            coverImageX: 0,
+            coverImagrY: 0,
+          });
+        } else {
+          addDatabaseSchema('UserDetail', {
+            id: Date.now(),
+            type: 'mentee',
+            coverImage: res.data,
+            coverImageX: 0,
+            coverImagrY: 0,
+          });
+        }
       }
     } catch (err) {
       console.log(err);
@@ -173,14 +202,13 @@ class CoverPic extends React.Component {
         />
         <div className="edit-cover">
           { drag ? (
-            // eslint-disable-next-line jsx-a11y/no-static-element-interactions
             <div onClick={() => this.clickEditCover('reposition')}>
               <span style={{ padding: '3px', border: '1px solid white' }}>Save </span>
             </div>
           )
             : (
               <Popover
-                content={SmallMenu(this.clickEditCover)}
+                content={SmallMenu(this.clickEditCover, userDetail)}
               >
                 <div>
                   <span>Edit </span>
@@ -205,6 +233,8 @@ CoverPic.propTypes = {
   account: PropTypes.objectOf(PropTypes.any).isRequired,
   userDetail: PropTypes.objectOf(PropTypes.any).isRequired,
   apis: PropTypes.objectOf(PropTypes.any).isRequired,
+  updateDatabaseSchema: PropTypes.func.isRequired,
+  addDatabaseSchema: PropTypes.func.isRequired,
 };
 
 export default CoverPic;
