@@ -8,12 +8,41 @@ import { ENDPOINT } from '../../../../../config';
 const file = require('../../../../../assets/icons/512h/uploadicon512.png');
 
 class ProfilePic extends React.Component {
-  state = {
-    picUrl: file,
-  };
+  state = { portrait: false };
+
+  componentDidMount() {
+    this.checkOrientation();
+  }
+
+  componentDidUpdate(prevProps) {
+    const { userDetail } = this.props;
+    if (userDetail.image !== prevProps.userDetail.image) {
+      this.checkOrientation();
+    }
+  }
+
+  checkOrientation = () => {
+    const { userDetail, account } = this.props;
+    const imgUrl = userDetail.image ? `${ENDPOINT}/user/${10000000 + parseInt(account.user.id, 10)}/profile/${userDetail.image}` : file;
+    const img = new Image();
+    img.onload = () => {
+      if (img.height > img.width) {
+        this.setState({
+          portrait: true,
+        });
+      }
+    };
+    img.src = imgUrl;
+  }
 
   uploadImage = async (data) => {
-    const { account } = this.props;
+    const {
+      account,
+      apis,
+      userDetail,
+      updateDatabaseSchema,
+      addDatabaseSchema,
+    } = this.props;
     const formData = new FormData();
     formData.append('data', JSON.stringify({ token: account.sessionId, fileType: 'image', content: 'profile' }));
     formData.append('image', data);
@@ -29,10 +58,22 @@ class ProfilePic extends React.Component {
         data: formData,
       });
       if (res.status === 200) {
-        console.log(res);
-        this.setState({
-          picUrl: `${ENDPOINT}/user/${10000000 + parseInt(account.user.id, 10)}/profile/${res.data}`,
+        await apis.updateUserDetails({
+          userId: account.user.id,
+          image: res.data,
         });
+        if (userDetail.id) {
+          updateDatabaseSchema('UserDetail', {
+            id: userDetail.id,
+            image: res.data,
+          });
+        } else {
+          addDatabaseSchema('UserDetail', {
+            id: Date.now(),
+            type: 'mentee',
+            image: res.data,
+          });
+        }
       }
     } catch (e) {
       console.log(e);
@@ -40,11 +81,16 @@ class ProfilePic extends React.Component {
   }
 
   render() {
-    const { picUrl } = this.state;
-    // console.log(this.props.userDetail);
+    const { userDetail, account } = this.props;
+    const imgUrl = userDetail.image ? `${ENDPOINT}/user/${10000000 + parseInt(account.user.id, 10)}/profile/${userDetail.image}` : file;
+    const { portrait } = this.state;
     return (
       <div className="profilePic">
-        <img src={picUrl} alt="profile of the user" />
+        <img
+          className={portrait ? 'portrait' : 'landscape'}
+          src={imgUrl}
+          alt="profile of the user"
+        />
         <FileInput onChange={this.uploadImage} />
       </div>
     );
@@ -53,6 +99,10 @@ class ProfilePic extends React.Component {
 
 ProfilePic.propTypes = {
   account: PropTypes.objectOf(PropTypes.any).isRequired,
+  userDetail: PropTypes.objectOf(PropTypes.any).isRequired,
+  apis: PropTypes.objectOf(PropTypes.any).isRequired,
+  updateDatabaseSchema: PropTypes.func.isRequired,
+  addDatabaseSchema: PropTypes.func.isRequired,
 };
 
 export default ProfilePic;

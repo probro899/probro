@@ -291,6 +291,7 @@ class Classes extends Component {
                             columnId={column.id}
                             index={index}
                             api={api}
+                            boardId={classId}
                             addDatabaseSchema={addDatabaseSchema}
                             updateDatabaseSchema={updateDatabaseSchema}
                             deleteDatabaseSchema={deleteDatabaseSchema}

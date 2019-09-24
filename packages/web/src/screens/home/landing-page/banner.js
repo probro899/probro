@@ -1,40 +1,60 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+
+const file = require('../../../assets/screenshot.png');
 
 class Banner extends Component {
   constructor(props) {
     super(props);
-    this.state = { image: {} };
-  }
-
-  componentWillMount() {
-    this.getImages();
-  }
-
-  getImages = async () => {
-    const res = await axios.get('http://localhost:3000/image');
-    this.setState({ image: res.data });
+    this.state = {};
   }
 
   render() {
-    const { image } = this.state;
-
     return (
       <div className="banner-container">
         <div className="banner-head">
-          <p>How it works?</p>
+          <p>How it works</p>
         </div>
-        <div className="banner-image">
-          <img src={image.image_url} alt="banner here" />
-          <p>Connect</p>
-        </div>
-        <div className="banner-image">
-          <img src={image.image_url} alt="banner here" />
-          <p>Mentorship</p>
-        </div>
-        <div className="banner-image">
-          <img src={image.image_url} alt="banner here" />
-          <p>Learning</p>
+        <div className="banners">
+          <div className="banner">
+            <div className="banner-image">
+              <img src={file} alt="banner here" />
+            </div>
+            <div className="banner-title">
+              <p>Connect</p>
+            </div>
+            <div className="banner-description">
+              <ul>
+                <li>Search for mentor in the site</li>
+              </ul>
+            </div>
+          </div>
+          <div className="banner">
+            <div className="banner-image">
+              <img src={file} alt="banner here" />
+            </div>
+            <div className="banner-title">
+              <p>Mentorship</p>
+            </div>
+            <div className="banner-description">
+              <ul>
+                <li>Search for mentor in the site</li>
+              </ul>
+            </div>
+          </div>
+          <div className="banner">
+            <div className="banner-image">
+              <img src={file} alt="banner here" />
+            </div>
+            <div className="banner-title">
+              <p>Learning</p>
+            </div>
+            <div className="banner-description">
+              <ul>
+                <li>Search for mentor in the site</li>
+                <li>Search</li>
+              </ul>
+            </div>
+          </div>
         </div>
       </div>
     );

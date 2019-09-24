@@ -35,7 +35,13 @@ class NewTask extends Component {
   }
 
   addNewTask = async (data) => {
-    const { columnId, account, database, addDatabaseSchema } = this.props;
+    const {
+      columnId,
+      account,
+      boardId,
+      database,
+      addDatabaseSchema,
+    } = this.props;
     const { api } = this.state;
     const pos = Object.keys(database.BoardColumnCard.byId).reduce((count, obj) => {
       if (database.BoardColumnCard.byId[obj].boardColumnId === columnId) {
@@ -50,6 +56,7 @@ class NewTask extends Component {
       name: data.name,
       position: pos,
       boardColumnId: columnId,
+      broadCastId: `Board-${boardId}`,
     });
     addDatabaseSchema('BoardColumnCard', {
       id: Date.now(),
@@ -85,6 +92,7 @@ NewTask.propTypes = {
   columnId: PropTypes.number.isRequired,
   account: PropTypes.objectOf(PropTypes.any).isRequired,
   database: PropTypes.objectOf(PropTypes.any).isRequired,
+  boardId: PropTypes.number.isRequired,
   addDatabaseSchema: PropTypes.func.isRequired,
 };
 

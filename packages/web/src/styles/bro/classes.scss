@@ -2,17 +2,22 @@
 // styling the class component here
 .classes {
   display: flex;
-  // flex: 0.8;
   flex-direction: column;
-  padding: 10px;
+  padding: 5px;
   .header {
-    font-size: 25px;
-    font-weight: 500px;
+    margin-bottom: 10px;
     padding: 10px;
-    // border-bottom: 1px solid lightgray;
+    .title {
+      font-size: 18px;
+      color: $textColor;
+    }
+    small {
+      color: $lightTextColor;
+    }
+    // display: flex;
+    // justify-content: space-between;
   }
   .content-list {
-    // padding: 10px;
     display: flex;
     flex-wrap: wrap;
     .more-button {
