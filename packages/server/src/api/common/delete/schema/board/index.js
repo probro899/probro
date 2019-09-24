@@ -11,13 +11,14 @@ function deleteBoard(record) {
 }
 
 function deleteBoardColumn(record) {
-  deleteBoardColumnHelper.call(Delete.bind(this), record);
+  // console.log('record in deleteBoardColumn', record);
+  const dbColDelete = Delete.bind(this);
+  deleteBoardColumnHelper(dbColDelete, record);
 }
 
 function deleteBoardColumnCard(record) {
-  deleteBoardColumnCardHelper.call(Delete.bind(this), [record]);
+  deleteBoardColumnCardHelper(Delete.bind(this), [record]);
 }
-
 
 function deleteBoardColumnCardAttachment(record) {
   Delete.call(this, 'BoardColumnCardAttachment', record);

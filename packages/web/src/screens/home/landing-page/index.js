@@ -8,16 +8,20 @@ import Banner from './banner';
 import Popular from './popular';
 import Post from './posts';
 import Footer from '../../../common/footer';
+import axios from 'axios';
+import { ENDPOINT } from '../../../config';
 
 class HomePage extends Component {
   state = {};
 
-  componentWillMount() {
+  async componentWillMount() {
     const { updateNav } = this.props;
     updateNav({
       schema: 'mainNav',
       data: { name: 'properClass' },
     });
+    const indexDataRes = await axios.get(`${ENDPOINT}/web/get-index`);
+    console.log('indexRes', indexDataRes);
   }
 
   render() {

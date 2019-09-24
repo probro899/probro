@@ -1,3 +1,4 @@
-export default async function exec(db, sql, ...params) {
-  return db.run(sql, ...params);
+export default async function exec(db, sql, params) {
+  const res = await db.all(sql, ...params);
+  return res;
 }
