@@ -32,6 +32,7 @@ class HomePage extends Component {
     } catch (e) {
       console.log('Eror: ', e);
     }
+
   }
 
   render() {

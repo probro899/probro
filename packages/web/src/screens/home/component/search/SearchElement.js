@@ -1,5 +1,7 @@
 import React from 'react';
+import axios from 'axios';
 import { Redirect } from 'react-router-dom';
+import { ENDPOINT } from '../../../../config';
 
 class SearchElement extends React.Component {
   state={
@@ -13,10 +15,12 @@ class SearchElement extends React.Component {
     });
   }
 
-  submitSearch = (e) => {
+  submitSearch = async (e) => {
     e.preventDefault();
     const { search } = this.state;
     if (search.replace(/\s/g, '').length !== 0) {
+      const result = await axios.get(`${ENDPOINT}/web/do-search?keyword=${search}`);
+      console.log('search Result', result);
       this.setState({
         gotKey: true,
       });

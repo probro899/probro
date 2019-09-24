@@ -11,26 +11,33 @@ async function addBoard(record) {
   const boardId = await add.call(this, 'Board', record);
   await add.call(this, 'BoardMember', { boardId, tuserId: record.userId, fuserId: record.userId, joinStatus: true, timeStamp: Date.now(), userType: 'creator' });
   session.subscribe(`Board-${boardId}`);
+  console.log('boardid in addBorad', boardId);
+  return boardId;
 }
 
-function addBoardColumn(record) {
-  add.call(this, 'BoardColumn', record);
+async function addBoardColumn(record) {
+  const res = await add.call(this, 'BoardColumn', record);
+  return res;
 }
 
-function addBoardColumnCard(record) {
-  add.call(this, 'BoardColumnCard', record);
+async function addBoardColumnCard(record) {
+  const res = await add.call(this, 'BoardColumnCard', record);
+  return res;
 }
 
-function addBoardColumnCardAttachment(record) {
-  add.call(this, 'BoardColumnCardAttachment', record);
+async function addBoardColumnCardAttachment(record) {
+  const res = await add.call(this, 'BoardColumnCardAttachment', record);
+  return res;
 }
 
-function addBoardColumnCardComment(record) {
-  add.call(this, 'BoardColumnCardComment', record);
+async function addBoardColumnCardComment(record) {
+  const res = add.call(this, 'BoardColumnCardComment', record);
+  return res;
 }
 
-function addBoardColumnCardDescription(record) {
-  add.call(this, 'BoardColumnCardDescription', record);
+async function addBoardColumnCardDescription(record) {
+  const res = await add.call(this, 'BoardColumnCardDescription', record);
+  return res;
 }
 
 async function addBoardMember(record) {
@@ -126,8 +133,9 @@ async function addBoardMember(record) {
   return res;
 }
 
-function addBoardMessage(record) {
-  add.call(this, 'BoardMessage', record);
+async function addBoardMessage(record) {
+ const res = await add.call(this, 'BoardMessage', record);
+ return res;
 }
 
 export default [
