@@ -1,5 +1,8 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+
+const icon = require('../../../../assets/icons/64w/uploadicon64.png');
 
 class Connecte extends React.Component {
   state = {};
@@ -14,10 +17,22 @@ class Connecte extends React.Component {
       }
     });
     return (
-      <div>
-        Helllo Connectee
-        <p>{id}</p>
-        <p>{user.firstName}</p>
+      <div className="i-result">
+        <div className="img-con">
+          <img
+            alt="profile thumnail"
+            src={icon}
+          />
+        </div>
+        <div className="desc-con">
+          <p className="name">
+            <Link to={`/user/${user.id}/`}>
+              {`${user.firstName} ${user.lastName}`}
+            </Link>
+          </p>
+          <p>Software Engineer</p>
+          <p className="location">Nepal</p>
+        </div>
       </div>
     );
   }

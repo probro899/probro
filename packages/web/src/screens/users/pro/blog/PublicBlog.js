@@ -2,11 +2,13 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import axios from 'axios';
 import Navbar from '../../../home/component/navbar';
 import CommentContainer from './comment';
 import Footer from '../../../../common/footer';
 import client from '../../../../socket';
-import * as actions from '../../../../actions';
+import { ENDPOINT } from '../../../../config';
+import { Spinner } from '../../../../common';
 
 const file = require('../../../../assets/icons/64w/uploadicon64.png');
 
@@ -14,15 +16,41 @@ class PublicBlog extends React.Component {
   state={
     blogId: null,
     apis: {},
+    data: {},
+    loading: true,
   };
 
   async componentDidMount() {
-    const apis = await client.scope('Mentee');
-    const { match } = this.props;
-    this.setState({
-      apis,
-      blogId: parseInt(match.params.blogId, 10),
-    });
+    const { account, match } = this.props;
+    try {
+      let apis = {};
+      if (account.user) {
+        apis = await client.scope('Mentee');
+      }
+      const res = await axios.get(`${ENDPOINT}/web/get-blog?blogId=${match.params.blogId}&userId=${match.params.userId}`);
+      this.setState({
+        data: res.data,
+        apis,
+        blogId: parseInt(match.params.blogId, 10),
+        loading: false,
+      });
+    } catch (e) {
+      console.log('Error', e);
+    }
+  }
+
+  async componentDidUpdate(prevProps) {
+    const { account } = this.props;
+    if (account.user !== prevProps.account.user) {
+      try {
+        const apis = await client.scope('Mentee');
+        this.setState({
+          apis,
+        });
+      } catch (e) {
+        console.log('Error', e);
+      }
+    }
   }
 
   createMarkup = (val) => {
@@ -30,17 +58,21 @@ class PublicBlog extends React.Component {
   }
 
   render() {
-    const { blogId, apis } = this.state;
-    const { database, account, addDatabaseSchema, deleteDatabaseSchema } = this.props;
-    const usr = blogId && database.Blog.byId[blogId].userId;
-    return !blogId && !usr ? <div /> : (
+    const { blogId, apis, data, loading } = this.state;
+    if (loading) {
+      return <Spinner />;
+    }
+    const { account } = this.props;
+    const usr = data.blog.userId;
+    const { userDetails } = data;
+    return (
       <div>
         <Navbar />
         <div className="public-blog">
           <div className="public-blog-title">
             <p>
               {
-                database.Blog.byId[blogId].title
+                data.blog.title
               }
             </p>
             <div className="author-user">
@@ -53,10 +85,16 @@ class PublicBlog extends React.Component {
                 />
                 <div className="author-detail">
                   <Link to={`/user/${usr}/`}>
-                    {`${database.User.byId[usr].firstName} ${database.User.byId[usr].middleName ? `${database.User.byId[usr].middleName} ` : ''}${database.User.byId[usr].lastName}`}
+                    {
+                      userDetails.map((obj) => {
+                        if (obj.user.id === usr) {
+                          return `${obj.user.firstName} ${obj.user.middleName ? `${obj.user.middleName} ` : ''}${obj.user.lastName}`;
+                        }
+                      })
+                    }
                   </Link>
                   <span>
-                    {new Date(database.Blog.byId[blogId].timeStamp).toDateString()}
+                    {new Date(data.blog.timeStamp).toDateString()}
                   </span>
                 </div>
               </div>
@@ -69,17 +107,17 @@ class PublicBlog extends React.Component {
             <div
               id="blogContent"
               // eslint-disable-next-line react/no-danger
-              dangerouslySetInnerHTML={this.createMarkup(database.Blog.byId[blogId].content)}
+              dangerouslySetInnerHTML={this.createMarkup(data.blog.content)}
             />
             <div className="right" />
           </div>
           <CommentContainer
             account={account}
             apis={apis}
-            database={database}
+            users={userDetails}
+            comments={data.blogComment}
+            likes={data.blogLike}
             blogId={blogId}
-            addDatabaseSchema={addDatabaseSchema}
-            deleteDatabaseSchema={deleteDatabaseSchema}
           />
         </div>
         <Footer />
@@ -90,10 +128,8 @@ class PublicBlog extends React.Component {
 
 PublicBlog.propTypes = {
   match: PropTypes.objectOf(PropTypes.any).isRequired,
-  database: PropTypes.objectOf(PropTypes.any).isRequired,
   account: PropTypes.objectOf(PropTypes.any).isRequired,
-  addDatabaseSchema: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => state;
-export default connect(mapStateToProps, { ...actions })(PublicBlog);
+export default connect(mapStateToProps)(PublicBlog);

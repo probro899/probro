@@ -13,21 +13,23 @@ import { Communication } from '../common';
 import { Archive } from './users/components';
 import { PublicProfile } from './home/component';
 import { SearchResult } from './home/component/search';
+import TakeTour from './home/take-a-tour';
 
 export default () => (
   <Router>
     <div className="home-screen">
       <Switch>
         <Route exact path="/archive" component={Archive} />
+        <Route exact path="/take-a-tour" component={TakeTour} />
         <Route path="/login" component={Login} />
         <Route path="/register" component={Registration} />
         <Route path="/forgot-password" component={Forgot} />
         <Route path="/class-work/:id/:classId" component={ClassManager} />
         <Route path="/edit-blog/:id/:blogId" component={CreateBlog} />
         <Route path="/create-blog/:id" component={CreateBlog} />
-        <Route path="/reset/:token" component={Reset} />
-        <Route path="/email-verification/:token" component={EmailVerification} />
-        <Route path="/archive/:blogId" component={PublicBlog} />
+        <Route exact path="/reset/:token" component={Reset} />
+        <Route exact path="/email-verification/:token" component={EmailVerification} />
+        <Route path="/archive/:blogId/:userId" component={PublicBlog} />
         <Route path="/user/:userId" component={PublicProfile} />
         <Route path="/search/key=:searchKey" component={SearchResult} />
         <Route path="/:id" component={BroHome} />

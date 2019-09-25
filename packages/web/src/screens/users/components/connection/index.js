@@ -34,9 +34,17 @@ class Connection extends React.Component {
     const connectionIds = this.getConnections();
     return (
       <div className="connection bro-right">
-        {
-          connectionIds.map(id => <Connecte key={id} id={id} database={database} />)
-        }
+        <div className="header">
+          <div>
+            <span className="title">Connections </span>
+            <small>Mange your connections</small>
+          </div>
+        </div>
+        <div className="con-list">
+          {
+            connectionIds.map(id => <Connecte key={id} id={id} database={database} />)
+          }
+        </div>
       </div>
     );
   }
