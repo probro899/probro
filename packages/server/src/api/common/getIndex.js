@@ -23,7 +23,12 @@ export default async () => {
       createdBlogCount.push(publishBlogs.filter(b => b.userId === id).length);
     });
 
-    const blogs = publishBlogs.map((blog, idx) => ({ blog, ...allBlogDetail[idx] }));
+    const blogs = publishBlogs.map((blog, idx) => ({ blog, ...allBlogDetail[idx] })).sort((a, b) => {
+      if ((a.blogLike.length + a.blogComment) > (b.blogLike + b.blogComment)) {
+        return -1;
+      }
+      return 1;
+    });
 
     // console.log('uniquser = ', uniqBlogUserId, 'createdBlogCount', createdBlogCount);
     const indexUserId = uniqBlogUserId.map((uid, idx) => ({ id: uid, count: createdBlogCount[idx] })).sort((a, b) => a > b ? 1 : -1).slice(0, 9);
