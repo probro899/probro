@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import client from '../../../../socket';
 import * as actions from '../../../../actions';
 import Tools from './Tools';
-import { Button } from '@blueprintjs/core';
 
 const fabric = require('fabric');
 const file = require('../../../../assets/icons/cursor/pencil.png');
@@ -28,7 +27,7 @@ class DrawingBoard extends Component {
   }
 
   componentDidMount() {
-    const canvas = new fabric.fabric.Canvas('mainCanvas', { preserveObjectStacking: true, selection: false });
+    const canvas = new fabric.fabric.Canvas('mainCanvas', { preserveObjectStacking: true, selection: false, backgroundColor: 'white' });
     canvas.freeDrawingBrush.width = 2;
     canvas.on('mouse:down', () => {
       this.onCanvasClick();
@@ -141,15 +140,6 @@ class DrawingBoard extends Component {
     }
   }
 
-  canvasCaptureStreamHandler = async () => {
-    console.log('capture stream called');
-    const canvasMain = document.getElementById('mainCanvas');
-    const stream = await canvasMain.captureStream(10);
-    console.log('stream in capture canvas', stream);
-    const videoCanvas = document.getElementById('canvasVideo');
-    videoCanvas.srcObject = stream;
-  }
-
   render() {
     const { draw, anyObjectActive, color } = this.state;
     return (
@@ -178,8 +168,6 @@ class DrawingBoard extends Component {
             }}
           />
         </div>
-        <Button text="start" onClick={this.canvasCaptureStreamHandler} />
-          <video controls id="canvasVideo" playsInline autoPlay style={{ height: 300, width: 400, background: 'white'}} />
       </div>
     );
   }

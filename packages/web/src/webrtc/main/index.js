@@ -13,9 +13,11 @@ function gotRemoteStream(e, userId, gotRemoteStreamHandler) {
   console.log('got remote stream', e, userId);
   gotRemoteStreamHandler(e.streams[0], userId);
   const videoElement = document.getElementById(`video-${userId}`);
+  const lastVideoElement = document.getElementById(`video-mentor`);
   // console.log('gotRemoteStream called', e);
   if (videoElement.srcObject !== e.streams[0]) {
     videoElement.srcObject = e.streams[0];
+    lastVideoElement.srcObject = e.streams[0];
   }
 }
 

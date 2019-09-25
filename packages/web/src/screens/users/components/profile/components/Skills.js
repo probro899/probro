@@ -142,14 +142,14 @@ class Skills extends React.Component {
         {skill && (
           <div className="skills-container">
             {
-              skill.map((i, index) => {
-                return (
-                  <span key={index}>{i}</span>
-                );
-              })
+            skill.map((i, index) => {
+              return (
+                <span key={index}>{i}</span>
+              );
+            })
             }
-          </div>)
-        }
+          </div>
+        )}
       </div>
     );
   }

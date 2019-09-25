@@ -18,6 +18,7 @@ const initialState = {
   isLive: false,
   mediaRecording: null,
   recordedBlobs: [],
+  lastStreamId: null,
 };
 
 export default (state = initialState, action) => {

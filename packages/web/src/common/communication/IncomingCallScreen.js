@@ -6,7 +6,6 @@ import { Button } from '@blueprintjs/core';
 import mediaSelector from './mediaSelector';
 import { SoundComponent } from './components';
 
-
 const callingPerson = require('../../assets/icons/128w/uploadicon128.png');
 
 class IncomingCallScreen extends React.Component {
@@ -20,7 +19,7 @@ class IncomingCallScreen extends React.Component {
     } = this.props;
     const stream = await mediaSelector(mediaType);
     await answerHandler(apis, stream);
-    updateWebRtc('showCommunication', 1);
+    // updateWebRtc('showCommunication', 1);
   }
 
   callReject = () => {

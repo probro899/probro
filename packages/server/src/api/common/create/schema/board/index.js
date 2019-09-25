@@ -53,13 +53,14 @@ async function addBoardMember(record) {
     const fuser = await findOne('User', { id: record.fuserId });
     const board = await findOne('Board', { id: record.boardId });
     const htmlStringValue = await mailBody();
+    let addMemberRes = null;
     if (user) {
       const boardMember = await findOne('BoardMember', { boardId: record.boardId, tuserId: user.id });
       if (boardMember) {
         return { status: 201, message: 'User is already added to this board' };
       }
       delete record.email;
-      await insert('BoardMember', { ...record, tuserId: user.id });
+      addMemberRes = await insert('BoardMember', { ...record, tuserId: user.id });
       mailer({
         from: 'ProperClass<probro899@gmail.com>',
         to: `<${email}>`,
@@ -129,6 +130,7 @@ async function addBoardMember(record) {
     } else {
       throw new Error('User Not Found');
     }
+    return { status: 200, data: addMemberRes };
   });
   return res;
 }

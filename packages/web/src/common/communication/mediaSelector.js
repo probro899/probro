@@ -1,5 +1,7 @@
 export default async (mediaType) => {
   console.log('check media type', mediaType);
+  const whiteBoardElement = document.getElementById('mainCanvas');
+  console.log('white boardelement', whiteBoardElement);
   let stream = null;
   try {
     navigator.getWebcam = (navigator.getUserMedia || navigator.webKitGetUserMedia || navigator.moxGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia);
@@ -21,6 +23,11 @@ export default async (mediaType) => {
         return stream;
       case 'screenshare':
         stream = await navigator.mediaDevices.getDisplayMedia({ video: true });
+        return stream;
+      case 'whiteBoard':
+        console.log('inside white board element');
+        stream = await whiteBoardElement.captureStream(10);
+        console.log('stream of white Board', stream);
         return stream;
       default:
         return stream;
