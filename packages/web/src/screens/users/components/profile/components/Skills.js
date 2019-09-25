@@ -139,15 +139,17 @@ class Skills extends React.Component {
           <span>Skills</span>
           <Icon icon="plus" onClick={this.togglePopover} />
         </p>
-        <div className="skills-container">
-          {
-            skill.map((i, index) => {
-              return (
-                <span key={index}>{i}</span>
-              );
-            })
-          }
-        </div>
+        {skill && (
+          <div className="skills-container">
+            {
+              skill.map((i, index) => {
+                return (
+                  <span key={index}>{i}</span>
+                );
+              })
+            }
+          </div>)
+        }
       </div>
     );
   }

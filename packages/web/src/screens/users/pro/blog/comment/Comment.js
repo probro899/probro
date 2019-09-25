@@ -6,7 +6,7 @@ import Moment from 'react-moment';
 const file = require('../../../../../assets/icons/64w/uploadicon64.png');
 
 const Comment = (props) => {
-  const { comment, UserTable } = props;
+  const { comment, users } = props;
   return (
     <div className="i-response">
       <img
@@ -18,9 +18,9 @@ const Comment = (props) => {
       <div className="comment-content">
         <div>
           {
-            Object.values(UserTable.byId).map((obj) => {
-              if (obj.id === comment.userId) {
-                const user = obj;
+            users.map((obj) => {
+              if (obj.user.id === comment.userId) {
+                const { user } = obj;
                 return user.middleName ? (
                   <Link to={`/user/${user.id}/`}>
                     {`${user.firstName} ${user.middleName} ${user.lastName} `}
@@ -53,7 +53,7 @@ const Comment = (props) => {
 
 Comment.propTypes = {
   comment: PropTypes.objectOf(PropTypes.any).isRequired,
-  UserTable: PropTypes.objectOf(PropTypes.any).isRequired,
+  users: PropTypes.arrayOf(PropTypes.any).isRequired,
 };
 
 export default Comment;

@@ -8,17 +8,25 @@ class CommentContainer extends React.Component {
   state = {
     comment: '',
     liked: null,
+    allComments: [],
+    allLikes: [],
   };
 
   componentDidMount = () => {
-    const { database, account, blogId } = this.props;
-    Object.values(database.BlogLike.byId).filter((obj) => {
-      if (obj.userId === account.user.id && obj.blogId === blogId) {
-        this.setState({
-          liked: obj.id,
-        });
-      }
+    const { likes, account, comments } = this.props;
+    this.setState({
+      allComments: comments,
+      allLikes: likes,
     });
+    if (account.user) {
+      likes.filter((obj) => {
+        if (obj.userId === account.user.id) {
+          this.setState({
+            liked: obj.id,
+          });
+        }
+      });
+    }
   }
 
   setComment = (e) => {
@@ -28,117 +36,106 @@ class CommentContainer extends React.Component {
   }
 
   submitComment = async () => {
-    const { comment } = this.state;
-    const { apis, blogId, account, addDatabaseSchema } = this.props;
-    addDatabaseSchema('BlogComment', {
-      id: Date.now(),
-      userId: account.user.id,
-      comment,
-      timeStamp: Date.now(),
-      blogId,
-    });
-    await apis.addBlogComment({
-      userId: account.user.id,
-      comment,
-      timeStamp: Date.now(),
-      blogId,
-      broadCastId: `Blog-${blogId}`,
-    });
-    this.setState({
-      comment: '',
-    });
-  }
-
-  getLikeCount = () => {
-    const { database, blogId } = this.props;
-    const likes = Object.values(database.BlogLike.byId).filter((obj) => {
-      return obj.blogId === blogId;
-    }).reduce(tot => tot + 1, 0);
-    return likes;
+    const { comment, allComments } = this.state;
+    const { apis, blogId, account } = this.props;
+    try {
+      const data = {
+        userId: account.user.id,
+        comment,
+        timeStamp: Date.now(),
+        blogId,
+        broadCastId: `Blog-${blogId}`,
+      };
+      const res = await apis.addBlogComment(data);
+      this.setState({
+        allComments: [...allComments, { ...data, id: res }],
+        comment: '',
+      });
+    } catch (e) {
+      console.log('Error', e);
+    }
   }
 
   likeBlog = async () => {
-    const { liked } = this.state;
+    const { liked, allLikes } = this.state;
     const {
       apis,
       account,
       blogId,
-      addDatabaseSchema,
-      deleteDatabaseSchema,
     } = this.props;
     if (liked) {
       await apis.deleteBlogLike({
         id: liked,
         broadCastId: `Blog-${blogId}`,
       });
-      deleteDatabaseSchema('BlogLike', { id: liked });
       this.setState({
+        allLikes: allLikes.filter(obj => obj.id !== liked),
         liked: null,
       });
     } else {
-      await apis.addBlogLike({
+      const data = {
         blogId,
         userId: account.user.id,
         timeStamp: Date.now(),
         likeType: 'like',
-        broadCastId: `Blog-${blogId}`,
-      });
-      addDatabaseSchema('BlogLike', {
-        id: Date.now(),
-        blogId,
-        userId: account.user.id,
-        timeStamp: Date.now(),
-        likeType: 'like',
-      });
+      };
+      await apis.addBlogLike({ ...data, broadCastId: `Blog-${blogId}` });
       this.setState({
         liked: Date.now(),
+        allLikes: [...allLikes, { ...data, id: Date.now() }],
       });
     }
   }
 
   render() {
-    const { comment, liked } = this.state;
-    console.log(liked);
-    const { database, blogId } = this.props;
+    const {
+      comment,
+      liked,
+      allComments,
+      allLikes,
+    } = this.state;
+    const { users, account } = this.props;
     return (
       <div className="response">
         <div className="left" />
         <div className="comment-section">
           <div>
-            <Button
-              intent={liked ? 'primary' : 'none'}
-              text="Like"
-              icon="thumbs-up"
-              onClick={this.likeBlog}
-            />
+            {account.user && (
+              <Button
+                intent={liked ? 'primary' : 'none'}
+                text="Like"
+                icon="thumbs-up"
+                onClick={this.likeBlog}
+              />
+            )}
             <span>
-              {` ${this.getLikeCount()} likes`}
+              {` ${allLikes.length} likes`}
             </span>
           </div>
           <div className="top-label">
             <h1>Comment here</h1>
           </div>
-          <div className="comment-area">
-            <TextArea
-              placeholder="put a comment in here"
-              onChange={this.setComment}
-              value={comment}
-            />
-            <Button
-              text="Submit"
-              intent="success"
-              fill
-              onClick={this.submitComment}
-            />
-          </div>
+          {account.user && (
+            <div className="comment-area">
+              <TextArea
+                placeholder="put a comment in here"
+                onChange={this.setComment}
+                value={comment}
+              />
+              <Button
+                text="Submit"
+                intent="success"
+                fill
+                onClick={this.submitComment}
+              />
+            </div>
+          )}
           <div className="responses">
             <div className="res-label">
               <h3>Responses</h3>
             </div>
-            {Object.values(database.BlogComment.byId).sort(timeStampSorting).map((obj, index) => {
-              if (blogId === obj.blogId) {
-                return <Comment UserTable={database.User} comment={obj} key={index} />;
-              }
+            {allComments.sort(timeStampSorting).map((obj, index) => {
+              return <Comment users={users} comment={obj} key={index} />;
             })}
           </div>
         </div>
@@ -149,12 +146,12 @@ class CommentContainer extends React.Component {
 }
 
 CommentContainer.propTypes = {
-  database: PropTypes.objectOf(PropTypes.any).isRequired,
   apis: PropTypes.objectOf(PropTypes.any).isRequired,
   account: PropTypes.objectOf(PropTypes.any).isRequired,
-  addDatabaseSchema: PropTypes.func.isRequired,
-  deleteDatabaseSchema: PropTypes.func.isRequired,
+  users: PropTypes.arrayOf(PropTypes.any).isRequired,
   blogId: PropTypes.number.isRequired,
+  comments: PropTypes.arrayOf(PropTypes.any).isRequired,
+  likes: PropTypes.arrayOf(PropTypes.any).isRequired,
 };
 
 export default CommentContainer;

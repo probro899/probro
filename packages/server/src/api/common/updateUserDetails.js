@@ -4,7 +4,7 @@ import db from '../../db';
 import { user } from '../../cache';
 
 export default async function updateUserDetails(record) {
-  console.log('update userDetails called', record);
+  // console.log('update userDetails called', record);
   const { session } = this;
 
   try {
@@ -13,8 +13,8 @@ export default async function updateUserDetails(record) {
       if (findOneRes) {
         const updateRes = await update('UserDetail', record, { userId: record.userId });
         if (updateRes) {
-          console.log('updateRes', updateRes);
-          const newRecord = findOne('UserDetail', { userId: record.userId });
+          // console.log('updateRes', updateRes);
+          const newRecord = await findOne('UserDetail', { userId: record.userId });
           session.dispatch(schema.update('UserDetail', newRecord));
           user.update(schema.update('UserDetail', newRecord), session);
           return 'User details updated successfully';

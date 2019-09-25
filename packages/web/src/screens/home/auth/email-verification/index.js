@@ -12,7 +12,8 @@ class VerifyEmail extends React.Component {
     loading: true,
   };
 
-  async componentWillMount() {
+  async componentDidMount() {
+    // console.log('hello there coming');
     const { match } = this.props;
     try {
       const res = await axios.get(`${ENDPOINT}/auth/email-verification?token=${match.params.token}`);

@@ -1,0 +1,38 @@
+@import '../config.scss';
+.connection {
+  .header {
+    margin-bottom: 10px;
+    padding: 10px;
+    .title {
+      font-size: 18px;
+      color: $textColor;
+    }
+    small {
+      color: $lightTextColor;
+    }
+  }
+  .con-list {
+    .i-result {
+      margin-top: 5px;
+      width: 100%;
+      display: flex;
+      .img-con {
+        padding: 3px;
+      }
+      .desc-con {
+        padding-left: 5px;
+        .name {
+          font-size: 16px;
+          font-weight: bold;
+        }
+        .location {
+          opacity: 0.8;
+          font-weight: bold;
+        }
+      }
+      img {
+        border-radius: 50%;
+      }
+    }
+  }
+}

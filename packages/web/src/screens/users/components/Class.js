@@ -44,8 +44,12 @@ class Class extends Component {
     const { api } = this.state;
     data.userId = account.user.id;
     data.timeStamp = Date.now();
-    await api.addBoard(data);
-    addDatabaseSchema('Board', { ...data, id: Date.now() });
+    try {
+      const res = await api.addBoard(data);
+      addDatabaseSchema('Board', { ...data, id: res });
+    } catch (e) {
+      console.log('Error: ', e);
+    }
     this.newClass();
     return { response: 200 };
   }

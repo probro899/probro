@@ -2,49 +2,63 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Icon } from '@blueprintjs/core';
+import axios from 'axios';
 import * as actions from '../../../../actions';
 import Navbar from '../navbar';
 import Footer from '../../../../common/footer';
 import Connections from './connections';
 import client from '../../../../socket';
+import { ENDPOINT } from '../../../../config';
+import { Spinner } from '../../../../common';
 
 const file = require('../../../../assets/icons/512h/uploadicon512.png');
 const school = require('../../../../assets/icons/64w/school64.png');
 const office = require('../../../../assets/icons/64w/office64.png');
 
 class PublicProfile extends React.Component {
-  state = {
-    apis: {},
-  };
-
-  async componentWillMount() {
+  constructor(props) {
+    super(props);
     const { updateNav } = this.props;
-    const apis = await client.scope('Mentee');
-    this.setState({
-      apis,
-    });
     updateNav({
       schema: 'mainNav',
       data: { name: '' },
     });
+    this.state = {
+      apis: {},
+      loading: true,
+      data: {},
+    };
+  }
+
+  async componentDidMount() {
+    const { match, account } = this.props;
+    let apis = {};
+    try {
+      if (account.user) {
+        apis = await client.scope('Mentee');
+      }
+      const res = await axios.get(`${ENDPOINT}/web/get-user?userId=${match.params.userId}`);
+      console.log(res);
+      this.setState({
+        data: res.data,
+        apis,
+        loading: false,
+      });
+    } catch (e) {
+      console.log('Error', e);
+    }
   }
 
   render() {
-    const { account, database, match, updateWebRtc } = this.props;
-    let details = null;
-    let moreDetails = null;
-    try {
-      details = database.User.byId[parseInt(match.params.userId, 10)];
-      database.UserDetail.allIds.map((obj) => {
-        if (parseInt(match.params.userId, 10) === database.UserDetail.byId[obj].userId) {
-          moreDetails = database.UserDetail.byId[obj];
-        }
-      });
-    } catch (e) {
-      console.log(e);
+    const { account, database, updateWebRtc } = this.props;
+    const { loading, data } = this.state;
+    if (loading) {
+      return <Spinner />;
     }
+    const userDetails = data.userDetail;
+    const { user } = data;
     const { apis } = this.state;
-    return (!account.user || !details) ? <div /> : (
+    return (
       <div>
         <Navbar />
         <div className="public-profile">
@@ -55,7 +69,7 @@ class PublicProfile extends React.Component {
           <div className="top-details">
             <div className="desc">
               <span className="name">
-                {details.middleName ? `${details.firstName} ${details.middleName} ${details.lastName}` : `${details.firstName} ${details.lastName}`}
+                {user.middleName ? `${user.firstName} ${user.middleName} ${user.lastName}` : `${user.firstName} ${user.lastName}`}
               </span>
               <br />
               <span className="designation">Software Engineer at Somewhere</span>
@@ -63,11 +77,22 @@ class PublicProfile extends React.Component {
               <Icon icon="locate" />
               <span className="country"> Nepal</span>
             </div>
-            <div className="connect-btns">
-              { account.user.id !== details.id && (account.user.userDetails.type !== 'mentee' || moreDetails.type !== 'mentee')
-                && <Connections apis={apis} updateWebRtc={updateWebRtc} database={database} details={details} moreDetails={moreDetails} account={account} />
-              }
-            </div>
+            {account.user && (
+              <div className="connect-btns">
+                { account.user.id !== user.id && (account.user.userDetails.type !== 'mentee' || userDetails.type !== 'mentee')
+                  && (
+                    <Connections
+                      apis={apis}
+                      updateWebRtc={updateWebRtc}
+                      database={database}
+                      details={user}
+                      moreDetails={userDetails}
+                      account={account}
+                    />
+                  )
+                }
+              </div>
+            )}
           </div>
           <div className="bio">
             <p>

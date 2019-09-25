@@ -10,6 +10,7 @@ import Popular from './popular';
 import Post from './posts';
 import Footer from '../../../common/footer';
 import { ENDPOINT } from '../../../config';
+import { Spinner } from '../../../common';
 
 class HomePage extends Component {
   state = {
@@ -17,7 +18,7 @@ class HomePage extends Component {
     loading: true,
   };
 
-  async componentWillMount() {
+  async componentDidMount() {
     const { updateNav } = this.props;
     updateNav({
       schema: 'mainNav',
@@ -36,13 +37,13 @@ class HomePage extends Component {
 
   render() {
     const { data, loading } = this.state;
-    return loading ? <div /> : (
+    return loading ? <Spinner /> : (
       <div>
         <Navbar />
         <Slider data={data.sliderImages} />
         <Banner />
         <Post />
-        <Popular />
+        <Popular data={data.indexUsers} />
         <Footer />
       </div>
     );
