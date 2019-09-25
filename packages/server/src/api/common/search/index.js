@@ -41,5 +41,6 @@ export default async (keyword) => {
     // console.log('final User Result', finalUserList);
     return { blogs: finalBlogDetals, users: finalUserList };
   });
+  console.log('search response', res);
   return res;
 };

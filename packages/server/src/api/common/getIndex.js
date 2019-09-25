@@ -11,19 +11,20 @@ const bannerImagesDir = path.join(__dirname, '..', '..', 'public', 'images', 'ba
 export default async () => {
   const sliderImages = fs.readdirSync(sliderDirectory);
   const bannerImages = fs.readdirSync(bannerImagesDir);
+
   const dataRes = await db.execute(async ({ find }) => {
     const publishBlogs = await find('Blog', { saveStatus: 'publish' });
     const allBlogDetailPromises = [];
     publishBlogs.forEach(b => allBlogDetailPromises.push(findBlogDetails(b.id, b.userId)));
     const allBlogDetail = await Promise.all(allBlogDetailPromises);
-    console.log('allBlogDetail', allBlogDetail);
+    // console.log('allBlogDetail', allBlogDetail);
     const uniqBlogUserId = lodash.uniq(publishBlogs.map(b => b.userId));
     const createdBlogCount = [];
     uniqBlogUserId.forEach((id) => {
       createdBlogCount.push(publishBlogs.filter(b => b.userId === id).length);
     });
 
-    const blogs = publishBlogs.map((blog, idx) => ({ blog, ...allBlogDetail[idx] })).sort((a, b) => {
+    const blogs = publishBlogs.map((blog, idx) => ({ ...allBlogDetail[idx], blog })).sort((a, b) => {
       if ((a.blogLike.length + a.blogComment) > (b.blogLike + b.blogComment)) {
         return -1;
       }

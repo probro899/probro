@@ -49,7 +49,6 @@ class HomePage extends Component {
   }
 }
 
-
 HomePage.propTypes = {
   updateNav: PropTypes.func.isRequired,
 };

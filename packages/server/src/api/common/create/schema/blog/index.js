@@ -1,17 +1,19 @@
 /* eslint-disable import/no-cycle */
 import add from '../../add';
 
-function addBlog(record) {
-  const res = add.call(this, 'Blog', record);
+async function addBlog(record) {
+  const res = await add.call(this, 'Blog', record);
   return res;
 }
 
-function addBlogComment(record) {
-  add.call(this, 'BlogComment', record);
+async function addBlogComment(record) {
+  const res = await add.call(this, 'BlogComment', record);
+  return res;
 }
 
-function addBlogLike(record) {
-  add.call(this, 'BlogLike', record);
+async function addBlogLike(record) {
+  const res = await add.call(this, 'BlogLike', record);
+  return res;
 }
 
 export default [

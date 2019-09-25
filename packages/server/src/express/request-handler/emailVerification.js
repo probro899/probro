@@ -6,7 +6,7 @@ export default async (req, res) => {
     const emaiVerificationEmail = await emailVerification(req.query.token);
     if (emaiVerificationEmail) {
       res.statusCode = 200;
-      res.send(emaiVerificationEmail);
+      res.send(emaiVerificationEmail); 
     }
   } catch (e) {
     console.log('email verification error', e);

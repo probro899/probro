@@ -71,7 +71,8 @@ export default async function get(id) {
 
     const boardPromises = [];
     BoardMember.forEach(bm => boardPromises.push(findOne('Board', { id: bm.boardId })));
-    const allBoards = await Promise.all(boardPromises);
+    const allBoardsTemp = await Promise.all(boardPromises);
+    const allBoards = allBoardsTemp.filter(b => b);
     // console.log('all board', allBoards);
 
     const boardMessagePromises = [];
