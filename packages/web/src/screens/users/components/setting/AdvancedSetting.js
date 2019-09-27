@@ -8,9 +8,9 @@ class AdvancedSettings extends React.Component {
     mentor: false,
   };
 
-  componentWillMount() {
+  componentDidMount() {
     const { account, database } = this.props;
-    console.log(database.UserDetail);
+    console.log('check database', database);
     database.UserDetail.allIds.map((obj) => {
       if (account.user.id === database.UserDetail.byId[obj].userId && database.UserDetail.byId[obj].type === 'mentor') {
         this.setState({

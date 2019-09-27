@@ -7,47 +7,66 @@
   margin-right: 1px;
   overflow: hidden;
   .search-box-container {
+    position: absolute;
     top:50%;  /* this to center the box w.r.t to parent */
     left: 50%;/* this to center the box w.r.t to parent */
     /* Above 2 lines wont fully center it, the next line internally
     centers it, buy moving itself 50% left and top */
     transform:translate(-50%,-50%);
-    // margin: auto;
-    position: absolute;
     z-index: 2;
     padding: 5px;
-    input {
-      background-color: $backgroundColor; 
-      padding: 4px;
-      height: 40px;
-      line-height: 40px;
-      font-size: 16px;
-      border-width: 1px;
-      vertical-align: middle;
-      border-color: $normalBorder;
-    }
-    button {
-      background: $darkBlue;
-      border-color: $darkBlue;
-      color: $backgroundColor;
-      font-weight: 450;
-      vertical-align: middle;
-      height: 40px;
-      padding: 3px;
-      font-size: 16px;
-      &.adv-search {
-        background: $pcGreen;
-        border-color: $pcGreen;
-        color: $darkBlue;
-        margin-top: 3px;
-        width: 100%;
-        // box-shadow: 0px 1px 2px 1px $pcGreen;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    .search-form {
+      box-shadow: 1px 1px 3px 0px $darkBlue;
+      input {
+        background-color: $backgroundColor; 
+        text-align: center;
+        height: 55px;
+        width: 230px;
+        line-height: 40px;
+        font-size: 20px;
+        border-width: 0.5px;
+        vertical-align: middle;
+        border-color: $normalBorder;
+      }
+      button {
+        background: $darkBlue;
+        border-color: $darkBlue;
+        color: $backgroundColor;
+        vertical-align: middle;
+        height: 55px;
+        width: 120px;
+        padding: 3px;
+        font-size: 20px;
         &:hover {
-          box-shadow: 1px 1px 3px 0px $pcGreen;
+          box-shadow: 1px 1px 3px 0px $darkBlue;
         }
       }
-      &:hover {
-        box-shadow: 1px 1px 3px 0px $darkBlue;
+    }
+    .pc-jumbo {
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      .pc-jumbo-text {
+        color: $backgroundColor;
+        font-size: 50px;
+        font-weight: bolder;
+        text-transform: uppercase;
+      }
+      button {
+        background: red;
+        border-color: red;
+        color: $backgroundColor;
+        vertical-align: middle;
+        height: 45px;
+        width: 120px;
+        padding: 3px;
+        font-size: 18px;
+        &:hover {
+          box-shadow: 1px 1px 3px 0px red;
+        }
       }
     }
   }
