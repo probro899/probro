@@ -47,7 +47,7 @@ class Archive extends React.Component {
             <div className="ar-left">
               {
                 data.map((obj, index) => {
-                  const description = obj.blog.content.replace(/<[^>]+>/g, '').replace('&nbsp;', ' ').substring(0, 300);
+                  const description = obj.blog.content.replace(/<[^>]+>/g, '').replace(/&nbsp;/g, ' ').substring(0, 300);
                   let user;
                   obj.userDetails.map((u) => {
                     if (u.user.id === obj.blog.userId) {
@@ -80,16 +80,16 @@ class Archive extends React.Component {
                           </small>
                         </p>
                         <div className="pc-blog-desc">
-                          {description}
+                          {`${description} ...`}
                         </div>
                         <div className="ar-i-counts">
                           <p className="label">
-                            Comments
                             <span className="count">{obj.blogComment.length}</span>
+                            Comments
                           </p>
                           <p className="label">
-                            Likes
                             <span className="count">{obj.blogLike.length}</span>
+                            Likes
                           </p>
                         </div>
                       </div>

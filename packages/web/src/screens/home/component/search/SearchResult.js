@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import PropTypes from 'prop-types';
 import FilterToolbar from './FilterToolbar';
 import Navbar from '../navbar';
 import ResultList from './ResultList';
@@ -13,7 +14,12 @@ class SearchResult extends React.Component {
   async componentDidMount() {
     const { match } = this.props;
     try {
-      const res = await axios.get(`${ENDPOINT}/web/do-search?keyword=${match.params.searchKey}`);
+      let res;
+      if (match.params.searchKey !== 'no-key') {
+        res = await axios.get(`${ENDPOINT}/web/do-search?keyword=${match.params.searchKey}`);
+      } else {
+        res = await axios.get(`${ENDPOINT}/web/get-mentor`);
+      }
       this.setState({
         data: res.data.users,
         loading: false,
@@ -37,5 +43,9 @@ class SearchResult extends React.Component {
     );
   }
 }
+
+SearchResult.propTypes = {
+  match: PropTypes.objectOf(PropTypes.any).isRequired,
+};
 
 export default SearchResult;

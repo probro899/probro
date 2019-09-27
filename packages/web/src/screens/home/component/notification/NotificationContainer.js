@@ -5,12 +5,9 @@ import PropTypes from 'prop-types';
 class NotificationContainer extends React.Component {
   state = {};
 
-  componentWillMount() {
-    const { apis } = this.props;
-  }
-
   render() {
     const { database } = this.props;
+    console.log(database.Notification);
     return (
       <div className="notification-list">
         {
@@ -31,7 +28,7 @@ class NotificationContainer extends React.Component {
 }
 
 NotificationContainer.propTypes = {
-  apis: PropTypes.objectOf(PropTypes.any).isRequired,
+  // apis: PropTypes.objectOf(PropTypes.any).isRequired,
   database: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 

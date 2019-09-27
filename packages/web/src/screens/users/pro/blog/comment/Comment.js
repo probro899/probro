@@ -22,12 +22,12 @@ const Comment = (props) => {
               if (obj.user.id === comment.userId) {
                 const { user } = obj;
                 return user.middleName ? (
-                  <Link to={`/user/${user.id}/`}>
+                  <Link to={`/user/${user.id}/`} key={`user-${obj.id}`}>
                     {`${user.firstName} ${user.middleName} ${user.lastName} `}
                   </Link>
                 )
                   : (
-                    <Link to={`/user/${user.id}/`}>
+                    <Link to={`/user/${user.id}/`} key={`user-${obj.id}`}>
                       {`${user.firstName} ${user.lastName} `}
                     </Link>
                   );

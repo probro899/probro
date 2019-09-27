@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 import { Drawer, Icon } from '@blueprintjs/core';
 import NotificationContainer from './NotificationContainer';
 
-
 class Notifications extends React.Component {
   state = { drawerOpen: false };
 

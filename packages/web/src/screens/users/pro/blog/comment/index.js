@@ -109,7 +109,7 @@ class CommentContainer extends React.Component {
               />
             )}
             <span>
-              {` ${allLikes.length} likes`}
+              {` ${allLikes.length} Likes`}
             </span>
           </div>
           <div className="top-label">
@@ -134,8 +134,8 @@ class CommentContainer extends React.Component {
             <div className="res-label">
               <h3>Responses</h3>
             </div>
-            {allComments.sort(timeStampSorting).map((obj, index) => {
-              return <Comment users={users} comment={obj} key={index} />;
+            {allComments.sort(timeStampSorting).map((obj) => {
+              return <Comment users={users} comment={obj} key={obj.id} />;
             })}
           </div>
         </div>
