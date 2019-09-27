@@ -67,7 +67,7 @@ class CallScreen extends React.Component {
             />
           </div>
           <div className="op-name">
-            Conor Mcgregor
+            Subject 1
           </div>
           <div />
         </div>
