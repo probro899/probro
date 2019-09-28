@@ -3,6 +3,20 @@ import lodash from 'lodash';
 import schema from '@probro/common/src/schema';
 import { user } from '../cache';
 
+
+
+const flat = (arr) => {
+  const flatArray = arr.reduce((t, a) => {
+    if (Array.isArray(a)) {
+      a.forEach(am => t.push(am));
+    } else {
+      t.push(a);
+    }
+    return t;
+  }, []);
+  return flatArray;
+};
+
 function userPresentorHelper(boards, userList) {
   // console.log('Boards and userlist', boards, userList);
   const finalUserList = userList.map((u) => {
@@ -31,7 +45,7 @@ export default async function initUser(id) {
   session.set('userData', u);
   // subscribe to all Related board
   u.Board.forEach(b => session.subscribe(`Board-${b.id}`));
-  lodash.uniq(u.UserConnection.map(obj => [obj.mId, obj.userId]).flat()).forEach(uid => session.subscribe(`UserConnection-${uid}`));
+  lodash.uniq(flat(u.UserConnection.map(obj => [obj.mId, obj.userId]))).forEach(uid => session.subscribe(`UserConnection-${uid}`));
 
   u.allAssociateBlogsId.forEach(blogId => session.subscribe(`Blog-${blogId}`));
 
@@ -40,12 +54,12 @@ export default async function initUser(id) {
   // console.log('Sessiosn user Details', boardSessions.flat()[0].values.user);
   const userSessions = session.getChannel(`UserConnection-${id}`) || [];
   // console.log('UserSessions', userSessions);
-  const finalUserList = userPresentorHelper([...boardSessions.flat(), ...userSessions.flat()], u.User);
+  const finalUserList = userPresentorHelper([...flat(boardSessions), ...flat(userSessions)], u.User);
   // console.log('finalUSerlist', finalUserList);
   // boardSessions.forEach(s => console.log(JSON.stringify(s.id)));
 
   u.Board.map(b => ({ channel: session.channel(`Board-${b.id}`), board: b })).forEach(obj => obj.channel.dispatch(schema.update('User', { id, activeStatus: true })));
-  lodash.uniq(u.UserConnection.map(obj => [obj.mId, obj.userId]).flat()).map(uid => ({ channel: session.channel(`UserConnection-${uid}`) })).forEach(obj => obj.channel.dispatch(schema.update('User', { id, activeStatus: true })));
+  lodash.uniq(flat(u.UserConnection.map(obj => [obj.mId, obj.userId]))).map(uid => ({ channel: session.channel(`UserConnection-${uid}`) })).forEach(obj => obj.channel.dispatch(schema.update('User', { id, activeStatus: true })));
   // console.log('userDetaisl in initUser', u.User);
   // console.log('userConnection', u.UserConnection);
   session.subscribe('Main');

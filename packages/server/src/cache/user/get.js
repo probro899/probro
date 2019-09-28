@@ -4,6 +4,18 @@ import users from './cache';
 import db from '../../db';
 import { findBoardDetail, findBlogDetail } from '../../api';
 
+const flat = (arr) => {
+  const flatArray = arr.reduce((t, a) => {
+    if (Array.isArray(a)) {
+      a.forEach(am => t.push(am));
+    } else {
+      t.push(a);
+    }
+    return t;
+  }, []);
+  return flatArray;
+};
+
 export default async function get(id) {
   // console.log('id in getUser', id);
   const res = users.get(id);
@@ -31,7 +43,7 @@ export default async function get(id) {
       connectionListUserId = await find('UserConnection', { userId: user[0].id });
     }
     const connectionList = [...connectionListMid, ...connectionListUserId];
-    const allConnectionUserList = lodash.uniq(connectionList.map(obj => [obj.mId, obj.userId]).flat());
+    const allConnectionUserList = lodash.uniq(flat(connectionList.map(obj => [obj.mId, obj.userId])));
     // console.log('allConnecitonUserList', allConnectionUserList);
     // ***************************************************************************************************
 
@@ -56,8 +68,8 @@ export default async function get(id) {
 
     const newBlogPublish = BlogPublish.filter(b => !allBlogs.find(bn => b.id === bn.id));
     // const BlogDetail = blogDetails.map(obj => obj.blogDetail).flat();
-    const BlogComment = blogDetails.map(obj => obj.blogComment).flat();
-    const BlogLike = blogDetails.map(obj => obj.blogLike).flat();
+    const BlogComment = flat(blogDetails.map(obj => obj.blogComment));
+    const BlogLike = flat(blogDetails.map(obj => obj.blogLike));
     const allBlogUsers = [...allBlogs, ...newBlogPublish, ...BlogLike, ...BlogComment].map(b => b.userId);
     // console.log('allBlogUsers', asllBlogUsers);
     // ***************************************************************************************************
@@ -93,7 +105,7 @@ export default async function get(id) {
 
     const allBoardMembers = await Promise.all(boardUserPromises);
     // console.log('all Board Member', allBoardMembers.flat());
-    const allBoardUserList = lodash.uniq(allBoardMembers.flat().map(obj => obj.tuserId));
+    const allBoardUserList = lodash.uniq(flat(allBoardMembers).map(obj => obj.tuserId));
     const allBoardUserPromises = [];
     lodash.uniq([...allBoardUserList, ...allConnectionUserList, ...allBlogUsers, user[0].id]).forEach(uid => allBoardUserPromises.push(findOne('User', { id: uid })));
     const allUserList = await Promise.all(allBoardUserPromises);
@@ -106,18 +118,18 @@ export default async function get(id) {
     // console.log('uniqUser and BoarUserDetails', uniqUsers, allBoardUserDetails);
     const boardDetails = await Promise.all(boardDetailsPromises);
     // console.log('boardDetails', JSON.stringify(boardDetails));
-    const BoardColumn = boardDetails.map(obj => obj.boardColumn).flat();
-    const BoardColumnCard = boardDetails.map(obj => obj.boardColumnCard).flat().flat();
-    const BoardColumnCardAttachment = boardDetails.map(obj => obj.boardColumnCardAttachment).flat().flat();
-    const BoardColumnCardComment = boardDetails.map(obj => obj.boardColumnCardComment).flat().flat();
+    const BoardColumn = flat(boardDetails.map(obj => obj.boardColumn));
+    const BoardColumnCard = flat(flat(boardDetails.map(obj => obj.boardColumnCard)));
+    const BoardColumnCardAttachment = flat(flat(boardDetails.map(obj => obj.boardColumnCardAttachment)));
+    const BoardColumnCardComment = flat(flat(boardDetails.map(obj => obj.boardColumnCardComment)));
     // console.log('board columnCardAttachment', boardColumnCardComment);
-    const BoardColumnCardDescription = boardDetails.map(obj => obj.boardColumnCardDescription).flat().flat();
+    const BoardColumnCardDescription = flat(flat(boardDetails.map(obj => obj.boardColumnCardDescription)));
     // console.log('connection list', [allBlogs, newBlogPublish]);
     const userDataRes = {
       User: allUser,
       UserDetail: allUserDetailsList,
       Board: allBoards,
-      BoardMember: allBoardMembers.flat(),
+      BoardMember: flat(allBoardMembers),
       BoardColumn,
       BoardColumnCard,
       BoardColumnCardAttachment,
@@ -131,7 +143,7 @@ export default async function get(id) {
       UserWorkExperience,
       UserPortal,
       UserSkill,
-      BoardMessage: BoardMessage.flat(),
+      BoardMessage: flat(BoardMessage),
       UserConnection: connectionList,
       UserMessage: userMessages,
       allAssociateBlogsId,
