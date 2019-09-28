@@ -73,8 +73,8 @@ top attachment etc.
 .popularContainer .popularCover .popular .popularDesc .popularExpertize { color: #696969; font-weight: 550; }
 
 .broWrapper { display: flex; margin-top: 60px; }
-.broWrapper .fake-side-nav { flex: 0.2; margin-top: 4px; margin-left: 4px; padding: 50px 10px; }
-.broWrapper .bro-right { flex: 0.8; }
+.broWrapper .fake-side-nav { flex: 0.19; margin-top: 4px; margin-left: 4px; padding: 50px 10px; }
+.broWrapper .bro-right { flex: 0.81; }
 
 .sideNav { margin-top: 4px; margin-left: 4px; padding: 50px 5px; display: flex; width: 20%; height: calc(100% - 70px); z-index: 3; align-items: center; flex-direction: column; position: fixed; border: 1px solid #e0e0e0; background-color: #f9f9f9; }
 .sideNav .sideNavElement { margin-bottom: 5px; padding: 10px 10px 10px 10px; align-self: stretch; border: 1px solid #e0e0e0; background-color: #f9f9f9; }
@@ -84,8 +84,8 @@ top attachment etc.
 .sideNav .active span { color: #137cbd; }
 .sideNav .active span svg { fill: #137cbd; }
 
-.profile { display: flex; align-items: center; flex-direction: column; padding: 5px 3px; position: relative; }
-.profile .cover-pic { height: 250px; position: relative; overflow: hidden; width: 100%; background: linear-gradient(to right, #9be1f3 0%, #43c0df 100%); }
+.profile { display: flex; align-items: center; flex-direction: column; padding: 4px; position: relative; }
+.profile .cover-pic { height: 250px; position: relative; overflow: hidden; width: 100%; background: linear-gradient(to right, #2b5468, 0%, #137cbd, 100%); }
 .profile .cover-pic img { width: 110%; }
 .profile .cover-pic .edit-cover { padding: 5px; position: absolute; bottom: 0; right: 0; color: white; }
 .profile .cover-pic .edit-cover .edit-icon { vertical-align: text-top; }
@@ -98,35 +98,36 @@ top attachment etc.
 .profile .profilePic svg { border-radius: 100px; background-color: #2572D1; }
 .profile .top-details { width: 100%; background: white; padding: 5px; }
 .profile .top-details .name { font-size: 20px; font-weight: bold; }
-.profile .top-details .designation { font-size: 16px; font-weight: bold; color: rgba(20, 18, 18, 0.596); }
-.profile .bio { margin-top: 5px; background: white; text-align: center; width: 100%; display: flex; justify-content: space-between; }
-.profile .bio p { font-family: 'Oxygen', sans-serif; font-weight: bold; font-style: italic; font-size: 16px; }
-.profile .bio p.edit { padding-right: 5px; }
-.profile .bio p.edit svg { fill: #137cbd; }
-.profile .education { margin-top: 5px; width: 100%; background: white; }
-.profile .education p.p-top { font-size: 20px; font-weight: bold; display: flex; justify-content: space-between; padding-right: 5px; }
+.profile .top-details .designation { font-size: 16px; font-weight: bold; color: #696969; }
+.profile .bio { width: 100%; padding: 20px 5px; }
+.profile .bio .bio-content { font-size: 20px; }
+.profile .bio .bio-info { margin-left: 2px; display: flex; justify-content: space-between; }
+.profile .bio .bio-info p.edit { padding-right: 5px; }
+.profile .bio .bio-info p.edit svg { fill: #137cbd; }
+.profile .education { padding: 20px 5px; width: 100%; }
+.profile .education p.p-top { font-size: 20px; display: flex; justify-content: space-between; padding-right: 5px; }
 .profile .education p.p-top svg { fill: #137cbd; }
 .profile .education .p-edu-list .p-edu-list-i { display: flex; padding: 2px; }
 .profile .education .p-edu-list .p-edu-list-i img { height: 45px; padding: 2px; }
 .profile .education .p-edu-list .p-edu-list-i p { padding: 0px 0px 0px 10px; }
 .profile .education .p-edu-list .p-edu-list-i p span.p-name-i { font-size: 18px; font-weight: bold; }
-.profile .education .p-edu-list .p-edu-list-i p span.p-timeline { font-weight: bold; color: #757575; }
+.profile .education .p-edu-list .p-edu-list-i p span.p-timeline { font-weight: bold; color: #696969; }
 .profile .education .p-edu-list .p-edu-list-i p svg { fill: #137cbd; }
-.profile .experience { margin-top: 5px; width: 100%; background: white; }
-.profile .experience p.p-top { font-size: 20px; font-weight: bold; display: flex; justify-content: space-between; padding-right: 5px; }
+.profile .experience { padding: 20px 5px; width: 100%; }
+.profile .experience p.p-top { font-size: 20px; display: flex; justify-content: space-between; padding-right: 5px; }
 .profile .experience p.p-top svg { fill: #137cbd; }
 .profile .experience .p-exp-list .p-exp-list-i { display: flex; padding: 2px; }
 .profile .experience .p-exp-list .p-exp-list-i img { height: 45px; padding: 2px; }
 .profile .experience .p-exp-list .p-exp-list-i p { padding: 0px 0px 0px 10px; }
 .profile .experience .p-exp-list .p-exp-list-i p span.p-title-i { font-size: 18px; font-weight: bold; }
-.profile .experience .p-exp-list .p-exp-list-i p span.p-company-i { font-size: 16px; font-weight: bold; color: #757575; }
-.profile .experience .p-exp-list .p-exp-list-i p span.p-timeline { font-weight: bold; color: #757575; }
+.profile .experience .p-exp-list .p-exp-list-i p span.p-company-i { font-size: 16px; font-weight: bold; color: #696969; }
+.profile .experience .p-exp-list .p-exp-list-i p span.p-timeline { font-weight: bold; color: #696969; }
 .profile .experience .p-exp-list .p-exp-list-i p svg { fill: #137cbd; }
-.profile .skills { margin-top: 5px; width: 100%; background: white; }
-.profile .skills p.p-top { font-size: 20px; font-weight: bold; display: flex; justify-content: space-between; padding-right: 5px; }
+.profile .skills { padding: 20px 5px; width: 100%; }
+.profile .skills p.p-top { font-size: 20px; display: flex; justify-content: space-between; padding-right: 5px; }
 .profile .skills p.p-top svg { fill: #137cbd; }
 .profile .skills .skills-container { padding: 5px 5px 5px 0px; }
-.profile .skills .skills-container span { margin: 5px; padding: 5px; color: white; background: #137cbd; }
+.profile .skills .skills-container span { margin: 5px; padding: 5px; color: #fff; background: #137cbd; }
 
 .classes { display: flex; flex-direction: column; padding: 5px; }
 .classes .header { margin-bottom: 10px; padding: 10px; }

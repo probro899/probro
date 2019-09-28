@@ -31,7 +31,7 @@ class Profile extends Component {
   }
 
   render() {
-    const { account, database, updateDatabaseSchema, addDatabaseSchema } = this.props;
+    const { account, database, deleteDatabaseSchema, updateDatabaseSchema, addDatabaseSchema } = this.props;
     const { apis } = this.state;
     if (!account.user) {
       return <div />;
@@ -69,7 +69,14 @@ class Profile extends Component {
           <Icon icon="locate" />
           <span className="country"> Nepal</span>
         </div>
-        <Bio apis={apis} />
+        <Bio
+          account={account}
+          apis={apis}
+          database={database}
+          updateDatabaseSchema={updateDatabaseSchema}
+          addDatabaseSchema={addDatabaseSchema}
+          deleteDatabaseSchema={deleteDatabaseSchema}
+        />
         <Education apis={apis} />
         <Experience apis={apis} />
         <Skills
@@ -90,6 +97,7 @@ Profile.propTypes = {
   updateNav: PropTypes.func.isRequired,
   updateDatabaseSchema: PropTypes.func.isRequired,
   addDatabaseSchema: PropTypes.func.isRequired,
+  deleteDatabaseSchema: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => state;

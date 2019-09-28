@@ -1,18 +1,17 @@
 @import '../config.scss';
 
 .profile {
-  // flex: 0.8;
   display: flex;
   align-items: center;
   flex-direction: column;
-  padding: 5px 3px;
+  padding: 4px;
   position: relative;
   .cover-pic {
     height: 250px;
     position: relative;
     overflow: hidden;
     width: 100%;
-    background: linear-gradient(to right, rgba(155,225,243,1) 0%, rgba(67,192,223,1) 100%);
+    background: linear-gradient(to right, $borderOnDarkBlue, 0%, $skyBlueMain, 100%);
     img {
       width: 110%;
     }
@@ -74,41 +73,39 @@
     .designation {
       font-size: 16px;
       font-weight: bold;
-      color: rgba(20, 18, 18, 0.596);
+      color: $lightTextColor;
     }
   }
   .bio {
-    margin-top: 5px;
-    background: white;
-    text-align: center;
     width: 100%;
-    display: flex;
-    justify-content: space-between;
-    p {
-      font-family: 'Oxygen', sans-serif;
-      font-weight: bold;
-      font-style: italic;
-      font-size: 16px;
-      &.edit {
-        padding-right: 5px;
-        svg {
-          fill: rgba(19, 124, 189, 1);
+    padding: 20px 5px;
+    .bio-content {
+      font-size: 20px;
+    }
+    .bio-info {
+      margin-left: 2px;
+      display: flex;
+      justify-content: space-between;
+      p {
+        &.edit {
+          padding-right: 5px;
+          svg {
+            fill: $skyBlueMain;
+          }
         }
       }
     }
   }
   .education {
-    margin-top: 5px;
+    padding: 20px 5px;
     width: 100%;
-    background: white;
     p.p-top {
       font-size: 20px;
-      font-weight: bold;
       display: flex;
       justify-content: space-between;
       padding-right: 5px;
       svg {
-        fill: rgba(19, 124, 189, 1);
+        fill: $skyBlueMain;
       }
     }
     .p-edu-list {
@@ -127,27 +124,25 @@
           }
           span.p-timeline {
             font-weight: bold;
-            color: #757575;
+            color: $lightTextColor;
           }
           svg {
-            fill: rgba(19, 124, 189, 1);
+            fill: $skyBlueMain;
           }
         }
       }
     }
   }
   .experience {
-    margin-top: 5px;
+    padding: 20px 5px;
     width: 100%;
-    background: white;
     p.p-top {
       font-size: 20px;
-      font-weight: bold;
       display: flex;
       justify-content: space-between;
       padding-right: 5px;
       svg {
-        fill: rgba(19, 124, 189, 1);
+        fill: $skyBlueMain;
       }
     }
     .p-exp-list {
@@ -167,31 +162,29 @@
           span.p-company-i {
             font-size: 16px;
             font-weight: bold;
-            color: #757575;
+            color: $lightTextColor;
           }
           span.p-timeline {
             font-weight: bold;
-            color: #757575;
+            color: $lightTextColor;
           }
           svg {
-            fill: rgba(19, 124, 189, 1);
+            fill: $skyBlueMain;
           }
         }
       }
     }
   }
   .skills {
-    margin-top: 5px;
+    padding: 20px 5px;
     width: 100%;
-    background: white;
     p.p-top {
       font-size: 20px;
-      font-weight: bold;
       display: flex;
       justify-content: space-between;
       padding-right: 5px;
       svg {
-        fill: rgba(19, 124, 189, 1);
+        fill: $skyBlueMain;
       }
     }
     .skills-container {
@@ -199,8 +192,8 @@
       span {
         margin: 5px;
         padding: 5px;
-        color: white;
-        background: rgba(19, 124, 189, 1);
+        color: $backgroundColor;
+        background: $skyBlueMain;
       }
     }
   }
