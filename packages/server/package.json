@@ -5,7 +5,11 @@
   "license": "MIT",
   "scripts": {
     "test": "jest",
-    "server-mon": "nodemon --exec ../../node_modules/.bin/babel-node -- src/index.js"
+    "server-mon": "nodemon --exec ../../node_modules/.bin/babel-node -- src/index.js",
+    "lint": "../../node_modules/.bin/eslint src",
+    "clean": "../../node_modules/.bin/rimraf build",
+    "postbuild": "../../node_modules/.bin/copy src/**/*.sql build/",
+    "build": "../../node_modules/.bin/babel src -d build"
   },
   "dependencies": {
     "@probro/common": "1.0.0",
