@@ -5,16 +5,18 @@ import BioForm from './BioForm';
 import { bioSchema } from '../structure';
 
 class Bio extends React.Component {
-  state = {};
-
   state = {
     bioEditPopover: false,
   };
 
-  editBio = (data) => {
-    const { apis, account, database } = this.props;
-    console.log(data, apis, account, database);
-    return { response: 200 };
+  editBio = async (data) => {
+    const { apis, account } = this.props;
+    const res = await apis.updateUserDetails({
+      userId: account.user.id,
+      ...data,
+    });
+    // this.togglePopover();
+    return { response: 200, message: res };
   }
 
   togglePopover = () => {
@@ -26,18 +28,29 @@ class Bio extends React.Component {
 
   render() {
     const { bioEditPopover } = this.state;
+    const { database, account, apis } = this.props;
+    let bi;
+    Object.values(database.UserDetail.byId).map((obj) => {
+      if (account.user.id === obj.userId) {
+        bi = obj.bio;
+      }
+    });
+    // console.log(database);
     return (
       <div className="bio">
         <p className="bio-content">About</p>
         <div className="bio-info">
           <p>
-            Win or Learn
+            {bi ? <span>{bi}</span> : <span style={{ color: '#696969' }}>No bio added</span>}
           </p>
           <p className="edit">
             <Icon icon="edit" onClick={this.togglePopover} />
           </p>
         </div>
         <BioForm
+          database={database}
+          account={account}
+          apis={apis}
           isOpen={bioEditPopover}
           structure={bioSchema}
           callback={this.editBio}
@@ -50,6 +63,7 @@ class Bio extends React.Component {
 
 Bio.propTypes = {
   account: PropTypes.objectOf(PropTypes.any).isRequired,
+  apis: PropTypes.objectOf(PropTypes.any).isRequired,
   database: PropTypes.objectOf(PropTypes.any).isRequired,
   updateDatabaseSchema: PropTypes.func.isRequired,
   addDatabaseSchema: PropTypes.func.isRequired,

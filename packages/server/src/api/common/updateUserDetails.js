@@ -25,7 +25,7 @@ export default async function updateUserDetails(record) {
       if (insertRes) {
         const userRes = await findOne('UserDetail', { userId: insertRes });
         session.dispatch(schema.add('UserDetail', userRes));
-        user.add(schema.add('UserDetail', userRes), session);
+        user.update(schema.add('UserDetail', userRes), session);
         return 'User details inserted successfully';
       }
       throw new Error('User details insertion faild');

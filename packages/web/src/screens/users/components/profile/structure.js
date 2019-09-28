@@ -4,6 +4,7 @@ const bioSchema = [
     fieldtype: 'textarea',
     name: 'Bio',
     placeholder: 'Tell world about you...',
+    required: true,
   },
   {
     id: 'submit',
@@ -90,6 +91,7 @@ const portalSchema = [
     fieldtype: 'input',
     name: 'Title',
     placeholder: 'Your product name',
+    required: true,
   },
   {
     id: 'attachment',

@@ -139,7 +139,7 @@ class Skills extends React.Component {
           <span>Skills</span>
           <Icon icon="plus" onClick={this.togglePopover} />
         </p>
-        {skill && (
+        {skill ? (
           <div className="skills-container">
             {
             skill.map((i, index) => {
@@ -149,7 +149,12 @@ class Skills extends React.Component {
             })
             }
           </div>
-        )}
+        )
+          : (
+            <div style={{ color: '#696969' }}>
+              No skills added
+            </div>
+          )}
       </div>
     );
   }

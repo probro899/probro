@@ -9,8 +9,19 @@ class BioForm extends React.Component {
     portal: false,
   };
 
+  componentDidMount() {
+    const { database, account } = this.props;
+    Object.values(database.UserDetail.byId).map((obj) => {
+      if (account.user.id === obj.userId) {
+        bioSchema[0].val = obj.bio;
+      }
+    });
+  }
+
   addPortal = (data) => {
-    this.togglePortal();
+    const { apis } = this.props;
+
+    console.log(data.attachment);
     return { response: 200 };
   }
 
