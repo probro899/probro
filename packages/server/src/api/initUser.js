@@ -3,8 +3,6 @@ import lodash from 'lodash';
 import schema from '@probro/common/src/schema';
 import { user } from '../cache';
 
-
-
 const flat = (arr) => {
   const flatArray = arr.reduce((t, a) => {
     if (Array.isArray(a)) {
