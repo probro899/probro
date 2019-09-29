@@ -3,7 +3,7 @@
 import store from '../store';
 import { SOCKETURL } from '../config';
 
-const protocol = process.env.REACT_APP_SOCKET_PROTOCOL || (window.location.protocol === 'https' ? 'wss' : 'ws');
+const protocol = 'wss';
 const host = process.env.REACT_APP_SOCKET_HOST || window.location.hostname;
 const port = 4001;
 // const port = process.env.REACT_APP_SOCKET_PORT || window.location.port;
