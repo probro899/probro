@@ -1,5 +1,5 @@
 const ENDPOINT = 'https://properclass.com:4001';
-const SOCKETURL = 'https://properclass.com';
+const SOCKETURL = 'properclass.com';
 
 // const ENDPOINT = 'http://localhost:4001';
 // const SOCKETURL = 'localhost';
