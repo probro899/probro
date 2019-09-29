@@ -1,5 +1,5 @@
 import express from 'express';
-import http from 'http';
+import https from 'https';
 import run from 'app-node';
 import bodyParser from 'body-parser';
 import authExpress from './express';
@@ -12,7 +12,7 @@ const port = process.env.PORT || 4001;
 const app = express();
 app.use(bodyParser.urlencoded({ limit: '10mb', extended: false }));
 app.use(bodyParser.json({ limit: '10mb', extended: true }));
-const server = http.createServer(app);
+const server = https.createServer(app);
 run(async (nodeApp) => {
   // define web socket url
   const url = '/shocked/:origin/:token';
