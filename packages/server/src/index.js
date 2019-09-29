@@ -1,6 +1,7 @@
 import express from 'express';
 import https from 'https';
 import run from 'app-node';
+import fs from 'fs';
 import bodyParser from 'body-parser';
 import authExpress from './express';
 import { init as dbinit } from './db';
@@ -12,7 +13,19 @@ const port = process.env.PORT || 4001;
 const app = express();
 app.use(bodyParser.urlencoded({ limit: '10mb', extended: false }));
 app.use(bodyParser.json({ limit: '10mb', extended: true }));
-const server = https.createServer(app);
+
+// Certificate
+const privateKey = fs.readFileSync('/etc/letsencrypt/live/yourdomain.com/privkey.pem', 'utf8');
+const certificate = fs.readFileSync('/etc/letsencrypt/live/yourdomain.com/cert.pem', 'utf8');
+const ca = fs.readFileSync('/etc/letsencrypt/live/yourdomain.com/chain.pem', 'utf8');
+
+const credentials = {
+  key: privateKey,
+  cert: certificate,
+  ca,
+};
+
+const server = https.createServer(credentials, app);
 run(async (nodeApp) => {
   // define web socket url
   const url = '/shocked/:origin/:token';

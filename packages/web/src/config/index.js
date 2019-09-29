@@ -1,5 +1,5 @@
-const ENDPOINT = 'https://properclass.com:4001';
-const SOCKETURL = 'properclass.com';
+const ENDPOINT = 'https://157.245.11.255:4001';
+const SOCKETURL = '157.245.11.255';
 
 // const ENDPOINT = 'http://localhost:4001';
 // const SOCKETURL = 'localhost';

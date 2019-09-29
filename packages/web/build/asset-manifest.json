@@ -1,7 +1,7 @@
 {
   "main.css": "/static/css/main.d239d64b.chunk.css",
-  "main.js": "/static/js/main.6c441ff7.chunk.js",
-  "main.js.map": "/static/js/main.6c441ff7.chunk.js.map",
+  "main.js": "/static/js/main.6fb2dc7e.chunk.js",
+  "main.js.map": "/static/js/main.6fb2dc7e.chunk.js.map",
   "static/css/1.87028e47.chunk.css": "/static/css/1.87028e47.chunk.css",
   "static/js/1.25fd8bc8.chunk.js": "/static/js/1.25fd8bc8.chunk.js",
   "static/js/1.25fd8bc8.chunk.js.map": "/static/js/1.25fd8bc8.chunk.js.map",
@@ -13,10 +13,10 @@
   "static/media/index.png": "/static/media/index.376f8c73.png",
   "static/media/class.png": "/static/media/class.5cc5b3ac.png",
   "static/media/insight.png": "/static/media/insight.ad1b3a0f.png",
-  "static/media/blueprint-icons.css": "/static/media/icons-20.657723dc.woff",
-  "static/css/1.87028e47.chunk.css.map": "/static/css/1.87028e47.chunk.css.map",
+  "static/media/blueprint-icons.css": "/static/media/icons-20.90247cfd.ttf",
   "static/css/main.d239d64b.chunk.css.map": "/static/css/main.d239d64b.chunk.css.map",
+  "static/css/1.87028e47.chunk.css.map": "/static/css/1.87028e47.chunk.css.map",
   "index.html": "/index.html",
-  "precache-manifest.260eccac46b6182f039eebda4ff48bf4.js": "/precache-manifest.260eccac46b6182f039eebda4ff48bf4.js",
+  "precache-manifest.3933d13690fbe956433c1ca01b65f8e3.js": "/precache-manifest.3933d13690fbe956433c1ca01b65f8e3.js",
   "service-worker.js": "/service-worker.js"
 }
