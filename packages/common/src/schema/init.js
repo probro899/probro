@@ -1,11 +1,16 @@
-const SCHEMA_INIT = 'schema.init';
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var SCHEMA_INIT = 'schema.init';
 
 function init(table, data) {
   return {
     type: SCHEMA_INIT,
     schema: table,
-    payload: data,
+    payload: data
   };
 }
 init.TYPE = SCHEMA_INIT;
-export default init;
+exports.default = init;

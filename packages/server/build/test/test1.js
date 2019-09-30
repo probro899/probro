@@ -1,5 +1,14 @@
 "use strict";
 
-const str1 = "Email is not verify";
+const arr = [[1, 2, 3], [3, 4, 5]];
 
-console.log(str1 === "Email is not verify");
+const newArray = arr.reduce((t, a) => {
+  if (Array.isArray(a)) {
+    a.forEach(am => t.push(am));
+  } else {
+    t.push(a);
+  }
+  return t;
+}, []);
+
+console.log(newArray);

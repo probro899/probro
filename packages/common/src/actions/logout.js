@@ -1,9 +1,14 @@
-const TYPE = 'LOGOUT';
+'use strict';
 
-const logout = () => {
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var TYPE = 'LOGOUT';
+
+var logout = function logout() {
   return {
-    type: TYPE,
+    type: TYPE
   };
 };
 logout.TYPE = TYPE;
-export default logout;
+exports.default = logout;

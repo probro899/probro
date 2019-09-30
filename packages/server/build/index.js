@@ -12,6 +12,10 @@ var _appNode = require('app-node');
 
 var _appNode2 = _interopRequireDefault(_appNode);
 
+var _fs = require('fs');
+
+var _fs2 = _interopRequireDefault(_fs);
+
 var _bodyParser = require('body-parser');
 
 var _bodyParser2 = _interopRequireDefault(_bodyParser);
@@ -36,6 +40,18 @@ const port = process.env.PORT || 4001;
 const app = (0, _express2.default)();
 app.use(_bodyParser2.default.urlencoded({ limit: '10mb', extended: false }));
 app.use(_bodyParser2.default.json({ limit: '10mb', extended: true }));
+
+// // Certificate
+// const privateKey = fs.readFileSync('/etc/letsencrypt/live/properclass.com/privkey.pem', 'utf8');
+// const certificate = fs.readFileSync('/etc/letsencrypt/live/properclass.com/cert.pem', 'utf8');
+// const ca = fs.readFileSync('/etc/letsencrypt/live/properclass.com/chain.pem', 'utf8');
+
+// const credentials = {
+//   key: privateKey,
+//   cert: certificate,
+//   ca,
+// };
+
 const server = _http2.default.createServer(app);
 (0, _appNode2.default)(async nodeApp => {
   // define web socket url

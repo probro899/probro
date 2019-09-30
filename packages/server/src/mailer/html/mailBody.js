@@ -21,8 +21,8 @@ export default async (token) => {
       <div class="main-body" style="background: white; width: 500; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; height: auto;">
         <h2>Congratulation you are registered successfully.</h2>
         <p style="color: black;">Please login by using following link to verify your email.</p>
-      <a style="background: white; text-align: center; width: 100;" href="http://localhost:3000/email-verification/${token}" target="_blank">
-        http://localhost:3000/email-verification/:${token}
+      <a style="background: white; text-align: center; width: 100;" href="http://properclass.com/email-verification/${token}" target="_blank">
+        https://peoperclass.com/email-verification/:${token}
       </a>
       <p style="color: black;">If you have any type of login issue then please send email to probro899@gmail.com <br> Thank You! </p>
     </div>
