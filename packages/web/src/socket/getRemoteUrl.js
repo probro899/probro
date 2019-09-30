@@ -16,5 +16,5 @@ export default () => {
     return null;
   }
   // return `${protocol}://${host}:${port}/shocked/web/${sessionId}`;
-  return `${protocol}://${SOCKETURL}:${port}/shocked/web/${sessionId}`;
+  return `${protocol}://${SOCKETURL}/shocked/web/${sessionId}`;
 };

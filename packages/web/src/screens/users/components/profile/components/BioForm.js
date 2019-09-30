@@ -20,7 +20,6 @@ class BioForm extends React.Component {
 
   addPortal = (data) => {
     const { apis } = this.props;
-
     console.log(data.attachment);
     return { response: 200 };
   }
