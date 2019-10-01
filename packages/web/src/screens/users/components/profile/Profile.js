@@ -77,8 +77,8 @@ class Profile extends Component {
           addDatabaseSchema={addDatabaseSchema}
           deleteDatabaseSchema={deleteDatabaseSchema}
         />
-        <Education apis={apis} />
-        <Experience apis={apis} />
+        <Education apis={apis} database={database} account={account} />
+        <Experience apis={apis} database={database} account={account} />
         <Skills
           account={account}
           apis={apis}

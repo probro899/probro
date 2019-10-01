@@ -20,9 +20,6 @@ top attachment etc.
     box-shadow: none;
     border: 1px solid $normalBorder;
   }
-  @media screen and (max-width: 650px){
-    height: $navbarHeightSmall;
-  }
   .navbar-left {
       display: flex;
       flex-direction: row;

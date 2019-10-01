@@ -8,16 +8,16 @@
     text-transform: uppercase;
     font-weight: bold;
     font-size: 18px;
-    color: $lightTextColor;
+    color: $darkBlue;
     padding: 3px;
   }
   .draw-tools {
     display: flex;
-    padding: 5px 0px;
+    padding: 5px 5px;
     .tool-label {
       clip-path: polygon(0 0, 0 100%, 65% 100%, 100% 50%, 65% 0);
       font-size: 18px;
-      background: $boardColor;
+      background: $darkBlue;
       color: white;
       padding: 3px 15px 3px 2px;
       display: flex;
@@ -34,6 +34,9 @@
       .i-tool {
         margin: 0px 5px;
       }
+    }
+    .save-wrapper {
+      margin-left: 5px;
     }
   }
   .draw-canvas {

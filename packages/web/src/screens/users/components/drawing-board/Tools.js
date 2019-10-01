@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button, HTMLSelect } from '@blueprintjs/core';
+import { Button, HTMLSelect, Popover } from '@blueprintjs/core';
+import SelectTask from './SelectTask';
 
 class Tools extends React.Component {
   constructor(props) {
@@ -11,6 +12,24 @@ class Tools extends React.Component {
 
   uploadImage = () => {
     this.fileInputRef.current.click();
+  }
+
+  saveImage = () => {
+    const { canvas } = this.props;
+    const dataUrl = canvas.toDataURL({
+      format: 'jpeg',
+      quality: 1,
+    });
+    const arr = dataUrl.split(',');
+    const mime = arr[0].match(/:(.*?);/)[1];
+    const bstr = window.atob(arr[1]);
+    let n = bstr.length;
+    const u8arr = new Uint8Array(n);
+    while (n) {
+      n -= 1;
+      u8arr[n] = bstr.charCodeAt(n);
+    }
+    const file = new File([u8arr], 'canvas-shot.jpeg', { type: mime });
   }
 
   render() {
@@ -24,6 +43,8 @@ class Tools extends React.Component {
       color,
       colorChange,
       fileUpload,
+      database,
+      account,
     } = this.props;
     return (
       <div className="draw-tools">
@@ -67,6 +88,11 @@ class Tools extends React.Component {
             icon="trash"
             className="i-tool"
           />
+        </div>
+        <div className="save-wrapper">
+          <Popover content={<SelectTask account={account} database={database} />}>
+            <Button text="save" large onClick={this.saveImage} intent="success" />
+          </Popover>
         </div>
       </div>
     );

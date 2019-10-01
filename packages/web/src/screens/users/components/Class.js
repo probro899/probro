@@ -25,7 +25,7 @@ class Class extends Component {
     api: {},
   };
 
-  async componentWillMount() {
+  async componentDidMount() {
     const { updateNav } = this.props;
     const api = await client.scope('Mentee');
     this.setState({
