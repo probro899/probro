@@ -26,6 +26,9 @@ exports.default = function (app) {
   app.get('/reset/:token', (req, res) => {
     res.sendFile(_path2.default.resolve(__dirname, '..', 'public', 'index.html'));
   });
+  app.get('*', (req, res) => {
+    res.sendFile(_path2.default.resolve(__dirname, '..', 'public', 'index.html'));
+  });
 };
 
 var _express = require('express');

@@ -24,6 +24,18 @@ var _findBlogDetails2 = _interopRequireDefault(_findBlogDetails);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+const flat = arr => {
+  const flatArray = arr.reduce((t, a) => {
+    if (Array.isArray(a)) {
+      a.forEach(am => t.push(am));
+    } else {
+      t.push(a);
+    }
+    return t;
+  }, []);
+  return flatArray;
+};
+
 exports.default = async keyword => {
   console.log('search keyword in search api', keyword);
   const keywordArrtemp = keyword.split(' ');
@@ -52,7 +64,7 @@ exports.default = async keyword => {
     const userSkillResult = await Promise.all(userSkillPromises);
     // console.log('userSkill', userSkillResult);
 
-    const uniqUsers = _lodash2.default.uniq([...userResult.flat().map(u => u.id), ...userDetailsResult.flat().map(u => u.userId), ...userSkillResult.flat().map(u => u.userId)]);
+    const uniqUsers = _lodash2.default.uniq([...flat(userResult).map(u => u.id), ...flat(userDetailsResult).map(u => u.userId), ...flat(userSkillResult).map(u => u.userId)]);
     // console.log('All uniq user', uniqUsers);
 
     const finalUserListPromises = [];

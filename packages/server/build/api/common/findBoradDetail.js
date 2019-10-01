@@ -10,6 +10,18 @@ var _db2 = _interopRequireDefault(_db);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+const flat = arr => {
+  const flatArray = arr.reduce((t, a) => {
+    if (Array.isArray(a)) {
+      a.forEach(am => t.push(am));
+    } else {
+      t.push(a);
+    }
+    return t;
+  }, []);
+  return flatArray;
+};
+
 exports.default = async boardId => {
   // console.log('findBoard details board id', boardId);
   const res = await _db2.default.execute(async ({ find }) => {
@@ -20,7 +32,7 @@ exports.default = async boardId => {
     boardColumn.forEach(b => columnCardPromise.push(find('BoardColumnCard', { boardColumnId: b.id })));
     const boardColumnCard = await Promise.all(columnCardPromise);
     // console.log('boardColumnCard data', boardColumnCard);
-    const boardColumnCardMap = boardColumnCard.map(a => a.map(o => o.id)).flat();
+    const boardColumnCardMap = flat(boardColumnCard.map(a => a.map(o => o.id)));
 
     const boardColumnCardAttachmentPromises = [];
     const boardColumnCardCommentPromises = [];

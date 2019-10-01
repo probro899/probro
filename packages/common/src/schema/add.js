@@ -1,11 +1,16 @@
-const TYPE = 'schema.add';
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var TYPE = 'schema.add';
 
 function add(table, record) {
   return {
     schema: table,
     type: TYPE,
-    payload: record,
+    payload: record
   };
 }
 add.TYPE = TYPE;
-export default add;
+exports.default = add;

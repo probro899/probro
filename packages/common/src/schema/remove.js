@@ -1,14 +1,18 @@
-const TYPE = 'schema.remove';
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var TYPE = 'schema.remove';
 
 function remove(schema, record) {
   return {
-    schema,
+    schema: schema,
     type: TYPE,
-    payload: record,
+    payload: record
   };
 }
 
 remove.TYPE = TYPE;
 
-export default remove;
-
+exports.default = remove;

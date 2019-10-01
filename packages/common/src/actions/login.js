@@ -1,11 +1,16 @@
-const TYPE = 'LOGIN';
+'use strict';
 
-const login = (user) => {
-  return ({
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var TYPE = 'LOGIN';
+
+var login = function login(user) {
+  return {
     type: TYPE,
-    payload: user,
-  });
+    payload: user
+  };
 };
 
 login.TYPE = TYPE;
-export default login;
+exports.default = login;
