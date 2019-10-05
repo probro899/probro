@@ -13,14 +13,8 @@ class BasicSettings extends React.Component {
 
   editName = async (data) => {
     const { apis, account } = this.props;
-    if (data.firstName.replace(/\s/g, '').length < 1) {
-      return { error: 'Please enter first name' };
-    }
-    if (data.lastName.replace(/\s/g, '').length < 1) {
-      return { error: 'Please enter last name' };
-    }
-    await apis.updateUserDetails([
-      { firstName: data.firstName, middleName: data.middleName, lastName: data.lastName },
+    await apis.updateUser([
+      { ...data },
       { id: account.user.id },
     ]);
     return { response: 200, message: 'Changed successfully' };
@@ -28,13 +22,9 @@ class BasicSettings extends React.Component {
 
   editGender = async (data) => {
     const { apis, account } = this.props;
-    if (data.gender.replace(/\s/g, '').length < 1) {
-      return { error: 'Select your gender' };
-    }
-    await apis.updateUserDetails([
-      { gender: data.gender },
-      { id: account.user.id },
-    ]);
+    await apis.updateUserDetails(
+      { ...data, userId: account.user.id }
+    );
     return { response: 200, message: 'Changed successfully' };
   }
 
@@ -49,7 +39,7 @@ class BasicSettings extends React.Component {
 
   togglePopover = (type) => {
     const { namePopover, genderPopover, careerPopover } = this.state;
-    const { account } = this.props;
+    const { account, database } = this.props;
     switch (type) {
       case 'name':
         NameSchema.map((obj) => {
@@ -68,6 +58,17 @@ class BasicSettings extends React.Component {
         });
         break;
       case 'gender':
+        GenderSchema.map((obj) => {
+          if (obj.id === 'gender') {
+            let gen = '';
+            Object.values(database.UserDetail.byId).map((obj) => {
+              if (obj.userId === account.user.id) {
+                gen = obj.gender;
+              }
+            });
+            obj.val = gen;
+          }
+        });
         this.setState({
           genderPopover: !genderPopover,
         });
@@ -82,8 +83,14 @@ class BasicSettings extends React.Component {
   }
 
   render() {
-    const { account } = this.props;
+    const { account, database } = this.props;
     const { namePopover, genderPopover, careerPopover } = this.state;
+    let gen = '---';
+    Object.values(database.UserDetail.byId).map((obj) => {
+      if (obj.userId === account.user.id) {
+        gen = obj.gender;
+      }
+    });
     return (
       <div className="container-settings">
         <PopoverForm
@@ -122,7 +129,7 @@ class BasicSettings extends React.Component {
         </p>
         <p className="basic">
           <span className="label">Gender</span>
-          <span className="value">Male</span>
+          <span className="value">{gen}</span>
           <Icon
             icon="edit"
             color="rgba(167, 182, 194, 1)"

@@ -1,8 +1,10 @@
 import React from 'react';
-import { Dialog, Button, Card, Icon, Portal } from '@blueprintjs/core';
+import { Dialog, Button } from '@blueprintjs/core';
 import PropTypes from 'prop-types';
+import axios from 'axios';
 import { Form } from '../../../../../common';
 import { portalSchema, bioSchema } from '../structure';
+import { ENDPOINT } from '../../../../../config';
 
 class BioForm extends React.Component {
   state = {
@@ -18,10 +20,35 @@ class BioForm extends React.Component {
     });
   }
 
-  addPortal = (data) => {
-    const { apis } = this.props;
-    console.log(data.attachment);
-    return { response: 200 };
+  addPortal = async (data) => {
+    const { apis, account } = this.props;
+    try {
+      const formData = new FormData();
+      formData.append('data', JSON.stringify({ token: account.sessionId, fileType: 'image', content: 'profile' }));
+      formData.append('image', data.attachment);
+      const res = await axios({
+        config: {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        },
+        method: 'post',
+        url: `${ENDPOINT}/web/upload-file`,
+        data: formData,
+      });
+      // console.log(res, apis);
+      if (res.status === 200) {
+        await apis.addUserPortal({
+          ...data,
+          attachment: res.data,
+          userId: account.user.id,
+        });
+        return { response: 200, message: 'Successfully added' };
+      }
+      return { response: 400, error: res.data };
+    } catch (e) {
+      return { response: 400, error: 'Something went wrong' };
+    }
   }
 
   togglePortal = () => {
@@ -47,34 +74,6 @@ class BioForm extends React.Component {
             ? (<div><Form data={portalSchema} callback={this.addPortal} /></div>)
             : <Form data={bioSchema} callback={callback} />
           }
-        </div>
-        <div style={{ display: 'flex', padding: '5px' }}>
-          <Card
-            elevation={2}
-            interactive
-            style={{ display: 'flex', flexDirection: 'row', padding: '2px', position: 'relative' }}
-          >
-            <div style={{ position: 'absolute', top: 0, right: 0 }}>
-              <Icon icon="edit" intent="primary" />
-            </div>
-            <div style={{ display: 'flex', height: '100%', alignItems: 'center', justifyContent: 'center' }}>
-              <img
-                alt="portal identity"
-                height="50px"
-                src="https://images.pexels.com/photos/67636/rose-blue-flower-rose-blooms-67636.jpeg"
-              />
-            </div>
-            <div style={{ padding: '3px' }}>
-              <span>
-                <strong>Title</strong>
-              </span>
-              <br />
-              <span>Description is what it takes to make it to the world label</span>
-              <br />
-              <span>Link</span>
-              <br />
-            </div>
-          </Card>
         </div>
         <div
           style={{ width: '100%', padding: '0px 5px' }}

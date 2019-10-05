@@ -4,6 +4,7 @@ const NameSchema = [
     fieldtype: 'input',
     name: 'First Name',
     placeholder: '',
+    required: true,
   },
   {
     id: 'middleName',
@@ -16,6 +17,7 @@ const NameSchema = [
     fieldtype: 'input',
     name: 'Last Name',
     placeholder: '',
+    required: true,
   },
   {
     id: 'submit',
@@ -33,6 +35,7 @@ const GenderSchema = [
     id: 'gender',
     fieldtype: 'select',
     name: 'Gender',
+    required: true,
     options: [
       { label: '---', value: '' },
       { label: 'Male', value: 'male' },

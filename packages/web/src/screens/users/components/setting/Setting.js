@@ -52,7 +52,7 @@ class Setting extends Component {
             Advanced
           </div>
         </div>
-        {activeTab === 'basic' && <BasicSettings apis={apis} />}
+        {activeTab === 'basic' && <BasicSettings apis={apis} account={account} database={database} />}
         {activeTab === 'advanced' && <AdvancedSettings apis={apis} database={database} account={account} />}
       </div>
     );

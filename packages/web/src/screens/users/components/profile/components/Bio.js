@@ -1,8 +1,40 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Icon } from '@blueprintjs/core';
+import { Icon, Card } from '@blueprintjs/core';
 import BioForm from './BioForm';
 import { bioSchema } from '../structure';
+import { ENDPOINT } from '../../../../../config';
+
+const UserPortal = ({ data, account }) => {
+  return (
+    <Card
+      elevation={2}
+      interactive
+      style={{ display: 'flex', flexDirection: 'row', padding: '2px', position: 'relative' }}
+    >
+      <div style={{ position: 'absolute', top: 0, right: 0 }}>
+        <Icon icon="cross" intent="default" />
+      </div>
+      <div style={{ display: 'flex', height: '100%', alignItems: 'center', justifyContent: 'center' }}>
+        <img
+          alt="portal identity"
+          height="50px"
+          src={`${ENDPOINT}/user/${10000000 + parseInt(account.user.id, 10)}/profile/${data.attachment}`}
+        />
+      </div>
+      <div style={{ padding: '3px' }}>
+        <span>
+          <strong>{data.title}</strong>
+        </span>
+        <br />
+        <span>{data.description}</span>
+        <br />
+        <span>{data.link}</span>
+        <br />
+      </div>
+    </Card>
+  );
+};
 
 class Bio extends React.Component {
   state = {
@@ -35,7 +67,12 @@ class Bio extends React.Component {
         bi = obj.bio;
       }
     });
-    // console.log(database);
+    const portals = [];
+    Object.values(database.UserPortal.byId).map((obj) => {
+      if (obj.userId === account.user.id) {
+        portals.push(obj);
+      }
+    });
     return (
       <div className="bio">
         <p className="bio-content">About</p>
@@ -46,6 +83,9 @@ class Bio extends React.Component {
           <p className="edit">
             <Icon icon="edit" onClick={this.togglePopover} />
           </p>
+        </div>
+        <div style={{ display: 'flex', padding: '5px' }}>
+          {portals.map(obj => <UserPortal account={account} key={obj.id} data={obj} />)}
         </div>
         <BioForm
           database={database}

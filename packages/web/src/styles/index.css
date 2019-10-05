@@ -1,5 +1,6 @@
 @import url("https://fonts.googleapis.com/css?family=Noto+Sans|Oxygen|Roboto:100,300,400,500,900&display=swap");
 .slider-container { position: relative; margin-top: 60px; height: 600px; margin-left: 1px; margin-right: 1px; overflow: hidden; }
+@media screen and (min-width: 100px) and (max-width: 810px) { .slider-container { height: 50%; } }
 .slider-container .search-box-container { position: absolute; top: 50%; /* this to center the box w.r.t to parent */ left: 50%; /* this to center the box w.r.t to parent */ /* Above 2 lines wont fully center it, the next line internally
 centers it, buy moving itself 50% left and top */ transform: translate(-50%, -50%); z-index: 2; padding: 5px; display: flex; flex-direction: column; align-items: center; }
 .slider-container .search-box-container .search-form { box-shadow: 1px 1px 3px 0px #1d4354; }
@@ -10,6 +11,19 @@ centers it, buy moving itself 50% left and top */ transform: translate(-50%, -50
 .slider-container .search-box-container .pc-jumbo .pc-jumbo-text { color: #fff; font-size: 50px; font-weight: bolder; text-transform: uppercase; }
 .slider-container .search-box-container .pc-jumbo button { background: red; border-color: red; color: #fff; vertical-align: middle; height: 45px; width: 120px; padding: 3px; font-size: 18px; }
 .slider-container .search-box-container .pc-jumbo button:hover { box-shadow: 1px 1px 3px 0px red; }
+@media screen and (min-width: 810px) and (max-width: 990px) { .slider-container .search-box-container .search-form input { height: 35px; width: 180px; line-height: 30px; font-size: 18px; }
+  .slider-container .search-box-container .search-form button { height: 35px; width: 100px; font-size: 18px; }
+  .slider-container .search-box-container .pc-jumbo .pc-jumbo-text { font-size: 40px; }
+  .slider-container .search-box-container .pc-jumbo button { height: 35px; width: 120px; } }
+@media screen and (min-width: 605px) and (max-width: 810px) { .slider-container .search-box-container .search-form input { height: 35px; width: 120px; line-height: 30px; font-size: 18px; }
+  .slider-container .search-box-container .search-form button { height: 35px; width: 60px; font-size: 16px; }
+  .slider-container .search-box-container .pc-jumbo .pc-jumbo-text { font-size: 30px; }
+  .slider-container .search-box-container .pc-jumbo button { height: 35px; width: 120px; } }
+@media screen and (min-width: 200px) and (max-width: 605px) { .slider-container .search-box-container .search-form { display: flex; flex-wrap: nowrap; }
+  .slider-container .search-box-container .search-form input { height: 30px; width: 120px; line-height: 30px; font-size: 18px; }
+  .slider-container .search-box-container .search-form button { height: 30px; width: 60px; font-size: 16px; }
+  .slider-container .search-box-container .pc-jumbo .pc-jumbo-text { font-size: 18px; }
+  .slider-container .search-box-container .pc-jumbo button { height: 30px; width: 100px; font-size: 16px; } }
 
 /* this is navbar
 there is navigation fixing
@@ -17,7 +31,6 @@ top attachment etc.
 */
 .navbar { top: 0; display: flex; position: fixed; margin: auto; width: 100%; height: 60px; justify-content: space-between; flex-wrap: nowrap; background-color: #fff; box-shadow: 0px 1px 2px rgba(57, 73, 76, 0.35); z-index: 3; }
 .navbar.pcm-nav { box-shadow: none; border: 1px solid #e0e0e0; }
-@media screen and (max-width: 650px) { .navbar { height: 40px; } }
 .navbar .navbar-left { display: flex; flex-direction: row; }
 .navbar .navbar-right { display: flex; flex-direction: row; }
 .navbar .navbar-item { font-size: 14px; font-weight: bold; padding: 10px; color: #666; text-transform: uppercase; }
@@ -62,7 +75,7 @@ top attachment etc.
 .banner-container .banners .banner .banner-description ul { list-style-type: square; padding-inline-start: 25px; font-size: 18px; }
 
 .popularContainer .popularHeader { display: flex; justify-content: space-around; padding: 3%; }
-.popularContainer .popularHeader p { color: #1d4354; font-size: 40px; font-weight: 600; }
+.popularContainer .popularHeader p { text-align: center; color: #1d4354; font-size: 40px; font-weight: 600; }
 .popularContainer .popularCover { display: flex; justify-content: space-around; flex-wrap: wrap; padding: 10px; }
 .popularContainer .popularCover .popular { display: flex; padding: 10px; }
 .popularContainer .popularCover .popular .popularImage { height: 150px; width: 150px; overflow: hidden; border: 1px solid #e0e0e0; border-radius: 50%; }
@@ -445,11 +458,12 @@ top attachment etc.
 .footer .left-right-container .footer-right .right-content { padding: 5px; font-weight: bold; }
 
 .drawing-board { flex: 0.8; padding: 5px; }
-.drawing-board .draw-title { text-align: center; text-transform: uppercase; font-weight: bold; font-size: 18px; color: #696969; padding: 3px; }
-.drawing-board .draw-tools { display: flex; padding: 5px 0px; }
-.drawing-board .draw-tools .tool-label { clip-path: polygon(0 0, 0 100%, 65% 100%, 100% 50%, 65% 0); font-size: 18px; background: #88e0e9; color: white; padding: 3px 15px 3px 2px; display: flex; align-items: center; flex-direction: row; }
+.drawing-board .draw-title { text-align: center; text-transform: uppercase; font-weight: bold; font-size: 18px; color: #1d4354; padding: 3px; }
+.drawing-board .draw-tools { display: flex; padding: 5px 5px; }
+.drawing-board .draw-tools .tool-label { clip-path: polygon(0 0, 0 100%, 65% 100%, 100% 50%, 65% 0); font-size: 18px; background: #1d4354; color: white; padding: 3px 15px 3px 2px; display: flex; align-items: center; flex-direction: row; }
 .drawing-board .draw-tools .tool-container { padding: 3px; margin-left: 5px; border: 1px solid #d6d9d9; display: flex; justify-content: center; width: 100%; }
 .drawing-board .draw-tools .tool-container .i-tool { margin: 0px 5px; }
+.drawing-board .draw-tools .save-wrapper { margin-left: 5px; }
 .drawing-board .draw-canvas { display: flex; justify-content: center; }
 .drawing-board .draw-canvas #mainCanvas { object-fit: contain; background: white; border: 2px solid black; }
 

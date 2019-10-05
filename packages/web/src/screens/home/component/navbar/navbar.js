@@ -88,8 +88,6 @@ class Navbar extends Component {
               </span>
             </div>
           </Link>
-        </div>
-        <div className="navbar-right">
           <Link
             to="/take-a-tour"
             className={navigate.mainNav.name === 'tour' ? 'active' : null}
@@ -100,6 +98,8 @@ class Navbar extends Component {
               </span>
             </div>
           </Link>
+        </div>
+        <div className="navbar-right">
           {/* Notifications in navigation */}
           {account.sessionId && <Notifications apis={apis} />}
           { account.sessionId

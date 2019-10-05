@@ -141,7 +141,8 @@ class DrawingBoard extends Component {
   }
 
   render() {
-    const { draw, anyObjectActive, color } = this.state;
+    const { draw, anyObjectActive, color, canvas } = this.state;
+    const { database, account } = this.props;
     return (
       <div className="drawing-board bro-right">
         <div className="draw-title">
@@ -156,7 +157,10 @@ class DrawingBoard extends Component {
           onDelete={this.deleteObject}
           addText={this.addText}
           color={color}
+          account={account}
+          database={database}
           fileUpload={this.fileUpload}
+          canvas={canvas}
         />
         <div className="draw-canvas">
           <canvas
