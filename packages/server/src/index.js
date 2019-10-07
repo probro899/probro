@@ -1,5 +1,5 @@
 import express from 'express';
-import http from 'http';
+import https from 'https';
 import run from 'app-node';
 import fs from 'fs';
 import bodyParser from 'body-parser';
@@ -9,23 +9,23 @@ import { start } from './socket';
 import validateToken from './auth/validateToken';
 import { initUser } from './api';
 
-const port = process.env.PORT || 4001;
+const port = process.env.PORT || 443;
 const app = express();
 app.use(bodyParser.urlencoded({ limit: '10mb', extended: false }));
 app.use(bodyParser.json({ limit: '10mb', extended: true }));
 
 // // Certificate
-// const privateKey = fs.readFileSync('/etc/letsencrypt/live/properclass.com/privkey.pem', 'utf8');
-// const certificate = fs.readFileSync('/etc/letsencrypt/live/properclass.com/cert.pem', 'utf8');
-// const ca = fs.readFileSync('/etc/letsencrypt/live/properclass.com/chain.pem', 'utf8');
+const privateKey = fs.readFileSync('/etc/letsencrypt/live/properclass.com/privkey.pem', 'utf8');
+const certificate = fs.readFileSync('/etc/letsencrypt/live/properclass.com/cert.pem', 'utf8');
+const ca = fs.readFileSync('/etc/letsencrypt/live/properclass.com/chain.pem', 'utf8');
 
-// const credentials = {
-//   key: privateKey,
-//   cert: certificate,
-//   ca,
-// };
+const credentials = {
+  key: privateKey,
+  cert: certificate,
+  ca,
+};
 
-const server = http.createServer(app);
+const server = https.createServer(credentials, app);
 run(async (nodeApp) => {
   // define web socket url
   const url = '/shocked/:origin/:token';

@@ -25,12 +25,12 @@ export default async function main(onIceCandidateHandler, uid, gotRemoteStreamHa
   // server configuration
   const userId = uid;
   const server = {
-    // iceServers: [{ urls: 'stun:stun2.l.google.com:19302' }],
-    iceServers: [{
-      urls: ['turn:properclass.com:3478'],
-      username: 'properclass',
-      credential: 'proper199201',
-    }],
+    iceServers: [{ urls: ['stun:properclass.com:4455'], username: 'properclass', credential: 'f6bc1195f91831c43d6d77fcee4b80f7' }],
+    // iceServers: [{
+    //   urls: ['turn:properclass.com:3478'],
+    //   username: 'properclass',
+    //   credential: 'proper199201',
+    // }],
     // iceServers: [{ url: 'stun:stun.l.google.com:19302' }, { url: 'turn:properclass@properclass.com:5349', credential: 'proper199201' }],
     // iceServers: [{
     //   urls: ["stun:bturn2.xirsys.com" ]
