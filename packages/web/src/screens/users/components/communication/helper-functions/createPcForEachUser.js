@@ -6,7 +6,7 @@ import offerHandler from './offerHandler';
 import localStreamHandler from './onLocalStream';
 
 export default async (boardId, props, state) => {
-  // console.log('create pc for each user', boardId, props);
+  console.log('create pc for each user', boardId, props);
   try {
     const { database, updateWebRtc, account } = props;
     const boardmembers = Object.values(database.BoardMember.byId).filter(bm => bm.boardId === boardId);

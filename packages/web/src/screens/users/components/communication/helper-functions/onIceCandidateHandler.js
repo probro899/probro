@@ -1,6 +1,7 @@
 import store from '../../../../../store';
 
 export default (props, state) => async (e, userId) => {
+  console.log('onIcecandidateHandler called', e);
   const { account, updateWebRtc } = props;
   const { webRtc } = store.getState();
   const { apis } = state;

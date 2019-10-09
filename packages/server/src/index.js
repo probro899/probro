@@ -1,4 +1,5 @@
 import express from 'express';
+import https from 'https';
 import http from 'http';
 import run from 'app-node';
 import fs from 'fs';
@@ -25,6 +26,7 @@ app.use(bodyParser.json({ limit: '10mb', extended: true }));
 //   ca,
 // };
 
+// const server = https.createServer(credentials, app);
 const server = http.createServer(app);
 run(async (nodeApp) => {
   // define web socket url

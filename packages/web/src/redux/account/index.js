@@ -1,5 +1,4 @@
 import { login, logout } from '@probro/common/src/actions';
-
 import Cookie from './cookies';
 
 const INITIAL_STATE = {
