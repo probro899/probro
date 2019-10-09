@@ -3,13 +3,13 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Redirect, Route } from 'react-router-dom';
 import { Navbar } from '../../home/component/index';
-import { SideNav, Profile, Class, Setting, DrawingBoard, Connection, Message } from '../components';
+import { SideNav, SmallScreenSideNav, Profile, Class, Setting, DrawingBoard, Connection, Message } from '../components';
 import { Blog } from '../pro/blog';
 
 class HomePage extends Component {
   state = {};
 
-  componentWillMount() {
+  componentDidMount() {
     const { account, match } = this.props;
     // this is to prevent hitting people
     if (match.params.id !== account.sessionId) {
@@ -27,6 +27,7 @@ class HomePage extends Component {
             {/* redirect to home page if not logged in  */}
             {account.online ? <Navbar /> : <Redirect to="/" />}
             <div className="broWrapper">
+              <SmallScreenSideNav match={match} />
               <SideNav match={match} />
               {/* fake-side-nav is just for the styling purpose only */}
               <div className="fake-side-nav" />

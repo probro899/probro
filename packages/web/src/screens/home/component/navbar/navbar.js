@@ -2,9 +2,11 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { Menu, MenuItem, Popover, Position, Intent } from '@blueprintjs/core';
+import { Menu, MenuItem, Popover, Position, Intent, Icon } from '@blueprintjs/core';
 import client from '../../../../socket';
+import * as actions from '../../../../actions';
 import Notifications from '../notification';
+import SmallScreenMenu from './SmallScreenMenu';
 
 const profileIcon = require('../../../../assets/icons/64w/uploadicon64.png');
 
@@ -32,6 +34,7 @@ class Navbar extends Component {
   state = {
     apis: {},
     redirectDashboard: false,
+    smallScreen: false,
   };
 
   async componentDidMount() {
@@ -51,9 +54,21 @@ class Navbar extends Component {
     this.setState({ redirectDashboard: true });
   }
 
+  toggleSmallScreen = () => {
+    const { smallScreen } = this.state;
+    this.setState({
+      smallScreen: !smallScreen,
+    });
+  }
+
+  showMessage = () => {
+    const { updateWebRtc } = this.props;
+    updateWebRtc('showCommunication', 1);
+  }
+
   render() {
     const { account, navigate, className } = this.props;
-    const { apis, redirectDashboard } = this.state;
+    const { apis, redirectDashboard, smallScreen } = this.state;
     return (
       <div className={`navbar ${className}`}>
         {redirectDashboard && <Redirect exact push to={`/${account.sessionId}/profile`} />}
@@ -99,8 +114,24 @@ class Navbar extends Component {
             </div>
           </Link>
         </div>
+        <div className="navbar-more-container">
+          <Icon icon="menu" className="more-icon" onClick={this.toggleSmallScreen} iconSize={25} color="#666" />
+          <SmallScreenMenu
+            smallScreenToggle={this.toggleSmallScreen}
+            open={smallScreen}
+            account={account}
+            apis={apis}
+          />
+        </div>
         <div className="navbar-right">
           {/* Notifications in navigation */}
+          {account.sessionId && (
+            <Link to="#" onClick={this.showMessage}>
+              <div className="navbar-item">
+                <Icon icon="chat" iconSize={Icon.SIZE_LARGE} />
+              </div>
+            </Link>
+          )}
           {account.sessionId && <Notifications apis={apis} />}
           { account.sessionId
             ? (
@@ -148,7 +179,8 @@ Navbar.propTypes = {
   className: PropTypes.string,
   account: PropTypes.objectOf(PropTypes.any).isRequired,
   navigate: PropTypes.objectOf(PropTypes.any).isRequired,
+  updateWebRtc: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => state;
-export default connect(mapStateToProps)(Navbar);
+export default connect(mapStateToProps, { ...actions })(Navbar);

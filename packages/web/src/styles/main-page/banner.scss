@@ -48,4 +48,17 @@
       }
     }
   }
+  @media screen and (max-width: 390px) {
+    .banners {
+      .banner {
+        margin: 10px 0px;
+        .banner-image {
+          img {
+           width: 300px;
+           height: auto;
+          }
+        }
+      }
+    }
+  }
 }

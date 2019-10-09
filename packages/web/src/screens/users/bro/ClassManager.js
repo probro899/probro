@@ -26,7 +26,7 @@ class Classes extends Component {
     taskIdInOverlay: 0,
   };
 
-  componentWillMount() {
+  componentDidMount() {
     const {
       account,
       match,
@@ -226,6 +226,7 @@ class Classes extends Component {
     this.setState({
       columns: newColumns,
     });
+    // console.log('moved intercard', newTask, dragable);
     await api.updateBoardColumnCard([
       {
         position: newTask.position,
@@ -258,6 +259,7 @@ class Classes extends Component {
       descriptions,
     } = this.state;
     const { addDatabaseSchema, updateDatabaseSchema, deleteDatabaseSchema } = this.props;
+    // console.log('classmanager', columns, tasks);
     return (
       <div style={{ position: 'relative' }}>
         {redirectionError && <Redirect to="/" />}

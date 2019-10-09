@@ -2,7 +2,7 @@
 .slider-container { position: relative; margin-top: 60px; height: 600px; margin-left: 1px; margin-right: 1px; overflow: hidden; }
 @media screen and (min-width: 100px) and (max-width: 810px) { .slider-container { height: 50%; } }
 .slider-container .search-box-container { position: absolute; top: 50%; /* this to center the box w.r.t to parent */ left: 50%; /* this to center the box w.r.t to parent */ /* Above 2 lines wont fully center it, the next line internally
-centers it, buy moving itself 50% left and top */ transform: translate(-50%, -50%); z-index: 2; padding: 5px; display: flex; flex-direction: column; align-items: center; }
+centers it, buy moving itself 50% left and top */ transform: translate(-50%, -50%); z-index: 2; display: flex; flex-direction: column; align-items: center; }
 .slider-container .search-box-container .search-form { box-shadow: 1px 1px 3px 0px #1d4354; }
 .slider-container .search-box-container .search-form input { background-color: #fff; text-align: center; height: 55px; width: 230px; line-height: 40px; font-size: 20px; border-width: 0.5px; vertical-align: middle; border-color: #e0e0e0; }
 .slider-container .search-box-container .search-form button { background: #1d4354; border-color: #1d4354; color: #fff; vertical-align: middle; height: 55px; width: 120px; padding: 3px; font-size: 20px; }
@@ -32,15 +32,25 @@ top attachment etc.
 .navbar { top: 0; display: flex; position: fixed; margin: auto; width: 100%; height: 60px; justify-content: space-between; flex-wrap: nowrap; background-color: #fff; box-shadow: 0px 1px 2px rgba(57, 73, 76, 0.35); z-index: 3; }
 .navbar.pcm-nav { box-shadow: none; border: 1px solid #e0e0e0; }
 .navbar .navbar-left { display: flex; flex-direction: row; }
+.navbar .navbar-more-container { padding: 0px 10px; display: flex; align-items: center; }
+.navbar .navbar-more-container .more-icon { display: none; }
 .navbar .navbar-right { display: flex; flex-direction: row; }
-.navbar .navbar-item { font-size: 14px; font-weight: bold; padding: 10px; color: #666; text-transform: uppercase; }
-@media screen and (max-width: 650px) { .navbar .navbar-item { font-size: 15px; padding: 2px; } }
+.navbar .navbar-item { font-size: 15px; font-weight: bold; padding: 10px; color: #666; text-transform: uppercase; }
 .navbar .navbar-item img.profile-icon { height: 50px; border-radius: 50%; padding: 1px; border: 1px solid #666; }
 .navbar a:link { display: flex; flex-direction: column; justify-content: center; text-decoration: none; }
 .navbar a:hover .navbar-item { color: #137cbd; }
 .navbar a:hover .navbar-item img { border: 2px solid #137cbd; }
 .navbar a.active .navbar-item { color: #137cbd; }
 .navbar a.active .navbar-item img { border: 2px solid #137cbd; }
+@media screen and (min-width: 550px) and (max-width: 700px) { .navbar .navbar-item { font-size: 14px; } }
+@media screen and (min-width: 200px) and (max-width: 550px) { .navbar .navbar-left { display: none; }
+  .navbar .navbar-more-container .more-icon { display: block; } }
+
+.pc-drop-menu { display: flex; flex-direction: column; padding: 10px; }
+.pc-drop-menu .pc-drop-menu-link { padding: 10px; text-transform: uppercase; color: #666; font-weight: bold; border-bottom: 1px solid #e0e0e0; }
+
+.pc-dropdown-drawer .bp3-drawer-header h4 { text-align: center; color: #137cbd; }
+.pc-dropdown-drawer .bp3-drawer-header svg { height: 25px; width: 25px; color: #666; }
 
 .o-log-or-reg { display: flex; justify-content: space-around; }
 .o-log-or-reg .log-or-reg { max-width: 40%; }
@@ -73,6 +83,8 @@ top attachment etc.
 .banner-container .banners .banner .banner-title { padding: 5px; display: flex; width: 100%; justify-content: center; font-size: 20px; font-weight: bolder; color: #58AFFC; }
 .banner-container .banners .banner .banner-description { width: 100%; display: flex; flex-direction: column; }
 .banner-container .banners .banner .banner-description ul { list-style-type: square; padding-inline-start: 25px; font-size: 18px; }
+@media screen and (max-width: 390px) { .banner-container .banners .banner { margin: 10px 0px; }
+  .banner-container .banners .banner .banner-image img { width: 300px; height: auto; } }
 
 .popularContainer .popularHeader { display: flex; justify-content: space-around; padding: 3%; }
 .popularContainer .popularHeader p { text-align: center; color: #1d4354; font-size: 40px; font-weight: 600; }
@@ -88,14 +100,27 @@ top attachment etc.
 .broWrapper { display: flex; margin-top: 60px; }
 .broWrapper .fake-side-nav { flex: 0.19; margin-top: 4px; margin-left: 4px; padding: 50px 10px; }
 .broWrapper .bro-right { flex: 0.81; }
+@media screen and (max-width: 855px) { .broWrapper { display: block; }
+  .broWrapper .fake-side-nav { display: none; } }
 
-.sideNav { margin-top: 4px; margin-left: 4px; padding: 50px 5px; display: flex; width: 20%; height: calc(100% - 70px); z-index: 3; align-items: center; flex-direction: column; position: fixed; border: 1px solid #e0e0e0; background-color: #f9f9f9; }
+.sideNav { display: flex; margin-top: 4px; margin-left: 4px; padding: 50px 5px; width: 20%; height: calc(100% - 70px); z-index: 3; align-items: center; flex-direction: column; position: fixed; border: 1px solid #e0e0e0; background-color: #f9f9f9; }
 .sideNav .sideNavElement { margin-bottom: 5px; padding: 10px 10px 10px 10px; align-self: stretch; border: 1px solid #e0e0e0; background-color: #f9f9f9; }
 .sideNav .sideNavElement span { font-size: 16px; font-weight: bold; color: #666; }
 .sideNav .sideNavElement span svg { fill: #666; }
 .sideNav .sideNavElement:hover { background-color: #fff; border-left: 3px solid #137cbd; text-decoration: none; }
 .sideNav .active span { color: #137cbd; }
 .sideNav .active span svg { fill: #137cbd; }
+@media screen and (max-width: 855px) { .sideNav { display: none; } }
+
+.pc-small-screen-sidenav { flex: 1; display: none; }
+.pc-small-screen-sidenav .nav-button { background-color: #fff; color: #666; }
+.pc-small-screen-sidenav .pc-collapse-menu { padding: 10px 0px; display: flex; flex-direction: column; }
+.pc-small-screen-sidenav .pc-collapse-menu .sideNavElement { margin-bottom: 5px; padding: 10px 10px 10px 10px; align-self: stretch; border: 1px solid #e0e0e0; background-color: #f9f9f9; }
+.pc-small-screen-sidenav .pc-collapse-menu .sideNavElement span { font-size: 16px; color: #666; }
+.pc-small-screen-sidenav .pc-collapse-menu .sideNavElement:hover { background-color: #fff; border-left: 3px solid #137cbd; text-decoration: none; }
+.pc-small-screen-sidenav .pc-collapse-menu .active span { color: #137cbd; }
+.pc-small-screen-sidenav .pc-collapse-menu .active span svg { fill: #137cbd; }
+@media screen and (max-width: 855px) { .pc-small-screen-sidenav { display: block; margin: 70px 20px 0px 15px; } }
 
 .profile { display: flex; align-items: center; flex-direction: column; padding: 4px; position: relative; }
 .profile .cover-pic { height: 250px; position: relative; overflow: hidden; width: 100%; background: linear-gradient(to right, #2b5468, 0%, #137cbd, 100%); }
@@ -141,6 +166,7 @@ top attachment etc.
 .profile .skills p.p-top svg { fill: #137cbd; }
 .profile .skills .skills-container { padding: 5px 5px 5px 0px; }
 .profile .skills .skills-container span { margin: 5px; padding: 5px; color: #fff; background: #137cbd; }
+@media screen and (max-width: 855px) { .profile { padding: 5px 15px; } }
 
 .classes { display: flex; flex-direction: column; padding: 5px; }
 .classes .header { margin-bottom: 10px; padding: 10px; }
@@ -239,6 +265,7 @@ top attachment etc.
 .settings .container-settings .switch-adv-con { display: flex; flex-direction: column; align-items: center; }
 .settings .container-settings .switch-adv-con p { text-align: center; color: #5c7080; line-height: 18px; }
 .settings .container-settings .switch-adv-con button.switch-button { background: #0f9960; color: white; }
+@media screen and (max-width: 855px) { .settings { padding: 5px 15px; } }
 
 .create-blog { margin-top: 60px; }
 .create-blog div[contenteditable]:focus { outline: 0px solid transparent; }

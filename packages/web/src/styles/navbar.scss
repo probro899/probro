@@ -21,29 +21,33 @@ top attachment etc.
     border: 1px solid $normalBorder;
   }
   .navbar-left {
-      display: flex;
-      flex-direction: row;
+    display: flex;
+    flex-direction: row;
+  }
+  .navbar-more-container {
+    padding: 0px 10px;
+    display: flex;
+    align-items: center;
+    .more-icon {
+      display: none;
+    }
   }
   .navbar-right {
-      display: flex;
-      flex-direction: row;
+    display: flex;
+    flex-direction: row;
   }
   .navbar-item {
-      font-size: 14px;
-      font-weight: bold;
-      padding: 10px;
-      color: $navTextColor;
-      text-transform: uppercase;
-      @media screen and (max-width: 650px){
-        font-size: 15px;
-        padding: 2px;
-      }
-      img.profile-icon {
-        height: 50px;
-        border-radius: 50%;
-        padding: 1px;
-        border: 1px solid $navTextColor;
-      }
+    font-size: 15px;
+    font-weight: bold;
+    padding: 10px;
+    color: $navTextColor;
+    text-transform: uppercase;
+    img.profile-icon {
+      height: 50px;
+      border-radius: 50%;
+      padding: 1px;
+      border: 1px solid $navTextColor;
+    }
   }
   a:link {
     display: flex;
@@ -65,6 +69,48 @@ top attachment etc.
       img {
         border: 2px solid $skyBlueMain;
       }
+    }
+  }
+  @media screen and (min-width: 550px) and (max-width: 700px){
+    .navbar-item {
+      font-size: 14px;
+    }
+  }
+  @media screen and (min-width: 200px) and (max-width: 550px) {
+    .navbar-left {
+      display: none;
+    }
+    .navbar-more-container {
+      .more-icon {
+        display: block;
+      }
+    }
+  }
+}
+
+// styling for the drop menu in the small screens
+.pc-drop-menu {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  .pc-drop-menu-link {
+    padding: 10px;
+    text-transform: uppercase;
+    color: $navTextColor;
+    font-weight: bold;
+    border-bottom: 1px solid $normalBorder;
+  }
+}
+.pc-dropdown-drawer {
+  .bp3-drawer-header {
+    h4 {
+      text-align: center;
+      color: $skyBlueMain;
+    }
+    svg {
+      height: 25px;
+      width: 25px;
+      color: $navTextColor;
     }
   }
 }
