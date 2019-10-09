@@ -136,8 +136,13 @@ async function addBoardMember(record) {
 }
 
 async function addBoardMessage(record) {
- const res = await add.call(this, 'BoardMessage', record);
- return res;
+  const res = await add.call(this, 'BoardMessage', record);
+  return res;
+}
+
+async function addBoardColumnCardTag(record) {
+  const res = await add.call(this, 'BoardColumnCardTag', record);
+  return res;
 }
 
 export default [
@@ -149,4 +154,5 @@ export default [
   addBoardColumnCardDescription,
   addBoardMember,
   addBoardMessage,
+  addBoardColumnCardTag,
 ];

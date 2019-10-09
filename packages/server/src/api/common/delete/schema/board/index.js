@@ -17,7 +17,7 @@ function deleteBoardColumn(record) {
 }
 
 function deleteBoardColumnCard(record) {
-  deleteBoardColumnCardHelper(Delete.bind(this), [record]);
+  deleteBoardColumnCardHelper(Delete.bind(this), [{ id: record.id }]);
 }
 
 function deleteBoardColumnCardAttachment(record) {
@@ -32,6 +32,10 @@ function deleteBordColumnDescription(record) {
   Delete.call(this, 'BoardColumnCardDescription', record);
 }
 
+function deleteBoardColumnCardTag(record) {
+  Delete.call(this, 'BoardColumnCardTag', record);
+}
+
 export default [
   deleteBoard,
   deleteBoardColumn,
@@ -39,4 +43,5 @@ export default [
   deleteBoardColumnCardAttachment,
   deleteBoardColumnCardComment,
   deleteBordColumnDescription,
+  deleteBoardColumnCardTag,
 ];

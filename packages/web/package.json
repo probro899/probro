@@ -53,6 +53,5 @@
   "devDependencies": {
     "json-server": "^0.14.2",
     "react-app-rewired": "^1.6.2"
-  },
-  "proxy": "http://157.245.11.255:4001"
+  }
 }

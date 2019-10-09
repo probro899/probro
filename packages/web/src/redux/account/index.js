@@ -1,5 +1,4 @@
 import { login, logout } from '@probro/common/src/actions';
-
 import Cookie from './cookies';
 
 const INITIAL_STATE = {
@@ -22,6 +21,8 @@ const reducer = () => (state = INITIAL_STATE, action) => {
         user: action.payload,
       };
     case logout.TYPE:
+      // console.log('LogoutCalled', logout.TYPE);
+      Cookie.clear('pc-session');
       return {
         ...state,
         user: null,

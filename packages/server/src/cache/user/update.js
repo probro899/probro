@@ -3,7 +3,7 @@ import users from './cache';
 export default (action, session) => {
   const { id } = session.values.user;
   const state = users.get(id);
-  console.log('previousState', state);
+  // console.log('previousState', state);
   const newState = () => {
     switch (action.type) {
       case 'schema.add':
@@ -15,7 +15,7 @@ export default (action, session) => {
           [action.schema]: [...state[action.schema], ...action.payload],
         };
       case 'schema.update':
-        console.log('update cache schema called', action, session);
+        // console.log('update cache schema called', action, session);
         return {
           ...state,
           [action.schema]: state[action.schema].map(obj => (obj.id === action.payload.id ? { ...obj, ...action.payload } : obj)),

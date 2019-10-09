@@ -25,27 +25,23 @@ export default async function main(onIceCandidateHandler, uid, gotRemoteStreamHa
   // server configuration
   const userId = uid;
   const server = {
-    iceServers: [{ urls: ['stun:properclass.com:4455'], username: 'properclass', credential: 'f6bc1195f91831c43d6d77fcee4b80f7' }],
+    // iceServers: [{ urls: ['stun:properclass.com:4455'], username: 'properclass', credential: 'f6bc1195f91831c43d6d77fcee4b80f7' }],
     // iceServers: [{
     //   urls: ['turn:properclass.com:3478'],
     //   username: 'properclass',
     //   credential: 'proper199201',
     // }],
-    // iceServers: [{ url: 'stun:stun.l.google.com:19302' }, { url: 'turn:properclass@properclass.com:5349', credential: 'proper199201' }],
+    iceServers: [{ urls: ['stun:stun.l.google.com:19302'] }, { urls: ['turn:properclass.com:3478?transport=udp'], username: 'properclass', credential: 'proper199201' }],
+    // iceServers: [{ urls: ["stun:bturn2.xirsys.com"] }, { username: "2vijQniCjCzLsvTPi2b2J-whXK64rE1XNRHcPfDl1Zn46v35LUnRvC9WlhfcFXa5AAAAAF2YObNSYWppdnNhaA==", credential: "54182106-e73a-11e9-8815-9646de0e6ccd", urls:["turn:bturn2.xirsys.com:80?transport=udp", "turn:bturn2.xirsys.com:3478?transport=udp", "turn:bturn2.xirsys.com:80?transport=tcp", "turn:bturn2.xirsys.com:3478?transport=tcp", "turns:bturn2.xirsys.com:443?transport=tcp", "turns:bturn2.xirsys.com:5349?transport=tcp" ]}],
     // iceServers: [{
-    //   urls: ["stun:bturn2.xirsys.com" ]
+    //   urls: ["stun:bturn2.xirsys.com"]
     // }, {
     //   username: "2vijQniCjCzLsvTPi2b2J-whXK64rE1XNRHcPfDl1Zn46v35LUnRvC9WlhfcFXa5AAAAAF2YObNSYWppdnNhaA==",
     //   credential: "54182106-e73a-11e9-8815-9646de0e6ccd",
     //   urls: [
-    //       "turn:bturn2.xirsys.com:80?transport=udp",
-    //       "turn:bturn2.xirsys.com:3478?transport=udp",
-    //       "turn:bturn2.xirsys.com:80?transport=tcp",
-    //       "turn:bturn2.xirsys.com:3478?transport=tcp",
-    //       "turns:bturn2.xirsys.com:443?transport=tcp",
-    //       "turns:bturn2.xirsys.com:5349?transport=tcp"
+    //     "turn:bturn2.xirsys.com:3478?transport=udp",
     //   ],
-    // } ],
+    // }],
   };
 
   // Initialize peerconnection

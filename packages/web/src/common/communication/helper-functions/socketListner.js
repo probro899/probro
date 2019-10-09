@@ -41,12 +41,16 @@ export default (props, state) => {
     const { apis } = state;
     const { updateWebRtc } = props;
     const { webRtc, account } = store.getState();
+    console.log('Total candidateFor this pc', webRtc.iceCandidates);
     const { uid, answer, boardId } = data;
     const { pc } = webRtc.peerConnections[uid];
     const iceCandidate = webRtc.iceCandidates[uid];
     if (data) {
+      console.log('sending All candidate during answer', iceCandidate);
       pc.setRemoteDescription(answer);
-      await apis.addIceCandidate({ iceCandidateDetail: { iceCandidate: JSON.stringify(iceCandidate.e.candidate), uid: account.user.id, boardId: webRtc.currentOffer ? webRtc.currentOffer.boardId : webRtc.showCommunication }, userList: [{ userId: uid }] });
+      iceCandidate.candidates.forEach((e) => {
+        apis.addIceCandidate({ iceCandidateDetail: { iceCandidate: JSON.stringify(e.candidate), uid: account.user.id, boardId: webRtc.currentOffer ? webRtc.currentOffer.boardId : webRtc.showCommunication }, userList: [{ userId: uid }] });
+      });
       updateWebRtc('iceCandidates', { ...webRtc.iceCandidates, [uid]: { ...webRtc.iceCandidates[uid], sendStatus: true } });
     }
   });
@@ -65,7 +69,10 @@ export default (props, state) => {
       if (!iceCand) {
         updateWebRtc('iceCandidates', { ...webRtc.iceCandidates, [uid]: { preFetch: true } });
       } else if (!iceCand.sendStatus) {
-        await apis.addIceCandidate({ iceCandidateDetail: { iceCandidate: JSON.stringify(iceCand.e.candidate), uid: account.user.id, boardId: webRtc.currentOffer ? webRtc.currentOffer.boardId : webRtc.showCommunication }, userList: [{ userId: uid }] });
+        console.log('sending All ICe candidate to remote of iceCandidate arrive', iceCand);
+        iceCand.candidates.forEach((e) => {
+          apis.addIceCandidate({ iceCandidateDetail: { iceCandidate: JSON.stringify(e.candidate), uid: account.user.id, boardId: webRtc.currentOffer ? webRtc.currentOffer.boardId : webRtc.showCommunication }, userList: [{ userId: uid }] });
+        });
         updateWebRtc('iceCandidates', { ...webRtc.iceCandidates, [uid]: { ...webRtc.iceCandidates[uid], sendStatus: true } });
       }
     }
