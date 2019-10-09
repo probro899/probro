@@ -24,42 +24,36 @@ PopoverContent.propTypes = {
   callback: PropTypes.func.isRequired,
 };
 
-const TagPopover = () => {
+const TagPopover = ({ tags, addTag }) => {
+  const tagNames = ['primary', 'warning', 'success', 'danger'];
   return (
     <div style={{ padding: '5px', minWidth: '250px' }}>
       <div style={{ padding: '5px', textAlign: 'center', fontSize: '15px', fontWeight: 'bold' }}>
         <span>Select Tags</span>
       </div>
       <div>
-        <Tag
-          fill
-          large
-          intent="primary"
-          interactive
-          style={{ margin: '5px 0px' }}
-          icon="tick"
-        />
-        <Tag
-          fill
-          large
-          interactive
-          intent="warning"
-          style={{ margin: '5px 0px' }}
-        />
-        <Tag
-          fill
-          large
-          interactive
-          intent="success"
-          style={{ margin: '5px 0px' }}
-        />
-        <Tag
-          fill
-          large
-          interactive
-          intent="danger"
-          style={{ margin: '5px 0px' }}
-        />
+        {
+          tagNames.map((type, index) => {
+            let tick = false;
+            tags.map((obj) => {
+              if (obj.tag === type) {
+                tick = true;
+              }
+            });
+            return (
+              <Tag
+                key={index}
+                onClick={() => addTag(type, tick)}
+                fill
+                large
+                intent={type}
+                interactive
+                style={{ margin: '5px 0px' }}
+                icon={tick ? 'tick' : null}
+              />
+            );
+          })
+        }
       </div>
     </div>
   );
@@ -99,11 +93,40 @@ class TaskDetailRight extends React.Component {
   };
 
   uploadAttachment = (id, file) => {
-    console.log(id, file);
+    // console.log(id, file);
   }
 
-  uploadDeadLine = (data) => {
-    console.log(data);
+  uploadDeadLine = async (data) => {
+    const { apis, task, updateDatabaseSchema } = this.props;
+    const deadline = data.deadline.toLocaleString('en-IN').split(',')[0];
+    await apis.updateBoardColumnCard([{ Deadline: deadline }, { id: task.id }]);
+    updateDatabaseSchema('BoardColumnCard', { id: task.id, Deadline: deadline });
+    return { response: 200, message: 'Deadline added' };
+  }
+
+  addTag = async (name, aord) => {
+    const {
+      task, apis, tags, addDatabaseSchema,
+      deleteDatabaseSchema,
+    } = this.props;
+    if (aord) {
+      let tag;
+      tags.map((obj) => {
+        if (obj.tag === name) {
+          tag = obj;
+        }
+      });
+      await apis.deleteBoardColumnCardTag({
+        id: tag.id,
+      });
+      deleteDatabaseSchema('BoardColumnCardTag', { id: tag.id });
+      return;
+    }
+    const res = await apis.addBoardColumnCardTag({
+      boardColumnCardId: task.id,
+      tag: name,
+    });
+    addDatabaseSchema('BoardColumnCardTag', { id: res, tag: name, boardColumnCardId: task.id });
   }
 
   deleteCard = async (type) => {
@@ -133,7 +156,7 @@ class TaskDetailRight extends React.Component {
 
   render() {
     const { deleteCardPopover } = this.state;
-    const { task } = this.props;
+    const { task, tags } = this.props;
     return (
       <div className="right">
         <div className="rt-in">
@@ -142,7 +165,7 @@ class TaskDetailRight extends React.Component {
           </div>
           <div className="rt-tools">
             <Popover
-              content={<TagPopover />}
+              content={<TagPopover addTag={this.addTag} tags={tags} />}
               position="left-top"
             >
               <Button
@@ -195,8 +218,11 @@ class TaskDetailRight extends React.Component {
 
 TaskDetailRight.propTypes = {
   task: PropTypes.objectOf(PropTypes.any).isRequired,
+  tags: PropTypes.arrayOf(PropTypes.any).isRequired,
   apis: PropTypes.objectOf(PropTypes.any).isRequired,
   deleteDatabaseSchema: PropTypes.func.isRequired,
+  updateDatabaseSchema: PropTypes.func.isRequired,
+  addDatabaseSchema: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
   boardId: PropTypes.number.isRequired,
 };

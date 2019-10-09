@@ -221,6 +221,9 @@ top attachment etc.
 .overlay-container .task-detail-overlay .overlay-title .head .buttons-group .edit-title svg { fill: #137cbd; }
 .overlay-container .task-detail-overlay .overlay-body { display: flex; background: #fff; }
 .overlay-container .task-detail-overlay .overlay-body .left { flex: 0.7; }
+.overlay-container .task-detail-overlay .overlay-body .left .pc-deadline-view { display: flex; padding: 5px; }
+.overlay-container .task-detail-overlay .overlay-body .left .pc-deadline-view p { padding: 5px; background-color: green; color: #fff; }
+.overlay-container .task-detail-overlay .overlay-body .left .pc-deadline-view p.expire { background-color: red; }
 .overlay-container .task-detail-overlay .overlay-body .left .overlay-description { padding: 5px; }
 .overlay-container .task-detail-overlay .overlay-body .left .overlay-description .desc-head u { font-weight: bold; font-size: 17px; }
 .overlay-container .task-detail-overlay .overlay-body .left .overlay-description .desc { padding: 5px; font-size: 15px; font-weight: 400; }

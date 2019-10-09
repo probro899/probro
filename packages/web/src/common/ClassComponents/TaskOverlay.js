@@ -15,6 +15,7 @@ class TaskOverlay extends Component {
     comments: [],
     description: {},
     attachments: [],
+    tags: [],
     title: '',
     desc: '',
     comment: '',
@@ -27,6 +28,7 @@ class TaskOverlay extends Component {
       comments,
       attachments,
       descriptions,
+      tags,
     } = nextProps;
     const commentsCard = comments.filter((obj) => {
       if (taskId === obj.boardColumnCardId) {
@@ -44,6 +46,13 @@ class TaskOverlay extends Component {
         return obj;
       }
     }).sort(timeStampSorting)[0];
+    // finding all the tags here
+    const allTags = Object.values(tags.byId).filter((obj) => {
+      if (taskId === obj.boardColumnCardId) {
+        return obj;
+      }
+    });
+
     let desc = '';
     if (latestDesription) {
       desc = latestDesription.title;
@@ -54,6 +63,7 @@ class TaskOverlay extends Component {
           comments: commentsCard,
           attachments: attachmentsCard,
           task: obj,
+          tags: allTags,
           description: latestDesription,
           title: obj.name,
           desc,
@@ -168,10 +178,13 @@ class TaskOverlay extends Component {
       description,
       desc,
       comment,
+      tags,
     } = this.state;
     const {
       userList, apis, boardId, onClose,
       deleteDatabaseSchema,
+      updateDatabaseSchema,
+      addDatabaseSchema,
     } = this.props;
     return (
       <Dialog
@@ -224,6 +237,11 @@ class TaskOverlay extends Component {
           </div>
           <div className="overlay-body">
             <div className="left">
+              <div className="pc-deadline-view">
+                <p className="expire">
+                  {`Deadline: ${task.Deadline}`}
+                </p>
+              </div>
               <div className="overlay-description">
                 <div className="desc-head">
                   <u>Description</u>
@@ -304,11 +322,14 @@ class TaskOverlay extends Component {
               <TaskComment comments={comments} userList={userList} />
             </div>
             <TaskDetailRight
+              tags={tags}
               onClose={onClose}
               boardId={boardId}
               task={task}
               apis={apis}
               deleteDatabaseSchema={deleteDatabaseSchema}
+              updateDatabaseSchema={updateDatabaseSchema}
+              addDatabaseSchema={addDatabaseSchema}
             />
           </div>
         </div>
@@ -324,6 +345,7 @@ TaskOverlay.propTypes = {
   userList: PropTypes.objectOf(PropTypes.any).isRequired,
   apis: PropTypes.objectOf(PropTypes.any).isRequired,
   account: PropTypes.objectOf(PropTypes.any).isRequired,
+  tags: PropTypes.objectOf(PropTypes.any).isRequired,
   tasks: PropTypes.arrayOf(PropTypes.any).isRequired,
   deleteDatabaseSchema: PropTypes.func.isRequired,
   boardId: PropTypes.number.isRequired,

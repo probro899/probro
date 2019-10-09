@@ -258,7 +258,7 @@ class Classes extends Component {
       attachments,
       descriptions,
     } = this.state;
-    const { addDatabaseSchema, updateDatabaseSchema, deleteDatabaseSchema } = this.props;
+    const { addDatabaseSchema, tags, updateDatabaseSchema, deleteDatabaseSchema } = this.props;
     // console.log('classmanager', columns, tasks);
     return (
       <div style={{ position: 'relative' }}>
@@ -321,6 +321,7 @@ class Classes extends Component {
           attachments={attachments}
           descriptions={descriptions}
           boardId={classId}
+          tags={tags}
           addDatabaseSchema={addDatabaseSchema}
           updateDatabaseSchema={updateDatabaseSchema}
           deleteDatabaseSchema={deleteDatabaseSchema}
@@ -332,6 +333,7 @@ class Classes extends Component {
 
 Classes.propTypes = {
   tasks: PropTypes.objectOf(PropTypes.any).isRequired,
+  tags: PropTypes.objectOf(PropTypes.any).isRequired,
   columns: PropTypes.objectOf(PropTypes.any).isRequired,
   match: PropTypes.objectOf(PropTypes.any).isRequired,
   account: PropTypes.objectOf(PropTypes.any).isRequired,
@@ -353,6 +355,7 @@ const mapStateToProps = (state) => {
     descriptions: database.BoardColumnCardDescription,
     attachments: database.BoardColumnCardAttachment,
     boardUsers: database.User,
+    tags: database.BoardColumnCardTag,
   };
 };
 export default connect(mapStateToProps, { ...actions })(Classes);

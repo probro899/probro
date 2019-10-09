@@ -276,6 +276,18 @@
       background: $backgroundColor;
       .left {
         flex: 0.7;
+        .pc-deadline-view {
+          display: flex;
+          padding: 5px;
+          p {
+            padding: 5px;
+            background-color: green;
+            color: $backgroundColor; 
+            &.expire {
+              background-color: red;
+            }
+          }
+        }
         .overlay-description {
           padding: 5px;
           .desc-head {
