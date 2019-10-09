@@ -7,8 +7,10 @@ import Profile from './profile';
 import DrawingBoard from './drawing-board';
 import Connection from './connection';
 import Message from './message';
+import SmallScreenSideNav from './SmallScreenSideNav';
 
 export {
+  SmallScreenSideNav,
   SideNav,
   Class,
   Setting,

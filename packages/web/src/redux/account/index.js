@@ -22,6 +22,7 @@ const reducer = () => (state = INITIAL_STATE, action) => {
         user: action.payload,
       };
     case logout.TYPE:
+      Cookie.clear('pc-session');
       return {
         ...state,
         user: null,

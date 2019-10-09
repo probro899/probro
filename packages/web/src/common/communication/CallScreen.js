@@ -49,7 +49,7 @@ class CallScreen extends React.Component {
   render() {
     const { style, webRtc, account } = this.props;
     const { showWhiteBoard } = this.state;
-    console.log('webRtc in CallScreen', webRtc);
+    // console.log('webRtc in CallScreen', webRtc);
     return !webRtc.showCommunication ? <div /> : (
       <div
         className="call-screen"

@@ -19,6 +19,6 @@ export default {
   },
 
   clear: (cookie) => {
-    document.cookie = `${cookie.trim}= ;expires=${(new Date(Date.now() - 1)).toUTCString()}`;
+    document.cookie = `${cookie.trim()}= ;expires=${(new Date(Date.now() - 1)).toUTCString()}`;
   },
 };

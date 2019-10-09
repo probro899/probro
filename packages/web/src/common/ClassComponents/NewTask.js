@@ -50,7 +50,7 @@ class NewTask extends Component {
       }
       return count;
     }, 16384);
-    await api.addBoardColumnCard({
+    const res = await api.addBoardColumnCard({
       userId: account.user.id,
       timeStamp: Date.now(),
       name: data.name,
@@ -58,16 +58,20 @@ class NewTask extends Component {
       boardColumnId: columnId,
       broadCastId: `Board-${boardId}`,
     });
-    addDatabaseSchema('BoardColumnCard', {
-      id: Date.now(),
-      userId: account.user.id,
-      timeStamp: Date.now(),
-      name: data.name,
-      position: pos,
-      boardColumnId: columnId,
-    });
-    this.handlePopOverForm();
-    return { response: 200 };
+    // console.log('add new task response', res);
+    if (res) {
+      addDatabaseSchema('BoardColumnCard', {
+        id: res,
+        userId: account.user.id,
+        timeStamp: Date.now(),
+        name: data.name,
+        position: pos,
+        boardColumnId: columnId,
+      });
+      this.handlePopOverForm();
+      return { response: 200 };
+    }
+    return { response: 404 };
   };
 
   render() {

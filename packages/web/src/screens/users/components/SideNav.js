@@ -40,7 +40,7 @@ NavElement.propTypes = {
 class SideNav extends Component {
   state = {}
 
-  componentWillMount() {
+  componentDidMount() {
     const { updateNav } = this.props;
     updateNav({
       schema: 'mainNav',
@@ -69,7 +69,7 @@ class SideNav extends Component {
                 name={obj.name}
                 key={obj.name}
                 iconName={obj.iconName}
-                active={navigate.sideNav.name === obj.name ? true : false}
+                active={navigate.sideNav.name === obj.name}
               />
             );
           })

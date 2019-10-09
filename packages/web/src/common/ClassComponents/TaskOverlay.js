@@ -169,7 +169,10 @@ class TaskOverlay extends Component {
       desc,
       comment,
     } = this.state;
-    const { userList } = this.props;
+    const {
+      userList, apis, boardId, onClose,
+      deleteDatabaseSchema,
+    } = this.props;
     return (
       <Dialog
         isOpen={isOpen}
@@ -300,7 +303,13 @@ class TaskOverlay extends Component {
               </div>
               <TaskComment comments={comments} userList={userList} />
             </div>
-            <TaskDetailRight task={task} />
+            <TaskDetailRight
+              onClose={onClose}
+              boardId={boardId}
+              task={task}
+              apis={apis}
+              deleteDatabaseSchema={deleteDatabaseSchema}
+            />
           </div>
         </div>
       </Dialog>
@@ -312,7 +321,17 @@ TaskOverlay.propTypes = {
   onClose: PropTypes.func.isRequired,
   isOpen: PropTypes.bool.isRequired,
   taskId: PropTypes.number.isRequired,
+  userList: PropTypes.objectOf(PropTypes.any).isRequired,
+  apis: PropTypes.objectOf(PropTypes.any).isRequired,
+  account: PropTypes.objectOf(PropTypes.any).isRequired,
   tasks: PropTypes.arrayOf(PropTypes.any).isRequired,
+  deleteDatabaseSchema: PropTypes.func.isRequired,
+  boardId: PropTypes.number.isRequired,
+  addDatabaseSchema: PropTypes.func.isRequired,
+  updateDatabaseSchema: PropTypes.func.isRequired,
+  comments: PropTypes.objectOf(PropTypes.any).isRequired,
+  attachments: PropTypes.objectOf(PropTypes.any).isRequired,
+  descriptions: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 const mapStateToProps = (state) => {

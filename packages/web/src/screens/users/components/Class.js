@@ -49,6 +49,7 @@ class Class extends Component {
       addDatabaseSchema('Board', { ...data, id: res });
     } catch (e) {
       console.log('Error: ', e);
+      return { response: 404 };
     }
     this.newClass();
     return { response: 200 };

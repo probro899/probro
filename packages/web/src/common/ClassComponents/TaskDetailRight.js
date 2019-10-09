@@ -106,9 +106,19 @@ class TaskDetailRight extends React.Component {
     console.log(data);
   }
 
-  deleteCard = (type) => {
+  deleteCard = async (type) => {
+    const {
+      apis,
+      deleteDatabaseSchema,
+      boardId,
+      task,
+      onClose,
+    } = this.props;
     if (type === 'confirm') {
       this.toggleDeleteCard();
+      await apis.deleteBoardColumnCard({ id: task.id, broadCastId: `Board-${boardId}` });
+      deleteDatabaseSchema('BoardColumnCard', { id: task.id });
+      onClose();
     } else {
       this.toggleDeleteCard();
     }
@@ -185,6 +195,10 @@ class TaskDetailRight extends React.Component {
 
 TaskDetailRight.propTypes = {
   task: PropTypes.objectOf(PropTypes.any).isRequired,
-}
+  apis: PropTypes.objectOf(PropTypes.any).isRequired,
+  deleteDatabaseSchema: PropTypes.func.isRequired,
+  onClose: PropTypes.func.isRequired,
+  boardId: PropTypes.number.isRequired,
+};
 
 export default TaskDetailRight;

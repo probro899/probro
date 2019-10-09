@@ -1,11 +1,10 @@
 import React from 'react';
 
-const UserView = (pc, idx, userId) => {
-  console.log('pc in USerView', pc);
+const UserView = ({ pc }) => {
+  // console.log('pc in USerView', pc);
   return (
     pc.user ? (
       <div
-        key={idx}
         style={{
           width: 100,
           height: 100,
@@ -21,7 +20,12 @@ const UserView = (pc, idx, userId) => {
           margin: 10,
         }}
       >
-        <video muted={pc.online ? true : false} controls id={`video-${pc.user.id}`} playsInline autoPlay style={{ height: 90, width: 90, background: 'black', borderRadius: 20 }} />
+        <video
+          muted={pc.online ? true : false}
+          controls id={`video-${pc.user.id}`}
+          playsInline autoPlay
+          style={{ height: 90, width: 90, background: 'black', borderRadius: 20 }}
+        />
         <div style={{ position: 'absolute', marginTop: 20, marginLeft: 20, width: 100, height: 100 }}>
           <div>
             <span style={{ color: 'yellow' }}>{ pc.online ? 'You' : `${pc.user.firstName}`}</span>
@@ -35,8 +39,7 @@ const UserView = (pc, idx, userId) => {
   );
 };
 
-const MentorView = (props) => {
-  const { webRtc } = props;
+const MentorView = () => {
   return (
     <div
       style={{
@@ -57,26 +60,23 @@ const MentorView = (props) => {
       }}
     >
       <div>
-        <video controls id={`video-mentor`} playsInline autoPlay style={{ height: '100%', width: '100%', background: 'black' }} />
+        <video
+          controls
+          id={`video-mentor`}
+          playsInline autoPlay
+          style={{ height: '100%', width: '100%', background: 'black' }}
+        />
       </div>
-      {/* <div>
-        <div>
-          <span>{`${pc.user.firstName} ${pc.user.lastName}`}</span>
-        </div>
-        <div>
-          <span>{pc.iceCandidateStatus}</span>
-        </div>
-      </div>  */}
     </div>
   );
 };
 
 const UsersView = (props) => {
   const { webRtc, account } = props;
-  console.log('Account', account);
+  // console.log('Account', account);
   const peerConnection = Object.values(webRtc.peerConnections);
-  const allOtherUser = peerConnection.map((pc, idx) => UserView(pc, idx));
-  const finalUserList = [...allOtherUser, <UserView {...account} />];
+  const allOtherUser = peerConnection.map(pc => <UserView pc={pc} key={pc.user.id} />);
+  const finalUserList = [...allOtherUser, <UserView pc={account} key={account.user.id} />];
   return finalUserList;
 };
 
@@ -84,8 +84,6 @@ class MediaComponents extends React.Component {
   state = {};
 
   render() {
-    const { account, webRtc } = this.props;
-    // console.log('remote Stream', webRtc.remoteStream);
     return (
       <div>
         <div style={{ display: 'flex', position: 'absolute', zIndex: 12 }}>
