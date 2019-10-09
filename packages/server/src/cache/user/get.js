@@ -124,6 +124,8 @@ export default async function get(id) {
     const BoardColumnCardComment = flat(flat(boardDetails.map(obj => obj.boardColumnCardComment)));
     // console.log('board columnCardAttachment', boardColumnCardComment);
     const BoardColumnCardDescription = flat(flat(boardDetails.map(obj => obj.boardColumnCardDescription)));
+    const BoardColumnCardTag = flat(flat(boardDetails.map(obj => obj.boardColumnCardTag)));
+
     // console.log('connection list', [allBlogs, newBlogPublish]);
     const userDataRes = {
       User: allUser,
@@ -135,6 +137,7 @@ export default async function get(id) {
       BoardColumnCardAttachment,
       BoardColumnCardComment,
       BoardColumnCardDescription,
+      BoardColumnCardTag,
       Blog: [...allBlogs, ...newBlogPublish],
       BlogComment,
       BlogLike,
