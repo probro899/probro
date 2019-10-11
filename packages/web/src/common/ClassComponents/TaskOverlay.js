@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Dialog, Button, TextArea, Intent, Icon } from '@blueprintjs/core';
+import { Dialog, Button, TextArea, Intent, Tag, Icon } from '@blueprintjs/core';
 import { Link } from 'react-router-dom';
+import moment from 'moment';
 import PropTypes from 'prop-types';
 import { timeStampSorting } from '../../screens/users/utility-functions';
 import TaskComment from './TaskComment';
@@ -30,6 +31,7 @@ class TaskOverlay extends Component {
       descriptions,
       tags,
     } = nextProps;
+    // console.log('description', descriptions);
     const commentsCard = comments.filter((obj) => {
       if (taskId === obj.boardColumnCardId) {
         return obj;
@@ -123,19 +125,19 @@ class TaskOverlay extends Component {
   saveDesc = async () => {
     const { apis, account, boardId, addDatabaseSchema } = this.props;
     const { task, desc } = this.state;
-    await apis.addBoardColumnCardDescription({
+    const res = await apis.addBoardColumnCardDescription({
       boardColumnCardId: task.id,
       title: desc,
       timeStamp: Date.now(),
       userId: account.user.id,
       broadCastId: `Board-${boardId}`,
     });
-    addDatabaseSchema('BoardColumnCard', {
+    addDatabaseSchema('BoardColumnCardDescription', {
       boardColumnCardId: task.id,
       title: desc,
       timeStamp: Date.now(),
       userId: account.user.id,
-      id: Date.now(),
+      id: res,
     });
     this.toggleElemDesc();
   }
@@ -164,6 +166,19 @@ class TaskOverlay extends Component {
     this.setState({
       comment: '',
     });
+  }
+
+  getTags = () => {
+    const { tags } = this.props;
+    const { task } = this.state;
+    if (task.id) {
+      return Object.values(tags.byId).filter((obj) => {
+        if (obj.boardColumnCardId === task.id) {
+          return obj;
+        }
+      });
+    }
+    return [];
   }
 
   render() {
@@ -237,10 +252,30 @@ class TaskOverlay extends Component {
           </div>
           <div className="overlay-body">
             <div className="left">
-              <div className="pc-deadline-view">
-                <p className="expire">
-                  {`Deadline: ${task.Deadline}`}
-                </p>
+              <div className="pc-tags-and-deadline">
+                <div className="pc-tag-view">
+                  {
+                    this.getTags().map((obj, index) => {
+                      return (
+                        <Tag
+                          key={index}
+                          large
+                          intent={obj.tag}
+                          style={{ margin: '5px' }}
+                        />
+                      );
+                    })
+                  }
+                </div>
+                <div className="pc-deadline-view">
+                  {task.Deadline && (
+                    <p
+                      className={task.Deadline < new Date() ? 'expire' : 'no-expire'}
+                    >
+                      {`Deadline: ${moment(task.Deadline).format('YYYY-MM-DD')}`}
+                    </p>
+                  )}
+                </div>
               </div>
               <div className="overlay-description">
                 <div className="desc-head">
@@ -351,9 +386,9 @@ TaskOverlay.propTypes = {
   boardId: PropTypes.number.isRequired,
   addDatabaseSchema: PropTypes.func.isRequired,
   updateDatabaseSchema: PropTypes.func.isRequired,
-  comments: PropTypes.objectOf(PropTypes.any).isRequired,
-  attachments: PropTypes.objectOf(PropTypes.any).isRequired,
-  descriptions: PropTypes.objectOf(PropTypes.any).isRequired,
+  comments: PropTypes.arrayOf(PropTypes.any).isRequired,
+  attachments: PropTypes.arrayOf(PropTypes.any).isRequired,
+  descriptions: PropTypes.arrayOf(PropTypes.any).isRequired,
 };
 
 const mapStateToProps = (state) => {
