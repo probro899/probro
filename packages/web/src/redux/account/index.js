@@ -1,8 +1,16 @@
+import uuid from 'uuid';
 import { login, logout } from '@probro/common/src/actions';
 import Cookie from './cookies';
 
+const slugGenerator = () => {
+  const longsString = uuid();
+  const shortString = longsString.substring(1, 10);
+  return shortString;
+};
+
 const INITIAL_STATE = {
   sessionId: Cookie.get('pc-session'),
+  slug: slugGenerator(),
   online: false,
   user: null,
 };
