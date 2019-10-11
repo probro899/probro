@@ -21,13 +21,35 @@
 @import './main-page/takeTour.scss';
 @import './bro/connection.scss';
 @import url('https://fonts.googleapis.com/css?family=Noto+Sans|Oxygen|Roboto:100,300,400,500,900&display=swap');
+@font-face {
+  font-family: 'Gotham-Pro';
+  src: url('../assets/fonts/gotham/gotham-pro.ttf') format('truetype');
+  font-weight: normal;
+  font-stretch: extra-condensed;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Gotham-Pro';
+  src: url('../assets/fonts/gotham/gotham-medium.otf') format('truetype');
+  font-weight: bold;
+  font-stretch: extra-condensed;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Gotham-Pro';
+  src: url('../assets/fonts/gotham/gotham-light.otf') format('truetype');
+  font-weight: 200;
+  font-stretch: extra-condensed;
+  font-style: normal;
+}
 body {
     margin: 0;
     padding: 0;
     background-color: $backgroundColor;
     // font-family: 'Roboto', sans-serif;
     // font-family: 'Oxygen', sans-serif;
-    font-family: 'Noto Sans', sans-serif;
+    // font-family: 'Noto Sans', sans-serif;
+    font-family: "Gotham-Pro";
 }
 
 .home-screen {

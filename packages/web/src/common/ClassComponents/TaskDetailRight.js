@@ -97,9 +97,9 @@ class TaskDetailRight extends React.Component {
   }
 
   uploadDeadLine = async (data) => {
-    const { apis, task, updateDatabaseSchema } = this.props;
-    const deadline = data.deadline.toLocaleString('en-IN').split(',')[0];
-    await apis.updateBoardColumnCard([{ Deadline: deadline }, { id: task.id }]);
+    const { apis, task, updateDatabaseSchema, boardId } = this.props;
+    const deadline = new Date(data.deadline).getTime();
+    await apis.updateBoardColumnCard([{ Deadline: deadline, broadCastId: `Board-${boardId}` }, { id: task.id }]);
     updateDatabaseSchema('BoardColumnCard', { id: task.id, Deadline: deadline });
     return { response: 200, message: 'Deadline added' };
   }
@@ -108,6 +108,7 @@ class TaskDetailRight extends React.Component {
     const {
       task, apis, tags, addDatabaseSchema,
       deleteDatabaseSchema,
+      boardId,
     } = this.props;
     if (aord) {
       let tag;
@@ -117,12 +118,14 @@ class TaskDetailRight extends React.Component {
         }
       });
       await apis.deleteBoardColumnCardTag({
+        broadCastId: `Board-${boardId}`,
         id: tag.id,
       });
       deleteDatabaseSchema('BoardColumnCardTag', { id: tag.id });
       return;
     }
     const res = await apis.addBoardColumnCardTag({
+      broadCastId: `Board-${boardId}`,
       boardColumnCardId: task.id,
       tag: name,
     });
@@ -200,7 +203,7 @@ class TaskDetailRight extends React.Component {
             <Button
               alignText="left"
               icon="move"
-              text="Move card"
+              text="Copy card"
             />
             <Button
               alignText="left"

@@ -37,7 +37,7 @@ top attachment etc.
     flex-direction: row;
   }
   .navbar-item {
-    font-size: 15px;
+    font-size: 14px;
     font-weight: bold;
     padding: 10px;
     color: $navTextColor;
@@ -71,12 +71,12 @@ top attachment etc.
       }
     }
   }
-  @media screen and (min-width: 550px) and (max-width: 700px){
+  @media screen and (min-width: 575px) and (max-width: 700px){
     .navbar-item {
-      font-size: 14px;
+      font-size: 13px;
     }
   }
-  @media screen and (min-width: 200px) and (max-width: 550px) {
+  @media screen and (min-width: 200px) and (max-width: 575px) {
     .navbar-left {
       display: none;
     }
