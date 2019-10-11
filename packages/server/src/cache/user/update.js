@@ -3,7 +3,7 @@ import users from './cache';
 export default (action, session) => {
   const { id } = session.values.user;
   const state = users.get(id);
-  // console.log('previousState', state);
+  // console.log('previousState', action.schema, state, state[action.schema], state[action.schema]);
   const newState = () => {
     switch (action.type) {
       case 'schema.add':

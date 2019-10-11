@@ -17,6 +17,7 @@ const reducer = combineReducers({
     'BoardColumnCardAttachment',
     'BoardColumnCardComment',
     'BoardColumnCardDescription',
+    'BoardColumnCardTag',
     'Blog',
     'BlogDetail',
     'BlogComment',
