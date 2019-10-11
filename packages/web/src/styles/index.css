@@ -35,7 +35,7 @@ top attachment etc.
 .navbar .navbar-more-container { padding: 0px 10px; display: flex; align-items: center; }
 .navbar .navbar-more-container .more-icon { display: none; }
 .navbar .navbar-right { display: flex; flex-direction: row; }
-.navbar .navbar-item { font-size: 14px; font-weight: bold; padding: 10px; color: #666; text-transform: uppercase; }
+.navbar .navbar-item { font-size: 14px; font-weight: bold; padding: 10px; color: #666; position: relative; text-transform: uppercase; }
 .navbar .navbar-item img.profile-icon { height: 50px; border-radius: 50%; padding: 1px; border: 1px solid #666; }
 .navbar a:link { display: flex; flex-direction: column; justify-content: center; text-decoration: none; }
 .navbar a:hover .navbar-item { color: #137cbd; }

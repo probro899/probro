@@ -6,6 +6,7 @@ import { Menu, MenuItem, Popover, Position, Intent, Icon } from '@blueprintjs/co
 import client from '../../../../socket';
 import * as actions from '../../../../actions';
 import Notifications from '../notification';
+import MessageNotification from './MessageNotification';
 import SmallScreenMenu from './SmallScreenMenu';
 
 const profileIcon = require('../../../../assets/icons/64w/uploadicon64.png');
@@ -46,7 +47,6 @@ class Navbar extends Component {
 
   // checks for the resize of window
   screenResize = (e) => {
-    // eslint-disable-next-line no-console
     // console.log('to be done for it to be responsive', e.currentTarget.innerWidth);
   }
 
@@ -61,13 +61,11 @@ class Navbar extends Component {
     });
   }
 
-  showMessage = () => {
-    const { updateWebRtc } = this.props;
-    updateWebRtc('showCommunication', 1);
-  }
-
   render() {
-    const { account, navigate, className } = this.props;
+    const {
+      account, database, navigate, className,
+      updateWebRtc,
+    } = this.props;
     const { apis, redirectDashboard, smallScreen } = this.state;
     return (
       <div className={`navbar ${className}`}>
@@ -125,13 +123,7 @@ class Navbar extends Component {
         </div>
         <div className="navbar-right">
           {/* Notifications in navigation */}
-          {account.sessionId && (
-            <Link to="#" onClick={this.showMessage}>
-              <div className="navbar-item">
-                <Icon icon="chat" iconSize={Icon.SIZE_LARGE} />
-              </div>
-            </Link>
-          )}
+          {account.sessionId && <MessageNotification account={account} database={database} updateWebRtc={updateWebRtc} />}
           {account.sessionId && <Notifications apis={apis} />}
           { account.sessionId
             ? (
@@ -178,6 +170,7 @@ Navbar.defaultProps = {
 Navbar.propTypes = {
   className: PropTypes.string,
   account: PropTypes.objectOf(PropTypes.any).isRequired,
+  database: PropTypes.objectOf(PropTypes.any).isRequired,
   navigate: PropTypes.objectOf(PropTypes.any).isRequired,
   updateWebRtc: PropTypes.func.isRequired,
 };

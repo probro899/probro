@@ -41,13 +41,13 @@ class Connections extends React.Component {
         if (existingCon) {
           await apis.updateUserConnection([{
             userId: account.user.id,
-            mid: details.id,
+            mId: details.id,
             status: 'pending',
           }, { id: existingCon.id }]);
         } else {
           await apis.connectUser({
             userId: account.user.id,
-            mid: details.id,
+            mId: details.id,
             timeStamp: Date.now(),
             status: 'pending',
           });
