@@ -1,6 +1,5 @@
 import db from '../../db';
 
-
 const flat = (arr) => {
   const flatArray = arr.reduce((t, a) => {
     if (Array.isArray(a)) {
@@ -18,7 +17,6 @@ export default async (boardId) => {
   const res = await db.execute(async ({ find }) => {
 
     const boardColumn = await find('BoardColumn', { boardId });
-    console.log()
     const columnCardPromise = [];
     boardColumn.forEach(b => columnCardPromise.push(find('BoardColumnCard', { boardColumnId: b.id })));
     const boardColumnCard = await Promise.all(columnCardPromise);
