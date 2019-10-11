@@ -63,7 +63,9 @@ async function connectUser(record) {
 
     const remoteUserSession = mainchannel.find(s => s.values.user.id === tUserDetails.id);
     console.log('remote User session', remoteUserSession);
-    remoteUserSession.dispatch(schema.add('Notification', notiDetails));
+    if (remoteUserSession) {
+      remoteUserSession.dispatch(schema.add('Notification', notiDetails));
+    }
     return connectRes;
   });
 }

@@ -15,7 +15,7 @@ export default (action, session) => {
           [action.schema]: [...state[action.schema], ...action.payload],
         };
       case 'schema.update':
-        // console.log('update cache schema called', action, session);
+        console.log('update cache schema called', action, state[action.schema]);
         return {
           ...state,
           [action.schema]: state[action.schema].map(obj => (obj.id === action.payload.id ? { ...obj, ...action.payload } : obj)),
