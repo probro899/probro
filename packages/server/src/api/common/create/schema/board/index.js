@@ -66,7 +66,7 @@ async function addBoardMember(record) {
         to: `<${email}>`,
         subject: `Board inivitation from ${fuser.firstName} `,
         text: 'No reply',
-        html: htmlStringValue.boardMemberInvitationHtmlString,
+        html: htmlStringValue.boardMemberInvitationHtmlString(board, fuser, user),
       });
       const notiData = {
         userId: user.id,

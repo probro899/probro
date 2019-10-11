@@ -13,7 +13,7 @@ export default async (record) => {
     const token = await uuid();
     const result = await db.execute(async ({ insert, findOne }) => {
       const findUserEmailRes = await findOne('User', { email: record.email });
-      const htmlStringValue = await htmlString(token);
+      const htmlStringValue = await htmlString();
       if (findUserEmailRes) {
         throw new Error('Emailisalreadytaken');
       }
@@ -26,7 +26,7 @@ export default async (record) => {
           to: `<${record.email}>`,
           subject: 'User email confirmation',
           text: 'No reply',
-          html: htmlStringValue.registrationHtmlString,
+          html: htmlStringValue.registrationHtmlString(token),
         });
         return insertRes;
       }
