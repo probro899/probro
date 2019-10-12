@@ -293,6 +293,7 @@ class Classes extends Component {
                             columnId={column.id}
                             index={index}
                             api={api}
+                            tags={tags}
                             boardId={classId}
                             addDatabaseSchema={addDatabaseSchema}
                             updateDatabaseSchema={updateDatabaseSchema}

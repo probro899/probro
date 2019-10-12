@@ -63,7 +63,7 @@ class Communication extends React.Component {
       >
         <div className="header">
           <div className="win-title">
-            Chat Window
+            Messaging
           </div>
           <div className="control-icons">
             { minimize ? <Icon icon="expand-all" style={{ cursor: 'pointer' }} onClick={this.toggleMinMax} />

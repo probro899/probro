@@ -197,8 +197,27 @@
             padding: 5px;
             background-color: $backgroundColor;
             border: 1px solid $normalBorder;
-            // border-radius: 2px;
             flex-grow: 1;
+            .pc-task-flag {
+              display: flex;
+              justify-content: space-between;
+              .pc-deadline-view {
+                color: $backgroundColor;
+                p {
+                  padding: 5px;
+                  border-radius: 2.5px;
+                  background-color: green;
+                  color: $backgroundColor; 
+                  &.expire {
+                    background-color: red;
+                  }
+                }
+              }
+            }
+            .pc-task-name {
+              margin: 0;
+              font-weight: bold;
+            }
           }
         }
         .column-footer {
@@ -284,6 +303,7 @@
             padding: 5px;
             p {
               padding: 5px;
+              border-radius: 3px;
               background-color: green;
               color: $backgroundColor; 
               &.expire {

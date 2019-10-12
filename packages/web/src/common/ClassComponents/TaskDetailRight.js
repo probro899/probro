@@ -203,7 +203,7 @@ class TaskDetailRight extends React.Component {
             <Button
               alignText="left"
               icon="move"
-              text="Copy card"
+              text="Copy"
             />
             <Button
               alignText="left"

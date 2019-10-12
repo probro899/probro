@@ -38,10 +38,8 @@ export default async function get(id) {
     // ******************* User ConnectionList **********************************************************
     let connectionListMid = [];
     let connectionListUserId = [];
-    if (userDetail.length === 1) {
-      connectionListMid = await find('UserConnection', { mId: user[0].id });
-      connectionListUserId = await find('UserConnection', { userId: user[0].id });
-    }
+    connectionListMid = await find('UserConnection', { mId: user[0].id });
+    connectionListUserId = await find('UserConnection', { userId: user[0].id });
     const connectionList = [...connectionListMid, ...connectionListUserId];
     const allConnectionUserList = lodash.uniq(flat(connectionList.map(obj => [obj.mId, obj.userId])));
     // console.log('allConnecitonUserList', allConnectionUserList);
