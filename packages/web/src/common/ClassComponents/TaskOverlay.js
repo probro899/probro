@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import axios from 'axios';
 import { Dialog, Button, TextArea, Intent, Tag, Icon } from '@blueprintjs/core';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
@@ -7,6 +8,7 @@ import PropTypes from 'prop-types';
 import { timeStampSorting } from '../../screens/users/utility-functions';
 import TaskComment from './TaskComment';
 import TaskDetailRight from './TaskDetailRight';
+import { ENDPOINT } from '../../config';
 
 class TaskOverlay extends Component {
   state = {
@@ -181,6 +183,27 @@ class TaskOverlay extends Component {
     return [];
   }
 
+  getName = (id) => {
+    const { userList } = this.props;
+    const user = userList.byId[id];
+    return user.middleName
+      ? `${user.firstName} ${user.middleName} ${user.lastName}`
+      : `${user.firstName} ${user.lastName}`;
+  };
+
+  deleteAttachment = async (id, url) => {
+    const { apis, deleteDatabaseSchema, account } = this.props;
+    try {
+      await axios.post(`${ENDPOINT}/web/delete-file`, { token: account.sessionId, content: 'board', fileName: url });
+      await apis.deleteBoardColumnCardAttachment({
+        id,
+      });
+      deleteDatabaseSchema('BoardColumnCardAttachment', { id });
+    } catch (e) {
+      console.log('Error');
+    }
+  }
+
   render() {
     const { isOpen } = this.props;
     const {
@@ -188,7 +211,7 @@ class TaskOverlay extends Component {
       editDesc,
       task,
       comments,
-      // attachments,
+      attachments,
       title,
       description,
       desc,
@@ -200,6 +223,7 @@ class TaskOverlay extends Component {
       deleteDatabaseSchema,
       updateDatabaseSchema,
       addDatabaseSchema,
+      account,
     } = this.props;
     return (
       <Dialog
@@ -318,25 +342,39 @@ class TaskOverlay extends Component {
                 </div>
               </div>
               <div className="attach-container">
-                <u>Attachments</u>
+                {attachments.length !== 0 && <u>Attachments</u>}
                 <div className="attach-list">
                   <ul>
-                    <li>
-                      <div className="file-type">
-                        <span>
-                          txt
-                        </span>
-                      </div>
-                      <div className="file-detail">
-                        <span className="attach-title">
-                          Project Report.pdf
-                        </span>
-                        <span>
-                          oct 27 2019 -
-                          <Link to=""> Nabin Bhusal</Link>
-                        </span>
-                      </div>
-                    </li>
+                    {
+                      attachments.map((obj) => {
+                        const name = this.getName(obj.userId);
+                        const link = `${ENDPOINT}/user/${10000000 + parseInt(obj.userId, 10)}/board/${obj.url}`;
+                        return (
+                          <li key={obj.id}>
+                            <div className="file-type">
+                              <span>
+                                {obj.url.split('.')[1]}
+                              </span>
+                              <Icon
+                                iconSize={11}
+                                icon="cross"
+                                className="pc-attach-delete"
+                                onClick={() => this.deleteAttachment(obj.id, obj.url)}
+                              />
+                            </div>
+                            <div className="file-detail">
+                              <a rel="noopener noreferrer" target="_blank" href={link} className="attach-title">
+                                {obj.name}
+                              </a>
+                              <span>
+                                {moment(obj.timeStamp).format('DD-MM-YYYY')}
+                                <Link to={`/user/${obj.userId}`}>{` - ${name}`}</Link>
+                              </span>
+                            </div>
+                          </li>
+                        );
+                      })
+                    }
                   </ul>
                 </div>
               </div>
@@ -362,6 +400,7 @@ class TaskOverlay extends Component {
               boardId={boardId}
               task={task}
               apis={apis}
+              account={account}
               deleteDatabaseSchema={deleteDatabaseSchema}
               updateDatabaseSchema={updateDatabaseSchema}
               addDatabaseSchema={addDatabaseSchema}

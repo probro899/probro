@@ -45,7 +45,7 @@ class ProfilePic extends React.Component {
     } = this.props;
     const formData = new FormData();
     formData.append('data', JSON.stringify({ token: account.sessionId, fileType: 'image', content: 'profile' }));
-    formData.append('image', data);
+    formData.append('file', data);
     try {
       const res = await axios({
         config: {

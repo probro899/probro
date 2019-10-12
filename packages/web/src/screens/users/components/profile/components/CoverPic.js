@@ -134,7 +134,7 @@ class CoverPic extends React.Component {
     } = this.props;
     const formData = new FormData();
     formData.append('data', JSON.stringify({ token: account.sessionId, fileType: 'image', content: 'profile' }));
-    formData.append('image', e.target.files[0]);
+    formData.append('file', e.target.files[0]);
     try {
       const res = await axios({
         config: {
