@@ -29,6 +29,7 @@ class MessageNotification extends React.Component {
           ? [...userMessages[obj.tuserId], obj] : [obj];
       }
     });
+    console.log(database);
   }
 
   render() {

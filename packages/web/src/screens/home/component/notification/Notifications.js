@@ -27,8 +27,7 @@ class Notifications extends React.Component {
             isOpen={drawerOpen}
             onClose={this.onDrawerToggle}
             size={Drawer.SIZE_SMALL}
-            icon="notifications"
-            title="Manage your Notifications"
+            title="Notifications"
             transitionDuration={200}
             hasBackdrop={false}
           >

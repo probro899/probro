@@ -5,10 +5,10 @@
   position: fixed;
   width: 35%;
   bottom: 0;
-  right: 20px;
+  right: 2px;
   background: $backgroundColor;
   z-index: 2;
-  border: 1px solid rgb(210, 207, 207);
+  border: 1px solid $normalBorder;
   @media screen and (min-width: 500px) and (max-width: 800px){
     width: 60%;
   }
@@ -20,15 +20,16 @@
   }
   .header {
     height: 30px;
-    font-size: 18px;
+    font-size: 16px;
     background: black;
     display: flex;
-    color: white;
+    color: $backgroundColor;
     justify-content: space-between;
     .win-title {
+      margin-left: 5px;
+      font-weight: bold;
       display: flex;
-      flex-direction: column;
-      justify-content: center;
+      align-items: center;
     }
   }
   .content {
@@ -37,20 +38,20 @@
     height:         calc(100% - 30px);
     // design chat list from here
     .chat-list {
-      padding: 5px 0px;
+      padding-bottom: 5px;
       overflow-y: scroll;
       .i-chat {
-        border: 1px solid #b3b3b3;
+        border-bottom: 1px solid $normalBorder;
         margin: 3px 0px;
         padding: 5px;
         &.unseen {
-          background: #b8b8b8;
+          background: $fadedBackground;
         }
         &:hover {
           box-shadow: 1px 1px 10px 0px rgba(155,159,163,1);
         }
         .name {
-          color: #0B5BC8;
+          color: $darkBlue;
           font-weight: bold;
           font-size: 16px;
         }
@@ -69,12 +70,12 @@
         display: flex;
         justify-content: space-between;
         padding: 5px 0px;
-        border-bottom: 1px solid rgb(210, 207, 207);
+        border-bottom: 1px solid $normalBorder;
         .op-name {
           display: flex;
           flex-direction: column;
           justify-content: center;
-          color: #0B5BC8;
+          color: $darkBlue;
           font-weight: bold;
           font-size: 16px
         }
@@ -100,7 +101,7 @@
           .img-wrap {
             img {
               border-radius: 50%;
-              border: 1px solid black;
+              border: 1px solid $normalBorder;
             }
           }
           &.left {
@@ -108,7 +109,7 @@
             flex-direction: row;
             .text {
               margin: 0px 10px;
-              border: 1px solid #0B5BC8;
+              border: 1px solid $darkBlue;
               padding: 2px;
               border-top-right-radius: 10px;
               border-bottom-right-radius: 10px;
@@ -126,7 +127,7 @@
             .text {
               margin: 0px 10px;
               padding: 2px;
-              border: 1px solid #0B5BC8;
+              border: 1px solid $darkBlue;
               border-top-left-radius: 10px;
               border-bottom-right-radius: 10px;
               border-bottom-left-radius: 10px;
@@ -153,12 +154,12 @@
         display: flex;
         justify-content: space-between;
         padding: 5px 0px;
-        border-bottom: 1px solid rgb(210, 207, 207);
+        border-bottom: 1px solid $normalBorder;
         .op-name {
           display: flex;
           flex-direction: column;
           justify-content: center;
-          color: #0B5BC8;
+          color: $darkBlue;
           font-weight: bold;
           font-size: 16px
         }
@@ -169,7 +170,6 @@
         padding: 5px;
         .peer-video {
           object-fit: contain;
-          // height: 90%;
           width: 100%;
         }
         .own-video {
@@ -201,7 +201,7 @@
           border-radius: 50%;
           border-width: 2px;
           border-style: solid;
-          border-color: white;
+          border-color: $backgroundColor;
 		      animation: rotate 2s ease infinite;
         }
         .controllers {

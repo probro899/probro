@@ -75,6 +75,7 @@ class Column extends Component {
       index,
       onTaskClick,
       boardId,
+      tags,
     } = this.props;
     const { columnDeletePopOver, columnEditPopOver } = this.state;
     return (
@@ -126,6 +127,7 @@ class Column extends Component {
                           key={`task${task.id}`}
                           task={task}
                           index={index}
+                          tags={tags}
                           onClick={onTaskClick}
                         />
                       );
@@ -146,6 +148,7 @@ class Column extends Component {
 
 Column.propTypes = {
   column: PropTypes.objectOf(PropTypes.any).isRequired,
+  tags: PropTypes.objectOf(PropTypes.any).isRequired,
   api: PropTypes.objectOf(PropTypes.any).isRequired,
   index: PropTypes.number.isRequired,
   columnId: PropTypes.number.isRequired,

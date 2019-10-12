@@ -59,7 +59,7 @@ export default async function initUser(id) {
   u.Board.map(b => ({ channel: session.channel(`Board-${b.id}`), board: b })).forEach(obj => obj.channel.dispatch(schema.update('User', { id, activeStatus: true })));
   lodash.uniq(flat(u.UserConnection.map(obj => [obj.mId, obj.userId]))).map(uid => ({ channel: session.channel(`UserConnection-${uid}`) })).forEach(obj => obj.channel.dispatch(schema.update('User', { id, activeStatus: true })));
   // console.log('userDetaisl in initUser', u.User);
-  // console.log('userConnection', u.UserConnection);
+  console.log('userConnection', u.UserConnection);
   session.subscribe('Main');
   // console.log('board member', u.BoardMember);
   session.dispatch(schema.init('User', finalUserList));
