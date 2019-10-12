@@ -10,7 +10,7 @@ class Login extends Component {
 
   render() {
     const { account } = this.props;
-    console.log("login", account);
+    console.log("login", account, this.props);
     return (
       <div className="o-log-or-reg">
         <div className="log-or-reg">
