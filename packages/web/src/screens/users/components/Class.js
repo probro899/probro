@@ -165,7 +165,7 @@ class Class extends Component {
                 <div style={{ position: 'relative' }} key={index}>
                   {/* more button popover */}
                   <MoreButton onMore={this.onMore} id={id} />
-                  <Link to={`/class-work/${account.sessionId}/${id}`} className="content-link">
+                  <Link to={`/class-work/${account.slug}/${id}`} className="content-link">
                     <div className="class-repr">
                       <span>
                         {name}

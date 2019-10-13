@@ -35,7 +35,10 @@ class Attachment extends React.Component {
     if (!data.attachment) {
       return { response: 400, error: 'Choose a file' };
     }
-    const { account, apis, addDatabaseSchema, task } = this.props;
+    const {
+      account, apis, addDatabaseSchema, boardId,
+      task,
+    } = this.props;
     try {
       const formData = new FormData();
       formData.append('data', JSON.stringify({ token: account.sessionId, fileType: data.attachment.type.split('/')[0], content: 'board' }));
@@ -58,7 +61,7 @@ class Attachment extends React.Component {
           boardColumnCardId: task.id,
           url: res.data,
         };
-        const apiRes = await apis.addBoardColumnCardAttachment(info);
+        const apiRes = await apis.addBoardColumnCardAttachment({ ...info, broadCastId: `Board-${boardId}` });
         addDatabaseSchema('BoardColumnCardAttachment', { ...info, id: apiRes });
       }
       return { response: 200, message: 'Uploaded' };

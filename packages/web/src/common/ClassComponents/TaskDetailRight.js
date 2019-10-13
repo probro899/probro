@@ -139,6 +139,7 @@ class TaskDetailRight extends React.Component {
     const {
       task, tags, addDatabaseSchema, apis,
       account,
+      boardId,
     } = this.props;
     return (
       <div className="right">
@@ -168,7 +169,15 @@ class TaskDetailRight extends React.Component {
               />
             </Popover>
             <Popover
-              content={<Attachment account={account} task={task} apis={apis} addDatabaseSchema={addDatabaseSchema} />}
+              content={(
+                <Attachment
+                  boardId={boardId}
+                  account={account}
+                  task={task}
+                  apis={apis}
+                  addDatabaseSchema={addDatabaseSchema}
+                />
+              )}
               position="left-top"
             >
               <Button

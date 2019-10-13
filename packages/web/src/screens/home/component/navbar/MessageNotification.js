@@ -29,7 +29,7 @@ class MessageNotification extends React.Component {
           ? [...userMessages[obj.tuserId], obj] : [obj];
       }
     });
-    console.log(database);
+    // console.log(database);
   }
 
   render() {
@@ -47,6 +47,8 @@ class MessageNotification extends React.Component {
 
 MessageNotification.propTypes = {
   updateWebRtc: PropTypes.func.isRequired,
+  database: PropTypes.objectOf(PropTypes.any).isRequired,
+  account: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 export default MessageNotification;
