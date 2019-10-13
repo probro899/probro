@@ -71,6 +71,7 @@ class ChatList extends React.Component {
   render() {
     const { style, database } = this.props;
     const chatList = this.getChatList();
+    console.log('database in communication', database);
     return (
       <div
         style={style}
@@ -93,10 +94,12 @@ class ChatList extends React.Component {
             });
           }
           return (
+            // eslint-disable-next-line jsx-a11y/no-static-element-interactions
             <div
               key={index}
               className="i-chat unseen"
               onClick={() => this.onClick(obj.type, obj.id)}
+              onKeyPress={() => this.onClick(obj.type, obj.id)}
             >
               <div className="name">
                 {fullName}

@@ -5,30 +5,39 @@ import db from '../../../../../db';
 import mailBody from '../../../../../mailer/html/mailBody';
 import mailer from '../../../../../mailer';
 
-function addUserWorkExperience(record) {
-  add.call(this, 'UserWorkExperience', record);
+async function addUserWorkExperience(record) {
+  const res = await add.call(this, 'UserWorkExperience', record);
+  return res;
 }
 
-function addUserEducation(record) {
-  add.call(this, 'UserEducation', record);
+async function addUserEducation(record) {
+  const res = await add.call(this, 'UserEducation', record);
+  return res;
 }
 
-function addUserSkill(record) {
-  add.call(this, 'UserSkill', record);
+async function addUserSkill(record) {
+  const res = await add.call(this, 'UserSkill', record);
+  return res;
 }
 
-function addUserPortal(record) {
-  add.call(this, 'UserPortal', record);
+async function addUserPortal(record) {
+  const res = await add.call(this, 'UserPortal', record);
+  return res;
 }
 
-function addUserMessage(record) {
-  add.call(this, 'UserMessage', record);
+async function addUserMessage(record) {
+  const res = await add.call(this, 'UserMessage', record);
+  return res;
+}
+
+async function addCarrierInterest(record) {
+  const res = await add.call(this, 'UserCarrierInterest', record);
+  return res;
 }
 
 async function connectUser(record) {
   const { session } = this;
-
-  console.log('record in conectUser', record);
+  // console.log('record in conectUser', record);
 
   const connectRes = add.call(this, 'UserConnection', record);
 
@@ -76,4 +85,5 @@ export default [
   addUserPortal,
   addUserMessage,
   connectUser,
+  addCarrierInterest,
 ];

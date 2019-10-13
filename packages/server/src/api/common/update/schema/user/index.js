@@ -21,10 +21,15 @@ function updateUserConnection(record) {
   update.call(this, 'UserConnection', ...record);
 }
 
+function updateUserCarrierInterest(record) {
+  update.call(this, 'UserCarrierInterest', record);
+}
+
 export default [
   updateUserEducation,
   updateUserWorkExperience,
   updateUserSkill,
   updateUserPortal,
   updateUserConnection,
+  updateUserCarrierInterest,
 ];

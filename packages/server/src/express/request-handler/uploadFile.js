@@ -72,7 +72,7 @@ const upload = multer({
   storage,
   limits: { fileSize: 1000000000 },
   fileFilter: (req, file, cb) => checkFileType(req, file, cb),
-}).single('image');
+}).single('file');
 
 export default async (req, res) => {
   try {

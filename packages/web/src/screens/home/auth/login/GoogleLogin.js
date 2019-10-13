@@ -15,7 +15,6 @@ class GoogleLogin extends React.Component {
     }
   }
 
-
   render() {
     return (
       <Googlelogin

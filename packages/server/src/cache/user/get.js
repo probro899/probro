@@ -77,6 +77,7 @@ export default async function get(id) {
     const UserEducation = await find('UserEducation', { userId: id });
     const UserSkill = await find('UserSkill', { userId: id });
     const UserPortal = await find('UserPortal', { userId: id });
+    const UserCarrierInterest = await find('UserCarrierInterest', { userId: id });
     const Board = await find('Board', { userId: id });
 
     const boardPromises = [];
@@ -145,6 +146,7 @@ export default async function get(id) {
       UserWorkExperience,
       UserPortal,
       UserSkill,
+      UserCarrierInterest,
       BoardMessage: flat(BoardMessage),
       UserConnection: connectionList,
       UserMessage: userMessages,

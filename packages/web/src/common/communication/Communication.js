@@ -49,6 +49,7 @@ class Communication extends React.Component {
       updateWebRtc,
       addDatabaseSchema,
     } = this.props;
+    console.log('apis', apis);
     return (
       <div
         className="communicate"
