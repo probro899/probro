@@ -28,12 +28,17 @@ export default async function add(table, record) {
         if (broadCastUserList) {
           // console.log('inside boardcastUserliSt', broadCastUserList);
           const channel = session.channel(broadCastId);
+          const allChannelSession = session.getChannel(broadCastId);
+          const allUserSession = [];
+          broadCastUserList.forEach(userIdObj => allUserSession.push(allChannelSession.find(s => s.values.user.id === userIdObj.userId)));
           channel.dispatch(schema.add(table, boardDetails), broadCastUserList);
-          user.update(schema.add(table, boardDetails), session);
+          [...allUserSession, session].forEach(s => user.update(schema.add(table, boardDetails), s));
         } else {
           const channel = session.channel(broadCastId);
+          const allChannelSession = session.getChannel(broadCastId);
+          // console.log('current channel', allChannelSession);
           channel.dispatch(schema.add(table, boardDetails), null, session.values.user.id);
-          user.update(schema.add(table, boardDetails), session);
+          allChannelSession.forEach(s => user.update(schema.add(table, boardDetails), s));
         }
       } else {
         // session.dispatch(schema.add(table, boardDetails));

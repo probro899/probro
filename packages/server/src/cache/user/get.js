@@ -127,6 +127,7 @@ export default async function get(id) {
     const BoardColumnCardTag = flat(flat(boardDetails.map(obj => obj.boardColumnCardTag)));
 
     // console.log('connection list', [allBlogs, newBlogPublish]);
+    console.log('UserMessage', userMessages);
     const userDataRes = {
       User: allUser,
       UserDetail: allUserDetailsList,

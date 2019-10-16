@@ -68,10 +68,27 @@ class ChatList extends React.Component {
     updateWebRtc('showCommunication', id);
   }
 
+  getNewChatList = () => {
+    const { database, account } = this.props;
+    const { user } = account;
+    const toMessage = [];
+    const fromMessage = [];
+    Object.values(database.UserMessage.byId).forEach((msg) => {
+      if (user.id === msg.fuserId) {
+        // eslint-disable-next-line no-param-reassign
+        fromMessage.push({ ...msg, type: 'f' });
+      } else {
+        toMessage.push({ ...msg, type: 't' });
+      }
+    });
+    return { toMessage, fromMessage };
+  }
+
   render() {
-    const { style, database } = this.props;
+    const { style, database, account } = this.props;
     const chatList = this.getChatList();
-    console.log('database in communication', database);
+    const newChatList = account.user ? this.getNewChatList() : {};
+    console.log('database in communication', newChatList);
     return (
       <div
         style={style}
