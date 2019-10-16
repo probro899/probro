@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import axios from 'axios';
 import { Button, HTMLSelect, Popover } from '@blueprintjs/core';
 import SelectTask from './SelectTask';
+import { ENDPOINT } from '../../../../config';
 
 class Tools extends React.Component {
   constructor(props) {
@@ -14,8 +16,8 @@ class Tools extends React.Component {
     this.fileInputRef.current.click();
   }
 
-  saveImage = () => {
-    const { canvas } = this.props;
+  saveImage = async (data) => {
+    const { canvas, account, addDatabaseSchema, apis } = this.props;
     const dataUrl = canvas.toDataURL({
       format: 'jpeg',
       quality: 1,
@@ -30,6 +32,36 @@ class Tools extends React.Component {
       u8arr[n] = bstr.charCodeAt(n);
     }
     const file = new File([u8arr], 'canvas-shot.jpeg', { type: mime });
+    try {
+      const formData = new FormData();
+      formData.append('data', JSON.stringify({ token: account.sessionId, fileType: 'image', content: 'board' }));
+      formData.append('file', file);
+      const res = await axios({
+        config: {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        },
+        method: 'post',
+        url: `${ENDPOINT}/web/upload-file`,
+        data: formData,
+      });
+      if (res.status === 200) {
+        const info = {
+          userId: account.user.id,
+          timeStamp: Date.now(),
+          name: 'Canvas Print',
+          boardColumnCardId: parseInt(data.task, 10),
+          url: res.data,
+        };
+        const apiRes = await apis.addBoardColumnCardAttachment({ ...info, broadCastId: `Board-${data.class}` });
+        // console.log(info, apiRes, addDatabaseSchema);
+        addDatabaseSchema('BoardColumnCardAttachment', { ...info, id: apiRes });
+      }
+      return { response: 200, message: 'Uploaded' };
+    } catch (e) {
+      return { response: 400, error: 'Network issues' };
+    }
   }
 
   render() {
@@ -44,7 +76,6 @@ class Tools extends React.Component {
       colorChange,
       fileUpload,
       database,
-      account,
     } = this.props;
     return (
       <div className="draw-tools">
@@ -90,8 +121,8 @@ class Tools extends React.Component {
           />
         </div>
         <div className="save-wrapper">
-          <Popover content={<SelectTask account={account} database={database} />}>
-            <Button text="save" large onClick={this.saveImage} intent="success" />
+          <Popover content={<SelectTask callback={this.saveImage} database={database} />}>
+            <Button text="save" large intent="success" />
           </Popover>
         </div>
       </div>
@@ -109,6 +140,11 @@ Tools.propTypes = {
   addText: PropTypes.func.isRequired,
   colorChange: PropTypes.func.isRequired,
   fileUpload: PropTypes.func.isRequired,
+  database: PropTypes.objectOf(PropTypes.any).isRequired,
+  apis: PropTypes.objectOf(PropTypes.any).isRequired,
+  addDatabaseSchema: PropTypes.func.isRequired,
+  account: PropTypes.objectOf(PropTypes.any).isRequired,
+  canvas: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 export default Tools;

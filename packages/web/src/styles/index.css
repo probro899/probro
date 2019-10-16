@@ -101,7 +101,8 @@ top attachment etc.
 .broWrapper .fake-side-nav { flex: 0.19; margin-top: 4px; margin-left: 4px; padding: 50px 10px; }
 .broWrapper .bro-right { flex: 0.81; }
 @media screen and (max-width: 855px) { .broWrapper { display: block; }
-  .broWrapper .fake-side-nav { display: none; } }
+  .broWrapper .fake-side-nav { display: none; }
+  .broWrapper .bro-right { flex: 1; } }
 
 .sideNav { display: flex; margin-top: 4px; margin-left: 4px; padding: 50px 5px; width: 20%; height: calc(100% - 70px); z-index: 3; align-items: center; flex-direction: column; position: fixed; border: 1px solid #e0e0e0; background-color: #f9f9f9; }
 .sideNav .sideNavElement { margin-bottom: 5px; padding: 10px 10px 10px 10px; align-self: stretch; border: 1px solid #e0e0e0; background-color: #f9f9f9; }
@@ -236,10 +237,13 @@ top attachment etc.
 .overlay-container .task-detail-overlay .overlay-body .left .overlay-description .desc textarea { width: 100%; }
 .overlay-container .task-detail-overlay .overlay-body .left .attach-container { padding: 5px; }
 .overlay-container .task-detail-overlay .overlay-body .left .attach-container u { font-weight: bold; font-size: 17px; }
+.overlay-container .task-detail-overlay .overlay-body .left .attach-container .attach-list ul { padding-inline-start: 20px; }
 .overlay-container .task-detail-overlay .overlay-body .left .attach-container .attach-list ul li { margin-bottom: 3px; display: flex; list-style-type: none; }
-.overlay-container .task-detail-overlay .overlay-body .left .attach-container .attach-list ul li .file-type { width: 60px; height: 60px; display: flex; flex-direction: column; justify-content: center; font-size: 18px; font-weight: bold; align-items: center; color: #222; background: #f9f9f9; text-transform: uppercase; box-shadow: 0px 1px 2px 0px #383535; }
+.overlay-container .task-detail-overlay .overlay-body .left .attach-container .attach-list ul li .file-type { width: 60px; height: 60px; display: flex; flex-direction: column; justify-content: center; font-size: 18px; font-weight: bold; align-items: center; color: #222; background: #f9f9f9; text-transform: uppercase; box-shadow: 0px 1px 2px 0px #383535; position: relative; }
+.overlay-container .task-detail-overlay .overlay-body .left .attach-container .attach-list ul li .file-type .pc-attach-delete { border-radius: 50%; top: 0; right: 0; position: absolute; }
+.overlay-container .task-detail-overlay .overlay-body .left .attach-container .attach-list ul li .file-type .pc-attach-delete svg { fill: #666; }
 .overlay-container .task-detail-overlay .overlay-body .left .attach-container .attach-list ul li .file-detail { padding-left: 10px; display: flex; flex-direction: column; justify-content: center; }
-.overlay-container .task-detail-overlay .overlay-body .left .attach-container .attach-list ul li .file-detail .attach-title { font-weight: bold; font-size: 16px; }
+.overlay-container .task-detail-overlay .overlay-body .left .attach-container .attach-list ul li .file-detail .attach-title { font-weight: bold; color: #1d4354; font-size: 16px; }
 .overlay-container .task-detail-overlay .overlay-body .left .edit-button { margin-left: 10px; vertical-align: inherit !important; }
 .overlay-container .task-detail-overlay .overlay-body .left .edit-button svg { fill: #137cbd; }
 .overlay-container .task-detail-overlay .overlay-body .left textarea { background: transparent; border: none; border-color: transparent; resize: none; }
@@ -338,6 +342,7 @@ top attachment etc.
 @media screen and (max-width: 500px) { .communicate { width: 90%; } }
 .communicate .header { height: 30px; font-size: 16px; background: black; display: flex; color: #fff; justify-content: space-between; }
 .communicate .header .win-title { margin-left: 5px; font-weight: bold; display: flex; align-items: center; }
+.communicate .header .control-icons { display: flex; align-items: center; }
 .communicate .content { height: -webkit-calc(100% - 30px); height: -moz-calc(100% - 30px); height: calc(100% - 30px); }
 .communicate .content .chat-list { padding-bottom: 5px; overflow-y: scroll; }
 .communicate .content .chat-list .i-chat { border-bottom: 1px solid #e0e0e0; margin: 3px 0px; padding: 5px; }
@@ -495,15 +500,17 @@ top attachment etc.
 .footer .left-right-container .footer-right { flex: 0.2; display: flex; justify-content: flex-end; }
 .footer .left-right-container .footer-right .right-content { padding: 5px; font-weight: bold; }
 
-.drawing-board { flex: 0.8; padding: 5px; }
+.drawing-board { padding: 5px; overflow: hidden; display: flex; flex-direction: column; }
 .drawing-board .draw-title { text-align: center; text-transform: uppercase; font-weight: bold; font-size: 18px; color: #1d4354; padding: 3px; }
 .drawing-board .draw-tools { display: flex; padding: 5px 5px; }
-.drawing-board .draw-tools .tool-label { clip-path: polygon(0 0, 0 100%, 65% 100%, 100% 50%, 65% 0); font-size: 18px; background: #1d4354; color: white; padding: 3px 15px 3px 2px; display: flex; align-items: center; flex-direction: row; }
+.drawing-board .draw-tools .tool-label { clip-path: polygon(0 0, 0 100%, 65% 100%, 100% 50%, 65% 0); font-size: 18px; background: #1d4354; color: #fff; padding: 3px 15px 3px 2px; display: flex; align-items: center; flex-direction: row; }
 .drawing-board .draw-tools .tool-container { padding: 3px; margin-left: 5px; border: 1px solid #d6d9d9; display: flex; justify-content: center; width: 100%; }
 .drawing-board .draw-tools .tool-container .i-tool { margin: 0px 5px; }
 .drawing-board .draw-tools .save-wrapper { margin-left: 5px; }
-.drawing-board .draw-canvas { display: flex; justify-content: center; }
-.drawing-board .draw-canvas #mainCanvas { object-fit: contain; background: white; border: 2px solid black; }
+.drawing-board .draw-canvas { display: flex; flex: 1; justify-content: center; width: 100%; }
+.drawing-board .draw-canvas .canvas-container #mainCanvas { width: 100% !important; object-fit: contain !important; height: auto !important; background: white; border: 2px solid #1d4354; }
+.drawing-board .draw-canvas .canvas-container .upper-canvas { object-fit: contain !important; height: auto !important; width: 100% !important; }
+@media screen and (max-width: 470px) { .drawing-board .draw-tools .tool-label { display: none; } }
 
 .take-tour { margin-top: 60px; padding: 20px; display: flex; justify-content: center; align-items: center; }
 

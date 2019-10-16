@@ -336,6 +336,9 @@
             font-size: 17px;
           }
           .attach-list {
+            ul {
+              padding-inline-start: 20px;
+            }
             ul li {
               margin-bottom: 3px;
               display: flex;
@@ -353,6 +356,16 @@
                 background: $fadedBackground;
                 text-transform: uppercase;
                 box-shadow: 0px 1px 2px 0px $shadowColor;
+                position: relative;
+                .pc-attach-delete {
+                  border-radius: 50%;
+                  top: 0;
+                  right: 0;
+                  position: absolute;
+                  svg {
+                    fill: $navTextColor;
+                  }
+                }
               }
               .file-detail {
                 padding-left: 10px;
@@ -361,6 +374,7 @@
                 justify-content: center;
                 .attach-title {
                   font-weight: bold;
+                  color: $darkBlue;
                   font-size: 16px;
                 }
               }

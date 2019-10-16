@@ -25,7 +25,7 @@ class BioForm extends React.Component {
     try {
       const formData = new FormData();
       formData.append('data', JSON.stringify({ token: account.sessionId, fileType: 'image', content: 'profile' }));
-      formData.append('image', data.attachment);
+      formData.append('file', data.attachment);
       const res = await axios({
         config: {
           headers: {

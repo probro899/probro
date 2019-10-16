@@ -1,8 +1,10 @@
 @import './config.scss';
 
 .drawing-board {
-  flex: 0.8;
   padding: 5px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
   .draw-title {
     text-align: center;
     text-transform: uppercase;
@@ -18,7 +20,7 @@
       clip-path: polygon(0 0, 0 100%, 65% 100%, 100% 50%, 65% 0);
       font-size: 18px;
       background: $darkBlue;
-      color: white;
+      color: $backgroundColor;
       padding: 3px 15px 3px 2px;
       display: flex;
       align-items: center;
@@ -41,11 +43,29 @@
   }
   .draw-canvas {
     display: flex;
+    flex: 1;
     justify-content: center;
-    #mainCanvas {
-      object-fit: contain;
-      background: white;
-      border: 2px solid black;
+    width: 100%;
+    .canvas-container {
+      #mainCanvas {
+        width: 100% !important;
+        object-fit: contain !important;
+        height: auto !important;
+        background: white;
+        border: 2px solid $darkBlue;
+      }
+      .upper-canvas {
+        object-fit: contain !important;
+        height: auto !important;
+        width: 100% !important;
+      }
+    }
+  }
+  @media screen and (max-width: 470px) {
+    .draw-tools {
+      .tool-label {
+        display: none;
+      }
     }
   }
 }

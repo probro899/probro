@@ -1,5 +1,6 @@
 import React from 'react';
-import { HTMLSelect, Button } from '@blueprintjs/core';
+import PropTypes from 'prop-types';
+import { HTMLSelect, Button, Spinner, Label } from '@blueprintjs/core';
 
 class SelectTask extends React.Component {
   constructor(props) {
@@ -15,16 +16,15 @@ class SelectTask extends React.Component {
       });
     });
     this.state = {
+      error: null,
+      message: null,
+      loading: false,
       classVal: classes[0].id,
       classeOptions: classes.map(obj => ({ label: obj.name.substring(0, 50), value: obj.id })),
       taskOptions: tasks.map(obj => ({ label: obj.name.substring(0, 50), value: obj.id })),
       taskVal: tasks[0] && tasks[0].id,
     };
   }
-
-  submitForm = (data) => {
-    // console.log(data);
-  };
 
   onClassChange = (e) => {
     const { database } = this.props;
@@ -49,8 +49,33 @@ class SelectTask extends React.Component {
     });
   }
 
+  submitForm = async () => {
+    const { callback } = this.props;
+    const { taskVal, classVal } = this.state;
+    this.setState({
+      loading: true,
+    });
+    const res = await callback({ task: taskVal, class: classVal });
+    if (res.response === 200) {
+      this.setState({
+        loading: false,
+        message: res.message,
+      });
+    } else {
+      this.setState({
+        loading: false,
+        error: res.error,
+      });
+    }
+  };
+
   render() {
-    const { classeOptions, taskOptions, taskVal, classVal } = this.state;
+    const {
+      classeOptions, taskOptions, taskVal,
+      classVal,
+      error,
+      loading, message,
+    } = this.state;
     return (
       <div style={{ padding: '10px' }}>
         <div style={{ padding: '5px' }}>
@@ -73,16 +98,29 @@ class SelectTask extends React.Component {
               value={taskVal}
             />
           </div>
-          <Button
-            text="Submit"
-            onClick={this.submitForm}
-            intent="primary"
-            large
-          />
+          <div className="btn-group">
+            <div style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', alignItems: 'center' }}>
+              {loading && <Spinner intent="primary" size={40} /> }
+              {error && <Label style={{ fontSize: 16, color: 'red' }}>{error}</Label>}
+              {message && <Label style={{ fontSize: 16, color: 'green' }}>{message}</Label>}
+            </div>
+            <Button
+              text="Submit"
+              onClick={this.submitForm}
+              intent="primary"
+              large
+              fill
+            />
+          </div>
         </div>
       </div>
     );
   }
 }
+
+SelectTask.propTypes = {
+  database: PropTypes.objectOf(PropTypes.any).isRequired,
+  callback: PropTypes.func.isRequired,
+};
 
 export default SelectTask;

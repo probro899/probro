@@ -67,11 +67,18 @@ class Communication extends React.Component {
             Messaging
           </div>
           <div className="control-icons">
-            { minimize ? <Icon icon="expand-all" style={{ cursor: 'pointer' }} onClick={this.toggleMinMax} />
-              : <Icon icon="minus" style={{ cursor: 'pointer' }} onClick={this.toggleMinMax} />
-            }
-            <Icon icon="maximize" style={{ cursor: 'pointer' }} iconSize={14} />
-            <Icon icon="small-cross" style={{ cursor: 'pointer' }} onClick={this.cutWindow} />
+            <div>
+              { minimize ? <Icon iconSize={20} icon="expand-all" style={{ cursor: 'pointer' }} onClick={this.toggleMinMax} />
+                : <Icon iconSize={20} icon="minus" style={{ cursor: 'pointer' }} onClick={this.toggleMinMax} />
+              }
+              {/* <Icon icon="maximize" style={{ cursor: 'pointer' }} iconSize={14} /> */}
+              <Icon
+                iconSize={20}
+                icon="small-cross"
+                style={{ cursor: 'pointer' }}
+                onClick={this.cutWindow}
+              />
+            </div>
           </div>
         </div>
         <div

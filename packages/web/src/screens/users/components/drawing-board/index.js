@@ -6,7 +6,6 @@ import * as actions from '../../../../actions';
 import Tools from './Tools';
 
 const fabric = require('fabric');
-const file = require('../../../../assets/icons/cursor/pencil.png');
 
 class DrawingBoard extends Component {
   state = {
@@ -14,6 +13,7 @@ class DrawingBoard extends Component {
     canvas: {},
     anyObjectActive: false,
     color: 'black',
+    draw: false,
   }
 
   async componentWillMount() {
@@ -141,8 +141,11 @@ class DrawingBoard extends Component {
   }
 
   render() {
-    const { draw, anyObjectActive, color, canvas } = this.state;
-    const { database, account } = this.props;
+    const {
+      draw, anyObjectActive, color, canvas,
+      apis,
+    } = this.state;
+    const { database, account, addDatabaseSchema } = this.props;
     return (
       <div className="drawing-board bro-right">
         <div className="draw-title">
@@ -151,6 +154,7 @@ class DrawingBoard extends Component {
         <Tools
           draw={this.draw}
           drawActive={draw}
+          apis={apis}
           colorChange={this.colorChange}
           clear={this.clearCanvas}
           anyObjectActive={anyObjectActive}
@@ -161,15 +165,13 @@ class DrawingBoard extends Component {
           database={database}
           fileUpload={this.fileUpload}
           canvas={canvas}
+          addDatabaseSchema={addDatabaseSchema}
         />
         <div className="draw-canvas">
           <canvas
             id="mainCanvas"
-            height="500px"
-            width="1000px"
-            style={{
-              cursor: `url(${file}), auto`,
-            }}
+            height={700}
+            width={1000}
           />
         </div>
       </div>
@@ -179,6 +181,9 @@ class DrawingBoard extends Component {
 
 DrawingBoard.propTypes = {
   updateNav: PropTypes.func.isRequired,
+  database: PropTypes.objectOf(PropTypes.any).isRequired,
+  account: PropTypes.objectOf(PropTypes.any).isRequired,
+  addDatabaseSchema: PropTypes.func.isRequired,
 };
 const mapStateToProps = state => state;
 export default connect(mapStateToProps, { ...actions })(DrawingBoard);

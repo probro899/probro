@@ -69,7 +69,7 @@ class Navbar extends Component {
     const { apis, redirectDashboard, smallScreen } = this.state;
     return (
       <div className={`navbar ${className}`}>
-        {redirectDashboard && <Redirect exact push to={`/${account.sessionId}/profile`} />}
+        {redirectDashboard && <Redirect exact push to={`/${account.slug}/profile`} />}
         <div className="navbar-left">
           <Link
             to="/"
@@ -123,7 +123,14 @@ class Navbar extends Component {
         </div>
         <div className="navbar-right">
           {/* Notifications in navigation */}
-          {account.sessionId && <MessageNotification account={account} database={database} updateWebRtc={updateWebRtc} />}
+          {account.sessionId
+            && (
+            <MessageNotification
+              account={account}
+              database={database}
+              updateWebRtc={updateWebRtc}
+            />
+            )}
           {account.sessionId && <Notifications apis={apis} />}
           { account.sessionId
             ? (

@@ -1,28 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Button, Popover, Tag } from '@blueprintjs/core';
-import Fileinput from '../FormFileInput';
 import Form from '../Form';
 import DeletePopOver from '../DeletePopOver';
-
-const PopoverContent = ({ callback }) => {
-  const data = {
-    id: 'file',
-    required: true,
-    name: 'Attachment',
-    placeholder: 'Choose an Image',
-  };
-
-  return (
-    <div style={{ padding: '5px', minWidth: '300px' }}>
-      <Fileinput onChange={callback} value={{}} data={data} />
-    </div>
-  );
-};
-
-PopoverContent.propTypes = {
-  callback: PropTypes.func.isRequired,
-};
+import Attachment from './Attachment';
 
 const TagPopover = ({ tags, addTag }) => {
   const tagNames = ['primary', 'warning', 'success', 'danger'];
@@ -92,10 +73,6 @@ class TaskDetailRight extends React.Component {
     deleteCardPopover: false,
   };
 
-  uploadAttachment = (id, file) => {
-    // console.log(id, file);
-  }
-
   uploadDeadLine = async (data) => {
     const { apis, task, updateDatabaseSchema, boardId } = this.props;
     const deadline = new Date(data.deadline).getTime();
@@ -159,7 +136,11 @@ class TaskDetailRight extends React.Component {
 
   render() {
     const { deleteCardPopover } = this.state;
-    const { task, tags } = this.props;
+    const {
+      task, tags, addDatabaseSchema, apis,
+      account,
+      boardId,
+    } = this.props;
     return (
       <div className="right">
         <div className="rt-in">
@@ -188,7 +169,15 @@ class TaskDetailRight extends React.Component {
               />
             </Popover>
             <Popover
-              content={<PopoverContent callback={this.uploadAttachment} />}
+              content={(
+                <Attachment
+                  boardId={boardId}
+                  account={account}
+                  task={task}
+                  apis={apis}
+                  addDatabaseSchema={addDatabaseSchema}
+                />
+              )}
               position="left-top"
             >
               <Button
@@ -227,6 +216,7 @@ TaskDetailRight.propTypes = {
   updateDatabaseSchema: PropTypes.func.isRequired,
   addDatabaseSchema: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
+  account: PropTypes.objectOf(PropTypes.any).isRequired,
   boardId: PropTypes.number.isRequired,
 };
 

@@ -10,7 +10,6 @@ class Login extends Component {
 
   render() {
     const { account } = this.props;
-    console.log("login", account, this.props);
     return (
       <div className="o-log-or-reg">
         <div className="log-or-reg">
@@ -20,7 +19,7 @@ class Login extends Component {
           </div>
           {/* just trying to redirect incase of logged in */}
           {
-            account.sessionId ? <Redirect push to={`/${account.sessionId}/profile`} /> : <Log />
+            account.sessionId ? <Redirect push to={`/${account.slug}/profile`} /> : <Log />
           }
           <div className="auth-with-others">
             <GoogleLogin />

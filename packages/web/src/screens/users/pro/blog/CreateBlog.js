@@ -282,7 +282,7 @@ class Blogs extends Component {
       await axios.post(`${ENDPOINT}/web/delete-file`, { token: account.sessionId, content: 'blog', fileName: fileList });
       this.saveBlog();
     } catch (e) {
-      console.log(e);
+      console.log('Internal Error', e);
     }
   }
 
@@ -419,6 +419,8 @@ Blogs.propTypes = {
   account: PropTypes.objectOf(PropTypes.any).isRequired,
   match: PropTypes.objectOf(PropTypes.any).isRequired,
   database: PropTypes.objectOf(PropTypes.any).isRequired,
+  addDatabaseSchema: PropTypes.func.isRequired,
+  updateDatabaseSchema: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({ account: state.account, database: state.database });

@@ -7,12 +7,12 @@ import { SideNav, SmallScreenSideNav, Profile, Class, Setting, DrawingBoard, Con
 import { Blog } from '../pro/blog';
 
 class HomePage extends Component {
-  state = {};
+  state = { error: false };
 
   componentDidMount() {
     const { account, match } = this.props;
     // this is to prevent hitting people
-    if (match.params.id !== account.sessionId) {
+    if (match.params.id !== account.slug) {
       this.setState({ error: true });
     }
   }
@@ -20,6 +20,7 @@ class HomePage extends Component {
   render() {
     const { error } = this.state;
     const { account, match } = this.props;
+    // console.log('test login', account, match.path, error);
     return (
       error ? <Redirect push to="/" />
         : (

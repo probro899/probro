@@ -11,7 +11,7 @@ class Profile extends Component {
     apis: {},
   };
 
-  async componentWillMount() {
+  async componentDidMount() {
     const { updateNav } = this.props;
     const apis = await client.scope('Mentee');
     this.setState({ apis });
@@ -31,7 +31,11 @@ class Profile extends Component {
   }
 
   render() {
-    const { account, database, deleteDatabaseSchema, updateDatabaseSchema, addDatabaseSchema } = this.props;
+    const {
+      account,
+      database, deleteDatabaseSchema, updateDatabaseSchema,
+      addDatabaseSchema,
+    } = this.props;
     const { apis } = this.state;
     if (!account.user) {
       return <div />;
