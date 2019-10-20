@@ -36,3 +36,4 @@ export default async function updateUserDetails(record) {
     throw e;
   }
 }
+ 

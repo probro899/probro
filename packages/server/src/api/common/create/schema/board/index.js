@@ -40,6 +40,11 @@ async function addBoardColumnCardDescription(record) {
   return res;
 }
 
+async function addBoardMessageSeenStatus(record) {
+  const res = await add.call(this, 'BoardMessageSeenStatus', record);
+  return res;
+}
+
 async function addBoardMember(record) {
   const { session } = this;
   const { email } = record;
@@ -155,4 +160,5 @@ export default [
   addBoardMember,
   addBoardMessage,
   addBoardColumnCardTag,
+  addBoardMessageSeenStatus,
 ];

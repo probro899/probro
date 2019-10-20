@@ -21,7 +21,7 @@ class MessageNotification extends React.Component {
         ? [...boardMessages[obj.boardId], obj] : [obj];
     });
     Object.values(database.UserMessage.byId).map((obj) => {
-      if (obj.tuserId === account.user.id) {
+      if (account.user && obj.tuserId === account.user.id) {
         userMessages[obj.fuserId] = userMessages[obj.fuserId]
           ? [...userMessages[obj.fuserId], obj] : [obj];
       } else {

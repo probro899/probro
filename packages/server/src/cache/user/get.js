@@ -77,6 +77,7 @@ export default async function get(id) {
     const UserEducation = await find('UserEducation', { userId: id });
     const UserSkill = await find('UserSkill', { userId: id });
     const UserPortal = await find('UserPortal', { userId: id });
+    const UserCarrierInterest = await find('UserCarrierInterest', { userId: id });
     const Board = await find('Board', { userId: id });
 
     const boardPromises = [];
@@ -126,6 +127,7 @@ export default async function get(id) {
     const BoardColumnCardTag = flat(flat(boardDetails.map(obj => obj.boardColumnCardTag)));
 
     // console.log('connection list', [allBlogs, newBlogPublish]);
+    console.log('UserMessage', userMessages);
     const userDataRes = {
       User: allUser,
       UserDetail: allUserDetailsList,
@@ -145,6 +147,7 @@ export default async function get(id) {
       UserWorkExperience,
       UserPortal,
       UserSkill,
+      UserCarrierInterest,
       BoardMessage: flat(BoardMessage),
       UserConnection: connectionList,
       UserMessage: userMessages,

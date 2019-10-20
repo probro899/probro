@@ -1,11 +1,18 @@
 import React from 'react';
 import { GoogleLogin as Googlelogin } from 'react-google-login';
+import login from '../helper-functions/login';
 
 class GoogleLogin extends React.Component {
   state = {};
 
-  responseGoogle = (response) => {
+  responseGoogle = async (response) => {
     console.log(response);
+    try {
+      const googleRes = await login({ loginType: 'google', record: response.profileObj });
+      console.log('google login response', googleRes);
+    } catch (e) {
+      console.error(e);
+    }
   }
 
   render() {

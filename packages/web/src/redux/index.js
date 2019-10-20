@@ -30,7 +30,8 @@ const reducer = combineReducers({
     'UserPortal',
     'BoardMessage',
     'UserConnection',
-    'UserMessage'
+    'UserMessage',
+    'UserCarrierInterest'
   ),
 });
 

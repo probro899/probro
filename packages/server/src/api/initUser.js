@@ -80,6 +80,7 @@ export default async function initUser(id) {
   session.dispatch(schema.init('UserWorkExperience', u.UserWorkExperience));
   session.dispatch(schema.init('UserPortal', u.UserPortal));
   session.dispatch(schema.init('UserSkill', u.UserSkill));
+  session.dispatch(schema.init('UserCarrierInterest', u.UserCarrierInterest));
   session.dispatch(schema.init('BoardMessage', u.BoardMessage));
   session.dispatch(schema.init('UserConnection', u.UserConnection));
   session.dispatch(schema.init('UserMessage', u.UserMessage));
