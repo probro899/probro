@@ -124,12 +124,13 @@ top attachment etc.
 @media screen and (max-width: 855px) { .pc-small-screen-sidenav { display: block; margin: 70px 20px 0px 15px; } }
 
 .profile { display: flex; align-items: center; flex-direction: column; padding: 4px; position: relative; }
-.profile .cover-pic { height: 250px; position: relative; overflow: hidden; width: 100%; background: linear-gradient(to right, #2b5468, 0%, #137cbd, 100%); }
-.profile .cover-pic img { width: 110%; }
-.profile .cover-pic .edit-cover { padding: 5px; position: absolute; bottom: 0; right: 0; color: white; }
+.profile .cover-pic { max-height: 300px; position: relative; overflow: hidden; width: 100%; background: linear-gradient(to right, #2b5468, 0%, #137cbd, 100%); }
+.profile .cover-pic .cr-boundary { z-index: 0; }
+.profile .cover-pic img { width: 100%; }
+.profile .cover-pic .edit-cover { padding: 5px; position: absolute; z-index: 1; bottom: 0; right: 0; color: #fff; }
 .profile .cover-pic .edit-cover .edit-icon { vertical-align: text-top; }
-.profile .cover-pic .edit-cover:hover { text-decoration: underline; cursor: pointer; color: #137cbd; }
-.profile .cover-pic .edit-cover:hover svg { fill: #137cbd; }
+.profile .cover-pic .edit-cover:hover { text-decoration: underline; cursor: pointer; color: #1d4354; }
+.profile .cover-pic .edit-cover:hover svg { fill: #1d4354; }
 .profile .profilePic { position: absolute; top: 100px; left: 10px; border: 1px solid #e0e0e0; box-shadow: 0px 0px 5px 1px rgba(57, 73, 76, 0.35); border-radius: 50%; width: 150px; height: 150px; overflow: hidden; }
 .profile .profilePic img.portrait { width: 100%; height: auto; }
 .profile .profilePic img.landscape { height: 100%; width: auto; }

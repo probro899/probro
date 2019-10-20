@@ -9,7 +9,6 @@ import Reset from './home/auth/change-password';
 import { CreateBlog, PublicBlog } from './users/pro/blog';
 import EmailVerification from './home/auth/email-verification';
 import { Communication } from '../common';
-// import Communication from './users/components/communication';
 import { Archive } from './users/components';
 import { PublicProfile } from './home/component';
 import { SearchResult } from './home/component/search';
