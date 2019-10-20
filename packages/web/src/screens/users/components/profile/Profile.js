@@ -41,17 +41,12 @@ class Profile extends Component {
       return <div />;
     }
     const { user } = account;
-    let userDetail = {};
-    Object.values(database.UserDetail.byId).map((obj) => {
-      if (obj.userId === user.id) {
-        userDetail = obj;
-      }
-    });
+    // console.log('cover page', account);
     return (
       <div className="profile bro-right">
         <CoverPic
           account={account}
-          userDetail={userDetail}
+          userDetail={user.userDetails}
           apis={apis}
           updateDatabaseSchema={updateDatabaseSchema}
           addDatabaseSchema={addDatabaseSchema}
@@ -59,7 +54,7 @@ class Profile extends Component {
         <ProfilePic
           account={account}
           apis={apis}
-          userDetail={userDetail}
+          userDetail={user.userDetails}
           updateDatabaseSchema={updateDatabaseSchema}
           addDatabaseSchema={addDatabaseSchema}
         />

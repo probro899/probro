@@ -1,7 +1,3 @@
-/* eslint-disable jsx-a11y/no-static-element-interactions */
-/* eslint-disable jsx-a11y/click-events-have-key-events */
-/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
-/* eslint-disable jsx-a11y/mouse-events-have-key-events */
 import React from 'react';
 import axios from 'axios';
 import PropTypes from 'prop-types';
@@ -39,14 +35,25 @@ class CoverPic extends React.Component {
 
   componentDidMount() {
     const { userDetail } = this.props;
+    if (!userDetail.coverImage) {
+      this.setState({
+        top: 0,
+        left: 0,
+      });
+      return;
+    }
+    const left = Number(userDetail.coverImageX);
+    const top = Number(userDetail.coverImagrY);
+    const { innerWidth } = window;
     this.setState({
-      top: userDetail.coverImagrY ? Number(userDetail.coverImagrY) : 0,
-      left: userDetail.coverImageX ? Number(userDetail.coverImageX) : 0,
+      left: left / 100 * innerWidth,
+      top: top / 100 * innerWidth,
     });
   }
 
   mouseDown = (e) => {
     const { drag } = this.state;
+    console.log('mouse click', this.state);
     if (drag) {
       this.setState({
         down: true,
@@ -103,17 +110,18 @@ class CoverPic extends React.Component {
   clickEditCover = async (type) => {
     const { drag, top, left } = this.state;
     const { apis, account, userDetail, updateDatabaseSchema } = this.props;
+    const { innerWidth } = window;
     if (type === 'reposition') {
       if (drag) {
         await apis.updateUserDetails({
           userId: account.user.id,
-          coverImageX: left,
-          coverImagrY: top,
+          coverImageX: left / innerWidth * 100,
+          coverImagrY: top / innerWidth * 100,
         });
         updateDatabaseSchema('UserDetail', {
           id: userDetail.id,
-          coverImageX: left,
-          coverImagrY: top,
+          coverImageX: left / innerWidth * 100,
+          coverImagrY: top / innerWidth * 100,
         });
       }
       this.setState({
@@ -178,6 +186,8 @@ class CoverPic extends React.Component {
   render() {
     const { userDetail, account } = this.props;
     const { left, top, drag } = this.state;
+    // console.log('cover page detail', userDetail);
+    const { innerWidth } = window;
     const imgUrl = userDetail.coverImage ? `${ENDPOINT}/user/${10000000 + parseInt(account.user.id, 10)}/profile/${userDetail.coverImage}` : 'https://i.pinimg.com/originals/5e/80/a2/5e80a234fc2df7c84476283520dd6b18.jpg';
     return (
       <div
@@ -185,24 +195,32 @@ class CoverPic extends React.Component {
         style={{
           boxShadow: drag && '-3px 3px 3px',
         }}
+        role="menubar"
+        tabIndex="0"
+        onBlur={() => false}
+        onMouseMove={this.mouseMove}
+        onMouseDown={this.mouseDown}
+        onMouseUp={this.mouseUp}
+        onMouseOut={this.mouseOut}
       >
         <img
           style={{
             position: 'absolute',
-            top: `${top}px`,
-            left: `${left}px`,
+            top: `${top / innerWidth * 100}%`,
+            left: `${left / innerWidth * 100}%`,
           }}
           draggable={false}
-          onMouseMove={this.mouseMove}
-          onMouseDown={this.mouseDown}
-          onMouseUp={this.mouseUp}
-          onMouseOut={this.mouseOut}
           alt="profile cover"
           src={imgUrl}
         />
         <div className="edit-cover">
           { drag ? (
-            <div onClick={() => this.clickEditCover('reposition')}>
+            <div
+              role="menu"
+              tabIndex="0"
+              onKeyDown={() => false}
+              onClick={() => this.clickEditCover('reposition')}
+            >
               <span style={{ padding: '3px', border: '1px solid white' }}>Save </span>
             </div>
           )
