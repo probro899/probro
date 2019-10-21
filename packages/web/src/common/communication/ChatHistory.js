@@ -4,7 +4,7 @@ import { Button } from '@blueprintjs/core';
 import ScrollToBottom from 'react-scroll-to-bottom';
 import mediaSelector from './mediaSelector';
 import { ChatElement, Message } from './components';
-import { normalTimeStampSorting } from '../../screens/users/utility-functions';
+import { normalTimeStampSorting } from '../utility-functions';
 
 class ChatHistory extends React.Component {
   state = {};

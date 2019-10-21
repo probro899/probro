@@ -4,6 +4,9 @@ import add from '../../add';
 import db from '../../../../../db';
 import mailBody from '../../../../../mailer/html/mailBody';
 import mailer from '../../../../../mailer';
+import { user } from '../../../../../cache';
+import findUserDetails from '../../../findUserDetails';
+import updateUserCache from '../../../updateUserCache';
 
 async function addUserWorkExperience(record) {
   const res = await add.call(this, 'UserWorkExperience', record);
@@ -39,7 +42,7 @@ async function connectUser(record) {
   const { session } = this;
   // console.log('record in conectUser', record);
 
-  const connectRes = add.call(this, 'UserConnection', record);
+  const connectRes = await add.call(this, 'UserConnection', record);
 
   const { mId, userId } = record;
   const bothUserDetails = await db.execute(async ({ findOne, insert }) => {
@@ -72,8 +75,29 @@ async function connectUser(record) {
     const remoteUserSession = mainchannel.find(s => s.values.user.id === tUserDetails.id);
     console.log('remote User session', remoteUserSession);
     if (remoteUserSession) {
-      remoteUserSession.dispatch(schema.add('Notification', notiDetails));
+      const fuserDetailsRes = await findUserDetails(fUserDetails.id, true);
+      const dataToBeUpdate = {
+        User: fuserDetailsRes.user,
+        UserDetail: fuserDetailsRes.userDetail,
+        UserSkill: fuserDetailsRes.userSkill,
+        UserEducation: fuserDetailsRes.userEducation,
+        UserWorkExperience: fuserDetailsRes.userWorkExperience,
+        UserPortal: fuserDetailsRes.userPortal,
+        Notification: notiDetails,
+        UserConnection: { ...record, connectRes },
+      };
+      updateUserCache(dataToBeUpdate, remoteUserSession);
     }
+    const tuserDetailsRes = await findUserDetails(tUserDetails.id, true);
+    const dataToBeUpdate = {
+      User: tuserDetailsRes.user,
+      UserDetail: tuserDetailsRes.userDetail,
+      UserSkill: tuserDetailsRes.userSkill,
+      UserEducation: tuserDetailsRes.userEducation,
+      UserWorkExperience: tuserDetailsRes.userWorkExperience,
+      UserPortal: tuserDetailsRes.userPortal,
+    };
+    updateUserCache(dataToBeUpdate, session);
     return connectRes;
   });
 }

@@ -9,7 +9,7 @@ export default async (uid, all) => {
     let userWorkExperience = [];
     let userPortal = [];
     if (all) {
-      userSkill = await findOne('UserSkill', { userId: uid }) || {};
+      userSkill = await find('UserSkill', { userId: uid }) || [];
       userEducation = await find('UserEducation', { userId: uid });
       userWorkExperience = await find('UserWorkExperience', { userId: uid });
       userPortal = await find('UserPortal', { userId: uid });

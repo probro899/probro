@@ -1,5 +1,5 @@
 import { UPDATE_WEBRTC } from '../actions/types';
-import messages from '../screens/users/components/communication/components/content/messenger/container/testData';
+// import messages from '../screens/users/components/communication/components/content/messenger/container/testData';
 
 const initialState = {
   showCommunication: null,
@@ -8,7 +8,7 @@ const initialState = {
   communicationContainer: 'list',
   peerType: '',
   outGoingCallType: null,
-  messages,
+  messages: [],
   peerConnections: {},
   pendingOffers: [],
   streams: {},

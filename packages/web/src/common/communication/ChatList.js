@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { timeStampSorting } from '../../screens/users/utility-functions';
+import { timeStampSorting } from '../utility-functions';
 
 class ChatList extends React.Component {
   state = {};

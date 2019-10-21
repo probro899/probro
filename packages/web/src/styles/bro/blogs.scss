@@ -1,3 +1,5 @@
+@import '../config.scss';
+
 .create-blog {
   margin-top: $navbarHeight;
   div[contenteditable]:focus {
@@ -53,8 +55,8 @@
         max-width: 100%;
         // object-fit: contain;
       }
-    } 
-  } 
+    }
+  }
 }
 .blogs {
   padding: 5px;

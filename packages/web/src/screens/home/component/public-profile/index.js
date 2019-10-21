@@ -52,7 +52,7 @@ class PublicProfile extends React.Component {
   render() {
     const { account, database, updateWebRtc } = this.props;
     const { loading, data } = this.state;
-    console.log('accout data', account);
+    console.log('accout data', account, data);
     if (loading) {
       return <Spinner />;
     }
@@ -65,7 +65,10 @@ class PublicProfile extends React.Component {
         <div className="public-profile">
           <div className="cover-pic" />
           <div className="profilePic">
-            <img src={file} alt="profile of the user" />
+            <img
+              src={userDetails.image ? `${ENDPOINT}/user/${10000000 + parseInt(user.id, 10)}/profile/${userDetails.image}` : file}
+              alt="profile of the user"
+            />
           </div>
           <div className="top-details">
             <div className="desc">
@@ -73,10 +76,11 @@ class PublicProfile extends React.Component {
                 {user.middleName ? `${user.firstName} ${user.middleName} ${user.lastName}` : `${user.firstName} ${user.lastName}`}
               </span>
               <br />
-              <span className="designation">Software Engineer at Somewhere</span>
-              <br />
               <Icon icon="locate" />
-              <span className="country"> Nepal</span>
+              <span className="country">
+                {' '}
+                {userDetails.address ? userDetails.address : '---'}
+              </span>
             </div>
             {account.user && (
               <div className="connect-btns">
@@ -97,7 +101,7 @@ class PublicProfile extends React.Component {
           </div>
           <div className="bio">
             <p>
-              &#34; Win or Learn &#34;
+              {userDetails.bio ? userDetails.bio : '---'}
             </p>
           </div>
           <div className="education">
@@ -141,18 +145,9 @@ class PublicProfile extends React.Component {
               <span>Skills</span>
             </p>
             <div className="skills-container">
-              <span>
-                Python
-              </span>
-              <span>
-                Javascript
-              </span>
-              <span>
-                React
-              </span>
-              <span>
-                Node
-              </span>
+              {
+                data.userSkill.length === 0 ? '---' : JSON.parse(data.userSkill[0].skill).map(skill => <span>{skill}</span>)
+              }
             </div>
           </div>
         </div>
