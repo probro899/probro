@@ -40,7 +40,7 @@ class Column extends Component {
     const { api, deleteDatabaseSchema, boardId } = this.props;
     const { id } = this.state;
     if (type === 'confirm') {
-      await api.deleteBoardColumn({ id, boardId });
+      await api.deleteBoardColumn({ id, boardId, broadCastId: `Board-${boardId}` });
       deleteDatabaseSchema('BoardColumn', { id });
     }
     this.setState({
@@ -52,7 +52,7 @@ class Column extends Component {
   updateColumnName = async (data) => {
     const { api, updateDatabaseSchema, boardId } = this.props;
     const { id } = this.state;
-    await api.updateBoardColumn([{ ...data, boardId }, { id }]);
+    await api.updateBoardColumn([{ ...data, boardId, broadCastId: `Board-${boardId}` }, { id }]);
     updateDatabaseSchema('BoardColumn', { id, ...data });
     this.setState({
       id: '',

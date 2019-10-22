@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
-import { Dialog, Button, TextArea, Intent, Tag, Icon } from '@blueprintjs/core';
+import { Dialog, Button, TextArea, Tag, Icon } from '@blueprintjs/core';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
 import PropTypes from 'prop-types';
@@ -9,6 +9,7 @@ import { timeStampSorting } from '../../../common/utility-functions';
 import TaskComment from './TaskComment';
 import TaskDetailRight from './TaskDetailRight';
 import { ENDPOINT } from '../../../config';
+import CommentBox from './CommentBox';
 
 class TaskOverlay extends Component {
   state = {
@@ -83,7 +84,6 @@ class TaskOverlay extends Component {
     this.setState({
       editHead: false,
       editDesc: false,
-      comment: '',
     });
   };
 
@@ -144,32 +144,6 @@ class TaskOverlay extends Component {
     this.toggleElemDesc();
   }
 
-  commentChange = (e) => {
-    this.setState({ comment: e.target.value });
-  }
-
-  saveComment = async () => {
-    const { comment, task } = this.state;
-    const { apis, account, boardId, addDatabaseSchema } = this.props;
-    await apis.addBoardColumnCardComment({
-      boardColumnCardId: task.id,
-      comment,
-      timeStamp: Date.now(),
-      userId: account.user.id,
-      broadCastId: `Board-${boardId}`,
-    });
-    addDatabaseSchema('BoardColumnCardComment', {
-      id: Date.now(),
-      boardColumnCardId: task.id,
-      comment,
-      timeStamp: Date.now(),
-      userId: account.user.id,
-    });
-    this.setState({
-      comment: '',
-    });
-  }
-
   getTags = () => {
     const { tags } = this.props;
     const { task } = this.state;
@@ -204,6 +178,12 @@ class TaskOverlay extends Component {
     }
   }
 
+  writeComment = (name) => {
+    this.setState({
+      comment: name,
+    });
+  }
+
   render() {
     const { isOpen } = this.props;
     const {
@@ -215,8 +195,8 @@ class TaskOverlay extends Component {
       title,
       description,
       desc,
-      comment,
       tags,
+      comment,
     } = this.state;
     const {
       userList, apis, boardId, onClose,
@@ -378,21 +358,25 @@ class TaskOverlay extends Component {
                   </ul>
                 </div>
               </div>
-              <div className="comment-container">
-                <TextArea
-                  fill
-                  placeholder="Put your comments."
-                  value={comment}
-                  onChange={e => this.commentChange(e)}
-                />
-                <Button
-                  style={{ marginLeft: '5px' }}
-                  text="submit"
-                  intent={Intent.PRIMARY}
-                  onClick={this.saveComment}
-                />
-              </div>
-              <TaskComment comments={comments} userList={userList} />
+              <CommentBox
+                apis={apis}
+                addDatabaseSchema={addDatabaseSchema}
+                account={account}
+                boardId={boardId}
+                task={task}
+                writeComment={this.writeComment}
+                comment={comment}
+              />
+              <TaskComment
+                comments={comments}
+                account={account}
+                apis={apis}
+                userList={userList}
+                commentReply={this.writeComment}
+                boardId={boardId}
+                deleteDatabaseSchema={deleteDatabaseSchema}
+                updateDatabaseSchema={updateDatabaseSchema}
+              />
             </div>
             <TaskDetailRight
               tags={tags}

@@ -122,7 +122,7 @@ class Classes extends Component {
         columns: newColumns,
       });
       await api.updateBoardColumn([
-        { position: column.position, timeStamp: Date.now() }, { id: columnId }]);
+        { position: column.position, timeStamp: Date.now(), broadCastId: `Board-${classId}` }, { id: columnId }]);
       return;
     }
     // finished column moving around here

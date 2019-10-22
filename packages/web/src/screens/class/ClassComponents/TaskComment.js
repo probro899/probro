@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import DeletePopOver from '../../../common/DeletePopOver';
 
 const profileIcon = require('../../../assets/icons/64w/uploadicon64.png');
 
@@ -26,24 +27,60 @@ CommentDesc.propTypes = {
 };
 
 class TaskComment extends React.Component {
-  state = {};
+  state = { deletePopover: false, activeComment: {} };
 
   editComment = () => {
 
   }
 
-  replyComment = () => {
-
+  replyComment = (com) => {
+    const { commentReply, userList } = this.props;
+    let name = 'Anonymous';
+    Object.values(userList.byId).map((obj) => {
+      if (obj.id === com.userId) {
+        name = obj.firstName;
+      }
+    });
+    commentReply(`@${name} `);
   }
 
-  delteComment = () => {
+  togglePopover = (com) => {
+    this.setState({
+      deletePopover: true,
+      activeComment: com,
+    });
+  }
 
+  deleteComment = async (type) => {
+    const { apis, boardId, deleteDatabaseSchema } = this.props;
+    const { activeComment } = this.state;
+    if (type === 'confirm') {
+      await apis.deleteBoardColumnCardComment({ id: activeComment.id, broadCastId: `Board-${boardId}` });
+      deleteDatabaseSchema('BoardColumnCardComment', { id: activeComment.id });
+    }
+    this.setState({
+      deletePopover: false,
+      activeComment: {},
+    });
+  }
+
+  getCommentUser = (com) => {
+    const { userList } = this.props;
+    let name = 'Anonymous';
+    Object.values(userList.byId).map((obj) => {
+      if (obj.id === com.userId) {
+        name = obj.middleName ? `${obj.firstName} ${obj.middleName} ${obj.lastName}` : `${obj.firstName} ${obj.lastName}`;
+      }
+    });
+    return name;
   }
 
   render() {
-    const { userList, comments } = this.props;
+    const { comments, account } = this.props;
+    const { deletePopover } = this.state;
     return (
       <div className="comments">
+        <DeletePopOver isOpen={deletePopover} name="Comment" action={this.deleteComment} />
         <h3>History</h3>
         {comments.map((com) => {
           return (
@@ -58,13 +95,7 @@ class TaskComment extends React.Component {
               <div className="com-con">
                 <div className="com-auth">
                   <span style={{ fontSize: '16px', fontWeight: 'bold' }}>
-                    {
-                      Object.values(userList.byId).map((obj) => {
-                        if (obj.id === com.userId) {
-                          return `${obj.firstName} ${obj.lastName}`;
-                        }
-                      })
-                    }
+                    {this.getCommentUser(com)}
                   </span>
                   <small>{new Date(com.timeStamp).toDateString()}</small>
                 </div>
@@ -72,15 +103,22 @@ class TaskComment extends React.Component {
                   <CommentDesc comment={com.comment} />
                 </div>
                 <div className="com-config">
-                  <small className="primary" onClick={() => this.replyComment(com.id)}>
-                    <u>Reply</u>
-                  </small>
-                  <small className="primary" onClick={() => this.editComment(com.id)}>
-                    <u>Edit</u>
-                  </small>
-                  <small className="danger" onClick={() => this.delteComment(com.id)}>
-                    <u>Delete</u>
-                  </small>
+                  {
+                    account.user.id === com.userId ? (
+                      <div>
+                        <small className="primary" role="menu" tabIndex="0" onKeyDown={() => false} onClick={() => this.editComment(com.id)}>
+                          <u>Edit</u>
+                        </small>
+                        <small className="danger" role="menu" tabIndex="0" onKeyDown={() => false} onClick={() => this.togglePopover(com)}>
+                          <u>Delete</u>
+                        </small>
+                      </div>
+                    ) : (
+                      <small className="primary" role="menu" tabIndex="0" onKeyDown={() => false} onClick={() => this.replyComment(com)}>
+                        <u>Reply</u>
+                      </small>
+                    )
+                  }
                 </div>
               </div>
             </div>
@@ -93,7 +131,12 @@ class TaskComment extends React.Component {
 
 TaskComment.propTypes = {
   userList: PropTypes.objectOf(PropTypes.any).isRequired,
+  apis: PropTypes.objectOf(PropTypes.any).isRequired,
+  deleteDatabaseSchema: PropTypes.func.isRequired,
+  boardId: PropTypes.number.isRequired,
+  commentReply: PropTypes.func.isRequired,
   comments: PropTypes.arrayOf(PropTypes.any).isRequired,
+  account: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 export default TaskComment;
