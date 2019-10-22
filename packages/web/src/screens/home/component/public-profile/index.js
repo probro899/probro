@@ -10,6 +10,7 @@ import Connections from './connections';
 import client from '../../../../socket';
 import { ENDPOINT } from '../../../../config';
 import { Spinner } from '../../../../common';
+import RoundPicture from '../../../../components/RoundPicture';
 
 const file = require('../../../../assets/icons/512h/uploadicon512.png');
 const school = require('../../../../assets/icons/64w/school64.png');
@@ -38,7 +39,7 @@ class PublicProfile extends React.Component {
         apis = await client.scope('Mentee');
       }
       const res = await axios.get(`${ENDPOINT}/web/get-user?userId=${match.params.userId}`);
-      console.log('profile detail', res);
+      // console.log('profile detail', res);
       this.setState({
         data: res.data,
         apis,
@@ -52,7 +53,7 @@ class PublicProfile extends React.Component {
   render() {
     const { account, database, updateWebRtc } = this.props;
     const { loading, data } = this.state;
-    console.log('accout data', account, data);
+    // console.log('accout data', account, data);
     if (loading) {
       return <Spinner />;
     }
@@ -65,10 +66,7 @@ class PublicProfile extends React.Component {
         <div className="public-profile">
           <div className="cover-pic" />
           <div className="profilePic">
-            <img
-              src={userDetails.image ? `${ENDPOINT}/user/${10000000 + parseInt(user.id, 10)}/profile/${userDetails.image}` : file}
-              alt="profile of the user"
-            />
+            <RoundPicture imgUrl={userDetails.image ? `${ENDPOINT}/user/${10000000 + parseInt(user.id, 10)}/profile/${userDetails.image}` : file} />
           </div>
           <div className="top-details">
             <div className="desc">

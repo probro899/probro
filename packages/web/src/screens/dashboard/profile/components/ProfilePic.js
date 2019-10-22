@@ -4,35 +4,18 @@ import axios from 'axios';
 import PropTypes from 'prop-types';
 import FileInput from './FileInput';
 import { ENDPOINT } from '../../../../config';
+import RoundPicture from '../../../../components/RoundPicture';
 
 const file = require('../../../../assets/icons/512h/uploadicon512.png');
 
 class ProfilePic extends React.Component {
-  state = { portrait: false };
-
-  componentDidMount() {
-    this.checkOrientation();
-  }
+  state = {};
 
   componentDidUpdate(prevProps) {
     const { userDetail } = this.props;
     if (userDetail.image !== prevProps.userDetail.image) {
       this.checkOrientation();
     }
-  }
-
-  checkOrientation = () => {
-    const { userDetail, account } = this.props;
-    const imgUrl = userDetail.image ? `${ENDPOINT}/user/${10000000 + parseInt(account.user.id, 10)}/profile/${userDetail.image}` : file;
-    const img = new Image();
-    img.onload = () => {
-      if (img.height > img.width) {
-        this.setState({
-          portrait: true,
-        });
-      }
-    };
-    img.src = imgUrl;
   }
 
   uploadImage = async (data) => {
@@ -83,14 +66,9 @@ class ProfilePic extends React.Component {
   render() {
     const { userDetail, account } = this.props;
     const imgUrl = userDetail.image ? `${ENDPOINT}/user/${10000000 + parseInt(account.user.id, 10)}/profile/${userDetail.image}` : file;
-    const { portrait } = this.state;
     return (
       <div className="profilePic">
-        <img
-          className={portrait ? 'portrait' : 'landscape'}
-          src={imgUrl}
-          alt="profile of the user"
-        />
+        <RoundPicture imgUrl={imgUrl} />
         <FileInput onChange={this.uploadImage} />
       </div>
     );

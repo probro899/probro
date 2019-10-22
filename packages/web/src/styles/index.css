@@ -439,8 +439,9 @@ top attachment etc.
 .public-profile .cover-pic .edit-cover .edit-icon { vertical-align: text-top; }
 .public-profile .cover-pic .edit-cover:hover { text-decoration: underline; cursor: pointer; color: #137cbd; }
 .public-profile .cover-pic .edit-cover:hover svg { fill: #137cbd; }
-.public-profile .profilePic { position: absolute; top: 100px; left: 10px; }
-.public-profile .profilePic img { border: 1px solid #e2eaeb; box-shadow: 0px 0px 5px 1px #e2eaeb; border-radius: 50%; height: 150px; padding: 2px; }
+.public-profile .profilePic { position: absolute; top: 100px; left: 10px; border: 1px solid #e0e0e0; box-shadow: 0px 0px 5px 1px rgba(57, 73, 76, 0.35); border-radius: 50%; width: 150px; height: 150px; overflow: hidden; }
+.public-profile .profilePic img.portrait { width: 100%; height: auto; }
+.public-profile .profilePic img.landscape { height: 100%; width: auto; }
 .public-profile .profilePic span { position: absolute; top: 70px; left: 110px; }
 .public-profile .profilePic svg { border-radius: 100px; background-color: #2572D1; }
 .public-profile .top-details { width: 100%; display: flex; justify-content: space-between; background: white; padding: 5px; }
