@@ -1,10 +1,8 @@
 /* eslint-disable import/no-cycle */
-import schema from '@probro/common/src/schema';
 import add from '../../add';
 import db from '../../../../../db';
 import mailBody from '../../../../../mailer/html/mailBody';
 import mailer from '../../../../../mailer';
-import { user } from '../../../../../cache';
 import findUserDetails from '../../../findUserDetails';
 import updateUserCache from '../../../updateUserCache';
 

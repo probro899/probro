@@ -9,7 +9,6 @@ import * as actions from '../../actions';
 import client from '../../socket';
 import posSorting, { timeStampSorting } from '../../common/utility-functions';
 
-
 class Classes extends Component {
   state = {
     // true if the id in the url doesn't match
@@ -85,7 +84,7 @@ class Classes extends Component {
   // all the drag and drop will be handled here
   onDragEnd = async (result) => {
     const { source, destination, draggableId, type } = result;
-    const { api, columns } = this.state;
+    const { api, columns, classId } = this.state;
     if (!destination) {
       return;
     }
@@ -171,7 +170,7 @@ class Classes extends Component {
         columns: newColumns,
       });
       await api.updateBoardColumnCard([
-        { position: newTask.position, timestamp: Date.now() }, { id: dragable }]);
+        { position: newTask.position, timestamp: Date.now(), broadCastId: `Board-${classId}` }, { id: dragable }]);
       return;
     }
     // cards movement within the column ends here
@@ -232,6 +231,7 @@ class Classes extends Component {
         position: newTask.position,
         timeStamp: Date.now(),
         boardColumnId: destinationDropable,
+        broadCastId: `Board-${classId}`,
       },
       { id: dragable },
     ]);

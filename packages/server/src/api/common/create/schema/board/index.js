@@ -5,6 +5,19 @@ import db from '../../../../../db';
 import mailBody from '../../../../../mailer/html/mailBody';
 import mailer from '../../../../../mailer';
 import findBoardDetails from '../../../findBoradDetail';
+import updateUserCache from '../../../updateUserCache';
+
+const flat = (arr) => {
+  const flatArray = arr.reduce((t, a) => {
+    if (Array.isArray(a)) {
+      a.forEach(am => t.push(am));
+    } else {
+      t.push(a);
+    }
+    return t;
+  }, []);
+  return flatArray;
+};
 
 async function addBoard(record) {
   const { session } = this;
@@ -117,15 +130,19 @@ async function addBoardMember(record) {
         const allBoardMemberDetailPromises = [];
         finalUserList.forEach(u => allBoardMemberDetailPromises.push(findOne('UserDetail', { userId: u.id })));
         const allBoardUserDetails = await Promise.all(allBoardMemberDetailPromises);
-        remoteUserSession.dispatch(schema.add('Board', boardDetail));
-        remoteUserSession.dispatch(schema.add('BoardColumn', boardDetails.boardColumn.flat()));
-        remoteUserSession.dispatch(schema.add('BoardColumnCard', boardDetails.boardColumnCard.flat().flat()));
-        remoteUserSession.dispatch(schema.add('BoardColumnCardAttachment', boardDetails.boardColumnCardAttachment.flat().flat()));
-        remoteUserSession.dispatch(schema.add('BoardColumnCardComment', boardDetails.boardColumnCardComment.flat().flat()));
-        remoteUserSession.dispatch(schema.add('BoardColumnCardDescription', boardDetails.boardColumnCardDescription.flat().flat()));
-        remoteUserSession.dispatch(schema.add('BoardMember', boardMembers));
-        remoteUserSession.dispatch(schema.add('User', finalUserList));
-        remoteUserSession.dispatch(schema.add('UserDetail', allBoardUserDetails));
+
+        const dataTobeUpdated = {
+          Board: boardDetail,
+          BoardColumn: flat(boardDetails.boardColumn),
+          BoardColumnCard: flat(flat(boardDetails.boardColumnCard)),
+          BoardColumnCardAttachment: flat(flat(boardDetails.boardColumnCardAttachment)),
+          BoardColumnCardComment: flat(flat(boardDetails.boardColumnCardComment)),
+          BoardColumnCardDescription: flat(flat(boardDetails.boardColumnCardDescription)),
+          BoardMember: boardMembers,
+          User: finalUserList,
+          UserDetail: allBoardUserDetails,
+        };
+        updateUserCache(dataTobeUpdated, remoteUserSession);
         currentBoardChannel.dispatch(schema.add('Notification', notiDetails));
         currentBoardChannel.dispatch(schema.add('User', { ...user, activeStatus: true }));
       } else {

@@ -15,7 +15,8 @@ export default async function Delete(table, record) {
       if (broadCastId) {
         const channel = session.channel(broadCastId);
         channel.dispatch(schema.remove(table, { id: record.id }));
-        user.update(schema.remove(table, { id: record.id }), session);
+        const allUserSession = session.getChannel(broadCastId);
+        allUserSession.forEach(s => user.update(schema.remove(table, { id: record.id }), s));
       } else {
         // session.dispatch(schema.remove(table, { id: record.id }));
         user.update(schema.remove(table, { id: record.id }), session);
