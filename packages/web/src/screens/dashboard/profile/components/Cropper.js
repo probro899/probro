@@ -1,5 +1,6 @@
 import React from 'react';
 import { Slider } from '@blueprintjs/core';
+import axios from 'axios';
 import { ENDPOINT } from '../../../../config';
 
 const fabric = require('fabric');
@@ -24,7 +25,7 @@ class Cropper extends React.Component {
       canvas.add(oImg);
       canvas.renderAll();
       this.centerBackgroundImage(oImg, canvas);
-    }, { hasBorders: false, top: canvas.height / 2, left: canvas.width / 2, hasControls: false });
+    }, { hasBorders: false, crossOrigin: 'Anonymous', top: canvas.height / 2, left: canvas.width / 2, hasControls: false });
     this.setState({
       canvas,
     });
@@ -61,8 +62,60 @@ class Cropper extends React.Component {
     });
   }
 
+  saveImage = async () => {
+    const { canvas } = this.state;
+    const {
+      clickEditCover,
+      account,
+      userDetail,
+      apis,
+      updateDatabaseSchema,
+    } = this.props;
+    const dataUrl = canvas.toDataURL({
+      format: 'jpeg',
+      quality: 1,
+    });
+    const arr = dataUrl.split(',');
+    const mime = arr[0].match(/:(.*?);/)[1];
+    const bstr = window.atob(arr[1]);
+    let n = bstr.length;
+    const u8arr = new Uint8Array(n);
+    while (n) {
+      n -= 1;
+      u8arr[n] = bstr.charCodeAt(n);
+    }
+    const file = new File([u8arr], 'cover-edit.jpeg', { type: mime });
+    try {
+      const formData = new FormData();
+      formData.append('data', JSON.stringify({ token: account.sessionId, fileType: 'image', content: 'user' }));
+      formData.append('file', file);
+      const res = await axios({
+        config: {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        },
+        method: 'post',
+        url: `${ENDPOINT}/web/upload-file`,
+        data: formData,
+      });
+      if (res.status === 200) {
+        await apis.updateUserDetails({
+          userId: account.user.id,
+          coverEdit: res,
+        });
+        updateDatabaseSchema('UserDetail', {
+          id: userDetail.id,
+          coverEdit: res,
+        });
+      }
+      clickEditCover('reposition');
+    } catch (e) {
+      alert('Sorry your task could not be performed');
+    }
+  }
+
   render() {
-    const { clickEditCover } = this.props;
     const { minScale, zoomValue } = this.state;
     return (
       <div
@@ -70,7 +123,7 @@ class Cropper extends React.Component {
       >
         <canvas id="mainCanvas" height={400} width={1200} />
         <div className="edit-cover">
-          <div role="menu" tabIndex="0" onKeyDown={() => false} onClick={() => clickEditCover('reposition')}>
+          <div role="menu" tabIndex="0" onKeyDown={() => false} onClick={this.saveImage}>
             <span style={{ padding: '3px', border: '1px solid #137cbd' }}>Save </span>
           </div>
         </div>

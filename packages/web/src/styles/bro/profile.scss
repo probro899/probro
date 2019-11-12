@@ -13,7 +13,7 @@
     overflow: hidden;
     width: 100%;
     background: linear-gradient(to right, $borderOnDarkBlue, 0%, $skyBlueMain, 100%);
-    // over writing the cropper styles 
+    // over writing the cropper styles
     .cr-boundary {
       z-index: 0;
     }
@@ -48,6 +48,7 @@
     position: relative;
     .canvas-container {
       height: calc((100vw * 0.81) * 0.33) !important;
+      width: 100% !important;
       @media screen and (max-width: 855px) {
         height: calc(100vw * 0.33) !important;
       }

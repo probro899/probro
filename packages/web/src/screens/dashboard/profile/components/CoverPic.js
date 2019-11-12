@@ -30,16 +30,7 @@ class CoverPic extends React.Component {
 
   clickEditCover = async (type) => {
     const { drag } = this.state;
-    const { apis, account, userDetail, updateDatabaseSchema } = this.props;
     if (type === 'reposition') {
-      if (drag) {
-        await apis.updateUserDetails({
-          userId: account.user.id,
-        });
-        updateDatabaseSchema('UserDetail', {
-          id: userDetail.id,
-        });
-      }
       this.setState({
         drag: !drag,
       });
@@ -94,7 +85,7 @@ class CoverPic extends React.Component {
   }
 
   render() {
-    const { userDetail, account } = this.props;
+    const { userDetail, account, updateDatabaseSchema, apis } = this.props;
     const { drag } = this.state;
     const imgUrl = userDetail.coverImage ? `${ENDPOINT}/user/${10000000 + parseInt(account.user.id, 10)}/profile/${userDetail.coverImage}` : 'https://i.pinimg.com/originals/5e/80/a2/5e80a234fc2df7c84476283520dd6b18.jpg';
     if (!drag) {
@@ -124,7 +115,13 @@ class CoverPic extends React.Component {
       );
     }
     return (
-      <Cropper clickEditCover={this.clickEditCover} userDetail={userDetail} account={account} />
+      <Cropper
+        clickEditCover={this.clickEditCover}
+        apis={apis}
+        updateDatabaseSchema={updateDatabaseSchema}
+        userDetail={userDetail}
+        account={account}
+      />
     );
   }
 }
