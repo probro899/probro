@@ -30,6 +30,25 @@ const NameSchema = [
   },
 ];
 
+const AddressSchema = [
+  {
+    id: 'address',
+    fieldtype: 'input',
+    name: 'Address',
+    placeholder: '',
+    required: true,
+  },
+  {
+    id: 'submit',
+    fieldtype: 'button',
+    text: 'Submit',
+    type: 'submit',
+    fill: 'fill',
+    intent: 'primary',
+    large: 'large',
+  },
+];
+
 const GenderSchema = [
   {
     id: 'gender',
@@ -54,23 +73,4 @@ const GenderSchema = [
   },
 ];
 
-const CarrierSchema = [
-  {
-    id: 'interest',
-    fieldtype: 'tagInput',
-    name: 'Career Interests',
-    placeholder: 'Ex, publicspeaking',
-    values: [],
-  },
-  {
-    id: 'submit',
-    fieldtype: 'button',
-    text: 'Submit',
-    type: 'submit',
-    fill: 'fill',
-    intent: 'primary',
-    large: 'large',
-  },
-];
-
-export { NameSchema, GenderSchema, CarrierSchema };
+export { NameSchema, GenderSchema, AddressSchema };

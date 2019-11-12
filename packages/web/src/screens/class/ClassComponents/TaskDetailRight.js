@@ -4,6 +4,7 @@ import { Button, Popover, Tag } from '@blueprintjs/core';
 import Form from '../../../common/Form';
 import DeletePopOver from '../../../common/DeletePopOver';
 import Attachment from './Attachment';
+import SelectColumn from './SelectColumn';
 
 const TagPopover = ({ tags, addTag }) => {
   const tagNames = ['primary', 'warning', 'success', 'danger'];
@@ -81,6 +82,15 @@ class TaskDetailRight extends React.Component {
     return { response: 200, message: 'Deadline added' };
   }
 
+  copyCard = (res) => {
+    try {
+      console.log(res);
+      return { response: 200, message: 'Copied!' };
+    } catch (e) {
+      return { response: 400, error: 'Could not copy' };
+    }
+  }
+
   addTag = async (name, aord) => {
     const {
       task, apis, tags, addDatabaseSchema,
@@ -140,6 +150,7 @@ class TaskDetailRight extends React.Component {
       task, tags, addDatabaseSchema, apis,
       account,
       boardId,
+      database,
     } = this.props;
     return (
       <div className="right">
@@ -189,11 +200,13 @@ class TaskDetailRight extends React.Component {
           </div>
           <div style={{ padding: '5px' }}><span style={{ color: '#696969' }}>Actions</span></div>
           <div className="rt-actions">
-            <Button
-              alignText="left"
-              icon="move"
-              text="Copy"
-            />
+            <Popover content={<SelectColumn callback={this.copyCard} database={database} />}>
+              <Button
+                alignText="left"
+                icon="move"
+                text="Copy"
+              />
+            </Popover>
             <Button
               alignText="left"
               icon="trash"

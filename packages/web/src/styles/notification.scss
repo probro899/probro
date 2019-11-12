@@ -10,22 +10,28 @@
     display: flex;
     flex-direction: row;
     .pc-noti-img {
-      img {
-        height: 50px;
-        width: 50px;
-        border-radius: 50%;
+      width: 55px;
+      height: 55px;
+      position: relative;
+      border-radius: 50%;
+      overflow: hidden;
+      img.portrait {
+        width: 100%;
+        height: auto;
+      }
+      img.landscape {
+        height: 100%;
+        width: auto;
       }
     }
     .pc-noti-body {
       margin-left: 10px;
       padding: 5px;
       display: flex;
-      align-items: center;
       justify-content: center;
       flex-direction: column;
       p {
         margin: 0;
-        width: 280px;
         word-wrap: break-word;
       }
       .pc-ago-date {

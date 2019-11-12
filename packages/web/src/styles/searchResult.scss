@@ -1,6 +1,7 @@
 @import './config.scss';
 
 .search-result {
+  min-height: calc(100vh - #{$navbarHeight} - #{$footerHeight});
   margin-top: $navbarHeight;
   .filter-toolbar {
     min-height: $toolbarHeight;

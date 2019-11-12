@@ -22,9 +22,10 @@ class DateField extends React.Component {
         <DateInput
           formatDate={date => date.toLocaleDateString()}
           parseDate={str => new Date(str)}
-          placeholder="M/D/YYYY"
+          placeholder="MM/DD/YYYY"
           onChange={e => onChange(data.id, e)}
           value={value}
+          closeOnSelection
           popoverProps={{ usePortal: false }}
           rightElement={calendarIcon()}
           {...data}

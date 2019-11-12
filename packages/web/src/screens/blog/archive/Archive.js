@@ -23,7 +23,6 @@ class Archive extends React.Component {
     });
     try {
       const res = await axios.get(`${ENDPOINT}/web/get-index`);
-      console.log('res', res);
       this.setState({
         data: res.data.archive,
         loading: false,
@@ -35,7 +34,6 @@ class Archive extends React.Component {
 
   render() {
     const { loading, data } = this.state;
-    console.log('archive', data);
     return loading ? <Spinner /> : (
       <div>
         <Navbar />

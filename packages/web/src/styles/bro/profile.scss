@@ -2,10 +2,11 @@
 
 .profile {
   display: flex;
-  align-items: center;
   flex-direction: column;
   padding: 4px;
   position: relative;
+  width: 100%;
+  overflow: hidden;
   .cover-pic {
     max-height: 300px;
     position: relative;
@@ -37,6 +38,48 @@
           fill: $darkBlue;
         }
       }
+    }
+  }
+  .cover-pic-edit-mode {
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    width: 100%;
+    position: relative;
+    .canvas-container {
+      height: calc((100vw * 0.81) * 0.33) !important;
+      @media screen and (max-width: 855px) {
+        height: calc(100vw * 0.33) !important;
+      }
+      #mainCanvas {
+        width: 100% !important;
+        object-fit: contain !important;
+        height: auto !important;
+        background: white;
+        box-shadow: 3px 3px 3px 3px;
+      }
+      .upper-canvas {
+        object-fit: contain !important;
+        height: auto !important;
+        width: 100% !important;
+      }
+    }
+    .edit-cover {
+      padding: 5px;
+      position: absolute;
+      z-index: 1;
+      bottom: 5px;
+      right: 1px;
+      color: $backgroundColor;
+      &:hover {
+        text-decoration: underline;
+        cursor: pointer;
+        color: $darkBlue;
+      }
+    }
+    .pc-zoom-slider {
+      position: absolute;
+      bottom: 10px;
     }
   }
   .profilePic {

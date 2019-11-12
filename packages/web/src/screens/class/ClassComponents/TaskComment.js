@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Button, TextArea } from '@blueprintjs/core';
 import DeletePopOver from '../../../common/DeletePopOver';
 
 const profileIcon = require('../../../assets/icons/64w/uploadicon64.png');
@@ -27,10 +28,29 @@ CommentDesc.propTypes = {
 };
 
 class TaskComment extends React.Component {
-  state = { deletePopover: false, activeComment: {} };
+  state = { deletePopover: false, editCommentId: null, comment: '', activeComment: {} };
 
-  editComment = () => {
+  editComment = (com) => {
+    this.setState({
+      editCommentId: com.id,
+      comment: com.comment,
+    });
+  }
 
+  commentChange = (e) => {
+    this.setState({
+      comment: e.target.value,
+    });
+  }
+
+  saveComment = async () => {
+    const { editCommentId, comment } = this.state;
+    const { apis, updateDatabaseSchema } = this.props;
+    await apis.updateBoardColumnCardComment([{ comment }, { id: editCommentId }]);
+    updateDatabaseSchema('BoardColumnCardComment', { comment, id: editCommentId });
+    this.setState({
+      editCommentId: null,
+    });
   }
 
   replyComment = (com) => {
@@ -77,7 +97,7 @@ class TaskComment extends React.Component {
 
   render() {
     const { comments, account } = this.props;
-    const { deletePopover } = this.state;
+    const { deletePopover, editCommentId, comment } = this.state;
     return (
       <div className="comments">
         <DeletePopOver isOpen={deletePopover} name="Comment" action={this.deleteComment} />
@@ -97,29 +117,50 @@ class TaskComment extends React.Component {
                   <span style={{ fontSize: '16px', fontWeight: 'bold' }}>
                     {this.getCommentUser(com)}
                   </span>
-                  <small>{new Date(com.timeStamp).toDateString()}</small>
+                  <small>
+                    {' '}
+                    {new Date(com.timeStamp).toDateString()}
+                  </small>
                 </div>
                 <div className="com-desc">
-                  <CommentDesc comment={com.comment} />
-                </div>
-                <div className="com-config">
                   {
-                    account.user.id === com.userId ? (
-                      <div>
-                        <small className="primary" role="menu" tabIndex="0" onKeyDown={() => false} onClick={() => this.editComment(com.id)}>
-                          <u>Edit</u>
-                        </small>
-                        <small className="danger" role="menu" tabIndex="0" onKeyDown={() => false} onClick={() => this.togglePopover(com)}>
-                          <u>Delete</u>
-                        </small>
+                    editCommentId !== com.id ? <CommentDesc comment={com.comment} /> : (
+                      <div className="pc-comment-edit">
+                        <TextArea
+                          fill
+                          small
+                          style={{ fontSize: 16, padding: '2px' }}
+                          placeholder="Put your comments."
+                          value={comment}
+                          onChange={e => this.commentChange(e)}
+                        />
+                        <Button icon="tick" style={{ margin: '0px 5px' }} onClick={this.saveComment} intent="success" />
+                        <Button icon="cross" onClick={() => this.setState({ editCommentId: null })} />
                       </div>
-                    ) : (
-                      <small className="primary" role="menu" tabIndex="0" onKeyDown={() => false} onClick={() => this.replyComment(com)}>
-                        <u>Reply</u>
-                      </small>
                     )
                   }
                 </div>
+                {editCommentId !== com.id
+                  && (
+                  <div className="com-config">
+                    {
+                      account.user.id === com.userId ? (
+                        <div>
+                          <small className="primary" role="menu" tabIndex="0" onKeyDown={() => false} onClick={() => this.editComment(com)}>
+                            <u>Edit</u>
+                          </small>
+                          <small className="danger" role="menu" tabIndex="0" onKeyDown={() => false} onClick={() => this.togglePopover(com)}>
+                            <u>Delete</u>
+                          </small>
+                        </div>
+                      ) : (
+                        <small className="primary" role="menu" tabIndex="0" onKeyDown={() => false} onClick={() => this.replyComment(com)}>
+                          <u>Reply</u>
+                        </small>
+                      )
+                    }
+                  </div>)
+                }
               </div>
             </div>
           );

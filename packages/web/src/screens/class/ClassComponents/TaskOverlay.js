@@ -185,7 +185,7 @@ class TaskOverlay extends Component {
   }
 
   render() {
-    const { isOpen } = this.props;
+    const { isOpen, database } = this.props;
     const {
       editHead,
       editDesc,
@@ -385,6 +385,7 @@ class TaskOverlay extends Component {
               task={task}
               apis={apis}
               account={account}
+              database={database}
               deleteDatabaseSchema={deleteDatabaseSchema}
               updateDatabaseSchema={updateDatabaseSchema}
               addDatabaseSchema={addDatabaseSchema}
@@ -404,6 +405,7 @@ TaskOverlay.propTypes = {
   apis: PropTypes.objectOf(PropTypes.any).isRequired,
   account: PropTypes.objectOf(PropTypes.any).isRequired,
   tags: PropTypes.objectOf(PropTypes.any).isRequired,
+  database: PropTypes.objectOf(PropTypes.any).isRequired,
   tasks: PropTypes.arrayOf(PropTypes.any).isRequired,
   deleteDatabaseSchema: PropTypes.func.isRequired,
   boardId: PropTypes.number.isRequired,
@@ -416,6 +418,6 @@ TaskOverlay.propTypes = {
 
 const mapStateToProps = (state) => {
   const { database, account } = state;
-  return { userList: database.User, account };
+  return { userList: database.User, account, database };
 };
 export default connect(mapStateToProps)(TaskOverlay);

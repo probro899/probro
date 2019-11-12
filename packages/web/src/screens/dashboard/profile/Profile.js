@@ -41,12 +41,18 @@ class Profile extends Component {
       return <div />;
     }
     const { user } = account;
+    let userDetail;
+    Object.values(database.UserDetail.byId).map((obj) => {
+      if (user && user.id === obj.userId) {
+        userDetail = obj;
+      }
+    });
     // console.log('cover page', account);
     return (
       <div className="profile bro-right">
         <CoverPic
           account={account}
-          userDetail={user.userDetails}
+          userDetail={userDetail}
           apis={apis}
           updateDatabaseSchema={updateDatabaseSchema}
           addDatabaseSchema={addDatabaseSchema}
@@ -54,7 +60,7 @@ class Profile extends Component {
         <ProfilePic
           account={account}
           apis={apis}
-          userDetail={user.userDetails}
+          userDetail={userDetail}
           updateDatabaseSchema={updateDatabaseSchema}
           addDatabaseSchema={addDatabaseSchema}
         />
@@ -76,8 +82,20 @@ class Profile extends Component {
           addDatabaseSchema={addDatabaseSchema}
           deleteDatabaseSchema={deleteDatabaseSchema}
         />
-        <Education apis={apis} database={database} account={account} />
-        <Experience apis={apis} database={database} account={account} />
+        <Education
+          apis={apis}
+          database={database}
+          account={account}
+          updateDatabaseSchema={updateDatabaseSchema}
+          addDatabaseSchema={addDatabaseSchema}
+        />
+        <Experience
+          apis={apis}
+          database={database}
+          account={account}
+          updateDatabaseSchema={updateDatabaseSchema}
+          addDatabaseSchema={addDatabaseSchema}
+        />
         <Skills
           account={account}
           apis={apis}

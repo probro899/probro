@@ -8,6 +8,8 @@ import * as actions from '../../../../actions';
 import Notifications from '../notification';
 import MessageNotification from './MessageNotification';
 import SmallScreenMenu from './SmallScreenMenu';
+import { RoundPicture } from '../../../../components';
+import { ENDPOINT } from '../../../../config';
 
 const profileIcon = require('../../../../assets/icons/64w/uploadicon64.png');
 
@@ -15,17 +17,17 @@ const DropDownMenu = (onclick, apis) => {
   return (
     <Menu>
       <MenuItem
-        icon="user"
+        icon="dashboard"
         active
         intent={Intent.PRIMARY}
-        text="My Profile"
+        text="Dashboard"
         onClick={onclick}
       />
       <MenuItem
         icon="log-out"
         intent={Intent.DANGER}
         text="Logout"
-        onClick={async () => await apis.logout()}
+        onClick={() => apis.logout()}
       />
     </Menu>
   );
@@ -66,6 +68,12 @@ class Navbar extends Component {
       account, database, navigate, className,
       updateWebRtc,
     } = this.props;
+    let profilePic;
+    Object.values(database.UserDetail.byId).map((obj) => {
+      if (account.user && account.user.id === obj.userId) {
+        profilePic = `${ENDPOINT}/user/${10000000 + parseInt(account.user.id, 10)}/profile/${obj.image}`;
+      }
+    });
     const { apis, redirectDashboard, smallScreen } = this.state;
     return (
       <div className={`navbar ${className}`}>
@@ -131,7 +139,7 @@ class Navbar extends Component {
               updateWebRtc={updateWebRtc}
             />
             )}
-          {account.sessionId && <Notifications apis={apis} />}
+          {account.sessionId && <Notifications account={account} apis={apis} />}
           { account.sessionId
             ? (
               <Link
@@ -144,11 +152,9 @@ class Navbar extends Component {
                   position={Position.BOTTOM}
                 >
                   <div className="navbar-item">
-                    <img
-                      src={profileIcon}
-                      className="profile-icon"
-                      alt="profile or blank profile"
-                    />
+                    <div className="profile-icon">
+                      <RoundPicture imgUrl={profilePic || profileIcon} />
+                    </div>
                   </div>
                 </Popover>
               </Link>

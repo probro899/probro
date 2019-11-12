@@ -11,13 +11,6 @@ const file = require('../../../../assets/icons/512h/uploadicon512.png');
 class ProfilePic extends React.Component {
   state = {};
 
-  componentDidUpdate(prevProps) {
-    const { userDetail } = this.props;
-    if (userDetail.image !== prevProps.userDetail.image) {
-      this.checkOrientation();
-    }
-  }
-
   uploadImage = async (data) => {
     const {
       account,
