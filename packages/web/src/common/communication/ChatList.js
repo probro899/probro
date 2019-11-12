@@ -85,10 +85,8 @@ class ChatList extends React.Component {
   }
 
   render() {
-    const { style, database, account } = this.props;
+    const { style, database } = this.props;
     const chatList = this.getChatList();
-    const newChatList = account.user ? this.getNewChatList() : {};
-    console.log('database in communication', newChatList);
     return (
       <div
         style={style}

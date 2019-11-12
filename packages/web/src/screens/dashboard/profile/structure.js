@@ -35,14 +35,12 @@ const educationSchema = [
   {
     id: 'startTime',
     fieldtype: 'date',
-    // required: true,
     name: 'Start Date',
   },
   {
     id: 'endTime',
     fieldtype: 'date',
     name: 'End Date',
-    // required: true,
   },
   {
     id: 'submit',

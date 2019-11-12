@@ -9,25 +9,22 @@ import Profile from './profile';
 import Setting from './setting';
 import DrawingBoard from './drawing-board';
 import Connection from './connection';
-import Message from './message';
+// import Message from './message';
 import Class from '../class/Class';
 import { Blog } from '../blog';
 
 class HomePage extends Component {
-  state = { error: false };
-
-  componentDidMount() {
+  constructor(props) {
+    super(props);
     const { account, match } = this.props;
-    // this is to prevent hitting people
-    if (match.params.id !== account.slug) {
-      this.setState({ error: true });
-    }
+    this.state = { error: match.params.id !== account.slug };
   }
+
+  state = { error: false };
 
   render() {
     const { error } = this.state;
     const { account, match } = this.props;
-    // console.log('test login', account, match.path, error);
     return (
       error ? <Redirect push to="/" />
         : (
@@ -45,7 +42,7 @@ class HomePage extends Component {
               <Route exact path={`${match.path}/settings`} component={Setting} />
               <Route exact path={`${match.path}/drawing-board`} component={DrawingBoard} />
               <Route exact path={`${match.path}/connection`} component={Connection} />
-              <Route exact path={`${match.path}/messages`} component={Message} />
+              {/* <Route exact path={`${match.path}/messages`} component={Message} /> */}
             </div>
           </div>
         )

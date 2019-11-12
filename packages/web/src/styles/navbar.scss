@@ -43,11 +43,20 @@ top attachment etc.
     color: $navTextColor;
     position: relative;
     text-transform: uppercase;
-    img.profile-icon {
+    .profile-icon {
+      width: 50px;
       height: 50px;
       border-radius: 50%;
-      padding: 1px;
-      border: 1px solid $navTextColor;
+      overflow: hidden;
+      box-shadow: 0px 1px 3px 2px $normalShadowColor;
+      img.portrait {
+        width: 100%;
+        height: auto;
+      }
+      img.landscape {
+        height: 100%;
+        width: auto;
+      }
     }
   }
   a:link {
@@ -59,17 +68,11 @@ top attachment etc.
   a:hover {
     .navbar-item {
       color: $skyBlueMain;
-      img {
-        border: 2px solid $skyBlueMain;
-      }
     }
   }
   a.active {
     .navbar-item {
       color: $skyBlueMain;
-      img {
-        border: 2px solid $skyBlueMain;
-      }
     }
   }
   @media screen and (min-width: 575px) and (max-width: 700px){

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 class RoundPicture extends React.Component {
   constructor(props) {
@@ -32,5 +33,9 @@ class RoundPicture extends React.Component {
     );
   }
 }
+
+RoundPicture.propTypes = {
+  imgUrl: PropTypes.string.isRequired,
+};
 
 export default RoundPicture;

@@ -17,7 +17,7 @@ class Notifications extends React.Component {
 
   render() {
     const { drawerOpen } = this.state;
-    const { apis } = this.props;
+    const { apis, account } = this.props;
     return (
       <Link to="#" onClick={this.onDrawerToggle}>
         <div className="navbar-item">
@@ -31,7 +31,7 @@ class Notifications extends React.Component {
             transitionDuration={200}
             hasBackdrop={false}
           >
-            <NotificationContainer apis={apis} />
+            <NotificationContainer account={account} apis={apis} />
           </Drawer>
         </div>
       </Link>
@@ -41,6 +41,7 @@ class Notifications extends React.Component {
 
 Notifications.propTypes = {
   apis: PropTypes.objectOf(PropTypes.any).isRequired,
+  account: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 export default Notifications;

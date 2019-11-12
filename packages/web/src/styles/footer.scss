@@ -2,7 +2,7 @@
 
 .footer {
   margin-top: 20px;
-  min-height: 100px;
+  min-height: $footerHeight;
   padding: 5px;
   background: $darkBlue;
   color: $backgroundColor;
@@ -14,9 +14,9 @@
   .left-right-container {
     display: flex;
     .footer-left {
-      flex: 0.8;
+      flex: 0.7;
       display: flex;
-      justify-content: flex-start;
+      justify-content: space-between;
       .foot-left-one {
         .one-content {
           padding: 5px;
@@ -25,10 +25,12 @@
       }
     }
     .footer-right {
-      flex: 0.2;
+      flex: 0.7;
       display: flex;
       justify-content: flex-end;
       .right-content {
+        display: flex;
+        flex-direction: column;
         padding: 5px;
         font-weight: bold;
       }

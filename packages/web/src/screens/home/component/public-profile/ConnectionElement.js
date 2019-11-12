@@ -28,7 +28,7 @@ const ConnectionElement = (props) => {
           text="Pending"
           large
           fill
-          icon="blocked-person"
+          icon="follower"
         />
       );
     case 'incoming':

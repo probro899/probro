@@ -2,6 +2,7 @@
 
 .public-profile {
   margin-top: $navbarHeight;
+  min-height: calc(100vh - #{$navbarHeight} - #{$footerHeight});
   flex: 0.8;
   display: flex;
   align-items: center;

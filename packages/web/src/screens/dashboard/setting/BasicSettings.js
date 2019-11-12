@@ -1,14 +1,16 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Icon } from '@blueprintjs/core';
+import * as actions from '../../../actions';
 import { PopoverForm } from '../../../components';
-import { NameSchema, CarrierSchema, GenderSchema } from './structure';
+import { NameSchema, GenderSchema, AddressSchema } from './structure';
+import CarrierInterestSetting from './CarrierInterestSetting';
 
 class BasicSettings extends React.Component {
   state={
     namePopover: false,
     genderPopover: false,
-    careerPopover: false,
+    addressPopover: false,
   };
 
   editName = async (data) => {
@@ -20,6 +22,14 @@ class BasicSettings extends React.Component {
     return { response: 200, message: 'Changed successfully' };
   }
 
+  editAddress = async (data) => {
+    const { apis, account } = this.props;
+    await apis.updateUserDetails(
+      { ...data, userId: account.user.id }
+    );
+    return { response: 200, message: 'Changed successfully' };
+  }
+
   editGender = async (data) => {
     const { apis, account } = this.props;
     await apis.updateUserDetails(
@@ -28,17 +38,8 @@ class BasicSettings extends React.Component {
     return { response: 200, message: 'Changed successfully' };
   }
 
-  editInterest = async (data) => {
-    const { apis, account } = this.props;
-    await apis.updateUserDetails([
-      { field: data.interest },
-      { id: account.user.id },
-    ]);
-    return { response: 200, message: 'Changed successfully' };
-  }
-
   togglePopover = (type) => {
-    const { namePopover, genderPopover, careerPopover } = this.state;
+    const { namePopover, genderPopover, careerPopover, addressPopover } = this.state;
     const { account, database } = this.props;
     switch (type) {
       case 'name':
@@ -73,9 +74,20 @@ class BasicSettings extends React.Component {
           genderPopover: !genderPopover,
         });
         break;
-      case 'career':
+      case 'address':
+        AddressSchema.map((obj) => {
+          if (obj.id === 'address') {
+            let address = '';
+            Object.values(database.UserDetail.byId).map((obj) => {
+              if (obj.userId === account.user.id) {
+                address = obj.address;
+              }
+            });
+            obj.val = address;
+          }
+        });
         this.setState({
-          careerPopover: !careerPopover,
+          addressPopover: !addressPopover,
         });
         break;
       default:
@@ -83,12 +95,16 @@ class BasicSettings extends React.Component {
   }
 
   render() {
-    const { account, database } = this.props;
-    const { namePopover, genderPopover, careerPopover } = this.state;
+    const { account, database, updateDatabaseSchema, apis } = this.props;
+    const { namePopover, addressPopover, genderPopover } = this.state;
     let gen = '---';
+    let address = '---';
+    let userDetail = {};
     Object.values(database.UserDetail.byId).map((obj) => {
       if (obj.userId === account.user.id) {
-        gen = obj.gender;
+        gen = obj.gender ? obj.gender : '---';
+        address = obj.address ? obj.address : '---';
+        userDetail = obj;
       }
     });
     return (
@@ -100,16 +116,16 @@ class BasicSettings extends React.Component {
           onClose={() => this.togglePopover('name')}
         />
         <PopoverForm
+          isOpen={addressPopover}
+          structure={AddressSchema}
+          callback={this.editAddress}
+          onClose={() => this.togglePopover('address')}
+        />
+        <PopoverForm
           isOpen={genderPopover}
           structure={GenderSchema}
           callback={this.editGender}
           onClose={() => this.togglePopover('gender')}
-        />
-        <PopoverForm
-          isOpen={careerPopover}
-          structure={CarrierSchema}
-          callback={this.editInterest}
-          onClose={() => this.togglePopover('career')}
         />
         <p className="basic">
           <span className="label">Full Name</span>
@@ -137,24 +153,25 @@ class BasicSettings extends React.Component {
             onClick={() => this.togglePopover('gender')}
           />
         </p>
-        <div className="basic">
-          <span className="label">Carrier Interests</span>
+        <p className="basic">
+          <span className="label">Address</span>
+          <span className="value">{address}</span>
           <Icon
             icon="edit"
             color="rgba(167, 182, 194, 1)"
             className="edit-icon"
-            onClick={() => this.togglePopover('career')}
+            onClick={() => this.togglePopover('address')}
           />
-          <ul>
-            <li>Leadership</li>
-            <li>Enterpreneur</li>
-            <li>Engineering</li>
-          </ul>
-        </div>
+        </p>
+        <CarrierInterestSetting
+          updateDatabaseSchema={updateDatabaseSchema}
+          userDetail={userDetail}
+          apis={apis}
+        />
       </div>
     );
   }
 }
 
 const mapStateToProps = state => state;
-export default connect(mapStateToProps)(BasicSettings);
+export default connect(mapStateToProps, { ...actions })(BasicSettings);

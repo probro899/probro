@@ -416,8 +416,13 @@
             .com-con {
               margin-left: 10px;
               display: flex;
+              width: 100%;
               flex-direction: column;
-              align-items: flex-start;
+              .com-desc {
+                .pc-comment-edit {
+                  display: flex;
+                }
+              }
               .com-config {
                 small {
                   cursor: pointer;
@@ -460,6 +465,12 @@
           .rt-actions {
             display: flex;
             flex-direction: column;
+            .bp3-popover-target {
+              width: 100%;
+              button {
+                width: 100%;
+              }
+            }
           }
           button {
             margin-bottom: 2px;
