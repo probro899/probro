@@ -1,4 +1,4 @@
-import store from '../../../store';
+import store from '../../../../store';
 import createPcForEachUser from './createPcForEachUser';
 
 export default (props, state) => async (apis, stream) => {

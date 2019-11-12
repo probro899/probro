@@ -142,7 +142,7 @@ async function addBoardMember(record) {
           User: finalUserList,
           UserDetail: allBoardUserDetails,
         };
-        updateUserCache(dataTobeUpdated, remoteUserSession);
+        updateUserCache(dataTobeUpdated, remoteUserSession, 'add');
         currentBoardChannel.dispatch(schema.add('Notification', notiDetails));
         currentBoardChannel.dispatch(schema.add('User', { ...user, activeStatus: true }));
       } else {

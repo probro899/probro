@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/media-has-caption */
 import React from 'react';
 
 const ringtone = require('./ringtone.mp3');
@@ -13,7 +14,7 @@ class SoundComponent extends React.Component {
         src={ringtone}
         loop
         type="audio/mpeg"
-        />
+      />
     );
   }
 }

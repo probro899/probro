@@ -1,5 +1,5 @@
 import createPcForEachUser from './createPcForEachUser';
-import store from '../../../store';
+import store from '../../../../store';
 
 export default (props, state) => async (apis, stream) => {
   console.log('answer handler called', stream);

@@ -1,4 +1,4 @@
-import store from '../../../store';
+import store from '../../../../store';
 
 export default (props, state) => async (offer, userId) => {
   const { account, webRtc } = store.getState();

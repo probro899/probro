@@ -7,6 +7,7 @@ const initialState = {
   showOutgoingCall: false,
   communicationContainer: 'list',
   peerType: '',
+  connectionId: null,
   outGoingCallType: null,
   messages: [],
   peerConnections: {},
@@ -19,11 +20,13 @@ const initialState = {
   mediaRecording: null,
   recordedBlobs: [],
   lastStreamId: null,
+  chatHistoryType: null,
 };
 
 export default (state = initialState, action) => {
   switch (action.type) {
     case UPDATE_WEBRTC:
+      console.log('update webRtc called', action);
       return {
         ...state,
         [action.schema]: action.payload,

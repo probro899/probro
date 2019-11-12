@@ -1,4 +1,4 @@
-import store from '../../../store';
+import store from '../../../../store';
 
 export default (props, state) => async (e, userId) => {
   console.log('OnIceCandidate local', e);

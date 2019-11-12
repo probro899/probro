@@ -2,11 +2,12 @@ import deleteBoardColumnCard from './deleteBoardColumnCard';
 import db from '../../../../../../db';
 
 export default async function deleteColumn(Delete, record) {
-  // console.log('deleteColumn', Delete, record, this);
+  console.log('deleteColumn', Delete, record, this);
+  const { broadCastId } = record;
   const boardColumnId = await db.execute(async ({ find }) => {
     const boardColumn = await find('BoardColumn', { boardId: record.boardId });
     // console.log('boardColumn data', boardColumn);
-    return boardColumn.map(obj => ({ boardColumnId: obj.id }));
+    return boardColumn.map(obj => ({ boardColumnId: obj.id, broadCastId }));
   });
   // console.log('column id', boardColumnId);
   if (boardColumnId.length > 0) {

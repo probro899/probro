@@ -1,4 +1,4 @@
-import store from '../../../store';
+import store from '../../../../store';
 
 export default props => (e, state, userId) => {
   // console.log('ice candidate status handler called', userId, state.iceConnectionState);

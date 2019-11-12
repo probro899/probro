@@ -1,4 +1,4 @@
-import store from '../../../store';
+import store from '../../../../store';
 import mediaRecorder from './mediaRecoder';
 
 const stopAndRecordStream = async (props, userId, stream) => {

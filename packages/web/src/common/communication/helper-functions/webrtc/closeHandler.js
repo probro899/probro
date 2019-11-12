@@ -1,4 +1,4 @@
-import store from '../../../store';
+import store from '../../../../store';
 
 export default props => async () => {
   // console.log('close handler called');

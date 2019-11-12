@@ -59,7 +59,7 @@ export default async function initUser(id) {
   u.Board.map(b => ({ channel: session.channel(`Board-${b.id}`), board: b })).forEach(obj => obj.channel.dispatch(schema.update('User', { id, activeStatus: true })));
   lodash.uniq(flat(u.UserConnection.map(obj => [obj.mId, obj.userId]))).map(uid => ({ channel: session.channel(`UserConnection-${uid}`) })).forEach(obj => obj.channel.dispatch(schema.update('User', { id, activeStatus: true })));
   // console.log('userDetaisl in initUser', u.User);
-  console.log('userConnection', u.UserConnection);
+  console.log('userConnection', u.BoardMessageSeenStatus);
   session.subscribe('Main');
   // console.log('board member', u.BoardMember);
   session.dispatch(schema.init('User', finalUserList));
@@ -82,7 +82,9 @@ export default async function initUser(id) {
   session.dispatch(schema.init('UserSkill', u.UserSkill));
   session.dispatch(schema.init('UserCarrierInterest', u.UserCarrierInterest));
   session.dispatch(schema.init('BoardMessage', u.BoardMessage));
+  session.dispatch(schema.init('BoardMessageSeenStatus', u.BoardMessageSeenStatus));
   session.dispatch(schema.init('UserConnection', u.UserConnection));
   session.dispatch(schema.init('UserMessage', u.UserMessage));
+  session.dispatch(schema.init('UserMessageSeenStatus', u.UserMessageSeenStatus));
   session.dispatch(schema.init('Notification', u.Notification));
 }

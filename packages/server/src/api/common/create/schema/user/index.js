@@ -31,6 +31,11 @@ async function addUserMessage(record) {
   return res;
 }
 
+async function addUserMessageSeenStatus(record) {
+  const res = await add.call(this, 'UserMessageSeenStatus', record);
+  return res;
+}
+
 async function addCarrierInterest(record) {
   const res = await add.call(this, 'UserCarrierInterest', record);
   return res;
@@ -41,7 +46,7 @@ async function connectUser(record) {
   // console.log('record in conectUser', record);
 
   const connectRes = await add.call(this, 'UserConnection', record);
-
+  // console.log('User Connection Res', connectRes);
   const { mId, userId } = record;
   const bothUserDetails = await db.execute(async ({ findOne, insert }) => {
     const fUserDetails = await findOne('User', { id: userId });
@@ -54,7 +59,7 @@ async function connectUser(record) {
       to: `<${tUserDetails.email}>`,
       subject: `Friend request from ${fUserDetails.firstName} `,
       text: 'No reply',
-      html: htmlStringValue.boardMemberInvitationHtmlString(fUserDetails, tUserDetails),
+      html: htmlStringValue.friendRequestHtmlString(fUserDetails, tUserDetails),
     });
 
     const notiData = {
@@ -71,7 +76,7 @@ async function connectUser(record) {
     const notiDetails = await findOne('Notification', { id: notiId });
     const mainchannel = session.getChannel('Main');
     const remoteUserSession = mainchannel.find(s => s.values.user.id === tUserDetails.id);
-    console.log('remote User session', remoteUserSession);
+    // console.log('remote User session', remoteUserSession);
     if (remoteUserSession) {
       const fuserDetailsRes = await findUserDetails(fUserDetails.id, true);
       const dataToBeUpdate = {
@@ -82,9 +87,9 @@ async function connectUser(record) {
         UserWorkExperience: fuserDetailsRes.userWorkExperience,
         UserPortal: fuserDetailsRes.userPortal,
         Notification: notiDetails,
-        UserConnection: { ...record, connectRes },
+        UserConnection: { ...record, id: connectRes },
       };
-      updateUserCache(dataToBeUpdate, remoteUserSession);
+      updateUserCache(dataToBeUpdate, remoteUserSession, 'add');
     }
     const tuserDetailsRes = await findUserDetails(tUserDetails.id, true);
     const dataToBeUpdate = {
@@ -95,7 +100,10 @@ async function connectUser(record) {
       UserWorkExperience: tuserDetailsRes.userWorkExperience,
       UserPortal: tuserDetailsRes.userPortal,
     };
-    updateUserCache(dataToBeUpdate, session);
+    updateUserCache(dataToBeUpdate, session, 'add');
+    session.subscribe(`UserConnection-${fUserDetails.id}`);
+    session.subscribe(`UserConnection-${tUserDetails.id}`);
+
     return connectRes;
   });
 }
@@ -106,6 +114,7 @@ export default [
   addUserSkill,
   addUserPortal,
   addUserMessage,
+  addUserMessageSeenStatus,
   connectUser,
   addCarrierInterest,
 ];

@@ -1,3 +1,4 @@
+/* eslint-disable import/no-cycle */
 import { combineReducers } from 'redux';
 import { reducer as schemaReducer } from './schema';
 import { reducer as accountReducer } from './account';
@@ -31,7 +32,9 @@ const reducer = combineReducers({
     'BoardMessage',
     'UserConnection',
     'UserMessage',
-    'UserCarrierInterest'
+    'UserCarrierInterest',
+    'BoardMessageSeenStatus',
+    'UserMessageSeenStatus'
   ),
 });
 

@@ -20,11 +20,14 @@ function deleteUserPortal(record) {
 function deleteUserCarrierInterest(record) {
   Delete.call(this, 'UserCarrierInterest', record);
 }
-
+function deleteUserConnection(record) {
+  Delete.call(this, 'UserConnection', record);
+}
 export default [
   deleteUserWorkExperience,
   deleteUserEducation,
   deleteUserSkill,
   deleteUserPortal,
   deleteUserCarrierInterest,
+  deleteUserConnection,
 ];

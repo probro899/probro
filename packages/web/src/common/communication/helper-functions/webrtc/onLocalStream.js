@@ -1,4 +1,4 @@
-import store from '../../../store';
+import store from '../../../../store';
 
 export default props => (stream, userId) => {
   console.log('local stream handler', stream, userId);

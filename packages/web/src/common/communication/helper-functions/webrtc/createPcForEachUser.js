@@ -1,4 +1,4 @@
-import main from '../../../webrtc/main';
+import main from '../../../../webrtc/main';
 import onIceCandidateHandler from './onIceCandidateHandler';
 import gotRemoteStreamHandler from './gotRemoteStreamHandler';
 import iceCandidateStatusHandler from './iceCandidateStatusHandler';

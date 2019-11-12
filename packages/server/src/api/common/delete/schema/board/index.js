@@ -17,7 +17,7 @@ function deleteBoardColumn(record) {
 }
 
 function deleteBoardColumnCard(record) {
-  deleteBoardColumnCardHelper(Delete.bind(this), [{ id: record.id }]);
+  deleteBoardColumnCardHelper(Delete.bind(this), [record]);
 }
 
 function deleteBoardColumnCardAttachment(record) {

@@ -32,7 +32,6 @@ export default function schemaReducer(...schemes) {
 
       // Add the data according to schema
       case schemaRedux.add.TYPE:
-        console.log('payload type', typeof action.payload, action.payload);
         return !Array.isArray(action.payload) ? {
           ...state,
           [schema]: {

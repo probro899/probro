@@ -33,6 +33,10 @@ export default async function get(id) {
     const tuserMessage = await find('UserMessage', { tuserId: id });
     const fuserMessage = await find('UserMessage', { fuserId: id });
     const userMessages = [...fuserMessage, ...tuserMessage];
+    const userMessageSeenStatusPromises = [];
+    userMessages.forEach(um => userMessageSeenStatusPromises.push(find('UserMessageSeenStatus', { umId: um.id })));
+    const userMessageSeenStatus = await Promise.all(userMessageSeenStatusPromises);
+
     // ************************************************************************************************
 
     // ******************* User ConnectionList **********************************************************
@@ -50,9 +54,9 @@ export default async function get(id) {
     const allLike = await find('BlogLike', { userId: id });
     const allComments = await find('BlogComment', { userId: id });
     const BlogPublish = await find('Blog', { saveStatus: 'publish' });
-    console.log('all blog data', Blog, allLike, allComments, BlogPublish);
+    // console.log('all blog data', Blog, allLike, allComments, BlogPublish);
     const allAssociateBlogsId = lodash.uniq([...allComments.map(obj => obj.blogId), ...allLike.map(obj => obj.blogId), ...Blog.map(obj => obj.id), ...BlogPublish.map(obj => obj.id)]);
-    console.log('allAssociated Blog Ids', allAssociateBlogsId);
+    // console.log('allAssociated Blog Ids', allAssociateBlogsId);
     const blogDetailsPromises = [];
     const allBlogsPromises = [];
     allAssociateBlogsId.forEach((bid) => {
@@ -62,7 +66,7 @@ export default async function get(id) {
 
     const blogDetails = await Promise.all(blogDetailsPromises);
     const allBlogs = await Promise.all(allBlogsPromises);
-    console.log('allBlogs', allBlogs);
+    // console.log('allBlogs', allBlogs);
 
     const newBlogPublish = BlogPublish.filter(b => !allBlogs.find(bn => b.id === bn.id));
     // const BlogDetail = blogDetails.map(obj => obj.blogDetail).flat();
@@ -89,6 +93,9 @@ export default async function get(id) {
     const boardMessagePromises = [];
     allBoards.forEach(b => boardMessagePromises.push(find('BoardMessage', { boardId: b.id })));
     const BoardMessage = await Promise.all(boardMessagePromises);
+    const boardMessageSeenStatusPromises = [];
+    flat(BoardMessage).forEach(msg => boardMessageSeenStatusPromises.push(find('BoardMessageSeenStatus', { bmId: msg.id })));
+    const BoardMessageSeenStatus = await Promise.all(boardMessageSeenStatusPromises);
     // console.log('BoardMessage', BoardMessage);
 
     const boardDetailsPromises = [];
@@ -112,7 +119,7 @@ export default async function get(id) {
     const boardUserDetailsPromises = [];
     lodash.uniq([...allBoardUserList, ...allConnectionUserList, ...allBlogUsers, user[0].id]).forEach(uid => boardUserDetailsPromises.push(findOne('UserDetail', { userId: uid })));
     const allUserDetailsList = (await Promise.all(boardUserDetailsPromises)).filter(obj => obj);
-    console.log('all user details list', allUserDetailsList);
+    // console.log('all user details list', allUserDetailsList);
     const allUser = allUserList.map(u => ({ id: u.id, firstName: u.firstName, email: u.email, lastName: u.lastName, activeStatus: null }));
     // console.log('allUser', allUser);
     // console.log('uniqUser and BoarUserDetails', uniqUsers, allBoardUserDetails);
@@ -127,7 +134,7 @@ export default async function get(id) {
     const BoardColumnCardTag = flat(flat(boardDetails.map(obj => obj.boardColumnCardTag)));
 
     // console.log('connection list', [allBlogs, newBlogPublish]);
-    console.log('UserMessage', userMessages);
+    // console.log('UserMessage', userMessages);
     const userDataRes = {
       User: allUser,
       UserDetail: allUserDetailsList,
@@ -149,8 +156,10 @@ export default async function get(id) {
       UserSkill,
       UserCarrierInterest,
       BoardMessage: flat(BoardMessage),
+      BoardMessageSeenStatus: flat(BoardMessageSeenStatus),
       UserConnection: connectionList,
       UserMessage: userMessages,
+      UserMessageSeenStatus: flat(userMessageSeenStatus),
       allAssociateBlogsId,
 
     };

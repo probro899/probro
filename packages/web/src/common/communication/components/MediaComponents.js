@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/media-has-caption */
 import React from 'react';
 
 const UserView = ({ pc }) => {
@@ -21,9 +22,11 @@ const UserView = ({ pc }) => {
         }}
       >
         <video
-          muted={pc.online ? true : false}
-          controls id={`video-${pc.user.id}`}
-          playsInline autoPlay
+          muted={pc.online}
+          controls
+          id={`video-${pc.user.id}`}
+          playsInline
+          autoPlay
           style={{ height: 90, width: 90, background: 'black', borderRadius: 20 }}
         />
         <div style={{ position: 'absolute', marginTop: 20, marginLeft: 20, width: 100, height: 100 }}>
@@ -62,8 +65,9 @@ const MentorView = () => {
       <div>
         <video
           controls
-          id={`video-mentor`}
-          playsInline autoPlay
+          id="video-mentor"
+          playsInline
+          autoPlay
           style={{ height: '100%', width: '100%', background: 'black' }}
         />
       </div>

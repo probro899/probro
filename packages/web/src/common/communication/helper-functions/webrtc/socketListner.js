@@ -1,5 +1,5 @@
-import client from '../../../socket';
-import store from '../../../store';
+import client from '../../../../socket';
+import store from '../../../../store';
 
 export default (props, state) => {
   // Handle offer request

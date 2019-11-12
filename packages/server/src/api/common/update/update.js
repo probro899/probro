@@ -18,9 +18,10 @@ export default async function Update(table, value, condition) {
     const allChannelSession = session.getChannel(broadCastId);
     // console.log('current channel', allChannelSession);
     channel.dispatch(schema.update(table, res));
-    allChannelSession.forEach(s => user.update(schema.add(table, res), s));
+    allChannelSession.forEach(s => user.update(schema.update(table, res), s));
   } else {
     // session.dispatch(schema.update(table, res));
     user.update(schema.update(table, res), session);
   }
+  return res;
 }

@@ -17,8 +17,12 @@ class Connections extends React.Component {
   }
 
   sendMessage = async () => {
-    const { updateWebRtc, details } = this.props;
+    const { updateWebRtc, details, database } = this.props;
+
+    const connectionId = Object.values(database.UserConnection.byId).find(con => con.mId === details.id || con.userId === details.id);
+    console.log('Connetion id', connectionId);
     updateWebRtc('showCommunication', details.id);
+    updateWebRtc('connectionId', connectionId.id);
     updateWebRtc('peerType', 'user');
     updateWebRtc('communicationContainer', 'history');
   }
@@ -59,6 +63,8 @@ class Connections extends React.Component {
       case 'accept':
         await apis.updateUserConnection([{
           status: 'connected',
+          mId: existingCon.mId,
+          userId: existingCon.userId,
         }, { id: existingCon.id }]);
         this.setState({
           type: 'connected',

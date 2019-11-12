@@ -101,7 +101,7 @@ class Class extends Component {
     const { deleteClass, api } = this.state;
     const { deleteDatabaseSchema } = this.props;
     if (type === 'confirm') {
-      await api.deleteBoard({ id: deleteClass.id });
+      await api.deleteBoard({ id: deleteClass.id, broadCastId: `Board-${deleteClass.id}` });
       deleteDatabaseSchema('Board', { id: deleteClass.id });
     }
     this.setState({
@@ -117,7 +117,7 @@ class Class extends Component {
   updateClass = async (data) => {
     const { updateClass, api } = this.state;
     const { updateDatabaseSchema } = this.props;
-    await api.updateBoard([data, { id: updateClass.id }]);
+    await api.updateBoard([{...data, broadCastId: `Board-${updateClass.id}`}, { id: updateClass.id }]);
     updateDatabaseSchema('Board', { id: updateClass.id, ...data });
     this.setState({
       updateClass: {

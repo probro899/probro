@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button } from '@blueprintjs/core';
-import store from '../../../store';
+import store from '../../../../store';
 
 export default async function (uid, props) {
   // console.log('stream recoder called', uid, store.getState().webRtc);
