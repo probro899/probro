@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link, Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import { Button } from '@blueprintjs/core';
 import mediaSelector from './mediaSelector';
 import { MediaComponents } from './components';
@@ -94,6 +94,9 @@ class CallScreen extends React.Component {
 CallScreen.propTypes = {
   style: PropTypes.objectOf(PropTypes.any).isRequired,
   webRtc: PropTypes.objectOf(PropTypes.any).isRequired,
+  change: PropTypes.func.isRequired,
+  closeHandler: PropTypes.func.isRequired,
+  account: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 export default CallScreen;

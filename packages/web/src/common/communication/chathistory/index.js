@@ -5,7 +5,8 @@ import PropTypes from 'prop-types';
 import { Button } from '@blueprintjs/core';
 import ScrollToBottom from 'react-scroll-to-bottom';
 import mediaSelector from '../mediaSelector';
-import { MessageSender, Message } from '../components';
+import { MessageSender } from '../components';
+import Message from './Message';
 import { normalTimeStampSorting } from '../../utility-functions';
 import { findChatHistory, isOwnFinder, markLastMessageRead } from './helper-function';
 

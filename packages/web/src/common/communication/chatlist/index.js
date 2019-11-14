@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import ChatListItem from '../components/ChatListItem';
+import ChatListItem from './ChatListItem';
 import { chatItemClickHandler, getChatList } from './helper-function';
 
 class ChatList extends React.Component {

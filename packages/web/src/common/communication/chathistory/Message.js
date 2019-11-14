@@ -31,16 +31,27 @@ const Message = ({ own, obj, props }) => {
       className={own.isOwn ? 'i-chat right' : 'i-chat left'}
       key={obj.id}
     >
-      <div className="img-wrap">
+     { obj.showImage &&  <div className="img-wrap">
         {(own.user.userDetails && own.user.userDetails.image)
           ? <img alt="profile-img" src={`${ENDPOINT}/user/${10000000 + parseInt(own.user.id, 10)}/profile/${own.user.userDetails.image}`} style={{ height: 30, width: 30, borderRadius: '50%'}} />
           : <div style={{ color: 'white', display: 'flex', justifyContent: 'center', alignItems: 'center', background: '#154155', height: 30, width: 30, borderRadius: '50%'}}>{`${own.user.firstName.charAt(0).toUpperCase()}${own.user.lastName.charAt(0).toUpperCase()}`}</div>
               }
       </div>
+     }
       <div className="text-contain">
-        <Moment format="YYYY-MM-DD hh:mm">{obj.timeStamp}</Moment>
-        <div className="text" style={{ background: own.isOwn ? (obj.status === 'error' ? '#ff7470' : '#A9DBEF') : 'white', border: `${own.isOwn ? ( obj.status === 'error' ? '1px solid red' : '1px solid #A9DBEF') : '1px solid white'}` }}>
+        <div
+          className="text"
+          style={{
+            background: own.isOwn ? (obj.status === 'error' ? '#ff7470' : '#A9DBEF') : 'white',
+            border: `${own.isOwn ? (obj.status === 'error' ? '1px solid red' : '1px solid #A9DBEF') : '1px solid white'}`,
+            padding: 2,
+            paddingBottom: 0,
+          }}
+        >
           {obj.message}
+          <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'flex-end' }}>
+            <Moment style={{ color: '#757575' }} format="h:mm:a">{obj.timeStamp}</Moment>
+          </div>
         </div>
         <div style={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: 0 }}>
           { obj.status === 'loading' && <Spinner size="15" intent="primary" /> }
