@@ -79,6 +79,15 @@ const findMessageSeenStatus = (msgId, type, props) => {
   return users;
 };
 
+const findShowImageStatus = (umd, idx, arr) => {
+  if (arr.length > idx + 1) {
+    if (umd.userId !== arr[idx + 1].userId) {
+      return true;
+    }
+  }
+  return false;
+};
+
 export default (props) => {
   const { database, webRtc } = props;
   let messages = [];
@@ -88,12 +97,12 @@ export default (props) => {
   if (webRtc.chatHistory) {
     if (webRtc.chatHistory.type === 'user') {
       messages = Object.values(database.UserMessage.byId).filter(msg => msg.connectionId === webRtc.connectionId);
-      arrWithSeenStatus = messages.map(umd => ({ ...umd, seenStatus: findMessageSeenStatus(umd.id, 'user', props) }));
+      arrWithSeenStatus = messages.map((umd, idx, arr) => ({ ...umd, showImage: findShowImageStatus(umd, idx, arr), seenStatus: findMessageSeenStatus(umd.id, 'user', props) }));
       arrWithSeenStatusToShow = findSeenStatusToShow(arrWithSeenStatus, [webRtc.chatHistory.user.user.id], 'user');
       lastMessageSeenIdAndUnseenNo = findLastMessageAndUnSeenNo(arrWithSeenStatus.reverse(), 'user', props);
     } else {
       messages = Object.values(database.BoardMessage.byId).filter(msg => msg.boardId === webRtc.showCommunication);
-      arrWithSeenStatus = messages.map(umd => ({ ...umd, seenStatus: findMessageSeenStatus(umd.id, 'board', props) }));
+      arrWithSeenStatus = messages.map((umd, idx, arr) => ({ ...umd, showImage: findShowImageStatus(umd, idx, arr), seenStatus: findMessageSeenStatus(umd.id, 'board', props) }));
       arrWithSeenStatusToShow = findSeenStatusToShow(arrWithSeenStatus, Object.values(database.BoardMember.byId).filter(obj => obj.boardId === webRtc.showCommunication));
       lastMessageSeenIdAndUnseenNo = findLastMessageAndUnSeenNo(arrWithSeenStatus.reverse(), 'board', props);
     }
