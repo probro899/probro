@@ -32,6 +32,7 @@ class Cropper extends React.Component {
   }
 
   centerBackgroundImage = (obj, canvas) => {
+    // console.log('called', obj.scaleX);
     const canWidth = canvas.width;
     const canHeight = canvas.height;
     if (obj.left > (obj.getScaledWidth() / 2) || obj.top > (obj.getScaledHeight() / 2 ||
@@ -55,7 +56,6 @@ class Cropper extends React.Component {
     canvas._objects[0].scaleX = e;
     canvas._objects[0].scaleY = e;
     canvas.renderAll();
-    // console.log(e, canvas);
     this.setState({
       canvas,
       zoomValue: e,
@@ -87,7 +87,7 @@ class Cropper extends React.Component {
     const file = new File([u8arr], 'cover-edit.jpeg', { type: mime });
     try {
       const formData = new FormData();
-      formData.append('data', JSON.stringify({ token: account.sessionId, fileType: 'image', content: 'user' }));
+      formData.append('data', JSON.stringify({ token: account.sessionId, fileType: 'image', content: 'profile' }));
       formData.append('file', file);
       const res = await axios({
         config: {
@@ -102,16 +102,16 @@ class Cropper extends React.Component {
       if (res.status === 200) {
         await apis.updateUserDetails({
           userId: account.user.id,
-          coverEdit: res,
+          coverEdit: res.data,
         });
         updateDatabaseSchema('UserDetail', {
           id: userDetail.id,
-          coverEdit: res,
+          coverEdit: res.data,
         });
       }
       clickEditCover('reposition');
     } catch (e) {
-      alert('Sorry your task could not be performed');
+      alert('Sorry your task could not be performed.');
     }
   }
 

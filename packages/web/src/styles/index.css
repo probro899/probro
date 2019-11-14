@@ -124,7 +124,7 @@ top attachment etc.
 @media screen and (max-width: 855px) { .pc-small-screen-sidenav { display: block; margin: 70px 20px 0px 15px; } }
 
 .profile { display: flex; flex-direction: column; padding: 4px; position: relative; width: 100%; overflow: hidden; }
-.profile .cover-pic { max-height: 300px; position: relative; overflow: hidden; width: 100%; background: linear-gradient(to right, #2b5468, 0%, #137cbd, 100%); }
+.profile .cover-pic { position: relative; overflow: hidden; width: 100%; background: linear-gradient(to right, #2b5468, 0%, #137cbd, 100%); }
 .profile .cover-pic .cr-boundary { z-index: 0; }
 .profile .cover-pic img { width: 100%; }
 .profile .cover-pic .edit-cover { padding: 5px; position: absolute; z-index: 1; bottom: 0; right: 0; color: #fff; }
@@ -132,18 +132,19 @@ top attachment etc.
 .profile .cover-pic .edit-cover:hover { text-decoration: underline; cursor: pointer; color: #1d4354; }
 .profile .cover-pic .edit-cover:hover svg { fill: #1d4354; }
 .profile .cover-pic-edit-mode { display: flex; flex: 1; justify-content: center; width: 100%; position: relative; }
-.profile .cover-pic-edit-mode .canvas-container { height: calc((100vw * 0.81) * 0.33) !important; }
+.profile .cover-pic-edit-mode .canvas-container { height: calc((100vw * 0.81) * 0.33) !important; width: 100% !important; }
 @media screen and (max-width: 855px) { .profile .cover-pic-edit-mode .canvas-container { height: calc(100vw * 0.33) !important; } }
 .profile .cover-pic-edit-mode .canvas-container #mainCanvas { width: 100% !important; object-fit: contain !important; height: auto !important; background: white; box-shadow: 3px 3px 3px 3px; }
 .profile .cover-pic-edit-mode .canvas-container .upper-canvas { object-fit: contain !important; height: auto !important; width: 100% !important; }
 .profile .cover-pic-edit-mode .edit-cover { padding: 5px; position: absolute; z-index: 1; bottom: 5px; right: 1px; color: #fff; }
 .profile .cover-pic-edit-mode .edit-cover:hover { text-decoration: underline; cursor: pointer; color: #1d4354; }
 .profile .cover-pic-edit-mode .pc-zoom-slider { position: absolute; bottom: 10px; }
-.profile .profilePic { position: absolute; top: 100px; left: 10px; border: 1px solid #e0e0e0; box-shadow: 0px 0px 5px 1px rgba(57, 73, 76, 0.35); border-radius: 50%; width: 150px; height: 150px; overflow: hidden; }
+.profile .profilePic { position: absolute; left: 10px; border: 1px solid #e0e0e0; box-shadow: 0px 0px 5px 1px rgba(57, 73, 76, 0.35); border-radius: 50%; width: calc((100vw * 0.81 * 0.33) * 0.55); height: calc((100vw * 0.81 * 0.33) * 0.55); overflow: hidden; top: calc((100vw * 0.81) * 0.33 * 0.4); }
 .profile .profilePic img.portrait { width: 100%; height: auto; }
 .profile .profilePic img.landscape { height: 100%; width: auto; }
-.profile .profilePic span { position: absolute; top: 70px; left: 110px; }
-.profile .profilePic svg { border-radius: 100px; background-color: #2572D1; }
+.profile .profilePic .image-upload-icon { position: absolute; bottom: 30%; right: 4%; }
+.profile .profilePic .image-upload-icon svg { border-radius: 50%; background-color: #2572D1; }
+@media screen and (max-width: 855px) { .profile .profilePic { top: calc(100vw * 0.33 * 0.4); left: 20px; width: calc((100vw * 0.33) * 0.55); height: calc((100vw * 0.33) * 0.55); } }
 .profile .top-details { width: 100%; background: white; padding: 5px; }
 .profile .top-details .name { font-size: 20px; font-weight: bold; }
 .profile .top-details .designation { font-size: 16px; font-weight: bold; color: #696969; }
