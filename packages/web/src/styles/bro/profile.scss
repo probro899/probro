@@ -11,10 +11,10 @@
     position: relative;
     overflow: hidden;
     width: 100%;
-    background: linear-gradient(to right, $borderOnDarkBlue, 0%, $skyBlueMain, 100%);
-    // over writing the cropper styles
-    .cr-boundary {
-      z-index: 0;
+    // to prevent overflow of unedited cover
+    height: calc((100vw * 0.81) * 0.33);
+    @media screen and (max-width: 855px) {
+      height: calc(100vw * 0.33);
     }
     img {
       width: 100%;

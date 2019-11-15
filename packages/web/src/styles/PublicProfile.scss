@@ -10,39 +10,27 @@
   padding: 1px 3px;
   position: relative;
   .cover-pic {
-    height: 250px;
-    position: relative;
+    overflow: hidden;
     width: 100%;
-    background: linear-gradient(to right, rgba(155,225,243,1) 0%, rgba(67,192,223,1) 100%);
-    .edit-cover {
-      padding: 5px;
-      position: absolute;
-      bottom: 0;
-      right: 0;
-      color: white;
-      .edit-icon {
-        vertical-align: text-top;
-      }
-      &:hover {
-        text-decoration: underline;
-        cursor: pointer;
-        color: rgba(19, 124, 189, 1);
-        svg {
-          fill: rgba(19, 124, 189, 1);
-        }
-      }
+    // to prevent overflow of unedited cover
+    height: calc((100vw * 0.81) * 0.33);
+    @media screen and (max-width: 855px) {
+      height: calc(100vw * 0.33);
+    }
+    img {
+      width: 100%;
     }
   }
   .profilePic {
     position: absolute;
-    top: 100px;
     left: 10px;
     border: 1px solid $normalBorder;
     box-shadow: 0px 0px 5px 1px $normalShadowColor;
     border-radius: 50%;
-    width: 150px;
-    height: 150px;
+    width: calc((100vw * 0.81 * 0.33) * 0.55);
+    height: calc((100vw * 0.81 * 0.33) * 0.55);
     overflow: hidden;
+    top: calc((100vw * 0.81) * 0.33 * 0.4);
     img.portrait {
       width: 100%;
       height: auto;
@@ -51,14 +39,11 @@
       height: 100%;
       width: auto;
     }
-    span {
-      position: absolute;
-      top: 70px;
-      left: 110px;
-    }
-    svg {
-      border-radius: 100px;
-      background-color: $primary;
+    @media screen and (max-width: 855px) {
+      top: calc(100vw * 0.33 * 0.4);
+      left: 20px;
+      width: calc((100vw * 0.33) * 0.55);
+      height: calc((100vw * 0.33) * 0.55);
     }
   }
   .top-details {

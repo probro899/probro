@@ -67,17 +67,20 @@ class CoverPic extends React.Component {
         await apis.updateUserDetails({
           userId: account.user.id,
           coverImage: res.data,
+          coverEdit: null,
         });
         if (userDetail.id) {
           updateDatabaseSchema('UserDetail', {
             id: userDetail.id,
             coverImage: res.data,
+            coverEdit: null,
           });
         } else {
           addDatabaseSchema('UserDetail', {
             id: Date.now(),
             type: 'mentee',
             coverImage: res.data,
+            coverEdit: null,
           });
         }
       }
@@ -89,13 +92,14 @@ class CoverPic extends React.Component {
   render() {
     const { userDetail, account, updateDatabaseSchema, apis } = this.props;
     const { drag } = this.state;
-    const imgUrl = userDetail.coverImage ? `${ENDPOINT}/user/${10000000 + parseInt(account.user.id, 10)}/profile/${userDetail.coverEdit}` : defaultCover;
-    const editCoverUrl = userDetail.coverEdit;
+    // console.log(userDetail);
+    const imgUrl = userDetail.coverImage ? `${ENDPOINT}/user/${10000000 + parseInt(account.user.id, 10)}/profile/${userDetail.coverImage}` : defaultCover;
+    const editCoverUrl = userDetail.coverEdit && `${ENDPOINT}/user/${10000000 + parseInt(account.user.id, 10)}/profile/${userDetail.coverEdit}`;
     if (!drag) {
       return (
         <div className="cover-pic">
           {
-            editCoverUrl ? <img alt="cover profile of the user" src={imgUrl} />
+            editCoverUrl ? <img alt="cover profile of the user" src={editCoverUrl} />
               : (
                 <img alt="cover profile of the user" src={imgUrl} />
               )

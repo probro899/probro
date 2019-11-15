@@ -15,6 +15,7 @@ import RoundPicture from '../../../../components/RoundPicture';
 const file = require('../../../../assets/icons/512h/uploadicon512.png');
 const school = require('../../../../assets/icons/64w/school64.png');
 const office = require('../../../../assets/icons/64w/office64.png');
+const defaultCover = require('../../../../assets/default-cover.png');
 
 class PublicProfile extends React.Component {
   constructor(props) {
@@ -53,18 +54,27 @@ class PublicProfile extends React.Component {
   render() {
     const { account, database, updateWebRtc } = this.props;
     const { loading, data } = this.state;
-    // console.log('accout data', account, data);
+    console.log('accout data', data);
     if (loading) {
       return <Spinner />;
     }
     const userDetails = data.userDetail;
     const { user } = data;
     const { apis } = this.state;
+    const imgUrl = data.userDetail.coverImage ? `${ENDPOINT}/user/${10000000 + parseInt(data.user.id, 10)}/profile/${data.userDetail.coverImage}` : defaultCover;
+    const editCoverUrl = data.userDetail.coverEdit && `${ENDPOINT}/user/${10000000 + parseInt(data.user.id, 10)}/profile/${data.userDetail.coverEdit}`;
     return (
       <div>
         <Navbar />
         <div className="public-profile">
-          <div className="cover-pic" />
+          <div className="cover-pic">
+            {
+              editCoverUrl ? <img alt="cover profile of the user" src={editCoverUrl} />
+                : (
+                  <img alt="cover profile of the user" src={imgUrl} />
+                )
+            }
+          </div>
           <div className="profilePic">
             <RoundPicture imgUrl={userDetails.image ? `${ENDPOINT}/user/${10000000 + parseInt(user.id, 10)}/profile/${userDetails.image}` : file} />
           </div>

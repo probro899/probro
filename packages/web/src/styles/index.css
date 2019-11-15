@@ -124,8 +124,8 @@ top attachment etc.
 @media screen and (max-width: 855px) { .pc-small-screen-sidenav { display: block; margin: 70px 20px 0px 15px; } }
 
 .profile { display: flex; flex-direction: column; padding: 4px; position: relative; width: 100%; overflow: hidden; }
-.profile .cover-pic { position: relative; overflow: hidden; width: 100%; background: linear-gradient(to right, #2b5468, 0%, #137cbd, 100%); }
-.profile .cover-pic .cr-boundary { z-index: 0; }
+.profile .cover-pic { position: relative; overflow: hidden; width: 100%; height: calc((100vw * 0.81) * 0.33); }
+@media screen and (max-width: 855px) { .profile .cover-pic { height: calc(100vw * 0.33); } }
 .profile .cover-pic img { width: 100%; }
 .profile .cover-pic .edit-cover { padding: 5px; position: absolute; z-index: 1; bottom: 0; right: 0; color: #fff; }
 .profile .cover-pic .edit-cover .edit-icon { vertical-align: text-top; }
@@ -448,16 +448,13 @@ top attachment etc.
 .public-blog .response .right { flex: 0.1; }
 
 .public-profile { margin-top: 60px; min-height: calc(100vh - 60px - 125px); flex: 0.8; display: flex; align-items: center; flex-direction: column; padding: 1px 3px; position: relative; }
-.public-profile .cover-pic { height: 250px; position: relative; width: 100%; background: linear-gradient(to right, #9be1f3 0%, #43c0df 100%); }
-.public-profile .cover-pic .edit-cover { padding: 5px; position: absolute; bottom: 0; right: 0; color: white; }
-.public-profile .cover-pic .edit-cover .edit-icon { vertical-align: text-top; }
-.public-profile .cover-pic .edit-cover:hover { text-decoration: underline; cursor: pointer; color: #137cbd; }
-.public-profile .cover-pic .edit-cover:hover svg { fill: #137cbd; }
-.public-profile .profilePic { position: absolute; top: 100px; left: 10px; border: 1px solid #e0e0e0; box-shadow: 0px 0px 5px 1px rgba(57, 73, 76, 0.35); border-radius: 50%; width: 150px; height: 150px; overflow: hidden; }
+.public-profile .cover-pic { overflow: hidden; width: 100%; height: calc((100vw * 0.81) * 0.33); }
+@media screen and (max-width: 855px) { .public-profile .cover-pic { height: calc(100vw * 0.33); } }
+.public-profile .cover-pic img { width: 100%; }
+.public-profile .profilePic { position: absolute; left: 10px; border: 1px solid #e0e0e0; box-shadow: 0px 0px 5px 1px rgba(57, 73, 76, 0.35); border-radius: 50%; width: calc((100vw * 0.81 * 0.33) * 0.55); height: calc((100vw * 0.81 * 0.33) * 0.55); overflow: hidden; top: calc((100vw * 0.81) * 0.33 * 0.4); }
 .public-profile .profilePic img.portrait { width: 100%; height: auto; }
 .public-profile .profilePic img.landscape { height: 100%; width: auto; }
-.public-profile .profilePic span { position: absolute; top: 70px; left: 110px; }
-.public-profile .profilePic svg { border-radius: 100px; background-color: #2572D1; }
+@media screen and (max-width: 855px) { .public-profile .profilePic { top: calc(100vw * 0.33 * 0.4); left: 20px; width: calc((100vw * 0.33) * 0.55); height: calc((100vw * 0.33) * 0.55); } }
 .public-profile .top-details { width: 100%; display: flex; justify-content: space-between; background: white; padding: 5px; }
 .public-profile .top-details .connect-btns { flex: 0.3; display: flex; flex-direction: column; justify-content: center; align-items: center; }
 .public-profile .top-details .connect-btns .con { display: flex; }
