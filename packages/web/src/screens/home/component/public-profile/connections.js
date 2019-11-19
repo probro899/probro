@@ -1,5 +1,4 @@
 import React from 'react';
-import { Button } from '@blueprintjs/core';
 import PropTypes from 'prop-types';
 import ConnectionElement from './ConnectionElement';
 
@@ -18,9 +17,8 @@ class Connections extends React.Component {
 
   sendMessage = async () => {
     const { updateWebRtc, details, database } = this.props;
-
     const connectionId = Object.values(database.UserConnection.byId).find(con => con.mId === details.id || con.userId === details.id);
-    console.log('Connetion id', connectionId);
+    // console.log('Connetion id', connectionId);
     updateWebRtc('showCommunication', details.id);
     updateWebRtc('connectionId', connectionId.id);
     updateWebRtc('peerType', 'user');
@@ -101,7 +99,6 @@ class Connections extends React.Component {
   };
 
   render() {
-    const { moreDetails } = this.props;
     const { type } = this.state;
     return (
       <div className="con">
@@ -110,15 +107,6 @@ class Connections extends React.Component {
           connectMentor: this.connectMentor,
           type,
         })}
-        { moreDetails && moreDetails.type === 'mentor'
-          && (
-          <Button
-            text="Follow"
-            fill
-            large
-          />
-          )
-        }
       </div>
     );
   }
@@ -128,7 +116,6 @@ Connections.propTypes = {
   updateWebRtc: PropTypes.func.isRequired,
   database: PropTypes.objectOf(PropTypes.any).isRequired,
   details: PropTypes.objectOf(PropTypes.any).isRequired,
-  moreDetails: PropTypes.objectOf(PropTypes.any).isRequired,
   account: PropTypes.objectOf(PropTypes.any).isRequired,
   apis: PropTypes.objectOf(PropTypes.any).isRequired,
 };

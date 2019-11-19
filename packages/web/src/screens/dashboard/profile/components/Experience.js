@@ -82,8 +82,16 @@ class Experience extends React.Component {
     });
   }
 
+  onDelete = async () => {
+    const { editObj } = this.state;
+    const { apis, deleteDatabaseSchema } = this.props;
+    await apis.deleteUserWorkExperience({ id: editObj.id });
+    deleteDatabaseSchema('UserWorkExperience', { id: editObj.id });
+    this.togglePopover(editObj);
+  }
+
   render() {
-    const { experienceEditPopover } = this.state;
+    const { experienceEditPopover, editObj } = this.state;
     const { database, account } = this.props;
     const experiences = [];
     Object.values(database.UserWorkExperience.byId).map((obj) => {
@@ -94,6 +102,8 @@ class Experience extends React.Component {
     return (
       <div className="experience">
         <PopoverForm
+          del={editObj}
+          onDelete={this.onDelete}
           isOpen={experienceEditPopover}
           structure={experienceSchema}
           callback={this.addExperience}

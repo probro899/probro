@@ -147,7 +147,6 @@ top attachment etc.
 @media screen and (max-width: 855px) { .profile .profilePic { top: calc(100vw * 0.33 * 0.4); left: 20px; width: calc((100vw * 0.33) * 0.55); height: calc((100vw * 0.33) * 0.55); } }
 .profile .top-details { width: 100%; background: white; padding: 5px; }
 .profile .top-details .name { font-size: 20px; font-weight: bold; }
-.profile .top-details .designation { font-size: 16px; font-weight: bold; color: #696969; }
 .profile .bio { width: 100%; padding: 20px 5px; }
 .profile .bio .bio-content { font-size: 20px; }
 .profile .bio .bio-info { margin-left: 2px; display: flex; justify-content: space-between; }
@@ -336,6 +335,10 @@ top attachment etc.
 .popover-form { padding: 5px 5px 0px 5px; }
 .popover-form.bio .bp3-form-group { margin-bottom: 2px; }
 .popover-form div.top { font-size: 18px; font-weight: 600; padding-bottom: 10px; text-align: center; }
+.popover-form .bp3-form-group { margin: 0; }
+.popover-form .pc-pop-delete-button { margin-top: 5px; }
+.popover-form .pc-pop-delete-button button span { color: #696969; }
+.popover-form .pc-pop-delete-button button svg { fill: #696969; }
 
 .delete-popover { padding: 5px 0px; }
 .delete-popover .top { padding: 15px 0px; text-align: center; font-size: 16px; }
@@ -455,55 +458,59 @@ top attachment etc.
 .public-profile .profilePic img.portrait { width: 100%; height: auto; }
 .public-profile .profilePic img.landscape { height: 100%; width: auto; }
 @media screen and (max-width: 855px) { .public-profile .profilePic { top: calc(100vw * 0.33 * 0.4); left: 20px; width: calc((100vw * 0.33) * 0.55); height: calc((100vw * 0.33) * 0.55); } }
-.public-profile .top-details { width: 100%; display: flex; justify-content: space-between; background: white; padding: 5px; }
+.public-profile .top-details { width: 100%; display: flex; justify-content: space-between; background: #fff; padding: 5px; }
+.public-profile .top-details .name { font-size: 20px; font-weight: bold; }
 .public-profile .top-details .connect-btns { flex: 0.3; display: flex; flex-direction: column; justify-content: center; align-items: center; }
 .public-profile .top-details .connect-btns .con { display: flex; }
 .public-profile .top-details .connect-btns .con .con-option { display: flex; flex-direction: row; }
 .public-profile .top-details .connect-btns button { margin-left: 10px; font-size: 16px; font-weight: 400; }
 .public-profile .top-details .desc { flex: 0.7; }
 .public-profile .top-details .desc .name { font-size: 20px; font-weight: bold; }
-.public-profile .top-details .desc .designation { font-size: 16px; font-weight: bold; color: rgba(20, 18, 18, 0.596); }
-.public-profile .bio { margin-top: 5px; background: white; text-align: center; width: 100%; }
-.public-profile .bio p { font-family: 'Oxygen', sans-serif; font-weight: bold; font-style: italic; font-size: 16px; }
-.public-profile .education { margin-top: 5px; width: 100%; background: white; }
-.public-profile .education p.p-top { font-size: 20px; font-weight: bold; display: flex; justify-content: space-between; padding-right: 5px; }
+.public-profile .bio { text-align: center; width: 100%; padding: 20px 5px; }
+.public-profile .bio p { font-family: 'Oxygen', sans-serif; font-size: 16px; }
+.public-profile .education { padding: 20px 5px; width: 100%; }
+.public-profile .education p.p-top { font-size: 20px; display: flex; justify-content: space-between; padding-right: 5px; }
 .public-profile .education p.p-top svg { fill: #137cbd; }
 .public-profile .education .p-edu-list .p-edu-list-i { display: flex; padding: 2px; }
 .public-profile .education .p-edu-list .p-edu-list-i img { height: 45px; padding: 2px; }
 .public-profile .education .p-edu-list .p-edu-list-i p { padding: 0px 0px 0px 10px; }
 .public-profile .education .p-edu-list .p-edu-list-i p span.p-name-i { font-size: 18px; font-weight: bold; }
-.public-profile .education .p-edu-list .p-edu-list-i p span.p-timeline { font-weight: bold; color: #757575; }
+.public-profile .education .p-edu-list .p-edu-list-i p span.p-timeline { font-weight: bold; color: #696969; }
 .public-profile .education .p-edu-list .p-edu-list-i p svg { fill: #137cbd; }
-.public-profile .experience { margin-top: 5px; width: 100%; background: white; }
-.public-profile .experience p.p-top { font-size: 20px; font-weight: bold; display: flex; justify-content: space-between; padding-right: 5px; }
+.public-profile .experience { padding: 20px 5px; width: 100%; }
+.public-profile .experience p.p-top { font-size: 20px; display: flex; justify-content: space-between; padding-right: 5px; }
 .public-profile .experience p.p-top svg { fill: #137cbd; }
 .public-profile .experience .p-exp-list .p-exp-list-i { display: flex; padding: 2px; }
 .public-profile .experience .p-exp-list .p-exp-list-i img { height: 45px; padding: 2px; }
 .public-profile .experience .p-exp-list .p-exp-list-i p { padding: 0px 0px 0px 10px; }
 .public-profile .experience .p-exp-list .p-exp-list-i p span.p-title-i { font-size: 18px; font-weight: bold; }
-.public-profile .experience .p-exp-list .p-exp-list-i p span.p-company-i { font-size: 16px; font-weight: bold; color: #757575; }
-.public-profile .experience .p-exp-list .p-exp-list-i p span.p-timeline { font-weight: bold; color: #757575; }
+.public-profile .experience .p-exp-list .p-exp-list-i p span.p-company-i { font-size: 16px; font-weight: bold; color: #696969; }
+.public-profile .experience .p-exp-list .p-exp-list-i p span.p-timeline { font-weight: bold; color: #696969; }
 .public-profile .experience .p-exp-list .p-exp-list-i p svg { fill: #137cbd; }
-.public-profile .skills { margin-top: 5px; width: 100%; background: white; }
-.public-profile .skills p.p-top { font-size: 20px; font-weight: bold; display: flex; justify-content: space-between; padding-right: 5px; }
+.public-profile .skills { padding: 20px 5px; width: 100%; }
+.public-profile .skills p.p-top { font-size: 20px; display: flex; justify-content: space-between; padding-right: 5px; }
 .public-profile .skills p.p-top svg { fill: #137cbd; }
 .public-profile .skills .skills-container { padding: 5px 5px 5px 0px; }
-.public-profile .skills .skills-container span { margin: 5px; padding: 5px; color: white; background: #137cbd; }
+.public-profile .skills .skills-container span { margin: 5px; padding: 5px; color: #fff; background: #137cbd; }
+@media screen and (max-width: 855px) { .public-profile { padding: 5px 15px; } }
 
 .search-result { min-height: calc(100vh - 60px - 125px); margin-top: 60px; }
-.search-result .filter-toolbar { min-height: 40px; display: flex; flex-direction: row; justify-content: space-between; background: white; padding: 5px; box-shadow: 1px 1px 3px 0px #9b9ca1; }
+.search-result .filter-toolbar { min-height: 40px; display: flex; flex-direction: row; justify-content: space-between; background: #fff; padding: 5px; width: 100%; box-shadow: 1px 1px 3px 0px rgba(57, 73, 76, 0.35); }
 .search-result .filter-toolbar .set { display: flex; justify-content: center; align-items: center; }
 .search-result .filter-toolbar .filter-label { font-size: 20px; font-weight: bold; opacity: 0.8; }
 .search-result .filter-toolbar .btn-group { padding-top: 6px; margin-left: 50px; vertical-align: middle; }
 .search-result .filter-toolbar .btn-group button { min-height: 0; }
 .search-result .result-list { padding: 5px; flex: 0.7; }
 .search-result .result-list .label { opacity: 0.7; font-weight: bold; }
-.search-result .result-list .i-result { margin-top: 5px; width: 100%; display: flex; }
-.search-result .result-list .i-result .img-con { padding: 3px; }
+.search-result .result-list .i-result { margin: 15px 0px; width: 100%; display: flex; align-items: center; }
+.search-result .result-list .i-result .img-con { border: 1px solid #e0e0e0; border-radius: 50%; overflow: hidden; width: 70px; height: 70px; }
+.search-result .result-list .i-result .img-con img.portrait { width: 100%; height: auto; }
+.search-result .result-list .i-result .img-con img.landscape { height: 100%; width: auto; }
 .search-result .result-list .i-result .desc-con { padding-left: 5px; }
 .search-result .result-list .i-result .desc-con .name { font-size: 16px; font-weight: bold; }
 .search-result .result-list .i-result .desc-con .location { opacity: 0.8; font-weight: bold; }
 .search-result .result-list .i-result img { border-radius: 50%; }
+@media screen and (max-width: 855px) { .search-result .filter-toolbar .filter-label { display: none; } }
 
 .footer { margin-top: 20px; min-height: 125px; padding: 5px; background: #1d4354; color: #fff; }
 .footer .pc-logo { padding: 5px; font-size: 18px; font-weight: bold; }

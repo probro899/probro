@@ -50,8 +50,12 @@
     width: 100%;
     display: flex;
     justify-content: space-between;
-    background: white;
+    background: $backgroundColor;
     padding: 5px;
+    .name {
+      font-size: 20px;
+      font-weight: bold;
+    }
     .connect-btns {
       flex: 0.3;
       display: flex;
@@ -77,37 +81,27 @@
         font-size: 20px;
         font-weight: bold;
       }
-      .designation {
-        font-size: 16px;
-        font-weight: bold;
-        color: rgba(20, 18, 18, 0.596);
-      }
     }
   }
   .bio {
-    margin-top: 5px;
-    background: white;
     text-align: center;
     width: 100%;
+    padding: 20px 5px;
     p {
       font-family: 'Oxygen', sans-serif;
-      font-weight: bold;
-      font-style: italic;
       font-size: 16px;
     }
   }
   .education {
-    margin-top: 5px;
+    padding: 20px 5px;
     width: 100%;
-    background: white;
     p.p-top {
       font-size: 20px;
-      font-weight: bold;
       display: flex;
       justify-content: space-between;
       padding-right: 5px;
       svg {
-        fill: rgba(19, 124, 189, 1);
+        fill: $skyBlueMain;
       }
     }
     .p-edu-list {
@@ -126,27 +120,25 @@
           }
           span.p-timeline {
             font-weight: bold;
-            color: #757575;
+            color: $lightTextColor;
           }
           svg {
-            fill: rgba(19, 124, 189, 1);
+            fill: $skyBlueMain;
           }
         }
       }
     }
   }
   .experience {
-    margin-top: 5px;
+    padding: 20px 5px;
     width: 100%;
-    background: white;
     p.p-top {
       font-size: 20px;
-      font-weight: bold;
       display: flex;
       justify-content: space-between;
       padding-right: 5px;
       svg {
-        fill: rgba(19, 124, 189, 1);
+        fill: $skyBlueMain;
       }
     }
     .p-exp-list {
@@ -166,31 +158,29 @@
           span.p-company-i {
             font-size: 16px;
             font-weight: bold;
-            color: #757575;
+            color: $lightTextColor;
           }
           span.p-timeline {
             font-weight: bold;
-            color: #757575;
+            color: $lightTextColor;
           }
           svg {
-            fill: rgba(19, 124, 189, 1);
+            fill: $skyBlueMain;
           }
         }
       }
     }
   }
   .skills {
-    margin-top: 5px;
+    padding: 20px 5px;
     width: 100%;
-    background: white;
     p.p-top {
       font-size: 20px;
-      font-weight: bold;
       display: flex;
       justify-content: space-between;
       padding-right: 5px;
       svg {
-        fill: rgba(19, 124, 189, 1);
+        fill: $skyBlueMain;
       }
     }
     .skills-container {
@@ -198,9 +188,12 @@
       span {
         margin: 5px;
         padding: 5px;
-        color: white;
-        background: rgba(19, 124, 189, 1);
+        color: $backgroundColor;
+        background: $skyBlueMain;
       }
     }
+  }
+  @media screen and (max-width: 855px) {
+    padding: 5px 15px;
   }
 }

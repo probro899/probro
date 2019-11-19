@@ -54,13 +54,15 @@ class PublicProfile extends React.Component {
   render() {
     const { account, database, updateWebRtc } = this.props;
     const { loading, data } = this.state;
-    console.log('accout data', data);
+    // console.log('accout data', data);
     if (loading) {
       return <Spinner />;
     }
     const userDetails = data.userDetail;
     const { user } = data;
     const { apis } = this.state;
+    const { userEducation } = data;
+    const { userWorkExperience } = data;
     const imgUrl = data.userDetail.coverImage ? `${ENDPOINT}/user/${10000000 + parseInt(data.user.id, 10)}/profile/${data.userDetail.coverImage}` : defaultCover;
     const editCoverUrl = data.userDetail.coverEdit && `${ENDPOINT}/user/${10000000 + parseInt(data.user.id, 10)}/profile/${data.userDetail.coverEdit}`;
     return (
@@ -109,7 +111,7 @@ class PublicProfile extends React.Component {
           </div>
           <div className="bio">
             <p>
-              {userDetails.bio ? userDetails.bio : '---'}
+              {userDetails.bio ? <span>{userDetails.bio}</span> : <span style={{ color: '#696969' }}>No bio added</span>}
             </p>
           </div>
           <div className="education">
@@ -117,16 +119,31 @@ class PublicProfile extends React.Component {
               <span>Education</span>
             </p>
             <div className="p-edu-list">
-              <div className="p-edu-list-i">
-                <img src={school} alt="school icon" />
-                <p>
-                  <span className="p-name-i">High School Study</span>
-                  <br />
-                  <span>Place Kathmandu</span>
-                  <br />
-                  <span className="p-timeline">2012-2018</span>
-                </p>
-              </div>
+              {userEducation.length !== 0 ? (
+                <div className="p-edu-list">
+                  {
+                    userEducation.map(obj => (
+                      <div className="p-edu-list-i">
+                        <img src={school} alt="school icon" />
+                        <p>
+                          <span className="p-name-i">{obj.degree}</span>
+                          <br />
+                          <span>{obj.address}</span>
+                          <br />
+                          <span className="p-timeline">{`${obj.startTime} - ${obj.endTime}`}</span>
+                          <br />
+                        </p>
+                      </div>
+                    ))
+                  }
+                </div>
+              )
+                : (
+                  <div>
+                    <span style={{ color: '#696969' }}>No School Added</span>
+                  </div>
+                )
+              }
             </div>
           </div>
           <div className="experience">
@@ -134,18 +151,31 @@ class PublicProfile extends React.Component {
               <span>Experience</span>
             </p>
             <div className="p-exp-list">
-              <div className="p-exp-list-i">
-                <img src={office} alt="school icon" />
-                <p>
-                  <span className="p-title-i">Software Engineer</span>
-                  <br />
-                  <span className="p-company-i">Proper Class</span>
-                  <br />
-                  <span className="p-timeline">2012-2018</span>
-                  <br />
-                  <span>Place Kathmandu</span>
-                </p>
-              </div>
+              {userWorkExperience.length !== 0 ? (
+                <div className="p-edu-list">
+                  {
+                    userWorkExperience.map(obj => (
+                      <div className="p-exp-list-i">
+                        <img src={office} alt="school icon" />
+                        <p>
+                          <span className="p-title-i">{obj.title}</span>
+                          <br />
+                          <span className="p-company-i">{obj.company}</span>
+                          <br />
+                          <span className="p-timeline">{`${obj.startTime} - ${obj.endTime}`}</span>
+                          <br />
+                          <span>{obj.summary}</span>
+                        </p>
+                      </div>))
+                  }
+                </div>
+              )
+                : (
+                  <div>
+                    <span style={{ color: '#696969' }}>No experience added</span>
+                  </div>
+                )
+              }
             </div>
           </div>
           <div className="skills">
@@ -154,7 +184,7 @@ class PublicProfile extends React.Component {
             </p>
             <div className="skills-container">
               {
-                data.userSkill.length === 0 ? '---' : JSON.parse(data.userSkill[0].skill).map(skill => <span>{skill}</span>)
+                data.userSkill.length === 0 ? 'No Skills Added' : JSON.parse(data.userSkill[0].skill).map((skill, idx) => <span key={idx}>{skill}</span>)
               }
             </div>
           </div>

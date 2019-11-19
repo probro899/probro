@@ -145,7 +145,7 @@ class BasicSettings extends React.Component {
         </p>
         <p className="basic">
           <span className="label">Gender</span>
-          <span className="value">{gen}</span>
+          <span className="value">{gen.charAt(0).toUpperCase() + gen.slice(1)}</span>
           <Icon
             icon="edit"
             color="rgba(167, 182, 194, 1)"
