@@ -20,6 +20,7 @@ class DateField extends React.Component {
         <span className="label-text">{data.name}</span>
         {data.required && <span style={{ color: 'red' }}> *</span>}
         <DateInput
+          className="pc-date-picker"
           formatDate={date => date.toLocaleDateString()}
           parseDate={str => new Date(str)}
           placeholder="MM/DD/YYYY"

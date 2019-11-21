@@ -67,6 +67,9 @@
         .con-option {
           display: flex;
           flex-direction: row;
+          button {
+            padding: 10px;
+          }
         }
       }
       button {
@@ -90,6 +93,7 @@
     p {
       font-family: 'Oxygen', sans-serif;
       font-size: 16px;
+      word-wrap: break-word;
     }
   }
   .education {
@@ -185,6 +189,8 @@
     }
     .skills-container {
       padding: 5px 5px 5px 0px;
+      display: flex;
+      flex-wrap: wrap;
       span {
         margin: 5px;
         padding: 5px;

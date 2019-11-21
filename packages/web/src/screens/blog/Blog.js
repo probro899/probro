@@ -17,7 +17,7 @@ class Blogs extends Component {
     apis: {},
   };
 
-  async componentWillMount() {
+  async componentDidMount() {
     const { updateNav } = this.props;
     const apis = await client.scope('Mentor');
     this.setState({
@@ -31,8 +31,10 @@ class Blogs extends Component {
 
   deleteBlog = async (type) => {
     const { apis, blogId } = this.state;
+    const { deleteDatabaseSchema } = this.props;
     if (type === 'confirm') {
       await apis.deleteBlog({ id: blogId });
+      deleteDatabaseSchema('Blog', { id: blogId });
       this.setState({
         deletePopOverIsOpen: false,
         blogId: '',
@@ -87,6 +89,13 @@ class Blogs extends Component {
           </div>
         </div>
         <div className="blog-list">
+          {
+            database.Blog.allIds.length === 0 && (
+              <div className="pc-no-blogs">
+                <p>You have not created any blogs at the moment.</p>
+              </div>
+            )
+          }
           {
             database.Blog.allIds.map((id, index) => {
               return (

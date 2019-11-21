@@ -110,9 +110,7 @@ class PublicProfile extends React.Component {
             )}
           </div>
           <div className="bio">
-            <p>
-              {userDetails.bio ? <span>{userDetails.bio}</span> : <span style={{ color: '#696969' }}>No bio added</span>}
-            </p>
+            {userDetails.bio ? <p>{userDetails.bio}</p> : <p style={{ color: '#696969' }}>No bio added</p>}
           </div>
           <div className="education">
             <p className="p-top">
