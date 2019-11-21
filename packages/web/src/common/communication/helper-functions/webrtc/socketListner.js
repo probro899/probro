@@ -5,11 +5,15 @@ export default (props, state) => {
   // Handle offer request
   client.on('offer', async (data) => {
     console.log('Offer arrived', data);
-    const { updateWebRtc } = props;
+    const { updateWebRtc, database } = props;
+    const { broadCastId, broadCastType, connectionId } = data;
+    const type = broadCastType === 'UserConnection' ? 'user' : 'board';
     const { webRtc, account } = store.getState();
     const { apis } = state;
     if (webRtc.showCommunication) {
       if (!webRtc.isLive) {
+        await updateWebRtc('chatHistory', { type, user: { user: database.User.byId[broadCastId] }, broadCastId });
+        await updateWebRtc('showCommunication', broadCastId);
         updateWebRtc('showIncommingCall', true);
       }
       updateWebRtc('currentOffer', data);
@@ -40,6 +44,8 @@ export default (props, state) => {
         updateWebRtc('liveIncomingCall', true);
       }
     } else {
+      await updateWebRtc('chatHistory', { type, user: { user: database.User.byId[broadCastId] }, broadCastId });
+      await updateWebRtc('showCommunication', broadCastId);
       updateWebRtc('showIncommingCall', true);
       updateWebRtc('currentOffer', data);
       updateWebRtc('pendingOffers', [...webRtc.pendingOffers, data]);

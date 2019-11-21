@@ -124,15 +124,19 @@ class Communication extends React.Component {
           />
           )
           }
+          {webRtc.showIncommingCall && webRtc.chatHistory.type && (
           <IncomingCallScreen
-            style={webRtc.showIncommingCall ? { display: 'flex' } : { display: 'none' }}
+            // style={webRtc.showIncommingCall ? { display: 'flex' } : { display: 'none' }}
             change={this.switchScreen}
             webRtc={webRtc}
             answerHandler={answerHandler(this.props, this.state)}
             apis={apis}
             updateWebRtc={updateWebRtc}
             closeHandler={closeHandler(this.props, this.state)}
+            {...this.props}
           />
+          )
+          }
         </div>
       </div>
       )
