@@ -1,6 +1,7 @@
 @import './config.scss';
 
 .search-result {
+  // this is for footer
   min-height: calc(100vh - #{$navbarHeight} - #{$footerHeight});
   margin-top: $navbarHeight;
   .filter-toolbar {
@@ -8,9 +9,10 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    background: white;
+    background: $backgroundColor;
     padding: 5px;
-    box-shadow: 1px 1px 3px 0px rgba(155,156,161,1);
+    width: 100%;
+    box-shadow: 1px 1px 3px 0px $normalShadowColor;
     .set {
       display: flex;
       justify-content: center;
@@ -38,11 +40,24 @@
       font-weight: bold;
     }
     .i-result {
-      margin-top: 5px;
+      margin: 15px 0px;
       width: 100%;
       display: flex;
+      align-items: center;
       .img-con {
-        padding: 3px;
+        border: 1px solid $normalBorder;
+        border-radius: 50%;
+        overflow: hidden;
+        width: 70px;
+        height: 70px;
+        img.portrait {
+          width: 100%;
+          height: auto;
+        }
+        img.landscape {
+          height: 100%;
+          width: auto;
+        }
       }
       .desc-con {
         padding-left: 5px;
@@ -57,6 +72,13 @@
       }
       img {
         border-radius: 50%;
+      }
+    }
+  }
+  @media screen and (max-width: 855px) {
+    .filter-toolbar {
+      .filter-label {
+        display: none;
       }
     }
   }

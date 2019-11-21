@@ -69,10 +69,11 @@ class Profile extends Component {
             {user.middleName ? `${user.firstName} ${user.middleName} ${user.lastName}` : `${user.firstName} ${user.lastName}`}
           </span>
           <br />
-          <span className="designation">Software Engineer at Somewhere</span>
-          <br />
           <Icon icon="locate" />
-          <span className="country"> Nepal</span>
+          <span className="country">
+            {' '}
+            {userDetail.address ? userDetail.address : '---'}
+          </span>
         </div>
         <Bio
           account={account}
@@ -88,6 +89,7 @@ class Profile extends Component {
           account={account}
           updateDatabaseSchema={updateDatabaseSchema}
           addDatabaseSchema={addDatabaseSchema}
+          deleteDatabaseSchema={deleteDatabaseSchema}
         />
         <Experience
           apis={apis}
@@ -95,6 +97,7 @@ class Profile extends Component {
           account={account}
           updateDatabaseSchema={updateDatabaseSchema}
           addDatabaseSchema={addDatabaseSchema}
+          deleteDatabaseSchema={deleteDatabaseSchema}
         />
         <Skills
           account={account}

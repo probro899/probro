@@ -34,7 +34,7 @@ class FileInput extends React.Component {
         onFocus={this.changeStyle}
         className="image-upload-icon"
       >
-        <Icon icon={IconNames.PLUS} intent={Intent.PRIMARY} iconSize="30" color="white" />
+        <Icon icon={IconNames.PLUS} intent={Intent.PRIMARY} iconSize={20} color="white" />
         <input
           ref={this.fileInputRef}
           type="file"

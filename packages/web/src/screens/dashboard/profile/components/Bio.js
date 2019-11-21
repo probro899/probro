@@ -77,9 +77,7 @@ class Bio extends React.Component {
       <div className="bio">
         <p className="bio-content">About</p>
         <div className="bio-info">
-          <p>
-            {bi ? <span>{bi}</span> : <span style={{ color: '#696969' }}>No bio added</span>}
-          </p>
+          {bi ? <p>{bi}</p> : <p style={{ color: '#696969' }}>No bio added</p>}
           <p className="edit">
             <Icon icon="edit" onClick={this.togglePopover} />
           </p>
@@ -105,9 +103,6 @@ Bio.propTypes = {
   account: PropTypes.objectOf(PropTypes.any).isRequired,
   apis: PropTypes.objectOf(PropTypes.any).isRequired,
   database: PropTypes.objectOf(PropTypes.any).isRequired,
-  updateDatabaseSchema: PropTypes.func.isRequired,
-  addDatabaseSchema: PropTypes.func.isRequired,
-  deleteDatabaseSchema: PropTypes.func.isRequired,
 };
 
 export default Bio;

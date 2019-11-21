@@ -9,9 +9,10 @@ import { ENDPOINT } from '../../../../config';
 import { Spinner } from '../../../../common';
 
 class SearchResult extends React.Component {
-  state={ loading: true, data: {} };
+  state={ loading: true, data: {}, changeStyle: false };
 
   async componentDidMount() {
+    window.addEventListener('scroll', this.fireScroll, { passive: true });
     const { match } = this.props;
     try {
       let res;
@@ -29,11 +30,25 @@ class SearchResult extends React.Component {
     }
   }
 
+  fireScroll = (e) => {
+    const { changeStyle } = this.state;
+    if (window.scrollY > 65 && !changeStyle) {
+      this.setState({
+        changeStyle: true,
+      });
+    }
+    if (window.scrollY < 65 && changeStyle) {
+      this.setState({
+        changeStyle: false,
+      });
+    }
+  }
+
   render() {
-    const { loading, data } = this.state;
+    const { loading, data, changeStyle } = this.state;
     return loading ? <Spinner /> : (
       <div>
-        <Navbar />
+        <Navbar className={!changeStyle ? 'pcm-nav' : ''} />
         <div className="search-result">
           <FilterToolbar />
           <ResultList data={data} />

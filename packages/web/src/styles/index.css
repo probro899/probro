@@ -124,29 +124,29 @@ top attachment etc.
 @media screen and (max-width: 855px) { .pc-small-screen-sidenav { display: block; margin: 70px 20px 0px 15px; } }
 
 .profile { display: flex; flex-direction: column; padding: 4px; position: relative; width: 100%; overflow: hidden; }
-.profile .cover-pic { max-height: 300px; position: relative; overflow: hidden; width: 100%; background: linear-gradient(to right, #2b5468, 0%, #137cbd, 100%); }
-.profile .cover-pic .cr-boundary { z-index: 0; }
+.profile .cover-pic { position: relative; overflow: hidden; width: 100%; height: calc((100vw * 0.81) * 0.33); }
+@media screen and (max-width: 855px) { .profile .cover-pic { height: calc(100vw * 0.33); } }
 .profile .cover-pic img { width: 100%; }
 .profile .cover-pic .edit-cover { padding: 5px; position: absolute; z-index: 1; bottom: 0; right: 0; color: #fff; }
 .profile .cover-pic .edit-cover .edit-icon { vertical-align: text-top; }
 .profile .cover-pic .edit-cover:hover { text-decoration: underline; cursor: pointer; color: #1d4354; }
 .profile .cover-pic .edit-cover:hover svg { fill: #1d4354; }
 .profile .cover-pic-edit-mode { display: flex; flex: 1; justify-content: center; width: 100%; position: relative; }
-.profile .cover-pic-edit-mode .canvas-container { height: calc((100vw * 0.81) * 0.33) !important; }
+.profile .cover-pic-edit-mode .canvas-container { height: calc((100vw * 0.81) * 0.33) !important; width: 100% !important; }
 @media screen and (max-width: 855px) { .profile .cover-pic-edit-mode .canvas-container { height: calc(100vw * 0.33) !important; } }
 .profile .cover-pic-edit-mode .canvas-container #mainCanvas { width: 100% !important; object-fit: contain !important; height: auto !important; background: white; box-shadow: 3px 3px 3px 3px; }
 .profile .cover-pic-edit-mode .canvas-container .upper-canvas { object-fit: contain !important; height: auto !important; width: 100% !important; }
 .profile .cover-pic-edit-mode .edit-cover { padding: 5px; position: absolute; z-index: 1; bottom: 5px; right: 1px; color: #fff; }
 .profile .cover-pic-edit-mode .edit-cover:hover { text-decoration: underline; cursor: pointer; color: #1d4354; }
 .profile .cover-pic-edit-mode .pc-zoom-slider { position: absolute; bottom: 10px; }
-.profile .profilePic { position: absolute; top: 100px; left: 10px; border: 1px solid #e0e0e0; box-shadow: 0px 0px 5px 1px rgba(57, 73, 76, 0.35); border-radius: 50%; width: 150px; height: 150px; overflow: hidden; }
+.profile .profilePic { position: absolute; left: 10px; border: 1px solid #e0e0e0; box-shadow: 0px 0px 5px 1px rgba(57, 73, 76, 0.35); border-radius: 50%; width: calc((100vw * 0.81 * 0.33) * 0.55); height: calc((100vw * 0.81 * 0.33) * 0.55); overflow: hidden; top: calc((100vw * 0.81) * 0.33 * 0.4); }
 .profile .profilePic img.portrait { width: 100%; height: auto; }
 .profile .profilePic img.landscape { height: 100%; width: auto; }
-.profile .profilePic span { position: absolute; top: 70px; left: 110px; }
-.profile .profilePic svg { border-radius: 100px; background-color: #2572D1; }
+.profile .profilePic .image-upload-icon { position: absolute; bottom: 30%; right: 4%; }
+.profile .profilePic .image-upload-icon svg { border-radius: 50%; background-color: #2572D1; }
+@media screen and (max-width: 855px) { .profile .profilePic { top: calc(100vw * 0.33 * 0.4); left: 20px; width: calc((100vw * 0.33) * 0.55); height: calc((100vw * 0.33) * 0.55); } }
 .profile .top-details { width: 100%; background: white; padding: 5px; }
 .profile .top-details .name { font-size: 20px; font-weight: bold; }
-.profile .top-details .designation { font-size: 16px; font-weight: bold; color: #696969; }
 .profile .bio { width: 100%; padding: 20px 5px; }
 .profile .bio .bio-content { font-size: 20px; }
 .profile .bio .bio-info { margin-left: 2px; display: flex; justify-content: space-between; }
@@ -174,7 +174,7 @@ top attachment etc.
 .profile .skills { padding: 20px 5px; width: 100%; }
 .profile .skills p.p-top { font-size: 20px; display: flex; justify-content: space-between; padding-right: 5px; }
 .profile .skills p.p-top svg { fill: #137cbd; }
-.profile .skills .skills-container { padding: 5px 5px 5px 0px; }
+.profile .skills .skills-container { padding: 5px 5px 5px 0px; display: flex; flex-wrap: wrap; word-wrap: break-word; }
 .profile .skills .skills-container span { margin: 5px; padding: 5px; color: #fff; background: #137cbd; }
 @media screen and (max-width: 855px) { .profile { padding: 5px 15px; } }
 
@@ -294,13 +294,15 @@ top attachment etc.
 
 .create-blog { margin-top: 60px; }
 .create-blog div[contenteditable]:focus { outline: 0px solid transparent; }
-.create-blog [contenteditable]:empty::before { content: attr(datatext); color: grey; }
+.create-blog [contenteditable]:empty::before { content: attr(datatext); color: #696969; }
 .create-blog .blog-top { padding: 10px; text-align: center; }
 .create-blog .blog-top span { font-size: 25px; font-weight: 600; }
-.create-blog .toolbar { display: flex; margin: 2px; padding: 10px; background-color: #DFDCDC; justify-content: space-between; }
-.create-blog .toolbar .left .switch { font-size: 18px; font-weight: bold; }
-.create-blog .toolbar .left .switch span { margin-top: 3px; }
-.create-blog .toolbar button { margin: 0px 3px 0px 3px; }
+.create-blog .toolbar { display: flex; width: 100%; margin: 2px; padding: 10px; background-color: #f9f9f9; justify-content: space-between; }
+.create-blog .toolbar .left { display: flex; align-items: center; }
+.create-blog .toolbar .left label { margin-bottom: 0px; }
+.create-blog .toolbar .right { display: flex; align-items: center; }
+.create-blog .toolbar .center { display: flex; justify-content: center; align-items: center; flex-wrap: wrap; }
+.create-blog .toolbar button { margin: 3px; }
 .create-blog .title { margin: 10px; }
 .create-blog .title textarea { font-size: 30px; font-weight: bold; }
 .create-blog .editor-container { padding: 5px 10px 5px 10px; }
@@ -312,6 +314,8 @@ top attachment etc.
 .blogs .header .title { font-size: 18px; color: #222; }
 .blogs .header small { color: #696969; }
 .blogs .blog-list { display: flex; flex-wrap: wrap; }
+.blogs .blog-list .pc-no-blogs { width: 100%; height: 50vh; display: flex; align-items: center; justify-content: center; }
+.blogs .blog-list .pc-no-blogs p { color: #696969; }
 .blogs .blog-list .blog-container { margin: 10px; max-width: 250px; box-shadow: 0px 1px 2px 1px rgba(57, 73, 76, 0.35); }
 .blogs .blog-list .blog-container .img-container { width: 100%; position: relative; overflow: hidden; }
 .blogs .blog-list .blog-container .img-container .more-button { position: absolute; top: 0; right: 0; }
@@ -335,6 +339,10 @@ top attachment etc.
 .popover-form { padding: 5px 5px 0px 5px; }
 .popover-form.bio .bp3-form-group { margin-bottom: 2px; }
 .popover-form div.top { font-size: 18px; font-weight: 600; padding-bottom: 10px; text-align: center; }
+.popover-form .bp3-form-group { margin: 0; }
+.popover-form .pc-pop-delete-button { margin-top: 5px; }
+.popover-form .pc-pop-delete-button button span { color: #696969; }
+.popover-form .pc-pop-delete-button button svg { fill: #696969; }
 
 .delete-popover { padding: 5px 0px; }
 .delete-popover .top { padding: 15px 0px; text-align: center; font-size: 16px; }
@@ -447,65 +455,67 @@ top attachment etc.
 .public-blog .response .right { flex: 0.1; }
 
 .public-profile { margin-top: 60px; min-height: calc(100vh - 60px - 125px); flex: 0.8; display: flex; align-items: center; flex-direction: column; padding: 1px 3px; position: relative; }
-.public-profile .cover-pic { height: 250px; position: relative; width: 100%; background: linear-gradient(to right, #9be1f3 0%, #43c0df 100%); }
-.public-profile .cover-pic .edit-cover { padding: 5px; position: absolute; bottom: 0; right: 0; color: white; }
-.public-profile .cover-pic .edit-cover .edit-icon { vertical-align: text-top; }
-.public-profile .cover-pic .edit-cover:hover { text-decoration: underline; cursor: pointer; color: #137cbd; }
-.public-profile .cover-pic .edit-cover:hover svg { fill: #137cbd; }
-.public-profile .profilePic { position: absolute; top: 100px; left: 10px; border: 1px solid #e0e0e0; box-shadow: 0px 0px 5px 1px rgba(57, 73, 76, 0.35); border-radius: 50%; width: 150px; height: 150px; overflow: hidden; }
+.public-profile .cover-pic { overflow: hidden; width: 100%; height: calc((100vw * 0.81) * 0.33); }
+@media screen and (max-width: 855px) { .public-profile .cover-pic { height: calc(100vw * 0.33); } }
+.public-profile .cover-pic img { width: 100%; }
+.public-profile .profilePic { position: absolute; left: 10px; border: 1px solid #e0e0e0; box-shadow: 0px 0px 5px 1px rgba(57, 73, 76, 0.35); border-radius: 50%; width: calc((100vw * 0.81 * 0.33) * 0.55); height: calc((100vw * 0.81 * 0.33) * 0.55); overflow: hidden; top: calc((100vw * 0.81) * 0.33 * 0.4); }
 .public-profile .profilePic img.portrait { width: 100%; height: auto; }
 .public-profile .profilePic img.landscape { height: 100%; width: auto; }
-.public-profile .profilePic span { position: absolute; top: 70px; left: 110px; }
-.public-profile .profilePic svg { border-radius: 100px; background-color: #2572D1; }
-.public-profile .top-details { width: 100%; display: flex; justify-content: space-between; background: white; padding: 5px; }
+@media screen and (max-width: 855px) { .public-profile .profilePic { top: calc(100vw * 0.33 * 0.4); left: 20px; width: calc((100vw * 0.33) * 0.55); height: calc((100vw * 0.33) * 0.55); } }
+.public-profile .top-details { width: 100%; display: flex; justify-content: space-between; background: #fff; padding: 5px; }
+.public-profile .top-details .name { font-size: 20px; font-weight: bold; }
 .public-profile .top-details .connect-btns { flex: 0.3; display: flex; flex-direction: column; justify-content: center; align-items: center; }
 .public-profile .top-details .connect-btns .con { display: flex; }
 .public-profile .top-details .connect-btns .con .con-option { display: flex; flex-direction: row; }
+.public-profile .top-details .connect-btns .con .con-option button { padding: 10px; }
 .public-profile .top-details .connect-btns button { margin-left: 10px; font-size: 16px; font-weight: 400; }
 .public-profile .top-details .desc { flex: 0.7; }
 .public-profile .top-details .desc .name { font-size: 20px; font-weight: bold; }
-.public-profile .top-details .desc .designation { font-size: 16px; font-weight: bold; color: rgba(20, 18, 18, 0.596); }
-.public-profile .bio { margin-top: 5px; background: white; text-align: center; width: 100%; }
-.public-profile .bio p { font-family: 'Oxygen', sans-serif; font-weight: bold; font-style: italic; font-size: 16px; }
-.public-profile .education { margin-top: 5px; width: 100%; background: white; }
-.public-profile .education p.p-top { font-size: 20px; font-weight: bold; display: flex; justify-content: space-between; padding-right: 5px; }
+.public-profile .bio { text-align: center; width: 100%; padding: 20px 5px; }
+.public-profile .bio p { font-family: 'Oxygen', sans-serif; font-size: 16px; word-wrap: break-word; }
+.public-profile .education { padding: 20px 5px; width: 100%; }
+.public-profile .education p.p-top { font-size: 20px; display: flex; justify-content: space-between; padding-right: 5px; }
 .public-profile .education p.p-top svg { fill: #137cbd; }
 .public-profile .education .p-edu-list .p-edu-list-i { display: flex; padding: 2px; }
 .public-profile .education .p-edu-list .p-edu-list-i img { height: 45px; padding: 2px; }
 .public-profile .education .p-edu-list .p-edu-list-i p { padding: 0px 0px 0px 10px; }
 .public-profile .education .p-edu-list .p-edu-list-i p span.p-name-i { font-size: 18px; font-weight: bold; }
-.public-profile .education .p-edu-list .p-edu-list-i p span.p-timeline { font-weight: bold; color: #757575; }
+.public-profile .education .p-edu-list .p-edu-list-i p span.p-timeline { font-weight: bold; color: #696969; }
 .public-profile .education .p-edu-list .p-edu-list-i p svg { fill: #137cbd; }
-.public-profile .experience { margin-top: 5px; width: 100%; background: white; }
-.public-profile .experience p.p-top { font-size: 20px; font-weight: bold; display: flex; justify-content: space-between; padding-right: 5px; }
+.public-profile .experience { padding: 20px 5px; width: 100%; }
+.public-profile .experience p.p-top { font-size: 20px; display: flex; justify-content: space-between; padding-right: 5px; }
 .public-profile .experience p.p-top svg { fill: #137cbd; }
 .public-profile .experience .p-exp-list .p-exp-list-i { display: flex; padding: 2px; }
 .public-profile .experience .p-exp-list .p-exp-list-i img { height: 45px; padding: 2px; }
 .public-profile .experience .p-exp-list .p-exp-list-i p { padding: 0px 0px 0px 10px; }
 .public-profile .experience .p-exp-list .p-exp-list-i p span.p-title-i { font-size: 18px; font-weight: bold; }
-.public-profile .experience .p-exp-list .p-exp-list-i p span.p-company-i { font-size: 16px; font-weight: bold; color: #757575; }
-.public-profile .experience .p-exp-list .p-exp-list-i p span.p-timeline { font-weight: bold; color: #757575; }
+.public-profile .experience .p-exp-list .p-exp-list-i p span.p-company-i { font-size: 16px; font-weight: bold; color: #696969; }
+.public-profile .experience .p-exp-list .p-exp-list-i p span.p-timeline { font-weight: bold; color: #696969; }
 .public-profile .experience .p-exp-list .p-exp-list-i p svg { fill: #137cbd; }
-.public-profile .skills { margin-top: 5px; width: 100%; background: white; }
-.public-profile .skills p.p-top { font-size: 20px; font-weight: bold; display: flex; justify-content: space-between; padding-right: 5px; }
+.public-profile .skills { padding: 20px 5px; width: 100%; }
+.public-profile .skills p.p-top { font-size: 20px; display: flex; justify-content: space-between; padding-right: 5px; }
 .public-profile .skills p.p-top svg { fill: #137cbd; }
-.public-profile .skills .skills-container { padding: 5px 5px 5px 0px; }
-.public-profile .skills .skills-container span { margin: 5px; padding: 5px; color: white; background: #137cbd; }
+.public-profile .skills .skills-container { padding: 5px 5px 5px 0px; display: flex; flex-wrap: wrap; }
+.public-profile .skills .skills-container span { margin: 5px; padding: 5px; color: #fff; background: #137cbd; }
+@media screen and (max-width: 855px) { .public-profile { padding: 5px 15px; } }
 
 .search-result { min-height: calc(100vh - 60px - 125px); margin-top: 60px; }
-.search-result .filter-toolbar { min-height: 40px; display: flex; flex-direction: row; justify-content: space-between; background: white; padding: 5px; box-shadow: 1px 1px 3px 0px #9b9ca1; }
+.search-result .filter-toolbar { min-height: 40px; display: flex; flex-direction: row; justify-content: space-between; background: #fff; padding: 5px; width: 100%; box-shadow: 1px 1px 3px 0px rgba(57, 73, 76, 0.35); }
 .search-result .filter-toolbar .set { display: flex; justify-content: center; align-items: center; }
 .search-result .filter-toolbar .filter-label { font-size: 20px; font-weight: bold; opacity: 0.8; }
 .search-result .filter-toolbar .btn-group { padding-top: 6px; margin-left: 50px; vertical-align: middle; }
 .search-result .filter-toolbar .btn-group button { min-height: 0; }
 .search-result .result-list { padding: 5px; flex: 0.7; }
 .search-result .result-list .label { opacity: 0.7; font-weight: bold; }
-.search-result .result-list .i-result { margin-top: 5px; width: 100%; display: flex; }
-.search-result .result-list .i-result .img-con { padding: 3px; }
+.search-result .result-list .i-result { margin: 15px 0px; width: 100%; display: flex; align-items: center; }
+.search-result .result-list .i-result .img-con { border: 1px solid #e0e0e0; border-radius: 50%; overflow: hidden; width: 70px; height: 70px; }
+.search-result .result-list .i-result .img-con img.portrait { width: 100%; height: auto; }
+.search-result .result-list .i-result .img-con img.landscape { height: 100%; width: auto; }
 .search-result .result-list .i-result .desc-con { padding-left: 5px; }
 .search-result .result-list .i-result .desc-con .name { font-size: 16px; font-weight: bold; }
 .search-result .result-list .i-result .desc-con .location { opacity: 0.8; font-weight: bold; }
 .search-result .result-list .i-result img { border-radius: 50%; }
+@media screen and (max-width: 855px) { .search-result .filter-toolbar .filter-label { display: none; } }
 
 .footer { margin-top: 20px; min-height: 125px; padding: 5px; background: #1d4354; color: #fff; }
 .footer .pc-logo { padding: 5px; font-size: 18px; font-weight: bold; }
@@ -553,3 +563,5 @@ body { margin: 0; padding: 0; background-color: #fff; font-family: "Gotham-Pro";
 .bp3-button { border-radius: 0; }
 
 .bp3-input { border-radius: 0; }
+
+.pc-date-picker .bp3-input-action { top: 6px; right: 5px !important; }

@@ -200,7 +200,7 @@ class Blogs extends Component {
         {
           userId: account.user.id,
           timeStamp: Date.now(),
-          saveStatus: 'draft',
+          saveStatus: publish,
           title,
           content: description,
         });
@@ -212,7 +212,7 @@ class Blogs extends Component {
         id: Date.now(),
         userId: account.user.id,
         timeStamp: Date.now(),
-        saveStatus: 'draft',
+        saveStatus: publish,
         title,
         content: description,
       });
@@ -230,7 +230,7 @@ class Blogs extends Component {
     ]);
     updateDatabaseSchema('Blog', {
       id: blogId,
-      saveStatus: 'draft',
+      saveStatus: publish,
       title,
       content: description,
     });
@@ -239,12 +239,32 @@ class Blogs extends Component {
   publish = async (e) => {
     const {
       blogId,
+      apis,
+      title,
+      description,
     } = this.state;
+    const { updateDatabaseSchema } = this.props;
+    const saveStatus = e.target.checked ? 'publish' : 'draft';
     if (blogId !== '') {
       this.setState({
-        publish: e.target.checked ? 'publish' : 'draft',
+        publish: saveStatus,
       });
-      this.saveBlog();
+      await updateBlog(apis.updateBlog, [
+        {
+          title,
+          content: description,
+          saveStatus,
+        },
+        {
+          id: blogId,
+        },
+      ]);
+      updateDatabaseSchema('Blog', {
+        id: blogId,
+        saveStatus,
+        title,
+        content: description,
+      });
     }
   }
 
@@ -306,10 +326,10 @@ class Blogs extends Component {
             <div className="left">
               <Switch
                 innerLabel="Draft"
-                innerLabelChecked="Live"
+                innerLabelChecked="Public"
                 alignIndicator="right"
                 large
-                label="Status"
+                // label="Status"
                 checked={publish === 'publish'}
                 className="switch"
                 onChange={this.publish}

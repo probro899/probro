@@ -14,6 +14,20 @@
     padding-bottom: 10px;
     text-align: center;
   }
+  .bp3-form-group {
+    margin: 0;
+  }
+  .pc-pop-delete-button {
+    margin-top: 5px;
+    button {
+      span {
+        color: $lightTextColor;
+      }
+      svg {
+        fill: $lightTextColor;
+      }
+    }
+  }
 }
 
 // styling the delete popover container

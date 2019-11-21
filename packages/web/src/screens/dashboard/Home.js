@@ -25,6 +25,7 @@ class HomePage extends Component {
   render() {
     const { error } = this.state;
     const { account, match } = this.props;
+    // console.log('error', error, 'account online ->', account, 'match', match);
     return (
       error ? <Redirect push to="/" />
         : (

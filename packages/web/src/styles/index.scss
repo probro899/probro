@@ -64,3 +64,10 @@ body {
 .bp3-input {
   border-radius: 0;
 }
+
+.pc-date-picker {
+  .bp3-input-action {
+    top: 6px;
+    right: 5px !important;
+  }
+}

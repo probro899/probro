@@ -80,8 +80,16 @@ class Education extends React.Component {
     });
   }
 
+  onDelete = async () => {
+    const { editObj } = this.state;
+    const { apis, deleteDatabaseSchema } = this.props;
+    await apis.deleteUserEducation({ id: editObj.id });
+    deleteDatabaseSchema('UserEducation', { id: editObj.id });
+    this.togglePopover(editObj);
+  }
+
   render() {
-    const { educationEditPopover } = this.state;
+    const { educationEditPopover, editObj } = this.state;
     const { database, account } = this.props;
     const schools = [];
     Object.values(database.UserEducation.byId).map((obj) => {
@@ -92,6 +100,8 @@ class Education extends React.Component {
     return (
       <div className="education">
         <PopoverForm
+          del={editObj}
+          onDelete={this.onDelete}
           isOpen={educationEditPopover}
           structure={educationSchema}
           callback={this.addEducation}

@@ -55,6 +55,9 @@ class Footer extends React.Component {
               <div>
                 <span>Safety center</span>
               </div>
+              <div>
+                <span>Report</span>
+              </div>
             </div>
           </div>
         </div>

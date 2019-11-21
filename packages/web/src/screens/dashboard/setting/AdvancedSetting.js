@@ -41,13 +41,25 @@ class AdvancedSettings extends React.Component {
     return (
       <div className="container-settings">
         <div className="switch-adv-con">
-          <p>
-            Change your profile to mentor
-            <br />
-            and help people learn with your knowledge base.
-            <br />
-            Be a part to educate the world.
-          </p>
+          {
+            mentor ? (
+              <p>
+                You are a Mentor
+                <br />
+                Help people learn with your knowledge base.
+                <br />
+                Be a part to educate the world.
+              </p>
+            ) : (
+              <p>
+                Change your profile to Mentor
+                <br />
+                and help people learn with your knowledge base.
+                <br />
+                Be a part to educate the world.
+              </p>
+            )
+          }
           <Switch
             onChange={this.switchUser}
             className="switch-button"
