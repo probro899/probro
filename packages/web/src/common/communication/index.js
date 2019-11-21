@@ -1,6 +1,5 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -20,8 +19,13 @@ class Communication extends React.Component {
   };
 
   async componentWillMount() {
-    const apisRes = await client.scope('Mentee');
-    this.setState({ apis: apisRes });
+    let apisRes = null;
+    try {
+      apisRes = await client.scope('Mentee');
+    } catch (e) {
+      console.error('error in fetching apis in communication');
+    }
+    await this.setState({ apis: apisRes });
     socketListner(this.props, this.state);
   }
 
@@ -33,13 +37,18 @@ class Communication extends React.Component {
   }
 
   cutWindow = () => {
-    const { updateWebRtc } = this.props;
+    const { updateWebRtc, webRtc } = this.props;
     updateWebRtc('showCommunication', false);
     updateWebRtc('showIncommingCall', false);
   }
 
-  switchScreen = (target) => {
-    const { updateWebRtc } = this.props;
+  switchScreen = async (target) => {
+    const { updateWebRtc, webRtc } = this.props;
+    console.log('close handler in index', webRtc);
+    if (webRtc.isLive) {
+      console.log('close handler called in index');
+      closeHandler(this.props)();
+    }
     updateWebRtc('communicationContainer', target);
   }
 
@@ -47,7 +56,6 @@ class Communication extends React.Component {
     const { minimize, apis } = this.state;
     const {
       webRtc,
-      account,
       updateWebRtc,
     } = this.props;
     // console.log('apis', apis, 'props', this.props);
@@ -105,16 +113,17 @@ class Communication extends React.Component {
             {...this.props}
           />
           )}
+          {!webRtc.showIncommingCall && webRtc.communicationContainer === 'connecting' && webRtc.chatHistory.type && (
           <CallScreen
-            style={!webRtc.showIncommingCall && webRtc.communicationContainer === 'connecting' ? { display: 'block' } : { display: 'none' }}
+            // style={!webRtc.showIncommingCall && webRtc.communicationContainer === 'connecting' ? { display: 'block' } : { display: 'none' }}
             change={this.switchScreen}
-            webRtc={webRtc}
-            account={account}
-            apis={apis}
             updateWebRtc={updateWebRtc}
             closeHandler={closeHandler(this.props, this.state)}
             _callHandler={callHandler(this.props, this.state)}
+            {...this.props}
           />
+          )
+          }
           <IncomingCallScreen
             style={webRtc.showIncommingCall ? { display: 'flex' } : { display: 'none' }}
             change={this.switchScreen}

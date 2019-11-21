@@ -37,7 +37,7 @@ class MessageSender extends React.Component {
   render() {
     const { message } = this.state;
     return (
-      <div className="chat-box">
+      <div className="chat-box" style={{ marginTop: 10 }}>
         <TextArea
           placeholder="Type here something..."
           onChange={this.onMessageType}

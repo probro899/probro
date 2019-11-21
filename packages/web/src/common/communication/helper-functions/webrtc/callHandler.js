@@ -6,6 +6,7 @@ export default (props, state) => async (apis, stream) => {
   let { webRtc } = store.getState();
   const { updateWebRtc, account } = props;
   if (!webRtc.isLive) {
+    console.log('creating pc for users');
     await createPcForEachUser(webRtc.showCommunication, props, state);
   }
   // eslint-disable-next-line

@@ -3,6 +3,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Button } from '@blueprintjs/core';
+import Moment from 'react-moment';
 import ScrollToBottom from 'react-scroll-to-bottom';
 import mediaSelector from '../mediaSelector';
 import { MessageSender } from '../components';
@@ -35,10 +36,24 @@ class ChatHistory extends React.Component {
     change('connecting');
   }
 
+  containerHandler = (msg) => {
+    switch (msg.type) {
+      case 'date':
+        return (
+          <div style={{ width: '95%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: 10 }}>
+            <Moment style={{ color: '#757575', padding: 5, border: '1px solid #757575', borderRadius: 10, fontSize: 10 }} format="YYYY MMM DD">{msg.timeStamp}</Moment>
+          </div>
+        );
+      default:
+        return <Message own={isOwnFinder(msg, this.props)} obj={msg} props={this.props} />;
+    }
+  }
+
   render() {
     const {
       style,
       webRtc,
+      database
     } = this.props;
     console.log('chat historyList state', this.state);
     const { user, boardDetails } = webRtc.chatHistory;
@@ -59,16 +74,16 @@ class ChatHistory extends React.Component {
             />
           </div>
           <div className="op-name">
-            {user ? `${user.user.firstName} ${user.user.lastName}` : boardDetails.name}
+            {webRtc.chatHistory.type === 'user' ? `${user.user.firstName} ${user.user.lastName}` : database.Board.byId[webRtc.showCommunication].name}
           </div>
           <div className="call-control">
             <Button icon="phone" intent="success" onClick={() => this.toCallScreen('audio')} />
-            <Button icon="mobile-video" intent="danger" onClick={() => this.toCallScreen('video')} />
+            <Button icon="mobile-video" intent="success" onClick={() => this.toCallScreen('video')} />
           </div>
         </div>
         <ScrollToBottom className="chats">
           {
-          messages.sort(normalTimeStampSorting).map(msg => <Message own={isOwnFinder(msg, this.props)} obj={msg} props={this.props} />)
+          messages.sort(normalTimeStampSorting).map(msg => this.containerHandler(msg))
           }
         </ScrollToBottom>
         <MessageSender {...this.props} />

@@ -1,7 +1,7 @@
 import store from '../../../../store';
 
 export default props => async () => {
-  // console.log('close handler called');
+  console.log('close handler called');
   const { updateWebRtc } = props;
   const { webRtc } = store.getState();
   const pcs = Object.values(webRtc.peerConnections);

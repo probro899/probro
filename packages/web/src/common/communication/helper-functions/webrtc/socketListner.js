@@ -9,6 +9,9 @@ export default (props, state) => {
     const { webRtc, account } = store.getState();
     const { apis } = state;
     if (webRtc.showCommunication) {
+      if (!webRtc.isLive) {
+        updateWebRtc('showIncommingCall', true);
+      }
       updateWebRtc('currentOffer', data);
       updateWebRtc('pendingOffers', [...webRtc.pendingOffers, data]);
       if (webRtc.isLive) {
@@ -21,7 +24,15 @@ export default (props, state) => {
           } else {
             answer = await pc.createAnswer(offer, webRtc.outGoingCallType);
           }
-          apis.createAnswer({ answerDetail: { answer, uid: account.user.id, boardId }, userList: [{ userId: uid }] });
+          apis.createAnswer({
+            answerDetail: {
+              answer,
+              uid: account.user.id,
+              broadCastId: webRtc.chatHistory.type === 'user' ? account.user.id : webRtc.showCommunication,
+              broadCastType: webRtc.chatHistory.type === 'user' ? 'UserConnection' : 'Board',
+            },
+            userList: [{ userId: uid }],
+          });
         } catch (e) {
           console.error('erro in answerHandler', e);
         }
@@ -49,7 +60,16 @@ export default (props, state) => {
       console.log('sending All candidate during answer', iceCandidate);
       pc.setRemoteDescription(answer);
       iceCandidate.candidates.forEach((e) => {
-        apis.addIceCandidate({ iceCandidateDetail: { iceCandidate: JSON.stringify(e.candidate), uid: account.user.id, boardId: webRtc.currentOffer ? webRtc.currentOffer.boardId : webRtc.showCommunication }, userList: [{ userId: uid }] });
+        apis.addIceCandidate(
+          {
+            iceCandidateDetail: {
+              iceCandidate: JSON.stringify(e.candidate),
+              uid: account.user.id,
+              broadCastId: webRtc.chatHistory.type === 'user' ? account.user.id : webRtc.showCommunication,
+              broadCastType: webRtc.chatHistory.type === 'user' ? 'UserConnection' : 'Board',
+            },
+            userList: [{ userId: uid }],
+          });
       });
       updateWebRtc('iceCandidates', { ...webRtc.iceCandidates, [uid]: { ...webRtc.iceCandidates[uid], sendStatus: true } });
     }
@@ -64,14 +84,25 @@ export default (props, state) => {
     const { webRtc, account } = store.getState();
     const { pc } = webRtc.peerConnections[uid];
     const iceCand = webRtc.iceCandidates[uid];
+    console.log('local iceCandidate status', iceCand);
     if (iceCandidate) {
       pc.addCandidate(iceCandidate);
       if (!iceCand) {
         updateWebRtc('iceCandidates', { ...webRtc.iceCandidates, [uid]: { preFetch: true } });
-      } else if (!iceCand.sendStatus) {
+      } else if (!iceCand.sendStatus && iceCand.candidates && iceCand.candidates.length > 0) {
         console.log('sending All ICe candidate to remote of iceCandidate arrive', iceCand);
         iceCand.candidates.forEach((e) => {
-          apis.addIceCandidate({ iceCandidateDetail: { iceCandidate: JSON.stringify(e.candidate), uid: account.user.id, boardId: webRtc.currentOffer ? webRtc.currentOffer.boardId : webRtc.showCommunication }, userList: [{ userId: uid }] });
+          apis.addIceCandidate(
+            {
+              iceCandidateDetail: {
+                iceCandidate: JSON.stringify(e.candidate),
+                uid: account.user.id,
+                broadCastId: webRtc.chatHistory.type === 'user' ? account.user.id : webRtc.showCommunication,
+                broadCastType: webRtc.chatHistory.type === 'user' ? 'UserConnection' : 'Board',
+              },
+              userList: [{ userId: uid }],
+            }
+          );
         });
         updateWebRtc('iceCandidates', { ...webRtc.iceCandidates, [uid]: { ...webRtc.iceCandidates[uid], sendStatus: true } });
       }

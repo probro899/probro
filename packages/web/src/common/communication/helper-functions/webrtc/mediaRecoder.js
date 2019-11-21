@@ -5,7 +5,7 @@ import store from '../../../../store';
 export default async function (uid, props) {
   // console.log('stream recoder called', uid, store.getState().webRtc);
   // const stream = store.getState().webRtc.streams[uid];
-  const stream = document.getElementById(`video-${uid}`).captureStream();
+  const stream = document.getElementById('video-mentor').captureStream();
 
   let mediaRecorder;
   const recordedBlob = [];
@@ -73,9 +73,15 @@ export default async function (uid, props) {
           id={stream.id}
           href={url}
           style={{ margin: 5 }}
-          download={`${database.Board.byId[webRtc.showCommunication].name}-${formatedDate}`}
+          download={`${webRtc.chatHistory.type === 'user' ? database.User.byId[webRtc.showCommunication].firstName : database.Board.byId[webRtc.showCommunication].name}-${formatedDate}`}
         >
-          <Button onClick={() => downLoadButtonClickHandler(stream.id)} style={{ background: 'green', color: 'white' }} rightIcon="download">{`${database.Board.byId[webRtc.showCommunication].name}-${formatedDate}`}</Button>
+          <Button
+            onClick={() => downLoadButtonClickHandler(stream.id)}
+            style={{ background: 'green', color: 'white' }}
+            rightIcon="download"
+          >
+            {`${webRtc.chatHistory.type === 'user' ? database.User.byId[webRtc.showCommunication].firstName : database.Board.byId[webRtc.showCommunication].name}-${formatedDate}`}
+          </Button>
         </a>
       },
     ]);

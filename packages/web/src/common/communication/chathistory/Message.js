@@ -30,15 +30,19 @@ const Message = ({ own, obj, props }) => {
     <div
       className={own.isOwn ? 'i-chat right' : 'i-chat left'}
       key={obj.id}
+      style={{ marginTop: obj.showImage && 15 }}
     >
-     { obj.showImage &&  <div className="img-wrap">
-        {(own.user.userDetails && own.user.userDetails.image)
-          ? <img alt="profile-img" src={`${ENDPOINT}/user/${10000000 + parseInt(own.user.id, 10)}/profile/${own.user.userDetails.image}`} style={{ height: 30, width: 30, borderRadius: '50%'}} />
-          : <div style={{ color: 'white', display: 'flex', justifyContent: 'center', alignItems: 'center', background: '#154155', height: 30, width: 30, borderRadius: '50%'}}>{`${own.user.firstName.charAt(0).toUpperCase()}${own.user.lastName.charAt(0).toUpperCase()}`}</div>
-              }
+      { (obj.showImage && !own.isOwn) && (
+      <div className="img-wrap">
+          {(own.user.userDetails && own.user.userDetails.image)
+            ? <img alt="profile-img" src={`${ENDPOINT}/user/${10000000 + parseInt(own.user.id, 10)}/profile/${own.user.userDetails.image}`} style={{ height: 30, width: 30, borderRadius: '50%'}} />
+            : <div style={{ color: 'white', display: 'flex', justifyContent: 'center', alignItems: 'center', background: '#154155', height: 30, width: 30, borderRadius: '50%'}}>{`${own.user.firstName.charAt(0).toUpperCase()}${own.user.lastName.charAt(0).toUpperCase()}`}</div>
+                }
       </div>
-     }
+      )
+      }
       <div className="text-contain">
+        {obj.showImage && !own.isOwn && <span style={{ fontSize: 10, color: '#757575', marginLeft: 5 }}>{own.user.firstName}</span>}
         <div
           className="text"
           style={{
@@ -46,6 +50,13 @@ const Message = ({ own, obj, props }) => {
             border: `${own.isOwn ? (obj.status === 'error' ? '1px solid red' : '1px solid #A9DBEF') : '1px solid white'}`,
             padding: 2,
             paddingBottom: 0,
+            margin: 0,
+            marginRight: 5,
+            marginLeft: (!obj.showImage && !own.isOwn) ? 33 : 3,
+            // marginRight: (!obj.showImage && own.isOwn) ? 30 : 0,
+            marginBottom: !obj.showImage && 0,
+            borderBottomRightRadius: own.isOwn && 0,
+            borderBottomLeftRadius: !own.isOwn && 0,
           }}
         >
           {obj.message}

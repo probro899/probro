@@ -2,10 +2,10 @@ import store from '../../../../store';
 import mediaRecorder from './mediaRecoder';
 
 const stopAndRecordStream = async (props, userId, stream) => {
-  console.log('stopAndRecordStream', stream.id);
+  console.log('stopAndRecordStream', stream.id, userId);
   const { webRtc } = store.getState();
   const { updateWebRtc } = props;
-  if (webRtc.mediaRecording && userId === 1 && stream.id !== webRtc.mediaRecording.stream.id) {
+  if (webRtc.mediaRecording && stream.id !== webRtc.mediaRecording.stream.id) {
     console.log('stopAndRecordStream inisde', webRtc.mediaRecording.stream.id, stream.id);
     webRtc.mediaRecording.stopRecording();
     const mediaRecording = await mediaRecorder(1, props);

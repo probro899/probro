@@ -3,10 +3,10 @@ import store from '../../store';
 import { UPDATE_WEBRTC } from '../types';
 
 export default (action) => {
-  console.log('action calld in addShchema helper', action);
+  // console.log('action calld in addShchema helper', action);
   const { schema } = action;
   const { webRtc } = store.getState();
-  console.log('webRtc value in ')
+  // console.log('webRtc value in ')
   if (schema === 'UserMessage') {
     store.dispatch({
       type: UPDATE_WEBRTC,

@@ -10,6 +10,10 @@ class CallScreen extends React.Component {
   state = {
     startRecording: false,
     showWhiteBoard: false,
+    activeAudio: false,
+    activeVideo: false,
+    activeScreenShare: false,
+    activeDrawingBoard: false,
   };
 
   goBack = () => {
@@ -19,8 +23,24 @@ class CallScreen extends React.Component {
 
   callHandle = async (mediaType) => {
     const { _callHandler, apis } = this.props;
-    if (mediaType === 'whiteBoard') {
-      await this.setState({ showWhiteBoard: true });
+    const { activeAudio, activeDrawingBoard, activeVideo, activeScreenShare } = this.state;
+    switch (mediaType) {
+      case 'audio':
+        await this.setState({ activeAudio: !activeAudio });
+        break;
+      case 'video':
+        await this.setState({ activeVideo: !activeVideo });
+        break;
+      case 'screenshare':
+        await this.setState({ activeVideo: false, activeDrawingBoard: false });
+        await this.setState({ activeScreenShare: !activeScreenShare });
+        break;
+      case 'whiteBoard':
+        await this.setState({ activeScreenShare: false, activeVideo: false });
+        await this.setState({ activeDrawingBoard: !activeDrawingBoard });
+        break;
+      default:
+        return null;
     }
     const stream = await mediaSelector(mediaType);
     _callHandler(apis, stream);
@@ -47,8 +67,10 @@ class CallScreen extends React.Component {
   }
 
   render() {
-    const { style, webRtc, account } = this.props;
-    const { showWhiteBoard } = this.state;
+    const { style, webRtc, account,database } = this.props;
+    const { user, boardDetails, type, broadCastId } = webRtc.chatHistory;
+    const { showWhiteBoard, startRecording, activeAudio, activeDrawingBoard, activeVideo, activeScreenShare } = this.state;
+
     // console.log('webRtc in CallScreen', webRtc);
     return !webRtc.showCommunication ? <div /> : (
       <div
@@ -67,7 +89,7 @@ class CallScreen extends React.Component {
             />
           </div>
           <div className="op-name">
-            Subject 1
+            {type === 'user' ? `${user.user.firstName} ${user.user.lastName}` : database.Board.byId[webRtc.showCommunication].name}
           </div>
           <div />
         </div>
@@ -75,13 +97,12 @@ class CallScreen extends React.Component {
           <MediaComponents account={account} webRtc={webRtc} />
         </div>
         <div className="controllers" style={{ zIndex: 20 }}>
-          <Button icon="phone" intent="success" onClick={() => this.callHandle('audio')} />
-          <Button icon="mobile-video" onClick={() => this.callHandle('video')} intent="success" />
+          <Button icon="phone" intent={activeAudio ? 'danger' : 'success'} onClick={() => this.callHandle('audio')} />
+          <Button icon="mobile-video" onClick={() => this.callHandle('video')} intent={activeVideo ? 'danger' : 'success'} />
           <Button icon="cross" intent="danger" onClick={this.callReject} />
-          <Button icon="duplicate" onClick={() => this.callHandle('screenshare')} intent="success" />
-          <Button icon="record" onClick={() => this.recordingHandler()} intent="success" />
-          <Button icon="headset" intent="success" />
-          <Button icon="edit" onClick={() => this.callHandle('whiteBoard')} intent="success" />
+          <Button icon="duplicate" onClick={() => this.callHandle('screenshare')} intent={activeScreenShare ? 'danger' : 'success'} />
+          <Button icon="record" onClick={() => this.recordingHandler()} intent={startRecording ? 'danger' : 'success'} />
+          <Button icon="edit" onClick={() => this.callHandle('whiteBoard')} intent={activeDrawingBoard ? 'danger' : 'success'} />
         </div>
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', overflow: 'scrollX', width: '100%' }}>
           {webRtc.recordedBlobs.map(a => Object.values(a)[0])}

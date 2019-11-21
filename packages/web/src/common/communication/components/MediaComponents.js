@@ -23,7 +23,6 @@ const UserView = ({ pc }) => {
       >
         <video
           muted={pc.online}
-          controls
           id={`video-${pc.user.id}`}
           playsInline
           autoPlay
@@ -51,24 +50,22 @@ const MentorView = () => {
         background: 'black',
         minHeight: '90%',
         minWidth: '98%',
+        maxHeight: '90%',
+        maxWidth: '98%',
         justifyContent: 'center',
         alignItems: 'center',
         display: 'flex',
         flexDirection: 'column',
-        border: 'solid',
-        borderWidth: 2,
-        borderColor: 'green',
-        borderRadius: 5,
         margin: 10,
       }}
     >
-      <div>
+      <div style={{ height: '100%', width: '100%'}}>
         <video
           controls
           id="video-mentor"
           playsInline
           autoPlay
-          style={{ height: '100%', width: '100%', background: 'black' }}
+          style={{maxHeight: 380, minHeight: 200, minWidth: 300, width: '100%', background: 'black' }}
         />
       </div>
     </div>
@@ -80,7 +77,7 @@ const UsersView = (props) => {
   // console.log('Account', account);
   const peerConnection = Object.values(webRtc.peerConnections);
   const allOtherUser = peerConnection.map(pc => <UserView pc={pc} key={pc.user.id} />);
-  const finalUserList = [...allOtherUser, <UserView pc={account} key={account.user.id} />];
+  const finalUserList = webRtc.chatHistory.type === 'user' ? [<UserView pc={account} key={account.user.id} />] : [...allOtherUser, <UserView pc={account} key={account.user.id} />];
   return finalUserList;
 };
 
@@ -89,11 +86,13 @@ class MediaComponents extends React.Component {
 
   render() {
     return (
-      <div>
-        <div style={{ display: 'flex', position: 'absolute', zIndex: 12 }}>
-          <UsersView {...this.props} />
+      <div style={{ width: '100%', height: '100%', overflow: 'hidden' }}>
+        <div style={{ display: 'flex', position: 'absolute', zIndex: 12, width: '96%', overflow: 'hidden' }}>
+          <div style={{ display: 'flex', height: '100%', width: '100%', overflow: 'auto' }}>
+            <UsersView {...this.props} />
+          </div>
         </div>
-        <div style={{ height: '100%', width: '100%' }}>
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', maxHeight: 400, minHeight: 200, width: '100%', minWidth: '100%', background: 'black', border: 'solid', borderWidth: 2, borderColor: 'green', borderRadius: 5, }}>
           <MentorView {...this.props} />
         </div>
       </div>

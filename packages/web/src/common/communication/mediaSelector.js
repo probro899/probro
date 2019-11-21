@@ -1,7 +1,6 @@
+/* eslint-disable no-case-declarations */
 export default async (mediaType) => {
-  console.log('check media type', mediaType);
   const whiteBoardElement = document.getElementById('mainCanvas');
-  console.log('white boardelement', whiteBoardElement);
   let stream = null;
   try {
     navigator.getWebcam = (navigator.getUserMedia || navigator.webKitGetUserMedia || navigator.moxGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia);
@@ -12,7 +11,6 @@ export default async (mediaType) => {
         } else {
           stream = await navigator.getWebcam({ audio: true, video: false });
         }
-        console.log('final stream', stream);
         return stream;
       case 'video':
         if (navigator.mediaDevices.getUserMedia) {
@@ -22,12 +20,18 @@ export default async (mediaType) => {
         }
         return stream;
       case 'screenshare':
-        stream = await navigator.mediaDevices.getDisplayMedia({ video: true });
+        const audioStream = await navigator.mediaDevices.getUserMedia({ audio: true, video: false });
+        const screenShareStream = await navigator.mediaDevices.getDisplayMedia({ video: true });
+        const audioTracks = audioStream.getTracks();
+        const screenShareTracks = screenShareStream.getTracks();
+        stream = new MediaStream([...audioTracks, ...screenShareTracks]);
         return stream;
       case 'whiteBoard':
-        console.log('inside white board element');
-        stream = await whiteBoardElement.captureStream(10);
-        console.log('stream of white Board', stream);
+        const whiteBoardstream = await whiteBoardElement.captureStream(10);
+        const audioStreamforWhiteBoard = await navigator.mediaDevices.getUserMedia({ audio: true, video: false });
+        const audioTracksforWhiteBoard = audioStreamforWhiteBoard.getTracks();
+        const whiteBoardTracks = whiteBoardstream.getTracks();
+        stream = new MediaStream([...audioTracksforWhiteBoard, ...whiteBoardTracks]);
         return stream;
       default:
         return stream;

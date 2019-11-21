@@ -9,6 +9,7 @@
     "@probro/common": "1.0.0",
     "axios": "^0.18.0",
     "croppie": "^2.6.4",
+    "date-fns": "^2.7.0",
     "email-validator": "^2.0.4",
     "fabric": "^3.4.0",
     "glamor": "^2.20.40",
