@@ -83,6 +83,8 @@ class TaskDetailRight extends React.Component {
   }
 
   copyCard = (res) => {
+    const { apis } = this.props;
+    console.log(this.props);
     try {
       console.log(res);
       return { response: 200, message: 'Copied!' };

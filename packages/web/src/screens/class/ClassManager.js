@@ -32,6 +32,7 @@ class Classes extends Component {
     } = this.props;
     client.scope('Mentee').then((result) => {
       // checking if the user's sessionid is real
+      console.log(result);
       if (match.params.id === account.slug) {
         this.setState({
           api: result,
