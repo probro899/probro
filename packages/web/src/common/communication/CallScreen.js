@@ -38,6 +38,7 @@ class CallScreen extends React.Component {
       case 'whiteBoard':
         await this.setState({ activeScreenShare: false, activeVideo: false });
         await this.setState({ activeDrawingBoard: !activeDrawingBoard });
+        await this.setState({ showWhiteBoard: true });
         break;
       default:
         return null;

@@ -5,6 +5,7 @@ import { Button } from '@blueprintjs/core';
 // import ringtone from '../../assets/ringtone.mp3';
 import mediaSelector from './mediaSelector';
 import { SoundComponent } from './components';
+import { ENDPOINT } from '../../config';
 
 const callingPerson = require('../../assets/icons/128w/uploadicon128.png');
 
@@ -15,7 +16,6 @@ class IncomingCallScreen extends React.Component {
     const {
       answerHandler,
       apis,
-      updateWebRtc,
     } = this.props;
     const stream = await mediaSelector(mediaType);
     await answerHandler(apis, stream);
@@ -23,13 +23,15 @@ class IncomingCallScreen extends React.Component {
   }
 
   callReject = async () => {
-    const { closeHandler, change } = this.props;
-    await closeHandler(this.prop);
-    // change('list');
+    const { change, updateWebRtc } = this.props;
+    updateWebRtc('showIncommingCall', false);
+    change('list');
   }
 
   render() {
     const { style, webRtc, database } = this.props;
+    const isUser = webRtc.chatHistory.type === 'user';
+    console.log('user url', `${ENDPOINT}/user/${10000000 + parseInt(webRtc.chatHistory.broadCastId, 10)}/profile/${database.UserDetail.byId[webRtc.chatHistory.broadCastId].image}`);
     return (
       <div
         style={style}
@@ -37,16 +39,20 @@ class IncomingCallScreen extends React.Component {
       >
         {webRtc.showIncommingCall && <SoundComponent />}
         <div className="person-icon-container" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
-          <div>
+          <div style={{ display: 'flex', justifyContent: 'center', alignSelf: 'center', flexDirection: 'column' }}>
             <div style={{ width: '100%', display: 'flex', justifyContent: 'center', margin: 5 }}>
               <span style={{ fontSize: 20, fontWeight: 'bold', color: 'white'}}>
                 {webRtc.chatHistory.type === 'user' ? `${database.User.byId[webRtc.showCommunication].firstName} ${database.User.byId[webRtc.showCommunication].lastName}` : database.Board.byId[webRtc.showCommunication].name}
               </span>
             </div>
-            <img src={callingPerson} alt="calling person" />
+            {(isUser ? database.UserDetail.byId[webRtc.chatHistory.broadCastId] && database.UserDetail.byId[webRtc.chatHistory.broadCastId].image : [database.Board.byId[webRtc.chatHistory.broadCastId]].image)
+              ? <img alt="profile-img" src={`${ENDPOINT}/user/${10000000 + parseInt(webRtc.chatHistory.broadCastId, 10)}/profile/${Object.values(database.UserDetail.byId).find(u => u.userId === webRtc.chatHistory.broadCastId).image}`} style={{ height: 120, width: 120, borderRadius: '50%', alignSelf: 'center'}} />
+              : <img src={callingPerson} alt="calling person" />
+            }
+
             <div style={{ width: '100%', display: 'flex', justifyContent: 'center', margin: 5 }}>
               <span style={{ fontSize: 15, fontWeight: 'bold', color: '#757575'}}>
-               incoming call...
+               Incoming call...
               </span>
             </div>
             <div className="controllers">
@@ -67,7 +73,6 @@ IncomingCallScreen.propTypes = {
   answerHandler: PropTypes.func.isRequired,
   apis: PropTypes.objectOf(PropTypes.any).isRequired,
   change: PropTypes.func.isRequired,
-  closeHandler: PropTypes.func.isRequired,
   updateWebRtc: PropTypes.func.isRequired,
   database: PropTypes.objectOf(PropTypes.any).isRequired,
 };

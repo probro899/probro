@@ -167,6 +167,14 @@ async function addBoardColumnCardTag(record) {
   return res;
 }
 
+async function copyBoardColumnCard(record) {
+  console.log('copyBoardColumnCard called', record);
+  const { fboardColumnId, tboardColumnId, fboardId, tboardId } = { fboardColumnId: 3, tboardColumnId: 1, fboardId: 5, tboardId: 6 };
+  const mainResult = await db.execute(async ({ insert }) => {
+
+  });
+}
+
 export default [
   addBoard,
   addBoardColumn,
@@ -178,4 +186,5 @@ export default [
   addBoardMessage,
   addBoardColumnCardTag,
   addBoardMessageSeenStatus,
+  copyBoardColumnCard,
 ];
