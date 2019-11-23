@@ -1,10 +1,8 @@
 import { UPDATE_NAV } from './types';
 
-const updateNav = data => (
-  {
+export default data => async (dispatch, getState) => {
+  dispatch({
     type: UPDATE_NAV,
     payload: data,
-  }
-);
-
-export { updateNav };
+  });
+};

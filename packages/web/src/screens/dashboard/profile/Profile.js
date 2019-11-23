@@ -41,13 +41,13 @@ class Profile extends Component {
       return <div />;
     }
     const { user } = account;
-    let userDetail;
+    let userDetail = {};
     Object.values(database.UserDetail.byId).map((obj) => {
       if (user && user.id === obj.userId) {
         userDetail = obj;
       }
     });
-    // console.log('cover page', account);
+    // console.log('cover page', account, database);
     return (
       <div className="profile bro-right">
         <CoverPic

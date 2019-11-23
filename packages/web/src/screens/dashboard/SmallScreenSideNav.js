@@ -50,7 +50,7 @@ class SmallScreenSideNav extends React.Component {
       { name: 'Blog', url: 'blog' },
       { name: 'Settings', url: 'settings' },
       { name: 'Drawing Board', url: 'drawing-board' },
-      { name: 'Messages', url: 'messages' },
+      // { name: 'Messages', url: 'messages' },
       { name: 'Connections', url: 'connection' },
     ];
     return (

@@ -1,5 +1,4 @@
 import { UPDATE_WEBRTC } from '../actions/types';
-// import messages from '../screens/users/components/communication/components/content/messenger/container/testData';
 
 const initialState = {
   showCommunication: null,
@@ -26,7 +25,7 @@ const initialState = {
 export default (state = initialState, action) => {
   switch (action.type) {
     case UPDATE_WEBRTC:
-      console.log('update webRtc called', action);
+      // console.log('update webRtc called', action);
       return {
         ...state,
         [action.schema]: action.payload,

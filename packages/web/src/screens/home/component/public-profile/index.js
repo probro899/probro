@@ -52,12 +52,17 @@ class PublicProfile extends React.Component {
   }
 
   render() {
-    const { account, database, updateWebRtc } = this.props;
+    const { account, database, updateWebRtc, addDatabaseSchema, updateDatabaseSchema } = this.props;
     const { loading, data } = this.state;
-    // console.log('accout data', data);
     if (loading) {
       return <Spinner />;
     }
+    let loggedUserDetail = {};
+    Object.values(database.UserDetail.byId).map((obj) => {
+      if (account.user && account.user.id === obj.userId) {
+        loggedUserDetail = obj;
+      }
+    });
     const userDetails = data.userDetail;
     const { user } = data;
     const { apis } = this.state;
@@ -94,11 +99,13 @@ class PublicProfile extends React.Component {
             </div>
             {account.user && (
               <div className="connect-btns">
-                { account.user.id !== user.id && (account.user.userDetails.type !== 'mentee' || userDetails.type !== 'mentee')
+                { account.user.id !== user.id && (loggedUserDetail.type !== 'mentee' || userDetails.type !== 'mentee')
                   && (
                     <Connections
                       apis={apis}
                       updateWebRtc={updateWebRtc}
+                      addDatabaseSchema={addDatabaseSchema}
+                      updateDatabaseSchema={updateDatabaseSchema}
                       database={database}
                       details={user}
                       moreDetails={userDetails}
@@ -164,7 +171,8 @@ class PublicProfile extends React.Component {
                           <br />
                           <span>{obj.summary}</span>
                         </p>
-                      </div>))
+                      </div>
+                    ))
                   }
                 </div>
               )
