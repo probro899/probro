@@ -35,7 +35,7 @@ class Connecte extends React.Component {
 
   acceptRequest = async () => {
     const { apis, updateDatabaseSchema, connection } = this.props;
-    await apis.updateUserConnection([{ status: 'connected' }, { id: connection.id }]);
+    await apis.updateUserConnection([{ status: 'connected', mId: connection.mId, userId: connection.userId }, { id: connection.id }]);
     updateDatabaseSchema('UserConnection', { id: connection.id, status: 'connected' });
   };
 
