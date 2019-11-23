@@ -106,6 +106,7 @@ async function connectUser(record) {
 
     return connectRes;
   });
+  return connectRes;
 }
 
 export default [
