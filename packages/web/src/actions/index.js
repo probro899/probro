@@ -1,4 +1,4 @@
-import { updateNav } from './navigate';
+import updateNav from './navigate';
 import updateWebRtc from './webRtc/updateWebRtc';
 import addDatabaseSchema from './database/addDatabaseSchema';
 import updateDatabaseSchema from './database/updateDatabaseSchema';

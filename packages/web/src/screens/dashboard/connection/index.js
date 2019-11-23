@@ -55,6 +55,13 @@ class Connection extends React.Component {
         </div>
         <div className="con-list">
           {
+            connectionIds.length === 0 && (
+              <div className="pc-no-cons">
+                <p>You do not have any connections at the moment.</p>
+              </div>
+            )
+          }
+          {
             connectionIds.map(id => (
               <Connecte
                 updateWebRtc={updateWebRtc}
@@ -66,7 +73,8 @@ class Connection extends React.Component {
                 connection={id.connection}
                 account={account}
                 database={database}
-              />))
+              />
+            ))
           }
         </div>
       </div>

@@ -71,7 +71,7 @@ class Navbar extends Component {
     let profilePic;
     Object.values(database.UserDetail.byId).map((obj) => {
       if (account.user && account.user.id === obj.userId) {
-        profilePic = `${ENDPOINT}/user/${10000000 + parseInt(account.user.id, 10)}/profile/${obj.image}`;
+        profilePic = obj.image ? `${ENDPOINT}/user/${10000000 + parseInt(account.user.id, 10)}/profile/${obj.image}` : null;
       }
     });
     const { apis, redirectDashboard, smallScreen } = this.state;

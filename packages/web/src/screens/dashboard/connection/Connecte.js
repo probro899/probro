@@ -11,12 +11,13 @@ class Connecte extends React.Component {
   state = {};
 
   getImage = (userDetail, user) => {
-    const imgUrl = userDetail.image ? `${ENDPOINT}/user/${10000000 + parseInt(userDetail.userId, 10)}/profile/${userDetail.image}` : icon;
+    const imgUrl = userDetail && userDetail.image ? `${ENDPOINT}/user/${10000000 + parseInt(userDetail.userId, 10)}/profile/${userDetail.image}` : icon;
     return (
       <div className="img-con">
         <RoundPicture imgUrl={imgUrl} />
         {user.activeStatus && <span className="green-dot" />}
-      </div>);
+      </div>
+    );
   }
 
   sendMessage = () => {
@@ -34,7 +35,7 @@ class Connecte extends React.Component {
 
   acceptRequest = async () => {
     const { apis, updateDatabaseSchema, connection } = this.props;
-    await apis.updateUserConnection([{ status: 'connected', mId: connection.userId, userId: connection.userId }, { id: connection.id }]);
+    await apis.updateUserConnection([{ status: 'connected' }, { id: connection.id }]);
     updateDatabaseSchema('UserConnection', { id: connection.id, status: 'connected' });
   };
 
@@ -67,7 +68,7 @@ class Connecte extends React.Component {
   render() {
     const { id, database } = this.props;
     const user = database.User.byId[id];
-    let userDetail;
+    let userDetail = {};
     Object.values(database.UserDetail.byId).map((obj) => {
       if (id === obj.userId) {
         userDetail = obj;

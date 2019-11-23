@@ -52,13 +52,18 @@ class NotificationContainer extends React.Component {
 
   render() {
     const { database } = this.props;
+    const notifications = Object.values(database.Notification.byId);
     return (
       <div className="notification-list">
         {
-          database.Notification.allIds.map((noti) => {
-            const notification = database.Notification.byId[noti];
-            return this.getNotification(notification);
-          })
+          notifications.length === 0 && (
+            <div className="pc-no-notis">
+              <p>You do not have any notifications at the moment.</p>
+            </div>
+          )
+        }
+        {
+          notifications.map(obj => this.getNotification(obj))
         }
       </div>
     );

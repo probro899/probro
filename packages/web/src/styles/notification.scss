@@ -3,6 +3,17 @@
 .notification-list {
   padding: 5px;
   background: $backgroundColor;
+  .pc-no-notis {
+    width: 100%;
+    height: 50vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    p {
+      text-align: center;
+      color: $lightTextColor;
+    }
+  }
   .pc-noti-wrapper {
     padding: 5px;
     cursor: pointer;

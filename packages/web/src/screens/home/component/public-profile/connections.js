@@ -1,3 +1,4 @@
+/* eslint-disable no-case-declarations */
 import React from 'react';
 import PropTypes from 'prop-types';
 import ConnectionElement from './ConnectionElement';
@@ -26,7 +27,11 @@ class Connections extends React.Component {
   }
 
   connectMentor = async (type) => {
-    const { apis, account, details, database } = this.props;
+    const {
+      apis, account, details, database,
+      addDatabaseSchema,
+      updateDatabaseSchema,
+    } = this.props;
     const userId = account.user.id;
     const guestId = details.id;
     let existingCon = null;
@@ -40,20 +45,14 @@ class Connections extends React.Component {
     });
     switch (type) {
       case 'request':
-        if (existingCon) {
-          await apis.updateUserConnection([{
-            userId: account.user.id,
-            mId: details.id,
-            status: 'pending',
-          }, { id: existingCon.id }]);
-        } else {
-          await apis.connectUser({
-            userId: account.user.id,
-            mId: details.id,
-            timeStamp: Date.now(),
-            status: 'pending',
-          });
-        }
+        const info = {
+          userId: account.user.id,
+          mId: details.id,
+          timeStamp: Date.now(),
+          status: 'pending',
+        };
+        const res = await apis.connectUser(info);
+        addDatabaseSchema('UserConnection', { id: res, ...info });
         this.setState({
           type: 'pending',
         });
@@ -61,9 +60,8 @@ class Connections extends React.Component {
       case 'accept':
         await apis.updateUserConnection([{
           status: 'connected',
-          mId: existingCon.mId,
-          userId: existingCon.userId,
         }, { id: existingCon.id }]);
+        updateDatabaseSchema('UserConnection', { id: existingCon.id, status: 'connected' });
         this.setState({
           type: 'connected',
         });
@@ -79,6 +77,7 @@ class Connections extends React.Component {
     let type = '';
     database.UserConnection.allIds.map((id) => {
       const obj = database.UserConnection.byId[id];
+      console.log(obj, userId, guestId);
       if ((userId === obj.userId
         || userId === obj.mId)
         && (guestId === obj.userId || guestId === obj.mId)) {
