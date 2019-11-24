@@ -30,7 +30,8 @@ const findLastMessageAndUnSeenNo = (arr, type, props) => {
     unSeenNo = count;
   }
   // console.log('unseenMsgMessage', unseenMsg);
-  const lastMessageId = arrWithSeenStatusReverse.find(obj => obj[type === 'user' ? 'fuserId' : 'userId'] !== account.user.id).id;
+  const lastMessage = arrWithSeenStatusReverse.find(obj => obj[type === 'user' ? 'fuserId' : 'userId'] !== account.user.id)
+  const lastMessageId = lastMessage ? lastMessage.id : arrWithSeenStatusReverse[0].id;
   return { lastMessageId, unSeenNo };
 };
 
@@ -91,41 +92,45 @@ export default (props) => {
   if (webRtc.chatHistory) {
     if (webRtc.chatHistory.type === 'user') {
       messages = Object.values(database.UserMessage.byId).filter(msg => msg.connectionId === webRtc.connectionId);
-      isSameDayFlag = new Date(messages[0].timeStamp);
-      messages.forEach((umd, idx) => {
-        if (!isSameDay(isSameDayFlag, new Date(umd.timeStamp)) || idx === 0) {
-          arrWithSeenStatus.push({ ...umd, showImage: false, type: 'date', seenStatus: findMessageSeenStatus(umd.id, 'user', props) });
-          isSameDayFlag = umd.timeStamp;
-          // console.log('inside test is sameday', umd.id, arrWithSeenStatus);
-        }
-        if (umd.tuserId === userShowTestFlag) {
-          // console.log('inside test', umd.id, arrWithSeenStatus);
-          arrWithSeenStatus.push({ ...umd, showImage: false, seenStatus: findMessageSeenStatus(umd.id, 'user', props) });
-        } else {
-          // console.log('inside test', umd.id, arrWithSeenStatus);
-          userShowTestFlag = umd.tuserId;
-          arrWithSeenStatus.push({ ...umd, showImage: true, seenStatus: findMessageSeenStatus(umd.id, 'user', props) });
-        }
-      });
-      arrWithSeenStatusToShow = findSeenStatusToShow(arrWithSeenStatus, [webRtc.chatHistory.user.user.id], 'user');
-      lastMessageSeenIdAndUnseenNo = findLastMessageAndUnSeenNo(arrWithSeenStatus, 'user', props);
+      if (messages.length > 0) {
+        isSameDayFlag = new Date(messages[0].timeStamp);
+        messages.forEach((umd, idx) => {
+          if (!isSameDay(isSameDayFlag, new Date(umd.timeStamp)) || idx === 0) {
+            arrWithSeenStatus.push({ ...umd, showImage: false, type: 'date', seenStatus: findMessageSeenStatus(umd.id, 'user', props) });
+            isSameDayFlag = umd.timeStamp;
+            // console.log('inside test is sameday', umd.id, arrWithSeenStatus);
+          }
+          if (umd.tuserId === userShowTestFlag) {
+            // console.log('inside test', umd.id, arrWithSeenStatus);
+            arrWithSeenStatus.push({ ...umd, showImage: false, seenStatus: findMessageSeenStatus(umd.id, 'user', props) });
+          } else {
+            // console.log('inside test', umd.id, arrWithSeenStatus);
+            userShowTestFlag = umd.tuserId;
+            arrWithSeenStatus.push({ ...umd, showImage: true, seenStatus: findMessageSeenStatus(umd.id, 'user', props) });
+          }
+        });
+        arrWithSeenStatusToShow = findSeenStatusToShow(arrWithSeenStatus, [webRtc.chatHistory.user.user.id], 'user');
+        lastMessageSeenIdAndUnseenNo = findLastMessageAndUnSeenNo(arrWithSeenStatus, 'user', props);
+      }
     } else {
       messages = Object.values(database.BoardMessage.byId).filter(msg => msg.boardId === webRtc.showCommunication);
-      messages.forEach((umd, idx) => {
-        if (!isSameDay(isSameDayFlag, new Date(umd.timeStamp)) || idx === 0) {
-          arrWithSeenStatus.push({ ...umd, showImage: false, type: 'date', seenStatus: findMessageSeenStatus(umd.id, 'user', props) });
-          isSameDayFlag = umd.timeStamp;
-          // console.log('inside test is sameday', umd.id, arrWithSeenStatus);
-        }
-        if (umd.userId === userShowTestFlag) {
-          arrWithSeenStatus.push({ ...umd, showImage: false, seenStatus: findMessageSeenStatus(umd.id, 'board', props) });
-        } else {
-          userShowTestFlag = umd.userId;
-          arrWithSeenStatus.push({ ...umd, showImage: true, seenStatus: findMessageSeenStatus(umd.id, 'board', props) });
-        }
-      });
-      arrWithSeenStatusToShow = findSeenStatusToShow(arrWithSeenStatus, Object.values(database.BoardMember.byId).filter(obj => obj.boardId === webRtc.showCommunication));
-      lastMessageSeenIdAndUnseenNo = findLastMessageAndUnSeenNo(arrWithSeenStatus, 'board', props);
+      if (messages.length > 0) {
+        messages.forEach((umd, idx) => {
+          if (!isSameDay(isSameDayFlag, new Date(umd.timeStamp)) || idx === 0) {
+            arrWithSeenStatus.push({ ...umd, showImage: false, type: 'date', seenStatus: findMessageSeenStatus(umd.id, 'user', props) });
+            isSameDayFlag = umd.timeStamp;
+            // console.log('inside test is sameday', umd.id, arrWithSeenStatus);
+          }
+          if (umd.userId === userShowTestFlag) {
+            arrWithSeenStatus.push({ ...umd, showImage: false, seenStatus: findMessageSeenStatus(umd.id, 'board', props) });
+          } else {
+            userShowTestFlag = umd.userId;
+            arrWithSeenStatus.push({ ...umd, showImage: true, seenStatus: findMessageSeenStatus(umd.id, 'board', props) });
+          }
+        });
+        arrWithSeenStatusToShow = findSeenStatusToShow(arrWithSeenStatus, Object.values(database.BoardMember.byId).filter(obj => obj.boardId === webRtc.showCommunication));
+        lastMessageSeenIdAndUnseenNo = findLastMessageAndUnSeenNo(arrWithSeenStatus, 'board', props);
+      }
     }
   }
   // console.log('messages in chatHistory', arrWithSeenStatus);

@@ -16,7 +16,7 @@ export default async function Update(table, value, condition) {
   if (broadCastId) {
     const channel = session.channel(broadCastId);
     const allChannelSession = session.getChannel(broadCastId);
-    // console.log('current channel', allChannelSession);
+    console.log('current channel', allChannelSession);
     channel.dispatch(schema.update(table, res));
     allChannelSession.forEach(s => user.update(schema.update(table, res), s));
   } else {

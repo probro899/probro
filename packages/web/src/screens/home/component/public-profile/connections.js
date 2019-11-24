@@ -17,13 +17,15 @@ class Connections extends React.Component {
   }
 
   sendMessage = async () => {
-    const { updateWebRtc, details, database } = this.props;
+    const { updateWebRtc, details, database, account } = this.props;
     const connectionId = Object.values(database.UserConnection.byId).find(con => con.mId === details.id || con.userId === details.id);
     // console.log('Connetion id', connectionId);
     updateWebRtc('showCommunication', details.id);
     updateWebRtc('connectionId', connectionId.id);
     updateWebRtc('peerType', 'user');
     updateWebRtc('communicationContainer', 'history');
+    const user = connectionId.userId === account.user.id ? database.User.byId[connectionId.mId] : database.User.byId[connectionId.userId];
+    updateWebRtc('chatHistory', { type: 'user', user: { user } });
   }
 
   connectMentor = async (type) => {

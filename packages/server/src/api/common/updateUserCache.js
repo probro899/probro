@@ -3,7 +3,7 @@ import { user } from '../../cache';
 
 export default function updateUserCache(obj, session, todo) {
   Object.keys(obj).forEach((key) => {
-    session.dispatch(schema.add(key, obj[key]));
+    session.dispatch(schema[todo](key, obj[key]));
     user.update(schema[todo](key, obj[key]), session);
   });
 }
