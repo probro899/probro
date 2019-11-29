@@ -17,50 +17,41 @@ class Footer extends React.Component {
                 <Link to="/about" className="pc-foot-link">
                   <span>About Us</span>
                 </Link>
-                <div className="pc-foot-link">
+                <Link to="/career" className="pc-foot-link">
                   <span>Careers</span>
-                </div>
-                <div className="pc-foot-link">
-                  <span>Help</span>
-                </div>
-                <div className="pc-foot-link">
+                </Link>
+                <Link to="/support" className="pc-foot-link">
                   <span>Support</span>
-                </div>
+                </Link>
               </div>
             </div>
             <div className="foot-left-one">
               <div className="one-content">
-                <div className="pc-foot-link">
-                  <span>Advertising</span>
-                </div>
-                <div className="pc-foot-link">
-                  <span>Software solution</span>
-                </div>
-                <div className="pc-foot-link">
-                  <span>Partnership</span>
-                </div>
-                <div className="pc-foot-link">
-                  <span>Mobile</span>
-                </div>
+                <Link to="/business" className="pc-foot-link">
+                  <span>Business Enquiry</span>
+                </Link>
+                <Link to="/services" className="pc-foot-link">
+                  <span>Software Services</span>
+                </Link>
+                <Link to="/privacy-policy" className="pc-foot-link">
+                  <span>Privacy Policy</span>
+                </Link>
               </div>
             </div>
           </div>
           <div className="footer-right">
             <div className="right-content">
-              <div className="pc-foot-link">
-                <span>Privacy</span>
-              </div>
-              <div className="pc-foot-link">
-                <span>Terms and conditions</span>
-              </div>
-              <div className="pc-foot-link">
-                <span>Safety center</span>
-              </div>
-              <div className="pc-foot-link">
+              <Link to="/terms-and-conditions" className="pc-foot-link">
+                <span>Terms and Conditions</span>
+              </Link>
+              <Link to="/report" className="pc-foot-link">
                 <span>Report</span>
-              </div>
+              </Link>
             </div>
           </div>
+        </div>
+        <div className="pc-cr-container">
+          <p>© 2015 - 2019 Proper Class Inc.</p>
         </div>
       </div>
     );

@@ -519,14 +519,16 @@ top attachment etc.
 @media screen and (max-width: 855px) { .search-result .filter-toolbar .filter-label { display: none; } }
 
 .footer { margin-top: 20px; min-height: 125px; padding: 5px; background: #1d4354; color: #fff; }
-.footer .pc-logo { padding: 5px; font-size: 18px; font-weight: bold; }
+.footer .pc-logo { margin-top: 10px; padding: 5px; font-size: 18px; font-weight: bold; }
 .footer .left-right-container { display: flex; }
 .footer .left-right-container .footer-left { flex: 0.7; display: flex; justify-content: space-between; }
-.footer .left-right-container .footer-left .foot-left-one .one-content { padding: 5px; font-weight: bold; }
+.footer .left-right-container .footer-left .foot-left-one .one-content { display: flex; flex-direction: column; padding: 5px; font-weight: bold; }
 .footer .left-right-container .footer-right { flex: 0.7; display: flex; justify-content: flex-end; }
 .footer .left-right-container .footer-right .right-content { display: flex; flex-direction: column; padding: 5px; font-weight: bold; }
-.footer .left-right-container .pc-foot-link { cursor: pointer; color: #fff; }
+.footer .left-right-container .pc-foot-link { padding: 3px 0px; cursor: pointer; color: #fff; }
 .footer .left-right-container .pc-foot-link:hover { text-decoration-line: underline; }
+.footer .pc-cr-container { margin-top: 20px; padding: 20px; display: flex; justify-content: center; align-items: center; border-top: 1px solid #e0e0e0; }
+.footer .pc-cr-container p { margin: 0; }
 
 .drawing-board { padding: 5px; overflow: hidden; display: flex; flex-direction: column; }
 .drawing-board .draw-title { text-align: center; text-transform: uppercase; font-weight: bold; font-size: 18px; color: #1d4354; padding: 3px; }
@@ -564,6 +566,35 @@ top attachment etc.
 .pc-about .pc-about-header p { color: #fff; }
 .pc-about .pc-about-content { padding: 10px 10vw; }
 @media screen and (max-width: 700px) { .pc-about .pc-about-content { padding: 10px 5vw; } }
+
+.pc-privacy { margin-top: 60px; min-height: calc(100vh - 60px - 125px); }
+.pc-privacy .pc-privacy-content { padding: 10px 10vw; }
+.pc-privacy .pc-privacy-content ul li { margin-bottom: 5px; }
+@media screen and (max-width: 700px) { .pc-privacy .pc-privacy-content { padding: 10px 5vw; } }
+
+.pc-terms { margin-top: 60px; min-height: calc(100vh - 60px - 125px); }
+.pc-terms .pc-terms-content { padding: 10px 10vw; }
+@media screen and (max-width: 700px) { .pc-terms .pc-terms-content { padding: 10px 5vw; } }
+
+.pc-support { margin-top: 60px; min-height: calc(100vh - 60px - 125px); }
+.pc-support .pc-support-content { padding: 10px 10vw; }
+@media screen and (max-width: 700px) { .pc-support .pc-support-content { padding: 10px 5vw; } }
+
+.pc-career { margin-top: 60px; min-height: calc(100vh - 60px - 125px); }
+.pc-career .pc-career-content { padding: 10px 10vw; }
+@media screen and (max-width: 700px) { .pc-career .pc-career-content { padding: 10px 5vw; } }
+
+.pc-report { margin-top: 60px; min-height: calc(100vh - 60px - 125px); }
+.pc-report .pc-report-content { padding: 10px 10vw; }
+@media screen and (max-width: 700px) { .pc-report .pc-report-content { padding: 10px 5vw; } }
+
+.pc-business { margin-top: 60px; min-height: calc(100vh - 60px - 125px); }
+.pc-business .pc-business-content { padding: 10px 10vw; }
+@media screen and (max-width: 700px) { .pc-business .pc-business-content { padding: 10px 5vw; } }
+
+.pc-services { margin-top: 60px; min-height: calc(100vh - 60px - 125px); }
+.pc-services .pc-services-content { padding: 10px 10vw; }
+@media screen and (max-width: 700px) { .pc-services .pc-services-content { padding: 10px 5vw; } }
 
 @font-face { font-family: 'Gotham-Pro'; src: url("../assets/fonts/gotham/gotham-pro.ttf") format("truetype"); font-weight: normal; font-stretch: extra-condensed; font-style: normal; }
 @font-face { font-family: 'Gotham-Pro'; src: url("../assets/fonts/gotham/gotham-medium.otf") format("truetype"); font-weight: bold; font-stretch: extra-condensed; font-style: normal; }

@@ -7,6 +7,7 @@
   background: $darkBlue;
   color: $backgroundColor;
   .pc-logo {
+    margin-top: 10px;
     padding: 5px;
     font-size: 18px;
     font-weight: bold;
@@ -19,6 +20,8 @@
       justify-content: space-between;
       .foot-left-one {
         .one-content {
+          display: flex;
+          flex-direction: column;
           padding: 5px;
           font-weight: bold;
         }
@@ -36,11 +39,23 @@
       }
     }
     .pc-foot-link {
+      padding: 3px 0px;
       cursor: pointer;
       color: $backgroundColor;
       &:hover {
         text-decoration-line: underline;
       }
+    }
+  }
+  .pc-cr-container {
+    margin-top: 20px;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-top: 1px solid $normalBorder;
+    p {
+      margin: 0;
     }
   }
 }

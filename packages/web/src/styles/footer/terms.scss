@@ -1,0 +1,14 @@
+@import '../config.scss';
+
+.pc-terms {
+  margin-top: $navbarHeight;
+  min-height: calc(100vh - #{$navbarHeight} - #{$footerHeight});
+  .pc-terms-content {
+    padding: 10px 10vw;
+  }
+  @media screen and (max-width: 700px){
+    .pc-terms-content {
+      padding: 10px 5vw;
+    }
+  }
+}
