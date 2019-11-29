@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import * as actions from '../../../actions';
 import { Navbar } from '../../../screens/home/component';
@@ -32,15 +33,13 @@ class Business extends React.Component {
           <div className="pc-business-content">
             <h2>Business Enquiry</h2>
             <p>
-              Most of us here don't like how we are given education in universities.
-              In countries like Nepal, India and other south Asian countries the education is merely practical.
-              We are taught all the theories but when it comes to real life, real projects, we can't even kick off.
-              So I am not pointing college professors as your Mentors.
-              But Mentors are those who have practical knowledge and experience to guide you through the game.
-              A college professor can also be a Mentor but on certain aspects like (how to be a professor :D),
-              isn't it? He can't teach you with the real sentiment of an entrepreneur to be an entrepreneur,
-              he can't teach you with the real emotions of a scientist to be a scientist etc. You can just relate, right?
-              He can be a great teacher but not a great mentor. 
+              Our main business is Proper Class online Mentorship platform. However we provide other
+              tech related solutions.
+              <br />
+              If you are willing to partner with us or want to know more about our business. Please write
+              us at
+              {' '}
+              <Link to="#">info@properclass.com</Link>
             </p>
           </div>
         </div>
