@@ -38,11 +38,12 @@ class HomePage extends Component {
 
   render() {
     const { data, loading } = this.state;
+    const { account } = this.props;
     return loading ? <Spinner /> : (
       <div>
         <Navbar />
         <Slider data={data.sliderImages} />
-        <Banner />
+        <Banner account={account} />
         <Post />
         <Popular data={data.indexUsers} />
         <Footer />
@@ -53,6 +54,7 @@ class HomePage extends Component {
 
 HomePage.propTypes = {
   updateNav: PropTypes.func.isRequired,
+  account: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 const mapStateToProps = state => state;
