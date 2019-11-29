@@ -379,7 +379,7 @@ top attachment etc.
 .communicate .content .chat-history .top .op-name { display: flex; flex-direction: column; justify-content: center; color: #1d4354; font-weight: bold; font-size: 16px; }
 .communicate .content .chat-history .top .call-control button { margin: 0px 1px; }
 .communicate .content .chat-history .chats { padding: 5px 5px 0px 5px; overflow-y: scroll; height: 100%; }
-.communicate .content .chat-history .chats .i-chat { margin: 5px 5px 20px 5px; display: flex; }
+.communicate .content .chat-history .chats .i-chat { margin: 0; display: flex; }
 .communicate .content .chat-history .chats .i-chat time { margin: 0px 10px; font-size: 9px; color: #696969; font-weight: bold; }
 .communicate .content .chat-history .chats .i-chat .img-wrap img { border-radius: 50%; border: 1px solid #e0e0e0; }
 .communicate .content .chat-history .chats .i-chat.left { margin-right: 12%; flex-direction: row; }
@@ -516,7 +516,6 @@ top attachment etc.
 .search-result .result-list .i-result .desc-con { padding-left: 5px; }
 .search-result .result-list .i-result .desc-con .name { font-size: 16px; font-weight: bold; }
 .search-result .result-list .i-result .desc-con .location { opacity: 0.8; font-weight: bold; }
-.search-result .result-list .i-result img { border-radius: 50%; }
 @media screen and (max-width: 855px) { .search-result .filter-toolbar .filter-label { display: none; } }
 
 .footer { margin-top: 20px; min-height: 125px; padding: 5px; background: #1d4354; color: #fff; }
@@ -526,6 +525,8 @@ top attachment etc.
 .footer .left-right-container .footer-left .foot-left-one .one-content { padding: 5px; font-weight: bold; }
 .footer .left-right-container .footer-right { flex: 0.7; display: flex; justify-content: flex-end; }
 .footer .left-right-container .footer-right .right-content { display: flex; flex-direction: column; padding: 5px; font-weight: bold; }
+.footer .left-right-container .pc-foot-link { cursor: pointer; color: #fff; }
+.footer .left-right-container .pc-foot-link:hover { text-decoration-line: underline; }
 
 .drawing-board { padding: 5px; overflow: hidden; display: flex; flex-direction: column; }
 .drawing-board .draw-title { text-align: center; text-transform: uppercase; font-weight: bold; font-size: 18px; color: #1d4354; padding: 3px; }
@@ -556,6 +557,13 @@ top attachment etc.
 .connection .con-list .i-result .desc-con .location { opacity: 0.8; font-weight: bold; }
 .connection .con-list .i-result .desc-con .con-config { display: flex; align-items: center; }
 .connection .con-list .i-result .desc-con .con-config .con-buttons .pc-accept { margin-left: 10px; }
+
+.pc-about { margin-top: 60px; min-height: calc(100vh - 60px - 125px); }
+.pc-about .pc-about-header { width: 100%; background-color: #1d4354; height: calc(40vh); display: flex; flex-direction: column; justify-content: center; align-items: center; }
+.pc-about .pc-about-header h1 { color: #fff; }
+.pc-about .pc-about-header p { color: #fff; }
+.pc-about .pc-about-content { padding: 10px 10vw; }
+@media screen and (max-width: 700px) { .pc-about .pc-about-content { padding: 10px 5vw; } }
 
 @font-face { font-family: 'Gotham-Pro'; src: url("../assets/fonts/gotham/gotham-pro.ttf") format("truetype"); font-weight: normal; font-stretch: extra-condensed; font-style: normal; }
 @font-face { font-family: 'Gotham-Pro'; src: url("../assets/fonts/gotham/gotham-medium.otf") format("truetype"); font-weight: bold; font-stretch: extra-condensed; font-style: normal; }

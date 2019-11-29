@@ -82,8 +82,26 @@ class TaskDetailRight extends React.Component {
     return { response: 200, message: 'Deadline added' };
   }
 
-  copyCard = (res) => {
+  copyCard = async (arg) => {
+    const {
+      apis,
+      account,
+      addDatabaseSchema,
+      description,
+      attachments,
+      task,
+      tags,
+    } = this.props;
+    console.log(this.props);
     try {
+      const res = await apis.copyBoardColumnCard({
+        card: { ...task, userId: account.user.id, timStamp: Date.now() },
+        description: { ...description, userId: account.user.id, timStamp: Date.now() },
+        attachments: attachments.map(obj => ({ ...obj, userId: account.user.id, timStamp: Date.now() })),
+        tags: tags.map(obj => ({ ...obj, userId: account.user.id })),
+        boardId: arg.class,
+        columnId: arg.column,
+      });
       console.log(res);
       return { response: 200, message: 'Copied!' };
     } catch (e) {

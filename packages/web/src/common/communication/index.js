@@ -19,6 +19,7 @@ class Communication extends React.Component {
   };
 
   async componentWillMount() {
+    console.log('commnucation mount');
     let apisRes = null;
     try {
       apisRes = await client.scope('Mentee');
@@ -58,7 +59,7 @@ class Communication extends React.Component {
       webRtc,
       updateWebRtc,
     } = this.props;
-    console.log('apis', apis, 'props', this.props);
+    // console.log('apis', apis, 'props', this.props);
     return (
       (webRtc.showIncommingCall || webRtc.showCommunication) && (
       <div
@@ -72,7 +73,7 @@ class Communication extends React.Component {
           }
         }
       >
-        <div className="header" onClick={this.toggleMinMax} style={{ background: "#154155", cursor: 'pointer'}}>
+        <div className="header" onClick={this.toggleMinMax} style={{ background: '#154155', cursor: 'pointer' }}>
           <div className="win-title">
             Messaging
           </div>
@@ -94,7 +95,7 @@ class Communication extends React.Component {
         <div
           className="content"
         >
-          {!webRtc.showIncommingCall && webRtc.communicationContainer === 'list' && (
+          {!webRtc.showIncommingCall && webRtc.showCommunication && webRtc.communicationContainer === 'list' && (
           <ChatList
               // style={!webRtc.showIncommingCall && webRtc.communicationContainer === 'list' ? { display: 'block' } : { display: 'none' }}
             change={this.switchScreen}

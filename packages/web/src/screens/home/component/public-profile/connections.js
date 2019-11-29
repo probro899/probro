@@ -80,7 +80,7 @@ class Connections extends React.Component {
     let type = '';
     database.UserConnection.allIds.map((id) => {
       const obj = database.UserConnection.byId[id];
-      console.log(obj, userId, guestId);
+      // console.log(obj, userId, guestId);
       if ((userId === obj.userId
         || userId === obj.mId)
         && (guestId === obj.userId || guestId === obj.mId)) {

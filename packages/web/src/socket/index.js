@@ -1,6 +1,7 @@
 import { connect } from './main';
 import getRemoteUrl from './getRemoteUrl';
 import store from '../store';
+import { UPDATE_WEBRTC } from '../actions/types';
 
 const client = connect(getRemoteUrl(), store);
 
@@ -40,6 +41,16 @@ client.on('disconnect', () => {
 
 client.on('logout', () => {
   retryConnect = false;
+  store.dispatch({
+    type: UPDATE_WEBRTC,
+    payload: null,
+    schema: 'showCommunication',
+  });
+  store.dispatch({
+    type: UPDATE_WEBRTC,
+    payload: null,
+    schema: 'showIncommingCall',
+  });
 });
 
 client.on('error', (err) => {

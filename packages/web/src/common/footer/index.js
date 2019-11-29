@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 class Footer extends React.Component {
   state = {};
@@ -13,32 +14,32 @@ class Footer extends React.Component {
           <div className="footer-left">
             <div className="foot-left-one">
               <div className="one-content">
-                <div>
+                <Link to="/about" className="pc-foot-link">
                   <span>About Us</span>
-                </div>
-                <div>
+                </Link>
+                <div className="pc-foot-link">
                   <span>Careers</span>
                 </div>
-                <div>
+                <div className="pc-foot-link">
                   <span>Help</span>
                 </div>
-                <div>
+                <div className="pc-foot-link">
                   <span>Support</span>
                 </div>
               </div>
             </div>
             <div className="foot-left-one">
               <div className="one-content">
-                <div>
+                <div className="pc-foot-link">
                   <span>Advertising</span>
                 </div>
-                <div>
+                <div className="pc-foot-link">
                   <span>Software solution</span>
                 </div>
-                <div>
+                <div className="pc-foot-link">
                   <span>Partnership</span>
                 </div>
-                <div>
+                <div className="pc-foot-link">
                   <span>Mobile</span>
                 </div>
               </div>
@@ -46,16 +47,16 @@ class Footer extends React.Component {
           </div>
           <div className="footer-right">
             <div className="right-content">
-              <div>
+              <div className="pc-foot-link">
                 <span>Privacy</span>
               </div>
-              <div>
+              <div className="pc-foot-link">
                 <span>Terms and conditions</span>
               </div>
-              <div>
+              <div className="pc-foot-link">
                 <span>Safety center</span>
               </div>
-              <div>
+              <div className="pc-foot-link">
                 <span>Report</span>
               </div>
             </div>

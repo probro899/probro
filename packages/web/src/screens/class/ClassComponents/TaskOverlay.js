@@ -386,6 +386,8 @@ class TaskOverlay extends Component {
               apis={apis}
               account={account}
               database={database}
+              description={description}
+              attachments={attachments}
               deleteDatabaseSchema={deleteDatabaseSchema}
               updateDatabaseSchema={updateDatabaseSchema}
               addDatabaseSchema={addDatabaseSchema}

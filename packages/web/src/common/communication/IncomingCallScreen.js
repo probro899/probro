@@ -31,7 +31,7 @@ class IncomingCallScreen extends React.Component {
   render() {
     const { style, webRtc, database } = this.props;
     const isUser = webRtc.chatHistory.type === 'user';
-    console.log('user url', `${ENDPOINT}/user/${10000000 + parseInt(webRtc.chatHistory.broadCastId, 10)}/profile/${database.UserDetail.byId[webRtc.chatHistory.broadCastId].image}`);
+    // console.log('user url', `${ENDPOINT}/user/${10000000 + parseInt(webRtc.chatHistory.broadCastId, 10)}/profile/${database.UserDetail.byId[webRtc.chatHistory.broadCastId].image}`);
     return (
       <div
         style={style}

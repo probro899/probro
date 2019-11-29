@@ -3,6 +3,7 @@ import store from '../../../../store';
 
 export default (props, state) => {
   // Handle offer request
+  console.log('webRtc socket listner called');
   client.on('offer', async (data) => {
     console.log('Offer arrived', data);
     const { updateWebRtc, database } = props;

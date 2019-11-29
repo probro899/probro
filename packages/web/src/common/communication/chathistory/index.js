@@ -30,8 +30,9 @@ class ChatHistory extends React.Component {
   }
 
   toCallScreen = async (mediaType) => {
-    const { _callHandler, apis, change } = this.props;
+    const { _callHandler, apis, change, updateWebRtc } = this.props;
     const stream = await mediaSelector(mediaType);
+    updateWebRtc('localStream', stream);
     _callHandler(apis, stream);
     change('connecting');
   }
