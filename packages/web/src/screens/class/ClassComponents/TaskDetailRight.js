@@ -133,7 +133,7 @@ class TaskDetailRight extends React.Component {
       boardColumnCardId: task.id,
       tag: name,
     });
-    addDatabaseSchema('BoardColumnCardTag', { id: res, tag: name, boardColumnCardId: task.id });
+    addDatabaseSchema('BoardColumnCardTag', { id: res, userId: account.user.id, tag: name, boardColumnCardId: task.id });
   }
 
   deleteCard = async (type) => {
