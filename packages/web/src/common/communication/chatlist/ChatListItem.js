@@ -6,10 +6,17 @@ import moment from 'moment';
 import { Icon } from '@blueprintjs/core';
 import { ENDPOINT } from '../../../config';
 
-export default ({ clo }) => {
+export default ({ clo, idx }) => {
   const isUser = clo.type === 'user';
   return (
-    <div key={(isUser ? clo.user.user.id : clo.boardDetails.id)} style={{ cursor: 'pointer', padding: 5, background: clo.mouseHoverId === (isUser ? clo.user.user.id : clo.boardDetails.id) ? '#d6f4fe' : 'white' }} onClick={() => clo.onClick(clo)} onMouseOver={() => clo.onMouseHover(isUser ? clo.user.user.id : clo.boardDetails.id)}>
+    <div
+      key={idx}
+      style={
+        { cursor: 'pointer', padding: 5, background: clo.mouseHoverId === idx ? '#d6f4fe' : 'white' }
+        }
+      onClick={() => clo.onClick(clo)}
+      onMouseOver={() => clo.onMouseHover(idx)}
+    >
       <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
         <div style={{ display: 'flex' }}>
           <div style={{ display: 'flex' }}>

@@ -1,3 +1,4 @@
+/* eslint-disable import/no-cycle */
 import schema from '@probro/common/source/src/schema';
 import { user } from '../../cache';
 

@@ -5,11 +5,13 @@ export default props => async () => {
   const { webRtc } = store.getState();
   const pcs = Object.values(webRtc.peerConnections);
   console.log('close handler called', webRtc, updateWebRtc);
-  if (webRtc.localStream.active) {
-    console.log('inside the local steam stop case');
-    const allTracks = webRtc.localStream.getTracks();
-    console.log('all tracks', allTracks);
-    allTracks.forEach(track => track.stop());
+  if (webRtc.localStream) {
+    if (webRtc.localStream.active) {
+      console.log('inside the local steam stop case');
+      const allTracks = webRtc.localStream.getTracks();
+      console.log('all tracks', allTracks);
+      allTracks.forEach(track => track.stop());
+    }
   }
   if (webRtc.showCommunication) {
     if (webRtc.mediaRecording) {

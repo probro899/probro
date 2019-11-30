@@ -59,7 +59,7 @@ class Communication extends React.Component {
       webRtc,
       updateWebRtc,
     } = this.props;
-    // console.log('apis', apis, 'props', this.props);
+    console.log('apis', apis, 'props', this.props);
     return (
       (webRtc.showIncommingCall || webRtc.showCommunication) && (
       <div

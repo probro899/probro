@@ -13,13 +13,20 @@ import Archive from './blog/archive';
 import { PublicProfile } from './home/component';
 import { SearchResult } from './home/component/search';
 import TakeTour from './home/take-a-tour';
-import { About } from '../common/footer/footer-links';
+import { About, Privacy, Terms, Support, Career, Report, Business, Services } from '../common/footer/footer-links';
 
 export default () => (
   <Router>
     <div className="home-screen">
       <Switch>
         <Route exact path="/about" component={About} />
+        <Route exact path="/privacy-policy" component={Privacy} />
+        <Route exact path="/terms-and-conditions" component={Terms} />
+        <Route exact path="/support" component={Support} />
+        <Route exact path="/career" component={Career} />
+        <Route exact path="/report" component={Report} />
+        <Route exact path="/business" component={Business} />
+        <Route exact path="/services" component={Services} />
         <Route exact path="/archive" component={Archive} />
         <Route exact path="/take-a-tour" component={TakeTour} />
         <Route path="/login" component={Login} />

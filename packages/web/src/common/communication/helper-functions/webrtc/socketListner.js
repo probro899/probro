@@ -13,8 +13,9 @@ export default (props, state) => {
     const { apis } = state;
     if (webRtc.showCommunication) {
       if (!webRtc.isLive) {
-        await updateWebRtc('chatHistory', { type, user: { user: database.User.byId[broadCastId] }, broadCastId });
+        await updateWebRtc('communicationContainer', 'list');
         await updateWebRtc('showCommunication', broadCastId);
+        await updateWebRtc('chatHistory', { type, user: { user: database.User.byId[broadCastId] }, broadCastId });
         updateWebRtc('showIncommingCall', true);
       }
       updateWebRtc('currentOffer', data);

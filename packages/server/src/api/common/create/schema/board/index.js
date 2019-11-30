@@ -6,6 +6,7 @@ import mailBody from '../../../../../mailer/html/mailBody';
 import mailer from '../../../../../mailer';
 import findBoardDetails from '../../../findBoradDetail';
 import updateUserCache from '../../../updateUserCache';
+import { useReducer } from 'react';
 
 const flat = (arr) => {
   const flatArray = arr.reduce((t, a) => {
@@ -143,11 +144,20 @@ async function addBoardMember(record) {
           UserDetail: allBoardUserDetails,
         };
         updateUserCache(dataTobeUpdated, remoteUserSession, 'add');
-        currentBoardChannel.dispatch(schema.add('Notification', notiDetails));
-        currentBoardChannel.dispatch(schema.add('User', { ...user, activeStatus: true }));
+        const dataTobeupdateAllUser = {
+          Notification: notiDetails,
+          User: { ...user, activeStatus: true },
+          BoardMember: { id: addMemberRes, ...record, tuserId: user.id },
+        };
+        boardChannel.forEach(s => updateUserCache(dataTobeupdateAllUser, s, 'add'));
       } else {
-        currentBoardChannel.dispatch(schema.add('Notification', notiDetails));
-        currentBoardChannel.dispatch(schema.add('User', { ...user, activeStatus: false }));
+        const boardChannel = session.getChannel(`Board-${record.boardId}`);
+        const dataTobeupdateAllUser = {
+          Notification: notiDetails,
+          User: { ...user, activeStatus: false },
+          BoardMember: { id: addMemberRes, ...record, tuserId: user.id },
+        };
+        boardChannel.forEach(s => updateUserCache(dataTobeupdateAllUser, s, 'add'));
       }
     } else {
       throw new Error('User Not Found');
@@ -169,10 +179,35 @@ async function addBoardColumnCardTag(record) {
 
 async function copyBoardColumnCard(record) {
   console.log('copyBoardColumnCard called', record);
-  const { fboardColumnId, tboardColumnId, fboardId, tboardId } = { fboardColumnId: 3, tboardColumnId: 1, fboardId: 5, tboardId: 6 };
-  const mainResult = await db.execute(async ({ insert }) => {
+  const { card, description, attachments, tags, columnId } = record;
+  const { session } = this;
+  delete card.id;
+  delete description.id;
+  attachments.forEach(d => delete d.id);
+  tags.forEach(t => delete t.id);
 
+  console.log('after deletion id', card, description, attachments, tags);
+
+  const mainRes = await db.execute(async ({ insert }) => {
+    const addCardRes = await insert('BoardColumnCard', { ...card, boardColumnId: columnId });
+    await updateUserCache({ BoardColumnCard: { ...card, id: addCardRes, boardColumnId: columnId } }, session, 'add');
+    const addCardDescriptionRes = await insert('BoardColumnCardDescription', { ...description, boardColumnCardId: addCardRes });
+    await updateUserCache({ BoardColumnCardDescription: { ...description, boardColumnCardId: addCardRes, id: addCardDescriptionRes } });
+    const attachmentPromises = [];
+    attachments.forEach(at => attachmentPromises.push(insert('BoardColumnCardAttachment', { ...at, boardColumnCardId: addCardRes })));
+    const attachmentAllRes = await Promise.all(attachmentPromises);
+    console.log('all attachment res', attachmentAllRes);
+    const attachmentValues = Object.values(attachments).map((at, idx) => ({ ...at, boardColumnCardId: addCardRes, id: attachmentAllRes[idx] }));
+    console.log('new Attachment values', attachmentValues);
+    attachmentValues.forEach(at => updateUserCache({ BoardColumnCardAttachment: at }, session, 'add'));
+    const tagsPromises = [];
+    tags.forEach(t => tagsPromises.push(insert('BoardColumnCardTag', { ...t, boardColumnCardId: addCardRes })));
+    const tagsAllRes = await Promise.all(tagsPromises);
+    const tagsValues = Object.values(tags).map((at, idx) => ({ ...at, boardColumnCardId: addCardRes, id: tagsAllRes[idx] }));
+    console.log('tags insert res', tagsValues);
+    tagsValues.forEach(tg => updateUserCache({ BoardColumnCardTag: tg }, session, 'add'));
   });
+  return mainRes;
 }
 
 export default [
