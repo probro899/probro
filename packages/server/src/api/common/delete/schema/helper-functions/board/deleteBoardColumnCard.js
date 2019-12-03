@@ -13,7 +13,7 @@ const flat = (arr) => {
 };
 
 export default async function deleteBoardColumnCard(Delete, record) {
-  console.log('deleteBoardColumnCard Helper', record);
+  // console.log('deleteBoardColumnCard Helper', record);
   const { broadCastId } = record[0];
   await db.execute(async ({ find }) => {
     const allboardColumnCardPromises = [];

@@ -11,7 +11,7 @@ export default async function findBlogDetails(blogId, userId, getBlog) {
     const blogComment = await find('BlogComment', { blogId });
     const blogLike = await find('BlogLike', { blogId });
     const allUserIds = lodash.uniq([parseInt(userId, 10), ...blogComment.map(bc => bc.userId), ...blogLike.map(bl => bl.userId)]);
-    console.log('allUserIds', allUserIds);
+    // console.log('allUserIds', allUserIds);
     const userListPromises = [];
     const userDetailPromises = [];
     // console.log('allUserIds', allUserIds);

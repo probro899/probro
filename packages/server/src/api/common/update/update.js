@@ -6,7 +6,7 @@ import { user } from '../../../cache';
 export default async function Update(table, value, condition) {
   const { session } = this;
   const { broadCastId } = value;
-  console.log('update value', value, value);
+  // console.log('update value', value, value);
   delete value.broadCastId;
   const res = await db.execute(async ({ update, findOne }) => {
     await update(table, value, condition);
@@ -16,7 +16,7 @@ export default async function Update(table, value, condition) {
   if (broadCastId) {
     const channel = session.channel(broadCastId);
     const allChannelSession = session.getChannel(broadCastId);
-    console.log('current channel', allChannelSession);
+    // console.log('current channel', allChannelSession);
     channel.dispatch(schema.update(table, res));
     allChannelSession.forEach(s => user.update(schema.update(table, res), s));
   } else {

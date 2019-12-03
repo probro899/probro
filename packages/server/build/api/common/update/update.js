@@ -19,6 +19,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 exports.default = async function Update(table, value, condition) {
   const { session } = this;
   const { broadCastId } = value;
+  // console.log('update value', value, value);
   delete value.broadCastId;
   const res = await _db2.default.execute(async ({ update, findOne }) => {
     await update(table, value, condition);
@@ -27,11 +28,14 @@ exports.default = async function Update(table, value, condition) {
   });
   if (broadCastId) {
     const channel = session.channel(broadCastId);
+    const allChannelSession = session.getChannel(broadCastId);
+    // console.log('current channel', allChannelSession);
     channel.dispatch(_schema2.default.update(table, res));
-    _cache.user.update(_schema2.default.update(table, res), session);
+    allChannelSession.forEach(s => _cache.user.update(_schema2.default.update(table, res), s));
   } else {
     // session.dispatch(schema.update(table, res));
     _cache.user.update(_schema2.default.update(table, res), session);
   }
+  return res;
 };
 // eslint-disable-next-line import/no-cycle

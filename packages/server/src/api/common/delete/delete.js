@@ -4,7 +4,7 @@ import db from '../../../db';
 import { user } from '../../../cache';
 
 export default async function Delete(table, record) {
-  console.log('db delete called', table, record, this.session);
+  // console.log('db delete called', table, record, this.session);
   try {
     const { session } = this;
     const { broadCastId } = record;

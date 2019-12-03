@@ -51,4 +51,8 @@ function deleteBordColumnDescription(record) {
   _delete2.default.call(this, 'BoardColumnCardDescription', record);
 }
 
-exports.default = [deleteBoard, deleteBoardColumn, deleteBoardColumnCard, deleteBoardColumnCardAttachment, deleteBoardColumnCardComment, deleteBordColumnDescription];
+function deleteBoardColumnCardTag(record) {
+  _delete2.default.call(this, 'BoardColumnCardTag', record);
+}
+
+exports.default = [deleteBoard, deleteBoardColumn, deleteBoardColumnCard, deleteBoardColumnCardAttachment, deleteBoardColumnCardComment, deleteBordColumnDescription, deleteBoardColumnCardTag];

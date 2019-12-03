@@ -1,12 +1,10 @@
 /* eslint-disable import/no-cycle */
-import schema from '@probro/common/src/schema';
 import add from '../../add';
 import db from '../../../../../db';
 import mailBody from '../../../../../mailer/html/mailBody';
 import mailer from '../../../../../mailer';
 import findBoardDetails from '../../../findBoradDetail';
 import updateUserCache from '../../../updateUserCache';
-import { useReducer } from 'react';
 
 const flat = (arr) => {
   const flatArray = arr.reduce((t, a) => {
@@ -25,7 +23,7 @@ async function addBoard(record) {
   const boardId = await add.call(this, 'Board', record);
   await add.call(this, 'BoardMember', { boardId, tuserId: record.userId, fuserId: record.userId, joinStatus: true, timeStamp: Date.now(), userType: 'creator' });
   session.subscribe(`Board-${boardId}`);
-  console.log('boardid in addBorad', boardId);
+  // console.log('boardid in addBorad', boardId);
   return boardId;
 }
 
@@ -103,7 +101,7 @@ async function addBoardMember(record) {
       const mainchannel = session.getChannel('Main');
 
       const remoteUserSession = mainchannel.find(s => s.values.user.id === user.id);
-      console.log('remote User session', remoteUserSession);
+      // console.log('remote User session', remoteUserSession);
       currentBoardChannel = session.channel(`Board-${board.id}`);
       if (remoteUserSession) {
         remoteUserSession.subscribe(`Board-${board.id}`);
@@ -178,7 +176,7 @@ async function addBoardColumnCardTag(record) {
 }
 
 async function copyBoardColumnCard(record) {
-  console.log('copyBoardColumnCard called', record);
+  // console.log('copyBoardColumnCard called', record);
   const { card, description, attachments, tags, columnId } = record;
   const { session } = this;
   delete card.id;
@@ -186,25 +184,20 @@ async function copyBoardColumnCard(record) {
   attachments.forEach(d => delete d.id);
   tags.forEach(t => delete t.id);
 
-  console.log('after deletion id', card, description, attachments, tags);
-
   const mainRes = await db.execute(async ({ insert }) => {
-    const addCardRes = await insert('BoardColumnCard', { ...card, boardColumnId: columnId });
-    await updateUserCache({ BoardColumnCard: { ...card, id: addCardRes, boardColumnId: columnId } }, session, 'add');
+    const addCardRes = await insert('BoardColumnCard', { ...card, boardColumnId: parseInt(columnId, 10) });
+    await updateUserCache({ BoardColumnCard: { ...card, id: addCardRes, boardColumnId: parseInt(columnId, 10) } }, session, 'add');
     const addCardDescriptionRes = await insert('BoardColumnCardDescription', { ...description, boardColumnCardId: addCardRes });
-    await updateUserCache({ BoardColumnCardDescription: { ...description, boardColumnCardId: addCardRes, id: addCardDescriptionRes } });
+    await updateUserCache({ BoardColumnCardDescription: { ...description, boardColumnCardId: addCardRes, id: addCardDescriptionRes } }, session, 'add');
     const attachmentPromises = [];
     attachments.forEach(at => attachmentPromises.push(insert('BoardColumnCardAttachment', { ...at, boardColumnCardId: addCardRes })));
     const attachmentAllRes = await Promise.all(attachmentPromises);
-    console.log('all attachment res', attachmentAllRes);
     const attachmentValues = Object.values(attachments).map((at, idx) => ({ ...at, boardColumnCardId: addCardRes, id: attachmentAllRes[idx] }));
-    console.log('new Attachment values', attachmentValues);
     attachmentValues.forEach(at => updateUserCache({ BoardColumnCardAttachment: at }, session, 'add'));
     const tagsPromises = [];
     tags.forEach(t => tagsPromises.push(insert('BoardColumnCardTag', { ...t, boardColumnCardId: addCardRes })));
     const tagsAllRes = await Promise.all(tagsPromises);
     const tagsValues = Object.values(tags).map((at, idx) => ({ ...at, boardColumnCardId: addCardRes, id: tagsAllRes[idx] }));
-    console.log('tags insert res', tagsValues);
     tagsValues.forEach(tg => updateUserCache({ BoardColumnCardTag: tg }, session, 'add'));
   });
   return mainRes;

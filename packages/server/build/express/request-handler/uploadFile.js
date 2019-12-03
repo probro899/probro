@@ -79,7 +79,10 @@ const checkFileType = (req, file, cb) => {
       case 'video':
         checkFileReg = /avi|AVI|wmv|WMV|flv|FLV|mpg|MPG|mp4|MP4|webm|mkv|MKV|WEBM|x-matroska/;
         break;
-      case 'file':
+      case 'audio':
+        checkFileReg = /mp3/;
+        break;
+      case 'application':
         checkFileReg = /pdf|txt/;
         break;
       default:
@@ -101,7 +104,7 @@ const upload = (0, _multer2.default)({
   storage,
   limits: { fileSize: 1000000000 },
   fileFilter: (req, file, cb) => checkFileType(req, file, cb)
-}).single('image');
+}).single('file');
 
 exports.default = async (req, res) => {
   try {

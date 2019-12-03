@@ -38,7 +38,7 @@ exports.default = async record => {
     const token = await (0, _v2.default)();
     const result = await _db2.default.execute(async ({ insert, findOne }) => {
       const findUserEmailRes = await findOne('User', { email: record.email });
-      const htmlStringValue = await (0, _mailBody2.default)(token);
+      const htmlStringValue = await (0, _mailBody2.default)();
       if (findUserEmailRes) {
         throw new Error('Emailisalreadytaken');
       }
@@ -51,7 +51,7 @@ exports.default = async record => {
           to: `<${record.email}>`,
           subject: 'User email confirmation',
           text: 'No reply',
-          html: htmlStringValue.registrationHtmlString
+          html: htmlStringValue.registrationHtmlString(token)
         });
         return insertRes;
       }
