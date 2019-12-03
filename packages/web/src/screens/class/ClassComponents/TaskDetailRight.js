@@ -110,6 +110,7 @@ class TaskDetailRight extends React.Component {
     const {
       task, apis, tags, addDatabaseSchema,
       deleteDatabaseSchema,
+      account,
       boardId,
     } = this.props;
     if (aord) {
@@ -128,10 +129,11 @@ class TaskDetailRight extends React.Component {
     }
     const res = await apis.addBoardColumnCardTag({
       broadCastId: `Board-${boardId}`,
+      userId: account.user.id,
       boardColumnCardId: task.id,
       tag: name,
     });
-    addDatabaseSchema('BoardColumnCardTag', { id: res, tag: name, boardColumnCardId: task.id });
+    addDatabaseSchema('BoardColumnCardTag', { id: res, userId: account.user.id, tag: name, boardColumnCardId: task.id });
   }
 
   deleteCard = async (type) => {
