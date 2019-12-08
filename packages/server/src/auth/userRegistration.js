@@ -18,7 +18,9 @@ export default async (record) => {
         throw new Error('Emailisalreadytaken');
       }
       const hasPassword = await genHashPassword(record.password);
-      const insertRes = await insert('User', { ...record, password: hasPassword, verify: false, verificationToken: token });
+      const firstNameLowerCase = `${record.firstName}`.toLowerCase();
+      const lastNameLowerCase = `${record.lastName}`.toLowerCase();
+      const insertRes = await insert('User', { ...record, password: hasPassword, verify: false, verificationToken: token, slug: `${firstNameLowerCase}-${lastNameLowerCase}-${Date.now()}` });
       if (insertRes) {
         cache.users.set(token, record.email, RESET_TOKEN_AGE);
         mailer({

@@ -92,6 +92,7 @@ async function addBoardMember(record) {
         body: `Added ${user.firstName} to the board ${board.name}`,
         title: 'Board Invitation',
         type: 'board',
+        typeId: record.boardId,
         viewStatus: false,
         imageUrl: null,
       };
