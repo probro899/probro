@@ -9,29 +9,26 @@ import Profile from './profile';
 import Setting from './setting';
 import DrawingBoard from './drawing-board';
 import Connection from './connection';
-// import Message from './message';
 import Class from '../class/Class';
 import { Blog } from '../blog';
+import { Spinner } from '../../common';
 
 class HomePage extends Component {
-  constructor(props) {
-    super(props);
-    const { account, match } = this.props;
-    this.state = { error: match.params.id !== account.slug };
-  }
-
-  state = { error: false };
+  state = {};
 
   render() {
-    const { error } = this.state;
     const { account, match } = this.props;
-    // console.log('error', error, 'account online ->', account, 'match', match);
+    if (!account.user) {
+      return (
+        <Spinner />
+      );
+    }
     return (
-      error ? <Redirect push to="/" />
+      account.user.slug !== match.params.id ? <Redirect push to="/" />
         : (
           <div>
             {/* redirect to home page if not logged in  */}
-            {account.online ? <Navbar /> : <Redirect to="/" />}
+            <Navbar />
             <div className="broWrapper">
               <SmallScreenSideNav match={match} />
               <SideNav match={match} />

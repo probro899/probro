@@ -31,6 +31,7 @@ class NotificationContainer extends React.Component {
       }
     });
     const imgUrl = userDetail && userDetail.image ? `${ENDPOINT}/user/${10000000 + parseInt(userDetail.userId, 10)}/profile/${userDetail.image}` : file;
+    console.log('notification', account, database.UserDetail, notification, userDetail);
     return (
       <Link
         to={`/${url}`}
