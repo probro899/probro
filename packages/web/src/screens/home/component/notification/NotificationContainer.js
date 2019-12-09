@@ -1,8 +1,10 @@
+/* eslint-disable no-case-declarations */
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import moment from 'moment';
+import { Icon } from '@blueprintjs/core';
 import { RoundPicture } from '../../../../components';
 import { ENDPOINT } from '../../../../config';
 
@@ -14,33 +16,41 @@ class NotificationContainer extends React.Component {
   getNotification = (notification) => {
     const { account, database } = this.props;
     let url;
+    let imageIcon;
     switch (notification.type) {
       case 'user':
-        url = `user/${notification.userId}`;
+        url = `user/${database.User.byId[notification.typeId].slug}`;
+        let userDetail;
+        Object.values(database.UserDetail.byId).map((obj) => {
+          if (notification.typeId === obj.userId) {
+            userDetail = obj;
+          }
+        });
+        const imgUrl = userDetail && userDetail.image ? `${ENDPOINT}/user/${10000000 + parseInt(userDetail.userId, 10)}/profile/${userDetail.image}` : file;
+        imageIcon = (
+          <div className="pc-noti-img">
+            <RoundPicture imgUrl={imgUrl} />
+          </div>
+        );
         break;
       case 'board':
         url = `class-work/${account.slug}/${notification.boardId}`;
+        imageIcon = (
+          <div className="pc-noti-icon">
+            <Icon icon="application" iconSize={40} />
+          </div>
+        );
         break;
       default:
         url = '';
     }
-    let userDetail;
-    Object.values(database.UserDetail.byId).map((obj) => {
-      if (notification.typeId === obj.userId) {
-        userDetail = obj;
-      }
-    });
-    const imgUrl = userDetail && userDetail.image ? `${ENDPOINT}/user/${10000000 + parseInt(userDetail.userId, 10)}/profile/${userDetail.image}` : file;
-    console.log('notification', account, database.UserDetail, notification, userDetail);
     return (
       <Link
         to={`/${url}`}
         className="pc-noti-wrapper"
         key={notification.id}
       >
-        <div className="pc-noti-img">
-          <RoundPicture imgUrl={imgUrl} />
-        </div>
+        {imageIcon}
         <div className="pc-noti-body">
           <p className="pc-noti-desc">
             {notification.body}

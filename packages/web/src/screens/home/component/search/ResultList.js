@@ -17,7 +17,7 @@ const User = ({ item }) => {
       </div>
       <div className="desc-con">
         <p className="name">
-          <Link to={`/user/${user.id}/`}>
+          <Link to={`/user/${user.slug}/`}>
             {userName}
           </Link>
         </p>

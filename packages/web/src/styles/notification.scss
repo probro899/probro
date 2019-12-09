@@ -35,6 +35,14 @@
         width: auto;
       }
     }
+    .pc-noti-icon {
+      width: 55px;
+      height: 55px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
     .pc-noti-body {
       margin-left: 10px;
       padding: 5px;

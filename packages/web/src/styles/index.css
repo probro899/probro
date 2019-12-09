@@ -343,6 +343,7 @@ top attachment etc.
 .notification-list .pc-noti-wrapper .pc-noti-img { width: 55px; height: 55px; position: relative; border-radius: 50%; overflow: hidden; }
 .notification-list .pc-noti-wrapper .pc-noti-img img.portrait { width: 100%; height: auto; }
 .notification-list .pc-noti-wrapper .pc-noti-img img.landscape { height: 100%; width: auto; }
+.notification-list .pc-noti-wrapper .pc-noti-icon { width: 55px; height: 55px; display: flex; flex-direction: column; justify-content: center; align-items: center; }
 .notification-list .pc-noti-wrapper .pc-noti-body { margin-left: 10px; padding: 5px; display: flex; justify-content: center; flex-direction: column; }
 .notification-list .pc-noti-wrapper .pc-noti-body p { margin: 0; word-wrap: break-word; }
 .notification-list .pc-noti-wrapper .pc-noti-body .pc-ago-date { font-size: 12px; color: #696969; }

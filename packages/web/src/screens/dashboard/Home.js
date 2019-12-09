@@ -18,13 +18,16 @@ class HomePage extends Component {
 
   render() {
     const { account, match } = this.props;
+    if (!account.sessionId) {
+      return <Redirect to="/" />;
+    }
     if (!account.user) {
       return (
         <Spinner />
       );
     }
     return (
-      account.user.slug !== match.params.id ? <Redirect push to="/" />
+      account.user.slug !== match.params.id ? <Redirect to="/" />
         : (
           <div>
             {/* redirect to home page if not logged in  */}
