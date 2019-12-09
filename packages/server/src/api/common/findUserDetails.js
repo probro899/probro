@@ -15,7 +15,7 @@ export default async (uid, all, slug) => {
       userWorkExperience = await find('UserWorkExperience', { userId: uid });
       userPortal = await find('UserPortal', { userId: uid });
     }
-    return { user: { id: user.id, firstName: user.firstName, middleName: user.middleName, lastName: user.lastName }, userDetail, userSkill, userEducation, userWorkExperience, userPortal };
+    return { user: { id: user.id, slug: user.slug, firstName: user.firstName, middleName: user.middleName, lastName: user.lastName }, userDetail, userSkill, userEducation, userWorkExperience, userPortal };
   });
   return res;
 };
