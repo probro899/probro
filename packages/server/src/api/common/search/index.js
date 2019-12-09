@@ -15,6 +15,8 @@ const flat = (arr) => {
   return flatArray;
 };
 
+// Todo make baninary tree for searching it is expensive for now it is ok
+
 export default async (keyword) => {
   // console.log('search keyword in search api', keyword);
   const keywordArrtemp = keyword.split(' ');

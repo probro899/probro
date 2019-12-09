@@ -120,7 +120,7 @@ export default async function get(id) {
     lodash.uniq([...allBoardUserList, ...allConnectionUserList, ...allBlogUsers, user[0].id]).forEach(uid => boardUserDetailsPromises.push(findOne('UserDetail', { userId: uid })));
     const allUserDetailsList = (await Promise.all(boardUserDetailsPromises)).filter(obj => obj);
     // console.log('all user details list', allUserDetailsList);
-    const allUser = allUserList.map(u => ({ id: u.id, firstName: u.firstName, email: u.email, lastName: u.lastName, activeStatus: null }));
+    const allUser = allUserList.map(u => ({ id: u.id, firstName: u.firstName, email: u.email, lastName: u.lastName, slug: u.slug, activeStatus: null }));
     // console.log('allUser', allUser);
     // console.log('uniqUser and BoarUserDetails', uniqUsers, allBoardUserDetails);
     const boardDetails = await Promise.all(boardDetailsPromises);
