@@ -19,7 +19,7 @@ class Communication extends React.Component {
   };
 
   async componentWillMount() {
-    console.log('commnucation mount');
+    // console.log('commnucation mount');
     let apisRes = null;
     try {
       apisRes = await client.scope('Mentee');
@@ -45,9 +45,9 @@ class Communication extends React.Component {
 
   switchScreen = async (target) => {
     const { updateWebRtc, webRtc } = this.props;
-    console.log('close handler in index', webRtc);
+    // console.log('close handler in index', webRtc);
     if (webRtc.isLive) {
-      console.log('close handler called in index');
+      // console.log('close handler called in index');
       closeHandler(this.props)();
     }
     updateWebRtc('communicationContainer', target);
@@ -59,7 +59,7 @@ class Communication extends React.Component {
       webRtc,
       updateWebRtc,
     } = this.props;
-    console.log('apis', apis, 'props', this.props);
+    // console.log('apis', apis, 'props', this.props);
     return (
       (webRtc.showIncommingCall || webRtc.showCommunication) && (
       <div
