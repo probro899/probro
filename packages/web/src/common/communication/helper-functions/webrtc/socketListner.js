@@ -3,6 +3,7 @@ import store from '../../../../store';
 
 export default (props, state) => {
   // Handle offer request
+  console.log('webRtc socket listner called');
   client.on('offer', async (data) => {
     console.log('Offer arrived', data);
     const { updateWebRtc, database } = props;
@@ -12,8 +13,9 @@ export default (props, state) => {
     const { apis } = state;
     if (webRtc.showCommunication) {
       if (!webRtc.isLive) {
-        await updateWebRtc('chatHistory', { type, user: { user: database.User.byId[broadCastId] }, broadCastId });
+        await updateWebRtc('communicationContainer', 'list');
         await updateWebRtc('showCommunication', broadCastId);
+        await updateWebRtc('chatHistory', { type, user: { user: database.User.byId[broadCastId] }, broadCastId });
         updateWebRtc('showIncommingCall', true);
       }
       updateWebRtc('currentOffer', data);

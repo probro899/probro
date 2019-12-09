@@ -13,7 +13,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 exports.default = async (req, res) => {
   try {
     const resFinal = await (0, _userRegistration2.default)(req.body);
-    console.log('final response', resFinal);
+    // console.log('final response', resFinal);
     if (resFinal) {
       res.status(200);
       res.send(JSON.stringify(resFinal));

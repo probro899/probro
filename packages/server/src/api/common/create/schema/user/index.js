@@ -68,6 +68,7 @@ async function connectUser(record) {
       body: `You have friend request from ${fUserDetails.firstName}`,
       title: 'Friend request',
       type: 'user',
+      typeId: fUserDetails.id,
       viewStatus: false,
       imageUrl: null,
     };

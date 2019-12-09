@@ -12,7 +12,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function deleteUserWorkExperience(record) {
   _delete2.default.call(this, 'UserWorkExperience', record);
-}
+} // eslint-disable-next-line import/no-cycle
+
 
 function deleteUserEducation(record) {
   _delete2.default.call(this, 'UserEducation', record);
@@ -26,4 +27,10 @@ function deleteUserPortal(record) {
   _delete2.default.call(this, 'UserPortal', record);
 }
 
-exports.default = [deleteUserWorkExperience, deleteUserEducation, deleteUserSkill, deleteUserPortal];
+function deleteUserCarrierInterest(record) {
+  _delete2.default.call(this, 'UserCarrierInterest', record);
+}
+function deleteUserConnection(record) {
+  _delete2.default.call(this, 'UserConnection', record);
+}
+exports.default = [deleteUserWorkExperience, deleteUserEducation, deleteUserSkill, deleteUserPortal, deleteUserCarrierInterest, deleteUserConnection];

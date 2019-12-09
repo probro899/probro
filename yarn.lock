@@ -11301,9 +11301,9 @@ react-resizable@^1.8.0:
     prop-types "15.x"
     react-draggable "^3.0.3"
 
-react-responsive-carousel@^3.1.50:
-  version "3.1.50"
-  resolved "https://registry.yarnpkg.com/react-responsive-carousel/-/react-responsive-carousel-3.1.50.tgz#e5255f7760f3b4766efa5cd04361c74df4311960"
+react-responsive-carousel@^3.1.51:
+  version "3.1.51"
+  resolved "https://registry.yarnpkg.com/react-responsive-carousel/-/react-responsive-carousel-3.1.51.tgz#f1913530b32e8fe7b484c77051571800b4ab535f"
   dependencies:
     classnames "^2.2.5"
     prop-types "^15.5.8"

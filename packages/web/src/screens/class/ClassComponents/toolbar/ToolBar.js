@@ -20,10 +20,14 @@ class ToolBar extends React.Component {
     const {
       updateWebRtc,
       boardId,
+      database,
     } = this.props;
     updateWebRtc('showCommunication', boardId);
     updateWebRtc('peerType', 'board');
     updateWebRtc('communicationContainer', 'history');
+    // updateWebRtc('connectionId', connection.id);
+    // const user = connection.userId === account.user.id ? database.User.byId[connection.mId] : database.User.byId[connection.userId];
+    updateWebRtc('chatHistory', { type: 'board', user: { user: null } });
   }
 
   render() {

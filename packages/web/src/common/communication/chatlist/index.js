@@ -29,7 +29,7 @@ class ChatList extends React.Component {
         style={style}
         className="chat-list"
       >
-        {chatList.map(uc => <ChatListItem clo={{ ...uc, onClick: chatItemClickHandler, onMouseHover: this.onMouseHover, mouseHoverId, props: this.props }} />)}
+        {chatList.map((uc, idx) => <ChatListItem clo={{ ...uc, onClick: chatItemClickHandler, onMouseHover: this.onMouseHover, mouseHoverId, props: this.props }} idx={idx} />)}
       </div>
     );
   }

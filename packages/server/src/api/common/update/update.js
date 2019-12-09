@@ -6,7 +6,7 @@ import { user } from '../../../cache';
 export default async function Update(table, value, condition) {
   const { session } = this;
   const { broadCastId } = value;
-  console.log('update value', value, value);
+  // console.log('update value', value, value);
   delete value.broadCastId;
   const res = await db.execute(async ({ update, findOne }) => {
     await update(table, value, condition);

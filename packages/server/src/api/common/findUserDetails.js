@@ -2,8 +2,8 @@ import db from '../../db';
 
 export default async (uid, all) => {
   const res = await db.execute(async ({ find, findOne }) => {
-    const user = await findOne('User', { id: uid });
-    const userDetail = await findOne('UserDetail', { userId: uid }) || {};
+    const user = await findOne('User', { slug: uid });
+    const userDetail = await findOne('UserDetail', { userId: user.id }) || {};
     let userSkill = [];
     let userEducation = [];
     let userWorkExperience = [];

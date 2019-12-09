@@ -50,15 +50,17 @@ exports.default = async function get(id) {
     const tuserMessage = await find('UserMessage', { tuserId: id });
     const fuserMessage = await find('UserMessage', { fuserId: id });
     const userMessages = [...fuserMessage, ...tuserMessage];
+    const userMessageSeenStatusPromises = [];
+    userMessages.forEach(um => userMessageSeenStatusPromises.push(find('UserMessageSeenStatus', { umId: um.id })));
+    const userMessageSeenStatus = await Promise.all(userMessageSeenStatusPromises);
+
     // ************************************************************************************************
 
     // ******************* User ConnectionList **********************************************************
     let connectionListMid = [];
     let connectionListUserId = [];
-    if (userDetail.length === 1) {
-      connectionListMid = await find('UserConnection', { mId: user[0].id });
-      connectionListUserId = await find('UserConnection', { userId: user[0].id });
-    }
+    connectionListMid = await find('UserConnection', { mId: user[0].id });
+    connectionListUserId = await find('UserConnection', { userId: user[0].id });
     const connectionList = [...connectionListMid, ...connectionListUserId];
     const allConnectionUserList = _lodash2.default.uniq(flat(connectionList.map(obj => [obj.mId, obj.userId])));
     // console.log('allConnecitonUserList', allConnectionUserList);
@@ -69,9 +71,9 @@ exports.default = async function get(id) {
     const allLike = await find('BlogLike', { userId: id });
     const allComments = await find('BlogComment', { userId: id });
     const BlogPublish = await find('Blog', { saveStatus: 'publish' });
-    console.log('all blog data', Blog, allLike, allComments, BlogPublish);
+    // console.log('all blog data', Blog, allLike, allComments, BlogPublish);
     const allAssociateBlogsId = _lodash2.default.uniq([...allComments.map(obj => obj.blogId), ...allLike.map(obj => obj.blogId), ...Blog.map(obj => obj.id), ...BlogPublish.map(obj => obj.id)]);
-    console.log('allAssociated Blog Ids', allAssociateBlogsId);
+    // console.log('allAssociated Blog Ids', allAssociateBlogsId);
     const blogDetailsPromises = [];
     const allBlogsPromises = [];
     allAssociateBlogsId.forEach(bid => {
@@ -81,7 +83,7 @@ exports.default = async function get(id) {
 
     const blogDetails = await Promise.all(blogDetailsPromises);
     const allBlogs = await Promise.all(allBlogsPromises);
-    console.log('allBlogs', allBlogs);
+    // console.log('allBlogs', allBlogs);
 
     const newBlogPublish = BlogPublish.filter(b => !allBlogs.find(bn => b.id === bn.id));
     // const BlogDetail = blogDetails.map(obj => obj.blogDetail).flat();
@@ -96,6 +98,7 @@ exports.default = async function get(id) {
     const UserEducation = await find('UserEducation', { userId: id });
     const UserSkill = await find('UserSkill', { userId: id });
     const UserPortal = await find('UserPortal', { userId: id });
+    const UserCarrierInterest = await find('UserCarrierInterest', { userId: id });
     const Board = await find('Board', { userId: id });
 
     const boardPromises = [];
@@ -107,6 +110,9 @@ exports.default = async function get(id) {
     const boardMessagePromises = [];
     allBoards.forEach(b => boardMessagePromises.push(find('BoardMessage', { boardId: b.id })));
     const BoardMessage = await Promise.all(boardMessagePromises);
+    const boardMessageSeenStatusPromises = [];
+    flat(BoardMessage).forEach(msg => boardMessageSeenStatusPromises.push(find('BoardMessageSeenStatus', { bmId: msg.id })));
+    const BoardMessageSeenStatus = await Promise.all(boardMessageSeenStatusPromises);
     // console.log('BoardMessage', BoardMessage);
 
     const boardDetailsPromises = [];
@@ -129,7 +135,8 @@ exports.default = async function get(id) {
 
     const boardUserDetailsPromises = [];
     _lodash2.default.uniq([...allBoardUserList, ...allConnectionUserList, ...allBlogUsers, user[0].id]).forEach(uid => boardUserDetailsPromises.push(findOne('UserDetail', { userId: uid })));
-    const allUserDetailsList = await Promise.all(boardUserDetailsPromises);
+    const allUserDetailsList = (await Promise.all(boardUserDetailsPromises)).filter(obj => obj);
+    // console.log('all user details list', allUserDetailsList);
     const allUser = allUserList.map(u => ({ id: u.id, firstName: u.firstName, email: u.email, lastName: u.lastName, activeStatus: null }));
     // console.log('allUser', allUser);
     // console.log('uniqUser and BoarUserDetails', uniqUsers, allBoardUserDetails);
@@ -141,7 +148,10 @@ exports.default = async function get(id) {
     const BoardColumnCardComment = flat(flat(boardDetails.map(obj => obj.boardColumnCardComment)));
     // console.log('board columnCardAttachment', boardColumnCardComment);
     const BoardColumnCardDescription = flat(flat(boardDetails.map(obj => obj.boardColumnCardDescription)));
+    const BoardColumnCardTag = flat(flat(boardDetails.map(obj => obj.boardColumnCardTag)));
+
     // console.log('connection list', [allBlogs, newBlogPublish]);
+    // console.log('UserMessage', userMessages);
     const userDataRes = {
       User: allUser,
       UserDetail: allUserDetailsList,
@@ -152,6 +162,7 @@ exports.default = async function get(id) {
       BoardColumnCardAttachment,
       BoardColumnCardComment,
       BoardColumnCardDescription,
+      BoardColumnCardTag,
       Blog: [...allBlogs, ...newBlogPublish],
       BlogComment,
       BlogLike,
@@ -160,9 +171,12 @@ exports.default = async function get(id) {
       UserWorkExperience,
       UserPortal,
       UserSkill,
+      UserCarrierInterest,
       BoardMessage: flat(BoardMessage),
+      BoardMessageSeenStatus: flat(BoardMessageSeenStatus),
       UserConnection: connectionList,
       UserMessage: userMessages,
+      UserMessageSeenStatus: flat(userMessageSeenStatus),
       allAssociateBlogsId
 
     };

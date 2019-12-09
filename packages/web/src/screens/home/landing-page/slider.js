@@ -3,7 +3,6 @@ import { Carousel } from 'react-responsive-carousel';
 import SearchElement from '../component/search/SearchElement';
 import { ENDPOINT } from '../../../config';
 
-
 class Slider extends Component {
   state = {
     data: null,

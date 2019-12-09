@@ -75,7 +75,7 @@ exports.default = async function initUser(id) {
   u.Board.map(b => ({ channel: session.channel(`Board-${b.id}`), board: b })).forEach(obj => obj.channel.dispatch(_schema2.default.update('User', { id, activeStatus: true })));
   _lodash2.default.uniq(flat(u.UserConnection.map(obj => [obj.mId, obj.userId]))).map(uid => ({ channel: session.channel(`UserConnection-${uid}`) })).forEach(obj => obj.channel.dispatch(_schema2.default.update('User', { id, activeStatus: true })));
   // console.log('userDetaisl in initUser', u.User);
-  // console.log('userConnection', u.UserConnection);
+  // console.log('userConnection', u.BoardMessageSeenStatus);
   session.subscribe('Main');
   // console.log('board member', u.BoardMember);
   session.dispatch(_schema2.default.init('User', finalUserList));
@@ -86,6 +86,7 @@ exports.default = async function initUser(id) {
   session.dispatch(_schema2.default.init('BoardColumnCardAttachment', u.BoardColumnCardAttachment));
   session.dispatch(_schema2.default.init('BoardColumnCardComment', u.BoardColumnCardComment));
   session.dispatch(_schema2.default.init('BoardColumnCardDescription', u.BoardColumnCardDescription));
+  session.dispatch(_schema2.default.init('BoardColumnCardTag', u.BoardColumnCardTag));
   session.dispatch(_schema2.default.init('Blog', u.Blog));
   // session.dispatch(schema.init('BlogDetail', u.BlogDetail));
   session.dispatch(_schema2.default.init('BlogComment', u.BlogComment));
@@ -95,7 +96,11 @@ exports.default = async function initUser(id) {
   session.dispatch(_schema2.default.init('UserWorkExperience', u.UserWorkExperience));
   session.dispatch(_schema2.default.init('UserPortal', u.UserPortal));
   session.dispatch(_schema2.default.init('UserSkill', u.UserSkill));
+  session.dispatch(_schema2.default.init('UserCarrierInterest', u.UserCarrierInterest));
   session.dispatch(_schema2.default.init('BoardMessage', u.BoardMessage));
+  session.dispatch(_schema2.default.init('BoardMessageSeenStatus', u.BoardMessageSeenStatus));
   session.dispatch(_schema2.default.init('UserConnection', u.UserConnection));
   session.dispatch(_schema2.default.init('UserMessage', u.UserMessage));
+  session.dispatch(_schema2.default.init('UserMessageSeenStatus', u.UserMessageSeenStatus));
+  session.dispatch(_schema2.default.init('Notification', u.Notification));
 };

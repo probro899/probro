@@ -11,7 +11,7 @@ var _emailVerification2 = _interopRequireDefault(_emailVerification);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = async (req, res) => {
-  console.log('email verification handler', req.query);
+  // console.log('email verification handler', req.query);
   try {
     const emaiVerificationEmail = await (0, _emailVerification2.default)(req.query.token);
     if (emaiVerificationEmail) {

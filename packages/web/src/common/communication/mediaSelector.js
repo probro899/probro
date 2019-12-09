@@ -40,3 +40,4 @@ export default async (mediaType) => {
     console.error('Media Selector error', e);
   }
 };
+ 

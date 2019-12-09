@@ -16,7 +16,7 @@ const flat = (arr) => {
 };
 
 export default async (keyword) => {
-  console.log('search keyword in search api', keyword);
+  // console.log('search keyword in search api', keyword);
   const keywordArrtemp = keyword.split(' ');
   // console.log('all keyword', keywordArrtemp);
   const keywordArr = keywordArrtemp.filter(key => key.length > 0);

@@ -21,10 +21,13 @@ class Connecte extends React.Component {
   }
 
   sendMessage = () => {
-    const { updateWebRtc, id } = this.props;
+    const { updateWebRtc, id, database, account, connection } = this.props;
     updateWebRtc('showCommunication', id);
     updateWebRtc('peerType', 'user');
     updateWebRtc('communicationContainer', 'history');
+    updateWebRtc('connectionId', connection.id);
+    const user = connection.userId === account.user.id ? database.User.byId[connection.mId] : database.User.byId[connection.userId];
+    updateWebRtc('chatHistory', { type: 'user', user: { user } });
   };
 
   deleteRequest = async () => {
@@ -34,7 +37,7 @@ class Connecte extends React.Component {
   };
 
   acceptRequest = async () => {
-    const { apis, updateDatabaseSchema, connection } = this.props;
+    const { apis, updateDatabaseSchema, connection, account } = this.props;
     await apis.updateUserConnection([{ status: 'connected', mId: connection.mId, userId: connection.userId }, { id: connection.id }]);
     updateDatabaseSchema('UserConnection', { id: connection.id, status: 'connected' });
   };
