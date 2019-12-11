@@ -1,3 +1,4 @@
+/* eslint-disable import/no-cycle */
 import update from '../../update';
 
 function updateBlog(records) {
@@ -15,5 +16,5 @@ function updateBlogLike(records) {
 export default [
   updateBlog,
   updateBlogComment,
-  updateBlogLike
+  updateBlogLike,
 ];
