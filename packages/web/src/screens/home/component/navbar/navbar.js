@@ -77,7 +77,7 @@ class Navbar extends Component {
     const { apis, redirectDashboard, smallScreen } = this.state;
     return (
       <div className={`navbar ${className}`}>
-        {redirectDashboard && <Redirect exact push to={`/${account.slug}/profile`} />}
+        {redirectDashboard && <Redirect exact push to={`/${account.user.slug}/profile`} />}
         <div className="navbar-left">
           <Link
             to="/"

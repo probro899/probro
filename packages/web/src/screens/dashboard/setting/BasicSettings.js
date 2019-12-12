@@ -24,22 +24,30 @@ class BasicSettings extends React.Component {
 
   editAddress = async (data) => {
     const { apis, account } = this.props;
-    await apis.updateUserDetails(
-      { ...data, userId: account.user.id }
-    );
-    return { response: 200, message: 'Changed successfully' };
+    try {
+      await apis.updateUserDetails(
+        { ...data, userId: account.user.id }
+      );
+      return { response: 200, message: 'Changed successfully' };
+    } catch (e) {
+      return { response: 400, error: 'Internal server error' };
+    }
   }
 
   editGender = async (data) => {
     const { apis, account } = this.props;
-    await apis.updateUserDetails(
-      { ...data, userId: account.user.id }
-    );
-    return { response: 200, message: 'Changed successfully' };
+    try {
+      await apis.updateUserDetails(
+        { ...data, userId: account.user.id }
+      );
+      return { response: 200, message: 'Changed successfully' };
+    } catch (e) {
+      return { response: 400, error: 'Internal server error' };
+    }
   }
 
   togglePopover = (type) => {
-    const { namePopover, genderPopover, careerPopover, addressPopover } = this.state;
+    const { namePopover, genderPopover, addressPopover } = this.state;
     const { account, database } = this.props;
     switch (type) {
       case 'name':

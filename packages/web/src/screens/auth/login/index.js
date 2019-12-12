@@ -19,7 +19,7 @@ class Login extends Component {
           </div>
           {/* just trying to redirect incase of logged in */}
           {
-            account.sessionId ? <Redirect push to={`/${account.slug}/profile`} /> : <Log />
+            account.user ? <Redirect push to={`/${account.user.slug}/profile`} /> : <Log />
           }
           <div className="auth-with-others">
             <GoogleLogin />
