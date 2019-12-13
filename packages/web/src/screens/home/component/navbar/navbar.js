@@ -131,7 +131,7 @@ class Navbar extends Component {
         </div>
         <div className="navbar-right">
           {/* Notifications in navigation */}
-          {account.sessionId
+          {account.user
             && (
             <MessageNotification
               account={account}
@@ -139,8 +139,8 @@ class Navbar extends Component {
               updateWebRtc={updateWebRtc}
             />
             )}
-          {account.sessionId && <Notifications account={account} apis={apis} />}
-          { account.sessionId
+          {account.user && <Notifications account={account} apis={apis} />}
+          { account.user
             ? (
               <Link
                 to="#"

@@ -37,7 +37,7 @@ export default () => (
         <Route path="/create-blog/:id" component={CreateBlog} />
         <Route exact path="/reset/:token" component={Reset} />
         <Route exact path="/email-verification/:token" component={EmailVerification} />
-        <Route path="/archive/:blogId/:userId" component={PublicBlog} />
+        <Route path="/blog/:userSlug/:blogSlug" component={PublicBlog} />
         <Route path="/user/:userId" component={PublicProfile} />
         <Route path="/search/key=:searchKey" component={SearchResult} />
         <Route path="/:id" component={DashBoard} />

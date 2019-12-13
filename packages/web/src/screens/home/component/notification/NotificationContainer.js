@@ -20,13 +20,8 @@ class NotificationContainer extends React.Component {
     switch (notification.type) {
       case 'user':
         url = `user/${database.User.byId[notification.typeId].slug}`;
-        let userDetail;
-        Object.values(database.UserDetail.byId).map((obj) => {
-          if (notification.typeId === obj.userId) {
-            userDetail = obj;
-          }
-        });
-        const imgUrl = userDetail && userDetail.image ? `${ENDPOINT}/user/${10000000 + parseInt(userDetail.userId, 10)}/profile/${userDetail.image}` : file;
+        const userDetail = Object.values(database.UserDetail.byId).find(u => notification.typeId === u.userId);
+        const imgUrl = userDetail && userDetail.image ? `${ENDPOINT}/user/${10000000 + parseInt(notification.typeId, 10)}/profile/${userDetail.image}` : file;
         imageIcon = (
           <div className="pc-noti-img">
             <RoundPicture imgUrl={imgUrl} />

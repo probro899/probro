@@ -77,17 +77,30 @@
     .author-user {
       display: flex;
       justify-content: center;
+      margin-bottom: 10px;
       .auth-con {
         display: flex;
+        .profile-icon {
+          width: 100px;
+          height: 100px;
+          border-radius: 50%;
+          overflow: hidden;
+          margin: 10px;
+          img.portrait {
+            width: 100%;
+            height: auto;
+          }
+          img.landscape {
+            height: 100%;
+            width: auto;
+          }
+        }
         .author-detail {
           display: flex;
           justify-content: center;
           align-items: flex-start;
           flex-direction: column;
         }
-      }
-      img {
-        margin: 5px;
       }
     }
   }
@@ -136,7 +149,23 @@
       }
       .responses {
         .i-response {
+          margin: 10px 0;
           display: flex;
+          .pc-profile-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin: 0 10px;
+            img.portrait {
+              width: 100%;
+              height: auto;
+            }
+            img.landscape {
+              height: 100%;
+              width: auto;
+            }
+          }
           .comment-content {
             padding: 5px;
           }
