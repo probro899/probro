@@ -61,6 +61,7 @@ export default async function get(id) {
       BlogComment: blogDetails.BlogComment,
       BlogLike: blogDetails.BlogLike,
       Notification: userNotifications.Notification,
+      NotificationReadStatus: userNotifications.notificationReadstatus,
 
 
       UserConnection: userConnectionListDetails.connectionList,

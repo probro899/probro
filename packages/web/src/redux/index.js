@@ -34,7 +34,8 @@ const reducer = combineReducers({
     'UserMessage',
     'UserCarrierInterest',
     'BoardMessageSeenStatus',
-    'UserMessageSeenStatus'
+    'UserMessageSeenStatus',
+    'NotificationReadStatus'
   ),
 });
 

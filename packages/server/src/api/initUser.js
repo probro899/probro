@@ -87,4 +87,5 @@ export default async function initUser(id) {
   session.dispatch(schema.init('UserMessage', u.UserMessage));
   session.dispatch(schema.init('UserMessageSeenStatus', u.UserMessageSeenStatus));
   session.dispatch(schema.init('Notification', u.Notification));
+  session.dispatch(schema.init('NotificationReadStatus', u.NotificationReadStatus));
 }
