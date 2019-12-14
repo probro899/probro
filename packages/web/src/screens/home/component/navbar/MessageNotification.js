@@ -6,11 +6,10 @@ import { Badge } from '../../../../components';
 import { getChatList } from '../../../../common/communication/chatlist/helper-function';
 
 class MessageNotification extends React.Component {
-  state = { unReadMessage: null };
+  state = { unReadMessage: 0 };
 
   componentDidMount() {
     const chatList = getChatList(this.props);
-    console.log('chat list in notification component', chatList);
     const unReadMessage = chatList.reduce((t, next) => {
       t += next.unSeenNo;
       return t;
@@ -20,7 +19,6 @@ class MessageNotification extends React.Component {
 
   componentWillReceiveProps(props) {
     const chatList = getChatList(props);
-    console.log('chat list in will recieve props', chatList);
     const unReadMessage = chatList.reduce((t, next) => {
       t += next.unSeenNo;
       return t;
@@ -39,7 +37,7 @@ class MessageNotification extends React.Component {
       <Link to="#" onClick={this.showMessage}>
         <div className="navbar-item">
           <Icon icon="chat" iconSize={Icon.SIZE_LARGE} />
-         {unReadMessage !== 0 && <Badge number={unReadMessage} size={25} />}
+          {unReadMessage !== 0 && <Badge number={unReadMessage} size={25} />}
         </div>
       </Link>
     );

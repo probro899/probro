@@ -9,6 +9,7 @@ import Footer from '../../common/footer';
 import client from '../../socket';
 import { ENDPOINT } from '../../config';
 import { Spinner } from '../../common';
+import { RoundPicture } from '../../components';
 
 const file = require('../../assets/icons/64w/uploadicon64.png');
 
@@ -27,11 +28,11 @@ class PublicBlog extends React.Component {
       if (account.user) {
         apis = await client.scope('Mentee');
       }
-      const res = await axios.get(`${ENDPOINT}/web/get-blog?blogId=${match.params.blogId}&userId=${match.params.userId}`);
+      const res = await axios.get(`${ENDPOINT}/web/get-blog?blogId=${match.params.blogSlug}&userId=${match.params.userSlug}`);
       this.setState({
         data: res.data,
         apis,
-        blogId: parseInt(match.params.blogId, 10),
+        blogId: res.data.blog.id,
         loading: false,
       });
     } catch (e) {
@@ -57,13 +58,25 @@ class PublicBlog extends React.Component {
     return { __html: val };
   }
 
+  getUser = () => {
+    const { data } = this.state;
+    let user = {};
+    data.userDetails.map((obj) => {
+      if (obj.user.id === data.blog.id) {
+        user = obj;
+      }
+    });
+    return user;
+  }
+
   render() {
     const { blogId, apis, data, loading } = this.state;
     if (loading) {
       return <Spinner />;
     }
     const { account } = this.props;
-    const usr = data.blog.userId;
+    const user = this.getUser();
+    const imgUrl = user.userDetail.image ? `${ENDPOINT}/user/${10000000 + parseInt(user.user.id, 10)}/profile/${user.userDetail.image}` : file;
     const { userDetails } = data;
     return (
       <div>
@@ -77,21 +90,12 @@ class PublicBlog extends React.Component {
             </p>
             <div className="author-user">
               <div className="auth-con">
-                <img
-                  style={{ borderRadius: '50%' }}
-                  height="64px"
-                  src={file}
-                  alt="author blank"
-                />
+                <div className="profile-icon">
+                  <RoundPicture imgUrl={imgUrl} />
+                </div>
                 <div className="author-detail">
-                  <Link to={`/user/${usr}/`}>
-                    {
-                      userDetails.map((obj) => {
-                        if (obj.user.id === usr) {
-                          return `${obj.user.firstName} ${obj.user.middleName ? `${obj.user.middleName} ` : ''}${obj.user.lastName}`;
-                        }
-                      })
-                    }
+                  <Link key={user.user.id} to={`/user/${user.user.slug}`}>
+                    {`${user.user.firstName} ${user.user.middleName ? `${user.user.middleName} ` : ''}${user.user.lastName}`}
                   </Link>
                   <span>
                     {new Date(data.blog.timeStamp).toDateString()}

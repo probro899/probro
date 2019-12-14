@@ -68,6 +68,7 @@ class Navbar extends Component {
       account, database, navigate, className,
       updateWebRtc,
     } = this.props;
+    console.log('props in nav bar', this.props);
     let profilePic;
     Object.values(database.UserDetail.byId).map((obj) => {
       if (account.user && account.user.id === obj.userId) {
@@ -131,7 +132,7 @@ class Navbar extends Component {
         </div>
         <div className="navbar-right">
           {/* Notifications in navigation */}
-          {account.sessionId && account.user
+          {account.user
             && (
             <MessageNotification
               account={account}
@@ -139,8 +140,8 @@ class Navbar extends Component {
               updateWebRtc={updateWebRtc}
             />
             )}
-          {account.sessionId && account.user && <Notifications account={account} apis={apis} />}
-          { account.sessionId
+          {account.user && <Notifications account={account} apis={apis} />}
+          { account.user
             ? (
               <Link
                 to="#"

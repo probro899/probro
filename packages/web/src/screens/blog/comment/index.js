@@ -112,9 +112,11 @@ class CommentContainer extends React.Component {
               {` ${allLikes.length} Likes`}
             </span>
           </div>
-          <div className="top-label">
-            <h1>Comment here</h1>
-          </div>
+          { account.user && (
+            <div className="top-label">
+              <h1>Comment here</h1>
+            </div>
+          )}
           {account.user && (
             <div className="comment-area">
               <TextArea
@@ -135,7 +137,8 @@ class CommentContainer extends React.Component {
               <h3>Responses</h3>
             </div>
             {allComments.sort(timeStampSorting).map((obj) => {
-              return <Comment users={users} comment={obj} key={obj.id} />;
+              const user = users.find(u => u.user.id === obj.userId);
+              return <Comment user={user} comment={obj} key={obj.id} />;
             })}
           </div>
         </div>

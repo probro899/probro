@@ -12,7 +12,7 @@ import { Spinner } from '../../../common';
 class Archive extends React.Component {
   state = {
     loading: true,
-    data: [],
+    data: {},
   };
 
   async componentDidMount() {
@@ -24,7 +24,7 @@ class Archive extends React.Component {
     try {
       const res = await axios.get(`${ENDPOINT}/web/get-index`);
       this.setState({
-        data: res.data.archive,
+        data: res.data,
         loading: false,
       });
     } catch (e) {
@@ -44,7 +44,7 @@ class Archive extends React.Component {
           <div className="ar-content">
             <div className="ar-left">
               {
-                data.map((obj, index) => {
+                data.archive.map((obj, index) => {
                   const description = obj.blog.content.replace(/<[^>]+>/g, '').replace(/&nbsp;/g, ' ').substring(0, 300);
                   let user;
                   obj.userDetails.map((u) => {
@@ -62,12 +62,12 @@ class Archive extends React.Component {
                         />
                       </div>
                       <div className="ar-i-detail">
-                        <Link to={`/archive/${obj.blog.id}/${obj.blog.userId}`} className="ar-i-title">
+                        <Link to={`/blog/${user.user.slug}/${obj.blog.slug}`} className="ar-i-title">
                           {obj.blog.title}
                         </Link>
                         <p>
                           <span>Author-</span>
-                          <Link to={`/user/${user.user.id}/`}>
+                          <Link to={`/user/${user.user.slug}/`}>
                             {
                               ` ${user.user.firstName} ${user.user.middleName ? `${user.user.middleName} ` : ''}${user.user.lastName}`
                             }

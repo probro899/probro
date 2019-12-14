@@ -2,37 +2,32 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import Moment from 'react-moment';
+import { RoundPicture } from '../../../components';
+import { ENDPOINT } from '../../../config';
 
 const file = require('../../../assets/icons/64w/uploadicon64.png');
 
 const Comment = (props) => {
-  const { comment, users } = props;
+  const { comment, user } = props;
+  const imgUrl = user.userDetail.image ? `${ENDPOINT}/user/${10000000 + parseInt(user.user.id, 10)}/profile/${user.userDetail.image}` : file;
   return (
     <div className="i-response">
-      <img
-        alt="profile comment author"
-        src={file}
-        height="64px"
-        style={{ borderRadius: '50%' }}
-      />
+      <div className="pc-profile-icon">
+        <RoundPicture imgUrl={imgUrl} />
+      </div>
       <div className="comment-content">
         <div>
           {
-            users.map((obj) => {
-              if (obj.user.id === comment.userId) {
-                const { user } = obj;
-                return user.middleName ? (
-                  <Link to={`/user/${user.id}/`} key={`user-${obj.id}`}>
-                    {`${user.firstName} ${user.middleName} ${user.lastName} `}
-                  </Link>
-                )
-                  : (
-                    <Link to={`/user/${user.id}/`} key={`user-${obj.id}`}>
-                      {`${user.firstName} ${user.lastName} `}
-                    </Link>
-                  );
-              }
-            })
+            user.user.middleName ? (
+              <Link to={`/user/${user.user.slug}/`} key={`user-${user.user.id}`}>
+                {`${user.user.firstName} ${user.user.middleName} ${user.user.lastName} `}
+              </Link>
+            )
+              : (
+                <Link to={`/user/${user.user.slug}/`} key={`user-${user.user.id}`}>
+                  {`${user.user.firstName} ${user.user.lastName} `}
+                </Link>
+              )
           }
           <small>
             <Moment
@@ -53,7 +48,7 @@ const Comment = (props) => {
 
 Comment.propTypes = {
   comment: PropTypes.objectOf(PropTypes.any).isRequired,
-  users: PropTypes.arrayOf(PropTypes.any).isRequired,
+  user: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 export default Comment;
