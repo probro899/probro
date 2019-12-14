@@ -29,7 +29,7 @@ class SmallScreenMenu extends React.Component {
   state = {};
 
   render() {
-    const { open, smallScreenToggle, account, apis } = this.props;
+    const { open, smallScreenToggle, account, pcLogo, apis } = this.props;
     return (
       <Drawer
         className="pc-dropdown-drawer"
@@ -39,7 +39,7 @@ class SmallScreenMenu extends React.Component {
         size="60%"
         position="left"
         lazy
-        title="PROPER CLASS"
+        title={<img alt="Proper Class Logo" style={{ objectFit: 'contain', width: '100%' }} src={pcLogo} />}
         transitionDuration={200}
       >
         <DropMenu account={account} apis={apis} />

@@ -12,6 +12,7 @@ import { RoundPicture } from '../../../../components';
 import { ENDPOINT } from '../../../../config';
 
 const profileIcon = require('../../../../assets/icons/64w/uploadicon64.png');
+const pcLogo = require('../../../../assets/logo.png');
 
 const DropDownMenu = (onclick, apis) => {
   return (
@@ -86,7 +87,7 @@ class Navbar extends Component {
           >
             <div className="navbar-item">
               <span>
-                Proper Class
+                <img width={200} alt="Proper Class Logo" src={pcLogo} />
               </span>
             </div>
           </Link>
@@ -128,6 +129,7 @@ class Navbar extends Component {
             open={smallScreen}
             account={account}
             apis={apis}
+            pcLogo={pcLogo}
           />
         </div>
         <div className="navbar-right">
