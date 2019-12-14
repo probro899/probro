@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
-import PopularCandidate from './PopularCandidate';
 import PropTypes from 'prop-types';
+import PopularCandidate from './PopularCandidate';
 
 class Popular extends Component {
   state = {};
 
   render() {
     const { data } = this.props;
-    // console.log(popular);
     return (
       <div className="popularContainer">
         <div className="popularHeader">
@@ -15,8 +14,8 @@ class Popular extends Component {
         </div>
         <div className="popularCover">
           {
-            data.map((candidate, index) => (
-              <PopularCandidate key={index} candidate={candidate} />
+            data.map(candidate => (
+              <PopularCandidate key={candidate.user.id} candidate={candidate} />
             ))
           }
         </div>
@@ -24,5 +23,9 @@ class Popular extends Component {
     );
   }
 }
+
+Popular.propTypes = {
+  data: PropTypes.arrayOf(PropTypes.any).isRequired,
+};
 
 export default Popular;
