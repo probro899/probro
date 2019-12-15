@@ -56,7 +56,7 @@ class ChatHistory extends React.Component {
       webRtc,
       database
     } = this.props;
-    console.log('chat historyList state', this.state);
+    // console.log('chat historyList state', this.state);
     const { user, boardDetails } = webRtc.chatHistory;
     const { messages } = this.state;
     return !webRtc.showCommunication ? <div /> : (

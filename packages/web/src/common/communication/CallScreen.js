@@ -72,7 +72,7 @@ class CallScreen extends React.Component {
     const { user, boardDetails, type, broadCastId } = webRtc.chatHistory;
     const { showWhiteBoard, startRecording, activeAudio, activeDrawingBoard, activeVideo, activeScreenShare } = this.state;
 
-    // console.log('webRtc in CallScreen', webRtc);
+    console.log('Props in call screen', this.props);
     return !webRtc.showCommunication ? <div /> : (
       <div
         className="call-screen"

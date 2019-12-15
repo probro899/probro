@@ -1,10 +1,10 @@
 import store from '../../../../store';
 
-export default props => async () => {
+export default (props, state, apis) => async () => {
   const { updateWebRtc } = props;
   const { webRtc } = store.getState();
   const pcs = Object.values(webRtc.peerConnections);
-  console.log('close handler called', webRtc, updateWebRtc);
+  console.log('close handler called', state, apis);
   if (webRtc.localStream) {
     if (webRtc.localStream.active) {
       console.log('inside the local steam stop case');

@@ -28,7 +28,7 @@ class Notifications extends React.Component {
     if (notiNo > 0) {
       try {
         const readStatusId = await apis.addNotificationReadStatus({ notifId: lastNotifId, userId: account.user.id, status: 1, timeStamp: Date.now() });
-        console.log('response of markNoti read', readStatusId);
+        // console.log('response of markNoti read', readStatusId);
         addDatabaseSchema('NotificationReadStatus', { id: readStatusId, notifId: lastNotifId, userId: account.user.id, status: 1, timeStamp: Date.now() });
       } catch (e) {
         console.error('error in mark noti read', e);
@@ -37,9 +37,9 @@ class Notifications extends React.Component {
   }
 
   render() {
-    const { drawerOpen, notiNo, lastNotifId } = this.state;
+    const { drawerOpen, notiNo } = this.state;
     const { apis, account } = this.props;
-    console.log('props in notification', this.props, lastNotifId);
+    // console.log('props in notification', this.props, lastNotifId);
     return (
       <Link to="#" onClick={this.onDrawerToggle}>
         <div className="navbar-item">
@@ -64,6 +64,7 @@ class Notifications extends React.Component {
 Notifications.propTypes = {
   apis: PropTypes.objectOf(PropTypes.any).isRequired,
   account: PropTypes.objectOf(PropTypes.any).isRequired,
+  addDatabaseSchema: PropTypes.func.isRequired,
 };
 
 export default Notifications;
