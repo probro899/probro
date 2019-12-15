@@ -58,24 +58,13 @@ class PublicBlog extends React.Component {
     return { __html: val };
   }
 
-  getUser = () => {
-    const { data } = this.state;
-    let user = {};
-    data.userDetails.map((obj) => {
-      if (obj.user.id === data.blog.id) {
-        user = obj;
-      }
-    });
-    return user;
-  }
-
   render() {
     const { blogId, apis, data, loading } = this.state;
     if (loading) {
       return <Spinner />;
     }
     const { account } = this.props;
-    const user = this.getUser();
+    const user = data.userDetails.find(obj => obj.user.id === data.blog.id);
     const imgUrl = user.userDetail.image ? `${ENDPOINT}/user/${10000000 + parseInt(user.user.id, 10)}/profile/${user.userDetail.image}` : file;
     const { userDetails } = data;
     return (
