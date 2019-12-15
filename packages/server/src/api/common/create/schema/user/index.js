@@ -41,6 +41,11 @@ async function addCarrierInterest(record) {
   return res;
 }
 
+async function addNotificationReadStatus(record) {
+  const res = await add.call(this, 'NotificationReadStatus', record);
+  return res;
+}
+
 async function connectUser(record) {
   const { session } = this;
   // console.log('record in conectUser', record);
@@ -119,4 +124,5 @@ export default [
   addUserMessageSeenStatus,
   connectUser,
   addCarrierInterest,
+  addNotificationReadStatus,
 ];

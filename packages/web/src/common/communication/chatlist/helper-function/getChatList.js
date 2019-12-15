@@ -39,7 +39,11 @@ const findUserChatListDetails = (arr, props) => {
   }
   // console.log('unseenMsgMessage', unseenMsg);
   const msgObj = arrWithSeenStatus[0];
-  const lastMessageId = arrWithSeenStatus.find(obj => obj.fuserId !== account.user.id).id;
+
+  const lastMessage = arrWithSeenStatus.find(obj => obj.fuserId !== account.user.id);
+  const lastMessageId = lastMessage ? lastMessage.id : arrWithSeenStatus[0].id;
+
+  // const lastMessageId = arrWithSeenStatus.find(obj => obj.fuserId !== account.user.id).id;
   let user;
   let userDetails;
   // console.log('msgObj', msgObj);
@@ -72,8 +76,8 @@ const findBoardMessageDetails = (arr, props) => {
     }
     unSeenNo = count;
   }
-
-  const lastMessageId = arrWithSeenStatus.find(obj => obj.userId !== account.user.id).id;
+  const lastMessage = arrWithSeenStatus.find(obj => obj.userId !== account.user.id);
+  const lastMessageId = lastMessage ? lastMessage.id : arrWithSeenStatus[0].id;
   return { type: 'board', boardDetails, unSeenNo, timeStamp: arrWithSeenStatus[0].timeStamp, lastMessage: arrWithSeenStatus[0].message, lastMessageId };
 };
 

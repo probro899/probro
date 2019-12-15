@@ -4,25 +4,47 @@ import { Link } from 'react-router-dom';
 import { Drawer, Icon } from '@blueprintjs/core';
 import NotificationContainer from './NotificationContainer';
 import { Badge } from '../../../../components';
+import getUnReadNotification from './helper-functions/getUnreadNotification';
 
 class Notifications extends React.Component {
-  state = { drawerOpen: false };
+  state = { drawerOpen: false, notiNo: null, lastNotifId: null };
 
-  onDrawerToggle = () => {
-    const { drawerOpen } = this.state;
+  componentWillMount() {
+    const notiDetails = getUnReadNotification(this.props);
+    this.setState({ notiNo: notiDetails.unSeenNo, lastNotifId: notiDetails.lastNotifId });
+  }
+
+  componentWillReceiveProps(newPorps) {
+    const notiDetails = getUnReadNotification(newPorps);
+    this.setState({ notiNo: notiDetails.unSeenNo, lastNotifId: notiDetails.lastNotifId });
+  }
+
+  onDrawerToggle = async () => {
+    const { drawerOpen, lastNotifId, notiNo } = this.state;
+    const { apis, account, addDatabaseSchema } = this.props;
     this.setState({
       drawerOpen: !drawerOpen,
     });
+    if (notiNo > 0) {
+      try {
+        const readStatusId = await apis.addNotificationReadStatus({ notifId: lastNotifId, userId: account.user.id, status: 1, timeStamp: Date.now() });
+        console.log('response of markNoti read', readStatusId);
+        addDatabaseSchema('NotificationReadStatus', { id: readStatusId, notifId: lastNotifId, userId: account.user.id, status: 1, timeStamp: Date.now() });
+      } catch (e) {
+        console.error('error in mark noti read', e);
+      }
+    }
   }
 
   render() {
-    const { drawerOpen } = this.state;
+    const { drawerOpen, notiNo, lastNotifId } = this.state;
     const { apis, account } = this.props;
+    console.log('props in notification', this.props, lastNotifId);
     return (
       <Link to="#" onClick={this.onDrawerToggle}>
         <div className="navbar-item">
           <Icon icon="notifications" iconSize={Icon.SIZE_LARGE} />
-          <Badge number={12} size={20} />
+          {notiNo > 0 && <Badge number={notiNo} size={20} />}
           <Drawer
             isOpen={drawerOpen}
             onClose={this.onDrawerToggle}
