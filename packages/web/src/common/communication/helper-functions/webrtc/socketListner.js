@@ -116,4 +116,11 @@ export default (props, state) => {
       }
     }
   });
+
+  client.on('callEnd', async (data) => {
+    console.log('callend event called', data, props);
+    const { updateWebRtc } = props;
+    updateWebRtc('showIncommingCall', false);
+    // change('list');
+  });
 };
