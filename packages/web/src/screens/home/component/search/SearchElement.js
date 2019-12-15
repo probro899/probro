@@ -39,14 +39,16 @@ class SearchElement extends React.Component {
       <div className="search-box-container">
         {gotKey && <Redirect push to={`/search/key=${search}`} />}
         <div className="search-form">
-          <input
-            value={search}
-            onChange={this.searchChange}
-            placeholder="Keyword ..."
-          />
-          <button type="submit" onClick={this.submitSearch}>
-            Search
-          </button>
+          <form>
+            <input
+              value={search}
+              onChange={this.searchChange}
+              placeholder="Keyword ..."
+            />
+            <button type="submit" onClick={this.submitSearch}>
+              Search
+            </button>
+          </form>
         </div>
         <div className="pc-jumbo">
           <span className="pc-jumbo-text">
