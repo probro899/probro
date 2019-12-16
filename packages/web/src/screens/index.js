@@ -32,7 +32,7 @@ export default () => (
         <Route path="/login" component={Login} />
         <Route path="/register" component={Registration} />
         <Route path="/forgot-password" component={Forget} />
-        <Route path="/class-work/:id/:classId" component={ClassManager} />
+        <Route path="/class-work/:userSlug/:classId" component={ClassManager} />
         <Route path="/edit-blog/:id/:blogId" component={CreateBlog} />
         <Route path="/create-blog/:id" component={CreateBlog} />
         <Route exact path="/reset/:token" component={Reset} />

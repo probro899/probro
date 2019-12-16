@@ -157,23 +157,28 @@ class Class extends Component {
         </div>
         <div className="content-list">
           {
-            database.Board.allIds.map((id, index) => {
-              const len = database.Board.byId[id].name.length > 30;
-              const name = len ? database.Board.byId[id].name.substring(0, 29) : database.Board.byId[id].name;
+            Object.values(database.Board.byId).map((obj, index) => {
+              const user = database.User.byId[obj.userId];
+              const len = obj.name.length > 30;
+              const name = len ? obj.name.substring(0, 29) : obj.name;
               return (
                 // eslint-disable-next-line react/no-array-index-key
                 <div style={{ position: 'relative' }} key={index}>
                   {/* more button popover */}
-                  <MoreButton onMore={this.onMore} id={id} />
-                  <Link to={`/class-work/${account.slug}/${id}`} className="content-link">
+                  <MoreButton onMore={this.onMore} id={obj.id} />
+                  <Link to={`/class-work/${account.user.slug}/${obj.id}`} className="content-link">
                     <div className="class-repr">
                       <span>
                         {name}
                       </span>
                     </div>
                     <div className="class-detail">
-                      <span className="name">Nabin Bhusal</span>
-                      <span className="date">{new Date(database.Board.byId[id].timeStamp).toDateString()}</span>
+                      <span className="name">
+                        {
+                          user.middleName ? `${user.firstName} ${user.middleName} ${user.lastName}` : `${user.firstName} ${user.lastName}`
+                        }
+                      </span>
+                      <span className="date">{new Date(obj.timeStamp).toDateString()}</span>
                     </div>
                   </Link>
                 </div>

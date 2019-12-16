@@ -37,7 +37,7 @@ class Connecte extends React.Component {
   };
 
   acceptRequest = async () => {
-    const { apis, updateDatabaseSchema, connection, account } = this.props;
+    const { apis, updateDatabaseSchema, connection } = this.props;
     await apis.updateUserConnection([{ status: 'connected', mId: connection.mId, userId: connection.userId }, { id: connection.id }]);
     updateDatabaseSchema('UserConnection', { id: connection.id, status: 'connected' });
   };
@@ -71,12 +71,7 @@ class Connecte extends React.Component {
   render() {
     const { id, database } = this.props;
     const user = database.User.byId[id];
-    let userDetail = {};
-    Object.values(database.UserDetail.byId).map((obj) => {
-      if (id === obj.userId) {
-        userDetail = obj;
-      }
-    });
+    const userDetail = Object.values(database.UserDetail.byId).find(obj => id === obj.userId);
     return (
       <div className="i-result">
         {
@@ -84,8 +79,10 @@ class Connecte extends React.Component {
         }
         <div className="desc-con">
           <p className="name">
-            <Link to={`/user/${user.id}/`}>
-              {`${user.firstName} ${user.lastName}`}
+            {
+            }
+            <Link to={`/user/${user.slug}/`}>
+              {user.middleName ? `${user.firstName} ${user.middleName} ${user.lastName}` : `${user.firstName} ${user.lastName}`}
             </Link>
           </p>
           <p className="location">{userDetail.address ? userDetail.address : '---'}</p>

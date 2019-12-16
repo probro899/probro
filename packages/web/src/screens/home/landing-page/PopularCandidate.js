@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { ENDPOINT } from '../../../config';
 
@@ -13,8 +14,7 @@ class PopularCandidate extends React.Component {
 
   checkPortrait = () => {
     const { candidate } = this.props;
-    const user = candidate.user;
-    const userDetail = candidate.userDetail;
+    const { user, userDetail } = candidate;
     const imgUrl = userDetail.image ? `${ENDPOINT}/user/${10000000 + parseInt(user.id, 10)}/profile/${userDetail.image}` : file;
     const img = new Image();
     img.onload = () => {
@@ -27,10 +27,9 @@ class PopularCandidate extends React.Component {
     img.src = imgUrl;
   }
 
-  render () {
+  render() {
     const { candidate } = this.props;
-    const user = candidate.user;
-    const userDetail = candidate.userDetail;
+    const { user, userDetail } = candidate;
     const { portrait } = this.state;
     const imgUrl = userDetail.image ? `${ENDPOINT}/user/${10000000 + parseInt(user.id, 10)}/profile/${userDetail.image}` : file;
     return (
@@ -43,11 +42,11 @@ class PopularCandidate extends React.Component {
           />
         </div>
         <div className="popularDesc">
-          <p className="popularName">
+          <Link to={`user/${user.slug}`} className="popularName">
             {
               `${user.firstName} ${user.middleName ? `${user.middleName} ` : ''}${user.lastName}`
             }
-          </p>
+          </Link>
           <p className="popularExpertize">
             { candidate.expertize }
           </p>

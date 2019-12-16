@@ -42,6 +42,9 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
+      svg {
+        fill: $darkBlue;
+      }
     }
     .pc-noti-body {
       margin-left: 10px;
