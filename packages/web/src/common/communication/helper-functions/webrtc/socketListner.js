@@ -1,5 +1,6 @@
 import client from '../../../../socket';
 import store from '../../../../store';
+import closeHandler from './closeHandler';
 
 export default (props, state) => {
   // Handle offer request
@@ -11,6 +12,8 @@ export default (props, state) => {
     const type = broadCastType === 'UserConnection' ? 'user' : 'board';
     const { webRtc, account } = store.getState();
     const { apis } = state;
+    updateWebRtc('connectionId', connectionId);
+    updateWebRtc('streams', { ...webRtc.streams, [data.uid]: { ...webRtc.streams[data.uid], callEnd: false, stream: [], callType: 'Incoming' } });
     if (webRtc.showCommunication) {
       if (!webRtc.isLive) {
         await updateWebRtc('communicationContainer', 'list');
@@ -36,6 +39,7 @@ export default (props, state) => {
               uid: account.user.id,
               broadCastId: webRtc.chatHistory.type === 'user' ? account.user.id : webRtc.showCommunication,
               broadCastType: webRtc.chatHistory.type === 'user' ? 'UserConnection' : 'Board',
+              callType: webRtc.localStream.mediaType,
             },
             userList: [{ userId: uid }],
           });
@@ -119,8 +123,13 @@ export default (props, state) => {
 
   client.on('callEnd', async (data) => {
     console.log('callend event called', data, props);
-    const { updateWebRtc } = props;
+    const { updateWebRtc, webRtc } = props;
+    const { uid } = data;
+    updateWebRtc('streams', { ...webRtc.streams, [uid]: { ...webRtc.streams[uid], callEnd: true } });
+    await closeHandler(props, state, state.apis)();
     updateWebRtc('showIncommingCall', false);
+    updateWebRtc('communicationContainer', 'history');
+    updateWebRtc('streams', { callEnd: true });
     // change('list');
   });
 };

@@ -16,7 +16,16 @@ const stopAndRecordStream = async (props, userId, stream) => {
 export default props => async (stream, userId) => {
   console.log('remote stream handler', stream, userId);
   const { updateWebRtc } = props;
-  await updateWebRtc('streams', { ...store.getState().webRtc.streams, [userId]: stream });
+  const { webRtc } = store.getState();
+  console.log('webRtc value in got remote handler', webRtc);
+  await updateWebRtc('streams', {
+    ...webRtc.streams,
+    [userId]: {
+      startTimeStamp: Date.now(),
+      endTimeStamp: null,
+      stream: webRtc.streams[userId] ? [...webRtc.streams[userId].stream, stream] : [stream],
+    },
+  });
   await updateWebRtc('lastStreamId', userId);
   await updateWebRtc('isLive', true);
   await stopAndRecordStream(props, userId, stream);

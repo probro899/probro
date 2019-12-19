@@ -16,21 +16,27 @@ class IncomingCallScreen extends React.Component {
     const {
       answerHandler,
       apis,
+      updateWebRtc,
     } = this.props;
     const stream = await mediaSelector(mediaType);
+    await updateWebRtc('localStream', { stream, mediaType, callType: 'Incoming' });
     await answerHandler(apis, stream);
+
     // updateWebRtc('showCommunication', 1);
   }
 
   callReject = async () => {
-    const { change, updateWebRtc } = this.props;
+    const { change, updateWebRtc, closeHandler } = this.props;
+    closeHandler();
     updateWebRtc('showIncommingCall', false);
-    change('list');
+    change('history');
   }
 
   render() {
     const { style, webRtc, database } = this.props;
     const isUser = webRtc.chatHistory.type === 'user';
+    console.log('props in incomming call screen', this.props);
+    // console.log('webRtc value inComming call screen', webRtc);
     // console.log('user url', `${ENDPOINT}/user/${10000000 + parseInt(webRtc.chatHistory.broadCastId, 10)}/profile/${database.UserDetail.byId[webRtc.chatHistory.broadCastId].image}`);
     return (
       <div
@@ -51,8 +57,8 @@ class IncomingCallScreen extends React.Component {
             }
 
             <div style={{ width: '100%', display: 'flex', justifyContent: 'center', margin: 5 }}>
-              <span style={{ fontSize: 15, fontWeight: 'bold', color: '#757575'}}>
-               Incoming call...
+              <span style={{ fontSize: 15, fontWeight: 'bold', color: '#757575' }}>
+                {webRtc.currentOffer ? `Incoming ${webRtc.currentOffer.callType} call...` : null}
               </span>
             </div>
             <div className="controllers">

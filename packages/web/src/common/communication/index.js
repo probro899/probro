@@ -48,7 +48,7 @@ class Communication extends React.Component {
     // console.log('close handler in index', webRtc);
     if (webRtc.isLive) {
       // console.log('close handler called in index');
-      closeHandler(this.props)();
+      // closeHandler(this.props)();
     }
     updateWebRtc('communicationContainer', target);
   }
@@ -135,10 +135,10 @@ class Communication extends React.Component {
             // style={webRtc.showIncommingCall ? { display: 'flex' } : { display: 'none' }}
             change={this.switchScreen}
             webRtc={webRtc}
-            answerHandler={answerHandler(this.props, this.state)}
+            answerHandler={answerHandler(this.props, this.state, apis)}
             apis={apis}
             updateWebRtc={updateWebRtc}
-            closeHandler={closeHandler(this.props, this.state)}
+            closeHandler={closeHandler(this.props, this.state, apis)}
             {...this.props}
           />
           )

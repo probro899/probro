@@ -22,7 +22,7 @@ class CallScreen extends React.Component {
   }
 
   callHandle = async (mediaType) => {
-    const { _callHandler, apis } = this.props;
+    const { _callHandler, apis, updateWebRtc, webRtc } = this.props;
     const { activeAudio, activeDrawingBoard, activeVideo, activeScreenShare } = this.state;
     switch (mediaType) {
       case 'audio':
@@ -44,6 +44,7 @@ class CallScreen extends React.Component {
         return null;
     }
     const stream = await mediaSelector(mediaType);
+    updateWebRtc('localStream', { ...webRtc.localStream, stream, mediaType });
     _callHandler(apis, stream);
   }
 
@@ -68,7 +69,7 @@ class CallScreen extends React.Component {
   }
 
   render() {
-    const { style, webRtc, account,database } = this.props;
+    const { style, webRtc, account, database } = this.props;
     const { user, boardDetails, type, broadCastId } = webRtc.chatHistory;
     const { showWhiteBoard, startRecording, activeAudio, activeDrawingBoard, activeVideo, activeScreenShare } = this.state;
 
