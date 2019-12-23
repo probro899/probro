@@ -12,7 +12,7 @@ class CommentContainer extends React.Component {
     allLikes: [],
   };
 
-  componentDidMount = () => {
+  componentDidMount() {
     const { likes, account, comments } = this.props;
     this.setState({
       allComments: comments,
@@ -21,6 +21,19 @@ class CommentContainer extends React.Component {
     if (account.user) {
       likes.filter((obj) => {
         if (obj.userId === account.user.id) {
+          this.setState({
+            liked: obj.id,
+          });
+        }
+      });
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { account, likes } = this.props;
+    if (account.user !== nextProps.account.user) {
+      likes.filter((obj) => {
+        if (obj.userId === nextProps.account.user.id) {
           this.setState({
             liked: obj.id,
           });
@@ -79,10 +92,10 @@ class CommentContainer extends React.Component {
         timeStamp: Date.now(),
         likeType: 'like',
       };
-      await apis.addBlogLike({ ...data, broadCastId: `Blog-${blogId}` });
+      const res = await apis.addBlogLike({ ...data, broadCastId: `Blog-${blogId}` });
       this.setState({
-        liked: Date.now(),
-        allLikes: [...allLikes, { ...data, id: Date.now() }],
+        liked: res,
+        allLikes: [...allLikes, { ...data, id: res }],
       });
     }
   }
@@ -94,6 +107,7 @@ class CommentContainer extends React.Component {
       allComments,
       allLikes,
     } = this.state;
+    console.log('all likes', allLikes);
     const { users, account } = this.props;
     return (
       <div className="response">
@@ -103,7 +117,7 @@ class CommentContainer extends React.Component {
             {account.user && (
               <Button
                 intent={liked ? 'primary' : 'none'}
-                text="Like"
+                text={liked ? 'Liked' : 'Like'}
                 icon="thumbs-up"
                 onClick={this.likeBlog}
               />
