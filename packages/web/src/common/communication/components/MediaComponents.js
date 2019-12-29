@@ -76,6 +76,7 @@ const UsersView = (props) => {
   const { webRtc, account } = props;
   // console.log('Account', account);
   const peerConnection = Object.values(webRtc.peerConnections);
+  // console.log('all perconnection', peerConnection);
   const allOtherUser = peerConnection.map(pc => <UserView pc={pc} key={pc.user.id} />);
   const finalUserList = webRtc.chatHistory.type === 'user' ? [<UserView pc={account} key={account.user.id} />] : [...allOtherUser, <UserView pc={account} key={account.user.id} />];
   return finalUserList;

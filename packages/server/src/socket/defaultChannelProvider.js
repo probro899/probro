@@ -25,9 +25,11 @@ export default function createDefaultProvider() {
       if (!list) {
         channels[channelId] = [session];
         // console.log('channel data after subscription', channels.Board);
-      } else {
+      } else if (!list.find(s => s.values.user.id === session.values.user.id)) {
         list.push(session);
         // console.log('chanel record after another user login', channels.Board[0].scopes);
+      } else {
+        console.log('user session is already in channel');
       }
       // console.log('ALll channels', channels);
       return true;

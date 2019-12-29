@@ -22,7 +22,7 @@ class CallScreen extends React.Component {
   }
 
   callHandle = async (mediaType) => {
-    const { _callHandler, apis } = this.props;
+    const { _callHandler, apis, updateWebRtc, webRtc } = this.props;
     const { activeAudio, activeDrawingBoard, activeVideo, activeScreenShare } = this.state;
     switch (mediaType) {
       case 'audio':
@@ -44,6 +44,7 @@ class CallScreen extends React.Component {
         return null;
     }
     const stream = await mediaSelector(mediaType);
+    updateWebRtc('localStream', { ...webRtc.localStream, stream, mediaType });
     _callHandler(apis, stream);
   }
 
@@ -68,17 +69,17 @@ class CallScreen extends React.Component {
   }
 
   render() {
-    const { style, webRtc, account,database } = this.props;
-    const { user, boardDetails, type, broadCastId } = webRtc.chatHistory;
+    const { style, webRtc, account, database } = this.props;
+    const { user, type } = webRtc.chatHistory;
     const { showWhiteBoard, startRecording, activeAudio, activeDrawingBoard, activeVideo, activeScreenShare } = this.state;
 
-    // console.log('webRtc in CallScreen', webRtc);
+    // console.log('Props in call screen', this.props);
     return !webRtc.showCommunication ? <div /> : (
       <div
         className="call-screen"
         style={style}
       >
-        {showWhiteBoard && <Redirect to={`/${account.sessionId}/drawing-board`} />}
+        {showWhiteBoard && <Redirect to={`/${account.user.slug}/drawing-board`} />}
         <div className="top">
           <div>
             <Button
@@ -119,6 +120,9 @@ CallScreen.propTypes = {
   change: PropTypes.func.isRequired,
   closeHandler: PropTypes.func.isRequired,
   account: PropTypes.objectOf(PropTypes.any).isRequired,
+  updateWebRtc: PropTypes.func.isRequired,
+  _callHandler: PropTypes.func.isRequired,
+  apis: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 export default CallScreen;

@@ -37,7 +37,7 @@ class Notifications extends React.Component {
   }
 
   render() {
-    const { drawerOpen, notiNo, lastNotifId } = this.state;
+    const { drawerOpen, notiNo } = this.state;
     const { apis, account } = this.props;
     // console.log('props in notification', this.props, lastNotifId);
     return (
@@ -64,6 +64,7 @@ class Notifications extends React.Component {
 Notifications.propTypes = {
   apis: PropTypes.objectOf(PropTypes.any).isRequired,
   account: PropTypes.objectOf(PropTypes.any).isRequired,
+  addDatabaseSchema: PropTypes.func.isRequired,
 };
 
 export default Notifications;

@@ -63,7 +63,6 @@ export default async function get(id) {
       Notification: userNotifications.Notification,
       NotificationReadStatus: userNotifications.notificationReadstatus,
 
-
       UserConnection: userConnectionListDetails.connectionList,
       UserMessage: userMessageDetails.userMessages,
       UserMessageSeenStatus: flat(userMessageDetails.userMessageSeenStatus),

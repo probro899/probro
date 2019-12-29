@@ -2,6 +2,11 @@ export default async function createAnswer(data) {
   console.log('createAnswer called', data);
   const { session } = this;
   const { answerDetail } = data;
-  const channel = session.channel(`${answerDetail.broadCastType}-${answerDetail.broadCastId}`);
-  channel.emit('answer', data.answerDetail, data.userList);
+  if (answerDetail.broadCastType === 'Board') {
+    const channel = session.channel(`${answerDetail.broadCastType}-live-${answerDetail.broadCastId}`);
+    channel.emit('answer', data.answerDetail, data.userList);
+  } else {
+    const channel = session.channel(`${answerDetail.broadCastType}-${answerDetail.broadCastId}`);
+    channel.emit('answer', data.answerDetail, data.userList);
+  }
 }

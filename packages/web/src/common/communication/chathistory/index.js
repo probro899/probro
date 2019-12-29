@@ -9,7 +9,7 @@ import mediaSelector from '../mediaSelector';
 import { MessageSender } from '../components';
 import Message from './Message';
 import { normalTimeStampSorting } from '../../utility-functions';
-import { findChatHistory, isOwnFinder, markLastMessageRead } from './helper-function';
+import { findChatHistory, isOwnFinder, markLastMessageRead, incomingCallLogHandler, outgoingCallLogHandler } from './helper-function';
 
 class ChatHistory extends React.Component {
   state = { messages: [], lastMessageId: null, unSeenNo: null };
@@ -30,20 +30,38 @@ class ChatHistory extends React.Component {
   }
 
   toCallScreen = async (mediaType) => {
-    const { _callHandler, apis, change, updateWebRtc } = this.props;
-    const stream = await mediaSelector(mediaType);
-    updateWebRtc('localStream', stream);
-    _callHandler(apis, stream);
-    change('connecting');
+    // console.log('tocallSrean func called', mediaType);
+    try {
+      const { _callHandler, apis, change, updateWebRtc, webRtc } = this.props;
+      const stream = await mediaSelector(mediaType);
+      updateWebRtc('localCallHistory', { stream, mediaType, callType: 'Outgoing', callEnd: false });
+      if (webRtc.chatHistory.type === 'user') {
+        updateWebRtc('streams', { ...webRtc.streams, [webRtc.chatHistory.user.user.id]: { stream: [] } });
+      }
+      _callHandler(apis, stream);
+      change('connecting');
+    } catch (e) {
+      console.error('Error in calling', e);
+    }
   }
 
-  containerHandler = (msg) => {
+  containerHandler = (msg, account) => {
+    // console.log('message type', msg);
+    const { webRtc } = this.props;
     switch (msg.type) {
       case 'date':
         return (
           <div style={{ width: '95%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: 10 }}>
             <Moment style={{ color: '#757575', padding: 5, border: '1px solid #757575', borderRadius: 10, fontSize: 10 }} format="YYYY MMM DD">{msg.timeStamp}</Moment>
           </div>
+        );
+      case 'Incoming':
+        return (
+          incomingCallLogHandler(msg, account, webRtc.chatHistory.type)
+        );
+      case 'Outgoing':
+        return (
+          outgoingCallLogHandler(msg, account, webRtc.chatHistory.type)
         );
       default:
         return <Message own={isOwnFinder(msg, this.props)} obj={msg} props={this.props} />;
@@ -54,9 +72,10 @@ class ChatHistory extends React.Component {
     const {
       style,
       webRtc,
-      database
+      database,
+      account,
     } = this.props;
-    console.log('chat historyList state', this.state);
+    // console.log('chat historyList state', this.state);
     const { user, boardDetails } = webRtc.chatHistory;
     const { messages } = this.state;
     return !webRtc.showCommunication ? <div /> : (
@@ -84,7 +103,7 @@ class ChatHistory extends React.Component {
         </div>
         <ScrollToBottom className="chats">
           {
-          messages.sort(normalTimeStampSorting).map(msg => this.containerHandler(msg))
+          messages.sort(normalTimeStampSorting).map(msg => this.containerHandler(msg, account))
           }
         </ScrollToBottom>
         <MessageSender {...this.props} />
@@ -102,6 +121,7 @@ ChatHistory.propTypes = {
   account: PropTypes.objectOf(PropTypes.any).isRequired,
   database: PropTypes.objectOf(PropTypes.any).isRequired,
   addDatabaseSchema: PropTypes.func.isRequired,
+  updateWebRtc: PropTypes.func.isRequired,
 };
 
 export default ChatHistory;

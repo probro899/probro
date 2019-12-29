@@ -11,7 +11,7 @@ function setLocalStream(stream, userId, onLocalStream) {
 
 function gotRemoteStream(e, userId, gotRemoteStreamHandler) {
   console.log('got remote stream', e, userId);
-  gotRemoteStreamHandler(e.streams[0], userId);
+  gotRemoteStreamHandler(e, userId);
   const { webRtc } = store.getState();
   const videoElement = document.getElementById(`video-${userId}`);
   const lastVideoElement = document.getElementById('video-mentor');

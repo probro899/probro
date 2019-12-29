@@ -1,7 +1,0 @@
-
-1. open communication with chatbox
-2. click audio or video call
-3. create a pc for each user with connection status {1: {pc, status}, 2:{pc, status}}
-4. change content dispayling Connecting....{acorrdining to store pc status}
-5. add the track if any track is arrive on that user Conneting UI,
-6. show connection status on each

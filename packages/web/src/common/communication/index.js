@@ -13,6 +13,7 @@ import IncomingCallScreen from './IncomingCallScreen';
 import { socketListner, callHandler, answerHandler, closeHandler } from './helper-functions';
 
 class Communication extends React.Component {
+
   state = {
     minimize: false,
     apis: {},
@@ -33,7 +34,7 @@ class Communication extends React.Component {
   toggleMinMax = () => {
     const { minimize } = this.state;
     this.setState({
-      minimize: !minimize,
+      minimize: false,
     });
   }
 
@@ -48,9 +49,13 @@ class Communication extends React.Component {
     // console.log('close handler in index', webRtc);
     if (webRtc.isLive) {
       // console.log('close handler called in index');
-      closeHandler(this.props)();
+      // closeHandler(this.props)();
     }
     updateWebRtc('communicationContainer', target);
+  }
+
+  manimizeCommunication = () => {
+    this.setState({ minimize: true });
   }
 
   render() {
@@ -73,14 +78,14 @@ class Communication extends React.Component {
           }
         }
       >
-        <div className="header" onClick={this.toggleMinMax} style={{ background: '#154155', cursor: 'pointer' }}>
+        <div className="header" style={{ background: '#154155', cursor: 'pointer' }}>
           <div className="win-title">
             Messaging
           </div>
           <div className="control-icons">
             <div>
               { minimize ? <Icon iconSize={20} icon="expand-all" style={{ cursor: 'pointer' }} onClick={this.toggleMinMax} />
-                : <Icon iconSize={20} icon="minus" style={{ cursor: 'pointer' }} onClick={this.toggleMinMax} />
+                : <Icon iconSize={20} icon="minus" style={{ cursor: 'pointer' }} onClick={this.manimizeCommunication} />
               }
               {/* <Icon icon="maximize" style={{ cursor: 'pointer' }} iconSize={14} /> */}
               <Icon
@@ -119,8 +124,9 @@ class Communication extends React.Component {
             // style={!webRtc.showIncommingCall && webRtc.communicationContainer === 'connecting' ? { display: 'block' } : { display: 'none' }}
             change={this.switchScreen}
             updateWebRtc={updateWebRtc}
-            closeHandler={closeHandler(this.props, this.state)}
+            closeHandler={closeHandler(this.props, this.state, apis)}
             _callHandler={callHandler(this.props, this.state)}
+            apis={apis}
             {...this.props}
           />
           )
@@ -130,10 +136,10 @@ class Communication extends React.Component {
             // style={webRtc.showIncommingCall ? { display: 'flex' } : { display: 'none' }}
             change={this.switchScreen}
             webRtc={webRtc}
-            answerHandler={answerHandler(this.props, this.state)}
+            answerHandler={answerHandler(this.props, this.state, apis)}
             apis={apis}
             updateWebRtc={updateWebRtc}
-            closeHandler={closeHandler(this.props, this.state)}
+            closeHandler={closeHandler(this.props, this.state, apis)}
             {...this.props}
           />
           )

@@ -47,4 +47,4 @@ export default async (find, findOne, id) => {
   const BoardColumnCardTag = flat(flat(boardDetails.map(obj => obj.boardColumnCardTag)));
 
   return { allBoards, allBoardMembers, BoardMessage, BoardMessageSeenStatus, allBoardUserList, BoardColumnCardTag, BoardColumn, BoardColumnCard, BoardColumnCardAttachment, BoardColumnCardComment, BoardColumnCardDescription }
-}
+};

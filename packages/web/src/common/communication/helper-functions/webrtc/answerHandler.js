@@ -13,6 +13,7 @@ export default (props, state) => async (apis, stream) => {
     await createPcForEachUser(broadCastId, props, state);
     // eslint-disable-next-line
     webRtc = store.getState().webRtc;
+    console.log('webRtc in asnwer handler', webRtc);
     updateWebRtc('outGoingCallType', stream);
     updateWebRtc('showIncommingCall', false);
     updateWebRtc('showCommunication', broadCastId);
@@ -28,7 +29,7 @@ export default (props, state) => async (apis, stream) => {
     const answerPromises = remainingUserPcs.map(p => p.pc.createAnswer(previousOffers.find(ofr => ofr.uid === p.user.id).offer, stream));
     const anserList = await Promise.all(answerPromises);
     console.log('answer list', anserList);
-    anserList.forEach((answer, idx) => apis.createAnswer({ answerDetail: { answer, uid: account.user.id, broadCastId, broadCastType }, userList: [{ userId: remainingUserPcs[idx].user.id }] }));
+    anserList.forEach((answer, idx) => apis.createAnswer({ answerDetail: { answer, uid: account.user.id, broadCastId, broadCastType, callType: webRtc.localCallHistory.mediaType }, userList: [{ userId: remainingUserPcs[idx].user.id }] }));
     const previousOffer = webRtc.pendingOffers;
     //  console.log('previousOffer for offer test', previousOffer);
     const pc = Object.values(webRtc.peerConnections);

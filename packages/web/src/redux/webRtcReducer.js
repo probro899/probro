@@ -1,6 +1,7 @@
 import { UPDATE_WEBRTC } from '../actions/types';
 
 const initialState = {
+  localCallHistory: {},
   showCommunication: null,
   showIncommingCall: false,
   showOutgoingCall: false,
@@ -25,7 +26,7 @@ const initialState = {
 export default (state = initialState, action) => {
   switch (action.type) {
     case UPDATE_WEBRTC:
-      console.log('update webRtc called', action);
+      // console.log('update webRtc called', action);
       return {
         ...state,
         [action.schema]: action.payload,

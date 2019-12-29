@@ -8,7 +8,7 @@ import findBlogDetail from './common/findBlogDetails';
 import addHandlerApi from './common/create';
 import deleteHandler from './common/delete';
 import updateHandler from './common/update';
-import { createOffer, createAnswer, addICeCandidate } from './common/web-rtc';
+import { createOffer, createAnswer, addICeCandidate, callClose, callStatusChange } from './common/web-rtc';
 
 const mentor = createScope('Mentor', () => {
 
@@ -32,9 +32,14 @@ updateHandler.forEach(func => mentor(func));
 mentor(createOffer);
 mentor(createAnswer);
 mentor(addICeCandidate);
+mentor(callClose);
+mentor(callStatusChange);
+
 mentee(createOffer);
 mentee(createAnswer);
 mentee(addICeCandidate);
+mentee(callClose);
+mentee(callStatusChange);
 
 mentor(logout);
 mentor(updateUserDetails);

@@ -11,6 +11,7 @@ const findNotificationSeenStatus = (notifId, props) => {
 };
 
 export default (props) => {
+  // console.log('props in get Read notification', props);
   const { database, account } = props;
   const arrWithSeenStatus = Object.values(database.Notification.byId).map(un => ({ ...un, seenStatus: findNotificationSeenStatus(un.id, props) }));
   const arrWithSeenStatusReverse = arrWithSeenStatus.slice().reverse();
