@@ -17,9 +17,10 @@ class IncomingCallScreen extends React.Component {
       answerHandler,
       apis,
       updateWebRtc,
+      webRtc,
     } = this.props;
     const stream = await mediaSelector(mediaType);
-    await updateWebRtc('localStream', { stream, mediaType, callType: 'Incoming' });
+    await updateWebRtc('localCallHistory', { ...webRtc.localCallHistory, stream, mediaType, callType: 'Incoming' });
     await answerHandler(apis, stream);
 
     // updateWebRtc('showCommunication', 1);

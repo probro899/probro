@@ -13,6 +13,7 @@ import IncomingCallScreen from './IncomingCallScreen';
 import { socketListner, callHandler, answerHandler, closeHandler } from './helper-functions';
 
 class Communication extends React.Component {
+
   state = {
     minimize: false,
     apis: {},

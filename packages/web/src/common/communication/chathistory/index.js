@@ -2,14 +2,14 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button, Icon } from '@blueprintjs/core';
+import { Button } from '@blueprintjs/core';
 import Moment from 'react-moment';
 import ScrollToBottom from 'react-scroll-to-bottom';
 import mediaSelector from '../mediaSelector';
 import { MessageSender } from '../components';
 import Message from './Message';
 import { normalTimeStampSorting } from '../../utility-functions';
-import { findChatHistory, isOwnFinder, markLastMessageRead } from './helper-function';
+import { findChatHistory, isOwnFinder, markLastMessageRead, incomingCallLogHandler, outgoingCallLogHandler } from './helper-function';
 
 class ChatHistory extends React.Component {
   state = { messages: [], lastMessageId: null, unSeenNo: null };
@@ -30,108 +30,24 @@ class ChatHistory extends React.Component {
   }
 
   toCallScreen = async (mediaType) => {
-    const { _callHandler, apis, change, updateWebRtc, webRtc } = this.props;
-    const stream = await mediaSelector(mediaType);
-    updateWebRtc('localStream', { stream, mediaType, callType: 'Outgoing', callEnd: false });
-    updateWebRtc('streams', { ...webRtc.streams, [webRtc.chatHistory.user.user.id]: { stream: [] } });
-    _callHandler(apis, stream);
-    change('connecting');
-  }
-
-  timeDurationFormater = (duration) => {
-    const mins = Math.floor(parseInt(duration, 10) / (60 * 1000));
-    const secs = Math.floor((parseInt(duration, 10) - (mins * 60 * 1000)) / 1000);
-    return `(${mins} : ${secs})  `;
-  }
-
-  IncommingHandler = (msg, account) => {
-    if (msg.fuserId === account.user.id && !msg.duration) {
-      return (
-        <div style={{ width: '95%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: 10 }}>
-          <span style={{ padding: 5, border: '1px solid #f17d77', borderRadius: 10, fontSize: 10, background: '#f17d77', color: 'white' }}>
-            <Icon icon="arrow-bottom-left" iconSize={10} style={{ marginRight: 5 }} />
-            {`Miss Call`}
-            <Moment format="h:mm:a" style={{ marginLeft: 10 }}>{msg.timeStamp}</Moment>
-          </span>
-        </div>
-      );
-    }
-    if (msg.tuserId === account.user.id && !msg.duration) {
-      return (
-        <div style={{ width: '95%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: 10 }}>
-          <span style={{ padding: 5, border: '1px solid #A6A9A9', borderRadius: 10, fontSize: 10, background: '#A6A9A9', color: 'white' }}>
-            <Icon icon="arrow-top-right" iconSize={10} style={{ marginRight: 5 }} />
-            {`Outgoing Call ${msg.duration ? this.timeDurationFormater(msg.duration) : ''}`}
-            <Moment format="h:mm:a" style={{ marginLeft: 10 }}>{msg.timeStamp}</Moment>
-          </span>
-        </div>
-      );
-    }
-    if (msg.fuserId === account.user.id) {
-      return (
-        <div style={{ width: '95%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: 10 }}>
-          <span style={{ padding: 5, border: '1px solid #A6A9A9', borderRadius: 10, fontSize: 10, background: '#A6A9A9', color: 'white' }}>
-            <Icon icon="arrow-bottom-left" iconSize={10} style={{ marginRight: 5 }} />
-            {`Incoming Call ${msg.duration ? this.timeDurationFormater(msg.duration) : ''}`}
-            <Moment format="h:mm:a" style={{ marginLeft: 10 }}>{msg.timeStamp}</Moment>
-          </span>
-        </div>
-      );
-    }
-    if (msg.tuserId === account.user.id) {
-      return (
-        <div style={{ width: '95%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: 10 }}>
-          <span style={{ padding: 5, border: '1px solid #A6A9A9', borderRadius: 10, fontSize: 10, background: '#A6A9A9', color: 'white' }}>
-            <Icon icon="arrow-top-right" iconSize={10} style={{ marginRight: 5 }} />
-            {`Outgoing Call ${msg.duration ? this.timeDurationFormater(msg.duration) : ''}`}
-            <Moment format="h:mm:a" style={{ marginLeft: 10 }}>{msg.timeStamp}</Moment>
-          </span>
-        </div>
-      );
-    }
-  }
-
-
-  outgoingCallHandler = (msg, account) => {
-
-    if (msg.tuserId === account.user.id && !msg.duration) {
-      return (
-        <div style={{ width: '95%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: 10 }}>
-          <span style={{ padding: 5, border: '1px solid #f17d77', borderRadius: 10, fontSize: 10, background: '#f17d77', color: 'white' }}>
-            <Icon icon="arrow-bottom-left" iconSize={10} style={{ marginRight: 5 }} />
-            {`Miss Call`}
-            <Moment format="h:mm:a" style={{ marginLeft: 10 }}>{msg.timeStamp}</Moment>
-          </span>
-        </div>
-      );
-    }
-    if (msg.tuserId === account.user.id) {
-      return (
-        <div style={{ width: '95%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: 10 }}>
-          <span style={{ padding: 5, border: '1px solid #A6A9A9', borderRadius: 10, fontSize: 10, background: '#A6A9A9', color: 'white' }}>
-            <Icon icon="arrow-bottom-left" iconSize={10} style={{ marginRight: 5 }} />
-            {`Incoming Call ${msg.duration ? this.timeDurationFormater(msg.duration) : ''}`}
-            <Moment format="h:mm:a" style={{ marginLeft: 10 }}>{msg.timeStamp}</Moment>
-          </span>
-        </div>
-      );
-    }
-
-    if (msg.fuserId === account.user.id) {
-      return (
-        <div style={{ width: '95%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: 10 }}>
-          <span style={{ padding: 5, border: '1px solid #A6A9A9', borderRadius: 10, fontSize: 10, background: '#A6A9A9', color: 'white' }}>
-            <Icon icon="arrow-top-right" iconSize={10} style={{ marginRight: 5 }} />
-            {`Outgoing Call ${msg.duration ? this.timeDurationFormater(msg.duration) : ''}   `}
-            <Moment format="h:mm:a" style={{ marginLeft: 10 }}>{msg.timeStamp}</Moment>
-          </span>
-        </div>
-      );
+    // console.log('tocallSrean func called', mediaType);
+    try {
+      const { _callHandler, apis, change, updateWebRtc, webRtc } = this.props;
+      const stream = await mediaSelector(mediaType);
+      updateWebRtc('localCallHistory', { stream, mediaType, callType: 'Outgoing', callEnd: false });
+      if (webRtc.chatHistory.type === 'user') {
+        updateWebRtc('streams', { ...webRtc.streams, [webRtc.chatHistory.user.user.id]: { stream: [] } });
+      }
+      _callHandler(apis, stream);
+      change('connecting');
+    } catch (e) {
+      console.error('Error in calling', e);
     }
   }
 
   containerHandler = (msg, account) => {
-    console.log('message type', msg);
+    // console.log('message type', msg);
+    const { webRtc } = this.props;
     switch (msg.type) {
       case 'date':
         return (
@@ -141,11 +57,11 @@ class ChatHistory extends React.Component {
         );
       case 'Incoming':
         return (
-          this.IncommingHandler(msg, account)
+          incomingCallLogHandler(msg, account, webRtc.chatHistory.type)
         );
       case 'Outgoing':
         return (
-          this.outgoingCallHandler(msg, account)
+          outgoingCallLogHandler(msg, account, webRtc.chatHistory.type)
         );
       default:
         return <Message own={isOwnFinder(msg, this.props)} obj={msg} props={this.props} />;

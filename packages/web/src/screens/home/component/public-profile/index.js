@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -40,7 +41,6 @@ class PublicProfile extends React.Component {
         apis = await client.scope('Mentee');
       }
       const res = await axios.get(`${ENDPOINT}/web/get-user?userId=${match.params.userId}`);
-      // console.log('profile detail', res);
       this.setState({
         data: res.data,
         apis,
@@ -51,8 +51,30 @@ class PublicProfile extends React.Component {
     }
   }
 
+  async componentWillReceiveProps(nextProps) {
+    const { match } = this.props;
+    if (nextProps.match.params.userId !== match.params.userId) {
+      this.setState({
+        loading: true,
+      });
+      try {
+        const res = await axios.get(`${ENDPOINT}/web/get-user?userId=${nextProps.match.params.userId}`);
+        this.setState({
+          data: res.data,
+          loading: false,
+        });
+      } catch (e) {
+        console.log('Error', e);
+      }
+    }
+  }
+
   render() {
-    const { account, database, updateWebRtc, addDatabaseSchema, updateDatabaseSchema } = this.props;
+    const {
+      account,
+      database, updateWebRtc, addDatabaseSchema,
+      updateDatabaseSchema,
+    } = this.props;
     const { loading, data } = this.state;
     if (loading) {
       return <Spinner />;
@@ -207,6 +229,8 @@ PublicProfile.propTypes = {
   updateNav: PropTypes.func.isRequired,
   updateWebRtc: PropTypes.func.isRequired,
   match: PropTypes.objectOf(PropTypes.any).isRequired,
+  addDatabaseSchema: PropTypes.func.isRequired,
+  updateDatabaseSchema: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => state;

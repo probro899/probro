@@ -29,7 +29,7 @@ export default (props, state) => async (apis, stream) => {
     const answerPromises = remainingUserPcs.map(p => p.pc.createAnswer(previousOffers.find(ofr => ofr.uid === p.user.id).offer, stream));
     const anserList = await Promise.all(answerPromises);
     console.log('answer list', anserList);
-    anserList.forEach((answer, idx) => apis.createAnswer({ answerDetail: { answer, uid: account.user.id, broadCastId, broadCastType, callType: webRtc.localStream.mediaType }, userList: [{ userId: remainingUserPcs[idx].user.id }] }));
+    anserList.forEach((answer, idx) => apis.createAnswer({ answerDetail: { answer, uid: account.user.id, broadCastId, broadCastType, callType: webRtc.localCallHistory.mediaType }, userList: [{ userId: remainingUserPcs[idx].user.id }] }));
     const previousOffer = webRtc.pendingOffers;
     //  console.log('previousOffer for offer test', previousOffer);
     const pc = Object.values(webRtc.peerConnections);

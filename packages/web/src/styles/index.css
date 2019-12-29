@@ -103,7 +103,8 @@ top attachment etc.
 .popularContainer .popularCover .popular .popularImage img.landscape { height: 100%; width: auto; }
 .popularContainer .popularCover .popular .popularImage img.portrait { width: 100%; height: auto; }
 .popularContainer .popularCover .popular .popularDesc { display: flex; flex-direction: column; justify-content: center; padding: 10px; }
-.popularContainer .popularCover .popular .popularDesc .popularName { font-size: 20px; }
+.popularContainer .popularCover .popular .popularDesc .popularName { font-size: 20px; color: #1d4354; }
+.popularContainer .popularCover .popular .popularDesc .popularName:hover { text-decoration: none; }
 .popularContainer .popularCover .popular .popularDesc .popularExpertize { color: #696969; font-weight: 550; }
 
 .broWrapper { display: flex; margin-top: 60px; }
@@ -344,6 +345,7 @@ top attachment etc.
 .notification-list .pc-noti-wrapper .pc-noti-img img.portrait { width: 100%; height: auto; }
 .notification-list .pc-noti-wrapper .pc-noti-img img.landscape { height: 100%; width: auto; }
 .notification-list .pc-noti-wrapper .pc-noti-icon { width: 55px; height: 55px; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+.notification-list .pc-noti-wrapper .pc-noti-icon svg { fill: #1d4354; }
 .notification-list .pc-noti-wrapper .pc-noti-body { margin-left: 10px; padding: 5px; display: flex; justify-content: center; flex-direction: column; }
 .notification-list .pc-noti-wrapper .pc-noti-body p { margin: 0; word-wrap: break-word; }
 .notification-list .pc-noti-wrapper .pc-noti-body .pc-ago-date { font-size: 12px; color: #696969; }
@@ -623,3 +625,5 @@ body { margin: 0; padding: 0; background-color: #fff; font-family: "Gotham-Pro";
 .bp3-input { border-radius: 0; }
 
 .pc-date-picker .bp3-input-action { top: 6px; right: 5px !important; }
+
+a, button, div { outline: none !important; }

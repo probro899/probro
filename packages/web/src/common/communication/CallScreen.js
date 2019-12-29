@@ -70,7 +70,7 @@ class CallScreen extends React.Component {
 
   render() {
     const { style, webRtc, account, database } = this.props;
-    const { user, boardDetails, type, broadCastId } = webRtc.chatHistory;
+    const { user, type } = webRtc.chatHistory;
     const { showWhiteBoard, startRecording, activeAudio, activeDrawingBoard, activeVideo, activeScreenShare } = this.state;
 
     // console.log('Props in call screen', this.props);
@@ -79,7 +79,7 @@ class CallScreen extends React.Component {
         className="call-screen"
         style={style}
       >
-        {showWhiteBoard && <Redirect to={`/${account.sessionId}/drawing-board`} />}
+        {showWhiteBoard && <Redirect to={`/${account.user.slug}/drawing-board`} />}
         <div className="top">
           <div>
             <Button
@@ -120,6 +120,9 @@ CallScreen.propTypes = {
   change: PropTypes.func.isRequired,
   closeHandler: PropTypes.func.isRequired,
   account: PropTypes.objectOf(PropTypes.any).isRequired,
+  updateWebRtc: PropTypes.func.isRequired,
+  _callHandler: PropTypes.func.isRequired,
+  apis: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 export default CallScreen;

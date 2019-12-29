@@ -1,4 +1,4 @@
-import socketListner from './webrtc/socketListner';
+import socketListner from './webrtc/socket-listner';
 import callHandler from './webrtc/callHandler';
 import closeHandler from './webrtc/closeHandler';
 import answerHandler from './webrtc/answerHandler';

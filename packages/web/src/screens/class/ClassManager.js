@@ -8,11 +8,10 @@ import { Navbar } from '../home/component';
 import * as actions from '../../actions';
 import client from '../../socket';
 import posSorting, { timeStampSorting } from '../../common/utility-functions';
+import { Spinner } from '../../common';
 
 class Classes extends Component {
   state = {
-    // true if the id in the url doesn't match
-    redirectionError: false,
     api: {},
     classId: 0,
     columns: [],
@@ -27,23 +26,16 @@ class Classes extends Component {
 
   componentDidMount() {
     const {
-      account,
       match,
     } = this.props;
     client.scope('Mentee').then((result) => {
       // checking if the user's sessionid is real
-      if (match.params.id === account.slug) {
-        this.setState({
-          api: result,
-          classId: parseInt(match.params.classId, 10),
-        });
-        // this is to ensure the props loaded in the component
-        this.componentWillReceiveProps(this.props);
-      } else {
-        this.setState({
-          redirectionError: true,
-        });
-      }
+      this.setState({
+        api: result,
+        classId: parseInt(match.params.classId, 10),
+      });
+      // this is to ensure the props loaded in the component
+      this.componentWillReceiveProps(this.props);
     });
   }
 
@@ -250,7 +242,6 @@ class Classes extends Component {
       classId,
       columns,
       tasks,
-      redirectionError,
       api,
       taskIdInOverlay,
       taskOverlayIsOpen,
@@ -258,11 +249,16 @@ class Classes extends Component {
       attachments,
       descriptions,
     } = this.state;
-    const { addDatabaseSchema, tags, updateDatabaseSchema, deleteDatabaseSchema } = this.props;
-    // console.log('classmanager', columns, tasks);
+    const {
+      addDatabaseSchema, tags, account, updateDatabaseSchema,
+      deleteDatabaseSchema,
+      match,
+    } = this.props;
+    if (!account.sessionId) return <Redirect to="/" />;
+    if (!account.user) return <Spinner />;
+    if (account.user.slug !== match.params.userSlug) return <Redirect to="/" />;
     return (
       <div style={{ position: 'relative' }}>
-        {redirectionError && <Redirect to="/" />}
         <Navbar className="pcm-nav" />
         <ToolBar boardId={classId} apis={api} />
         <div

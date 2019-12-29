@@ -79,3 +79,7 @@ body {
     right: 5px !important;
   }
 }
+// removes outlines from every possible tabs or links
+a, button, div {
+  outline: none !important;
+}

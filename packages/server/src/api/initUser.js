@@ -60,11 +60,14 @@ export default async function initUser(id) {
   lodash.uniq(flat(u.UserConnection.map(obj => [obj.mId, obj.userId]))).map(uid => ({ channel: session.channel(`UserConnection-${uid}`) })).forEach(obj => obj.channel.dispatch(schema.update('User', { id, activeStatus: true })));
   // console.log('userDetaisl in initUser', u.User);
   // console.log('userConnection', u.BoardMessageSeenStatus);
+  const boardWithLiveStatus = u.Board.map(b => (session.getChannel(`Board-live-${b.id}`) ? session.getChannel(`Board-live-${b.id}`).length : 0));
+  console.log('boardWIth live status', boardWithLiveStatus);
+  const finalBoard = u.Board.map((b, idx) => ({ ...b, activeStatus: boardWithLiveStatus[idx] > 1 }));
   session.subscribe('Main');
   // console.log('board member', u.BoardMember);
   session.dispatch(schema.init('User', finalUserList));
   session.dispatch(schema.init('UserDetail', u.UserDetail));
-  session.dispatch(schema.init('Board', u.Board));
+  session.dispatch(schema.init('Board', finalBoard));
   session.dispatch(schema.init('BoardColumn', u.BoardColumn));
   session.dispatch(schema.init('BoardColumnCard', u.BoardColumnCard));
   session.dispatch(schema.init('BoardColumnCardAttachment', u.BoardColumnCardAttachment));

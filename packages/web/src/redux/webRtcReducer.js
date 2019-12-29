@@ -1,6 +1,7 @@
 import { UPDATE_WEBRTC } from '../actions/types';
 
 const initialState = {
+  localCallHistory: {},
   showCommunication: null,
   showIncommingCall: false,
   showOutgoingCall: false,
