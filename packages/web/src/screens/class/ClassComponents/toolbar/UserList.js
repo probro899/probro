@@ -1,34 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Popover, Icon } from '@blueprintjs/core';
-
-const CallButton = () => {
-  return (
-    <span
-      style={{
-        padding: '5px',
-        borderRadius: '50%',
-        background: '#0F9960',
-      }}
-    >
-      <Icon icon="phone" iconSize={20} color="white" />
-    </span>
-  );
-};
-
-const VideoCallButton = () => {
-  return (
-    <span
-      style={{
-        padding: '5px',
-        borderRadius: '50%',
-        background: '#0F9960',
-      }}
-    >
-      <Icon icon="mobile-video" iconSize={20} color="white" />
-    </span>
-  );
-};
+import { Link } from 'react-router-dom';
+import { Popover } from '@blueprintjs/core';
+import { IoIosMore } from 'react-icons/io';
 
 const UserDetail = (props) => {
   const { detail } = props;
@@ -37,15 +11,11 @@ const UserDetail = (props) => {
       style={{ padding: '10px 5px 5px 5px' }}
     >
       <div
-        style={{ fontWeight: 600, padding: '2px' }}
+        style={{ padding: '2px' }}
       >
-        {`${detail.firstName} ${detail.lastName}`}
-      </div>
-      <div
-        style={{ padding: '5px', display: 'flex', justifyContent: 'space-around' }}
-      >
-        <CallButton />
-        <VideoCallButton />
+        <Link to={`/user/${detail.slug}`}>
+          {detail.middleName ? `${detail.firstName} ${detail.middleName} ${detail.lastName}` : `${detail.firstName} ${detail.lastName}`}
+        </Link>
       </div>
     </div>
   );
@@ -68,11 +38,11 @@ const AllUsers = ({ userList, boardMembers, boardId }) => {
       <div
         style={{ fontWeight: 600, padding: '2px' }}
       >
-        <u>Class Members</u>
+        <span>Members</span>
       </div>
       <div
         style={{
-          padding: '5px',
+          padding: '2px',
         }}
       >
         {
@@ -81,14 +51,12 @@ const AllUsers = ({ userList, boardMembers, boardId }) => {
               return (
                 <div
                   style={{
-                    padding: '10px',
+                    padding: '5px',
                   }}
                 >
-                  <span>
-                    {`${userList.byId[o.tuserId].firstName} ${userList.byId[o.tuserId].lastName}`}
-                  </span>
-                  <CallButton />
-                  <VideoCallButton />
+                  <Link to={`/user/${userList.byId[o.tuserId].slug}`}>
+                    {userList.byId[o.tuserId].middleName ? `${userList.byId[o.tuserId].firstName} ${userList.byId[o.tuserId].middleName} ${userList.byId[o.tuserId].lastName}` : `${userList.byId[o.tuserId].firstName} ${userList.byId[o.tuserId].lastName}`}
+                  </Link>
                 </div>
               );
             }
@@ -145,7 +113,7 @@ class UserList extends React.Component {
         }
         >
           <div className="i-user">
-            ...
+            <IoIosMore size={18} />
           </div>
         </Popover>
       </div>

@@ -20,13 +20,10 @@ class ToolBar extends React.Component {
     const {
       updateWebRtc,
       boardId,
-      database,
     } = this.props;
     updateWebRtc('showCommunication', boardId);
     updateWebRtc('peerType', 'board');
     updateWebRtc('communicationContainer', 'history');
-    // updateWebRtc('connectionId', connection.id);
-    // const user = connection.userId === account.user.id ? database.User.byId[connection.mId] : database.User.byId[connection.userId];
     updateWebRtc('chatHistory', { type: 'board', user: { user: null } });
   }
 
@@ -39,19 +36,13 @@ class ToolBar extends React.Component {
       account,
       apis,
     } = this.props;
-
+    const board = Object.values(boards.byId).find(obj => obj.id === boardId);
     return (
       <div className="tool-bar">
         <div className="toolbar-container">
           <div className="left-tools">
             <div className="class-name each-item">
-              {
-                boards.allIds.map((id) => {
-                  if (id === boardId) {
-                    return boards.byId[id].name;
-                  }
-                })
-              }
+              {board.name}
             </div>
             <Divider />
             <UserList userList={users} boardId={boardId} boardMembers={boardMembers} />

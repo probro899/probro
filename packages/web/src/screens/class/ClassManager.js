@@ -12,6 +12,7 @@ import { Spinner } from '../../common';
 
 class Classes extends Component {
   state = {
+    loading: true,
     api: {},
     classId: 0,
     columns: [],
@@ -33,6 +34,7 @@ class Classes extends Component {
       this.setState({
         api: result,
         classId: parseInt(match.params.classId, 10),
+        loading: false,
       });
       // this is to ensure the props loaded in the component
       this.componentWillReceiveProps(this.props);
@@ -248,6 +250,7 @@ class Classes extends Component {
       comments,
       attachments,
       descriptions,
+      loading,
     } = this.state;
     const {
       addDatabaseSchema, tags, account, updateDatabaseSchema,
@@ -255,7 +258,7 @@ class Classes extends Component {
       match,
     } = this.props;
     if (!account.sessionId) return <Redirect to="/" />;
-    if (!account.user) return <Spinner />;
+    if (!account.user || loading) return <Spinner />;
     if (account.user.slug !== match.params.userSlug) return <Redirect to="/" />;
     return (
       <div style={{ position: 'relative' }}>

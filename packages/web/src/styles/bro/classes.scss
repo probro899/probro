@@ -115,11 +115,13 @@
         .i-user {
           position: relative;
           padding: 4px;
+          margin-right: 2px;
           border-radius: 50%;
           font-weight: 500;
           cursor: pointer;
           background: $skyBlueMain;
           color: $backgroundColor;
+          display: flex;
           &:hover {
             background: $darkBlue;
           }
