@@ -106,7 +106,7 @@ class MediaComponents extends React.Component {
   render() {
     return (
       <div style={{ width: '100%', height: '100%', overflow: 'hidden' }}>
-        <div style={{ display: 'flex', position: 'absolute', zIndex: 12, width: '96%', overflow: 'hidden' }}>
+        <div style={{ display: 'flex', position: 'absolute', zIndex: 2, width: '96%', overflow: 'hidden' }}>
           <div style={{ display: 'flex', height: '100%', width: '100%', overflow: 'auto' }}>
             <UsersView {...this.props} />
           </div>

@@ -107,7 +107,6 @@ class CommentContainer extends React.Component {
       allComments,
       allLikes,
     } = this.state;
-    console.log('all likes', allLikes);
     const { users, account } = this.props;
     return (
       <div className="response">
