@@ -16,7 +16,7 @@ const declineCloseCall = (state) => {
 export default async (props, state, data) => {
   const { webRtc } = store.getState();
   const { uid, broadCastId, broadCastType, type, connectionId } = data;
-  if (type === 'user' && webRtc.isLive) {
+  if (type === webRtc.chatHistory.type && webRtc.isLive) {
     if (webRtc.connectionId === connectionId) {
       closeCall(props, state, data);
     } else {
