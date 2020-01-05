@@ -40,8 +40,23 @@ const UserView = ({ pc }) => {
     ) : null
   );
 };
+const showCallStatus = (webRtc) => {
+  console.log('webRtc value in showCallStatus', webRtc);
+  if (webRtc.chatHistory.type === 'user') {
+    const callStatus = webRtc.peerConnections[webRtc.chatHistory.user.user.id] ? webRtc.peerConnections[webRtc.chatHistory.user.user.id].iceCandidateStatus : null;
+    return (
+      callStatus ? <div><span style={{ color: 'yellow' }}>{callStatus}</span></div> : null
+    );
+  }
+  const callStatus = webRtc.lastStreamId ? webRtc.peerConnections[webRtc.lastStreamId].iceCandidateStatus : null;
+  return (
+    <div><span style={{ color: 'yellow' }}>{callStatus}</span></div>
+  );
+};
 
-const MentorView = () => {
+const MentorView = (props) => {
+  const { webRtc } = props;
+  console.log('props in mentorView', webRtc);
   return (
     <div
       style={{
@@ -60,12 +75,15 @@ const MentorView = () => {
       }}
     >
       <div style={{ height: '100%', width: '100%'}}>
+        <div style={{ position: 'absolute', maxHeight: 380, minHeight: 200, minWidth: 300, width: '100%', justifyContent: 'center', alignItems: 'center', display: 'flex' }}>
+          {showCallStatus(webRtc)}
+        </div>
         <video
           controls
           id="video-mentor"
           playsInline
           autoPlay
-          style={{maxHeight: 380, minHeight: 200, minWidth: 300, width: '100%', background: 'black' }}
+          style={{ maxHeight: 380, minHeight: 200, minWidth: 300, width: '100%', background: 'black' }}
         />
       </div>
     </div>

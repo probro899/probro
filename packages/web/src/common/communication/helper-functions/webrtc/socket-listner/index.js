@@ -3,6 +3,7 @@ import onOfferHandler from './on-offer';
 import onAnswerHandler from './onAnswerHandler';
 import onIceCandidateHandler from './onIceCandidateHandler';
 import onCallEndHandler from './onCallEndHandler';
+import onCallStatusChangeHandler from './onCallStatusHandler';
 
 export default (props, state) => {
   // Handle offer request
@@ -18,6 +19,12 @@ export default (props, state) => {
   // Handling incoming iceCandidate
   client.on('icecandidate', async (data) => {
     onIceCandidateHandler(props, state, data);
+  });
+
+  // change call Status handler
+  client.on('callStatus', async (data) => {
+    console.log('call Status', data);
+    onCallStatusChangeHandler(props, state, data);
   });
 
   // Handling Call End event

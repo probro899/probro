@@ -24,7 +24,7 @@ export default async (boardId, props, state) => {
     const peerConnectionPromises = userList.map(user => main(onIceCandidateHandler(props, state), user.id, gotRemoteStreamHandler(props), iceCandidateStatusHandler(props), offerHandler(props, state), localStreamHandler(props)));
     const peerConnList = await Promise.all(peerConnectionPromises);
     const storeValue = userList.reduce((obj, user, idx) => {
-      obj[user.id] = { pc: peerConnList[idx], user };
+      obj[user.id] = { pc: peerConnList[idx], user, iceCandidateStatus: 'Connecting...' };
       return obj;
     }, {});
     updateWebRtc('peerConnections', storeValue);
