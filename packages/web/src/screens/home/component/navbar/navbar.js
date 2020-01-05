@@ -69,7 +69,6 @@ class Navbar extends Component {
       account, database, navigate, className,
       updateWebRtc,
     } = this.props;
-    // console.log('props in nav bar', this.props);
     let profilePic;
     Object.values(database.UserDetail.byId).map((obj) => {
       if (account.user && account.user.id === obj.userId) {
@@ -85,10 +84,8 @@ class Navbar extends Component {
             to="/"
             className={navigate.mainNav.name === 'properClass' ? 'active' : null}
           >
-            <div className="navbar-item">
-              <span>
-                <img width={200} alt="Proper Class Logo" src={pcLogo} />
-              </span>
+            <div className="navbar-item" style={{ padding: '0px 5px' }}>
+              <img width={200} alt="Proper Class Logo" src={pcLogo} />
             </div>
           </Link>
           <Link

@@ -14,7 +14,7 @@ const customIcon = (icon, handleLockClick, hidden) => {
   }
   if (icon.side === 'right') {
     const rightIcon = (
-      <Tooltip content={hidden === true ? 'show' : 'hide'} position={Position.RIGHT}>
+      <Tooltip content={hidden === true ? <span style={{ color: '#1d4354' }}>Show</span> : <span style={{ color: '#1d4354' }}>Hide</span>} position={Position.RIGHT}>
         <Icon
           style={{ marginTop: 3, marginRight: 5, color: '#757575' }}
           icon={icon.name}

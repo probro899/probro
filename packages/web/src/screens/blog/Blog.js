@@ -8,6 +8,8 @@ import { DeletePopOver } from '../../common';
 import client from '../../socket';
 import { MoreButton } from '../../components';
 
+const blogImg = require('../../assets/blog-img.jpeg');
+
 class Blogs extends Component {
   state = {
     createBlog: false,
@@ -105,7 +107,7 @@ class Blogs extends Component {
                     <MoreButton onMore={this.onMore} id={id} />
                     <img
                       alt="test"
-                      src="https://images.unsplash.com/photo-1425082661705-1834bfd09dca?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2555&q=80"
+                      src={blogImg}
                     />
                   </div>
                   <div className="detail-container">
@@ -118,7 +120,7 @@ class Blogs extends Component {
                       </p>
                     </div>
                     <div className="blog-author">
-                      <Link to="#">
+                      <Link to={`/user/${database.User.byId[database.Blog.byId[id].userId].slug}`}>
                         {database.User.byId[database.Blog.byId[id].userId].middleName
                           ? `${database.User.byId[database.Blog.byId[id].userId].firstName} ${database.User.byId[database.Blog.byId[id].userId].middleName} ${database.User.byId[database.Blog.byId[id].userId].lastName}` : `${database.User.byId[database.Blog.byId[id].userId].firstName} ${database.User.byId[database.Blog.byId[id].userId].lastName}`}
                       </Link>

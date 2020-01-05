@@ -19,7 +19,6 @@ class Connections extends React.Component {
   sendMessage = async () => {
     const { updateWebRtc, details, database, account } = this.props;
     const connectionId = Object.values(database.UserConnection.byId).find(con => con.mId === details.id || con.userId === details.id);
-    // console.log('Connetion id', connectionId);
     updateWebRtc('showCommunication', details.id);
     updateWebRtc('connectionId', connectionId.id);
     updateWebRtc('peerType', 'user');
@@ -53,21 +52,30 @@ class Connections extends React.Component {
           timeStamp: Date.now(),
           status: 'pending',
         };
-        const res = await apis.connectUser(info);
-        console.log('connectio user res', res);
-        addDatabaseSchema('UserConnection', { id: res, ...info });
-        this.setState({
-          type: 'pending',
-        });
+        try {
+          const res = await apis.connectUser(info);
+          addDatabaseSchema('UserConnection', { id: res, ...info });
+          this.setState({
+            type: 'pending',
+          });
+        } catch (e) {
+          console.log('Error =>', e);
+        }
         break;
       case 'accept':
-        await apis.updateUserConnection([{
-          status: 'connected',
-        }, { id: existingCon.id }]);
-        updateDatabaseSchema('UserConnection', { id: existingCon.id, status: 'connected' });
-        this.setState({
-          type: 'connected',
-        });
+        try {
+          await apis.updateUserConnection([{
+            status: 'connected',
+            mId: existingCon.mId,
+            userId: existingCon.userId,
+          }, { id: existingCon.id }]);
+          updateDatabaseSchema('UserConnection', { id: existingCon.id, status: 'connected' });
+          this.setState({
+            type: 'connected',
+          });
+        } catch (e) {
+          console.log('Error =>', e);
+        }
         break;
       default:
     }
@@ -80,7 +88,6 @@ class Connections extends React.Component {
     let type = '';
     database.UserConnection.allIds.map((id) => {
       const obj = database.UserConnection.byId[id];
-      // console.log(obj, userId, guestId);
       if ((userId === obj.userId
         || userId === obj.mId)
         && (guestId === obj.userId || guestId === obj.mId)) {
@@ -120,6 +127,8 @@ Connections.propTypes = {
   details: PropTypes.objectOf(PropTypes.any).isRequired,
   account: PropTypes.objectOf(PropTypes.any).isRequired,
   apis: PropTypes.objectOf(PropTypes.any).isRequired,
+  updateDatabaseSchema: PropTypes.func.isRequired,
+  addDatabaseSchema: PropTypes.func.isRequired,
 };
 
 export default Connections;
