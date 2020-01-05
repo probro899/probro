@@ -2,9 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 import { Button } from '@blueprintjs/core';
-import mediaSelector from './mediaSelector';
-import { MediaComponents } from './components';
-import { mediaRecorder } from './helper-functions';
+import { MdMessage } from 'react-icons/md';
+import mediaSelector from '../mediaSelector';
+import { MediaComponents } from '../components';
+import { mediaRecorder } from '../helper-functions';
+import ScChatList from './sc-chat-list';
+import ScChatHistory from './sc-chat-history';
 
 class CallScreen extends React.Component {
   state = {
@@ -14,11 +17,22 @@ class CallScreen extends React.Component {
     activeVideo: false,
     activeScreenShare: false,
     activeDrawingBoard: false,
+    showChatList: false,
+    showChatBox: null,
   };
 
-  goBack = () => {
-    const { change } = this.props;
-    change('history');
+  handleClickChatBox = (val) => {
+    this.setState({
+      showChatBox: val,
+      showChatList: false,
+    });
+  }
+
+  handleClickChatList = () => {
+    const { showChatList } = this.state;
+    this.setState({
+      showChatList: !showChatList,
+    });
   }
 
   callHandle = async (mediaType) => {
@@ -71,34 +85,38 @@ class CallScreen extends React.Component {
   render() {
     const { style, webRtc, account, database } = this.props;
     const { user, type } = webRtc.chatHistory;
-    const { showWhiteBoard, startRecording, activeAudio, activeDrawingBoard, activeVideo, activeScreenShare } = this.state;
-
-    // console.log('Props in call screen', this.props);
+    const {
+      showWhiteBoard,
+      startRecording,
+      activeAudio,
+      activeDrawingBoard,
+      activeVideo,
+      activeScreenShare,
+      showChatBox,
+      showChatList,
+    } = this.state;
+    // console.log('chat screen', this.props);
     return !webRtc.showCommunication ? <div /> : (
       <div
         className="call-screen"
         style={style}
       >
+        {showChatList && <ScChatList onClose={this.handleClickChatList} onClickItem={this.handleClickChatBox} />}
+        {showChatBox && <ScChatHistory onClose={this.handleClickChatBox} />}
         {showWhiteBoard && <Redirect to={`/${account.user.slug}/drawing-board`} />}
         <div className="top">
-          <div>
-            <Button
-              // text="Back"
-              minimal
-              intent="default"
-              icon="double-chevron-left"
-              onClick={this.goBack}
-            />
-          </div>
+          <Button minimal intent="default" icon="menu" onClick={this.handleClickChatList} />
           <div className="op-name">
             {type === 'user' ? `${user.user.firstName} ${user.user.lastName}` : database.Board.byId[webRtc.showCommunication].name}
           </div>
-          <div />
+          <Button minimal onClick={() => this.handleClickChatBox(webRtc.showCommunication)}>
+            <MdMessage size={18} />
+          </Button>
         </div>
         <div className="video-container">
           <MediaComponents account={account} webRtc={webRtc} />
         </div>
-        <div className="controllers" style={{ zIndex: 20 }}>
+        <div className="controllers" style={{ zIndex: 2 }}>
           <Button icon="phone" intent={activeAudio ? 'danger' : 'success'} onClick={() => this.callHandle('audio')} />
           <Button icon="mobile-video" onClick={() => this.callHandle('video')} intent={activeVideo ? 'danger' : 'success'} />
           <Button icon="cross" intent="danger" onClick={this.callReject} />
@@ -119,6 +137,7 @@ CallScreen.propTypes = {
   webRtc: PropTypes.objectOf(PropTypes.any).isRequired,
   change: PropTypes.func.isRequired,
   closeHandler: PropTypes.func.isRequired,
+  database: PropTypes.objectOf(PropTypes.any).isRequired,
   account: PropTypes.objectOf(PropTypes.any).isRequired,
   updateWebRtc: PropTypes.func.isRequired,
   _callHandler: PropTypes.func.isRequired,

@@ -8,7 +8,7 @@ import * as actions from '../../actions';
 import client from '../../socket';
 import ChatList from './chatlist';
 import ChatHistory from './chathistory';
-import CallScreen from './CallScreen';
+import CallScreen from './callscreen';
 import IncomingCallScreen from './IncomingCallScreen';
 import { socketListner, callHandler, answerHandler, closeHandler } from './helper-functions';
 

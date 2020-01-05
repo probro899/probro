@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Divider, Button } from '@blueprintjs/core';
+import { Divider, Button, Tooltip } from '@blueprintjs/core';
+import { GoGraph } from 'react-icons/go';
 import * as actions from '../../../../actions';
 import UserList from './UserList';
 import AddUser from './add-user';
@@ -35,7 +36,9 @@ class ToolBar extends React.Component {
       boardMembers,
       account,
       apis,
+      UserDetail,
     } = this.props;
+    const extUser = Object.values(UserDetail.byId).find(obj => obj.userId === account.user.id);
     const board = Object.values(boards.byId).find(obj => obj.id === boardId);
     return (
       <div className="tool-bar">
@@ -58,6 +61,19 @@ class ToolBar extends React.Component {
               account={account}
               boardId={boardId}
             />
+            {
+              extUser && extUser.type === 'mentor' && (
+                <Tooltip
+                  content={<span style={{ color: '#1d4354' }}>Generate Report</span>}
+                >
+                  <Button
+                    minimal
+                  >
+                    <GoGraph size={20} />
+                  </Button>
+                </Tooltip>
+              )
+            }
           </div>
         </div>
       </div>
@@ -69,6 +85,7 @@ ToolBar.propTypes = {
   boards: PropTypes.objectOf(PropTypes.any).isRequired,
   boardId: PropTypes.number.isRequired,
   users: PropTypes.objectOf(PropTypes.any).isRequired,
+  UserDetail: PropTypes.objectOf(PropTypes.any).isRequired,
   boardMembers: PropTypes.objectOf(PropTypes.any).isRequired,
   updateWebRtc: PropTypes.func.isRequired,
   account: PropTypes.objectOf(PropTypes.any).isRequired,
@@ -79,6 +96,7 @@ const mapStateToProps = (state) => {
   const { database, account } = state;
   return {
     boards: database.Board,
+    UserDetail: database.UserDetail,
     users: database.User,
     boardMembers: database.BoardMember,
     account,
