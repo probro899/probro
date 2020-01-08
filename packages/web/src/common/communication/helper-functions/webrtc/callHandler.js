@@ -2,7 +2,7 @@ import store from '../../../../store';
 import createPcForEachUser from './createPcForEachUser';
 
 export default (props, state) => async (apis, stream) => {
-  console.log('call handler called', stream);
+  // console.log('call handler called', stream);
   try {
     let { webRtc } = store.getState();
     const { updateWebRtc, account } = props;

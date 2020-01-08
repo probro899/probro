@@ -74,8 +74,8 @@ const MentorView = (props) => {
         margin: 10,
       }}
     >
-      <div style={{ height: '100%', width: '100%'}}>
-        <div style={{ position: 'absolute', maxHeight: 380, minHeight: 200, minWidth: 300, width: '100%', justifyContent: 'center', alignItems: 'center', display: 'flex' }}>
+      <div style={{ height: '100%', width: '100%' }}>
+        <div style={{ position: 'absolute', zIndex: 2, maxHeight: 380, minHeight: 200, minWidth: 300, width: '100%', justifyContent: 'center', alignItems: 'center', display: 'flex' }}>
           {showCallStatus(webRtc)}
         </div>
         <video

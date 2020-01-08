@@ -3,14 +3,14 @@ import store from '../../store';
 function setLocalStream(stream, userId, onLocalStream) {
   // console.log('stream in local stream', stream);
   onLocalStream(stream, userId);
-  const videoElement = document.getElementById(`video-${store.getState().account.user.id}`);
-  if (stream) {
-    videoElement.srcObject = stream;
-  }
+  // const videoElement = document.getElementById(`video-${store.getState().account.user.id}`);
+  // if (stream) {
+  //   videoElement.srcObject = stream;
+  // }
 }
 
 function gotRemoteStream(e, userId, gotRemoteStreamHandler) {
-  console.log('got remote stream', e, userId);
+  // console.log('got remote stream', e, userId);
   gotRemoteStreamHandler(e, userId);
   const { webRtc } = store.getState();
   const videoElement = document.getElementById(`video-${userId}`);

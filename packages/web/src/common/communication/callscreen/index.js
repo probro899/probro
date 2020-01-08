@@ -8,6 +8,7 @@ import { MediaComponents } from '../components';
 import { mediaRecorder } from '../helper-functions';
 import ScChatList from './sc-chat-list';
 import ScChatHistory from './sc-chat-history';
+import OutgoingCallScreen from './OutgoingCallScreen';
 
 class CallScreen extends React.Component {
   state = {
@@ -82,6 +83,37 @@ class CallScreen extends React.Component {
     }
   }
 
+  checkConnection = () => {
+    const { webRtc } = this.props;
+    let redirect = false;
+    let status = 'Connecting';
+    console.log('check con', webRtc);
+    if (webRtc.chatHistory.type === 'user') {
+      const peerConnection = webRtc.peerConnections[webRtc.chatHistory.user.user.id];
+      if (peerConnection) {
+        if (peerConnection.iceCandidateStatus === 'connected') {
+          return { redirect: true, status: 'Connected' };
+        }
+        if (peerConnection.iceCandidateStatus === 'Ringing') {
+          return { redirect: false, status: 'Ringing' };
+        }
+      }
+    } else {
+      Object.values(webRtc.peerConnections).map((obj) => {
+        if (!redirect) {
+          if (obj.iceCandidateStatus === 'connected') {
+            redirect = true;
+            status = 'Connected';
+          }
+          if (obj.iceCandidateStatus === 'Ringing') {
+            status = 'Ringing';
+          }
+        }
+      });
+    }
+    return { redirect, status };
+  }
+
   render() {
     const { style, webRtc, account, database } = this.props;
     const { user, type } = webRtc.chatHistory;
@@ -95,8 +127,10 @@ class CallScreen extends React.Component {
       showChatBox,
       showChatList,
     } = this.state;
-    // console.log('chat screen', this.props);
-    return !webRtc.showCommunication ? <div /> : (
+    if (!webRtc.showCommunication) return <div />;
+    const outgoingStatus = this.checkConnection();
+    if (!outgoingStatus.redirect) return <OutgoingCallScreen callStatus={outgoingStatus.status} callReject={this.callReject} parentProps={this.props} />;
+    return (
       <div
         className="call-screen"
         style={style}
