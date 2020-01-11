@@ -41,7 +41,6 @@ const UserView = ({ pc }) => {
   );
 };
 const showCallStatus = (webRtc) => {
-  console.log('webRtc value in showCallStatus', webRtc);
   if (webRtc.chatHistory.type === 'user') {
     const callStatus = webRtc.peerConnections[webRtc.chatHistory.user.user.id] ? webRtc.peerConnections[webRtc.chatHistory.user.user.id].iceCandidateStatus : null;
     return (
@@ -56,7 +55,6 @@ const showCallStatus = (webRtc) => {
 
 const MentorView = (props) => {
   const { webRtc } = props;
-  console.log('props in mentorView', webRtc);
   return (
     <div
       style={{
@@ -93,7 +91,7 @@ const MentorView = (props) => {
 const UsersView = (props) => {
   const { webRtc, account } = props;
   // console.log('Account', account);
-  const peerConnection = Object.values(webRtc.peerConnections);
+  const peerConnection = Object.values(webRtc.peerConnections).filter(obj => obj.iceCandidateStatus !== 'disconnected');
   // console.log('all perconnection', peerConnection);
   const allOtherUser = peerConnection.map(pc => <UserView pc={pc} key={pc.user.id} />);
   const finalUserList = webRtc.chatHistory.type === 'user' ? [<UserView pc={account} key={account.user.id} />] : [...allOtherUser, <UserView pc={account} key={account.user.id} />];

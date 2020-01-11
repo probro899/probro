@@ -45,7 +45,7 @@ class OutgoingCallScreen extends React.Component {
             <span className="name">
               {webRtc.chatHistory.type === 'user' ? `${database.User.byId[webRtc.showCommunication].firstName} ${database.User.byId[webRtc.showCommunication].lastName}` : database.Board.byId[webRtc.showCommunication].name}
             </span>
-            <span className="status" style={{ color: callStatus === 'Declined' ? 'red' : 'white' }}>
+            <span className="status" style={{ textTransform: 'capitalize', color: callStatus === 'Declined' ? 'red' : 'white' }}>
               {callStatus}
               {' '}
               ...
@@ -61,7 +61,7 @@ class OutgoingCallScreen extends React.Component {
           }
           <div className="controllers">
             {
-              callStatus === 'Declined' ? (
+              callStatus === 'declined' || callStatus === 'disconnected' ? (
                 <Button large intent="danger">
                   <MdHourglassEmpty size={20} />
                 </Button>

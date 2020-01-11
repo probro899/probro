@@ -20,23 +20,24 @@ class CallScreen extends React.Component {
     activeDrawingBoard: false,
     showChatList: false,
     showChatBox: null,
-    callStatus: { status: 'Connecting', redirect: false },
+    callStatus: { status: 'connecting', redirect: false },
   };
 
   componentWillReceiveProps(nextProps) {
     const { webRtc } = this.props;
     if (webRtc !== nextProps.webRtc) {
+      console.log('hello again', nextProps.webRtc);
       if (nextProps.webRtc.chatHistory.type === 'user') {
         const peerConnection = nextProps.webRtc.peerConnections[webRtc.chatHistory.user.user.id];
-        if (peerConnection.iceCandidateStatus === 'connected') this.setState({ callStatus: { redirect: true, status: 'Connected' } });
-        if (peerConnection.iceCandidateStatus === 'Ringing') this.setState({ callStatus: { redirect: false, status: 'Ringing' } });
-        if (peerConnection.iceCandidateStatus === 'declined') {
+        if (peerConnection.iceCandidateStatus === 'connected') this.setState({ callStatus: { redirect: true, status: peerConnection.iceCandidateStatus } });
+        if (peerConnection.iceCandidateStatus === 'ringing') this.setState({ callStatus: { redirect: false, status: peerConnection.iceCandidateStatus } });
+        if (peerConnection.iceCandidateStatus === 'declined' || peerConnection.iceCandidateStatus === 'disconnected') {
           this.setState(
             {
-              callStatus: { redirect: false, status: 'Declined' },
+              callStatus: { redirect: false, status: peerConnection.iceCandidateStatus },
             }
           );
-          setTimeout(() => { this.setState({ callStatus: { redirect: true, status: 'Declined' } }); }, 2000);
+          setTimeout(() => { this.setState({ callStatus: { redirect: true, status: peerConnection.iceCandidateStatus } }); }, 2000);
         }
       }
       if (nextProps.webRtc.chatHistory.type === 'board') {
@@ -50,6 +51,7 @@ class CallScreen extends React.Component {
               status = 'Connected';
               count += 1;
             }
+            if (obj.iceCandidateStatus === 'connecting') count += 1;
             if (obj.iceCandidateStatus === 'Ringing') {
               status = 'Ringing';
               count += 1;
@@ -60,7 +62,7 @@ class CallScreen extends React.Component {
           callStatus: { redirect, status },
         });
         if (count === 0 && Object.values(nextProps.webRtc.peerConnections).length > 0) {
-          setTimeout(() => { this.setState({ callStatus: { redirect: true, status: 'Declined' } }); }, 2000);
+          setTimeout(() => { this.setState({ callStatus: { redirect: true, status: 'Disconnected' } }); }, 2000);
         }
       }
     }
