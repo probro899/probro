@@ -20,7 +20,51 @@ class CallScreen extends React.Component {
     activeDrawingBoard: false,
     showChatList: false,
     showChatBox: null,
+    callStatus: { status: 'Connecting', redirect: false },
   };
+
+  componentWillReceiveProps(nextProps) {
+    const { webRtc } = this.props;
+    if (webRtc !== nextProps.webRtc) {
+      if (nextProps.webRtc.chatHistory.type === 'user') {
+        const peerConnection = nextProps.webRtc.peerConnections[webRtc.chatHistory.user.user.id];
+        if (peerConnection.iceCandidateStatus === 'connected') this.setState({ callStatus: { redirect: true, status: 'Connected' } });
+        if (peerConnection.iceCandidateStatus === 'Ringing') this.setState({ callStatus: { redirect: false, status: 'Ringing' } });
+        if (peerConnection.iceCandidateStatus === 'declined') {
+          this.setState(
+            {
+              callStatus: { redirect: false, status: 'Declined' },
+            }
+          );
+          setTimeout(() => { this.setState({ callStatus: { redirect: true, status: 'Declined' } }); }, 2000);
+        }
+      }
+      if (nextProps.webRtc.chatHistory.type === 'board') {
+        let redirect = false;
+        let status = 'connecting';
+        let count = 0;
+        Object.values(nextProps.webRtc.peerConnections).map((obj) => {
+          if (!redirect) {
+            if (obj.iceCandidateStatus === 'connected') {
+              redirect = true;
+              status = 'Connected';
+              count += 1;
+            }
+            if (obj.iceCandidateStatus === 'Ringing') {
+              status = 'Ringing';
+              count += 1;
+            }
+          }
+        });
+        this.setState({
+          callStatus: { redirect, status },
+        });
+        if (count === 0 && Object.values(nextProps.webRtc.peerConnections).length > 0) {
+          setTimeout(() => { this.setState({ callStatus: { redirect: true, status: 'Declined' } }); }, 2000);
+        }
+      }
+    }
+  }
 
   handleClickChatBox = (val) => {
     this.setState({
@@ -83,37 +127,6 @@ class CallScreen extends React.Component {
     }
   }
 
-  checkConnection = () => {
-    const { webRtc } = this.props;
-    let redirect = false;
-    let status = 'Connecting';
-    console.log('check con', webRtc);
-    if (webRtc.chatHistory.type === 'user') {
-      const peerConnection = webRtc.peerConnections[webRtc.chatHistory.user.user.id];
-      if (peerConnection) {
-        if (peerConnection.iceCandidateStatus === 'connected') {
-          return { redirect: true, status: 'Connected' };
-        }
-        if (peerConnection.iceCandidateStatus === 'Ringing') {
-          return { redirect: false, status: 'Ringing' };
-        }
-      }
-    } else {
-      Object.values(webRtc.peerConnections).map((obj) => {
-        if (!redirect) {
-          if (obj.iceCandidateStatus === 'connected') {
-            redirect = true;
-            status = 'Connected';
-          }
-          if (obj.iceCandidateStatus === 'Ringing') {
-            status = 'Ringing';
-          }
-        }
-      });
-    }
-    return { redirect, status };
-  }
-
   render() {
     const { style, webRtc, account, database } = this.props;
     const { user, type } = webRtc.chatHistory;
@@ -126,10 +139,10 @@ class CallScreen extends React.Component {
       activeScreenShare,
       showChatBox,
       showChatList,
+      callStatus,
     } = this.state;
     if (!webRtc.showCommunication) return <div />;
-    const outgoingStatus = this.checkConnection();
-    if (!outgoingStatus.redirect) return <OutgoingCallScreen callStatus={outgoingStatus.status} callReject={this.callReject} parentProps={this.props} />;
+    if (!callStatus.redirect) return <OutgoingCallScreen callStatus={callStatus.status} callReject={this.callReject} parentProps={this.props} />;
     return (
       <div
         className="call-screen"

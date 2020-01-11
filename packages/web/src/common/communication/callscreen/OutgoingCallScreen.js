@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FaPhoneSlash } from 'react-icons/fa';
+import { MdHourglassEmpty } from 'react-icons/md';
 import { Button, Icon } from '@blueprintjs/core';
 import RoundPicture from '../../../components/RoundPicture';
 import { ENDPOINT } from '../../../config';
@@ -44,7 +45,7 @@ class OutgoingCallScreen extends React.Component {
             <span className="name">
               {webRtc.chatHistory.type === 'user' ? `${database.User.byId[webRtc.showCommunication].firstName} ${database.User.byId[webRtc.showCommunication].lastName}` : database.Board.byId[webRtc.showCommunication].name}
             </span>
-            <span className="status">
+            <span className="status" style={{ color: callStatus === 'Declined' ? 'red' : 'white' }}>
               {callStatus}
               {' '}
               ...
@@ -59,9 +60,18 @@ class OutgoingCallScreen extends React.Component {
             : <IconOrImage isUser={isUser} />
           }
           <div className="controllers">
-            <Button onClick={callReject} large intent="danger">
-              <FaPhoneSlash size={20} />
-            </Button>
+            {
+              callStatus === 'Declined' ? (
+                <Button large intent="danger">
+                  <MdHourglassEmpty size={20} />
+                </Button>
+              )
+                : (
+                  <Button onClick={callReject} large intent="danger">
+                    <FaPhoneSlash size={20} />
+                  </Button>
+                )
+            }
           </div>
         </div>
       </div>
