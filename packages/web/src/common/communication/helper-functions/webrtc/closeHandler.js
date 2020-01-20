@@ -1,11 +1,12 @@
 import store from '../../../../store';
 
 export default (props, state, apis) => async (remoteData) => {
-  console.log('close handler called', state, apis, props, remoteData);
+
   const { updateWebRtc, account } = props;
   const { webRtc } = store.getState();
   const pcs = Object.values(webRtc.peerConnections);
-
+  console.log('close handler called', remoteData, webRtc);
+  updateWebRtc('chatHistory', webRtc.localCallHistory.chatHistory);
   if (webRtc.localCallHistory.stream) {
     if (webRtc.localCallHistory.stream.active) {
       // console.log('inside the local steam stop case');
@@ -25,18 +26,21 @@ export default (props, state, apis) => async (remoteData) => {
     if (pcs.length === 0) {
       if (!webRtc.localCallHistory.callEnd) {
         await updateWebRtc('localCallHistory', { ...webRtc.localCallHistory, callEnd: true });
-        apis.callClose({
-          callCloseDetail: {
-            uid: account.user.id,
-            broadCastId: webRtc.chatHistory.type === 'user' ? account.user.id : webRtc.showCommunication,
-            broadCastType: webRtc.chatHistory.type === 'user' ? 'UserConnection' : 'Board',
-            callType: webRtc.localCallHistory.callType || 'Misscall',
-            callDuration: 0,
-            type: webRtc.chatHistory.type,
-            connectionId: webRtc.connectionId,
-          },
-          userList: [{ userId: webRtc.chatHistory.user.user.id }],
-        });
+        if (!remoteData || webRtc.localCallHistory.chatHistory.type === 'board') {
+          apis.callClose({
+            callCloseDetail: {
+              uid: account.user.id,
+              broadCastId: webRtc.localCallHistory.chatHistory.type === 'user' ? account.user.id : webRtc.localCallHistory.chatHistory.connectionId,
+              broadCastType: webRtc.localCallHistory.chatHistory.type === 'user' ? 'UserConnection' : 'Board',
+              callType: webRtc.localCallHistory.callType || 'Misscall',
+              callDuration: 0,
+              type: webRtc.localCallHistory.chatHistory.type,
+              connectionId: webRtc.localCallHistory.chatHistory.connectionId,
+              callEndReply: remoteData,
+            },
+            userList: [{ userId: webRtc.localCallHistory.chatHistory.user.user.id }],
+          });
+        }
       }
     } else if (!webRtc.localCallHistory.callEnd) {
       await updateWebRtc('localCallHistory', { ...webRtc.localCallHistory, callEnd: true });
@@ -48,18 +52,21 @@ export default (props, state, apis) => async (remoteData) => {
           console.error('errror in call close handler', e);
         }
       });
-      apis.callClose({
-        callCloseDetail: {
-          uid: account.user.id,
-          broadCastId: webRtc.chatHistory.type === 'user' ? account.user.id : webRtc.showCommunication,
-          broadCastType: webRtc.chatHistory.type === 'user' ? 'UserConnection' : 'Board',
-          callType: webRtc.localCallHistory.callType || 'Misscall',
-          callDuration: webRtc.localCallHistory.startTime ? Date.now() - webRtc.localCallHistory.startTime : 0,
-          type: webRtc.chatHistory.type,
-          connectionId: webRtc.connectionId,
-        },
-        userList: [{ userId: webRtc.chatHistory.type === 'user' ? webRtc.chatHistory.user.user.id : webRtc.showCommunication }],
-      });
+      if (!remoteData || webRtc.localCallHistory.chatHistory.type === 'board') {
+        apis.callClose({
+          callCloseDetail: {
+            uid: account.user.id,
+            broadCastId: webRtc.localCallHistory.chatHistory.type === 'user' ? account.user.id : webRtc.localCallHistory.chatHistory.connectionId,
+            broadCastType: webRtc.localCallHistory.chatHistory.type === 'user' ? 'UserConnection' : 'Board',
+            callType: webRtc.localCallHistory.callType || 'Misscall',
+            callDuration: webRtc.localCallHistory.startTime ? Date.now() - webRtc.localCallHistory.startTime : 0,
+            type: webRtc.localCallHistory.chatHistory.type,
+            connectionId: webRtc.localCallHistory.chatHistory.connectionId,
+            callEndReply: remoteData,
+          },
+          userList: [{ userId: webRtc.localCallHistory.chatHistory.type === 'user' ? webRtc.localCallHistory.chatHistory.user.user.id : webRtc.localCallHistory.chatHistory.connectionId }],
+        });
+      }
     }
 
     updateWebRtc('communicationContainer', 'history');

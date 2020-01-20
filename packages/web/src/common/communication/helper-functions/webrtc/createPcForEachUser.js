@@ -13,8 +13,8 @@ export default async (boardId, props, state) => {
     const { webRtc } = store.getState();
 
     let userList = null;
-    if (webRtc.chatHistory.type === 'user') {
-      userList = [webRtc.chatHistory.user.user];
+    if (webRtc.localCallHistory.chatHistory.type === 'user') {
+      userList = [webRtc.localCallHistory.chatHistory.user.user];
     } else {
       const boardmembers = Object.values(database.BoardMember.byId).filter(bm => bm.boardId === boardId);
       const userListAll = boardmembers.map(bm => database.User.byId[bm.tuserId]);

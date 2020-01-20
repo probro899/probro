@@ -84,7 +84,7 @@ class CallScreen extends React.Component {
 
   render() {
     const { style, webRtc, account, database } = this.props;
-    const { user, type } = webRtc.chatHistory;
+    const { user, type } = webRtc.localCallHistory.chatHistory;
     const {
       showWhiteBoard,
       startRecording,
@@ -101,13 +101,13 @@ class CallScreen extends React.Component {
         className="call-screen"
         style={style}
       >
-        {showChatList && <ScChatList onClose={this.handleClickChatList} onClickItem={this.handleClickChatBox} />}
-        {showChatBox && <ScChatHistory onClose={this.handleClickChatBox} />}
+        {showChatList && <ScChatList onClose={this.handleClickChatList} onClickItem={this.handleClickChatBox} {...this.props} />}
+        {showChatBox && <ScChatHistory onClose={this.handleClickChatBox} {...this.props} />}
         {showWhiteBoard && <Redirect to={`/${account.user.slug}/drawing-board`} />}
         <div className="top">
           <Button minimal intent="default" icon="menu" onClick={this.handleClickChatList} />
           <div className="op-name">
-            {type === 'user' ? `${user.user.firstName} ${user.user.lastName}` : database.Board.byId[webRtc.showCommunication].name}
+            {type === 'user' ? `${user.user.firstName} ${user.user.lastName}` : database.Board.byId[webRtc.localCallHistory.chatHistory.connectionId].name}
           </div>
           <Button minimal onClick={() => this.handleClickChatBox(webRtc.showCommunication)}>
             <MdMessage size={18} />

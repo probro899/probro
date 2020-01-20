@@ -119,7 +119,7 @@ class Communication extends React.Component {
             {...this.props}
           />
           )}
-          {!webRtc.showIncommingCall && webRtc.communicationContainer === 'connecting' && webRtc.chatHistory.type && (
+          {!webRtc.showIncommingCall && webRtc.communicationContainer === 'connecting' && webRtc.localCallHistory.chatHistory && (
           <CallScreen
             // style={!webRtc.showIncommingCall && webRtc.communicationContainer === 'connecting' ? { display: 'block' } : { display: 'none' }}
             change={this.switchScreen}
@@ -131,7 +131,7 @@ class Communication extends React.Component {
           />
           )
           }
-          {webRtc.showIncommingCall && webRtc.chatHistory.type && (
+          {webRtc.showIncommingCall && webRtc.localCallHistory.chatHistory && (
           <IncomingCallScreen
             // style={webRtc.showIncommingCall ? { display: 'flex' } : { display: 'none' }}
             change={this.switchScreen}

@@ -113,7 +113,7 @@ export default (props) => {
         lastMessageSeenIdAndUnseenNo = findLastMessageAndUnSeenNo(arrWithSeenStatus, 'user', props);
       }
     } else {
-      messages = Object.values(database.BoardMessage.byId).filter(msg => msg.boardId === webRtc.showCommunication);
+      messages = Object.values(database.BoardMessage.byId).filter(msg => msg.boardId === webRtc.chatHistory.connectionId);
       if (messages.length > 0) {
         messages.forEach((umd, idx) => {
           if (!isSameDay(isSameDayFlag, new Date(umd.timeStamp)) || idx === 0) {

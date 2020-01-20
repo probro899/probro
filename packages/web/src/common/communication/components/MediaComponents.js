@@ -40,10 +40,11 @@ const UserView = ({ pc }) => {
     ) : null
   );
 };
+
 const showCallStatus = (webRtc) => {
   console.log('webRtc value in showCallStatus', webRtc);
-  if (webRtc.chatHistory.type === 'user') {
-    const callStatus = webRtc.peerConnections[webRtc.chatHistory.user.user.id] ? webRtc.peerConnections[webRtc.chatHistory.user.user.id].iceCandidateStatus : null;
+  if (webRtc.localCallHistory.chatHistory.type === 'user') {
+    const callStatus = webRtc.peerConnections[webRtc.localCallHistory.chatHistory.user.user.id] ? webRtc.peerConnections[webRtc.localCallHistory.chatHistory.user.user.id].iceCandidateStatus : null;
     return (
       callStatus ? <div><span style={{ color: 'yellow' }}>{callStatus}</span></div> : null
     );
@@ -75,7 +76,7 @@ const MentorView = (props) => {
       }}
     >
       <div style={{ height: '100%', width: '100%'}}>
-        <div style={{ position: 'absolute', maxHeight: 380, minHeight: 200, minWidth: 300, width: '100%', justifyContent: 'center', alignItems: 'center', display: 'flex' }}>
+        <div style={{ position: 'absolute', zIndex: 2, maxHeight: 380, minHeight: 200, minWidth: 300, width: '100%', justifyContent: 'center', alignItems: 'center', display: 'flex' }}>
           {showCallStatus(webRtc)}
         </div>
         <video
@@ -96,7 +97,7 @@ const UsersView = (props) => {
   const peerConnection = Object.values(webRtc.peerConnections);
   // console.log('all perconnection', peerConnection);
   const allOtherUser = peerConnection.map(pc => <UserView pc={pc} key={pc.user.id} />);
-  const finalUserList = webRtc.chatHistory.type === 'user' ? [<UserView pc={account} key={account.user.id} />] : [...allOtherUser, <UserView pc={account} key={account.user.id} />];
+  const finalUserList = webRtc.localCallHistory.chatHistory.type === 'user' ? [<UserView pc={account} key={account.user.id} />] : [...allOtherUser, <UserView pc={account} key={account.user.id} />];
   return finalUserList;
 };
 

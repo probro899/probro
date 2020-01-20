@@ -1,6 +1,7 @@
 import offerInitialization from './offerInitializationHandler';
 import offerOnCommunicationOpen from './offerOnCommunicationOpen';
 import offerOnCommunicationNotOpen from './offerOnCommunicationNotOpen';
+import closeHandler from '../../closeHandler';
 import store from '../../../../../../store';
 
 const initCall = async (props, state, data, webRtc) => {
@@ -25,7 +26,7 @@ const declineCall = async (status, props, state, data, webRtc) => {
         broadCastId,
         uid: account.user.id,
         connectionId,
-        type: 'Busy',
+        type: 'busy',
       },
       userList: [{ userId: uid }],
     });
@@ -35,45 +36,56 @@ const declineCall = async (status, props, state, data, webRtc) => {
 };
 
 export default async (props, state, data) => {
-  console.log('offer arrived', data);
+
   const { webRtc } = store.getState();
+  console.log('offer arrived', data, webRtc, props);
+
   const { uid, connectionId, broadCastType, broadCastId } = data;
   const type = broadCastType === 'Board' ? 'board' : 'user';
-  const { account } = props;
+  const { account, updateWebRtc } = props;
   // const { uid, broadCastId, broadCastType, connectionId } = data;
   const { apis } = state;
-  apis.callStatusChange({
-    callStatusDetails: {
-      broadCastType,
-      broadCastId,
-      uid: account.user.id,
-      connectionId,
-      type: 'Ringing',
-    },
-    userList: [{ userId: uid }],
-  });
-
-  if (type === 'board') {
-    if (webRtc.isLive) {
-      if (webRtc.showCommunication === broadCastId) {
-        await initCall(props, state, data, webRtc);
+  if (webRtc.showIncommingCall) {
+    declineCall('Call is busy', props, state, data, webRtc);
+  } else {
+    // setTimeout(async () => {
+    //   await closeHandler(props, state, state.apis)();
+    //   updateWebRtc('showIncommingCall', false);
+    //   updateWebRtc('communicationContainer', 'history');
+    //   // change('history');
+    // }, 10000);
+    apis.callStatusChange({
+      callStatusDetails: {
+        broadCastType,
+        broadCastId,
+        uid: account.user.id,
+        connectionId,
+        type: 'ringing',
+      },
+      userList: [{ userId: uid }],
+    });
+    if (type === 'board') {
+      if (webRtc.isLive) {
+        if (webRtc.showCommunication === broadCastId) {
+          await initCall(props, state, data, webRtc);
+        } else {
+          declineCall('Call is busy', props, state, data, webRtc);
+        }
       } else {
-        declineCall('Call is busy', props, state, data, webRtc);
+        await initCall(props, state, data, webRtc);
       }
-    } else {
-      await initCall(props, state, data, webRtc);
     }
-  }
 
-  if (type === 'user') {
-    if (webRtc.isLive) {
-      if (webRtc.connectionId === connectionId && webRtc.chatHistory.type !== 'board') {
-        await initCall(props, state, data, webRtc);
+    if (type === 'user') {
+      if (webRtc.isLive) {
+        if (webRtc.localCallHistory.chatHistory.connectionId === connectionId && webRtc.localCallHistory.chatHistory.type !== 'board') {
+          await initCall(props, state, data, webRtc);
+        } else {
+          declineCall('Call is busy', props, state, data, webRtc);
+        }
       } else {
-        declineCall('Call is busy', props, state, data, webRtc);
+        await initCall(props, state, data, webRtc);
       }
-    } else {
-      await initCall(props, state, data, webRtc);
     }
   }
 };

@@ -16,7 +16,7 @@ function gotRemoteStream(e, userId, gotRemoteStreamHandler) {
   const videoElement = document.getElementById(`video-${userId}`);
   const lastVideoElement = document.getElementById('video-mentor');
   // console.log('gotRemoteStream called', e);
-  if (webRtc.chatHistory.type !== 'user') {
+  if (webRtc.localCallHistory.chatHistory.type !== 'user') {
     if (videoElement.srcObject !== e.streams[0]) {
       videoElement.srcObject = e.streams[0];
     }

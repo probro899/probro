@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Icon } from '@blueprintjs/core';
+import ChatList from '../chatlist';
 
 const ScChatList = (props) => {
   const { onClose, onClickItem } = props;
-  const chatList = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
 
   return (
     <div className="sc-chat-list">
@@ -16,16 +16,7 @@ const ScChatList = (props) => {
         </div>
       </div>
       <div className="sc-cl-content">
-        {/* here comes the chat list */}
-        {
-          chatList.map((obj) => {
-            return (
-              <div key={obj} onClick={() => onClickItem(obj)} className="sc-cl-i-chat">
-                Hello Nepal
-              </div>
-            );
-          })
-        }
+        <ChatList {...props} fromLive showChatHistory={onClickItem} />
       </div>
       <div className="sc-cl-footer" />
     </div>

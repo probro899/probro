@@ -14,13 +14,18 @@ const declineCloseCall = (state) => {
 };
 
 export default async (props, state, data) => {
+  console.log('close details in main close handler', data);
   const { webRtc } = store.getState();
   const { uid, broadCastId, broadCastType, type, connectionId } = data;
-  if (type === webRtc.chatHistory.type && webRtc.isLive) {
-    if (webRtc.connectionId === connectionId) {
-      closeCall(props, state, data);
-    } else {
-      declineCloseCall('Permission denied');
+  if (type === 'user') {
+    if (webRtc.isLive || webRtc.peerConnections[uid] || webRtc.showIncommingCall) {
+      if (type === webRtc.localCallHistory.chatHistory.type) {
+        if (webRtc.connectionId === connectionId) {
+          closeCall(props, state, data);
+        } else {
+          declineCloseCall('Permission denied');
+        }
+      }
     }
   }
 

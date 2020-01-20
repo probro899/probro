@@ -73,14 +73,14 @@ export default async function (uid, props) {
           id={stream.id}
           href={url}
           style={{ margin: 5 }}
-          download={`${webRtc.chatHistory.type === 'user' ? database.User.byId[webRtc.showCommunication].firstName : database.Board.byId[webRtc.showCommunication].name}-${formatedDate}`}
+          download={`${webRtc.localCallHistory.chatHistory.type === 'user' ? database.User.byId[webRtc.showCommunication].firstName : database.Board.byId[webRtc.showCommunication].name}-${formatedDate}`}
         >
           <Button
             onClick={() => downLoadButtonClickHandler(stream.id)}
             style={{ background: 'green', color: 'white' }}
             rightIcon="download"
           >
-            {`${webRtc.chatHistory.type === 'user' ? database.User.byId[webRtc.showCommunication].firstName : database.Board.byId[webRtc.showCommunication].name}-${formatedDate}`}
+            {`${webRtc.localCallHistory.chatHistory.type === 'user' ? database.User.byId[webRtc.showCommunication].firstName : database.Board.byId[webRtc.showCommunication].name}-${formatedDate}`}
           </Button>
         </a>
       },

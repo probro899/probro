@@ -6,7 +6,7 @@ export default async function sendUserMessage(props) {
     webRtc,
     message,
   } = props;
-
+//  console.log('webRtc value in send User Message', webRtc);
   try {
     const sendingUserMessageRes = await apis.addUserMessage({
       tuserId: webRtc.showCommunication,

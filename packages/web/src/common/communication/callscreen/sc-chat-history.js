@@ -1,10 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Icon } from '@blueprintjs/core';
+import ChatHistory from '../chathistory';
 
 const ScChatList = (props) => {
   const { onClose } = props;
-  const messages = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
+  const { webRtc, database } = props;
+  const { user, boardDetails } = webRtc.chatHistory;
 
   return (
     <div className="sc-chat-history">
@@ -12,20 +14,13 @@ const ScChatList = (props) => {
         <div style={{ cursor: 'pointer' }}>
           <Icon onClick={() => onClose(null)} icon="double-chevron-right" />
         </div>
-        <div className="sc-ch-title">Name of Chat History</div>
+        <div className="sc-ch-title">
+          {webRtc.chatHistory.type === 'user' ? `${user.user.firstName} ${user.user.lastName}` : database.Board.byId[webRtc.showCommunication].name}
+        </div>
         <div />
       </div>
       <div className="sc-ch-content">
-        {/* here comes the chat list */}
-        {
-          messages.map((obj) => {
-            return (
-              <div key={obj} className="sc-cl-i-chat">
-                message
-              </div>
-            );
-          })
-        }
+        <ChatHistory {...props} fromLive />
       </div>
       <div className="sc-ch-footer" />
     </div>

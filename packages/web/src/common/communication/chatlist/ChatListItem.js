@@ -2,6 +2,7 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/mouse-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
+
 import React from 'react';
 import moment from 'moment';
 import { Icon } from '@blueprintjs/core';
@@ -16,6 +17,7 @@ export default ({ clo, idx }) => {
       style={
         { cursor: 'pointer', padding: 5, background: clo.mouseHoverId === idx ? '#d6f4fe' : 'white' }
         }
+
       onClick={() => clo.onClick(clo)}
       onMouseOver={() => clo.onMouseHover(idx)}
     >

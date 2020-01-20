@@ -1,11 +1,17 @@
 export default (chatHistory) => {
-  const { change, updateWebRtc, database, apis, account, addDatabaseSchema  } = chatHistory.props;
-  // console.log('props in onClick chalt list', this.props);
+  const { change, updateWebRtc, database, apis, account, addDatabaseSchema, fromLive, showChatHistory  } = chatHistory.props;
+  console.log('props in onClick chalt list', chatHistory);
   const { type, user, lastMessageId, boardDetails, unSeenNo } = chatHistory;
   const id = user ? user.user.id : chatHistory.boardDetails.id;
   updateWebRtc('chatHistory', chatHistory);
+  if (!fromLive) {
+    change('history');
+  }
 
-  change('history');
+  if (fromLive) {
+    showChatHistory(true);
+  }
+
   if (chatHistory.type === 'user') {
     const connection = Object.values(database.UserConnection.byId).find(con => con.userId === id || con.mId === id);
     updateWebRtc('connectionId', connection.id);

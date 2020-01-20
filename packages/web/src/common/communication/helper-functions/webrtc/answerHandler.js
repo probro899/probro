@@ -9,7 +9,7 @@ export default (props, state) => async (apis, stream) => {
     const { broadCastId, broadCastType, connectionId } = webRtc.currentOffer;
     updateWebRtc('liveIncomingCall', false);
     const type = broadCastType === 'UserConnection' ? 'user' : 'board';
-    await updateWebRtc('chatHistory', { type, user: { user: database.User.byId[broadCastId] }, broadCastId });
+    // await updateWebRtc('localCallHistory', { ...webRtc.localCallHistory, chatHistory: { type, user: { user: database.User.byId[broadCastId] }, broadCastId } });
     await createPcForEachUser(broadCastId, props, state);
     // eslint-disable-next-line
     webRtc = store.getState().webRtc;

@@ -24,7 +24,7 @@ const findSeenUser = (props, seenStatus) => {
   return userNameList;
 };
 
-const Message = ({ own, obj, props }) => {
+const Message = ({ own, obj, props, type }) => {
   // console.log('own obj props', own, obj, props);
   return (
     <div
@@ -32,7 +32,7 @@ const Message = ({ own, obj, props }) => {
       key={obj.id}
       style={{ marginTop: obj.showImage && 15 }}
     >
-      { (obj.showImage && !own.isOwn) && (
+      { ((obj.showImage && !own.isOwn) || type) && (
       <div className="img-wrap">
           {(own.user.userDetails && own.user.userDetails.image)
             ? <img alt="profile-img" src={`${ENDPOINT}/user/${10000000 + parseInt(own.user.id, 10)}/profile/${own.user.userDetails.image}`} style={{ height: 30, width: 30, borderRadius: '50%'}} />
@@ -52,8 +52,7 @@ const Message = ({ own, obj, props }) => {
             paddingBottom: 0,
             margin: 0,
             marginRight: 5,
-            marginLeft: (!obj.showImage && !own.isOwn) ? 33 : 3,
-            // marginRight: (!obj.showImage && own.isOwn) ? 30 : 0,
+            marginLeft: (!obj.showImage && !own.isOwn) ? (type ? 3 : 33) : 3,
             marginBottom: !obj.showImage && 0,
             borderBottomRightRadius: own.isOwn && 0,
             borderBottomLeftRadius: !own.isOwn && 0,
