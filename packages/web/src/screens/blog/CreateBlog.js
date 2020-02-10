@@ -39,12 +39,14 @@ class Blogs extends Component {
     const mutationObserver = new MutationObserver(this.observeMutation);
     mutationObserver.observe(targetNode, config);
     if (match.params.blogId && database.Blog.allIds.length > 0) {
-      document.getElementById('editor').innerHTML = database.Blog.byId[parseInt(match.params.blogId, 10)].content;
+      const blog = database.Blog.byId[parseInt(match.params.blogId, 10)];
+      document.getElementById('editor').innerHTML = blog.content;
       this.setState({
-        blogId: match.params.blogId,
-        publish: database.Blog.byId[match.params.blogId].saveStatus,
-        title: database.Blog.byId[match.params.blogId].title,
-        description: database.Blog.byId[parseInt(match.params.blogId, 10)].content,
+        blogId: blog.id,
+        publish: blog.saveStatus,
+        title: blog.title,
+        coverImage: { url: blog.coverImage ? `${ENDPOINT}/user/${10000000 + parseInt(blog.userId, 10)}/blog/${blog.coverImage}` : null },
+        description: blog.content,
       });
     }
   }
@@ -52,12 +54,14 @@ class Blogs extends Component {
   componentWillUpdate(nextProps) {
     const { database, match } = this.props;
     if (match.params.blogId && nextProps.database.Blog.byId !== database.Blog.byId) {
+      const blog = nextProps.database.Blog.byId[parseInt(match.params.blogId, 10)];
       document.getElementById('editor').innerHTML = nextProps.database.Blog.byId[parseInt(match.params.blogId, 10)].content;
       this.setState({
-        blogId: match.params.blogId,
-        publish: nextProps.database.Blog.byId[match.params.blogId].saveStatus,
-        title: nextProps.database.Blog.byId[match.params.blogId].title,
-        description: nextProps.database.Blog.byId[parseInt(match.params.blogId, 10)].content,
+        blogId: blog.id,
+        coverImage: { url: blog.coverImage ? `${ENDPOINT}/user/${10000000 + parseInt(blog.userId, 10)}/blog/${blog.coverImage}` : null },
+        publish: blog.saveStatus,
+        title: blog.title,
+        description: blog.content,
       });
     }
   }
@@ -194,8 +198,32 @@ class Blogs extends Component {
       description,
       blogId,
       publish,
+      coverImage,
     } = this.state;
+    let uploadedUrl = null;
     const { account, addDatabaseSchema, updateDatabaseSchema } = this.props;
+    if (coverImage.actualFile) {
+      const formData = new FormData();
+      formData.append('data', JSON.stringify({ token: account.sessionId, fileType: 'image', content: 'blog' }));
+      formData.append('file', coverImage.actualFile);
+      try {
+        const res = await axios({
+          config: {
+            headers: {
+              'Content-Type': 'multipart/form-data',
+            },
+          },
+          method: 'post',
+          url: `${ENDPOINT}/web/upload-file`,
+          data: formData,
+        });
+        if (res.status === 200) {
+          uploadedUrl = res.data;
+        }
+      } catch (e) {
+        console.log('Error', e);
+      }
+    }
     if (blogId === '') {
       const res = await addBlog(apis.addBlog,
         {
@@ -203,6 +231,7 @@ class Blogs extends Component {
           timeStamp: Date.now(),
           saveStatus: publish,
           title,
+          coverImage: uploadedUrl,
           content: description,
         });
       this.setState({
@@ -214,6 +243,7 @@ class Blogs extends Component {
         userId: account.user.id,
         timeStamp: Date.now(),
         saveStatus: publish,
+        coverImage: uploadedUrl,
         title,
         content: description,
       });
@@ -224,6 +254,7 @@ class Blogs extends Component {
         title,
         content: description,
         saveStatus: publish,
+        coverImage: !coverImage.url && !uploadedUrl ? null : (uploadedUrl || coverImage.url),
       },
       {
         id: blogId,
@@ -234,6 +265,7 @@ class Blogs extends Component {
       saveStatus: publish,
       title,
       content: description,
+      coverImage: !coverImage.url && !uploadedUrl ? null : (uploadedUrl || coverImage.url),
     });
   }
 
@@ -326,6 +358,7 @@ class Blogs extends Component {
       title,
       coverImage,
     } = this.state;
+    console.log(this.props.database.Blog);
     return (
       <div>
         <Navbar className="pcm-nav" />
