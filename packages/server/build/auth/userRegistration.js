@@ -43,7 +43,9 @@ exports.default = async record => {
         throw new Error('Emailisalreadytaken');
       }
       const hasPassword = await (0, _passwordHandler.genHashPassword)(record.password);
-      const insertRes = await insert('User', _extends({}, record, { password: hasPassword, verify: false, verificationToken: token }));
+      const firstNameLowerCase = `${record.firstName}`.toLowerCase();
+      const lastNameLowerCase = `${record.lastName}`.toLowerCase();
+      const insertRes = await insert('User', _extends({}, record, { password: hasPassword, verify: false, verificationToken: token, slug: `${firstNameLowerCase}-${lastNameLowerCase}-${Date.now()}` }));
       if (insertRes) {
         _cache2.default.users.set(token, record.email, RESET_TOKEN_AGE);
         (0, _mailer2.default)({

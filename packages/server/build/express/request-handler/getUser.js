@@ -14,7 +14,7 @@ exports.default = async function getUser(req, res) {
   console.log('getUser request handler', req.query);
   try {
     const { userId } = req.query;
-    const result = await (0, _findUserDetails2.default)(userId, true);
+    const result = await (0, _findUserDetails2.default)(userId, true, true);
     // console.log('getuser result in do request handler', result);
     res.status(200);
     res.send(JSON.stringify(result));

@@ -68,6 +68,11 @@ async function addCarrierInterest(record) {
   return res;
 }
 
+async function addNotificationReadStatus(record) {
+  const res = await _add2.default.call(this, 'NotificationReadStatus', record);
+  return res;
+}
+
 async function connectUser(record) {
   const { session } = this;
   // console.log('record in conectUser', record);
@@ -95,6 +100,7 @@ async function connectUser(record) {
       body: `You have friend request from ${fUserDetails.firstName}`,
       title: 'Friend request',
       type: 'user',
+      typeId: fUserDetails.id,
       viewStatus: false,
       imageUrl: null
     };
@@ -136,4 +142,4 @@ async function connectUser(record) {
   return connectRes;
 }
 
-exports.default = [addUserWorkExperience, addUserEducation, addUserSkill, addUserPortal, addUserMessage, addUserMessageSeenStatus, connectUser, addCarrierInterest];
+exports.default = [addUserWorkExperience, addUserEducation, addUserSkill, addUserPortal, addUserMessage, addUserMessageSeenStatus, connectUser, addCarrierInterest, addNotificationReadStatus];

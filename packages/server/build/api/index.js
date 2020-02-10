@@ -62,9 +62,14 @@ _update2.default.forEach(func => mentor(func));
 mentor(_webRtc.createOffer);
 mentor(_webRtc.createAnswer);
 mentor(_webRtc.addICeCandidate);
+mentor(_webRtc.callClose);
+mentor(_webRtc.callStatusChange);
+
 mentee(_webRtc.createOffer);
 mentee(_webRtc.createAnswer);
 mentee(_webRtc.addICeCandidate);
+mentee(_webRtc.callClose);
+mentee(_webRtc.callStatusChange);
 
 mentor(_logout2.default);
 mentor(_updateUserDetails2.default);

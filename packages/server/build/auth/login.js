@@ -31,6 +31,7 @@ const loginHelper = async (rec, userDetails) => {
     middleName: rec.middleName,
     email: rec.email,
     type: rec.type,
+    slug: rec.slug,
     token,
     userDetails: userDetails || {}
   };

@@ -12,7 +12,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function updateBlog(records) {
   _update2.default.call(this, 'Blog', ...records);
-}
+} /* eslint-disable import/no-cycle */
+
 
 function updateBlogComment(records) {
   _update2.default.call(this, 'BlogComment', ...records);
