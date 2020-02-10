@@ -3,52 +3,32 @@ import { Icon } from '@blueprintjs/core';
 import Moment from 'react-moment';
 import timeDurationFormater from './timeDurationFormater';
 
-export default (msg, account, type) => {
+const callLogHelper = (type, icon, backgroundColor, msg, isList) => {
+  return (
+    <div style={{ width: '95%', display: 'flex', justifyContent: isList ? 'flex-start' : 'center', alignItems: 'center', margin: isList ? 0 : 10 }}>
+      <span style={{ padding: 5, border: isList ? null : `1px solid ${backgroundColor}`, borderRadius: 10, fontSize: isList ? 14 : 10, background: isList ? null : backgroundColor, color: isList ? '#757575' : 'white' }}>
+        <Icon icon={icon} iconSize={isList ? 13 : 10} style={{ marginRight: 5 }} />
+        {`${type} ${msg.duration ? timeDurationFormater(msg.duration) : ''}`}
+        {isList ? null : <Moment format="h:mm:a" style={{ marginLeft: 10 }}>{msg.timeStamp}</Moment> }
+      </span>
+    </div>
+  );
+};
+
+export default (msg, account, type, isList) => {
   if (type === 'board') {
     if (msg.userId === account.user.id) {
-      return (
-        <div style={{ width: '95%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: 10 }}>
-          <span style={{ padding: 5, border: '1px solid #A6A9A9', borderRadius: 10, fontSize: 10, background: '#A6A9A9', color: 'white' }}>
-            <Icon icon="arrow-top-right" iconSize={10} style={{ marginRight: 5 }} />
-            {`Outgoing Call ${msg.duration ? timeDurationFormater(msg.duration) : ''}   `}
-            <Moment format="h:mm:a" style={{ marginLeft: 10 }}>{msg.timeStamp}</Moment>
-          </span>
-        </div>
-      );
+      return callLogHelper('Outgoing Call', 'arrow-top-right', '#A6A9A9', msg, isList);
     }
   }
   if (msg.tuserId === account.user.id && !msg.duration) {
-    return (
-      <div style={{ width: '95%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: 10 }}>
-        <span style={{ padding: 5, border: '1px solid #f17d77', borderRadius: 10, fontSize: 10, background: '#f17d77', color: 'white' }}>
-          <Icon icon="arrow-bottom-left" iconSize={10} style={{ marginRight: 5 }} />
-          {`Miss Call`}
-          <Moment format="h:mm:a" style={{ marginLeft: 10 }}>{msg.timeStamp}</Moment>
-        </span>
-      </div>
-    );
+    return callLogHelper('Missed Call', 'arrow-bottom-left', '#f17d77', msg, isList);
   }
   if (msg.tuserId === account.user.id) {
-    return (
-      <div style={{ width: '95%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: 10 }}>
-        <span style={{ padding: 5, border: '1px solid #A6A9A9', borderRadius: 10, fontSize: 10, background: '#A6A9A9', color: 'white' }}>
-          <Icon icon="arrow-bottom-left" iconSize={10} style={{ marginRight: 5 }} />
-          {`Incoming Call ${msg.duration ? timeDurationFormater(msg.duration) : ''}`}
-          <Moment format="h:mm:a" style={{ marginLeft: 10 }}>{msg.timeStamp}</Moment>
-        </span>
-      </div>
-    );
+    return callLogHelper('Incoming Call', 'arrow-bottom-left', '#A6A9A9', msg, isList);
   }
 
   if (msg.fuserId === account.user.id) {
-    return (
-      <div style={{ width: '95%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: 10 }}>
-        <span style={{ padding: 5, border: '1px solid #A6A9A9', borderRadius: 10, fontSize: 10, background: '#A6A9A9', color: 'white' }}>
-          <Icon icon="arrow-top-right" iconSize={10} style={{ marginRight: 5 }} />
-          {`Outgoing Call ${msg.duration ? timeDurationFormater(msg.duration) : ''}   `}
-          <Moment format="h:mm:a" style={{ marginLeft: 10 }}>{msg.timeStamp}</Moment>
-        </span>
-      </div>
-    );
+    return callLogHelper('Outgoing', 'arrow-top-right', '#A6A9A9', msg, isList);
   }
 };

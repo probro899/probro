@@ -1,3 +1,4 @@
+/* eslint-disable react/require-default-props */
 import React from 'react';
 import PropTypes from 'prop-types';
 import ChatListItem from './ChatListItem';
@@ -23,7 +24,7 @@ class ChatList extends React.Component {
   render() {
     const { style } = this.props;
     const { mouseHoverId, chatList } = this.state;
-    // console.log('chatlist', this.props);
+    // console.log('chatlist', chatList);
     return (
       <div
         style={style}
@@ -36,7 +37,7 @@ class ChatList extends React.Component {
 }
 
 ChatList.propTypes = {
-  style: PropTypes.objectOf(PropTypes.any).isRequired,
+  style: PropTypes.objectOf(PropTypes.any),
 };
 
 export default ChatList;

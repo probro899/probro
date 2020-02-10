@@ -2,13 +2,16 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/mouse-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
+
 import React from 'react';
 import moment from 'moment';
 import { Icon } from '@blueprintjs/core';
 import { ENDPOINT } from '../../../config';
+import store from '../../../store';
+import { incomingCallLogHandler, outgoingCallLogHandler } from '../chathistory/helper-function';
 
 export default ({ clo, idx }) => {
-  // console.log('data in chatlist Item', clo);
+  // console.log('data in chatlist Item', clo, store.getState());
   const isUser = clo.type === 'user';
   return (
     <div
@@ -16,6 +19,7 @@ export default ({ clo, idx }) => {
       style={
         { cursor: 'pointer', padding: 5, background: clo.mouseHoverId === idx ? '#d6f4fe' : 'white' }
         }
+
       onClick={() => clo.onClick(clo)}
       onMouseOver={() => clo.onMouseHover(idx)}
     >
@@ -34,7 +38,9 @@ export default ({ clo, idx }) => {
             <span
               style={{ fontSize: 14, color: '#757575', width: 200, overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis' }}
             >
-              {clo.lastMessage}
+              {clo.lastMessage.type
+                ? (clo.lastMessage.type === 'Incoming' ? incomingCallLogHandler(clo.lastMessage, store.getState().account, clo.type, true) : outgoingCallLogHandler(clo.lastMessage, store.getState().account, clo.type, true))
+                : clo.lastMessage.message}
             </span>
           </div>
           {!isUser && clo.boardDetails.activeStatus && <span style={{ background: 'green', width: 40, height: 20, fontWeight: 'bold', paddingTop: 2, borderRadius: '10%', color: 'white', textAlign: 'center', marginTop: 10 }}>live</span>}

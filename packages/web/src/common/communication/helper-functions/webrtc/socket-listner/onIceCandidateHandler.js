@@ -1,7 +1,7 @@
 import store from '../../../../../store';
 
 export default (props, state, data) => {
-console.log('icecandidate Arrived', data);
+// console.log('icecandidate Arrived', data);
   const { apis } = state;
   const { uid, iceCandidate } = data;
   const { updateWebRtc } = props;
@@ -21,8 +21,8 @@ console.log('icecandidate Arrived', data);
             iceCandidateDetail: {
               iceCandidate: JSON.stringify(e.candidate),
               uid: account.user.id,
-              broadCastId: webRtc.chatHistory.type === 'user' ? account.user.id : webRtc.showCommunication,
-              broadCastType: webRtc.chatHistory.type === 'user' ? 'UserConnection' : 'Board',
+              broadCastId: webRtc.localCallHistory.chatHistory.type === 'user' ? account.user.id : webRtc.showCommunication,
+              broadCastType: webRtc.localCallHistory.chatHistory.type === 'user' ? 'UserConnection' : 'Board',
             },
             userList: [{ userId: uid }],
           }

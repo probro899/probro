@@ -1,10 +1,10 @@
 import store from '../../../../../store';
 
 export default async (props, state, data) => {
-  console.log('answer arrived', data);
+  // console.log('answer arrived', data);
   const { apis } = state;
   const { updateWebRtc } = props;
-  const { webRtc, account } = store.getState();
+  const { webRtc, account, database } = store.getState();
   // console.log('Total candidateFor this pc', webRtc.iceCandidates);
   const { uid, answer, boardId } = data;
   const { pc } = webRtc.peerConnections[uid];
@@ -18,12 +18,14 @@ export default async (props, state, data) => {
           iceCandidateDetail: {
             iceCandidate: JSON.stringify(e.candidate),
             uid: account.user.id,
-            broadCastId: webRtc.chatHistory.type === 'user' ? account.user.id : webRtc.showCommunication,
-            broadCastType: webRtc.chatHistory.type === 'user' ? 'UserConnection' : 'Board',
+            broadCastId: webRtc.localCallHistory.chatHistory.type === 'user' ? account.user.id : webRtc.showCommunication,
+            broadCastType: webRtc.localCallHistory.chatHistory.type === 'user' ? 'UserConnection' : 'Board',
           },
           userList: [{ userId: uid }],
         });
     });
     updateWebRtc('iceCandidates', { ...webRtc.iceCandidates, [uid]: { ...webRtc.iceCandidates[uid], sendStatus: true } });
+    updateWebRtc('isLive', true);
+    updateWebRtc('isConnecting', false);
   }
 };

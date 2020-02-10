@@ -25,7 +25,7 @@ class ToolBar extends React.Component {
     updateWebRtc('showCommunication', boardId);
     updateWebRtc('peerType', 'board');
     updateWebRtc('communicationContainer', 'history');
-    updateWebRtc('chatHistory', { type: 'board', user: { user: null } });
+    updateWebRtc('chatHistory', { type: 'board', user: { user: null }, connectionId: boardId });
   }
 
   render() {

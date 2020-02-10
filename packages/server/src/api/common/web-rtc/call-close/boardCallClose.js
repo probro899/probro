@@ -1,6 +1,6 @@
 /* eslint-disable import/no-cycle */
-import updateUserCache from '../../updateUserCache';
 import schema from '@probro/common/source/src/schema';
+import updateUserCache from '../../updateUserCache';
 
 const updateUserData = async (insert, callCloseDetail, session) => {
   const insertRes = await insert('BoardMessage', {
@@ -32,9 +32,18 @@ export default async (insert, callCloseDetail, userList, session) => {
   if (channelSessionBefore.length <= 2) {
     console.log('less than two users are connected in board', channelSessionBefore.length);
     const channel = session.channel(`${callCloseDetail.broadCastType}-live-${callCloseDetail.broadCastId}`);
+    const allSessions = session.getChannel(`${callCloseDetail.broadCastType}-live-${callCloseDetail.broadCastId}`);
+
+    // say all user to bay bay
+    // allSessions.forEach(s => updateUserData(insert, callCloseDetail, s));
+
     session.unsubscribe(`${callCloseDetail.broadCastType}-live-${callCloseDetail.broadCastId}`);
     await updateUserData(insert, callCloseDetail, session);
-    session.channel(`${callCloseDetail.broadCastType}-${callCloseDetail.broadCastId}`).dispatch(schema.update('Board', { id: callCloseDetail.broadCastId, activeStatus: false }));
+
+    const allLiveSessions = session.getChannel(`Board-${callCloseDetail.broadCastId}`);
+    allLiveSessions.forEach(s => updateUserCache({ Board: { id: callCloseDetail.broadCastId, activeStatus: false } }, s, 'update'));
+
+    // session.channel(`${callCloseDetail.broadCastType}-${callCloseDetail.broadCastId}`).dispatch(schema.update('Board', { id: callCloseDetail.broadCastId, activeStatus: false }));
     channel.emit('callEnd', callCloseDetail);
   }
 

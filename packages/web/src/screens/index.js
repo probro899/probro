@@ -1,5 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import HomePage from './home';
 import { Login, Registration } from './auth';
 import DashBoard from './dashboard/Home';
@@ -15,35 +17,51 @@ import { SearchResult } from './home/component/search';
 import TakeTour from './home/take-a-tour';
 import { About, Privacy, Terms, Support, Career, Report, Business, Services } from '../common/footer/footer-links';
 
-export default () => (
-  <Router>
-    <div className="home-screen">
-      <Switch>
-        <Route exact path="/about" component={About} />
-        <Route exact path="/privacy-policy" component={Privacy} />
-        <Route exact path="/terms-and-conditions" component={Terms} />
-        <Route exact path="/support" component={Support} />
-        <Route exact path="/career" component={Career} />
-        <Route exact path="/report" component={Report} />
-        <Route exact path="/business" component={Business} />
-        <Route exact path="/services" component={Services} />
-        <Route exact path="/archive" component={Archive} />
-        <Route exact path="/take-a-tour" component={TakeTour} />
-        <Route path="/login" component={Login} />
-        <Route path="/register" component={Registration} />
-        <Route path="/forgot-password" component={Forget} />
-        <Route path="/class-work/:userSlug/:classId" component={ClassManager} />
-        <Route path="/edit-blog/:id/:blogId" component={CreateBlog} />
-        <Route path="/create-blog/:id" component={CreateBlog} />
-        <Route exact path="/reset/:token" component={Reset} />
-        <Route exact path="/email-verification/:token" component={EmailVerification} />
-        <Route path="/blog/:userSlug/:blogSlug" component={PublicBlog} />
-        <Route path="/user/:userId" component={PublicProfile} />
-        <Route path="/search/key=:searchKey" component={SearchResult} />
-        <Route path="/:id" component={DashBoard} />
-        <Route exact path="/" component={HomePage} />
-      </Switch>
-      <Communication />
-    </div>
-  </Router>
-);
+class MainScreen extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
+
+  render() {
+    // console.log('Props in main screen', this.props);
+    const { account } = this.props;
+    return (
+      <Router>
+        <div className="home-screen">
+          <Switch>
+            <Route exact path="/about" component={About} />
+            <Route exact path="/privacy-policy" component={Privacy} />
+            <Route exact path="/terms-and-conditions" component={Terms} />
+            <Route exact path="/support" component={Support} />
+            <Route exact path="/career" component={Career} />
+            <Route exact path="/report" component={Report} />
+            <Route exact path="/business" component={Business} />
+            <Route exact path="/services" component={Services} />
+            <Route exact path="/archive" component={Archive} />
+            <Route exact path="/take-a-tour" component={TakeTour} />
+            <Route path="/login" component={Login} />
+            <Route path="/register" component={Registration} />
+            <Route path="/forgot-password" component={Forget} />
+            <Route path="/class-work/:userSlug/:classId" component={ClassManager} />
+            <Route path="/edit-blog/:id/:blogId" component={CreateBlog} />
+            <Route path="/create-blog/:id" component={CreateBlog} />
+            <Route exact path="/reset/:token" component={Reset} />
+            <Route exact path="/email-verification/:token" component={EmailVerification} />
+            <Route path="/blog/:userSlug/:blogSlug" component={PublicBlog} />
+            <Route path="/user/:userId" component={PublicProfile} />
+            <Route path="/search/key=:searchKey" component={SearchResult} />
+            <Route path="/:id" component={DashBoard} />
+            <Route exact path="/" component={HomePage} />
+          </Switch>
+          {account.user && <Communication />}
+        </div>
+      </Router>
+    );
+  }
+}
+const mapStateToProps = state => state;
+export default connect(mapStateToProps)(MainScreen);
+MainScreen.propTypes = {
+  account: PropTypes.objectOf(PropTypes.any).isRequired,
+};

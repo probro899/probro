@@ -4,7 +4,7 @@ import db from '../../db';
 import { getUserMessgeDetails, getBlogDetails, getUserConnectionListDetails, getAllBoardDetails, getUserDetails, getNotificationDetails } from './helper-functions';
 import flat from '../../api/flat';
 
-export default async function get(id) {
+export default async function get(id, session) {
   // console.log('id in getUser', id);
   const res = users.get(id);
   if (res) {
@@ -26,7 +26,7 @@ export default async function get(id) {
     // ***************************************************************************************************
 
     // ********************* getting all Board Details ***************************************************
-    const boardDetails = await getAllBoardDetails(find, findOne, id);
+    const boardDetails = await getAllBoardDetails(find, findOne, id, session);
     // *****************************************************************************************************
 
     // ************ getting notification details ***********************************************************

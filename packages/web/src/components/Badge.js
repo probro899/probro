@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const Badge = (props) => {
-  const { number, size } = props;
+  const { number, size, top } = props;
   let num = number;
   if (number > 9) {
     num = '9+';
@@ -11,7 +11,7 @@ const Badge = (props) => {
     <span style={{
       position: 'absolute',
       left: size,
-      top: 4,
+      top: top || 4,
       textAlign: 'center',
       padding: '2px',
       borderRadius: '50%',

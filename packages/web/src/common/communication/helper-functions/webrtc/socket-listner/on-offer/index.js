@@ -2,9 +2,10 @@ import offerInitialization from './offerInitializationHandler';
 import offerOnCommunicationOpen from './offerOnCommunicationOpen';
 import offerOnCommunicationNotOpen from './offerOnCommunicationNotOpen';
 import store from '../../../../../../store';
+import autoCloseHandler from '../../autoCloseHandler';
 
 const initCall = async (props, state, data, webRtc) => {
-  console.log('call init', data);
+  // console.log('call init', data);
   await offerInitialization(props, state, data);
   if (webRtc.showCommunication) {
     await offerOnCommunicationOpen(props, state, data);
@@ -14,7 +15,7 @@ const initCall = async (props, state, data, webRtc) => {
 };
 
 const declineCall = async (status, props, state, data, webRtc) => {
-  console.log('call decline', status, state, props, state, data, webRtc);
+  // console.log('call decline', status, state, props, state, data, webRtc);
   const { account } = props;
   const { uid, broadCastId, broadCastType, connectionId } = data;
   const { apis } = state;
@@ -25,7 +26,7 @@ const declineCall = async (status, props, state, data, webRtc) => {
         broadCastId,
         uid: account.user.id,
         connectionId,
-        type: 'Busy',
+        type: 'busy',
       },
       userList: [{ userId: uid }],
     });
@@ -35,45 +36,53 @@ const declineCall = async (status, props, state, data, webRtc) => {
 };
 
 export default async (props, state, data) => {
-  console.log('offer arrived', data);
   const { webRtc } = store.getState();
+  // console.log('offer arrived', data, webRtc, props);
+
   const { uid, connectionId, broadCastType, broadCastId } = data;
   const type = broadCastType === 'Board' ? 'board' : 'user';
-  const { account } = props;
+  const { account, updateWebRtc } = props;
   // const { uid, broadCastId, broadCastType, connectionId } = data;
   const { apis } = state;
-  apis.callStatusChange({
-    callStatusDetails: {
-      broadCastType,
-      broadCastId,
-      uid: account.user.id,
-      connectionId,
-      type: 'Ringing',
-    },
-    userList: [{ userId: uid }],
-  });
-
-  if (type === 'board') {
-    if (webRtc.isLive) {
-      if (webRtc.showCommunication === broadCastId) {
-        await initCall(props, state, data, webRtc);
-      } else {
-        declineCall('Call is busy', props, state, data, webRtc);
-      }
-    } else {
-      await initCall(props, state, data, webRtc);
+  if (webRtc.showIncommingCall || webRtc.isConnecting) {
+    declineCall('Call is busy', props, state, data, webRtc);
+  } else {
+    if (!webRtc.isLive) {
+      autoCloseHandler(props, state);
+      apis.callStatusChange({
+        callStatusDetails: {
+          broadCastType,
+          broadCastId,
+          uid: account.user.id,
+          connectionId,
+          type: 'ringing',
+        },
+        userList: [{ userId: uid }],
+      });
     }
-  }
 
-  if (type === 'user') {
-    if (webRtc.isLive) {
-      if (webRtc.connectionId === connectionId && webRtc.chatHistory.type !== 'board') {
-        await initCall(props, state, data, webRtc);
+    if (type === 'board') {
+      if (webRtc.isLive) {
+        if (webRtc.localCallHistory.chatHistory.connectionId === broadCastId) {
+          await initCall(props, state, data, webRtc);
+        } else {
+          declineCall('Call is busy', props, state, data, webRtc);
+        }
       } else {
-        declineCall('Call is busy', props, state, data, webRtc);
+        await initCall(props, state, data, webRtc);
       }
-    } else {
-      await initCall(props, state, data, webRtc);
+    }
+
+    if (type === 'user') {
+      if (webRtc.isLive) {
+        if (webRtc.localCallHistory.chatHistory.connectionId === connectionId && webRtc.localCallHistory.chatHistory.type !== 'board') {
+          await initCall(props, state, data, webRtc);
+        } else {
+          declineCall('Call is busy', props, state, data, webRtc);
+        }
+      } else {
+        await initCall(props, state, data, webRtc);
+      }
     }
   }
 };

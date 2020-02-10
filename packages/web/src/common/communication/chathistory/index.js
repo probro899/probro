@@ -10,6 +10,7 @@ import { MessageSender } from '../components';
 import Message from './Message';
 import { normalTimeStampSorting } from '../../utility-functions';
 import { findChatHistory, isOwnFinder, markLastMessageRead, incomingCallLogHandler, outgoingCallLogHandler } from './helper-function';
+import autoCloseHandler from '../helper-functions/webrtc/autoCloseHandler';
 
 class ChatHistory extends React.Component {
   state = { messages: [], lastMessageId: null, unSeenNo: null };
@@ -32,11 +33,23 @@ class ChatHistory extends React.Component {
   toCallScreen = async (mediaType) => {
     // console.log('tocallSrean func called', mediaType);
     try {
-      const { _callHandler, apis, change, updateWebRtc, webRtc } = this.props;
+      const { _callHandler, apis, change, updateWebRtc, webRtc, account, database } = this.props;
       const stream = await mediaSelector(mediaType);
-      updateWebRtc('localCallHistory', { stream, mediaType, callType: 'Outgoing', callEnd: false });
+      updateWebRtc('isCallUpgraded', false);
+      updateWebRtc('isConnecting', true);
+      updateWebRtc('streams', { [account.user.id]: { stream: [stream] } });
+      updateWebRtc('localCallHistory', { chatHistory: webRtc.chatHistory, stream, mediaType, callType: 'Outgoing', callEnd: false });
+      autoCloseHandler(this.props, { apis }, 22000);
       if (webRtc.chatHistory.type === 'user') {
+        updateWebRtc('mainStreamId', webRtc.chatHistory.user.user.id);
         updateWebRtc('streams', { ...webRtc.streams, [webRtc.chatHistory.user.user.id]: { stream: [] } });
+      }
+      if (webRtc.chatHistory.type === 'board') {
+        if (database.Board.byId[webRtc.chatHistory.connectionId].activeStatus) {
+          updateWebRtc('mainStreamId', database.Board.byId[webRtc.chatHistory.connectionId].activeStatus);
+        } else {
+          updateWebRtc('mainStreamId', account.user.id);
+        }
       }
       _callHandler(apis, stream);
       change('connecting');
@@ -45,7 +58,7 @@ class ChatHistory extends React.Component {
     }
   }
 
-  containerHandler = (msg, account) => {
+  containerHandler = (msg, account, type) => {
     // console.log('message type', msg);
     const { webRtc } = this.props;
     switch (msg.type) {
@@ -64,7 +77,7 @@ class ChatHistory extends React.Component {
           outgoingCallLogHandler(msg, account, webRtc.chatHistory.type)
         );
       default:
-        return <Message own={isOwnFinder(msg, this.props)} obj={msg} props={this.props} />;
+        return <Message own={isOwnFinder(msg, this.props)} obj={msg} props={this.props} type={type} />;
     }
   }
 
@@ -74,6 +87,7 @@ class ChatHistory extends React.Component {
       webRtc,
       database,
       account,
+      fromLive,
     } = this.props;
     // console.log('chat historyList state', this.state);
     const { user, boardDetails } = webRtc.chatHistory;
@@ -84,6 +98,7 @@ class ChatHistory extends React.Component {
         className="chat-history"
         onClick={() => markLastMessageRead(this.props, this.state)}
       >
+        {!fromLive && (
         <div className="top" style={{ background: 'white' }}>
           <div>
             <Button
@@ -94,16 +109,18 @@ class ChatHistory extends React.Component {
             />
           </div>
           <div className="op-name">
-            {webRtc.chatHistory.type === 'user' ? `${user.user.firstName} ${user.user.lastName}` : database.Board.byId[webRtc.showCommunication].name}
+            {webRtc.chatHistory.type === 'user' ? `${user.user.firstName} ${user.user.lastName}` : database.Board.byId[webRtc.chatHistory.connectionId].name}
           </div>
           <div className="call-control">
-            <Button icon="phone" intent="success" onClick={() => this.toCallScreen('audio')} />
-            <Button icon="mobile-video" intent="success" onClick={() => this.toCallScreen('video')} />
+            {webRtc.chatHistory.type === 'board' ? !database.Board.byId[webRtc.chatHistory.connectionId].activeStatus && <Button icon="phone" intent="success" onClick={() => this.toCallScreen('audio')} /> :  <Button icon="phone" intent="success" onClick={() => this.toCallScreen('audio')} />}
+            {webRtc.chatHistory.type === 'board' ? !database.Board.byId[webRtc.chatHistory.connectionId].activeStatus && <Button icon="mobile-video" intent="success" onClick={() => this.toCallScreen('video')} /> : <Button icon="mobile-video" intent="success" onClick={() => this.toCallScreen('video')} /> }
+            {webRtc.chatHistory.type === 'board' && database.Board.byId[webRtc.chatHistory.connectionId].activeStatus && <Button intent="success" onClick={() => this.toCallScreen('audio')} text="Join" /> }
           </div>
         </div>
-        <ScrollToBottom className="chats">
+        )}
+        <ScrollToBottom className="chats" checkInterval={1}>
           {
-          messages.sort(normalTimeStampSorting).map(msg => this.containerHandler(msg, account))
+          messages.sort(normalTimeStampSorting).map((msg, idx, arr) => this.containerHandler(msg, account, idx === 0 ? false : arr[idx - 1].type))
           }
         </ScrollToBottom>
         <MessageSender {...this.props} />
@@ -122,6 +139,7 @@ ChatHistory.propTypes = {
   database: PropTypes.objectOf(PropTypes.any).isRequired,
   addDatabaseSchema: PropTypes.func.isRequired,
   updateWebRtc: PropTypes.func.isRequired,
+  fromLive: PropTypes.bool.isRequired,
 };
 
 export default ChatHistory;

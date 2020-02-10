@@ -19,6 +19,8 @@ class IncomingCallScreen extends React.Component {
       webRtc,
     } = this.props;
     const stream = await mediaSelector(mediaType);
+    updateWebRtc('isCallUpgraded', false);
+    updateWebRtc('isLive', true);
     await updateWebRtc('localCallHistory', { ...webRtc.localCallHistory, stream, mediaType, callType: 'Incoming' });
     await answerHandler(apis, stream);
   }
@@ -32,7 +34,10 @@ class IncomingCallScreen extends React.Component {
 
   render() {
     const { style, webRtc, database } = this.props;
-    const isUser = webRtc.chatHistory.type === 'user';
+    const isUser = webRtc.localCallHistory.chatHistory.type === 'user';
+    // console.log('props in incomming call screen', this.props);
+    // console.log('webRtc value inComming call screen', webRtc);
+    // console.log('user url', `${ENDPOINT}/user/${10000000 + parseInt(webRtc.localCallHistory.chatHistory.broadCastId, 10)}/profile/${database.UserDetail.byId[webRtc.localCallHistory.chatHistory.broadCastId].image}`);
     return (
       <div
         style={style}
@@ -50,12 +55,12 @@ class IncomingCallScreen extends React.Component {
               style={{ width: '100%', display: 'flex', alignSelf: 'center', justifyContent: 'center', margin: 5 }}
             >
               <span style={{ fontSize: 20, fontWeight: 'bold', color: 'white' }}>
-                {webRtc.chatHistory.type === 'user' ? `${database.User.byId[webRtc.showCommunication].firstName} ${database.User.byId[webRtc.showCommunication].lastName}` : database.Board.byId[webRtc.showCommunication].name}
+                {webRtc.localCallHistory.chatHistory.type === 'user' ? `${database.User.byId[webRtc.showCommunication].firstName} ${database.User.byId[webRtc.showCommunication].lastName}` : database.Board.byId[webRtc.showCommunication].name}
               </span>
             </div>
             <div className="img-container">
-              {(isUser ? database.UserDetail.byId[webRtc.chatHistory.broadCastId] && database.UserDetail.byId[webRtc.chatHistory.broadCastId].image : [database.Board.byId[webRtc.chatHistory.broadCastId]].image)
-                ? <RoundPicture imgUrl={`${ENDPOINT}/user/${10000000 + parseInt(webRtc.chatHistory.broadCastId, 10)}/profile/${Object.values(database.UserDetail.byId).find(u => u.userId === webRtc.chatHistory.broadCastId).image}`} />
+              {(isUser ? database.UserDetail.byId[webRtc.localCallHistory.chatHistory.broadCastId] && database.UserDetail.byId[webRtc.localCallHistory.chatHistory.broadCastId].image : [database.Board.byId[webRtc.localCallHistory.chatHistory.broadCastId]].image)
+                ? <RoundPicture imgUrl={`${ENDPOINT}/user/${10000000 + parseInt(webRtc.localCallHistory.chatHistory.broadCastId, 10)}/profile/${Object.values(database.UserDetail.byId).find(u => u.userId === webRtc.localCallHistory.chatHistory.broadCastId).image}`} />
                 : <RoundPicture imgUrl={callingPerson} />
               }
             </div>

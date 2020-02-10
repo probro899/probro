@@ -3,13 +3,24 @@ import lodash from 'lodash';
 import { findBoardDetail } from '../../../api';
 import flat from '../../../api/flat';
 
-export default async (find, findOne, id) => {
+const findBoardActiveStatus = (session, boardId) => {
+  const liveBoardSessions = session.getChannel(`Board-live-${boardId}`) || [];
+  // console.log('Live Board Sessions', liveBoardSessions);
+  if (liveBoardSessions.length > 1) {
+    const { activeStatus } = liveBoardSessions[0].userData.Board.find(b => b.id === boardId);
+    // console.log('session to be extracted', anySession);
+    return activeStatus;
+  }
+  return false;
+};
+
+export default async (find, findOne, id, session) => {
   const BoardMember = await find('BoardMember', { tuserId: id });
   const Board = await find('Board', { userId: id });
   const boardPromises = [];
   BoardMember.forEach(bm => boardPromises.push(findOne('Board', { id: bm.boardId })));
   const allBoardsTemp = await Promise.all(boardPromises);
-  const allBoards = allBoardsTemp.filter(b => b);
+  const allBoards = allBoardsTemp.filter(b => b).map(b => ({ ...b, activeStatus: findBoardActiveStatus(session, b.id) }));
   // console.log('all board', allBoards);
 
   const boardMessagePromises = [];

@@ -2,18 +2,19 @@ import createPcForEachUser from './createPcForEachUser';
 import store from '../../../../store';
 
 export default (props, state) => async (apis, stream) => {
-  console.log('answer handler called', stream);
+  // console.log('answer handler called', stream);
   try {
     let { webRtc } = store.getState();
     const { account, updateWebRtc, database } = props;
     const { broadCastId, broadCastType, connectionId } = webRtc.currentOffer;
     updateWebRtc('liveIncomingCall', false);
     const type = broadCastType === 'UserConnection' ? 'user' : 'board';
-    await updateWebRtc('chatHistory', { type, user: { user: database.User.byId[broadCastId] }, broadCastId });
+    // await updateWebRtc('localCallHistory', { ...webRtc.localCallHistory, chatHistory: { type, user: { user: database.User.byId[broadCastId] }, broadCastId } });
     await createPcForEachUser(broadCastId, props, state);
     // eslint-disable-next-line
     webRtc = store.getState().webRtc;
-    console.log('webRtc in asnwer handler', webRtc);
+    // console.log('webRtc in asnwer handler', webRtc);
+    updateWebRtc('streams', { [account.user.id]: { stream: [stream] } });
     updateWebRtc('outGoingCallType', stream);
     updateWebRtc('showIncommingCall', false);
     updateWebRtc('showCommunication', broadCastId);
@@ -28,7 +29,7 @@ export default (props, state) => async (apis, stream) => {
     //  console.log('remainingUserPcs', remainingUserPcs);
     const answerPromises = remainingUserPcs.map(p => p.pc.createAnswer(previousOffers.find(ofr => ofr.uid === p.user.id).offer, stream));
     const anserList = await Promise.all(answerPromises);
-    console.log('answer list', anserList);
+    // console.log('answer list', anserList);
     anserList.forEach((answer, idx) => apis.createAnswer({ answerDetail: { answer, uid: account.user.id, broadCastId, broadCastType, callType: webRtc.localCallHistory.mediaType }, userList: [{ userId: remainingUserPcs[idx].user.id }] }));
     const previousOffer = webRtc.pendingOffers;
     //  console.log('previousOffer for offer test', previousOffer);
@@ -38,6 +39,7 @@ export default (props, state) => async (apis, stream) => {
     //  console.log('remaininguser for offer test', remainingUser);
     const pcsPromises = remainingUser.map(p => p.pc.createOffer(stream));
     const allOffers = await Promise.all(pcsPromises);
+    updateWebRtc('isLive', true);
     //  console.log('all offers', allOffers);
     // allOffers.forEach((offr, idx) => apis.createOffer({ offerDetail: { offer: offr, uid: account.user.id, boardId: 1 }, userList: [{ userId: remainingUser[idx].user.id }] }));
   } catch (e) {

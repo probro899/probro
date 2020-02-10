@@ -30,7 +30,7 @@ const findLastMessageAndUnSeenNo = (arr, type, props) => {
     unSeenNo = count;
   }
   // console.log('unseenMsgMessage', unseenMsg);
-  const lastMessage = arrWithSeenStatusReverse.find(obj => obj[type === 'user' ? 'fuserId' : 'userId'] !== account.user.id)
+  const lastMessage = arrWithSeenStatusReverse.find(obj => obj[type === 'user' ? 'fuserId' : 'userId'] !== account.user.id);
   const lastMessageId = lastMessage ? lastMessage.id : arrWithSeenStatusReverse[0].id;
   return { lastMessageId, unSeenNo };
 };
@@ -91,7 +91,7 @@ export default (props) => {
   let isSameDayFlag = null;
   if (webRtc.chatHistory) {
     if (webRtc.chatHistory.type === 'user') {
-      messages = Object.values(database.UserMessage.byId).filter(msg => msg.connectionId === webRtc.connectionId);
+      messages = Object.values(database.UserMessage.byId).filter(msg => msg.connectionId === webRtc.chatHistory.connectionId);
       if (messages.length > 0) {
         isSameDayFlag = new Date(messages[0].timeStamp);
         messages.forEach((umd, idx) => {
@@ -113,7 +113,7 @@ export default (props) => {
         lastMessageSeenIdAndUnseenNo = findLastMessageAndUnSeenNo(arrWithSeenStatus, 'user', props);
       }
     } else {
-      messages = Object.values(database.BoardMessage.byId).filter(msg => msg.boardId === webRtc.showCommunication);
+      messages = Object.values(database.BoardMessage.byId).filter(msg => msg.boardId === webRtc.chatHistory.connectionId);
       if (messages.length > 0) {
         messages.forEach((umd, idx) => {
           if (!isSameDay(isSameDayFlag, new Date(umd.timeStamp)) || idx === 0) {
@@ -128,7 +128,7 @@ export default (props) => {
             arrWithSeenStatus.push({ ...umd, showImage: true, seenStatus: findMessageSeenStatus(umd.id, 'board', props) });
           }
         });
-        arrWithSeenStatusToShow = findSeenStatusToShow(arrWithSeenStatus, Object.values(database.BoardMember.byId).filter(obj => obj.boardId === webRtc.showCommunication));
+        arrWithSeenStatusToShow = findSeenStatusToShow(arrWithSeenStatus, Object.values(database.BoardMember.byId).filter(obj => obj.boardId === webRtc.chatHistory.connectionId));
         lastMessageSeenIdAndUnseenNo = findLastMessageAndUnSeenNo(arrWithSeenStatus, 'board', props);
       }
     }

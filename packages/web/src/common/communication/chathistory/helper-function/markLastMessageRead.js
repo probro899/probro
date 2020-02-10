@@ -8,7 +8,7 @@ export default (props, state) => {
       addDatabaseSchema('UserMessageSeenStatus', { id: Date.now(), userId: account.user.id, umId: lastMessageId, timeStamp: Date.now(), status: true });
     }
     if (webRtc.chatHistory.type === 'board') {
-      apis.addBoardMessageSeenStatus({ userId: account.user.id, bmId: lastMessageId, timeStamp: Date.now(), status: true, broadCastId: `Board-${webRtc.showCommunication}` });
+      apis.addBoardMessageSeenStatus({ userId: account.user.id, bmId: lastMessageId, timeStamp: Date.now(), status: true, broadCastId: `Board-${webRtc.chatHistory.connectionId}` });
       addDatabaseSchema('BoardMessageSeenStatus', { id: Date.now(), userId: account.user.id, bmId: lastMessageId, timeStamp: Date.now(), status: true });
     }
   }

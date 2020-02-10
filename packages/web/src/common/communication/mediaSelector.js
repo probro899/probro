@@ -1,6 +1,6 @@
 /* eslint-disable no-case-declarations */
 export default async (mediaType) => {
-  console.log('main canvas called', mediaType);
+  // console.log('main canvas called', mediaType);
   const whiteBoardElement = document.getElementById('mainCanvas');
   let stream = null;
   try {

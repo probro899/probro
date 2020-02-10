@@ -8,16 +8,16 @@ export default async function sendBoardMessage(props) {
   } = props;
   try {
     const sendingRes = await apis.addBoardMessage({
-      boardId: webRtc.showCommunication,
+      boardId: webRtc.chatHistory.connectionId,
       message,
       userId: account.user.id,
       timeStamp: Date.now(),
       url: null,
       remarks: null,
-      broadCastId: `Board-${webRtc.showCommunication}`,
+      broadCastId: `Board-${webRtc.chatHistory.connectionId}`,
       readStatus: 0,
     });
-    console.log('BoardMessage SendingMessage', sendingRes);
+    // console.log('BoardMessage SendingMessage', sendingRes);
     return sendingRes;
   } catch (e) {
     console.error('Error in sending board message', e);
