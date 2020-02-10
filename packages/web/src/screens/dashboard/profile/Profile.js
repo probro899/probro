@@ -47,7 +47,6 @@ class Profile extends Component {
         userDetail = obj;
       }
     });
-    // console.log('cover page', account, database);
     return (
       <div className="profile bro-right">
         <CoverPic

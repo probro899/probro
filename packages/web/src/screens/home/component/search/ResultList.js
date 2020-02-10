@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import { ENDPOINT } from '../../../../config/index';
 import { RoundPicture } from '../../../../components';
 
@@ -25,14 +26,17 @@ const User = ({ item }) => {
       </div>
     </div>
   );
-}
+};
+
+User.propTypes = {
+  item: PropTypes.objectOf(PropTypes.any).isRequired,
+};
 
 class ResultList extends React.Component {
   state={};
 
   render() {
     const { data } = this.props;
-    // console.log(data);
     return (
       <div className="result-list">
         <p className="label">
@@ -51,5 +55,9 @@ class ResultList extends React.Component {
     );
   }
 }
+
+ResultList.propTypes = {
+  data: PropTypes.objectOf(PropTypes.any).isRequired,
+};
 
 export default ResultList;

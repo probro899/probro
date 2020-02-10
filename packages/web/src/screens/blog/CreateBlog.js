@@ -2,27 +2,14 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import axios from 'axios';
-import { Button, TextArea, Intent, Popover, FileInput, HTMLSelect, Switch } from '@blueprintjs/core';
+import { TextArea } from '@blueprintjs/core';
 import * as actions from '../../actions';
 import { Navbar } from '../home/component';
 import client from '../../socket';
 import { addBlog, updateBlog } from './helper-functions';
 import { ENDPOINT } from '../../config';
-
-const PopoverContent = ({ imgName, callback }) => (
-  <div style={{ padding: '5px' }}>
-    <FileInput
-      text={imgName}
-      onInputChange={callback}
-      large
-    />
-  </div>
-);
-
-PopoverContent.propTypes = {
-  callback: PropTypes.func.isRequired,
-  imgName: PropTypes.string.isRequired,
-};
+import BlogToolbar from './BlogToolbar';
+import CoverImage from './CoverImage';
 
 class Blogs extends Component {
   state = {
@@ -35,18 +22,23 @@ class Blogs extends Component {
     description: '',
     blogId: '',
     imageSource: 'Choose a picture...',
+    coverImage: {
+      actualFile: null,
+      url: null,
+    },
   };
 
-  async componentWillMount() {
+  async componentDidMount() {
+    const { match, database } = this.props;
     const apis = await client.scope('Mentor');
     this.setState({
       apis,
     });
-  }
-
-  componentDidMount() {
-    const { match, database } = this.props;
-    if (match.params.blogId) {
+    const config = { attributes: true, childList: true, subtree: true };
+    const targetNode = document.getElementById('editor');
+    const mutationObserver = new MutationObserver(this.observeMutation);
+    mutationObserver.observe(targetNode, config);
+    if (match.params.blogId && database.Blog.allIds.length > 0) {
       document.getElementById('editor').innerHTML = database.Blog.byId[parseInt(match.params.blogId, 10)].content;
       this.setState({
         blogId: match.params.blogId,
@@ -55,10 +47,19 @@ class Blogs extends Component {
         description: database.Blog.byId[parseInt(match.params.blogId, 10)].content,
       });
     }
-    const config = { attributes: true, childList: true, subtree: true };
-    const targetNode = document.getElementById('editor');
-    const mutationObserver = new MutationObserver(this.observeMutation);
-    mutationObserver.observe(targetNode, config);
+  }
+
+  componentWillUpdate(nextProps) {
+    const { database, match } = this.props;
+    if (match.params.blogId && nextProps.database.Blog.byId !== database.Blog.byId) {
+      document.getElementById('editor').innerHTML = nextProps.database.Blog.byId[parseInt(match.params.blogId, 10)].content;
+      this.setState({
+        blogId: match.params.blogId,
+        publish: nextProps.database.Blog.byId[match.params.blogId].saveStatus,
+        title: nextProps.database.Blog.byId[match.params.blogId].title,
+        description: nextProps.database.Blog.byId[parseInt(match.params.blogId, 10)].content,
+      });
+    }
   }
 
   observeMutation = (mutationsList) => {
@@ -306,97 +307,41 @@ class Blogs extends Component {
     }
   }
 
+  coverChange = (f) => {
+    this.setState({
+      coverImage: {
+        url: URL.createObjectURL(f),
+        actualFile: f,
+      },
+    });
+  }
+
   render() {
     const {
       bold,
       italic,
       underline,
-      title,
       imageSource,
       publish,
+      title,
+      coverImage,
     } = this.state;
     return (
       <div>
-        <Navbar />
+        <Navbar className="pcm-nav" />
         <div className="create-blog">
-          <div className="blog-top">
-            <span>Proper Blogging Experience</span>
-          </div>
-          <div className="toolbar">
-            <div className="left">
-              <Switch
-                innerLabel="Draft"
-                innerLabelChecked="Public"
-                alignIndicator="right"
-                large
-                // label="Status"
-                checked={publish === 'publish'}
-                className="switch"
-                onChange={this.publish}
-              />
-            </div>
-            <div className="center">
-              <HTMLSelect
-                options={[
-                  { label: 'Normal', value: 'p' },
-                  { value: 'h1', label: 'Heading 1' },
-                  { value: 'h2', label: 'Heading 2' },
-                  { value: 'h3', label: 'Heading 3' },
-                  { label: 'Code', value: 'pre' },
-                ]}
-                onChange={e => this.onClick('formatBlock', e.target.value)}
-              />
-              <Button
-                type="button"
-                icon="bold"
-                intent={bold ? Intent.PRIMARY : null}
-                onClick={() => this.onClick('bold', '')}
-              />
-              <Button
-                type="button"
-                icon="italic"
-                intent={italic ? Intent.PRIMARY : null}
-                onClick={() => this.onClick('italic', '')}
-              />
-              <Button
-                type="button"
-                icon="underline"
-                intent={underline ? Intent.PRIMARY : null}
-                onClick={() => this.onClick('underline', '')}
-              />
-              <Button
-                type="button"
-                icon="align-left"
-                onClick={() => this.onClick('justifyLeft', '')}
-              />
-              <Button
-                type="button"
-                icon="align-center"
-                onClick={() => this.onClick('justifyCenter', '')}
-              />
-              <Button
-                type="button"
-                icon="align-right"
-                onClick={() => this.onClick('justifyRight', '')}
-              />
-              <Popover
-                content={<PopoverContent imgName={imageSource} callback={this.uploadImg} />}
-              >
-                <Button
-                  type="button"
-                  icon="media"
-                />
-              </Popover>
-            </div>
-            <div className="right">
-              <Button
-                type="button"
-                intent="success"
-                text="save"
-                onClick={this.saveBlog}
-              />
-            </div>
-          </div>
+          <BlogToolbar
+            onClick={this.onClick}
+            onPublish={this.publish}
+            uploadImg={this.uploadImg}
+            saveBlog={this.saveBlog}
+            bold={bold}
+            italic={italic}
+            underline={underline}
+            imageSource={imageSource}
+            publish={publish}
+          />
+          <CoverImage coverImage={coverImage.url} coverChange={this.coverChange} />
           <div className="title">
             <TextArea
               fill

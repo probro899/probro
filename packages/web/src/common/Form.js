@@ -53,6 +53,7 @@ class Form extends React.Component {
       if (obj.fieldtype === 'input'
       || obj.fieldtype === 'select'
       || obj.fieldtype === 'tagInput'
+      || obj.fieldtype === 'image'
       || obj.fieldtype === 'textarea'
       || obj.fieldtype === 'date') {
         return obj;

@@ -12,6 +12,7 @@ import client from '../../../../socket';
 import { ENDPOINT } from '../../../../config';
 import { Spinner } from '../../../../common';
 import RoundPicture from '../../../../components/RoundPicture';
+import UserPortal from './UserPortal';
 
 const file = require('../../../../assets/icons/512h/uploadicon512.png');
 const school = require('../../../../assets/icons/64w/school64.png');
@@ -90,6 +91,7 @@ class PublicProfile extends React.Component {
     const { apis } = this.state;
     const { userEducation } = data;
     const { userWorkExperience } = data;
+    const portals = data.userPortal;
     const imgUrl = data.userDetail.coverImage ? `${ENDPOINT}/user/${10000000 + parseInt(data.user.id, 10)}/profile/${data.userDetail.coverImage}` : defaultCover;
     const editCoverUrl = data.userDetail.coverEdit && `${ENDPOINT}/user/${10000000 + parseInt(data.user.id, 10)}/profile/${data.userDetail.coverEdit}`;
     return (
@@ -139,7 +141,12 @@ class PublicProfile extends React.Component {
             )}
           </div>
           <div className="bio">
-            {userDetails.bio ? <p>{userDetails.bio}</p> : <p style={{ color: '#696969' }}>No bio added</p>}
+            <div>
+              {userDetails.bio ? <p>{userDetails.bio}</p> : <p style={{ color: '#696969' }}>No bio added</p>}
+            </div>
+            <div style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', padding: '5px' }}>
+              {portals.map(obj => <UserPortal key={obj.id} data={obj} />)}
+            </div>
           </div>
           <div className="education">
             <p className="p-top">

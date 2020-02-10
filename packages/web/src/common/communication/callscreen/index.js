@@ -26,7 +26,6 @@ class CallScreen extends React.Component {
   componentWillReceiveProps(nextProps) {
     const { webRtc } = this.props;
     if (webRtc !== nextProps.webRtc) {
-      console.log('hello again', nextProps.webRtc);
       if (nextProps.webRtc.chatHistory.type === 'user') {
         const peerConnection = nextProps.webRtc.peerConnections[webRtc.chatHistory.user.user.id];
         if (peerConnection.iceCandidateStatus === 'connected') this.setState({ callStatus: { redirect: true, status: peerConnection.iceCandidateStatus } });

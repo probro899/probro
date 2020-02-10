@@ -3,10 +3,11 @@ import PropTypes from 'prop-types';
 import { FileInput, Label } from '@blueprintjs/core';
 
 class Fileinput extends React.Component {
-  state = {};
+  state = { fileInputText: 'Choose a file...' };
 
   render() {
     const { data, onChange, value } = this.props;
+    const { fileInputText } = this.state;
     return (
       <Label>
         <span className="label-text">{data.name}</span>
@@ -15,7 +16,7 @@ class Fileinput extends React.Component {
         <FileInput
           onInputChange={e => onChange(data.id, e.target.files[0])}
           value={value}
-          options={data.options}
+          text={value.name || fileInputText}
           {...data}
         />
       </Label>

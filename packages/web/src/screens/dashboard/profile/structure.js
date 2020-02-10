@@ -108,7 +108,6 @@ const portalSchema = [
     id: 'attachment',
     fieldtype: 'image',
     name: 'Attachment',
-    text: 'Choose a file...',
   },
   {
     id: 'description',
@@ -120,7 +119,7 @@ const portalSchema = [
     id: 'link',
     fieldtype: 'input',
     name: 'Link',
-    placeholder: 'Write a link to your product',
+    placeholder: 'https://www.google.com',
   },
   {
     id: 'submit',

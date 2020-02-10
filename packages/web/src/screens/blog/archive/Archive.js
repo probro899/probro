@@ -9,6 +9,8 @@ import Footer from '../../../common/footer';
 import { ENDPOINT } from '../../../config';
 import { Spinner } from '../../../common';
 
+const blogImg = require('../../../assets/blog-img.jpeg');
+
 class Archive extends React.Component {
   state = {
     loading: true,
@@ -57,8 +59,8 @@ class Archive extends React.Component {
                       <div className="ar-i-img">
                         <img
                           alt="test here"
-                          height="150px"
-                          src="http://www.sarkarinaukrisearch.in/wp-content/uploads/2019/03/good-morning-pics-1.jpg"
+                          height="170px"
+                          src={blogImg}
                         />
                       </div>
                       <div className="ar-i-detail">
