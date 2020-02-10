@@ -5,6 +5,7 @@ const initialState = {
   showCommunication: null,
   showIncommingCall: false,
   showOutgoingCall: false,
+  isConnecting: false,
   communicationContainer: 'list',
   peerType: '',
   connectionId: null,

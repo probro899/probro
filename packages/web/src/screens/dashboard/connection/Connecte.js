@@ -27,7 +27,7 @@ class Connecte extends React.Component {
     updateWebRtc('communicationContainer', 'history');
     updateWebRtc('connectionId', connection.id);
     const user = connection.userId === account.user.id ? database.User.byId[connection.mId] : database.User.byId[connection.userId];
-    updateWebRtc('chatHistory', { type: 'user', user: { user } });
+    updateWebRtc('chatHistory', { type: 'user', user: { user }, connectionId: connection.id });
   };
 
   deleteRequest = async () => {
@@ -103,6 +103,9 @@ Connecte.propTypes = {
   account: PropTypes.objectOf(PropTypes.any).isRequired,
   connection: PropTypes.objectOf(PropTypes.any).isRequired,
   updateWebRtc: PropTypes.func.isRequired,
+  apis: PropTypes.objectOf(PropTypes.any).isRequired,
+  deleteDatabaseSchema: PropTypes.func.isRequired,
+  updateDatabaseSchema: PropTypes.func.isRequired,
 };
 
 

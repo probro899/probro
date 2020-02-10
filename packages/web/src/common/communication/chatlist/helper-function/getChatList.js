@@ -57,7 +57,7 @@ const findUserChatListDetails = (arr, props) => {
     userDetails = Object.values(database.UserDetail.byId).find(u => u.userId === msgObj.tuserId);
     connection = Object.values(database.UserConnection.byId).find(con => con.userId === user.id || con.mId === user.id);
   }
-  return { connectionId: connection ? connection.id : null, type: 'user', user: { user, userDetails }, unSeenNo, timeStamp: arrWithSeenStatus[0].timeStamp, lastMessage: arrWithSeenStatus[0].message, lastMessageId };
+  return { connectionId: connection ? connection.id : null, type: 'user', user: { user, userDetails }, unSeenNo, timeStamp: arrWithSeenStatus[0].timeStamp, lastMessage: arrWithSeenStatus[0], lastMessageId };
 };
 
 const findBoardMessageDetails = (arr, props) => {
@@ -81,7 +81,15 @@ const findBoardMessageDetails = (arr, props) => {
   }
   const lastMessage = arrWithSeenStatus.find(obj => obj.userId !== account.user.id);
   const lastMessageId = lastMessage ? lastMessage.id : arrWithSeenStatus[0].id;
-  return { connectionId: lastMessage.boardId, type: 'board', boardDetails, unSeenNo, timeStamp: arrWithSeenStatus[0].timeStamp, lastMessage: arrWithSeenStatus[0].message, lastMessageId };
+  const lastMessageForSeenStatus = arrWithSeenStatus.find((obj) => {
+    if (!obj.type) {
+      return true;
+    }
+    if (obj.type && obj.userId === account.user.id) {
+      return true;
+    }
+  });
+  return { connectionId: lastMessage.boardId, type: 'board', boardDetails, unSeenNo, timeStamp: arrWithSeenStatus[0].timeStamp, lastMessage: lastMessageForSeenStatus, lastMessageId };
 };
 
 export default (props) => {

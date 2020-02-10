@@ -1,4 +1,6 @@
+/* eslint-disable import/no-cycle */
 import schema from "@probro/common/source/src/schema";
+import updateUserCache from '../updateUserCache';
 
 export default async function createOffer(data) {
   const { session } = this;
@@ -15,7 +17,9 @@ export default async function createOffer(data) {
       allBoardUserSession.forEach(s => s.subscribe(`${offerDetail.broadCastType}-live-${offerDetail.broadCastId}`));
       const liveBoardChannel = session.channel(`${offerDetail.broadCastType}-live-${offerDetail.broadCastId}`);
       liveBoardChannel.emit('offer', data.offerDetail, data.userList);
-      liveBoardChannel.dispatch(schema.update('Board', { id: offerDetail.broadCastId, activeStatus: true }));
+      const allLiveSessions = session.getChannel(`Board-${offerDetail.broadCastId}`);
+      allLiveSessions.forEach(s => updateUserCache({ Board: { id: offerDetail.broadCastId, activeStatus: offerDetail.uid } }, s, 'update'));
+      // liveBoardChannel.dispatch(schema.update('Board', { id: offerDetail.broadCastId, activeStatus: offerDetail.uid }));
     } else if (liveBoardChannelBefore.length <= 1) {
       console.log('only one or zoro user are live', liveBoardChannelBefore.length);
       liveBoardChannelBefore.forEach(s => s.unsubscribe(`${offerDetail.broadCastType}-live-${offerDetail.broadCastId}`));
@@ -24,8 +28,13 @@ export default async function createOffer(data) {
       liveBoardChannel.emit('offer', data.offerDetail, data.userList);
     } else {
       session.subscribe(`${offerDetail.broadCastType}-live-${offerDetail.broadCastId}`);
-      console.log('board are live now', liveBoardChannelBefore.length);
+      console.log('board are live now', liveBoardChannelBefore.length, offerDetail);
       const liveBoardChannel = session.channel(`${offerDetail.broadCastType}-live-${offerDetail.broadCastId}`);
+      if (offerDetail.isLive) {
+        const allLiveSessions = session.getChannel(`Board-${offerDetail.broadCastId}`);
+        // liveBoardChannel.dispatch(schema.update('Board', { id: offerDetail.broadCastId, activeStatus: offerDetail.uid }));
+        allLiveSessions.forEach(s => updateUserCache({ Board: { id: offerDetail.broadCastId, activeStatus: offerDetail.uid } }, s, 'update'));
+      }
       liveBoardChannel.emit('offer', data.offerDetail, data.userList);
     }
   }

@@ -1,7 +1,7 @@
 import store from '../../../../../../store';
 
 export default async (props, state, data) => {
-  console.log('offer on Communication Open');
+  // console.log('offer on Communication Open');
   try {
     const { updateWebRtc, database } = props;
     const { broadCastId, broadCastType, connectionId } = data;

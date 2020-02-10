@@ -4,12 +4,12 @@ import sendBoardMessage from './sendBoardMessage';
 
 const updateStore = (props, id, todo, tempId, status) => {
   const { webRtc, addDatabaseSchema, message, account, deleteDatabaseSchema } = props;
-  if (webRtc.peerType === 'board') {
+  if (webRtc.chatHistory.type === 'board') {
     if (todo === 'add') {
       addDatabaseSchema('BoardMessage',
         {
           id,
-          boardId: webRtc.showCommunication,
+          boardId: webRtc.chatHistory.connectionId,
           message,
           userId: account.user.id,
           timeStamp: Date.now(),
@@ -23,7 +23,7 @@ const updateStore = (props, id, todo, tempId, status) => {
       addDatabaseSchema('BoardMessage',
         {
           id,
-          boardId: webRtc.showCommunication,
+          boardId: webRtc.chatHistory.connectionId,
           message,
           userId: account.user.id,
           timeStamp: Date.now(),
@@ -37,10 +37,10 @@ const updateStore = (props, id, todo, tempId, status) => {
     if (todo === 'add') {
       addDatabaseSchema('UserMessage', {
         id,
-        tuserId: webRtc.showCommunication,
+        tuserId: webRtc.chatHistory.user.user.id,
         fuserId: account.user.id,
         timeStamp: Date.now(),
-        connectionId: webRtc.connectionId,
+        connectionId: webRtc.chatHistory.connectionId,
         message,
         url: null,
         readStatus: 0,
@@ -50,10 +50,10 @@ const updateStore = (props, id, todo, tempId, status) => {
       deleteDatabaseSchema('UserMessage', { id: tempId });
       addDatabaseSchema('UserMessage', {
         id,
-        tuserId: webRtc.showCommunication,
+        tuserId: webRtc.chatHistory.user.user.id,
         fuserId: account.user.id,
         timeStamp: Date.now(),
-        connectionId: webRtc.connectionId,
+        connectionId: webRtc.chatHistory.connectionId,
         message,
         url: null,
         readStatus: 0,
@@ -64,14 +64,14 @@ const updateStore = (props, id, todo, tempId, status) => {
 };
 
 export default async function sendMessage(props) {
-  console.log('props in sendMessage', props);
+  // console.log('props in sendMessage', props);
   const { resend, deleteDatabaseSchema } = props;
   if (resend) {
     deleteDatabaseSchema('UserMessage', { id: resend });
   }
   const tempId = Date.now();
   const { webRtc } = props;
-  if (webRtc.peerType === 'board') {
+  if (webRtc.chatHistory.type === 'board') {
     updateStore(props, tempId, 'add');
     const boardMessageRes = await sendBoardMessage(props);
     if (boardMessageRes) {

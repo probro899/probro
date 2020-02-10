@@ -1,6 +1,6 @@
 export default (chatHistory) => {
   const { change, updateWebRtc, database, apis, account, addDatabaseSchema, fromLive, showChatHistory  } = chatHistory.props;
-  console.log('props in onClick chalt list', chatHistory);
+  // console.log('props in onClick chalt list', chatHistory);
   const { type, user, lastMessageId, boardDetails, unSeenNo } = chatHistory;
   const id = user ? user.user.id : chatHistory.boardDetails.id;
   updateWebRtc('chatHistory', chatHistory);

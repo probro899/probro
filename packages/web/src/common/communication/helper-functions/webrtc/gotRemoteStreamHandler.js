@@ -2,7 +2,7 @@ import store from '../../../../store';
 import mediaRecorder from './mediaRecoder';
 
 const stopAndRecordStream = async (props, userId, stream) => {
-  console.log('stopAndRecordStream', stream.id, userId);
+  // console.log('stopAndRecordStream', stream.id, userId);
   const { webRtc } = store.getState();
   const { updateWebRtc } = props;
   if (webRtc.mediaRecording && stream.id !== webRtc.mediaRecording.stream.id) {
@@ -14,9 +14,9 @@ const stopAndRecordStream = async (props, userId, stream) => {
 };
 
 export default props => async (stream, userId) => {
-  // console.log('remote stream handler', stream, userId);
   const { updateWebRtc } = props;
   const { webRtc } = store.getState();
+  // console.log('remote stream handler', stream, userId, webRtc);
   // console.log('webRtc value in got remote handler', webRtc);
   await updateWebRtc('streams', {
     ...webRtc.streams,
@@ -29,6 +29,6 @@ export default props => async (stream, userId) => {
   });
   await updateWebRtc('localCallHistory', { ...webRtc.localCallHistory, startTime: webRtc.localCallHistory.startTime || Date.now() });
   await updateWebRtc('lastStreamId', userId);
-  await updateWebRtc('isLive', true);
+  // await updateWebRtc('isLive', true);
   await stopAndRecordStream(props, userId, stream);
 };

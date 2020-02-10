@@ -1,7 +1,7 @@
 import store from '../../../../../store';
 
 export default (props, state, data) => {
-console.log('icecandidate Arrived', data);
+// console.log('icecandidate Arrived', data);
   const { apis } = state;
   const { uid, iceCandidate } = data;
   const { updateWebRtc } = props;

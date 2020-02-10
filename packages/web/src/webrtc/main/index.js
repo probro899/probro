@@ -4,24 +4,50 @@ function setLocalStream(stream, userId, onLocalStream) {
   // console.log('stream in local stream', stream);
   onLocalStream(stream, userId);
   const videoElement = document.getElementById(`video-${store.getState().account.user.id}`);
-  if (stream) {
+  if (stream && videoElement) {
     videoElement.srcObject = stream;
+  }
+
+  const { webRtc, database, account } = store.getState();
+  if (webRtc.chatHistory.type === 'board') {
+    if (database.Board.byId[webRtc.localCallHistory.chatHistory.connectionId].activeStatus === account.user.id) {
+      const lastVideoElement = document.getElementById('video-mentor');
+      if (lastVideoElement) {
+        lastVideoElement.srcObject = webRtc.streams[account.user.id].stream[0];
+      }
+    }
   }
 }
 
-function gotRemoteStream(e, userId, gotRemoteStreamHandler) {
-  console.log('got remote stream', e, userId);
-  gotRemoteStreamHandler(e, userId);
-  const { webRtc } = store.getState();
-  const videoElement = document.getElementById(`video-${userId}`);
+async function gotRemoteStream(e, userId, gotRemoteStreamHandler) {
+  await gotRemoteStreamHandler(e, userId);
+  const { webRtc, database, account } = store.getState();
   const lastVideoElement = document.getElementById('video-mentor');
-  // console.log('gotRemoteStream called', e);
-  if (webRtc.localCallHistory.chatHistory.type !== 'user') {
-    if (videoElement.srcObject !== e.streams[0]) {
-      videoElement.srcObject = e.streams[0];
+  // console.log('got remote stream', e, userId, database.Board.byId[1].activeStatus);
+  if (webRtc.localCallHistory.chatHistory.type === 'board') {
+    const videoElement = document.getElementById(`video-${userId}`);
+    if (videoElement) {
+      if (videoElement.srcObject !== e.streams[0]) {
+        videoElement.srcObject = e.streams[0];
+      }
+    }
+
+    if (userId === database.Board.byId[webRtc.localCallHistory.chatHistory.connectionId].activeStatus && lastVideoElement) {
+      if (lastVideoElement.srcObject !== e.streams[0]) {
+        lastVideoElement.srcObject = e.streams[0];
+      }
+    }
+
+    if (database.Board.byId[webRtc.localCallHistory.chatHistory.connectionId].activeStatus === account.user.id && lastVideoElement) {
+      if (webRtc.streams[account.user.id].stream[0] !== lastVideoElement.srcObject) {
+        lastVideoElement.srcObject = webRtc.streams[account.user.id].stream[0];
+      }
     }
   }
-  lastVideoElement.srcObject = e.streams[0];
+
+  if (webRtc.localCallHistory.chatHistory.type === 'user' && lastVideoElement) {
+    lastVideoElement.srcObject = e.streams[0];
+  }
 }
 
 export default async function main(onIceCandidateHandler, uid, gotRemoteStreamHandler, onIceConnectionStateChange, offerHandler, onLocalStream) {
@@ -62,7 +88,7 @@ export default async function main(onIceCandidateHandler, uid, gotRemoteStreamHa
 
     pc.onicecandidateerror = e => console.error('Error on onIceCandidate', e);
 
-    pc.onicegatheringstatechange = info => console.info('OnICeGatheringsStateChange', info);
+    // pc.onicegatheringstatechange = info => console.info('OnICeGatheringsStateChange', info);
 
     // seting Local Description
     const setLocalDescription = (data) => {
@@ -75,7 +101,7 @@ export default async function main(onIceCandidateHandler, uid, gotRemoteStreamHa
 
     // seting Remote Description
     const setRemoteDescription = (data) => {
-      console.log('setRemote description called for anser', data);
+      // console.log('setRemote description called for anser', data);
       pc.setRemoteDescription(data);
     };
 
@@ -93,7 +119,7 @@ export default async function main(onIceCandidateHandler, uid, gotRemoteStreamHa
 
     // creating Answer for offer
     const createAnswer = async (data, stream) => {
-      console.log('createAnswer called', data, stream);
+      // console.log('createAnswer called', data, stream);
       if (stream) {
         stream.getTracks().forEach(track => pc.addTrack(track, stream));
         setLocalStream(stream, userId, onLocalStream);

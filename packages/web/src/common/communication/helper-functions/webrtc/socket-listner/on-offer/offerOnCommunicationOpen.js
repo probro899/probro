@@ -7,7 +7,7 @@ import offerHandler from '../../offerHandler';
 import localStreamHandler from '../../onLocalStream';
 
 const onNotLiveHandler = async (updateWebRtc, broadCastId, database, type, webRtc, connectionId) => {
-  console.log('Communication is not live');
+  // console.log('Communication is not live');
   await updateWebRtc('communicationContainer', 'list');
   await updateWebRtc('showCommunication', broadCastId);
   await updateWebRtc('localCallHistory', { ...webRtc.localCallHistory, chatHistory: { connectionId, type, user: { user: database.User.byId[broadCastId] }, broadCastId } });
@@ -15,7 +15,7 @@ const onNotLiveHandler = async (updateWebRtc, broadCastId, database, type, webRt
 };
 
 const onLiveHandler = async (props, state, data) => {
-  console.log('communication is live');
+  // console.log('communication is live');
   const { uid, offer } = data;
   const { updateWebRtc, database } = props;
   const { webRtc, account } = store.getState();
@@ -29,7 +29,7 @@ const onLiveHandler = async (props, state, data) => {
       pc.pc.close();
       delete webRtc.peerConnections[uid];
       const newPc = await main(onIceCandidateHandler(props, state), uid, gotRemoteStreamHandler(props), iceCandidateStatusHandler(props), offerHandler(props, state), localStreamHandler(props));
-      answer = await newPc.createAnswer(offer, webRtc.outGoingCallType);
+      answer = await newPc.createAnswer(offer, webRtc.streams[account.user.id].stream[0]);
       updateWebRtc('peerConnections', { ...webRtc.peerConnections, [uid]: { pc: newPc, user: database.User.byId[uid] } });
     }
     apis.createAnswer({
@@ -48,7 +48,7 @@ const onLiveHandler = async (props, state, data) => {
 };
 
 export default async (props, state, data) => {
-  console.log('Offer on Live handler called');
+  // console.log('Offer on Live handler called');
   const { updateWebRtc, database } = props;
   const { broadCastId, broadCastType, connectionId } = data;
   const type = broadCastType === 'UserConnection' ? 'user' : 'board';

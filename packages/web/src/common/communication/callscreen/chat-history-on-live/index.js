@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Icon } from '@blueprintjs/core';
-import ChatHistory from '../chathistory';
+import ChatHistory from '../../chathistory';
 
 const ScChatList = (props) => {
   const { onClose } = props;
   const { webRtc, database } = props;
-  const { user, boardDetails } = webRtc.chatHistory;
+  const { user } = webRtc.chatHistory;
 
   return (
     <div className="sc-chat-history">
@@ -15,7 +15,7 @@ const ScChatList = (props) => {
           <Icon onClick={() => onClose(null)} icon="double-chevron-right" />
         </div>
         <div className="sc-ch-title">
-          {webRtc.chatHistory.type === 'user' ? `${user.user.firstName} ${user.user.lastName}` : database.Board.byId[webRtc.showCommunication].name}
+          {webRtc.chatHistory.type === 'user' ? `${user.user.firstName} ${user.user.lastName}` : database.Board.byId[webRtc.chatHistory.connectionId].name}
         </div>
         <div />
       </div>
@@ -29,6 +29,8 @@ const ScChatList = (props) => {
 
 ScChatList.propTypes = {
   onClose: PropTypes.func.isRequired,
+  webRtc: PropTypes.objectOf(PropTypes.any).isRequired,
+  database: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 export default ScChatList;

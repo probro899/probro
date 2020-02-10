@@ -265,17 +265,96 @@
       overflow: hidden;
       align-items: center;
       justify-content: center;
-      background: rgba(17, 4, 12, 0.7);
+      background: #574e54;
       .person-icon-container {
         flex-direction: column;
-        img {
+        .img-container {
+          height: 140px;
+          width: 140px;
           border-radius: 50%;
-          border-width: 2px;
+          overflow: hidden;
+          align-self: center;
+          border-width: 3px;
           border-style: solid;
           border-color: $backgroundColor;
-		      animation: rotate 2s ease infinite;
+          animation: rotate 2s ease infinite;
+          img.portrait {
+            width: 100%;
+            height: auto;
+          }
+          img.landscape {
+            height: 100%;
+            width: auto;
+          }
         }
         .controllers {
+          padding: 10px 0px;
+          display: flex;
+          justify-content: space-around;
+        }
+      }
+    }
+    .outgoing-call-screen {
+      margin: 1px;
+      height: 100%;
+      flex-direction: column;
+      overflow: hidden;
+      align-items: center;
+      justify-content: center;
+      background: #574e54;
+      .person-icon-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+        .person-name-status {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          width: 100%;
+          margin: 5px;
+          .name {
+            color: $backgroundColor;
+            font-size: 22px;
+            font-weight: bold;
+          }
+          .status {
+            font-size: 12px;
+            color: $fadedBackground;
+          }
+        }
+        .icon-container {
+          margin-top: 5%;
+          border-color: $backgroundColor;
+          border-width: 3px;
+          border-style: solid;
+          padding: 0px 6px;
+          border-radius: 10px;
+          animation: rotate 2s ease infinite;
+        }
+        .img-container {
+          margin-top: 5%;
+          height: 140px;
+          width: 140px;
+          border-radius: 50%;
+          overflow: hidden;
+          align-self: center;
+          border-width: 3px;
+          border-style: solid;
+          border-color: $backgroundColor;
+          animation: rotate 2s ease infinite;
+          img.portrait {
+            width: 100%;
+            height: auto;
+          }
+          img.landscape {
+            height: 100%;
+            width: auto;
+          }
+        }
+        .controllers {
+          margin-top: 5%;
           padding: 10px 0px;
           display: flex;
           justify-content: space-around;

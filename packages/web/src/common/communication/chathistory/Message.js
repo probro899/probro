@@ -32,7 +32,7 @@ const Message = ({ own, obj, props, type }) => {
       key={obj.id}
       style={{ marginTop: obj.showImage && 15 }}
     >
-      { ((obj.showImage && !own.isOwn) || type) && (
+      { ((obj.showImage && !own.isOwn) || (type && !own.isOwn)) && (
       <div className="img-wrap">
           {(own.user.userDetails && own.user.userDetails.image)
             ? <img alt="profile-img" src={`${ENDPOINT}/user/${10000000 + parseInt(own.user.id, 10)}/profile/${own.user.userDetails.image}`} style={{ height: 30, width: 30, borderRadius: '50%'}} />

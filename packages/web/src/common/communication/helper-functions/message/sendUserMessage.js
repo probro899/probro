@@ -9,20 +9,20 @@ export default async function sendUserMessage(props) {
 //  console.log('webRtc value in send User Message', webRtc);
   try {
     const sendingUserMessageRes = await apis.addUserMessage({
-      tuserId: webRtc.showCommunication,
+      tuserId: webRtc.chatHistory.user.user.id,
       fuserId: account.user.id,
       timeStamp: Date.now(),
       message,
       url: null,
       readStatus: 0,
-      connectionId: webRtc.connectionId,
+      connectionId: webRtc.chatHistory.connectionId,
       broadCastId: `UserConnection-${account.user.id}`,
-      broadCastUserList: [{ userId: webRtc.showCommunication }],
+      broadCastUserList: [{ userId: webRtc.chatHistory.user.user.id }],
     });
-    console.log('Sending user message res', sendingUserMessageRes);
+    // console.log('Sending user message res', sendingUserMessageRes);
     return sendingUserMessageRes;
   } catch (e) {
-    return false;
     console.error('Error in sending message', e);
+    return false;
   }
 }

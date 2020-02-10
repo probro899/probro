@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Icon } from '@blueprintjs/core';
-import ChatList from '../chatlist';
+import ChatList from '../../chatlist';
 
 const ScChatList = (props) => {
   const { onClose, onClickItem } = props;

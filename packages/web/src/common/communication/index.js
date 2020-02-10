@@ -1,3 +1,4 @@
+/* eslint-disable import/no-cycle */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React from 'react';
@@ -13,17 +14,17 @@ import IncomingCallScreen from './IncomingCallScreen';
 import { socketListner, callHandler, answerHandler, closeHandler } from './helper-functions';
 
 class Communication extends React.Component {
-
   state = {
     minimize: false,
-    apis: {},
+    apis: null,
   };
 
   async componentWillMount() {
-    // console.log('commnucation mount');
     let apisRes = null;
+    // console.log('Communication Will Mount');
     try {
       apisRes = await client.scope('Mentee');
+      // console.log('api fetched in Communication', apisRes);
     } catch (e) {
       console.error('error in fetching apis in communication');
     }
@@ -32,14 +33,13 @@ class Communication extends React.Component {
   }
 
   toggleMinMax = () => {
-    const { minimize } = this.state;
     this.setState({
       minimize: false,
     });
   }
 
   cutWindow = () => {
-    const { updateWebRtc, webRtc } = this.props;
+    const { updateWebRtc } = this.props;
     updateWebRtc('showCommunication', false);
     updateWebRtc('showIncommingCall', false);
   }
@@ -110,7 +110,7 @@ class Communication extends React.Component {
           )
             }
 
-          {!webRtc.showIncommingCall && webRtc.communicationContainer === 'history' && (
+          {!webRtc.showIncommingCall && webRtc.communicationContainer === 'history' && apis && (
           <ChatHistory
             // style={!webRtc.showIncommingCall && webRtc.communicationContainer === 'history' ? { display: 'flex' } : { display: 'none' }}
             change={this.switchScreen}

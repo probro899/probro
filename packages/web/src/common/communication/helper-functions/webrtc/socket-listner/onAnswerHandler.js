@@ -1,10 +1,10 @@
 import store from '../../../../../store';
 
 export default async (props, state, data) => {
-  console.log('answer arrived', data);
+  // console.log('answer arrived', data);
   const { apis } = state;
   const { updateWebRtc } = props;
-  const { webRtc, account } = store.getState();
+  const { webRtc, account, database } = store.getState();
   // console.log('Total candidateFor this pc', webRtc.iceCandidates);
   const { uid, answer, boardId } = data;
   const { pc } = webRtc.peerConnections[uid];
@@ -25,5 +25,7 @@ export default async (props, state, data) => {
         });
     });
     updateWebRtc('iceCandidates', { ...webRtc.iceCandidates, [uid]: { ...webRtc.iceCandidates[uid], sendStatus: true } });
+    updateWebRtc('isLive', true);
+    updateWebRtc('isConnecting', false);
   }
 };

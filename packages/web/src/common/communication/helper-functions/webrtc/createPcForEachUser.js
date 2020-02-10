@@ -7,7 +7,7 @@ import localStreamHandler from './onLocalStream';
 import store from '../../../../store';
 
 export default async (boardId, props, state) => {
-  console.log('create pc for each user', boardId, props);
+  // console.log('create pc for each user', boardId, props);
   try {
     const { database, updateWebRtc, account } = props;
     const { webRtc } = store.getState();
@@ -20,7 +20,7 @@ export default async (boardId, props, state) => {
       const userListAll = boardmembers.map(bm => database.User.byId[bm.tuserId]);
       userList = userListAll.filter(user => user.id !== account.user.id);
     }
-    console.log('userList', userList);
+    // console.log('userList', userList);
     const peerConnectionPromises = userList.map(user => main(onIceCandidateHandler(props, state), user.id, gotRemoteStreamHandler(props), iceCandidateStatusHandler(props), offerHandler(props, state), localStreamHandler(props)));
     const peerConnList = await Promise.all(peerConnectionPromises);
     const storeValue = userList.reduce((obj, user, idx) => {

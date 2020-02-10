@@ -5,8 +5,8 @@ export default (props, state, apis) => async (remoteData) => {
   const { updateWebRtc, account } = props;
   const { webRtc } = store.getState();
   const pcs = Object.values(webRtc.peerConnections);
-  console.log('close handler called', remoteData, webRtc);
-  updateWebRtc('chatHistory', webRtc.localCallHistory.chatHistory);
+  // console.log('close handler called', remoteData, webRtc);
+  await updateWebRtc('chatHistory', webRtc.localCallHistory.chatHistory);
   if (webRtc.localCallHistory.stream) {
     if (webRtc.localCallHistory.stream.active) {
       // console.log('inside the local steam stop case');
@@ -80,6 +80,8 @@ export default (props, state, apis) => async (remoteData) => {
     updateWebRtc('liveIncomingCall', false);
     updateWebRtc('isLive', false);
     updateWebRtc('localCallHistory', { callEnd: true });
+    updateWebRtc('mainStreamId', null);
+    updateWebRtc('streams', {});
   } else {
     updateWebRtc('showIncommingCall', false);
   }

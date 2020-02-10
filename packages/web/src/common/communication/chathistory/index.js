@@ -10,6 +10,7 @@ import { MessageSender } from '../components';
 import Message from './Message';
 import { normalTimeStampSorting } from '../../utility-functions';
 import { findChatHistory, isOwnFinder, markLastMessageRead, incomingCallLogHandler, outgoingCallLogHandler } from './helper-function';
+import autoCloseHandler from '../helper-functions/webrtc/autoCloseHandler';
 
 class ChatHistory extends React.Component {
   state = { messages: [], lastMessageId: null, unSeenNo: null };
@@ -32,11 +33,23 @@ class ChatHistory extends React.Component {
   toCallScreen = async (mediaType) => {
     // console.log('tocallSrean func called', mediaType);
     try {
-      const { _callHandler, apis, change, updateWebRtc, webRtc } = this.props;
+      const { _callHandler, apis, change, updateWebRtc, webRtc, account, database } = this.props;
       const stream = await mediaSelector(mediaType);
+      updateWebRtc('isCallUpgraded', false);
+      updateWebRtc('isConnecting', true);
+      updateWebRtc('streams', { [account.user.id]: { stream: [stream] } });
       updateWebRtc('localCallHistory', { chatHistory: webRtc.chatHistory, stream, mediaType, callType: 'Outgoing', callEnd: false });
+      autoCloseHandler(this.props, { apis }, 22000);
       if (webRtc.chatHistory.type === 'user') {
+        updateWebRtc('mainStreamId', webRtc.chatHistory.user.user.id);
         updateWebRtc('streams', { ...webRtc.streams, [webRtc.chatHistory.user.user.id]: { stream: [] } });
+      }
+      if (webRtc.chatHistory.type === 'board') {
+        if (database.Board.byId[webRtc.chatHistory.connectionId].activeStatus) {
+          updateWebRtc('mainStreamId', database.Board.byId[webRtc.chatHistory.connectionId].activeStatus);
+        } else {
+          updateWebRtc('mainStreamId', account.user.id);
+        }
       }
       _callHandler(apis, stream);
       change('connecting');
@@ -99,8 +112,9 @@ class ChatHistory extends React.Component {
             {webRtc.chatHistory.type === 'user' ? `${user.user.firstName} ${user.user.lastName}` : database.Board.byId[webRtc.chatHistory.connectionId].name}
           </div>
           <div className="call-control">
-            <Button icon="phone" intent="success" onClick={() => this.toCallScreen('audio')} />
-            <Button icon="mobile-video" intent="success" onClick={() => this.toCallScreen('video')} />
+            {webRtc.chatHistory.type === 'board' ? !database.Board.byId[webRtc.chatHistory.connectionId].activeStatus && <Button icon="phone" intent="success" onClick={() => this.toCallScreen('audio')} /> :  <Button icon="phone" intent="success" onClick={() => this.toCallScreen('audio')} />}
+            {webRtc.chatHistory.type === 'board' ? !database.Board.byId[webRtc.chatHistory.connectionId].activeStatus && <Button icon="mobile-video" intent="success" onClick={() => this.toCallScreen('video')} /> : <Button icon="mobile-video" intent="success" onClick={() => this.toCallScreen('video')} /> }
+            {webRtc.chatHistory.type === 'board' && database.Board.byId[webRtc.chatHistory.connectionId].activeStatus && <Button intent="success" onClick={() => this.toCallScreen('audio')} text="Join" /> }
           </div>
         </div>
         )}

@@ -1,7 +1,7 @@
 import store from '../../../../store';
 
 export default (props, state) => async (e, userId) => {
-  console.log('OnIceCandidate local', e, userId);
+  // console.log('OnIceCandidate local', e, userId);
   const { account, updateWebRtc } = props;
   const { webRtc } = store.getState();
   const { apis } = state;
