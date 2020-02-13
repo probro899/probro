@@ -78,6 +78,7 @@ async function updateUserConnection(record) {
         body: `${tUserDetails.firstName} accept your friend request`,
         title: 'Friend request',
         type: 'user',
+        typeId: tUserDetails.id,
         viewStatus: false,
         imageUrl: null
       };

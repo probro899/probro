@@ -49,7 +49,7 @@ exports.default = async function initUser(id) {
 
   let u = null;
   try {
-    u = await _cache.user.get(id);
+    u = await _cache.user.get(id, session);
   } catch (err) {
     console.error('error in getUser data from cache', err);
     throw err;
@@ -76,6 +76,9 @@ exports.default = async function initUser(id) {
   _lodash2.default.uniq(flat(u.UserConnection.map(obj => [obj.mId, obj.userId]))).map(uid => ({ channel: session.channel(`UserConnection-${uid}`) })).forEach(obj => obj.channel.dispatch(_schema2.default.update('User', { id, activeStatus: true })));
   // console.log('userDetaisl in initUser', u.User);
   // console.log('userConnection', u.BoardMessageSeenStatus);
+  // const boardWithLiveStatus = u.Board.map(b => (session.getChannel(`Board-live-${b.id}`) ? session.getChannel(`Board-live-${b.id}`).length : 0));
+  // console.log('boardWIth live status', boardWithLiveStatus);
+  // const finalBoard = u.Board.map((b, idx) => ({ ...b, activeStatus: boardWithLiveStatus[idx] > 1 }));
   session.subscribe('Main');
   // console.log('board member', u.BoardMember);
   session.dispatch(_schema2.default.init('User', finalUserList));
@@ -103,4 +106,5 @@ exports.default = async function initUser(id) {
   session.dispatch(_schema2.default.init('UserMessage', u.UserMessage));
   session.dispatch(_schema2.default.init('UserMessageSeenStatus', u.UserMessageSeenStatus));
   session.dispatch(_schema2.default.init('Notification', u.Notification));
+  session.dispatch(_schema2.default.init('NotificationReadStatus', u.NotificationReadStatus));
 };

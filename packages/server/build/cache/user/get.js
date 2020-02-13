@@ -4,10 +4,6 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _lodash = require('lodash');
-
-var _lodash2 = _interopRequireDefault(_lodash);
-
 var _cache = require('./cache');
 
 var _cache2 = _interopRequireDefault(_cache);
@@ -16,24 +12,16 @@ var _db = require('../../db');
 
 var _db2 = _interopRequireDefault(_db);
 
-var _api = require('../../api');
+var _helperFunctions = require('./helper-functions');
+
+var _flat = require('../../api/flat');
+
+var _flat2 = _interopRequireDefault(_flat);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /* eslint-disable import/no-cycle */
-const flat = arr => {
-  const flatArray = arr.reduce((t, a) => {
-    if (Array.isArray(a)) {
-      a.forEach(am => t.push(am));
-    } else {
-      t.push(a);
-    }
-    return t;
-  }, []);
-  return flatArray;
-};
-
-exports.default = async function get(id) {
+exports.default = async function get(id, session) {
   // console.log('id in getUser', id);
   const res = _cache2.default.get(id);
   if (res) {
@@ -41,143 +29,61 @@ exports.default = async function get(id) {
   }
 
   const userData = await _db2.default.execute(async ({ find, findOne }) => {
-    const user = await find('User', { id });
-    delete user[0].password;
-    const Notification = await find('Notification', { userId: id });
-    const userDetail = await find('UserDetail', { userId: id });
 
-    // ******************* User Messages *****************************************************************
-    const tuserMessage = await find('UserMessage', { tuserId: id });
-    const fuserMessage = await find('UserMessage', { fuserId: id });
-    const userMessages = [...fuserMessage, ...tuserMessage];
-    const userMessageSeenStatusPromises = [];
-    userMessages.forEach(um => userMessageSeenStatusPromises.push(find('UserMessageSeenStatus', { umId: um.id })));
-    const userMessageSeenStatus = await Promise.all(userMessageSeenStatusPromises);
-
+    // ******************* User Messages ***************************************************************
+    const userMessageDetails = await (0, _helperFunctions.getUserMessgeDetails)(find, id);
     // ************************************************************************************************
 
     // ******************* User ConnectionList **********************************************************
-    let connectionListMid = [];
-    let connectionListUserId = [];
-    connectionListMid = await find('UserConnection', { mId: user[0].id });
-    connectionListUserId = await find('UserConnection', { userId: user[0].id });
-    const connectionList = [...connectionListMid, ...connectionListUserId];
-    const allConnectionUserList = _lodash2.default.uniq(flat(connectionList.map(obj => [obj.mId, obj.userId])));
-    // console.log('allConnecitonUserList', allConnectionUserList);
+    const userConnectionListDetails = await (0, _helperFunctions.getUserConnectionListDetails)(find, id);
     // ***************************************************************************************************
 
     // ******************** all Blog details *************************************************************
-    const Blog = await find('Blog', { userId: id });
-    const allLike = await find('BlogLike', { userId: id });
-    const allComments = await find('BlogComment', { userId: id });
-    const BlogPublish = await find('Blog', { saveStatus: 'publish' });
-    // console.log('all blog data', Blog, allLike, allComments, BlogPublish);
-    const allAssociateBlogsId = _lodash2.default.uniq([...allComments.map(obj => obj.blogId), ...allLike.map(obj => obj.blogId), ...Blog.map(obj => obj.id), ...BlogPublish.map(obj => obj.id)]);
-    // console.log('allAssociated Blog Ids', allAssociateBlogsId);
-    const blogDetailsPromises = [];
-    const allBlogsPromises = [];
-    allAssociateBlogsId.forEach(bid => {
-      blogDetailsPromises.push((0, _api.findBlogDetail)(bid));
-      allBlogsPromises.push(findOne('Blog', { id: bid }));
-    });
-
-    const blogDetails = await Promise.all(blogDetailsPromises);
-    const allBlogs = await Promise.all(allBlogsPromises);
-    // console.log('allBlogs', allBlogs);
-
-    const newBlogPublish = BlogPublish.filter(b => !allBlogs.find(bn => b.id === bn.id));
-    // const BlogDetail = blogDetails.map(obj => obj.blogDetail).flat();
-    const BlogComment = flat(blogDetails.map(obj => obj.blogComment));
-    const BlogLike = flat(blogDetails.map(obj => obj.blogLike));
-    const allBlogUsers = [...allBlogs, ...newBlogPublish, ...BlogLike, ...BlogComment].map(b => b.userId);
-    // console.log('allBlogUsers', asllBlogUsers);
+    const blogDetails = await (0, _helperFunctions.getBlogDetails)(find, findOne, id);
     // ***************************************************************************************************
 
-    const BoardMember = await find('BoardMember', { tuserId: id });
-    const UserWorkExperience = await find('UserWorkExperience', { userId: id });
-    const UserEducation = await find('UserEducation', { userId: id });
-    const UserSkill = await find('UserSkill', { userId: id });
-    const UserPortal = await find('UserPortal', { userId: id });
-    const UserCarrierInterest = await find('UserCarrierInterest', { userId: id });
-    const Board = await find('Board', { userId: id });
+    // ********************* getting all Board Details ***************************************************
+    const boardDetails = await (0, _helperFunctions.getAllBoardDetails)(find, findOne, id, session);
+    // *****************************************************************************************************
 
-    const boardPromises = [];
-    BoardMember.forEach(bm => boardPromises.push(findOne('Board', { id: bm.boardId })));
-    const allBoardsTemp = await Promise.all(boardPromises);
-    const allBoards = allBoardsTemp.filter(b => b);
-    // console.log('all board', allBoards);
+    // ************ getting notification details ***********************************************************
+    const userNotifications = await (0, _helperFunctions.getNotificationDetails)(find, id, boardDetails);
+    // *****************************************************************************************************
 
-    const boardMessagePromises = [];
-    allBoards.forEach(b => boardMessagePromises.push(find('BoardMessage', { boardId: b.id })));
-    const BoardMessage = await Promise.all(boardMessagePromises);
-    const boardMessageSeenStatusPromises = [];
-    flat(BoardMessage).forEach(msg => boardMessageSeenStatusPromises.push(find('BoardMessageSeenStatus', { bmId: msg.id })));
-    const BoardMessageSeenStatus = await Promise.all(boardMessageSeenStatusPromises);
-    // console.log('BoardMessage', BoardMessage);
+    // **********************************getting all UserDetails ******************************************
+    const userDetails = await (0, _helperFunctions.getUserDetails)(find, findOne, id, userConnectionListDetails, blogDetails, boardDetails);
+    // ***************************************************************************************************
 
-    const boardDetailsPromises = [];
-    allBoards.forEach(b => {
-      boardDetailsPromises.push((0, _api.findBoardDetail)(b.id));
-    });
-
-    const boardUserPromises = [];
-    allBoards.forEach(b => {
-      boardUserPromises.push(find('BoardMember', { boardId: b.id }));
-      // boardUserPromises.push(find('Board', { id: b.id }));
-    });
-
-    const allBoardMembers = await Promise.all(boardUserPromises);
-    // console.log('all Board Member', allBoardMembers.flat());
-    const allBoardUserList = _lodash2.default.uniq(flat(allBoardMembers).map(obj => obj.tuserId));
-    const allBoardUserPromises = [];
-    _lodash2.default.uniq([...allBoardUserList, ...allConnectionUserList, ...allBlogUsers, user[0].id]).forEach(uid => allBoardUserPromises.push(findOne('User', { id: uid })));
-    const allUserList = await Promise.all(allBoardUserPromises);
-
-    const boardUserDetailsPromises = [];
-    _lodash2.default.uniq([...allBoardUserList, ...allConnectionUserList, ...allBlogUsers, user[0].id]).forEach(uid => boardUserDetailsPromises.push(findOne('UserDetail', { userId: uid })));
-    const allUserDetailsList = (await Promise.all(boardUserDetailsPromises)).filter(obj => obj);
-    // console.log('all user details list', allUserDetailsList);
-    const allUser = allUserList.map(u => ({ id: u.id, firstName: u.firstName, email: u.email, lastName: u.lastName, activeStatus: null }));
-    // console.log('allUser', allUser);
-    // console.log('uniqUser and BoarUserDetails', uniqUsers, allBoardUserDetails);
-    const boardDetails = await Promise.all(boardDetailsPromises);
-    // console.log('boardDetails', JSON.stringify(boardDetails));
-    const BoardColumn = flat(boardDetails.map(obj => obj.boardColumn));
-    const BoardColumnCard = flat(flat(boardDetails.map(obj => obj.boardColumnCard)));
-    const BoardColumnCardAttachment = flat(flat(boardDetails.map(obj => obj.boardColumnCardAttachment)));
-    const BoardColumnCardComment = flat(flat(boardDetails.map(obj => obj.boardColumnCardComment)));
-    // console.log('board columnCardAttachment', boardColumnCardComment);
-    const BoardColumnCardDescription = flat(flat(boardDetails.map(obj => obj.boardColumnCardDescription)));
-    const BoardColumnCardTag = flat(flat(boardDetails.map(obj => obj.boardColumnCardTag)));
-
-    // console.log('connection list', [allBlogs, newBlogPublish]);
-    // console.log('UserMessage', userMessages);
     const userDataRes = {
-      User: allUser,
-      UserDetail: allUserDetailsList,
-      Board: allBoards,
-      BoardMember: flat(allBoardMembers),
-      BoardColumn,
-      BoardColumnCard,
-      BoardColumnCardAttachment,
-      BoardColumnCardComment,
-      BoardColumnCardDescription,
-      BoardColumnCardTag,
-      Blog: [...allBlogs, ...newBlogPublish],
-      BlogComment,
-      BlogLike,
-      Notification,
-      UserEducation,
-      UserWorkExperience,
-      UserPortal,
-      UserSkill,
-      UserCarrierInterest,
-      BoardMessage: flat(BoardMessage),
-      BoardMessageSeenStatus: flat(BoardMessageSeenStatus),
-      UserConnection: connectionList,
-      UserMessage: userMessages,
-      UserMessageSeenStatus: flat(userMessageSeenStatus),
-      allAssociateBlogsId
+      User: userDetails.allUser,
+      UserDetail: userDetails.allUserDetailsList,
+      UserEducation: userDetails.UserEducation,
+      UserWorkExperience: userDetails.UserWorkExperience,
+      UserPortal: userDetails.UserPortal,
+      UserSkill: userDetails.UserSkill,
+      UserCarrierInterest: userDetails.UserCarrierInterest,
+
+      Board: boardDetails.allBoards,
+      BoardMember: (0, _flat2.default)(boardDetails.allBoardMembers),
+      BoardColumn: boardDetails.BoardColumn,
+      BoardColumnCard: boardDetails.BoardColumnCard,
+      BoardColumnCardAttachment: boardDetails.BoardColumnCardAttachment,
+      BoardColumnCardComment: boardDetails.BoardColumnCardComment,
+      BoardColumnCardDescription: boardDetails.BoardColumnCardDescription,
+      BoardColumnCardTag: boardDetails.BoardColumnCardTag,
+      BoardMessage: (0, _flat2.default)(boardDetails.BoardMessage),
+      BoardMessageSeenStatus: (0, _flat2.default)(boardDetails.BoardMessageSeenStatus),
+
+      Blog: [...blogDetails.allBlogs, ...blogDetails.newBlogPublish],
+      BlogComment: blogDetails.BlogComment,
+      BlogLike: blogDetails.BlogLike,
+      Notification: userNotifications.Notification,
+      NotificationReadStatus: userNotifications.notificationReadstatus,
+
+      UserConnection: userConnectionListDetails.connectionList,
+      UserMessage: userMessageDetails.userMessages,
+      UserMessageSeenStatus: (0, _flat2.default)(userMessageDetails.userMessageSeenStatus),
+      allAssociateBlogsId: blogDetails.allAssociateBlogsId
 
     };
     return userDataRes;
