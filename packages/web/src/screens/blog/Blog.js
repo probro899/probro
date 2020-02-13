@@ -68,11 +68,11 @@ class Blogs extends Component {
     const { deleteDatabaseSchema } = this.props;
     if (type === 'confirm') {
       await apis.deleteBlog({ id: blogId });
-      deleteDatabaseSchema('Blog', { id: blogId });
       this.setState({
         deletePopOverIsOpen: false,
         blogId: '',
       });
+      deleteDatabaseSchema('Blog', { id: blogId });
       return;
     }
     this.setState({

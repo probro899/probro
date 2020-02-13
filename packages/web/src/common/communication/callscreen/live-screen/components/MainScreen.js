@@ -1,7 +1,6 @@
 /* eslint-disable react/jsx-indent */
 /* eslint-disable jsx-a11y/media-has-caption */
 import React from 'react';
-import ReactPlayer from 'react-player';
 import PropTypes from 'prop-types';
 import { ENDPOINT } from '../../../../../config';
 
