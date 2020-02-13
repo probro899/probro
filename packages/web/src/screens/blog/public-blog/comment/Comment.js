@@ -2,10 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import Moment from 'react-moment';
-import { RoundPicture } from '../../../components';
-import { ENDPOINT } from '../../../config';
+import { RoundPicture } from '../../../../components';
+import { ENDPOINT } from '../../../../config';
 
-const file = require('../../../assets/icons/64w/uploadicon64.png');
+const file = require('../../../../assets/icons/64w/uploadicon64.png');
 
 const Comment = (props) => {
   const { comment, user } = props;

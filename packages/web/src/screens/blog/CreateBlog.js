@@ -219,6 +219,11 @@ class Blogs extends Component {
         });
         if (res.status === 200) {
           uploadedUrl = res.data;
+          this.setState({
+            coverImage: {
+              actualFile: null,
+            },
+          });
         }
       } catch (e) {
         console.log('Error', e);
@@ -254,7 +259,7 @@ class Blogs extends Component {
         title,
         content: description,
         saveStatus: publish,
-        coverImage: !coverImage.url && !uploadedUrl ? null : (uploadedUrl || coverImage.url),
+        coverImage: (!coverImage.url && !uploadedUrl) ? null : (uploadedUrl || coverImage.url),
       },
       {
         id: blogId,
@@ -265,7 +270,7 @@ class Blogs extends Component {
       saveStatus: publish,
       title,
       content: description,
-      coverImage: !coverImage.url && !uploadedUrl ? null : (uploadedUrl || coverImage.url),
+      coverImage: (!coverImage.url && !uploadedUrl) ? null : (uploadedUrl || coverImage.url),
     });
   }
 

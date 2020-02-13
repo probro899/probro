@@ -19,7 +19,11 @@
         display: flex;
         border-bottom: 1px solid $normalBorder;
         .ar-i-img {
-
+          height: 250px;
+          width: 250px;
+          img {
+            object-fit: contain;
+          }
         }
         .ar-i-detail {
           flex-direction: column;
@@ -104,10 +108,23 @@
       }
     }
   }
+  .pc-blog-cover-image {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    padding: 0 15%;
+    overflow: hidden;
+    margin-bottom: 25px;
+    img {
+      width: 100%;
+      object-fit: contain;
+    }
+  }
   .public-blog-content {
     width: 100%;
     font-size: 21px;
     display: flex;
+    margin-bottom: 50px;
     .left {
       flex: 0.1;
     }
@@ -139,7 +156,8 @@
         textarea {
           font-size: 21px;
           flex: 0.8;
-          height: 80px;
+          height: 62px;
+          line-height: 40px;
           resize: none;
         }
         button {

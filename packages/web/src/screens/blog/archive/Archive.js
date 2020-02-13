@@ -1,15 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 import axios from 'axios';
 import * as actions from '../../../actions';
 import Navbar from '../../home/component/navbar';
 import Footer from '../../../common/footer';
 import { ENDPOINT } from '../../../config';
 import { Spinner } from '../../../common';
-
-const blogImg = require('../../../assets/blog-img.jpeg');
+import SingleArchive from './SingleArchive';
 
 class Archive extends React.Component {
   state = {
@@ -46,56 +44,7 @@ class Archive extends React.Component {
           <div className="ar-content">
             <div className="ar-left">
               {
-                data.archive.map((obj, index) => {
-                  const description = obj.blog.content.replace(/<[^>]+>/g, '').replace(/&nbsp;/g, ' ').substring(0, 300);
-                  let user;
-                  obj.userDetails.map((u) => {
-                    if (u.user.id === obj.blog.userId) {
-                      user = u;
-                    }
-                  });
-                  return (
-                    <div className="ar-left-i" key={index}>
-                      <div className="ar-i-img">
-                        <img
-                          alt="test here"
-                          height="170px"
-                          src={blogImg}
-                        />
-                      </div>
-                      <div className="ar-i-detail">
-                        <Link to={`/blog/${user.user.slug}/${obj.blog.slug}`} className="ar-i-title">
-                          {obj.blog.title}
-                        </Link>
-                        <p>
-                          <span>Author-</span>
-                          <Link to={`/user/${user.user.slug}/`}>
-                            {
-                              ` ${user.user.firstName} ${user.user.middleName ? `${user.user.middleName} ` : ''}${user.user.lastName}`
-                            }
-                          </Link>
-                          <br />
-                          <small className="pc-date">
-                            {new Date(obj.blog.timeStamp).toDateString()}
-                          </small>
-                        </p>
-                        <div className="pc-blog-desc">
-                          {`${description} ...`}
-                        </div>
-                        <div className="ar-i-counts">
-                          <p className="label">
-                            <span className="count">{obj.blogComment.length}</span>
-                            Comments
-                          </p>
-                          <p className="label">
-                            <span className="count">{obj.blogLike.length}</span>
-                            Likes
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  );
-                })
+                data.archive.map((obj, index) => <SingleArchive key={index} obj={obj} />)
               }
             </div>
             <div className="ar-right">

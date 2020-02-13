@@ -36,11 +36,15 @@ top attachment etc.
 .navbar .navbar-more-container .more-icon { display: none; }
 .navbar .navbar-right { display: flex; flex-direction: row; }
 .navbar .navbar-item { font-size: 14px; font-weight: bold; padding: 10px; color: #1d4354; position: relative; text-transform: uppercase; }
-.navbar .navbar-item .profile-icon { width: 50px; height: 50px; border-radius: 50%; overflow: hidden; box-shadow: 0px 1px 3px 2px rgba(57, 73, 76, 0.35); }
+.navbar .navbar-item .profile-icon { width: 50px; height: 50px; border-radius: 50%; overflow: hidden; border: 2px solid #fff; }
 .navbar .navbar-item .profile-icon img.portrait { width: 100%; height: auto; }
 .navbar .navbar-item .profile-icon img.landscape { height: 100%; width: auto; }
+.navbar .navbar-item.pc-dashboard-icon { display: flex; flex-direction: row-reverse; background-color: #1d4354; padding: 5px; margin-left: 5px; border-top-left-radius: 30px; border-bottom-left-radius: 30px; }
+.navbar .navbar-item.pc-dashboard-icon .pc-dot { position: absolute; right: 5px; height: 7px; width: 7px; border-radius: 3.5px; background-color: #fff; z-index: 10; }
+.navbar .navbar-item.pc-dashboard-icon .pc-dashboard { display: flex; align-items: center; margin-left: 5px; font-size: 12px; color: #fff; }
 .navbar a:link { display: flex; flex-direction: column; justify-content: center; text-decoration: none; }
 .navbar a:hover .navbar-item { color: #137cbd; }
+.navbar a:hover .navbar-item .pc-dot { background-color: red; }
 .navbar a.active .navbar-item { color: #137cbd; }
 @media screen and (min-width: 575px) and (max-width: 700px) { .navbar .navbar-item { font-size: 13px; } }
 @media screen and (min-width: 200px) and (max-width: 575px) { .navbar .navbar-left { display: none; }
@@ -329,13 +333,13 @@ top attachment etc.
 .blogs .blog-list { display: flex; flex-wrap: wrap; }
 .blogs .blog-list .pc-no-blogs { width: 100%; height: 50vh; display: flex; align-items: center; justify-content: center; }
 .blogs .blog-list .pc-no-blogs p { color: #696969; }
-.blogs .blog-list .blog-container { margin: 10px; max-width: 250px; box-shadow: 0px 1px 2px 1px rgba(57, 73, 76, 0.35); }
-.blogs .blog-list .blog-container .img-container { width: 100%; position: relative; overflow: hidden; }
+.blogs .blog-list .blog-container { margin: 10px; max-width: 250px; max-height: 340px; box-shadow: 0px 1px 2px 1px rgba(57, 73, 76, 0.35); }
+.blogs .blog-list .blog-container .img-container { max-width: 100%; height: 250px; position: relative; display: flex; overflow: hidden; justify-content: center; }
 .blogs .blog-list .blog-container .img-container .more-button { position: absolute; top: 0; right: 0; }
-.blogs .blog-list .blog-container .img-container img { height: 250px; object-fit: cover; }
-.blogs .blog-list .blog-container .detail-container { padding: 10px; }
+.blogs .blog-list .blog-container .img-container img { width: 100%; object-fit: contain; }
+.blogs .blog-list .blog-container .detail-container { height: 90px; padding: 10px; display: flex; flex-direction: column-reverse; }
 .blogs .blog-list .blog-container .detail-container .blog-title p { margin-bottom: 0; }
-.blogs .blog-list .blog-container .detail-container .blog-title p.title { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 18px; font-weight: 800; }
+.blogs .blog-list .blog-container .detail-container .blog-title p.title { text-align: end; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 18px; font-weight: 800; }
 .blogs .blog-list .blog-container .detail-container .blog-title p .pc-date { font-size: 12px; color: #696969; }
 .blogs .blog-list .blog-container .detail-container .blog-author { display: flex; justify-content: flex-end; }
 .blogs .blog-list .blog-container .detail-container .blog-author a { font-size: 16px; font-weight: 500; }
@@ -462,6 +466,8 @@ top attachment etc.
 .archive .ar-content { display: flex; }
 .archive .ar-content .ar-left { flex: 0.7; }
 .archive .ar-content .ar-left .ar-left-i { margin-top: 15px; padding: 5px; display: flex; border-bottom: 1px solid #e0e0e0; }
+.archive .ar-content .ar-left .ar-left-i .ar-i-img { height: 250px; width: 250px; }
+.archive .ar-content .ar-left .ar-left-i .ar-i-img img { object-fit: contain; }
 .archive .ar-content .ar-left .ar-left-i .ar-i-detail { flex-direction: column; margin-left: 10px; }
 .archive .ar-content .ar-left .ar-left-i .ar-i-detail .pc-date { font-size: 12px; color: #696969; }
 .archive .ar-content .ar-left .ar-left-i .ar-i-detail .ar-i-title { color: #222; font-size: 22px; }
@@ -482,7 +488,9 @@ top attachment etc.
 .public-blog .public-blog-title .author-user .auth-con .profile-icon img.portrait { width: 100%; height: auto; }
 .public-blog .public-blog-title .author-user .auth-con .profile-icon img.landscape { height: 100%; width: auto; }
 .public-blog .public-blog-title .author-user .auth-con .author-detail { display: flex; justify-content: center; align-items: flex-start; flex-direction: column; }
-.public-blog .public-blog-content { width: 100%; font-size: 21px; display: flex; }
+.public-blog .pc-blog-cover-image { display: flex; justify-content: center; width: 100%; padding: 0 15%; overflow: hidden; margin-bottom: 25px; }
+.public-blog .pc-blog-cover-image img { width: 100%; object-fit: contain; }
+.public-blog .public-blog-content { width: 100%; font-size: 21px; display: flex; margin-bottom: 50px; }
 .public-blog .public-blog-content .left { flex: 0.1; }
 .public-blog .public-blog-content #blogContent { flex: 0.8; }
 .public-blog .public-blog-content #blogContent img { max-width: 100%; }
@@ -491,7 +499,7 @@ top attachment etc.
 .public-blog .response .left { flex: 0.1; }
 .public-blog .response .comment-section { flex: 0.8; display: flex; flex-direction: column; }
 .public-blog .response .comment-section .comment-area { display: flex; }
-.public-blog .response .comment-section .comment-area textarea { font-size: 21px; flex: 0.8; height: 80px; resize: none; }
+.public-blog .response .comment-section .comment-area textarea { font-size: 21px; flex: 0.8; height: 62px; line-height: 40px; resize: none; }
 .public-blog .response .comment-section .comment-area button { font-size: 21px; flex: 0.2; }
 .public-blog .response .comment-section .responses .i-response { margin: 10px 0; display: flex; }
 .public-blog .response .comment-section .responses .i-response .pc-profile-icon { width: 60px; height: 60px; border-radius: 50%; overflow: hidden; margin: 0 10px; }
