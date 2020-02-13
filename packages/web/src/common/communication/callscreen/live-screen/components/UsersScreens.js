@@ -2,9 +2,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { ENDPOINT } from '../../../../../config';
+import { prototype } from 'events';
 
-const UserView = ({ pc, database }) => {
-  // console.log('pc in USerView', pc);
+const UserView = ({ pc, database, mute }) => {
+  console.log('pc in USerView', pc);
   return (
     pc.user ? (
       <div
@@ -25,7 +26,7 @@ const UserView = ({ pc, database }) => {
         }}
       >
         <video
-          muted={pc.online}
+          muted={mute}
           id={`video-${pc.user.id}`}
           playsInline
           poster={`${ENDPOINT}/user/${10000000 + parseInt(pc.user.id, 10)}/profile/${Object.values(database.UserDetail.byId).find(u => u.userId === pc.user.id).image}`}
@@ -36,6 +37,7 @@ const UserView = ({ pc, database }) => {
         <div style={{ position: 'absolute', marginTop: 20, marginLeft: 20, width: 100, height: 100 }}>
           <div>
             <span style={{ color: 'yellow' }}>{ pc.online ? 'You' : `${pc.user.firstName}`}</span>
+            <span style={{ color: 'red' }}>{ mute ? 'muted' : 'notmuted'}</span>
           </div>
           <div>
             <span style={{ color: 'yellow' }}>{pc.iceCandidateStatus}</span>
@@ -45,18 +47,23 @@ const UserView = ({ pc, database }) => {
     ) : null
   );
 };
+
 UserView.propTypes = {
   pc: PropTypes.objectOf(PropTypes.any).isRequired,
   database: PropTypes.objectOf(PropTypes.any).isRequired,
+  mute: PropTypes.bool.isRequired,
 };
 
 const UsersView = (props) => {
   const { webRtc, account, database } = props;
   // console.log('Account', account);
+  const { type, connectionId } = webRtc.localCallHistory.chatHistory;
+  const muteId = type === 'user' ? webRtc.mainStreamId : database.Board.byId[connectionId].activeStatus;
+  console.log('mute user', muteId);
   const peerConnection = Object.values(webRtc.peerConnections).filter(obj => obj.iceCandidateStatus !== 'disconnected');
   // console.log('all perconnection', peerConnection);
-  const allOtherUser = peerConnection.map(pc => <UserView pc={pc} key={pc.user.id} database={database} />);
-  const finalUserList = webRtc.localCallHistory.chatHistory.type === 'user' ? [<UserView pc={account} key={account.user.id} database={database} />] : [...allOtherUser, <UserView pc={account} key={account.user.id} database={database} />];
+  const allOtherUser = peerConnection.map(pc => <UserView pc={pc} key={pc.user.id} database={database} mute={muteId === pc.user.id} />);
+  const finalUserList = webRtc.localCallHistory.chatHistory.type === 'user' ? [<UserView pc={account} mute key={account.user.id} database={database} />] : [...allOtherUser, <UserView mute pc={account} key={account.user.id} database={database} />];
   return finalUserList;
 };
 

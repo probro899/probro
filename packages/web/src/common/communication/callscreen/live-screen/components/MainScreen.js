@@ -1,6 +1,7 @@
 /* eslint-disable react/jsx-indent */
 /* eslint-disable jsx-a11y/media-has-caption */
 import React from 'react';
+import ReactPlayer from 'react-player';
 import PropTypes from 'prop-types';
 import { ENDPOINT } from '../../../../../config';
 
@@ -39,8 +40,9 @@ class MainScreen extends React.Component {
           controls
           id="video-mentor"
           playsInline
+          controlsList="noremoteplayback"
           autoPlay
-          poster={`${ENDPOINT}/user/${10000000 + parseInt(userId, 10)}/profile/${Object.values(database.UserDetail.byId).find(u => u.userId === userId).image}`}
+          poster={userId && `${ENDPOINT}/user/${10000000 + parseInt(userId, 10)}/profile/${Object.values(database.UserDetail.byId).find(u => u.userId === userId).image}`}
           style={{ maxHeight: 380, minHeight: 200, minWidth: 300, width: '100%', background: 'black' }}
         />
           </div>

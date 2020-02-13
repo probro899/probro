@@ -39,7 +39,7 @@ class Notifications extends React.Component {
   render() {
     const { drawerOpen, notiNo } = this.state;
     const { apis, account } = this.props;
-    // console.log('props in notification', this.props, lastNotifId);
+    // console.log('props in notification', this.props);
     return (
       <Link to="#" onClick={this.onDrawerToggle}>
         <div className="navbar-item">

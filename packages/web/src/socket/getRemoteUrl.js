@@ -1,12 +1,8 @@
 /* global window */
 import store from '../store';
-import { SOCKETURL } from '../config';
+import { SOCKETURL, PORT, SOCKET_PROTOCOL } from '../config';
 
-// const protocol = 'wss';
-const protocol = 'ws';
-const host = process.env.REACT_APP_SOCKET_HOST || window.location.hostname;
-const port = 4001;
-// const port = 443;
+// const host = process.env.REACT_APP_SOCKET_HOST || window.location.hostname;
 // const port = process.env.REACT_APP_SOCKET_PORT || window.location.port;
 // const temp = 'localhost';
 
@@ -16,6 +12,5 @@ export default () => {
   if (!sessionId) {
     return null;
   }
-  // return `${protocol}://${host}:${port}/shocked/web/${sessionId}`;
-  return `${protocol}://${SOCKETURL}:${port}/shocked/web/${sessionId}`;
+  return `${SOCKET_PROTOCOL}://${SOCKETURL}:${PORT}/shocked/web/${sessionId}`;
 };

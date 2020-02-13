@@ -1,9 +1,11 @@
 // const ENDPOINT = 'https://properclass.com';
 // const SOCKETURL = 'properclass.com';
+// const PORT = 443;
+// const SOCKET_PROTOCOL = 'wss';
 
 const ENDPOINT = 'http://localhost:4001';
 const SOCKETURL = 'localhost';
-// const SOCKETURL = '192.168.1.66';
-// const ENDPOINT = 'http://192.168.1.66:4001';
+const PORT = 4001;
+const SOCKET_PROTOCOL = 'ws';
 
-export { ENDPOINT, SOCKETURL };
+export { ENDPOINT, SOCKETURL, PORT, SOCKET_PROTOCOL };

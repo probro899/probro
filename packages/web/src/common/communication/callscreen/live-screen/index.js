@@ -31,7 +31,7 @@ class LiveCallScreen extends React.Component {
 
   componentDidMount() {
     const { webRtc, database, account } = this.props;
-    if (webRtc.chatHistory.type === 'board') {
+    if (webRtc.chatHistory.type === 'board' && webRtc.localCallHistory.chatHistory) {
       if (database.Board.byId[webRtc.localCallHistory.chatHistory.connectionId].activeStatus === account.user.id) {
         const lastVideoElement = document.getElementById('video-mentor');
         if (lastVideoElement) {
