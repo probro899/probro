@@ -7,8 +7,40 @@ import * as actions from '../../actions';
 import { DeletePopOver } from '../../common';
 import client from '../../socket';
 import { MoreButton } from '../../components';
+import { ENDPOINT } from '../../config';
 
 const blogImg = require('../../assets/blog-img.jpeg');
+
+const EachBlog = ({ onMore, users, obj }) => {
+  const coverImage = obj.coverImage ? `${ENDPOINT}/user/${10000000 + parseInt(obj.userId, 10)}/blog/${obj.coverImage}` : blogImg;
+  return (
+    <div className="blog-container">
+      <div className="img-container">
+        <MoreButton onMore={onMore} id={obj.id} />
+        <img
+          alt="test"
+          src={coverImage}
+        />
+      </div>
+      <div className="detail-container">
+        <div className="blog-author">
+          <Link to={`/user/${users.byId[obj.userId].slug}`}>
+            {users.byId[obj.userId].middleName
+              ? `${users.byId[obj.userId].firstName} ${users.byId[obj.userId].middleName} ${users.byId[obj.userId].lastName}` : `${users.byId[obj.userId].firstName} ${users.byId[obj.userId].lastName}`}
+          </Link>
+        </div>
+        <div className="blog-title">
+          <p className="title">{obj.title}</p>
+          <p style={{ textAlign: 'right', width: '100%' }}>
+            <span className="pc-date">
+              {new Date(obj.timeStamp).toDateString()}
+            </span>
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 class Blogs extends Component {
   state = {
@@ -99,35 +131,8 @@ class Blogs extends Component {
             )
           }
           {
-            database.Blog.allIds.map((id, index) => {
-              return (
-                // eslint-disable-next-line react/no-array-index-key
-                <div className="blog-container" key={index}>
-                  <div className="img-container">
-                    <MoreButton onMore={this.onMore} id={id} />
-                    <img
-                      alt="test"
-                      src={blogImg}
-                    />
-                  </div>
-                  <div className="detail-container">
-                    <div className="blog-title">
-                      <p className="title">{database.Blog.byId[id].title}</p>
-                      <p style={{ textAlign: 'right', width: '100%' }}>
-                        <span className="pc-date">
-                          {new Date(database.Blog.byId[id].timeStamp).toDateString()}
-                        </span>
-                      </p>
-                    </div>
-                    <div className="blog-author">
-                      <Link to={`/user/${database.User.byId[database.Blog.byId[id].userId].slug}`}>
-                        {database.User.byId[database.Blog.byId[id].userId].middleName
-                          ? `${database.User.byId[database.Blog.byId[id].userId].firstName} ${database.User.byId[database.Blog.byId[id].userId].middleName} ${database.User.byId[database.Blog.byId[id].userId].lastName}` : `${database.User.byId[database.Blog.byId[id].userId].firstName} ${database.User.byId[database.Blog.byId[id].userId].lastName}`}
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-              );
+            Object.values(database.Blog.byId).map((obj, index) => {
+              return <EachBlog onMore={this.onMore} users={database.User} obj={obj} key={index} />;
             })
           }
         </div>

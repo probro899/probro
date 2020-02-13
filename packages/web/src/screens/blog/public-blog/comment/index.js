@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { TextArea, Button } from '@blueprintjs/core';
 import Comment from './Comment';
-import { timeStampSorting } from '../../../common/utility-functions';
+import { timeStampSorting } from '../../../../common/utility-functions';
 
 class CommentContainer extends React.Component {
   state = {

@@ -8,10 +8,10 @@ import * as actions from '../../../../actions';
 import Notifications from '../notification';
 import MessageNotification from './MessageNotification';
 import SmallScreenMenu from './SmallScreenMenu';
-import { RoundPicture } from '../../../../components';
 import { ENDPOINT } from '../../../../config';
+import DashboardMenu from './DashboardMenu';
 
-const profileIcon = require('../../../../assets/icons/64w/uploadicon64.png');
+
 const pcLogo = require('../../../../assets/logo.png');
 
 const DropDownMenu = (onclick, apis) => {
@@ -21,7 +21,7 @@ const DropDownMenu = (onclick, apis) => {
         icon="dashboard"
         active
         intent={Intent.PRIMARY}
-        text="Dashboard"
+        text="Goto Dashboard"
         onClick={onclick}
       />
       <MenuItem
@@ -141,24 +141,7 @@ class Navbar extends Component {
             )}
           {account.user && <Notifications {...this.props} apis={apis} />}
           { account.user
-            ? (
-              <Link
-                to="#"
-                className={navigate.mainNav.name === 'profileIcon' ? 'active' : null}
-              >
-                <Popover
-                  content={DropDownMenu(this.onClickHandler, apis)}
-                  minimal
-                  position={Position.BOTTOM}
-                >
-                  <div className="navbar-item">
-                    <div className="profile-icon">
-                      <RoundPicture imgUrl={profilePic || profileIcon} />
-                    </div>
-                  </div>
-                </Popover>
-              </Link>
-            )
+            ? <DashboardMenu navigate={navigate} profilePic={profilePic} content={DropDownMenu(this.onClickHandler, apis)} />
             : (
               <Link
                 to="/login"

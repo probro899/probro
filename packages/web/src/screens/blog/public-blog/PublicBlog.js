@@ -3,15 +3,16 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import axios from 'axios';
-import Navbar from '../home/component/navbar';
+import Navbar from '../../home/component/navbar';
 import CommentContainer from './comment';
-import Footer from '../../common/footer';
-import client from '../../socket';
-import { ENDPOINT } from '../../config';
-import { Spinner } from '../../common';
-import { RoundPicture } from '../../components';
+import Footer from '../../../common/footer';
+import client from '../../../socket';
+import { ENDPOINT } from '../../../config';
+import { Spinner } from '../../../common';
+import { RoundPicture } from '../../../components';
+import BlogCoverImage from './BlogCoverImage';
 
-const file = require('../../assets/icons/64w/uploadicon64.png');
+const file = require('../../../assets/icons/64w/uploadicon64.png');
 
 class PublicBlog extends React.Component {
   state={
@@ -93,9 +94,8 @@ class PublicBlog extends React.Component {
               </div>
             </div>
           </div>
-          <div
-            className="public-blog-content"
-          >
+          <BlogCoverImage blog={data} />
+          <div className="public-blog-content">
             <div className="left" />
             <div
               id="blogContent"

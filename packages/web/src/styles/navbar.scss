@@ -48,7 +48,7 @@ top attachment etc.
       height: 50px;
       border-radius: 50%;
       overflow: hidden;
-      box-shadow: 0px 1px 3px 2px $normalShadowColor;
+      border: 2px solid $backgroundColor;
       img.portrait {
         width: 100%;
         height: auto;
@@ -56,6 +56,32 @@ top attachment etc.
       img.landscape {
         height: 100%;
         width: auto;
+      }
+    }
+    &.pc-dashboard-icon {
+      display: flex;
+      flex-direction: row-reverse;
+      background-color: $darkBlue;
+      padding: 5px;
+      margin-left: 5px;
+      border-top-left-radius: 30px;
+      border-bottom-left-radius: 30px;
+      .pc-dot {
+        position: absolute;
+        right: 5px;
+        height: 7px;
+        width: 7px;
+        border-radius: 3.5px;
+        // border: 2px solid $backgroundColor;
+        background-color: $backgroundColor;
+        z-index: 10;
+      }
+      .pc-dashboard {
+        display: flex;
+        align-items: center;
+        margin-left: 5px;
+        font-size: 12px;
+        color: $backgroundColor;
       }
     }
   }
@@ -68,6 +94,9 @@ top attachment etc.
   a:hover {
     .navbar-item {
       color: $skyBlueMain;
+      .pc-dot {
+        background-color: red;
+      }
     }
   }
   a.active {
