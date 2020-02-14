@@ -6,6 +6,7 @@ import * as actions from '../../../actions';
 import Tools from './Tools';
 
 const fabric = require('fabric');
+const pcLogo = require('../../../assets/logo.png');
 
 class DrawingBoard extends Component {
   state = {
@@ -16,24 +17,30 @@ class DrawingBoard extends Component {
     draw: false,
   }
 
-  async componentWillMount() {
+  async componentDidMount() {
     const { updateNav } = this.props;
     const apis = await client.scope('Mentee');
-    this.setState({ apis });
-    updateNav({
-      schema: 'sideNav',
-      data: { name: 'Drawing Board' },
-    });
-  }
-
-  componentDidMount() {
     const canvas = new fabric.fabric.Canvas('mainCanvas', { preserveObjectStacking: true, selection: false, backgroundColor: 'white' });
     canvas.freeDrawingBrush.width = 2;
     canvas.on('mouse:down', () => {
       this.onCanvasClick();
     });
     this.setState({
+      apis,
       canvas,
+    });
+    updateNav({
+      schema: 'sideNav',
+      data: { name: 'Drawing Board' },
+    });
+    this.addInitialAnimation();
+  }
+
+  addInitialAnimation = () => {
+    const { canvas } = this.state;
+    fabric.fabric.Image.fromURL(pcLogo, (myImg) => {
+      const img1 = myImg.set({ left: 875, top: 0, scaleX: 0.2, scaleY: 0.2, selectable: false, opacity: 0.6 });
+      canvas.add(img1);
     });
   }
 
@@ -58,6 +65,7 @@ class DrawingBoard extends Component {
   clearCanvas = () => {
     const { canvas } = this.state;
     canvas.clear();
+    this.addInitialAnimation();
     this.setState({
       canvas,
     });
