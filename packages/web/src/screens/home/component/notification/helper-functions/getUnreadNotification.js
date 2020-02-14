@@ -11,7 +11,6 @@ const findNotificationSeenStatus = (notifId, props) => {
 };
 
 export default (props) => {
-  console.log('props in get Read notification', props);
   const { database, account } = props;
   if (database.Notification.allIds.length > 0) {
     const arrWithSeenStatus = Object.values(database.Notification.byId).map(un => ({ ...un, seenStatus: findNotificationSeenStatus(un.id, props) }));

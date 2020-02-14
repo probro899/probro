@@ -160,6 +160,11 @@
     flex-direction: row;
     align-items: flex-start;
     overflow-y: scroll;
+    -ms-overflow-style: none;
+    scrollbar-color: none; 
+    ::-webkit-scrollbar {
+      display: none;
+    }
     .column-container {
       height: 100%;
       // this 18px value has been calculated according to margins 18 px * 2

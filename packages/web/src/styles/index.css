@@ -221,7 +221,8 @@ top attachment etc.
 .tool-bar .toolbar-container .right-tools button { margin: 0px 3px; padding: 1px; color: #222; border: 1px solid #222; }
 .tool-bar .toolbar-container .right-tools button svg { fill: #222; }
 
-.class-wrapper .columns { height: 100%; padding-top: 100px; display: flex; flex-direction: row; align-items: flex-start; overflow-y: scroll; }
+.class-wrapper .columns { height: 100%; padding-top: 100px; display: flex; flex-direction: row; align-items: flex-start; overflow-y: scroll; -ms-overflow-style: none; scrollbar-color: none; }
+.class-wrapper .columns ::-webkit-scrollbar { display: none; }
 .class-wrapper .columns .column-container { height: 100%; padding-bottom: 18px; }
 .class-wrapper .columns .column-container .column-inner-container { display: flex; flex-direction: column; min-width: 300px; max-width: 300px; max-height: 100%; margin: 8px 8px 8px 8px; background-color: #1d4354; }
 .class-wrapper .columns .column-container .column-inner-container .column-title { padding: 8px; position: relative; color: #fff; }

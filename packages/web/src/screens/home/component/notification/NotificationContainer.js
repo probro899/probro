@@ -7,6 +7,7 @@ import moment from 'moment';
 import { Icon } from '@blueprintjs/core';
 import { RoundPicture } from '../../../../components';
 import { ENDPOINT } from '../../../../config';
+import { timeStampSorting } from '../../../../common/utility-functions';
 
 const file = require('../../../../assets/icons/64w/uploadicon64.png');
 
@@ -14,7 +15,7 @@ class NotificationContainer extends React.Component {
   state = {};
 
   getNotification = (notification) => {
-    const { account, database } = this.props;
+    const { database, account } = this.props;
     let url;
     let imageIcon;
     switch (notification.type) {
@@ -29,7 +30,7 @@ class NotificationContainer extends React.Component {
         );
         break;
       case 'board':
-        url = `class-work/${account.slug}/${notification.boardId}`;
+        url = `class-work/${database.User.byId[account.user.id].slug}/${notification.boardId}`;
         imageIcon = (
           <div className="pc-noti-icon">
             <Icon icon="application" iconSize={40} />
@@ -58,7 +59,7 @@ class NotificationContainer extends React.Component {
 
   render() {
     const { database } = this.props;
-    const notifications = Object.values(database.Notification.byId);
+    const notifications = Object.values(database.Notification.byId).sort(timeStampSorting);
     return (
       <div className="notification-list">
         {

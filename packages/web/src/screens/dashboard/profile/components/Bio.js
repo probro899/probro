@@ -94,13 +94,13 @@ class Bio extends React.Component {
       updateDatabaseSchema,
       addDatabaseSchema,
     } = this.props;
-    const bi = Object.values(database.UserDetail.byId).find(obj => account.user.id === obj.userId).bio;
+    const bio = Object.values(database.UserDetail.byId).find(obj => account.user.id === obj.userId);
     const portals = Object.values(database.UserPortal.byId).filter(obj => obj.userId === account.user.id);
     return (
       <div className="bio">
         <p className="bio-content">About</p>
         <div className="bio-info">
-          {bi ? <p>{bi}</p> : <p style={{ color: '#696969' }}>No bio added</p>}
+          {bio ? <p>{bio.bio}</p> : <p style={{ color: '#696969' }}>No bio added</p>}
           <p className="edit">
             <Icon icon="edit" onClick={this.togglePopover} />
           </p>

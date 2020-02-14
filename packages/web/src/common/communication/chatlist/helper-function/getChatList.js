@@ -89,7 +89,8 @@ const findBoardMessageDetails = (arr, props) => {
       return true;
     }
   });
-  return { connectionId: lastMessage.boardId, type: 'board', boardDetails, unSeenNo, timeStamp: arrWithSeenStatus[0].timeStamp, lastMessage: lastMessageForSeenStatus, lastMessageId };
+  // i have changed here connectionId
+  return { connectionId: boardId, type: 'board', boardDetails, unSeenNo, timeStamp: arrWithSeenStatus[0].timeStamp, lastMessage: lastMessageForSeenStatus, lastMessageId };
 };
 
 export default (props) => {

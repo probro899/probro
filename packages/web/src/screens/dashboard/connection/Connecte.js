@@ -85,7 +85,7 @@ class Connecte extends React.Component {
               {user.middleName ? `${user.firstName} ${user.middleName} ${user.lastName}` : `${user.firstName} ${user.lastName}`}
             </Link>
           </p>
-          <p className="location">{userDetail.address ? userDetail.address : '---'}</p>
+          <p className="location">{userDetail && userDetail.address ? userDetail.address : '---'}</p>
           <div className="con-config">
             {
               this.getConfigButtons()
