@@ -25,6 +25,7 @@ class Blogs extends Component {
     coverImage: {
       actualFile: null,
       url: null,
+      serverImageName: null,
     },
   };
 
@@ -45,7 +46,7 @@ class Blogs extends Component {
         blogId: blog.id,
         publish: blog.saveStatus,
         title: blog.title,
-        coverImage: { url: blog.coverImage ? `${ENDPOINT}/user/${10000000 + parseInt(blog.userId, 10)}/blog/${blog.coverImage}` : null },
+        coverImage: { actualFile: null, serverImageName: blog.coverImage, url: blog.coverImage ? `${ENDPOINT}/user/${10000000 + parseInt(blog.userId, 10)}/blog/${blog.coverImage}` : null },
         description: blog.content,
       });
     }
@@ -58,7 +59,7 @@ class Blogs extends Component {
       document.getElementById('editor').innerHTML = nextProps.database.Blog.byId[parseInt(match.params.blogId, 10)].content;
       this.setState({
         blogId: blog.id,
-        coverImage: { url: blog.coverImage ? `${ENDPOINT}/user/${10000000 + parseInt(blog.userId, 10)}/blog/${blog.coverImage}` : null },
+        coverImage: { actualFile: null, serverImageName: blog.coverImage, url: blog.coverImage ? `${ENDPOINT}/user/${10000000 + parseInt(blog.userId, 10)}/blog/${blog.coverImage}` : null },
         publish: blog.saveStatus,
         title: blog.title,
         description: blog.content,
@@ -221,7 +222,9 @@ class Blogs extends Component {
           uploadedUrl = res.data;
           this.setState({
             coverImage: {
+              ...coverImage,
               actualFile: null,
+              serverImageName: uploadedUrl,
             },
           });
         }
@@ -244,7 +247,7 @@ class Blogs extends Component {
         publish: 'draft',
       });
       addDatabaseSchema('Blog', {
-        id: Date.now(),
+        id: res,
         userId: account.user.id,
         timeStamp: Date.now(),
         saveStatus: publish,
@@ -259,7 +262,7 @@ class Blogs extends Component {
         title,
         content: description,
         saveStatus: publish,
-        coverImage: (!coverImage.url && !uploadedUrl) ? null : (uploadedUrl || coverImage.url),
+        coverImage: (!coverImage.url && !uploadedUrl) ? null : (uploadedUrl || coverImage.serverImageName),
       },
       {
         id: blogId,
@@ -270,7 +273,7 @@ class Blogs extends Component {
       saveStatus: publish,
       title,
       content: description,
-      coverImage: (!coverImage.url && !uploadedUrl) ? null : (uploadedUrl || coverImage.url),
+      coverImage: (!coverImage.url && !uploadedUrl) ? null : (uploadedUrl || coverImage.serverImageName),
     });
   }
 
@@ -363,7 +366,6 @@ class Blogs extends Component {
       title,
       coverImage,
     } = this.state;
-    console.log(this.props.database.Blog);
     return (
       <div>
         <Navbar className="pcm-nav" />
