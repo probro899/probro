@@ -86,7 +86,7 @@ class Index extends React.Component {
           {(isUser && database.UserDetail.byId[webRtc.localCallHistory.chatHistory.user.user.id])
             ? (
               <div className="img-container">
-                <RoundPicture imgUrl={`${ENDPOINT}/user/${10000000 + parseInt(webRtc.localCallHistory.chatHistory.user.user.id, 10)}/profile/${Object.values(database.UserDetail.byId).find(u => u.userId === webRtc.localCallHistory.chatHistory.user.user.id).image}`} />
+                {/* <RoundPicture imgUrl={`${ENDPOINT}/user/${10000000 + parseInt(webRtc.localCallHistory.chatHistory.user.user.id, 10)}/profile/${Object.values(database.UserDetail.byId).find(u => u.userId === webRtc.localCallHistory.chatHistory.user.user.id).image}`} /> */}
               </div>
             )
             : <IconOrImage isUser={isUser} />

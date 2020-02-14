@@ -8,6 +8,7 @@ export default async (props, state, data) => {
   // console.log('Total candidateFor this pc', webRtc.iceCandidates);
   const { uid, answer, boardId } = data;
   const { pc } = webRtc.peerConnections[uid];
+  console.log('ONANSWER', uid, webRtc);
   const iceCandidate = webRtc.iceCandidates[uid];
   if (data) {
     // console.log('sending All candidate during answer', iceCandidate);

@@ -88,7 +88,7 @@ export default async function main(onIceCandidateHandler, uid, gotRemoteStreamHa
 
     pc.onicecandidateerror = e => console.error('Error on onIceCandidate', e);
 
-    // pc.onicegatheringstatechange = info => console.info('OnICeGatheringsStateChange', info);
+    pc.onicegatheringstatechange = info => console.info('OnICeGatheringsStateChange', info);
 
     // seting Local Description
     const setLocalDescription = (data) => {
