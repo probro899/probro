@@ -8,7 +8,15 @@ import { ENDPOINT } from '../../../../config';
 
 const callingPerson = require('../../../../assets/icons/128w/uploadicon128.png');
 
-const IconOrImage = ({ isUser }) => {
+const IconOrImage = ({ isUser, database, webRtc }) => {
+  const userDetail = database.UserDetail.byId[webRtc.localCallHistory.chatHistory.user.user.id]
+  if (isUser && userDetail && userDetail.image) {
+    return (
+      <div className="img-container">
+        <RoundPicture imgUrl={`${ENDPOINT}/user/${10000000 + parseInt(userDetail.userId, 10)}/profile/${userDetail.image}`} />
+      </div>
+    );
+  }
   if (!isUser) {
     return (
       <div className="icon-container">
@@ -25,6 +33,8 @@ const IconOrImage = ({ isUser }) => {
 
 IconOrImage.propTypes = {
   isUser: PropTypes.bool.isRequired,
+  database: PropTypes.objectOf(PropTypes.any).isRequired,
+  webRtc: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 class Index extends React.Component {
@@ -83,14 +93,7 @@ class Index extends React.Component {
               ...
             </span>
           </div>
-          {(isUser && database.UserDetail.byId[webRtc.localCallHistory.chatHistory.user.user.id])
-            ? (
-              <div className="img-container">
-                {/* <RoundPicture imgUrl={`${ENDPOINT}/user/${10000000 + parseInt(webRtc.localCallHistory.chatHistory.user.user.id, 10)}/profile/${Object.values(database.UserDetail.byId).find(u => u.userId === webRtc.localCallHistory.chatHistory.user.user.id).image}`} /> */}
-              </div>
-            )
-            : <IconOrImage isUser={isUser} />
-          }
+          <IconOrImage isUser={isUser} webRtc={webRtc} database={database} />
           <div className="controllers">
             {
               (callStatus === 'declined' || callStatus === 'disconnected' || callStatus === 'busy') ? (

@@ -36,10 +36,24 @@ class DrawingBoard extends Component {
     this.addInitialAnimation();
   }
 
+  componentWillUpdate(nextProps) {
+    const { webRtc } = this.props;
+    const { canvas } = this.state;
+    if (webRtc.localCallHistory && webRtc.localCallHistory.mediaType === 'whiteBoard') {
+      return;
+    }
+    if (nextProps.webRtc.localCallHistory && nextProps.webRtc.localCallHistory.mediaType === 'whiteBoard') {
+      const logo = canvas.getObjects().find(obj => obj.cacheKey === 'logo' && obj);
+      canvas.remove(logo);
+      this.addInitialAnimation();
+      canvas.requestRenderAll();
+    }
+  }
+
   addInitialAnimation = () => {
     const { canvas } = this.state;
     fabric.fabric.Image.fromURL(pcLogo, (myImg) => {
-      const img1 = myImg.set({ left: 875, top: 0, scaleX: 0.2, scaleY: 0.2, selectable: false, opacity: 0.6 });
+      const img1 = myImg.set({ cacheKey: 'logo', left: 875, top: 0, scaleX: 0.2, scaleY: 0.2, selectable: false, opacity: 0.6 });
       canvas.add(img1);
     });
   }

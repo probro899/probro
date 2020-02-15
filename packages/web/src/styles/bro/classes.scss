@@ -277,6 +277,8 @@
           resize: none;
           padding: 0px 3px;
           overflow-y: scroll;
+          height: 40px;
+          line-height: 35px;
           font-size: 18px;
           font-weight: bold;
           background: transparent;
@@ -284,7 +286,7 @@
         .buttons-group {
           display: flex;
           justify-content: center;
-          align-items: center;
+          // align-items: center;
           button {
             margin-left: 5px;
           }
@@ -295,6 +297,7 @@
             }
           }
         }
+        .bp3-icon-tick { svg { fill: $backgroundColor; } }
       }
     }
     .overlay-body {
@@ -335,6 +338,8 @@
             font-size: 15px;
             font-weight: 400;
           }
+          .bp3-icon-tick { svg { fill: $backgroundColor; } }
+          .bp3-icon-cross { svg { fill: black; } }
         }
         .attach-container {
           padding: 5px;
