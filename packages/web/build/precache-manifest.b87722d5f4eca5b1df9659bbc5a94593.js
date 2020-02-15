@@ -1,31 +1,35 @@
 self.__precacheManifest = [
   {
-    "revision": "7d2e4db0aeb4605c6f54",
-    "url": "/static/css/main.79bc625b.chunk.css"
+    "revision": "65a6eb40a8c3e18ebef5",
+    "url": "/static/css/main.5b2e09c2.chunk.css"
   },
   {
-    "revision": "7d2e4db0aeb4605c6f54",
-    "url": "/static/js/main.7d2e4db0.chunk.js"
+    "revision": "65a6eb40a8c3e18ebef5",
+    "url": "/static/js/main.65a6eb40.chunk.js"
   },
   {
-    "revision": "a26e053ea8277156073a",
-    "url": "/static/css/1.12d19206.chunk.css"
+    "revision": "e1c2fa180a761704d407",
+    "url": "/static/css/1.cd4708ab.chunk.css"
   },
   {
-    "revision": "a26e053ea8277156073a",
-    "url": "/static/js/1.a26e053e.chunk.js"
+    "revision": "e1c2fa180a761704d407",
+    "url": "/static/js/1.e1c2fa18.chunk.js"
   },
   {
     "revision": "229c360febb4351a89df",
     "url": "/static/js/runtime~main.229c360f.js"
   },
   {
+    "revision": "d4c77ff23f10f741ec67fda4499ef24a",
+    "url": "/static/media/uploadicon512.d4c77ff2.png"
+  },
+  {
     "revision": "4c2e5ee7211e0ef93692bb84d95acd30",
     "url": "/static/media/blog-img.4c2e5ee7.jpeg"
   },
   {
-    "revision": "d4c77ff23f10f741ec67fda4499ef24a",
-    "url": "/static/media/uploadicon512.d4c77ff2.png"
+    "revision": "938bb86b36603784693fa681294217a6",
+    "url": "/static/media/logo.938bb86b.png"
   },
   {
     "revision": "85eb53f031ef299910a9aae96dac3e35",
@@ -34,10 +38,6 @@ self.__precacheManifest = [
   {
     "revision": "da570d5fa70391e358e5a4c90da47cc5",
     "url": "/static/media/ringtone.da570d5f.mp3"
-  },
-  {
-    "revision": "938bb86b36603784693fa681294217a6",
-    "url": "/static/media/logo.938bb86b.png"
   },
   {
     "revision": "b4cb6006625fcf26a4acd58a71c61f4a",
@@ -52,12 +52,12 @@ self.__precacheManifest = [
     "url": "/static/media/insight.f068a8c1.png"
   },
   {
-    "revision": "cd1a26696ebf17a89545a3f9067d7028",
-    "url": "/static/media/icons-16.cd1a2669.woff"
-  },
-  {
     "revision": "6fdb722c94434811f89a68eafc4531f8",
     "url": "/static/media/icons-16.6fdb722c.eot"
+  },
+  {
+    "revision": "cd1a26696ebf17a89545a3f9067d7028",
+    "url": "/static/media/icons-16.cd1a2669.woff"
   },
   {
     "revision": "5fa1b8f25b4aa8787f70d5b6b7f0b90f",
@@ -88,7 +88,7 @@ self.__precacheManifest = [
     "url": "/static/media/gotham-light.bceda3fa.otf"
   },
   {
-    "revision": "ee9bc0d31d91a1bc331a9357079ed0b7",
+    "revision": "1065cb4165429d250130ba621490b576",
     "url": "/index.html"
   }
 ];

@@ -16,6 +16,7 @@ class MainScreen extends React.Component {
     const { type, connectionId } = webRtc.localCallHistory.chatHistory;
     const isUser = type === 'user';
     const userId = isUser ? webRtc.mainStreamId : database.Board.byId[connectionId].activeStatus;
+    const user = Object.values(database.UserDetail.byId).find(u => u.userId === userId);
     return (
       <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', maxHeight: 400, minHeight: 200, width: '100%', minWidth: '100%', background: 'black', border: 'solid', borderWidth: 2, borderColor: 'black', borderRadius: 5, }}>
         <div
@@ -41,7 +42,7 @@ class MainScreen extends React.Component {
           playsInline
           controlsList="noremoteplayback"
           autoPlay
-          poster={userId && `${ENDPOINT}/user/${10000000 + parseInt(userId, 10)}/profile/${Object.values(database.UserDetail.byId).find(u => u.userId === userId).image}`}
+          poster={user ? `${ENDPOINT}/user/${10000000 + parseInt(userId, 10)}/profile/${user.image}` : null}
           style={{ maxHeight: 380, minHeight: 200, minWidth: 300, width: '100%', background: 'black' }}
         />
           </div>
