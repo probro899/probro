@@ -2,7 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 import { Button } from '@blueprintjs/core';
-import { MdCallEnd } from 'react-icons/md';
+import { TiMediaRecord } from 'react-icons/ti';
+import { FiMic, FiMicOff, FiEdit2, FiCopy, FiVideo, FiPhone } from 'react-icons/fi';
 import callUpgrader from '../helper-functions/callUpgrader';
 import { mediaRecorder } from '../../../helper-functions';
 
@@ -27,7 +28,8 @@ class Controllers extends React.Component {
   }
 
   callReject = () => {
-    const { closeHandler, change } = this.props;
+    const { closeHandler, change, toggleMaximize } = this.props;
+    toggleMaximize();
     closeHandler();
     change('history');
   }
@@ -44,46 +46,52 @@ class Controllers extends React.Component {
     }
   }
 
+  muteToggle = () => {
+    // perform mute here
+  }
+
   render() {
     const { webRtc, account } = this.props;
     const { showWhiteBoard, startRecording } = this.state;
-
     return (
-      <div className="controllers" style={{ marginTop: -10 }}>
+      <div className="controllers">
         {showWhiteBoard && <Redirect to={`/${account.user.slug}/drawing-board`} />}
-        <div style={{ width: '80%', background: 'black', height: '100%', display: 'flex', justifyContent: 'space-between' }}>
-          <div style={{ height: 50, width: 50, background: 'white', borderBottomRightRadius: 50 }} />
+        <div>
           <div style={{ padding: 10 }}>
-            <Button style={{ height: 40, width: 40, borderRadius: 40, background: 'red', color: 'white' }} onClick={this.callReject}>
-              <MdCallEnd size={30} />
+            <Button className="pc-control-btn bg-red" onClick={this.callReject}>
+              <FiPhone size={25} />
             </Button>
             <Button
-              style={{ height: 40, width: 40, borderRadius: 40, fontSize: 30 }}
-              icon="mobile-video"
+              className={webRtc.localCallHistory.mediaType === 'video' ? 'pc-control-btn active' : 'pc-control-btn'}
               onClick={() => this.callUpGradeController('video')}
-              intent={webRtc.localCallHistory.mediaType === 'video' ? 'danger' : 'success'}
-            />
-
+            >
+              <FiVideo size={25} />
+            </Button>
             <Button
-              style={{ height: 40, width: 40, borderRadius: 40, fontSize: 30 }}
-              icon="duplicate"
+              className={webRtc.localCallHistory.mediaType === 'screenshare' ? 'pc-control-btn active' : 'pc-control-btn'}
               onClick={() => this.callUpGradeController('screenshare')}
-              intent={webRtc.localCallHistory.mediaType === 'screenshare' ? 'danger' : 'success'}
-            />
+            >
+              <FiCopy size={25} />
+            </Button>
             <Button
-              style={{ height: 40, width: 40, borderRadius: 40, fontSize: 30 }}
-              icon="record"
               onClick={() => this.recordingHandler()}
-              intent={startRecording ? 'danger' : 'success'}
-            />
+              className={startRecording ? 'pc-control-btn active record' : 'pc-control-btn'}
+            >
+              <TiMediaRecord size={25} />
+            </Button>
             <Button
-              style={{ height: 40, width: 40, borderRadius: 40, fontSize: 30 }}
-              icon="edit"
+              className={webRtc.localCallHistory.mediaType === 'whiteBoard' ? 'pc-control-btn active' : 'pc-control-btn'}
               onClick={() => this.callUpGradeController('whiteBoard')}
-              intent={webRtc.localCallHistory.mediaType === 'whiteBoard' ? 'danger' : 'success'}
-            />
+            >
+              <FiEdit2 size={25} />
+            </Button>
+            <Button
+              className="pc-control-btn"
+              onClick={this.muteToggle}
+            >
+              <FiMic size={25} />
+            </Button>
           </div>
-          <div style={{ height: 50, width: 50, background: 'white', borderBottomLeftRadius: 50 }} />
         </div>
       </div>
     );
@@ -94,6 +102,7 @@ Controllers.propTypes = {
   closeHandler: PropTypes.func.isRequired,
   change: PropTypes.func.isRequired,
   updateWebRtc: PropTypes.func.isRequired,
+  toggleMaximize: PropTypes.func.isRequired,
   webRtc: PropTypes.objectOf(PropTypes.any).isRequired,
   account: PropTypes.objectOf(PropTypes.any).isRequired,
 };

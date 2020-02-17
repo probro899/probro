@@ -383,10 +383,7 @@ top attachment etc.
 .tag-input { display: flex !important; }
 .tag-input div { margin-top: 0px; }
 
-.communicate { position: fixed; width: 35%; bottom: 0; right: 2px; background: #fff; z-index: 2; border: 1px solid #e0e0e0; }
-@media screen and (min-width: 500px) and (max-width: 800px) { .communicate { width: 60%; } }
-@media screen and (min-width: 800px) and (max-width: 1000px) { .communicate { width: 50%; } }
-@media screen and (max-width: 500px) { .communicate { width: 90%; } }
+.communicate { position: fixed; width: 35%; bottom: 0; right: 2px; background: #fff; z-index: 3; border: 1px solid #e0e0e0; }
 .communicate .header { height: 30px; font-size: 16px; display: flex; color: #fff; justify-content: space-between; }
 .communicate .header .win-title { margin-left: 5px; font-weight: bold; display: flex; align-items: center; }
 .communicate .header .control-icons { display: flex; align-items: center; }
@@ -413,7 +410,7 @@ top attachment etc.
 .communicate .content .chat-history .chat-box { display: flex; }
 .communicate .content .chat-history .chat-box textarea { flex: 0.8; resize: none; }
 .communicate .content .chat-history .chat-box button { flex: 0.2; }
-.communicate .content .call-screen { display: flex; flex-direction: column; }
+.communicate .content .call-screen { display: flex; flex-direction: column; height: 100%; }
 .communicate .content .call-screen .sc-chat-list { height: 95%; position: absolute; background-color: #fff; z-index: 3; box-shadow: 0px 0px 3px 0px rgba(57, 73, 76, 0.35); width: 80%; }
 .communicate .content .call-screen .sc-chat-list .sc-cl-header { display: flex; justify-content: space-between; padding: 5px; height: 30px; border-bottom: 1px solid #e0e0e0; }
 .communicate .content .call-screen .sc-chat-list .sc-cl-header .sc-cl-title { color: #1d4354; font-size: 16; font-weight: bold; }
@@ -421,17 +418,25 @@ top attachment etc.
 .communicate .content .call-screen .sc-chat-list .sc-cl-content .sc-cl-i-chat { padding: 20px 0px; border-bottom: 1px solid #e0e0e0; background-color: #f9f9f9; cursor: pointer; }
 .communicate .content .call-screen .sc-chat-list .sc-cl-content .sc-cl-i-chat:hover { background-color: #88e0e9; }
 .communicate .content .call-screen .sc-chat-list .sc-cl-footer { height: 10px; }
-.communicate .content .call-screen .sc-chat-history { height: 95%; position: absolute; align-self: flex-end; background-color: #fff; z-index: 3; box-shadow: 0px 0px 3px 0px rgba(57, 73, 76, 0.35); width: 80%; }
+.communicate .content .call-screen .sc-chat-history { height: 95%; position: absolute; align-self: flex-end; background-color: #fff; z-index: 4; box-shadow: 0px 0px 3px 0px rgba(57, 73, 76, 0.35); width: 80%; }
 .communicate .content .call-screen .sc-chat-history .sc-ch-header { display: flex; justify-content: space-between; padding: 5px; height: 30px; border-bottom: 1px solid #e0e0e0; }
 .communicate .content .call-screen .sc-chat-history .sc-ch-header .sc-ch-title { color: #1d4354; font-size: 16; font-weight: bold; }
-.communicate .content .call-screen .sc-chat-history .sc-ch-content { overflow-y: scroll; overflow-x: hidden; height: calc(100% - 40px); }
+.communicate .content .call-screen .sc-chat-history .sc-ch-content { overflow-y: scroll; overflow-x: hidden; height: calc(100% - 33px); }
 .communicate .content .call-screen .sc-chat-history .sc-ch-footer { height: 10px; }
-.communicate .content .call-screen .top { display: flex; justify-content: space-between; align-items: center; padding: 5px 0px; border-bottom: 1px solid #e0e0e0; }
+.communicate .content .call-screen .top { display: flex; justify-content: space-between; align-items: center; padding: 5px 0px; border-bottom: 1px solid #e0e0e0; height: 35px; }
 .communicate .content .call-screen .top .op-name { display: flex; flex-direction: column; justify-content: center; color: #1d4354; font-weight: bold; font-size: 16px; }
-.communicate .content .call-screen .video-container { display: flex; justify-content: center; padding: 5px; }
-.communicate .content .call-screen .video-container .peer-video { object-fit: contain; width: 100%; }
-.communicate .content .call-screen .video-container .own-video { position: absolute; height: 20%; width: 30%; }
-.communicate .content .call-screen .controllers { padding: 5px; display: flex; justify-content: center; }
+.communicate .content .call-screen .video-container { height: calc(100% - 35px); }
+.communicate .content .call-screen .video-container .pc-main-screen { width: 100%; height: 100%; }
+.communicate .content .call-screen .video-container .pc-main-screen .pc-main-video { background-color: black; object-fit: contain; height: 100%; width: 100%; }
+.communicate .content .call-screen .video-container .pc-user-screens { display: flex; position: absolute; z-index: 2; width: 100%; overflow: auto; }
+.communicate .content .call-screen .video-container .pc-user-screens .pc-each-screen { display: flex; width: 100px; height: 100px; background-color: black; justify-content: center; align-items: center; flex-direction: column; border: 3px solid #fff; border-radius: 50px; margin: 10px; overflow: hidden; }
+.communicate .content .call-screen .video-container .pc-maxmin-btn { position: absolute; right: 0; display: none; padding: 5px; z-index: 3; }
+.communicate .content .call-screen .video-container .pc-maxmin-btn .pc-control-btn { background: #1d4354; color: #fff; height: 40px; width: 40px; font-size: 30px; border-radius: 40px; }
+.communicate .content .call-screen .video-container:hover .pc-maxmin-btn { display: block; }
+.communicate .content .call-screen .controllers { padding: 5px; display: flex; justify-content: center; position: absolute; width: 100%; bottom: 25px; }
+.communicate .content .call-screen .controllers .pc-control-btn { height: 40px; width: 40px; font-size: 30px; border-radius: 40px; color: #fff; background: #1d4354; }
+.communicate .content .call-screen .controllers .pc-control-btn.bg-red { background: red; }
+.communicate .content .call-screen .controllers .pc-control-btn.active { background: #fff; color: #1d4354; }
 .communicate .content .call-screen .controllers button { margin-left: 5px; }
 .communicate .content .incoming-call-screen { margin: 1px; height: 100%; flex-direction: column; overflow: hidden; align-items: center; justify-content: center; background: #574e54; }
 .communicate .content .incoming-call-screen .person-icon-container { flex-direction: column; }
@@ -449,6 +454,15 @@ top attachment etc.
 .communicate .content .outgoing-call-screen .person-icon-container .img-container img.portrait { width: 100%; height: auto; }
 .communicate .content .outgoing-call-screen .person-icon-container .img-container img.landscape { height: 100%; width: auto; }
 .communicate .content .outgoing-call-screen .person-icon-container .controllers { margin-top: 5%; padding: 10px 0px; display: flex; justify-content: space-around; }
+@media screen and (min-width: 500px) and (max-width: 800px) { .communicate { width: 60%; } }
+@media screen and (min-width: 800px) and (max-width: 1000px) { .communicate { width: 50%; } }
+@media screen and (max-width: 500px) { .communicate { width: 90%; }
+  .communicate .content .call-screen .video-container .pc-maxmin-btn { display: block; } }
+.communicate.pc-com-maximum { width: 100%; }
+.communicate.pc-com-maximum .content .call-screen .sc-chat-list { width: 50%; }
+.communicate.pc-com-maximum .content .call-screen .sc-chat-history { width: 50%; }
+@media screen and (max-width: 500px) { .communicate.pc-com-maximum .content .call-screen .sc-chat-list { width: 80%; }
+  .communicate.pc-com-maximum .content .call-screen .sc-chat-history { width: 80%; } }
 @keyframes rotate { 0% { border-color: #ff0000; }
   10% { border-color: #ff0080; }
   20% { border-color: #ff00ff; }

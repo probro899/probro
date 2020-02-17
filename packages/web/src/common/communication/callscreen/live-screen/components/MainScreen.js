@@ -17,35 +17,16 @@ class MainScreen extends React.Component {
     const isUser = type === 'user';
     const userId = isUser ? webRtc.mainStreamId : database.Board.byId[connectionId].activeStatus;
     return (
-      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', maxHeight: 400, minHeight: 200, width: '100%', minWidth: '100%', background: 'black', border: 'solid', borderWidth: 2, borderColor: 'black', borderRadius: 5, }}>
-        <div
-          style={{
-            width: '98%',
-            height: '98%',
-            background: 'black',
-            minHeight: '90%',
-            minWidth: '98%',
-            maxHeight: '90%',
-            maxWidth: '98%',
-            justifyContent: 'center',
-            alignItems: 'center',
-            display: 'flex',
-            flexDirection: 'column',
-            margin: 10,
-          }}
-        >
-          <div style={{ height: '100%', width: '100%' }}>
+      <div className="pc-main-screen">
         <video
-          controls
+          // controls
           id="video-mentor"
           playsInline
           controlsList="noremoteplayback"
           autoPlay
+          className="pc-main-video"
           poster={userId && `${ENDPOINT}/user/${10000000 + parseInt(userId, 10)}/profile/${Object.values(database.UserDetail.byId).find(u => u.userId === userId).image}`}
-          style={{ maxHeight: 380, minHeight: 200, minWidth: 300, width: '100%', background: 'black' }}
         />
-          </div>
-        </div>
       </div>
     );
   }

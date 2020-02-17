@@ -17,6 +17,7 @@ class Communication extends React.Component {
   state = {
     minimize: false,
     apis: null,
+    maximize: false,
   };
 
   async componentWillMount() {
@@ -40,6 +41,7 @@ class Communication extends React.Component {
 
   cutWindow = () => {
     const { updateWebRtc } = this.props;
+    this.setState({ maximize: false });
     updateWebRtc('showCommunication', false);
     updateWebRtc('showIncommingCall', false);
   }
@@ -54,27 +56,39 @@ class Communication extends React.Component {
     updateWebRtc('communicationContainer', target);
   }
 
-  manimizeCommunication = () => {
-    this.setState({ minimize: true });
+  minimizeCommunication = () => {
+    this.setState({ minimize: true, maximize: false });
+  }
+
+  maximize = () => {
+    const { maximize } = this.state;
+    this.setState({
+      maximize: !maximize,
+    });
   }
 
   render() {
-    const { minimize, apis } = this.state;
+    const { minimize, apis, maximize } = this.state;
+    let height = '75%';
+    if (maximize) {
+      height = '100%';
+    }
+    if (minimize) {
+      height = '31px';
+    }
     const {
       webRtc,
       updateWebRtc,
     } = this.props;
-    // console.log('apis', apis, 'props', this.props);
     return (
       (webRtc.showIncommingCall || webRtc.showCommunication) && (
       <div
-        className="communicate"
+        className={maximize ? 'communicate pc-com-maximum' : 'communicate'}
         style={
           {
-            height: minimize ? '31px' : '75%',
+            height,
             animationName: minimize ? 'slideDown' : 'slideUp',
             animationDuration: '0.3s',
-            // display: webRtc.showCommunication || webRtc.showIncommingCall ? 'block' : 'none',
           }
         }
       >
@@ -85,7 +99,7 @@ class Communication extends React.Component {
           <div className="control-icons">
             <div>
               { minimize ? <Icon iconSize={20} icon="expand-all" style={{ cursor: 'pointer' }} onClick={this.toggleMinMax} />
-                : <Icon iconSize={20} icon="minus" style={{ cursor: 'pointer' }} onClick={this.manimizeCommunication} />
+                : <Icon iconSize={20} icon="minus" style={{ cursor: 'pointer' }} onClick={this.minimizeCommunication} />
               }
               {/* <Icon icon="maximize" style={{ cursor: 'pointer' }} iconSize={14} /> */}
               <Icon
@@ -121,7 +135,8 @@ class Communication extends React.Component {
           )}
           {!webRtc.showIncommingCall && webRtc.communicationContainer === 'connecting' && webRtc.localCallHistory.chatHistory && (
           <CallScreen
-            // style={!webRtc.showIncommingCall && webRtc.communicationContainer === 'connecting' ? { display: 'block' } : { display: 'none' }}
+            toggleMaximize={this.maximize}
+            minimize={minimize}
             change={this.switchScreen}
             updateWebRtc={updateWebRtc}
             closeHandler={closeHandler(this.props, this.state, apis)}
