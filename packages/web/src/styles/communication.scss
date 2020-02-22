@@ -302,9 +302,34 @@
             background: $backgroundColor;
             color: $darkBlue;
           }
+          &.record {
+            border-width: 2px;
+            border-style: solid;
+            animation: rotate 2s ease infinite;
+          }
         }
         button {
           margin-left: 5px;
+        }
+      }
+      .pc-record-container {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 105px;
+        right: 0;
+        z-index: 5;
+        padding: 10px 5px;
+        .recorded-item {
+          color: $backgroundColor;
+          padding: 5px;
+          background: $skyBlueMain;
+          border-radius: 15px;
+          margin: 5px 0px;
+          &:hover {
+            cursor: pointer;
+            text-decoration: underline;
+          }
         }
       }
     }

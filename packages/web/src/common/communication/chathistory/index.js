@@ -4,7 +4,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Button } from '@blueprintjs/core';
 import Moment from 'react-moment';
-import ScrollToBottom from 'react-scroll-to-bottom';
 import mediaSelector from '../mediaSelector';
 import { MessageSender } from '../components';
 import Message from './Message';
@@ -13,16 +12,29 @@ import { findChatHistory, isOwnFinder, markLastMessageRead, incomingCallLogHandl
 import autoCloseHandler from '../helper-functions/webrtc/autoCloseHandler';
 
 class ChatHistory extends React.Component {
-  state = { messages: [], lastMessageId: null, unSeenNo: null };
+  constructor(props) {
+    super(props);
+    this.state = { messages: [], lastMessageId: null, unSeenNo: null };
+    this.scrollToEnd = React.createRef();
+  }
 
   componentDidMount() {
     const state = findChatHistory(this.props);
     this.setState({ ...state });
+    this.scrollToBottom();
   }
 
   componentWillReceiveProps(props) {
     const state = findChatHistory(props);
     this.setState({ ...state });
+  }
+
+  componentDidUpdate() {
+    this.scrollToBottom();
+  }
+
+  scrollToBottom = () => {
+    this.scrollToEnd.current.scrollIntoView({ behavior: 'auto' });
   }
 
   goBack = () => {
@@ -89,8 +101,7 @@ class ChatHistory extends React.Component {
       account,
       fromLive,
     } = this.props;
-    // console.log('chat historyList state', this.state);
-    const { user, boardDetails } = webRtc.chatHistory;
+    const { user } = webRtc.chatHistory;
     const { messages } = this.state;
     return !webRtc.showCommunication ? <div /> : (
       <div
@@ -118,11 +129,15 @@ class ChatHistory extends React.Component {
           </div>
         </div>
         )}
-        <ScrollToBottom className="chats" checkInterval={1}>
+        <div className="chats" id="pcChats">
           {
-          messages.sort(normalTimeStampSorting).map((msg, idx, arr) => this.containerHandler(msg, account, idx === 0 ? false : arr[idx - 1].type))
+            messages.sort(normalTimeStampSorting).map((msg, idx, arr) => this.containerHandler(msg, account, idx === 0 ? false : arr[idx - 1].type))
           }
-        </ScrollToBottom>
+          <div
+            className="i-chat left"
+            ref={this.scrollToEnd}
+          />
+        </div>
         <MessageSender {...this.props} />
       </div>
     );

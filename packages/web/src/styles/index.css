@@ -437,7 +437,11 @@ top attachment etc.
 .communicate .content .call-screen .controllers .pc-control-btn { height: 40px; width: 40px; font-size: 30px; border-radius: 40px; color: #fff; background: #1d4354; }
 .communicate .content .call-screen .controllers .pc-control-btn.bg-red { background: red; }
 .communicate .content .call-screen .controllers .pc-control-btn.active { background: #fff; color: #1d4354; }
+.communicate .content .call-screen .controllers .pc-control-btn.record { border-width: 2px; border-style: solid; animation: rotate 2s ease infinite; }
 .communicate .content .call-screen .controllers button { margin-left: 5px; }
+.communicate .content .call-screen .pc-record-container { display: flex; flex-direction: column; position: absolute; top: 105px; right: 0; z-index: 5; padding: 10px 5px; }
+.communicate .content .call-screen .pc-record-container .recorded-item { color: #fff; padding: 5px; background: #137cbd; border-radius: 15px; margin: 5px 0px; }
+.communicate .content .call-screen .pc-record-container .recorded-item:hover { cursor: pointer; text-decoration: underline; }
 .communicate .content .incoming-call-screen { margin: 1px; height: 100%; flex-direction: column; overflow: hidden; align-items: center; justify-content: center; background: #574e54; }
 .communicate .content .incoming-call-screen .person-icon-container { flex-direction: column; }
 .communicate .content .incoming-call-screen .person-icon-container .img-container { height: 140px; width: 140px; border-radius: 50%; overflow: hidden; align-self: center; border-width: 3px; border-style: solid; border-color: #fff; animation: rotate 2s ease infinite; }

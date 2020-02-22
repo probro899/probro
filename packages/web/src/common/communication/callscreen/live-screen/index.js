@@ -6,7 +6,6 @@ import { MdMessage } from 'react-icons/md';
 import { TiArrowMaximise } from 'react-icons/ti';
 import ScChatList from '../chat-list-on-live';
 import ScChatHistory from '../chat-history-on-live';
-// import streamConnector from '../streamConnector';
 import { Badge } from '../../../../components';
 import Controllers from './components/Controllers';
 import MainScreen from './components/MainScreen';
@@ -20,7 +19,6 @@ class LiveCallScreen extends React.Component {
       showChatList: false,
       showChatBox: null,
       unMessageCount: null,
-      // streams: {},
     };
   }
 
@@ -47,21 +45,6 @@ class LiveCallScreen extends React.Component {
     const unMessageCount = getChatList(nextProps).find(obj => obj.connectionId === webRtc.localCallHistory.chatHistory.connectionId);
     this.setState({ unMessageCount });
   }
-
-  // componentDidMount() {
-  //   const { streams } = this.state;
-  //   // streamConnector(streams, this.props);
-  // }
-
-  // async componentWillReceiveProps(nextProps) {
-  //   const { streams } = this.state;
-  //   const { webRtc } = nextProps;
-  //   if (streams !== nextProps.webRtc.streams) {
-  //     await this.setState({ streams: webRtc.streams });
-  //     const newStreams = this.state.streams;
-  //     streamConnector(newStreams, this.props);
-  //   }
-  // }
 
   handleClickChatBox = (val, showCurrent) => {
     const { updateWebRtc, webRtc } = this.props;
@@ -128,9 +111,10 @@ class LiveCallScreen extends React.Component {
           <MainScreen {...this.props} />
         </div>
         {!minimize && <Controllers toggleMaximize={toggleMaximize} {...this.props} />}
-        {/* <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', overflow: 'scrollX', width: '100%' }}>
+        <div className="pc-record-container">
           {webRtc.recordedBlobs.map(a => Object.values(a)[0])}
-        </div> */}
+          {/* <span className="recorded-item">Record 1</span> */}
+        </div>
       </div>
     );
   }

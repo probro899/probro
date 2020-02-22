@@ -5,7 +5,9 @@ import store from '../../../../store';
 export default async function (uid, props) {
   // console.log('stream recoder called', uid, store.getState().webRtc);
   // const stream = store.getState().webRtc.streams[uid];
-  const stream = document.getElementById('video-mentor').captureStream();
+  const videoElem = document.getElementById('video-mentor');
+  // const stream = videoElem.captureStream() || videoElem.mozCaptureStream();
+  const stream = videoElem.mozCaptureStream();
 
   let mediaRecorder;
   const recordedBlob = [];
@@ -28,6 +30,13 @@ export default async function (uid, props) {
       options = { mimeType: 'video/webm' };
       if (!MediaRecorder.isTypeSupported(options.mimeType)) {
         console.error(`${options.mimeType} is not supported`);
+        // types = ["video/webm",
+        //      "audio/webm",
+        //      "video/webm\;codecs=vp8",
+        //      "video/webm\;codecs=daala",
+        //      "video/webm\;codecs=h264",
+        //      "audio/webm\;codecs=opus",
+        //      "video/mpeg"];
         options = { mimeType: '' };
       }
     }
