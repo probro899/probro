@@ -5,6 +5,8 @@ import PropTypes from 'prop-types';
 import { ENDPOINT } from '../../../../../config';
 
 const UserView = ({ pc, database, mute }) => {
+  console.log('pc in USerView', pc);
+  const user = Object.values(database.UserDetail.byId).find(u => u.userId === pc.user.id);
   return (
     pc.user ? (
       <div className="pc-each-screen">
@@ -12,7 +14,7 @@ const UserView = ({ pc, database, mute }) => {
           muted={mute}
           id={`video-${pc.user.id}`}
           playsInline
-          poster={`${ENDPOINT}/user/${10000000 + parseInt(pc.user.id, 10)}/profile/${Object.values(database.UserDetail.byId).find(u => u.userId === pc.user.id).image}`}
+          poster={user ? `${ENDPOINT}/user/${10000000 + parseInt(pc.user.id, 10)}/profile/${user.image}` : null}
           // controls
           autoPlay
           style={{ height: 90, width: 90, background: 'black', borderRadius: 20 }}

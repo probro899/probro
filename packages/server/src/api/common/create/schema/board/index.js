@@ -6,6 +6,12 @@ import mailer from '../../../../../mailer';
 import findBoardDetails from '../../../findBoradDetail';
 import updateUserCache from '../../../updateUserCache';
 
+function addBoardActivity(record) {
+  db.execute(async ({ insert }) => {
+    insert('BoardActivity', record);
+  });
+}
+
 const flat = (arr) => {
   const flatArray = arr.reduce((t, a) => {
     if (Array.isArray(a)) {
@@ -23,32 +29,47 @@ async function addBoard(record) {
   const boardId = await add.call(this, 'Board', record);
   await add.call(this, 'BoardMember', { boardId, tuserId: record.userId, fuserId: record.userId, joinStatus: true, timeStamp: Date.now(), userType: 'creator' });
   session.subscribe(`Board-${boardId}`);
+  addBoardActivity({ boardId, timeStamp: Date.now(), userId: record.userId, message: 'Create Board' });
   // console.log('boardid in addBorad', boardId);
   return boardId;
 }
 
 async function addBoardColumn(record) {
   const res = await add.call(this, 'BoardColumn', record);
+  addBoardActivity({ userId: record.userId, timeStamp: Date.now(), boardId: record.boardId, columnId: res, message: 'Create Column' });
   return res;
 }
 
 async function addBoardColumnCard(record) {
+  // console.log('add Board Colomn', record);
+  const broadCastArr = record.broadCastId.split('-');
+  const boardId = broadCastArr[broadCastArr.length - 1];
   const res = await add.call(this, 'BoardColumnCard', record);
+  addBoardActivity({ userId: record.userId, boardId, cardId: res, timeStamp: Date.now(), columnId: record.boardColumnId, message: 'Create Card' });
   return res;
 }
 
 async function addBoardColumnCardAttachment(record) {
+  const broadCastArr = record.broadCastId.split('-');
+  const boardId = broadCastArr[broadCastArr.length - 1];
   const res = await add.call(this, 'BoardColumnCardAttachment', record);
+  addBoardActivity({ userId: record.userId, timeStamp: Date.now(), boardId, cardId: record.boardColumnCardId, message: 'Create Attachment' });
   return res;
 }
 
 async function addBoardColumnCardComment(record) {
+  const broadCastArr = record.broadCastId.split('-');
+  const boardId = broadCastArr[broadCastArr.length - 1];
   const res = add.call(this, 'BoardColumnCardComment', record);
+  addBoardActivity({ userId: record.userId, timeStamp: Date.now(), boardId, cardId: record.boardColumnCardId, message: 'Create Comment' });
   return res;
 }
 
 async function addBoardColumnCardDescription(record) {
+  const broadCastArr = record.broadCastId.split('-');
+  const boardId = broadCastArr[broadCastArr.length - 1];
   const res = await add.call(this, 'BoardColumnCardDescription', record);
+  addBoardActivity({ userId: record.userId, timeStamp: Date.now(), boardId, cardId: record.boardColumnCardId, message: 'Create Description' });
   return res;
 }
 
@@ -172,7 +193,10 @@ async function addBoardMessage(record) {
 }
 
 async function addBoardColumnCardTag(record) {
+  const broadCastArr = record.broadCastId.split('-');
+  const boardId = broadCastArr[broadCastArr.length - 1];
   const res = await add.call(this, 'BoardColumnCardTag', record);
+  addBoardActivity({ userId: record.userId, timeStamp: Date.now(), boardId, cardId: record.boardColumnCardId, message: 'Create Tag' });
   return res;
 }
 

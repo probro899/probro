@@ -8,6 +8,7 @@ import findBlogDetail from './common/findBlogDetails';
 import addHandlerApi from './common/create';
 import deleteHandler from './common/delete';
 import updateHandler from './common/update';
+import getHandler from './common/get';
 import { createOffer, createAnswer, addICeCandidate, callClose, callStatusChange } from './common/web-rtc';
 
 const mentor = createScope('Mentor', () => {
@@ -28,6 +29,10 @@ deleteHandler.forEach(func => mentor(func));
 // all update api scoping
 updateHandler.forEach(func => mentee(func));
 updateHandler.forEach(func => mentor(func));
+
+// all get api scoping
+getHandler.forEach(func => mentee(func));
+getHandler.forEach(func => mentor(func));
 
 mentor(createOffer);
 mentor(createAnswer);

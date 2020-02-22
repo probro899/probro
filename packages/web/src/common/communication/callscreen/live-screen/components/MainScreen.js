@@ -16,6 +16,7 @@ class MainScreen extends React.Component {
     const { type, connectionId } = webRtc.localCallHistory.chatHistory;
     const isUser = type === 'user';
     const userId = isUser ? webRtc.mainStreamId : database.Board.byId[connectionId].activeStatus;
+    const user = Object.values(database.UserDetail.byId).find(u => u.userId === userId);
     return (
       <div className="pc-main-screen">
         <video

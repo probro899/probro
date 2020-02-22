@@ -1,14 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { Divider, Button, Tooltip } from '@blueprintjs/core';
+import { Divider, Button, Tooltip, Dialog } from '@blueprintjs/core';
 import { GoGraph } from 'react-icons/go';
 import * as actions from '../../../../actions';
 import UserList from './UserList';
 import AddUser from './add-user';
+import Report from '../../report';
 
 class ToolBar extends React.Component {
-  state = {};
+  state = { showReport: null };
 
   toggleAddUser = () => {
     const { addUser } = this.state;
@@ -28,6 +30,15 @@ class ToolBar extends React.Component {
     updateWebRtc('chatHistory', { type: 'board', user: { user: null }, connectionId: boardId });
   }
 
+  generateReportHandler = () => {
+    const { boardId } = this.props;
+    this.setState({ showReport: window.location.pathname });
+  }
+
+  reportCloseHandler = () => {
+    this.setState({ showReport: null });
+  }
+
   render() {
     const {
       boards,
@@ -40,8 +51,10 @@ class ToolBar extends React.Component {
     } = this.props;
     const extUser = Object.values(UserDetail.byId).find(obj => obj.userId === account.user.id);
     const board = Object.values(boards.byId).find(obj => obj.id === boardId);
+    const { showReport } = this.state;
     return (
       <div className="tool-bar">
+        <Report isOpen={showReport} onClose={this.reportCloseHandler} boardId={boardId} {...this.props} boards={boards} apis={apis} users={users} />
         <div className="toolbar-container">
           <div className="left-tools">
             <div className="class-name each-item">
@@ -69,7 +82,7 @@ class ToolBar extends React.Component {
                   <Button
                     minimal
                   >
-                    <GoGraph size={20} />
+                    <GoGraph size={20} onClick={this.generateReportHandler} />
                   </Button>
                 </Tooltip>
               )

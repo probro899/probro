@@ -39,9 +39,9 @@ class DrawingBoard extends Component {
   componentWillUpdate(nextProps) {
     const { webRtc } = this.props;
     const { canvas } = this.state;
-    if (webRtc.localCallHistory && webRtc.localCallHistory.mediaType === 'whiteBoard') {
-      return;
-    }
+    // if (webRtc.localCallHistory && webRtc.localCallHistory.mediaType === 'whiteBoard') {
+    //   return;
+    // }
     if (nextProps.webRtc.localCallHistory && nextProps.webRtc.localCallHistory.mediaType === 'whiteBoard') {
       const logo = canvas.getObjects().find(obj => obj.cacheKey === 'logo' && obj);
       canvas.remove(logo);
