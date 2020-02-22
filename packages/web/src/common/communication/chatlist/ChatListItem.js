@@ -11,7 +11,6 @@ import store from '../../../store';
 import { incomingCallLogHandler, outgoingCallLogHandler } from '../chathistory/helper-function';
 
 export default ({ clo, idx }) => {
-  // console.log('data in chatlist Item', clo, store.getState());
   const isUser = clo.type === 'user';
   return (
     <div
@@ -31,6 +30,7 @@ export default ({ clo, idx }) => {
               : <Icon icon={isUser ? 'user' : 'application'} iconSize={30} style={{ color: '#757575' }} />
             }
             {isUser ? clo.user.user.activeStatus ? <div style={{ marginLeft: -5, marginTop: 20, height: 8, width: 8, borderRadius: '50%', background: '#A4DE02' }} /> : <div style={{ marginLeft: -5, marginTop: 20, height: 8, width: 8, borderRadius: '50%', background: '#f5f5f5' }} /> : null}
+            {!isUser && clo.boardDetails.activeStatus && <span style={{ background: 'green', width: 40, height: 20, fontWeight: 'bold', paddingTop: 2, borderRadius: '10%', color: 'white', textAlign: 'center', marginTop: 10 }}>live</span>}
             {/* {!isUser && clo.boardDetails.activeStatus ? <div style={{ marginLeft: -5, marginTop: 20, height: 8, width: 8, borderRadius: '50%', background: '#A4DE02' }} /> : <div style={{ marginLeft: -5, marginTop: 20, height: 8, width: 8, borderRadius: '50%', background: '#f5f5f5' }} />} */}
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', marginLeft: 10 }}>
@@ -43,7 +43,6 @@ export default ({ clo, idx }) => {
                 : clo.lastMessage.message}
             </span>
           </div>
-          {!isUser && clo.boardDetails.activeStatus && <span style={{ background: 'green', width: 40, height: 20, fontWeight: 'bold', paddingTop: 2, borderRadius: '10%', color: 'white', textAlign: 'center', marginTop: 10 }}>live</span>}
         </div>
         <div style={{ position: 'relative', display: 'flex', justifyContent: 'flex-end', flexDirection: 'column', alignItems: 'flex-end' }}>
           <span style={{ fontSize: 12, color: '#757575' }}>{moment(clo.timeStamp).fromNow()}</span>
