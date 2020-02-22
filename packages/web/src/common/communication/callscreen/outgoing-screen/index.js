@@ -9,7 +9,7 @@ import { ENDPOINT } from '../../../../config';
 const callingPerson = require('../../../../assets/icons/128w/uploadicon128.png');
 
 const IconOrImage = ({ isUser, database, webRtc }) => {
-  const userDetail = database.UserDetail.byId[webRtc.localCallHistory.chatHistory.user.user.id]
+  const userDetail = isUser ? database.UserDetail.byId[webRtc.localCallHistory.chatHistory.user.user.id] : null;
   if (isUser && userDetail && userDetail.image) {
     return (
       <div className="img-container">
