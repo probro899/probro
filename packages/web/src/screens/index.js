@@ -16,6 +16,7 @@ import { PublicProfile } from './home/component';
 import { SearchResult } from './home/component/search';
 import TakeTour from './home/take-a-tour';
 import { About, Privacy, Terms, Support, Career, Report, Business, Services } from '../common/footer/footer-links';
+import ClassReport from './class/report';
 
 class MainScreen extends React.Component {
   constructor(props) {
