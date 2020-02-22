@@ -434,7 +434,7 @@ top attachment etc.
 .communicate .content .call-screen .video-container .pc-maxmin-btn .pc-control-btn { background: #1d4354; color: #fff; height: 40px; width: 40px; font-size: 30px; border-radius: 40px; }
 .communicate .content .call-screen .video-container:hover .pc-maxmin-btn { display: block; }
 .communicate .content .call-screen .controllers { padding: 5px; display: flex; justify-content: center; position: absolute; width: 100%; bottom: 25px; }
-.communicate .content .call-screen .controllers .pc-control-btn { height: 40px; width: 40px; font-size: 30px; border-radius: 40px; color: #fff; background: #1d4354; }
+.communicate .content .call-screen .controllers .pc-control-btn { height: 40px; width: 40px; font-size: 27px; border-radius: 40px; color: #fff; background: #1d4354; display: flex; }
 .communicate .content .call-screen .controllers .pc-control-btn.bg-red { background: red; }
 .communicate .content .call-screen .controllers .pc-control-btn.active { background: #fff; color: #1d4354; }
 .communicate .content .call-screen .controllers .pc-control-btn.record { border-width: 2px; border-style: solid; animation: rotate 2s ease infinite; }

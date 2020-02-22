@@ -290,10 +290,11 @@
         .pc-control-btn {
           height: 40px;
           width: 40px;
-          font-size: 30px;
+          font-size: 27px;
           border-radius: 40px;
           color: $backgroundColor;
           background: $darkBlue;
+          display: flex;
           &.bg-red {
             background: red;
           }
