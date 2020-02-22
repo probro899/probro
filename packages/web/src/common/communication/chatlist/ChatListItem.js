@@ -30,11 +30,13 @@ export default ({ clo, idx }) => {
               : <Icon icon={isUser ? 'user' : 'application'} iconSize={30} style={{ color: '#757575' }} />
             }
             {isUser ? clo.user.user.activeStatus ? <div style={{ marginLeft: -5, marginTop: 20, height: 8, width: 8, borderRadius: '50%', background: '#A4DE02' }} /> : <div style={{ marginLeft: -5, marginTop: 20, height: 8, width: 8, borderRadius: '50%', background: '#f5f5f5' }} /> : null}
-            {!isUser && clo.boardDetails.activeStatus && <span style={{ background: 'green', width: 40, height: 20, fontWeight: 'bold', paddingTop: 2, borderRadius: '10%', color: 'white', textAlign: 'center', marginTop: 10 }}>live</span>}
             {/* {!isUser && clo.boardDetails.activeStatus ? <div style={{ marginLeft: -5, marginTop: 20, height: 8, width: 8, borderRadius: '50%', background: '#A4DE02' }} /> : <div style={{ marginLeft: -5, marginTop: 20, height: 8, width: 8, borderRadius: '50%', background: '#f5f5f5' }} />} */}
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', marginLeft: 10 }}>
-            <span style={{ fontWeight: 'bold' }}>{isUser ? clo.user.user.firstName : clo.boardDetails.name}</span>
+            <div style={{ fontWeight: 'bold' }}>
+              <span style={{ padding: 3 }}>{isUser ? clo.user.user.firstName : clo.boardDetails.name}</span>
+              {!isUser && clo.boardDetails.activeStatus && <span style={{ background: 'green', padding: 3, fontSize: 10, marginLeft: 5, fontWeight: 'lighter', borderRadius: 5, color: 'white' }}>Live</span>}
+            </div>
             <span
               style={{ fontSize: 14, color: '#757575', width: 200, overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis' }}
             >
