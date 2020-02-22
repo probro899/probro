@@ -166,7 +166,6 @@
           }
         }
         .sc-cl-content {
-          overflow-y: scroll;
           overflow-x: hidden;
           height: calc(100% - 40px);
           .sc-cl-i-chat {
@@ -204,7 +203,6 @@
           }
         }
         .sc-ch-content {
-          overflow-y: scroll;
           overflow-x: hidden;
           height: calc(100% - 33px);
         }
@@ -245,7 +243,7 @@
           position: absolute;
           z-index: 2;
           width: 100%;
-          overflow: auto;
+          overflow-x: auto;
           .pc-each-screen {
             display: flex;
             width: 100px;
