@@ -3,9 +3,9 @@ import React from 'react';
 import { Button } from '@blueprintjs/core';
 import PropTypes from 'prop-types';
 import { MdMessage } from 'react-icons/md';
+import { TiArrowMaximise } from 'react-icons/ti';
 import ScChatList from '../chat-list-on-live';
 import ScChatHistory from '../chat-history-on-live';
-// import streamConnector from '../streamConnector';
 import { Badge } from '../../../../components';
 import Controllers from './components/Controllers';
 import MainScreen from './components/MainScreen';
@@ -19,7 +19,6 @@ class LiveCallScreen extends React.Component {
       showChatList: false,
       showChatBox: null,
       unMessageCount: null,
-      // streams: {},
     };
   }
 
@@ -46,21 +45,6 @@ class LiveCallScreen extends React.Component {
     const unMessageCount = getChatList(nextProps).find(obj => obj.connectionId === webRtc.localCallHistory.chatHistory.connectionId);
     this.setState({ unMessageCount });
   }
-
-  // componentDidMount() {
-  //   const { streams } = this.state;
-  //   // streamConnector(streams, this.props);
-  // }
-
-  // async componentWillReceiveProps(nextProps) {
-  //   const { streams } = this.state;
-  //   const { webRtc } = nextProps;
-  //   if (streams !== nextProps.webRtc.streams) {
-  //     await this.setState({ streams: webRtc.streams });
-  //     const newStreams = this.state.streams;
-  //     streamConnector(newStreams, this.props);
-  //   }
-  // }
 
   handleClickChatBox = (val, showCurrent) => {
     const { updateWebRtc, webRtc } = this.props;
@@ -90,7 +74,7 @@ class LiveCallScreen extends React.Component {
 
   render() {
     // console.log('Live Screen called', this.state);
-    const { style, webRtc, database } = this.props;
+    const { style, webRtc, database, toggleMaximize, minimize } = this.props;
     const { user, type } = webRtc.localCallHistory.chatHistory;
     const {
       showChatBox,
@@ -118,14 +102,18 @@ class LiveCallScreen extends React.Component {
           </Button>
         </div>
         <div className="video-container">
-          <div style={{ width: '100%', height: '100%', overflow: 'hidden' }}>
-            <UsersScreen {...this.props} />
-            <MainScreen {...this.props} />
+          <div className="pc-maxmin-btn">
+            <Button onClick={toggleMaximize} className="pc-control-btn">
+              <TiArrowMaximise size={25} />
+            </Button>
           </div>
+          <UsersScreen {...this.props} />
+          <MainScreen {...this.props} />
         </div>
-        <Controllers {...this.props} />
-        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', overflow: 'scrollX', width: '100%' }}>
+        {!minimize && <Controllers toggleMaximize={toggleMaximize} {...this.props} />}
+        <div className="pc-record-container">
           {webRtc.recordedBlobs.map(a => Object.values(a)[0])}
+          {/* <span className="recorded-item">Record 1</span> */}
         </div>
       </div>
     );
@@ -134,6 +122,7 @@ class LiveCallScreen extends React.Component {
 export default LiveCallScreen;
 
 LiveCallScreen.propTypes = {
+  minimize: PropTypes.bool.isRequired,
   style: PropTypes.objectOf(PropTypes.any).isRequired,
   webRtc: PropTypes.objectOf(PropTypes.any).isRequired,
   change: PropTypes.func.isRequired,
@@ -142,5 +131,6 @@ LiveCallScreen.propTypes = {
   account: PropTypes.objectOf(PropTypes.any).isRequired,
   updateWebRtc: PropTypes.func.isRequired,
   _callHandler: PropTypes.func.isRequired,
+  toggleMaximize: PropTypes.func.isRequired,
   apis: PropTypes.objectOf(PropTypes.any).isRequired,
 };

@@ -1,6 +1,7 @@
 /* eslint-disable jsx-a11y/media-has-caption */
 import React from 'react';
 import PropTypes from 'prop-types';
+// import { IoMdMic, IoMdMicOff } from 'react-icons/io';
 import { ENDPOINT } from '../../../../../config';
 
 const UserView = ({ pc, database, mute }) => {
@@ -8,23 +9,7 @@ const UserView = ({ pc, database, mute }) => {
   const user = Object.values(database.UserDetail.byId).find(u => u.userId === pc.user.id);
   return (
     pc.user ? (
-      <div
-        style={{
-          width: 100,
-          height: 100,
-          background: 'black',
-          justifyContent: 'center',
-          alignItems: 'center',
-          display: 'flex',
-          flexDirection: 'column',
-          border: 'solid',
-          borderWidth: 2,
-          borderColor: pc.online ? 'yellow' : 'green',
-          borderRadius: 100,
-          margin: 10,
-          overflow: 'hidden',
-        }}
-      >
+      <div className="pc-each-screen">
         <video
           muted={mute}
           id={`video-${pc.user.id}`}
@@ -36,8 +21,8 @@ const UserView = ({ pc, database, mute }) => {
         />
         <div style={{ position: 'absolute', marginTop: 20, marginLeft: 20, width: 100, height: 100 }}>
           <div>
-            <span style={{ color: 'yellow' }}>{ pc.online ? 'You' : `${pc.user.firstName}`}</span>
-            <span style={{ color: 'red' }}>{ mute ? 'muted' : 'notmuted'}</span>
+            <span style={{ color: 'white' }}>{ pc.online ? 'You' : `${pc.user.firstName[0].toUpperCase()}${pc.user.lastName[0].toUpperCase()}`}</span>
+            {/* <span>{mute ? <IoMdMicOff /> : <IoMdMic />}</span> */}
           </div>
           <div>
             <span style={{ color: 'yellow' }}>{pc.iceCandidateStatus}</span>
@@ -59,7 +44,7 @@ const UsersView = (props) => {
   // console.log('Account', account);
   const { type, connectionId } = webRtc.localCallHistory.chatHistory;
   const muteId = type === 'user' ? webRtc.mainStreamId : database.Board.byId[connectionId].activeStatus;
-  console.log('mute user', muteId);
+  // console.log('mute user', muteId);
   const peerConnection = Object.values(webRtc.peerConnections).filter(obj => obj.iceCandidateStatus !== 'disconnected');
   // console.log('all perconnection', peerConnection);
   const allOtherUser = peerConnection.map(pc => <UserView pc={pc} key={pc.user.id} database={database} mute={muteId === pc.user.id} />);
@@ -75,10 +60,8 @@ class UsersScreen extends React.Component {
 
   render() {
     return (
-      <div style={{ display: 'flex', position: 'absolute', zIndex: 2, width: '96%', overflow: 'hidden' }}>
-        <div style={{ display: 'flex', height: '100%', width: '100%', overflow: 'auto' }}>
-          <UsersView {...this.props} />
-        </div>
+      <div className="pc-user-screens">
+        <UsersView {...this.props} />
       </div>
     );
   }

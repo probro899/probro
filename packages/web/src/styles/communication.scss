@@ -7,17 +7,8 @@
   bottom: 0;
   right: 2px;
   background: $backgroundColor;
-  z-index: 2;
+  z-index: 3;
   border: 1px solid $normalBorder;
-  @media screen and (min-width: 500px) and (max-width: 800px){
-    width: 60%;
-  }
-  @media screen and (min-width: 800px) and (max-width: 1000px){
-    width: 50%;
-  }
-  @media screen and (max-width: 500px){
-    width: 90%;
-  }
   .header {
     height: 30px;
     font-size: 16px;
@@ -153,6 +144,7 @@
     .call-screen {
       display: flex;
       flex-direction: column;
+      height: 100%;
       // chat-screen inside call screen
       .sc-chat-list {
         height: 95%;
@@ -196,7 +188,7 @@
         position: absolute;
         align-self: flex-end;
         background-color: $backgroundColor;
-        z-index: 3;
+        z-index: 4;
         box-shadow: 0px 0px 3px 0px $normalShadowColor;
         width: 80%;
         .sc-ch-header {
@@ -214,7 +206,7 @@
         .sc-ch-content {
           overflow-y: scroll;
           overflow-x: hidden;
-          height: calc(100% - 40px);
+          height: calc(100% - 33px);
         }
         .sc-ch-footer {
           height: 10px;
@@ -226,6 +218,7 @@
         align-items: center;
         padding: 5px 0px;
         border-bottom: 1px solid $normalBorder;
+        height: 35px;
         .op-name {
           display: flex;
           flex-direction: column;
@@ -236,25 +229,107 @@
         }
       }
       .video-container {
-        display: flex;
-        justify-content: center;
-        padding: 5px;
-        .peer-video {
-          object-fit: contain;
+        height: calc(100% - 35px);
+        .pc-main-screen {
           width: 100%;
+          height: 100%;
+          .pc-main-video {
+            background-color: black;
+            object-fit: contain;
+            height: 100%;
+            width: 100%;
+          }
         }
-        .own-video {
+        .pc-user-screens {
+          display: flex;
           position: absolute;
-          height: 20%;
-          width: 30%;
+          z-index: 2;
+          width: 100%;
+          overflow: auto;
+          .pc-each-screen {
+            display: flex;
+            width: 100px;
+            height: 100px;
+            background-color: black;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            border: 3px solid $backgroundColor;
+            border-radius: 50px;
+            margin: 10px;
+            overflow: hidden;
+          }
+        }
+        .pc-maxmin-btn {
+          position: absolute;
+          right: 0;
+          display: none;
+          padding: 5px;
+          z-index: 3;
+          .pc-control-btn {
+            background: $darkBlue;
+            color: $backgroundColor;
+            height: 40px;
+            width: 40px;
+            font-size: 30px;
+            border-radius: 40px;
+          }
+        }
+        &:hover {
+          .pc-maxmin-btn {
+            display: block;
+          }
         }
       }
       .controllers {
         padding: 5px;
         display: flex;
         justify-content: center;
+        position: absolute;
+        width: 100%;
+        bottom: 25px;
+        .pc-control-btn {
+          height: 40px;
+          width: 40px;
+          font-size: 30px;
+          border-radius: 40px;
+          color: $backgroundColor;
+          background: $darkBlue;
+          &.bg-red {
+            background: red;
+          }
+          &.active {
+            background: $backgroundColor;
+            color: $darkBlue;
+          }
+          &.record {
+            border-width: 2px;
+            border-style: solid;
+            animation: rotate 2s ease infinite;
+          }
+        }
         button {
           margin-left: 5px;
+        }
+      }
+      .pc-record-container {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 105px;
+        right: 0;
+        z-index: 5;
+        padding: 10px 5px;
+        .recorded-item {
+          color: $backgroundColor;
+          padding: 5px;
+          background: $skyBlueMain;
+          border-radius: 15px;
+          margin: 5px 0px;
+          &:hover {
+            cursor: pointer;
+            text-decoration: underline;
+          }
         }
       }
     }
@@ -362,7 +437,50 @@
       }
     }
   }
+  @media screen and (min-width: 500px) and (max-width: 800px){
+    width: 60%;
+  }
+  @media screen and (min-width: 800px) and (max-width: 1000px){
+    width: 50%;
+  }
+  @media screen and (max-width: 500px){
+    width: 90%;
+    .content {
+      .call-screen {
+        .video-container {
+          .pc-maxmin-btn {
+            display: block;
+          }
+        }
+      }
+    }
+  }
 
+  &.pc-com-maximum {
+    width: 100%;
+    .content {
+      .call-screen {
+        .sc-chat-list {
+          width: 50%;
+        }
+        .sc-chat-history {
+          width: 50%;
+        }
+      }
+    }
+    @media screen and (max-width: 500px){
+      .content {
+        .call-screen {
+          .sc-chat-list {
+            width: 80%;
+          }
+          .sc-chat-history {
+            width: 80%;
+          }
+        }
+      }
+    }
+  }
   @keyframes rotate {
     0%   {border-color: #ff0000;}
     10%  {border-color: #ff0080;}
