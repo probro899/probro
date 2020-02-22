@@ -414,21 +414,21 @@ top attachment etc.
 .communicate .content .call-screen .sc-chat-list { height: 95%; position: absolute; background-color: #fff; z-index: 3; box-shadow: 0px 0px 3px 0px rgba(57, 73, 76, 0.35); width: 80%; }
 .communicate .content .call-screen .sc-chat-list .sc-cl-header { display: flex; justify-content: space-between; padding: 5px; height: 30px; border-bottom: 1px solid #e0e0e0; }
 .communicate .content .call-screen .sc-chat-list .sc-cl-header .sc-cl-title { color: #1d4354; font-size: 16; font-weight: bold; }
-.communicate .content .call-screen .sc-chat-list .sc-cl-content { overflow-y: scroll; overflow-x: hidden; height: calc(100% - 40px); }
+.communicate .content .call-screen .sc-chat-list .sc-cl-content { overflow-x: hidden; height: calc(100% - 40px); }
 .communicate .content .call-screen .sc-chat-list .sc-cl-content .sc-cl-i-chat { padding: 20px 0px; border-bottom: 1px solid #e0e0e0; background-color: #f9f9f9; cursor: pointer; }
 .communicate .content .call-screen .sc-chat-list .sc-cl-content .sc-cl-i-chat:hover { background-color: #88e0e9; }
 .communicate .content .call-screen .sc-chat-list .sc-cl-footer { height: 10px; }
 .communicate .content .call-screen .sc-chat-history { height: 95%; position: absolute; align-self: flex-end; background-color: #fff; z-index: 4; box-shadow: 0px 0px 3px 0px rgba(57, 73, 76, 0.35); width: 80%; }
 .communicate .content .call-screen .sc-chat-history .sc-ch-header { display: flex; justify-content: space-between; padding: 5px; height: 30px; border-bottom: 1px solid #e0e0e0; }
 .communicate .content .call-screen .sc-chat-history .sc-ch-header .sc-ch-title { color: #1d4354; font-size: 16; font-weight: bold; }
-.communicate .content .call-screen .sc-chat-history .sc-ch-content { overflow-y: scroll; overflow-x: hidden; height: calc(100% - 33px); }
+.communicate .content .call-screen .sc-chat-history .sc-ch-content { overflow-x: hidden; height: calc(100% - 33px); }
 .communicate .content .call-screen .sc-chat-history .sc-ch-footer { height: 10px; }
 .communicate .content .call-screen .top { display: flex; justify-content: space-between; align-items: center; padding: 5px 0px; border-bottom: 1px solid #e0e0e0; height: 35px; }
 .communicate .content .call-screen .top .op-name { display: flex; flex-direction: column; justify-content: center; color: #1d4354; font-weight: bold; font-size: 16px; }
 .communicate .content .call-screen .video-container { height: calc(100% - 35px); }
 .communicate .content .call-screen .video-container .pc-main-screen { width: 100%; height: 100%; }
 .communicate .content .call-screen .video-container .pc-main-screen .pc-main-video { background-color: black; object-fit: contain; height: 100%; width: 100%; }
-.communicate .content .call-screen .video-container .pc-user-screens { display: flex; position: absolute; z-index: 2; width: 100%; overflow: auto; }
+.communicate .content .call-screen .video-container .pc-user-screens { display: flex; position: absolute; z-index: 2; width: 100%; overflow-x: auto; }
 .communicate .content .call-screen .video-container .pc-user-screens .pc-each-screen { display: flex; width: 100px; height: 100px; background-color: black; justify-content: center; align-items: center; flex-direction: column; border: 3px solid #fff; border-radius: 50px; margin: 10px; overflow: hidden; }
 .communicate .content .call-screen .video-container .pc-maxmin-btn { position: absolute; right: 0; display: none; padding: 5px; z-index: 3; }
 .communicate .content .call-screen .video-container .pc-maxmin-btn .pc-control-btn { background: #1d4354; color: #fff; height: 40px; width: 40px; font-size: 30px; border-radius: 40px; }
