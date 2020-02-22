@@ -56,43 +56,39 @@ class Controllers extends React.Component {
     return (
       <div className="controllers">
         {showWhiteBoard && <Redirect to={`/${account.user.slug}/drawing-board`} />}
-        <div>
-          <div style={{ padding: 10 }}>
-            <Button className="pc-control-btn bg-red" onClick={this.callReject}>
-              <FiPhone size={25} />
-            </Button>
-            <Button
-              className={webRtc.localCallHistory.mediaType === 'video' ? 'pc-control-btn active' : 'pc-control-btn'}
-              onClick={() => this.callUpGradeController('video')}
-            >
-              <FiVideo size={25} />
-            </Button>
-            <Button
-              className={webRtc.localCallHistory.mediaType === 'screenshare' ? 'pc-control-btn active' : 'pc-control-btn'}
-              onClick={() => this.callUpGradeController('screenshare')}
-            >
-              <FiCopy size={25} />
-            </Button>
-            <Button
-              onClick={() => this.recordingHandler()}
-              className={startRecording ? 'pc-control-btn active record' : 'pc-control-btn'}
-            >
-              <TiMediaRecord size={25} />
-            </Button>
-            <Button
-              className={webRtc.localCallHistory.mediaType === 'whiteBoard' ? 'pc-control-btn active' : 'pc-control-btn'}
-              onClick={() => this.callUpGradeController('whiteBoard')}
-            >
-              <FiEdit2 size={25} />
-            </Button>
-            <Button
-              className="pc-control-btn"
-              onClick={this.muteToggle}
-            >
-              <FiMic size={25} />
-            </Button>
-          </div>
-        </div>
+        <Button className="pc-control-btn bg-red" onClick={this.callReject}>
+          <FiPhone size={20} />
+        </Button>
+        <Button
+          className={webRtc.localCallHistory.mediaType === 'video' ? 'pc-control-btn active' : 'pc-control-btn'}
+          onClick={() => this.callUpGradeController('video')}
+        >
+          <FiVideo size={20} />
+        </Button>
+        <Button
+          className={webRtc.localCallHistory.mediaType === 'screenshare' ? 'pc-control-btn active' : 'pc-control-btn'}
+          onClick={() => this.callUpGradeController('screenshare')}
+        >
+          <FiCopy size={20} />
+        </Button>
+        <Button
+          onClick={() => this.recordingHandler()}
+          className={startRecording ? 'pc-control-btn active record' : 'pc-control-btn'}
+        >
+          <TiMediaRecord size={20} />
+        </Button>
+        <Button
+          className={webRtc.localCallHistory.mediaType === 'whiteBoard' ? 'pc-control-btn active' : 'pc-control-btn'}
+          onClick={() => this.callUpGradeController('whiteBoard')}
+        >
+          <FiEdit2 size={20} />
+        </Button>
+        <Button
+          className="pc-control-btn"
+          onClick={this.muteToggle}
+        >
+          <FiMic size={20} />
+        </Button>
       </div>
     );
   }
