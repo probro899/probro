@@ -26,7 +26,7 @@ class MainScreen extends React.Component {
           controlsList="noremoteplayback"
           autoPlay
           className="pc-main-video"
-          poster={userId && `${ENDPOINT}/user/${10000000 + parseInt(userId, 10)}/profile/${Object.values(database.UserDetail.byId).find(u => u.userId === userId).image}`}
+          poster={user && `${ENDPOINT}/user/${10000000 + parseInt(userId, 10)}/profile/${Object.values(database.UserDetail.byId).find(u => u.userId === userId).image}`}
         />
       </div>
     );

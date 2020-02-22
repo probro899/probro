@@ -6,8 +6,8 @@ export default async function (uid, props) {
   // console.log('stream recoder called', uid, store.getState().webRtc);
   // const stream = store.getState().webRtc.streams[uid];
   const videoElem = document.getElementById('video-mentor');
-  // const stream = videoElem.captureStream() || videoElem.mozCaptureStream();
-  const stream = videoElem.mozCaptureStream();
+  const stream = videoElem.captureStream() || videoElem.mozCaptureStream();
+  // const stream = videoElem.mozCaptureStream();
 
   let mediaRecorder;
   const recordedBlob = [];
@@ -81,16 +81,14 @@ export default async function (uid, props) {
         [stream.id]: <a
           id={stream.id}
           href={url}
-          style={{ margin: 5 }}
+          className="recorded-item"
+          // style={{ margin: 5 }}
           download={`${webRtc.localCallHistory.chatHistory.type === 'user' ? database.User.byId[webRtc.showCommunication].firstName : database.Board.byId[webRtc.showCommunication].name}-${formatedDate}`}
+          // onClick={() => downLoadButtonClickHandler(stream.id)}
         >
-          <Button
-            onClick={() => downLoadButtonClickHandler(stream.id)}
-            style={{ background: 'green', color: 'white' }}
-            rightIcon="download"
-          >
+          <div onClick={() => downLoadButtonClickHandler(stream.id)}>
             {`${webRtc.localCallHistory.chatHistory.type === 'user' ? database.User.byId[webRtc.showCommunication].firstName : database.Board.byId[webRtc.showCommunication].name}-${formatedDate}`}
-          </Button>
+          </div>
         </a>
       },
     ]);
