@@ -6,7 +6,7 @@ class GoogleLogin extends React.Component {
   state = {};
 
   responseGoogle = async (response) => {
-    // console.log(response);
+    console.log('Response from google ==>', response);
     try {
       await login({ loginType: 'google', record: response.profileObj });
       // console.log('google login response', googleRes);

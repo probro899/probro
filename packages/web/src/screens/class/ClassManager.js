@@ -164,7 +164,7 @@ class Classes extends Component {
         columns: newColumns,
       });
       await api.updateBoardColumnCard([
-        { position: newTask.position, timestamp: Date.now(), broadCastId: `Board-${classId}` }, { id: dragable }]);
+        { position: newTask.position, todo: 'withinColumn', timestamp: Date.now(), broadCastId: `Board-${classId}` }, { id: dragable }]);
       return;
     }
     // cards movement within the column ends here
@@ -222,6 +222,7 @@ class Classes extends Component {
     // console.log('moved intercard', newTask, dragable);
     await api.updateBoardColumnCard([
       {
+        todo: 'outsideColumn',
         position: newTask.position,
         timeStamp: Date.now(),
         boardColumnId: destinationDropable,
