@@ -118,7 +118,7 @@ class LiveCallScreen extends React.Component {
       </div>
     );
   }
-}
+} 
 export default LiveCallScreen;
 
 LiveCallScreen.propTypes = {

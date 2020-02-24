@@ -5,6 +5,7 @@ import mailBody from '../../../../../mailer/html/mailBody';
 import mailer from '../../../../../mailer';
 import findBoardDetails from '../../../findBoradDetail';
 import updateUserCache from '../../../updateUserCache';
+import buildPdfHelper from '../../../../../report-generator';
 
 function addBoardActivity(record) {
   db.execute(async ({ insert }) => {
@@ -228,6 +229,17 @@ async function copyBoardColumnCard(record) {
   return mainRes;
 }
 
+async function generateReport(record) {
+  const { session } = this;
+  console.log('generate Report api called', record);
+  const pdfRes = await buildPdfHelper(record, session);
+  console.log('generated pdf res', pdfRes);
+  if (pdfRes) {
+    return pdfRes;
+  }
+  return false;
+}
+
 export default [
   addBoard,
   addBoardColumn,
@@ -240,4 +252,5 @@ export default [
   addBoardColumnCardTag,
   addBoardMessageSeenStatus,
   copyBoardColumnCard,
+  generateReport,
 ];

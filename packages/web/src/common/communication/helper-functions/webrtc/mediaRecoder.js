@@ -6,8 +6,8 @@ export default async function (uid, props) {
   // console.log('stream recoder called', uid, store.getState().webRtc);
   // const stream = store.getState().webRtc.streams[uid];
   const videoElem = document.getElementById('video-mentor');
-  const stream = videoElem.captureStream() || videoElem.mozCaptureStream();
-  // const stream = videoElem.mozCaptureStream();
+  // const stream = videoElem.captureStream() || videoElem.mozCaptureStream();
+  const stream = videoElem.mozCaptureStream();
 
   let mediaRecorder;
   const recordedBlob = [];
@@ -19,7 +19,7 @@ export default async function (uid, props) {
     }
   };
 
-  let options = { mimeType: 'video/webm;codecs=vp9' };
+  let options = { mimeType: 'video/webm;codecs=vp8' };
   if (!MediaRecorder.isTypeSupported(options.mimeType)) {
     console.error(`${options.mimeType} is not Supported`);
 
@@ -44,6 +44,8 @@ export default async function (uid, props) {
 
   try {
     mediaRecorder = new MediaRecorder(stream, options);
+    mediaRecorder.ondataavailable = handleDataAvailable;
+    mediaRecorder.start(10);
   } catch (e) {
     console.error('Media recorder error', e);
   }
@@ -59,9 +61,6 @@ export default async function (uid, props) {
   mediaRecorder.onresume = (event) => {
     console.log('Recoder resumed', event);
   };
-
-  mediaRecorder.ondataavailable = handleDataAvailable;
-  mediaRecorder.start(10);
 
   const downLoadButtonClickHandler = (sid) => {
     const { updateWebRtc } = props;

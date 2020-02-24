@@ -113,6 +113,7 @@ const mapStateToProps = (state) => {
     users: database.User,
     boardMembers: database.BoardMember,
     account,
+    database,
   };
 };
 export default connect(mapStateToProps, { ...actions })(ToolBar);

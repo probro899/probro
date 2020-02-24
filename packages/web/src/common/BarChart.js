@@ -1,16 +1,17 @@
 import Chart from 'chart.js';
 import colorSets from './colorSets';
 
-export default (userList, dataList, ctx) => {
-  const myChart = new Chart(ctx, {
+export default (labels, label, data, title, yAxesLabelString, xAxesLabelString, context) => {
+  console.log('Common Bar chart called', labels);
+  const myChart = new Chart(context, {
     type: 'horizontalBar',
     data: {
-      labels: userList.map(u => u.firstName),
+      labels,
       datasets: [{
-        label: 'Board Activities',
-        data: dataList,
-        backgroundColor: userList.map((u, idx) => colorSets[idx]),
-        borderColor: userList.map((u, idx) => colorSets[idx]),
+        label,
+        data,
+        backgroundColor: labels.map((u, idx) => colorSets[idx]),
+        borderColor: labels.map((u, idx) => colorSets[idx]),
         borderWidth: 1,
       }],
     },
@@ -18,14 +19,14 @@ export default (userList, dataList, ctx) => {
       responsive: true,
       title: {
         display: true,
-        text: 'Boar Activities Bar Chart',
+        text: title,
       },
       scales: {
         yAxes: [{
           display: true,
           scaleLabel: {
             display: true,
-            labelString: 'User List',
+            labelString: yAxesLabelString,
           },
           ticks: {
             beginAtZero: true,
@@ -35,7 +36,7 @@ export default (userList, dataList, ctx) => {
           display: true,
           scaleLabel: {
             display: true,
-            labelString: 'No of Board Activities',
+            labelString: xAxesLabelString,
           },
           ticks: {
             beginAtZero: true,
