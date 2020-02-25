@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { Divider, Button, Tooltip, Dialog } from '@blueprintjs/core';
+import { Divider, Button, Tooltip } from '@blueprintjs/core';
 import { GoGraph } from 'react-icons/go';
 import * as actions from '../../../../actions';
 import UserList from './UserList';
@@ -31,7 +30,6 @@ class ToolBar extends React.Component {
   }
 
   generateReportHandler = () => {
-    const { boardId } = this.props;
     this.setState({ showReport: window.location.pathname });
   }
 

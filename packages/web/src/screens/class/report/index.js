@@ -19,7 +19,7 @@ class Report extends React.Component {
     if (reportData) {
       this.setState({ boardActivities: reportData.boardActivities, boardCommunicationActivities: reportData.boardCommunicationActivities });
     } else {
-      this.setState({ error: 'Faild to fetch report data.'});
+      this.setState({ error: "Faild to fetch report data."});
     }
   }
 
@@ -29,35 +29,47 @@ class Report extends React.Component {
   }
 
   render() {
-    const { isOpen, onClose, boardId, boards, users, boardMembers, database } = this.props;
-    console.log('props in Report', this.props, this.state);
+    const { isOpen, onClose, boardId, boards, users, boardMembers } = this.props;
     const { boardActivities, boardCommunicationActivities } = this.state;
     const boardName = boards.byId[boardId].name;
     const boardMemberList = Object.values(boardMembers.byId).filter(bm => bm.boardId === boardId);
     const userList = boardMemberList.map(bm => Object.values(users.byId).find(u => u.id === bm.tuserId));
-    console.log('useList', userList);
     const tableData = boardActivities ? userList.map(u => findTableData(u, boardActivities, boardCommunicationActivities)) : [];
     return (
-      <Dialog onOpened={this.fetchReport} isOpen={isOpen} title={boardName} onClose={onClose} style={{ width: 850, height: 'auto' }}>
-        <div style={{ width: 850, height: 'auto' }}>
-          {boardActivities ? <DrawChart boardId={boardId} {...this.props} boardActivities={boardActivities} boardCommunicationActivities={boardCommunicationActivities} userList={boardMemberList} /> : <Spinner intent="success" /> }
-          <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
-            <Table
-              headers={{
-                userName: 'Name',
-                noOfCreateCard: 'No Of Create Cards',
-                noOfMoveCard: 'No Of Move Cards',
-                noOfComment: 'No Of Comments',
-                noOfHours: 'Calling Hours',
-                noOfMessage: 'No Of Messages',
-              }}
-              data={tableData}
-            />
-          </div>
-          <div style={{ width: '100%', display: 'flex', justifyContent: 'flex-end', padding: 10 }}>
-            <Button text="Generate PDF" intent="success" onClick={() => this.generatePdfHandler(boards.byId[boardId], tableData)} />
-          </div>
-        </div>
+      <Dialog
+        onOpened={this.fetchReport}
+        isOpen={isOpen}
+        title={boardName}
+        icon="chart"
+        onClose={onClose}
+        className="pc-report-overlay"
+      >
+        {
+          boardActivities ? (
+            <div className="pc-report-content">
+              <DrawChart boardId={boardId} {...this.props} boardActivities={boardActivities} boardCommunicationActivities={boardCommunicationActivities} userList={boardMemberList} />
+              <div className="pc-report-table-con">
+                <div className="table-title">
+                  <h3>Tabulated Data</h3>
+                </div>
+                <Table
+                  headers={{
+                    userName: 'Users',
+                    noOfCreateCard: 'No of cards created',
+                    noOfMoveCard: 'No of card moves',
+                    noOfComment: 'No of comments',
+                    noOfHours: 'Call time(hr)',
+                    noOfMessage: 'Total messages sent',
+                  }}
+                  data={tableData}
+                />
+              </div>
+              <div className="pc-pdf-gen-btn-con">
+                <Button text="Generate PDF" intent="success" onClick={() => this.generatePdfHandler(boards.byId[boardId], tableData)} />
+              </div>
+            </div>
+          ) : <Spinner intent="success" />
+        }
       </Dialog>
     );
   }
