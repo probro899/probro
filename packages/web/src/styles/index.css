@@ -293,6 +293,16 @@ top attachment etc.
 .overlay-container .task-detail-overlay .overlay-body .right .rt-in .rt-actions .bp3-popover-target button { width: 100%; }
 .overlay-container .task-detail-overlay .overlay-body .right .rt-in button { margin-bottom: 2px; }
 
+.pc-report-overlay { padding: 0; width: 70vw; height: auto; }
+.pc-report-overlay .bp3-dialog-header { padding: 10px 5px 10px 20px; border-bottom: 1px solid #e0e0e0; }
+.pc-report-overlay .bp3-dialog-header span { color: #137cbd; }
+.pc-report-overlay .bp3-dialog-header h4 { color: #1d4354; line-height: 15px; height: 30px; padding: 10px 0px 0px 10px; }
+.pc-report-overlay .pc-report-content { background-color: #fff; padding: 10px; }
+.pc-report-overlay .pc-report-content .pc-report-table-con .table-title h3 { color: #1d4354; }
+.pc-report-overlay .pc-report-content .pc-report-table-con table { border: 1px solid #e0e0e0; width: 100%; }
+.pc-report-overlay .pc-report-content .pc-report-table-con table th { background-color: #1d4354; color: #fff; padding: 5px; font-size: 14px; }
+.pc-report-overlay .pc-report-content .pc-pdf-gen-btn-con { margin-top: 10px; width: 100%; display: flex; justify-content: flex-end; }
+
 .settings { display: flex; padding: 5px 5px 5px 10px; flex-direction: column; }
 .settings .setting-types { display: flex; flex-direction: row; justify-content: space-around; font-size: 18px; font-weight: bold; border-bottom: 1px solid #d6d9d9; }
 .settings .setting-types .i-setting { width: 100%; padding: 10px; text-align: center; }

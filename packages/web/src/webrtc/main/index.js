@@ -58,17 +58,18 @@ export default async function main(onIceCandidateHandler, uid, gotRemoteStreamHa
     iceServers: [
       { urls: ['stun:stun.l.google.com:19302'] },
       {
-        urls: ['turn:properclass.com:3478?transport=udp'],
+        urls: ['turn:properclass.com:3478?transport=tcp'],
         username: 'properclass',
         credential: 'proper199201',
       },
     ],
+
     // iceServers: [
-    //   { urls: 'stun:stun.l.google.com:19302' },
+    //   { "urls": ["stun:stun.l.google.com:19302"]},
     //   {
-    //     urls: 'turn:properclass.com:3478?transport=udp',
-    //     username: 'properclass',
-    //     credential: 'proper199201',
+    //     "urls": ["turn:properclass.com:3478?transport=tcp"],
+    //     "username": "properclass",
+    //     "credential": "proper199201",
     //   },
     // ],
   };

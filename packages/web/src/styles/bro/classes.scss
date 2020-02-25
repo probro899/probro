@@ -492,3 +492,50 @@
     }
   }
 }
+
+// report popover styling here
+.pc-report-overlay {
+  padding: 0;
+  width: 70vw;
+  height: auto;
+  .bp3-dialog-header {
+    padding: 10px 5px 10px 20px;
+    border-bottom: 1px solid $normalBorder;
+    span {
+      color: $skyBlueMain;
+    }
+    h4 {
+      color: $darkBlue;
+      line-height: 15px;
+      height:30px;
+      padding: 10px 0px 0px 10px;
+    }
+  }
+  .pc-report-content {
+    background-color: $backgroundColor;
+    padding: 10px;
+    .pc-report-table-con {
+      .table-title {
+        h3 {
+          color: $darkBlue;
+        }
+      }
+      table {
+        border: 1px solid $normalBorder;
+        width: 100%;
+        th {
+          background-color: $darkBlue;
+          color: $backgroundColor;
+          padding: 5px;
+          font-size: 14px;
+        }
+      }
+    }
+    .pc-pdf-gen-btn-con {
+      margin-top: 10px;
+      width: 100%;
+      display: flex;
+      justify-content: flex-end;
+    }
+  }
+}

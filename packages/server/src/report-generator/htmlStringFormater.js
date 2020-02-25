@@ -29,7 +29,7 @@ export default (reportData) => {
         </h1>
         <hr />
         <div>
-          ${allImages.map(img => `<img src="file:///home/bhagya/workspace/reactjs/projects/probro/packages/server/src/public/user/10000001/report/${img}" style="height: 500px; width: 700px;" />`)}
+          ${allImages.map(img => `<img src="file:///Users/Nabin/workspace/probro/packages/server/src/public/user/10000001/report/${img}" style="height: 400px; width: 400px;" />`)}
         </div>
         <div>
         <table style="border-width: 1px; border-style: solid; margin: 10px;">

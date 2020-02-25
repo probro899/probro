@@ -14,17 +14,10 @@ const renderRow = (keys, values) => {
 
 export default (data) => {
   return (
-    <table style={{ borderWidth: '1px', backgroundColor: '#aaaaaa', borderStyle: 'solid', margin: 10 }}>
-      <tbody
-        style={{
-          display: 'block',
-          overflowY: 'auto',
-          height: 'auto',
-          width: '100%',
-        }}
-      >
+    <table className="pc-table">
+      <tbody>
         <tr>
-          {Object.values(data.headers).map((h, idx) => <th key={idx} style={{padding: 12, background: 'green', fontSize: 15, minWidth: 100, color: 'white' }}>{h}</th>)}
+          {Object.values(data.headers).map((h, idx) => <th key={idx}>{h}</th>)}
         </tr>
         {renderRow(Object.keys(data.headers), data.data)}
       </tbody>
