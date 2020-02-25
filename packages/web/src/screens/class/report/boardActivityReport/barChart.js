@@ -8,5 +8,6 @@ export default (userList, dataList, ctx) => {
   const yAxesLabelString = 'User List';
   const xAxesLabelString = 'No of Board Activities';
   const context = ctx;
-  BarChart(labels, label, data, title, yAxesLabelString, xAxesLabelString, context);
+  const bar = BarChart(labels, label, data, title, yAxesLabelString, xAxesLabelString, context);
+  return bar;
 };

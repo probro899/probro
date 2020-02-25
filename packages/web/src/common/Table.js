@@ -14,13 +14,15 @@ const renderRow = (keys, values) => {
 
 export default (data) => {
   return (
-    <table className="pc-table">
-      <tbody>
-        <tr>
-          {Object.values(data.headers).map((h, idx) => <th key={idx}>{h}</th>)}
-        </tr>
-        {renderRow(Object.keys(data.headers), data.data)}
-      </tbody>
-    </table>
+    <div style={{ width: '100%', overflowX: 'auto' }}>
+      <table className="pc-table">
+        <tbody>
+          <tr>
+            {Object.values(data.headers).map((h, idx) => <th key={idx}>{h}</th>)}
+          </tr>
+          {renderRow(Object.keys(data.headers), data.data)}
+        </tbody>
+      </table>
+    </div>
   );
 };

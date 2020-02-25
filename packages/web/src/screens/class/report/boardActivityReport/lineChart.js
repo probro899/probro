@@ -16,11 +16,23 @@ const lableRenderHelper = (allBoardActivities, todoFunc) => {
   return lables;
 };
 
-export default (userList, data, ctx, allBoardActivities) => {
-  const boardActivitiesInDays = allFormater(allBoardActivities, isSameDay);
-  const labels = lableRenderHelper(allBoardActivities, differenceInDays);
-  const title = 'Board Activities';
-  const yAxesLabelString = 'Board Activities';
+export default (userList, data, ctx, allBoardActivities, type) => {
+  let boardActivitiesInDays; let labels;
+  switch (type) {
+    case 'Week':
+      boardActivitiesInDays = allFormater(allBoardActivities, isSameWeek);
+      labels = lableRenderHelper(allBoardActivities, differenceInWeeks);
+      break;
+    case 'Month':
+      boardActivitiesInDays = allFormater(allBoardActivities, isSameMonth);
+      labels = lableRenderHelper(allBoardActivities, differenceInMonths);
+      break;
+    default:
+      boardActivitiesInDays = allFormater(allBoardActivities, isSameDay);
+      labels = lableRenderHelper(allBoardActivities, differenceInDays);
+  }
+  const title = 'Board Activities Chart';
+  const yAxesLabelString = 'Activities';
   const xAxesLabelString = 'No Of Days';
   const datasets = userList.map((user, idx) => ({
     label: user.firstName,
@@ -29,6 +41,6 @@ export default (userList, data, ctx, allBoardActivities) => {
     data: allUserMonthActivityFormater(boardActivitiesInDays, user.id),
     fill: false,
   }));
-  const context = ctx;
-  LineChart(labels, title, yAxesLabelString, xAxesLabelString, datasets, context);
+  const line = LineChart(labels, title, yAxesLabelString, xAxesLabelString, datasets, ctx);
+  return line;
 };

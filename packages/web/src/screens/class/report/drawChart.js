@@ -7,7 +7,7 @@ class DrawChart extends React.Component {
 
   render() {
     return (
-      <div style={{ width: 850, height: 'auto' }}>
+      <div className="pc-report-charts">
         <BoardActivityReport {...this.props} />
         <CommunicationReport {...this.props} />
       </div>

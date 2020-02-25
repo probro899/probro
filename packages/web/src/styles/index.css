@@ -294,12 +294,22 @@ top attachment etc.
 .overlay-container .task-detail-overlay .overlay-body .right .rt-in button { margin-bottom: 2px; }
 
 .pc-report-overlay { padding: 0; width: 70vw; height: auto; }
+@media screen and (max-width: 500px) { .pc-report-overlay { width: 90vw; } }
 .pc-report-overlay .bp3-dialog-header { padding: 10px 5px 10px 20px; border-bottom: 1px solid #e0e0e0; }
 .pc-report-overlay .bp3-dialog-header span { color: #137cbd; }
 .pc-report-overlay .bp3-dialog-header h4 { color: #1d4354; line-height: 15px; height: 30px; padding: 10px 0px 0px 10px; }
 .pc-report-overlay .pc-report-content { background-color: #fff; padding: 10px; }
+.pc-report-overlay .pc-report-content .pc-report-charts { width: 100%; }
+.pc-report-overlay .pc-report-content .pc-report-charts .pc-canvases { width: 100%; display: flex; flex-direction: column; align-items: center; }
+.pc-report-overlay .pc-report-content .pc-report-charts .pc-canvases .pc-graph-timeline { width: 100%; display: flex; padding-left: 10px; }
+.pc-report-overlay .pc-report-content .pc-report-charts .pc-canvases .pc-graph-timeline h3 { color: #1d4354; margin-right: 7%; }
+.pc-report-overlay .pc-report-content .pc-report-charts .pc-canvases .pc-graph-timeline .pc-report-radio-group { display: flex; align-items: center; }
+.pc-report-overlay .pc-report-content .pc-report-charts .pc-canvases .pc-graph-timeline .pc-report-radio-group label { margin-bottom: 0px; }
+.pc-report-overlay .pc-report-content .pc-report-charts .pc-canvases .pc-canvas-con { margin-bottom: 10%; width: 80%; }
+.pc-report-overlay .pc-report-content .pc-report-charts .pc-canvases .pc-canvas-con canvas { width: 100%; }
+.pc-report-overlay .pc-report-content .pc-report-table-con { padding: 10px; }
 .pc-report-overlay .pc-report-content .pc-report-table-con .table-title h3 { color: #1d4354; }
-.pc-report-overlay .pc-report-content .pc-report-table-con table { border: 1px solid #e0e0e0; width: 100%; }
+.pc-report-overlay .pc-report-content .pc-report-table-con table { border: 1px solid #e0e0e0; width: 100%; overflow-x: scroll; }
 .pc-report-overlay .pc-report-content .pc-report-table-con table th { background-color: #1d4354; color: #fff; padding: 5px; font-size: 14px; }
 .pc-report-overlay .pc-report-content .pc-pdf-gen-btn-con { margin-top: 10px; width: 100%; display: flex; justify-content: flex-end; }
 
