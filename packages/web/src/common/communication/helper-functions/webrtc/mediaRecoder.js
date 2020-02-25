@@ -1,13 +1,14 @@
+/* eslint-disable react/jsx-closing-tag-location */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 import React from 'react';
-import { Button } from '@blueprintjs/core';
 import store from '../../../../store';
 
 export default async function (uid, props) {
   // console.log('stream recoder called', uid, store.getState().webRtc);
   // const stream = store.getState().webRtc.streams[uid];
   const videoElem = document.getElementById('video-mentor');
-  // const stream = videoElem.captureStream() || videoElem.mozCaptureStream();
-  const stream = videoElem.mozCaptureStream();
+  const stream = videoElem.captureStream ? videoElem.captureStream() : videoElem.mozCaptureStream();
 
   let mediaRecorder;
   const recordedBlob = [];
@@ -19,24 +20,17 @@ export default async function (uid, props) {
     }
   };
 
-  let options = { mimeType: 'video/webm;codecs=vp8' };
+  let options = { mimeType: 'video/webm; codecs="vp9, opus"' };
   if (!MediaRecorder.isTypeSupported(options.mimeType)) {
     console.error(`${options.mimeType} is not Supported`);
 
-    options = { mimeType: 'video/webm;codecs=vp8' };
+    options = { mimeType: 'video/webm; codecs="vp8, opus"' };
     if (!MediaRecorder.isTypeSupported(options.mimeType)) {
       console.error(`${options.mimeType} is not supported`);
 
       options = { mimeType: 'video/webm' };
       if (!MediaRecorder.isTypeSupported(options.mimeType)) {
         console.error(`${options.mimeType} is not supported`);
-        // types = ["video/webm",
-        //      "audio/webm",
-        //      "video/webm\;codecs=vp8",
-        //      "video/webm\;codecs=daala",
-        //      "video/webm\;codecs=h264",
-        //      "audio/webm\;codecs=opus",
-        //      "video/mpeg"];
         options = { mimeType: '' };
       }
     }
@@ -88,7 +82,7 @@ export default async function (uid, props) {
           <div onClick={() => downLoadButtonClickHandler(stream.id)}>
             {`${webRtc.localCallHistory.chatHistory.type === 'user' ? database.User.byId[webRtc.showCommunication].firstName : database.Board.byId[webRtc.showCommunication].name}-${formatedDate}`}
           </div>
-        </a>
+        </a>,
       },
     ]);
   };

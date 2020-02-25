@@ -37,7 +37,7 @@ class DrawingBoard extends Component {
   }
 
   componentWillUpdate(nextProps) {
-    const { webRtc } = this.props;
+    // const { webRtc } = this.props;
     const { canvas } = this.state;
     // if (webRtc.localCallHistory && webRtc.localCallHistory.mediaType === 'whiteBoard') {
     //   return;
