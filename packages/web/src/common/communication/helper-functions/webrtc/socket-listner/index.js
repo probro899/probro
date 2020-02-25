@@ -5,7 +5,7 @@ import onIceCandidateHandler from './onIceCandidateHandler';
 import onCallEndHandler from './onCallEndHandler';
 import onCallStatusChangeHandler from './onCallStatusHandler';
 
-export default (props, state) => {
+export default (props, state, maximize) => {
   // Handle offer request
   client.on('offer', async (data) => {
     await onOfferHandler(props, state, data);
@@ -30,6 +30,6 @@ export default (props, state) => {
   // Handling Call End event
   client.on('callEnd', async (data) => {
     console.log('callend event called', data);
-    onCallEndHandler(props, state, data);
+    onCallEndHandler(props, state, data, maximize);
   });
 };

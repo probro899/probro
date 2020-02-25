@@ -30,7 +30,7 @@ class Communication extends React.Component {
       console.error('error in fetching apis in communication');
     }
     await this.setState({ apis: apisRes });
-    socketListner(this.props, this.state);
+    socketListner(this.props, this.state, this.maximize);
   }
 
   toggleMinMax = () => {

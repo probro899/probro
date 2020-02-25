@@ -13,7 +13,7 @@ const declineCloseCall = (state) => {
   // console.log('close call decline', state);
 };
 
-export default async (props, state, data) => {
+export default async (props, state, data, maximizeHandler) => {
   // console.log('close details in main close handler', data);
   const { webRtc } = store.getState();
   const { uid, broadCastId, broadCastType, type, connectionId } = data;
@@ -21,6 +21,7 @@ export default async (props, state, data) => {
     if (webRtc.isLive || webRtc.peerConnections[uid] || webRtc.showIncommingCall) {
       if (type === webRtc.localCallHistory.chatHistory.type) {
         if (webRtc.localCallHistory.chatHistory.connectionId === connectionId) {
+          maximizeHandler();
           closeCall(props, state, data);
         } else {
           declineCloseCall('Permission denied');
@@ -31,6 +32,7 @@ export default async (props, state, data) => {
 
   if (type === 'board') {
     if (webRtc.isLive && webRtc.showCommunication === broadCastId) {
+      maximizeHandler();
       closeCall(props, state, data);
     } else {
       declineCloseCall('Permission denied to end call');
