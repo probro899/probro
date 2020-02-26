@@ -35,7 +35,6 @@ const postImageToServer = async (file, account) => {
       data: formData,
     });
     if (res.status === 200) {
-      console.log('convasCapture res', res.data);
       return res.data;
     }
     return false;
@@ -46,16 +45,13 @@ const postImageToServer = async (file, account) => {
 };
 
 export default async (data) => {
-  // console.log('capture canvas called', data);
-  const { canvas, account, addDatabaseSchema, apis, boardDetail, tableData } = data;
+  const { account, apis, boardDetail, tableData } = data;
   const imageName = ['BoarActivityBarChart.jpeg', 'BoardActivityLineChart.jpeg', 'CommunicationActivityBarChart.jpeg', 'CommunicationActivityLineChart.jpeg'];
   const canvasNameNeedToCapture = ['board-activity-bar-chart', 'board-activity-line-chart', 'communication-activity-bar-chart', 'communication-activity-line-chart'];
   const canvasElements = canvasNameNeedToCapture.map(c => document.getElementById(c));
   const imageFiles = canvasElements.map((ce, idx) => convertCanvasToImage(ce, imageName[idx]));
-  console.log('canvas Images', imageFiles);
   const postReq = imageFiles.map(file => postImageToServer(file, account));
   const postedImages = await Promise.all(postReq);
-  console.log('Posted images', postedImages, apis);
   const reportRes = await apis.generateReport({ allImages: postedImages, boardDetail, tableData });
-  console.log('generate Report Res', reportRes);
+  return { images: postedImages, pdf: reportRes };
 };

@@ -573,6 +573,17 @@
       width: 100%;
       display: flex;
       justify-content: flex-end;
+      .pdf-link {
+        background-color: $skyBlueMain;
+        margin-right: 10px;
+        border-radius: 15px;
+        display: flex;
+        align-items: center;
+        padding: 5px;
+        a {
+          color: $backgroundColor;
+        }
+      }
     }
   }
 }

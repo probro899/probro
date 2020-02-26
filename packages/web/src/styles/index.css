@@ -312,6 +312,8 @@ top attachment etc.
 .pc-report-overlay .pc-report-content .pc-report-table-con table { border: 1px solid #e0e0e0; width: 100%; overflow-x: scroll; }
 .pc-report-overlay .pc-report-content .pc-report-table-con table th { background-color: #1d4354; color: #fff; padding: 5px; font-size: 14px; }
 .pc-report-overlay .pc-report-content .pc-pdf-gen-btn-con { margin-top: 10px; width: 100%; display: flex; justify-content: flex-end; }
+.pc-report-overlay .pc-report-content .pc-pdf-gen-btn-con .pdf-link { background-color: #137cbd; margin-right: 10px; border-radius: 15px; display: flex; align-items: center; padding: 5px; }
+.pc-report-overlay .pc-report-content .pc-pdf-gen-btn-con .pdf-link a { color: #fff; }
 
 .settings { display: flex; padding: 5px 5px 5px 10px; flex-direction: column; }
 .settings .setting-types { display: flex; flex-direction: row; justify-content: space-around; font-size: 18px; font-weight: bold; border-bottom: 1px solid #d6d9d9; }
