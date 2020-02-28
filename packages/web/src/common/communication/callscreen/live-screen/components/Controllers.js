@@ -28,8 +28,9 @@ class Controllers extends React.Component {
   }
 
   callReject = () => {
-    const { closeHandler, change, toggleMaximize } = this.props;
-    toggleMaximize();
+    console.log('PROPS IN CALL REJECT', this.props);
+    const { closeHandler, change, toggleMaximize, remoteCallEndMinimizer} = this.props;
+    remoteCallEndMinimizer();
     closeHandler();
     change('history');
   }

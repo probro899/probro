@@ -30,7 +30,11 @@ class Communication extends React.Component {
       console.error('error in fetching apis in communication');
     }
     await this.setState({ apis: apisRes });
-    socketListner(this.props, this.state, this.maximize);
+    socketListner(this.props, this.state, this.remoteCallEndMinimizer);
+  }
+
+  remoteCallEndMinimizer = () => {
+    this.setState({ maximize: false });
   }
 
   toggleMinMax = () => {
@@ -137,6 +141,7 @@ class Communication extends React.Component {
           <CallScreen
             toggleMaximize={this.maximize}
             minimize={minimize}
+            remoteCallEndMinimizer={this.remoteCallEndMinimizer}
             change={this.switchScreen}
             updateWebRtc={updateWebRtc}
             closeHandler={closeHandler(this.props, this.state, apis)}

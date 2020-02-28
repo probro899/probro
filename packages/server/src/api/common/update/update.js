@@ -1,9 +1,11 @@
 import schema from '@probro/common/src/schema';
 import db from '../../../db';
 // eslint-disable-next-line import/no-cycle
-import { user } from '../../../cache';
+import { database } from '../../../cache';
 
 export default async function Update(table, value, condition) {
+  console.log('value in update', value);
+  delete value.todo;
   const { session } = this;
   const { broadCastId } = value;
   // console.log('update value', value, value);
@@ -15,13 +17,10 @@ export default async function Update(table, value, condition) {
   });
   if (broadCastId) {
     const channel = session.channel(broadCastId);
-    const allChannelSession = session.getChannel(broadCastId);
-    // console.log('current channel', allChannelSession);
     channel.dispatch(schema.update(table, res));
-    allChannelSession.forEach(s => user.update(schema.update(table, res), s));
+    database.update(table, schema.update(table, res));
   } else {
-    // session.dispatch(schema.update(table, res));
-    user.update(schema.update(table, res), session);
+    database.update(table, schema.update(table, res));
   }
   return res;
 }

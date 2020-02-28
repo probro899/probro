@@ -20,11 +20,11 @@ export default async function (uid, props) {
     }
   };
 
-  let options = { mimeType: 'video/webm; codecs="vp9, opus"' };
+  let options = { mimeType: 'video/webm;codecs="vp8,opus"' };
   if (!MediaRecorder.isTypeSupported(options.mimeType)) {
     console.error(`${options.mimeType} is not Supported`);
 
-    options = { mimeType: 'video/webm; codecs="vp8, opus"' };
+    options = { mimeType: 'video/webm;codecs="vp8, opus"' };
     if (!MediaRecorder.isTypeSupported(options.mimeType)) {
       console.error(`${options.mimeType} is not supported`);
 
@@ -76,7 +76,7 @@ export default async function (uid, props) {
           href={url}
           className="recorded-item"
           // style={{ margin: 5 }}
-          download={`${webRtc.localCallHistory.chatHistory.type === 'user' ? database.User.byId[webRtc.showCommunication].firstName : database.Board.byId[webRtc.showCommunication].name}-${formatedDate}`}
+          download={`${webRtc.localCallHistory.chatHistory.type === 'user' ? database.User.byId[webRtc.showCommunication].firstName : database.Board.byId[webRtc.showCommunication].name}-${formatedDate}.webm`}
           // onClick={() => downLoadButtonClickHandler(stream.id)}
         >
           <div onClick={() => downLoadButtonClickHandler(stream.id)}>

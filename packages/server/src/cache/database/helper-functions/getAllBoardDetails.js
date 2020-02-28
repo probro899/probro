@@ -2,6 +2,7 @@
 import lodash from 'lodash';
 import { findBoardDetail } from '../../../api';
 import flat from '../../../api/flat';
+import cacheDatabase from '../cache';
 
 const findBoardActiveStatus = (session, boardId) => {
   const liveBoardSessions = session.getChannel(`Board-live-${boardId}`) || [];
@@ -14,40 +15,30 @@ const findBoardActiveStatus = (session, boardId) => {
   return false;
 };
 
-export default async (find, findOne, id, session) => {
-  const BoardMember = await find('BoardMember', { tuserId: id });
-  const Board = await find('Board', { userId: id });
-  const boardPromises = [];
-  BoardMember.forEach(bm => boardPromises.push(findOne('Board', { id: bm.boardId })));
-  const allBoardsTemp = await Promise.all(boardPromises);
-  const allBoards = allBoardsTemp.filter(b => b).map(b => ({ ...b, activeStatus: findBoardActiveStatus(session, b.id) }));
+export default (id, session) => {
+  const allDbBoardMembers = cacheDatabase.get('BoardMember');
+  const allDbBoard = cacheDatabase.get('Board');
+  const allDbBoardMessageSeenStatus = cacheDatabase.get('BoardMessageSeenStatus');
+  const allDbBoardMessage = cacheDatabase.get('BoardMessage');
+
+  const BoardMember = allDbBoardMembers.filter(bm => bm.tuserId === id);
+  const Board = allDbBoard.filter(b => b.userId === id);
+  const allBoardsTemp = BoardMember.map(bm => allDbBoard.find(b => b.id === bm.boardId));
+  // const allBoards = allBoardsTemp.filter(b => b).map(b => ({ ...b, activeStatus: findBoardActiveStatus(session, b.id) }));
+  const allBoards = allBoardsTemp.filter(b => b);
   // console.log('all board', allBoards);
 
-  const boardMessagePromises = [];
-  allBoards.forEach(b => boardMessagePromises.push(find('BoardMessage', { boardId: b.id })));
-  const BoardMessage = await Promise.all(boardMessagePromises);
-  const boardMessageSeenStatusPromises = [];
-  flat(BoardMessage).forEach(msg => boardMessageSeenStatusPromises.push(find('BoardMessageSeenStatus', { bmId: msg.id })));
-  const BoardMessageSeenStatus = await Promise.all(boardMessageSeenStatusPromises);
+  const BoardMessage = allBoards.map(b => allDbBoardMessage.filter(bm => bm.boardId === b.id));
+
+  const BoardMessageSeenStatus = flat(BoardMessage).map(bm => allDbBoardMessageSeenStatus.filter(bms => bms.bmId === bm.id));
   // console.log('BoardMessage', BoardMessage);
 
-  const boardDetailsPromises = [];
-  allBoards.forEach((b) => {
-    boardDetailsPromises.push(findBoardDetail(b.id));
-  });
-
-  const boardUserPromises = [];
-  allBoards.forEach((b) => {
-    boardUserPromises.push(find('BoardMember', { boardId: b.id }));
-    // boardUserPromises.push(find('Board', { id: b.id }));
-  });
-
-  const allBoardMembers = await Promise.all(boardUserPromises);
+  const allBoardMembers = allBoards.map(b => allDbBoardMembers.filter(bm => bm.boardId === b.id));
   // console.log('all Board Member', allBoardMembers.flat());
   const allBoardUserList = lodash.uniq(flat(allBoardMembers).map(obj => obj.tuserId));
 
   // console.log('uniqUser and BoarUserDetails', uniqUsers, allBoardUserDetails);
-  const boardDetails = await Promise.all(boardDetailsPromises);
+  const boardDetails = allBoards.map(b => findBoardDetail(b.id));
   // console.log('boardDetails', JSON.stringify(boardDetails));
   const BoardColumn = flat(boardDetails.map(obj => obj.boardColumn));
   const BoardColumnCard = flat(flat(boardDetails.map(obj => obj.boardColumnCard)));

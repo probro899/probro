@@ -1,7 +1,7 @@
 /* eslint-disable import/no-cycle */
 import lodash from 'lodash';
 import schema from '@probro/common/src/schema';
-import { user } from '../cache';
+import get from '../cache/database/get';
 
 const flat = (arr) => {
   const flatArray = arr.reduce((t, a) => {
@@ -29,11 +29,13 @@ function userPresentorHelper(boards, userList) {
 }
 
 export default async function initUser(id) {
+  // console.log('init user called', id);
   const { session } = this;
 
   let u = null;
   try {
-    u = await user.get(id, session);
+    u = get(id, session);
+    // console.log('get Res', u);
   } catch (err) {
     console.error('error in getUser data from cache', err);
     throw err;
@@ -75,7 +77,6 @@ export default async function initUser(id) {
   session.dispatch(schema.init('BoardColumnCardDescription', u.BoardColumnCardDescription));
   session.dispatch(schema.init('BoardColumnCardTag', u.BoardColumnCardTag));
   session.dispatch(schema.init('Blog', u.Blog));
-  // session.dispatch(schema.init('BlogDetail', u.BlogDetail));
   session.dispatch(schema.init('BlogComment', u.BlogComment));
   session.dispatch(schema.init('BlogLike', u.BlogLike));
   session.dispatch(schema.init('BoardMember', u.BoardMember));

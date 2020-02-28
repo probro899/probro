@@ -2,7 +2,7 @@ import Chart from 'chart.js';
 import colorSets from './colorSets';
 
 export default (labels, label, data, title, yAxesLabelString, xAxesLabelString, context) => {
-  console.log('Common Bar chart called', labels);
+  // console.log('Common Bar chart called', labels);
   const myChart = new Chart(context, {
     type: 'horizontalBar',
     data: {

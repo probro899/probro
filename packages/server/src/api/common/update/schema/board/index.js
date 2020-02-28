@@ -9,9 +9,12 @@ function updateBoardColumn(records) {
 }
 
 function updateBoardColumnCard(records) {
+  console.log('update boardCoolumn card', records);
   // const record = records[0];
   // records.shift();
-  update.call(this, 'BoardColumnCard', ...records);
+  const record = records;
+  delete record.todo;
+  update.call(this, 'BoardColumnCard', ...record);
 }
 
 function updateBoardColumnCardAttachment(records) {

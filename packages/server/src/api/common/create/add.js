@@ -1,7 +1,7 @@
 import schema from '@probro/common/src/schema';
 import db from '../../../db';
 // eslint-disable-next-line import/no-cycle
-import { user } from '../../../cache';
+import { database } from '../../../cache';
 
 export default async function add(table, record) {
   console.log('add api called', table, record);
@@ -32,17 +32,17 @@ export default async function add(table, record) {
           const allUserSession = [];
           broadCastUserList.forEach(userIdObj => allUserSession.push(allChannelSession.find(s => s.values.user.id === userIdObj.userId)));
           channel.dispatch(schema.add(table, boardDetails), broadCastUserList);
-          [...allUserSession, session].forEach(s => user.update(schema.add(table, boardDetails), s));
+          database.update(table, schema.add(table, boardDetails));
         } else {
           const channel = session.channel(broadCastId);
           const allChannelSession = session.getChannel(broadCastId);
           // console.log('current channel', allChannelSession);
           channel.dispatch(schema.add(table, boardDetails), null, session.values.user.id);
-          allChannelSession.forEach(s => user.update(schema.add(table, boardDetails), s));
+          database.update(table, schema.add(table, boardDetails));
         }
       } else {
         // session.dispatch(schema.add(table, boardDetails));
-        user.update(schema.add(table, boardDetails), session);
+        database.update(table, schema.add(table, boardDetails));
       }
     }
     // console.log('boardId', boardId);

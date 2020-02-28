@@ -9,6 +9,7 @@ import { init as dbinit } from './db';
 import { start } from './socket';
 import validateToken from './auth/validateToken';
 import { initUser } from './api';
+import initCachDB from './cache/database/initCacheDB';
 
 const port = process.env.PORT || 4001;
 const app = express();
@@ -40,6 +41,9 @@ run(async (nodeApp) => {
   const url = '/shocked/:origin/:token';
   // initialise database
   await dbinit();
+  // initialise cache database
+  initCachDB();
+
   // starting socket
 
   const socket = start({ server, url }, async (session) => {
