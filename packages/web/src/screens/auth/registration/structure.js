@@ -31,7 +31,7 @@ export default [
     fieldtype: 'input',
     hidden: true,
     name: 'Password',
-    placeholder: 'Eg, ........',
+    placeholder: 'Eg, Xyz@123peQ',
     icon: {
       side: 'right',
       name: 'eye-open',

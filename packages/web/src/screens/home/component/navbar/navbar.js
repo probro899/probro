@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { Menu, MenuItem, Popover, Position, Intent, Icon } from '@blueprintjs/core';
+import { Menu, MenuItem, Intent, Icon } from '@blueprintjs/core';
 import client from '../../../../socket';
 import * as actions from '../../../../actions';
 import Notifications from '../notification';

@@ -5,7 +5,8 @@ export const forgetForm = [
     fieldtype: 'input',
     hidden: true,
     name: 'New Password',
-    placeholder: 'Eg, ........',
+    placeholder: 'Eg, Xyz@123peQ',
+    required: true,
     icon: {
       side: 'right',
       name: 'eye-open',
@@ -14,9 +15,10 @@ export const forgetForm = [
   {
     id: 'confirmPassword',
     fieldtype: 'input',
+    required: true,
     hidden: true,
     name: 'Confirm Password',
-    placeholder: 'Eg, ........',
+    placeholder: 'Eg, Xyz@123peQ',
     icon: {
       side: 'right',
       name: 'eye-open',

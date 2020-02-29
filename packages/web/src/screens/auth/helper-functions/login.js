@@ -6,10 +6,9 @@ export default async (args) => {
   try {
     const res = await axios.post(`${ENDPOINT}/auth/login`, args);
     const { data } = res;
-    // console.log('loginResponse', data);
     if (res.status === 200 && data.token) {
       connect(data);
-      return { response: 200 };
+      return { response: 200, data: res.data };
     }
     if (res.status === 201) {
       return { error: res.data };
