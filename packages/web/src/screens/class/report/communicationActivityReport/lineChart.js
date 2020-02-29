@@ -16,9 +16,21 @@ const lableRenderHelper = (allBoardActivities, todoFunc) => {
   return lables;
 };
 
-export default (userList, data, ctx, allBoardActivities) => {
-  const boardActivitiesInDays = allFormater(allBoardActivities, isSameDay);
-  const labels = lableRenderHelper(allBoardActivities, differenceInDays);
+export default (userList, data, ctx, allBoardActivities, type) => {
+  let boardActivitiesInDays; let labels;
+  switch (type) {
+    case 'Week':
+      boardActivitiesInDays = allFormater(allBoardActivities, isSameWeek);
+      labels = lableRenderHelper(allBoardActivities, differenceInWeeks);
+      break;
+    case 'Month':
+      boardActivitiesInDays = allFormater(allBoardActivities, isSameMonth);
+      labels = lableRenderHelper(allBoardActivities, differenceInMonths);
+      break;
+    default:
+      boardActivitiesInDays = allFormater(allBoardActivities, isSameDay);
+      labels = lableRenderHelper(allBoardActivities, differenceInDays);
+  }
   const title = 'Communication Activities';
   const yAxesLabelString = 'Communication Activities';
   const xAxesLabelString = 'No of Days';
@@ -30,5 +42,6 @@ export default (userList, data, ctx, allBoardActivities) => {
     fill: false,
   }));
   const context = ctx;
-  LineChart(labels, title, yAxesLabelString, xAxesLabelString, datasets, context);
+  const lineChart = LineChart(labels, title, yAxesLabelString, xAxesLabelString, datasets, context);
+  return lineChart;
 };

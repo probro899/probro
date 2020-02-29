@@ -1,8 +1,8 @@
 import Chart from 'chart.js';
+import lineChart from '../screens/class/report/communicationActivityReport/lineChart';
 
 export default (labels, title, yAxesLabelString, xAxesLabelString, datasets, context) => {
-
-  const myChart = new Chart(context, {
+  const myChartLine = new Chart(context, {
     type: 'line',
     data: {
       labels,
@@ -46,4 +46,5 @@ export default (labels, title, yAxesLabelString, xAxesLabelString, datasets, con
       },
     },
   });
+  return myChartLine;
 };

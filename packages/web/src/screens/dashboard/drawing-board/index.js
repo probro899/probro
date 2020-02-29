@@ -9,12 +9,17 @@ const fabric = require('fabric');
 const pcLogo = require('../../../assets/logo.png');
 
 class DrawingBoard extends Component {
-  state = {
-    apis: {},
-    canvas: {},
-    anyObjectActive: false,
-    color: 'black',
-    draw: false,
+  constructor(props) {
+    super(props);
+    this.state = {
+      apis: {},
+      canvas: {},
+      anyObjectActive: false,
+      color: 'black',
+      draw: false,
+      mouseDown: false,
+    };
+    this.previousPoint = { x: 0, y: 0 };
   }
 
   async componentDidMount() {
@@ -22,8 +27,14 @@ class DrawingBoard extends Component {
     const apis = await client.scope('Mentee');
     const canvas = new fabric.fabric.Canvas('mainCanvas', { preserveObjectStacking: true, selection: false, backgroundColor: 'white' });
     canvas.freeDrawingBrush.width = 2;
-    canvas.on('mouse:down', () => {
-      this.onCanvasClick();
+    canvas.on('mouse:down', (e) => {
+      this.onMouseDown(e);
+    });
+    canvas.on('mouse:move', (e) => {
+      this.onMouseMove(e);
+    });
+    canvas.on('mouse:up', (e) => {
+      this.onMouseUp(e);
     });
     this.setState({
       apis,
@@ -47,6 +58,25 @@ class DrawingBoard extends Component {
       canvas.remove(logo);
       this.addInitialAnimation();
       canvas.requestRenderAll();
+    }
+  }
+
+  drawPath = (ctx, e) => {
+    const { color } = this.state;
+    ctx.beginPath();
+    ctx.moveTo(this.previousPoint.x, this.previousPoint.y);
+    ctx.lineTo(e.pointer.x, e.pointer.y);
+    ctx.strokeStyle = color;
+    ctx.lineWidth = 1;
+    ctx.stroke();
+    ctx.closePath();
+    this.previousPoint = e.pointer;
+  }
+
+  onMouseMove = (e) => {
+    const { canvas, draw, mouseDown } = this.state;
+    if (draw && mouseDown) {
+      this.drawPath(canvas.lowerCanvasEl.getContext('2d'), e);
     }
   }
 
@@ -85,16 +115,29 @@ class DrawingBoard extends Component {
     });
   }
 
-  onCanvasClick = () => {
-    const { canvas, anyObjectActive } = this.state;
-    if (!anyObjectActive && canvas.getActiveObject()) {
+  onMouseUp = () => {
+    this.setState({
+      mouseDown: false,
+    });
+  }
+
+  onMouseDown = (e) => {
+    const { canvas, anyObjectActive, draw } = this.state;
+    if (!draw) {
+      if (!anyObjectActive && canvas.getActiveObject()) {
+        this.setState({
+          anyObjectActive: true,
+        });
+      } else if (!canvas.getActiveObject()) {
+        this.setState({
+          anyObjectActive: false,
+        });
+      }
+    } else {
       this.setState({
-        anyObjectActive: true,
+        mouseDown: true,
       });
-    } else if (!canvas.getActiveObject()) {
-      this.setState({
-        anyObjectActive: false,
-      });
+      this.previousPoint = e.pointer;
     }
   }
 

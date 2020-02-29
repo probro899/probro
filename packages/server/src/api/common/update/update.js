@@ -4,7 +4,6 @@ import db from '../../../db';
 import { database } from '../../../cache';
 
 export default async function Update(table, value, condition) {
-  console.log('value in update', value);
   delete value.todo;
   const { session } = this;
   const { broadCastId } = value;

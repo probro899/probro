@@ -1,4 +1,11 @@
 import update from '../../update';
+import db from '../../../../../db';
+
+function addBoardActivity(record) {
+  db.execute(async ({ insert }) => {
+    insert('BoardActivity', record);
+  });
+}
 
 function updateBoard(records) {
   update.call(this, 'Board', ...records);

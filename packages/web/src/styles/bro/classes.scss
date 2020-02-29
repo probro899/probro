@@ -5,11 +5,11 @@
   flex-direction: column;
   padding: 5px;
   .header {
-    margin-bottom: 10px;
+    // margin-bottom: 10px;
     padding: 10px;
     .title {
       font-size: 18px;
-      color: $textColor;
+      color: $darkBlue;
     }
     small {
       color: $lightTextColor;
@@ -77,6 +77,17 @@
             opacity: 0.7;
           }
         }
+      }
+    }
+  }
+  .pc-class-template-container {
+    margin-top: 30px;
+    .template-icon {
+      position: absolute;
+      bottom: 10px;
+      right: 15px;
+      svg {
+        stroke: #0f9960;
       }
     }
   }
@@ -498,6 +509,9 @@
   padding: 0;
   width: 70vw;
   height: auto;
+  @media screen and (max-width: 500px){
+    width: 90vw;
+  }
   .bp3-dialog-header {
     padding: 10px 5px 10px 20px;
     border-bottom: 1px solid $normalBorder;
@@ -514,7 +528,40 @@
   .pc-report-content {
     background-color: $backgroundColor;
     padding: 10px;
+    .pc-report-charts {
+      width: 100%;
+      .pc-canvases {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        .pc-graph-timeline {
+          width: 100%;
+          display: flex;
+          padding-left: 10px;
+          h3 {
+            color: $darkBlue;
+            margin-right: 7%;
+          }
+          .pc-report-radio-group {
+            display: flex;
+            align-items: center;
+            label {
+              margin-bottom: 0px;
+            }
+          }
+        }
+        .pc-canvas-con {
+          margin-bottom: 10%;
+          width: 80%;
+          canvas {
+            width: 100%;
+          }
+        }
+      }
+    }
     .pc-report-table-con {
+      padding: 10px;
       .table-title {
         h3 {
           color: $darkBlue;
@@ -523,6 +570,7 @@
       table {
         border: 1px solid $normalBorder;
         width: 100%;
+        overflow-x: scroll;
         th {
           background-color: $darkBlue;
           color: $backgroundColor;
@@ -536,6 +584,17 @@
       width: 100%;
       display: flex;
       justify-content: flex-end;
+      .pdf-link {
+        background-color: $skyBlueMain;
+        margin-right: 10px;
+        border-radius: 15px;
+        display: flex;
+        align-items: center;
+        padding: 5px;
+        a {
+          color: $backgroundColor;
+        }
+      }
     }
   }
 }

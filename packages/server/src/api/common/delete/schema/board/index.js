@@ -40,7 +40,7 @@ function deleteBoardColumnCardAttachment(record) {
   const broadCastArr = record.broadCastId.split('-');
   const boardId = broadCastArr[broadCastArr.length - 1];
   Delete.call(this, 'BoardColumnCardAttachment', record);
-  addBoardActivity({ userId: session.values.user.id, timeStamp: Date.now(), boardId, cardId: record.id, message: 'Delete Attachment' });
+  addBoardActivity({ attachmentId: record.id, userId: session.values.user.id, timeStamp: Date.now(), boardId, cardId: record.cardId, message: 'Delete Attachment' });
 }
 
 function deleteBoardColumnCardComment(record) {
@@ -48,7 +48,7 @@ function deleteBoardColumnCardComment(record) {
   const broadCastArr = record.broadCastId.split('-');
   const boardId = broadCastArr[broadCastArr.length - 1];
   Delete.call(this, 'BoardColumnCardComment', record);
-  addBoardActivity({ userId: session.values.user.id, timeStamp: Date.now(), boardId, cardId: record.id, message: 'Delete Comment' });
+  addBoardActivity({ commentId: record.id, userId: session.values.user.id, timeStamp: Date.now(), boardId, cardId: record.id, message: 'Delete Comment' });
 }
 
 function deleteBordColumnDescription(record) {
@@ -56,7 +56,7 @@ function deleteBordColumnDescription(record) {
   const broadCastArr = record.broadCastId.split('-');
   const boardId = broadCastArr[broadCastArr.length - 1];
   Delete.call(this, 'BoardColumnCardDescription', record);
-  addBoardActivity({ userId: session.values.user.id, timeStamp: Date.now(), boardId, cardId: record.id, message: 'Delete Descripion' });
+  addBoardActivity({ descriptionId: record.id, userId: session.values.user.id, timeStamp: Date.now(), boardId, cardId: record.id, message: 'Delete Descripion' });
 }
 
 function deleteBoardColumnCardTag(record) {
@@ -64,7 +64,7 @@ function deleteBoardColumnCardTag(record) {
   const broadCastArr = record.broadCastId.split('-');
   const boardId = broadCastArr[broadCastArr.length - 1];
   Delete.call(this, 'BoardColumnCardTag', record);
-  addBoardActivity({ userId: session.values.user.id, timeStamp: Date.now(), boardId, cardId: record.id, message: 'Delete Tag' });
+  addBoardActivity({ tagId: record.id, userId: session.values.user.id, timeStamp: Date.now(), boardId, cardId: record.cardId, message: 'Delete Tag' });
 }
 
 export default [

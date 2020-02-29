@@ -5,7 +5,7 @@ import mailer from '../mailer';
 
 const RESET_TOKEN_AGE = 1 * 60 * 60 * 1000; // 1 hour
 
-const domain = process.env.RESTRO_DOMAIN || 'https://properclass.com';
+const domain = process.env.RESTRO_DOMAIN || 'http://localhost:3000';
 
 export default async function forgot(username) {
 

@@ -8,6 +8,7 @@ import { DeletePopOver } from '../../common';
 import boardStructure from './ClassComponents/structure';
 import client from '../../socket';
 import { PopoverForm, MoreButton } from '../../components';
+import ClassTemplate from './ClassTemplate';
 
 class Class extends Component {
   state = {
@@ -150,10 +151,8 @@ class Class extends Component {
           name={deleteClass.name}
         />
         <div className="header">
-          <div>
-            <span className="title">Classrooms </span>
-            <small>Your class management</small>
-          </div>
+          <span className="title">Classrooms </span>
+          <small>Your classrooms</small>
         </div>
         <div className="content-list">
           {
@@ -198,6 +197,7 @@ class Class extends Component {
           </div>
         </div>
         {/* create new class popover */}
+        <ClassTemplate />
         <PopoverForm
           isOpen={createBool}
           onClose={this.newClass}

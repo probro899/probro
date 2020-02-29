@@ -22,15 +22,15 @@ export default async function (uid, props) {
 
   let options = { mimeType: 'video/webm;codecs="vp8,opus"' };
   if (!MediaRecorder.isTypeSupported(options.mimeType)) {
-    console.error(`${options.mimeType} is not Supported`);
+    // console.error(`${options.mimeType} is not Supported`);
 
     options = { mimeType: 'video/webm;codecs="vp8, opus"' };
     if (!MediaRecorder.isTypeSupported(options.mimeType)) {
-      console.error(`${options.mimeType} is not supported`);
+      // console.error(`${options.mimeType} is not supported`);
 
       options = { mimeType: 'video/webm' };
       if (!MediaRecorder.isTypeSupported(options.mimeType)) {
-        console.error(`${options.mimeType} is not supported`);
+        // console.error(`${options.mimeType} is not supported`);
         options = { mimeType: '' };
       }
     }
@@ -41,24 +41,24 @@ export default async function (uid, props) {
     mediaRecorder.ondataavailable = handleDataAvailable;
     mediaRecorder.start(10);
   } catch (e) {
-    console.error('Media recorder error', e);
+    // console.error('Media recorder error', e);
   }
 
   mediaRecorder.onstop = (event) => {
-    console.log('Recorder stopped', event);
+    // console.log('Recorder stopped', event);
   };
 
   mediaRecorder.onpause = (event) => {
-    console.log('Recoder Paused', event);
+    // console.log('Recoder Paused', event);
   };
 
   mediaRecorder.onresume = (event) => {
-    console.log('Recoder resumed', event);
+    // console.log('Recoder resumed', event);
   };
 
   const downLoadButtonClickHandler = (sid) => {
     const { updateWebRtc } = props;
-    console.log('downloadButton Click handler', sid);
+    // console.log('downloadButton Click handler', sid);
     updateWebRtc('recordedBlobs', store.getState().webRtc.recordedBlobs.filter(a => Object.keys(a)[0] !== sid));
   };
 
