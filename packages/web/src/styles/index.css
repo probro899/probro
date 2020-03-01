@@ -6,13 +6,13 @@
 .slider-container .search-box-container { position: absolute; top: 50%; /* this to center the box w.r.t to parent */ left: 50%; /* this to center the box w.r.t to parent */ /* Above 2 lines wont fully center it, the next line internally
 centers it, buy moving itself 50% left and top */ transform: translate(-50%, -50%); z-index: 2; display: flex; flex-direction: column; align-items: center; }
 .slider-container .search-box-container .search-form { box-shadow: 1px 1px 3px 0px #1d4354; }
-.slider-container .search-box-container .search-form input { background-color: #fff; text-align: center; height: 55px; width: 230px; line-height: 40px; font-size: 20px; border-width: 0.5px; vertical-align: middle; border-color: #e0e0e0; }
+.slider-container .search-box-container .search-form input { background-color: #fff; text-align: center; height: 55px; width: 230px; line-height: 40px; font-size: 20px; border-width: 0.5px; vertical-align: middle; border-color: #e0e0e0; outline: none; }
 .slider-container .search-box-container .search-form button { background: #1d4354; border-color: #1d4354; color: #fff; vertical-align: middle; height: 55px; width: 120px; padding: 3px; font-size: 20px; }
-.slider-container .search-box-container .search-form button:hover { box-shadow: 1px 1px 3px 0px #1d4354; }
+.slider-container .search-box-container .search-form button:hover { cursor: pointer; box-shadow: 1px 1px 3px 0px #1d4354; }
 .slider-container .search-box-container .pc-jumbo { display: flex; align-items: center; flex-direction: column; }
 .slider-container .search-box-container .pc-jumbo .pc-jumbo-text { color: #fff; font-size: 50px; font-weight: bolder; text-transform: uppercase; }
 .slider-container .search-box-container .pc-jumbo button { background: red; border-color: red; color: #fff; vertical-align: middle; height: 45px; width: 120px; padding: 3px; font-size: 18px; }
-.slider-container .search-box-container .pc-jumbo button:hover { box-shadow: 1px 1px 3px 0px red; }
+.slider-container .search-box-container .pc-jumbo button:hover { box-shadow: 1px 1px 3px 0px red; cursor: pointer; }
 @media screen and (min-width: 810px) and (max-width: 990px) { .slider-container .search-box-container .search-form input { height: 35px; width: 180px; line-height: 30px; font-size: 18px; }
   .slider-container .search-box-container .search-form button { height: 35px; width: 100px; font-size: 18px; }
   .slider-container .search-box-container .pc-jumbo .pc-jumbo-text { font-size: 40px; }
