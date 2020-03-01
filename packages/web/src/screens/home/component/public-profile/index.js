@@ -17,7 +17,8 @@ import UserPortal from './UserPortal';
 const file = require('../../../../assets/icons/512h/uploadicon512.png');
 const school = require('../../../../assets/icons/64w/school64.png');
 const office = require('../../../../assets/icons/64w/office64.png');
-const defaultCover = require('../../../../assets/default-cover.png');
+
+const defaultCover = require('../../../../assets/default-cover.jpg');
 
 class PublicProfile extends React.Component {
   constructor(props) {

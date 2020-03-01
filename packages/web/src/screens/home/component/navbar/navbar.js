@@ -98,7 +98,7 @@ class Navbar extends Component {
               </span>
             </div>
           </Link>
-          <Link
+          {/* <Link
             to="#"
             className={navigate.mainNav === 'help' ? 'active' : null}
           >
@@ -117,7 +117,7 @@ class Navbar extends Component {
                 Take a Tour
               </span>
             </div>
-          </Link>
+          </Link> */}
         </div>
         <div className="navbar-more-container">
           <Icon icon="menu" className="more-icon" onClick={this.toggleSmallScreen} iconSize={25} color="#666" />

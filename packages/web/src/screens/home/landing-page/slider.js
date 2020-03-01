@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Carousel } from 'react-responsive-carousel';
 import SearchElement from '../component/search/SearchElement';
 import { ENDPOINT } from '../../../config';
@@ -45,7 +46,7 @@ class Slider extends Component {
           showIndicators={false}
           showThumbs={false}
           stopOnHover={false}
-          transitionTime={500}
+          dynamicHeight
           showStatus={false}
           infiniteLoop
           autoPlay
@@ -53,9 +54,7 @@ class Slider extends Component {
           {
             data.map((obj, index) => {
               return (
-                <div key={index}>
-                  <img src={obj} alt="slide prospectus" />
-                </div>
+                <div key={index} style={{ backgroundImage: `url(${obj})` }} className="slider-img-con" />
               );
             })
           }
@@ -65,5 +64,9 @@ class Slider extends Component {
     );
   }
 }
+
+Slider.propTypes = {
+  data: PropTypes.arrayOf(PropTypes.any).isRequired,
+};
 
 export default Slider;

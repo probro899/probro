@@ -2,12 +2,16 @@
 .slider-container {
   position: relative;
   margin-top: $navbarHeight;
-  height: 600px;
-  margin-left: 1px;
-  margin-right: 1px;
-  overflow: hidden;
+  .slide {
+    background-color: $backgroundColor;
+    .slider-img-con {
+      width: 100%;
+      height: 45vw;
+      background-size: cover;
+    }
+  }
   @media screen and (min-width: 100px) and (max-width: 810px){
-    height: 50%;
+    .slide .slider-img-con { height: 60vw; }
   }
   .search-box-container {
     position: absolute;
@@ -138,7 +142,7 @@
       }
       .pc-jumbo {
         .pc-jumbo-text {
-          font-size: 18px;
+          font-size: 17px;
         }
         button {
           height: 30px;
