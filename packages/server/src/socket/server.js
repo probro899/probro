@@ -8,7 +8,7 @@ function noop() { }
 
 function beat() {
   this.isAlive = true;
-} 
+}
 
 export default function start(options, validateSession, pulseRate = 30000) {
   // console.log('socked npm called', validateSession);

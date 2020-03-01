@@ -54,7 +54,7 @@ async function addBoardColumnCardAttachment(record) {
   const broadCastArr = record.broadCastId.split('-');
   const boardId = broadCastArr[broadCastArr.length - 1];
   const res = await add.call(this, 'BoardColumnCardAttachment', record);
-  addBoardActivity({ userId: record.userId, timeStamp: Date.now(), boardId, cardId: record.boardColumnCardId, message: 'Create Attachment' });
+  addBoardActivity({ attachmentId: res, userId: record.userId, timeStamp: Date.now(), boardId, cardId: record.boardColumnCardId, message: 'Create Attachment' });
   return res;
 }
 
@@ -62,7 +62,7 @@ async function addBoardColumnCardComment(record) {
   const broadCastArr = record.broadCastId.split('-');
   const boardId = broadCastArr[broadCastArr.length - 1];
   const res = add.call(this, 'BoardColumnCardComment', record);
-  addBoardActivity({ userId: record.userId, timeStamp: Date.now(), boardId, cardId: record.boardColumnCardId, message: 'Create Comment' });
+  addBoardActivity({ commentId: res, userId: record.userId, timeStamp: Date.now(), boardId, cardId: record.boardColumnCardId, message: 'Create Comment' });
   return res;
 }
 
@@ -70,7 +70,7 @@ async function addBoardColumnCardDescription(record) {
   const broadCastArr = record.broadCastId.split('-');
   const boardId = broadCastArr[broadCastArr.length - 1];
   const res = await add.call(this, 'BoardColumnCardDescription', record);
-  addBoardActivity({ userId: record.userId, timeStamp: Date.now(), boardId, cardId: record.boardColumnCardId, message: 'Create Description' });
+  addBoardActivity({ descriptionId: res, userId: record.userId, timeStamp: Date.now(), boardId, cardId: record.boardColumnCardId, message: 'Create Description' });
   return res;
 }
 
@@ -197,7 +197,7 @@ async function addBoardColumnCardTag(record) {
   const broadCastArr = record.broadCastId.split('-');
   const boardId = broadCastArr[broadCastArr.length - 1];
   const res = await add.call(this, 'BoardColumnCardTag', record);
-  addBoardActivity({ userId: record.userId, timeStamp: Date.now(), boardId, cardId: record.boardColumnCardId, message: 'Create Tag' });
+  addBoardActivity({ tagId: res, userId: record.userId, timeStamp: Date.now(), boardId, cardId: record.boardColumnCardId, message: 'Create Tag' });
   return res;
 }
 

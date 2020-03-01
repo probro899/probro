@@ -74,7 +74,7 @@ class LiveCallScreen extends React.Component {
 
   render() {
     // console.log('Live Screen called', this.state);
-    const { style, webRtc, database, toggleMaximize, minimize } = this.props;
+    const { style, webRtc, database, toggleMaximize, minimize, remoteCallEndMinimizer } = this.props;
     const { user, type } = webRtc.localCallHistory.chatHistory;
     const {
       showChatBox,
@@ -118,7 +118,7 @@ class LiveCallScreen extends React.Component {
       </div>
     );
   }
-} 
+}
 export default LiveCallScreen;
 
 LiveCallScreen.propTypes = {

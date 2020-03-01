@@ -21,7 +21,7 @@ export default async (props, state, data, maximizeHandler) => {
     if (webRtc.isLive || webRtc.peerConnections[uid] || webRtc.showIncommingCall) {
       if (type === webRtc.localCallHistory.chatHistory.type) {
         if (webRtc.localCallHistory.chatHistory.connectionId === connectionId) {
-          maximizeHandler();
+          maximizeHandler(true);
           closeCall(props, state, data);
         } else {
           declineCloseCall('Permission denied');
@@ -32,7 +32,7 @@ export default async (props, state, data, maximizeHandler) => {
 
   if (type === 'board') {
     if (webRtc.isLive && webRtc.showCommunication === broadCastId) {
-      maximizeHandler();
+      maximizeHandler(true);
       closeCall(props, state, data);
     } else {
       declineCloseCall('Permission denied to end call');

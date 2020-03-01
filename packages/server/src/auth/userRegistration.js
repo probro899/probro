@@ -1,10 +1,12 @@
 /* eslint-disable import/no-cycle */
 import uuid from 'uuid/v4';
+import schema from '@probro/common/src/schema';
 import db from '../db';
 import { genHashPassword } from './passwordHandler';
 import mailer from '../mailer';
 import htmlString from '../mailer/html/mailBody';
 import cache from '../cache';
+import database from '../cache/database';
 
 const RESET_TOKEN_AGE = 7 * 24 * 60 * 60 * 1000; // 7 days
 
@@ -21,6 +23,7 @@ export default async (record) => {
       const firstNameLowerCase = `${record.firstName}`.toLowerCase();
       const lastNameLowerCase = `${record.lastName}`.toLowerCase();
       const insertRes = await insert('User', { ...record, password: hasPassword, verify: false, verificationToken: token, slug: `${firstNameLowerCase}-${lastNameLowerCase}-${Date.now()}` });
+      database.update('User', schema.add('User', { id: insertRes, ...record, password: hasPassword, verify: false, verificationToken: token, slug: `${firstNameLowerCase}-${lastNameLowerCase}-${Date.now()}` }));
       if (insertRes) {
         cache.users.set(token, record.email, RESET_TOKEN_AGE);
         mailer({

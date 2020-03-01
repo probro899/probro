@@ -1,0 +1,12 @@
+--Up
+ALTER TABLE BoardActivity ADD COLUMN tColId INTEGER;
+ALTER TABLE BoardActivity ADD COLUMN fColId INTEGER;
+ALTER TABLE BoardActivity ADD COLUMN commentId INTEGER;
+ALTER TABLE BoardActivity ADD COLUMN attachmentId INTEGER;
+ALTER TABLE BoardActivity ADD COLUMN tagId INTEGER;
+ALTER TABLE BoardActivity ADD COLUMN descriptionId INTEGER;
+
+ALTER TABLE Board ADD COLUMN deleteStatus INTEGER;
+ALTER TABLE BoardColumn ADD COLUMN deleteStatus INTEGER;
+ALTER TABLE BoardColumnCard ADD COLUMN deleteStatus INTEGER;
+-- Down

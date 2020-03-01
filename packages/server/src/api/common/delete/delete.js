@@ -1,7 +1,7 @@
 import schema from '@probro/common/src/schema';
 import db from '../../../db';
 // eslint-disable-next-line import/no-cycle
-import { user } from '../../../cache';
+import { database } from '../../../cache';
 
 export default async function Delete(table, record) {
   // console.log('db delete called', table, record, this.session);
@@ -15,11 +15,10 @@ export default async function Delete(table, record) {
       if (broadCastId) {
         const channel = session.channel(broadCastId);
         channel.dispatch(schema.remove(table, { id: record.id }));
-        const allUserSession = session.getChannel(broadCastId);
-        allUserSession.forEach(s => user.update(schema.remove(table, { id: record.id }), s));
+        database.update(table, schema.remove(table, { id: record.id }));
       } else {
         // session.dispatch(schema.remove(table, { id: record.id }));
-        user.update(schema.remove(table, { id: record.id }), session);
+        database.update(table, schema.remove(table, { id: record.id }));
       }
       return delRes;
     });

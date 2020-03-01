@@ -34,7 +34,10 @@ const getInstance = async () => {
 };
 
 export const init = async () => {
-  await getInstance();
+  const dbInstanceRes = await getInstance();
+  if (dbInstanceRes) {
+    return true;
+  }
 };
 export default {
   execute: async (func) => {

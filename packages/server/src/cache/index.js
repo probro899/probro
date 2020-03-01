@@ -1,12 +1,12 @@
 /* eslint-disable import/no-cycle */
 import LRU from 'lru-cache';
-import user from './user';
+import database from './database';
 
 const users = new LRU({
-  max: 100,
+  max: 100000,
 });
 
-export { user };
+export { database };
 
 export default {
   users,

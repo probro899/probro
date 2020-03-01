@@ -1,6 +1,7 @@
 import reset from '../../auth/reset';
 
 export default async function resetPassword(req, res) {
+  console.log('pasword request handlercalled', req.query);
   try {
     const { token, password } = req.query;
     await reset(token, password);
