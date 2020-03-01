@@ -9,8 +9,8 @@ const DropMenu = ({ account, apis }) => {
       <Link to="/" className="pc-drop-menu-link">Home</Link>
       {account.user && <Link to={`/${account.user.slug}/profile`} className="pc-drop-menu-link">Profile</Link>}
       <Link to="/archive" className="pc-drop-menu-link">Archive</Link>
-      <Link to="#" className="pc-drop-menu-link">Get Help</Link>
-      <Link to="/take-a-tour" className="pc-drop-menu-link">Take a Tour</Link>
+      {/* <Link to="#" className="pc-drop-menu-link">Get Help</Link>
+      <Link to="/take-a-tour" className="pc-drop-menu-link">Take a Tour</Link> */}
       {!account.sessionId ? (
         <Link to="/login" className="pc-drop-menu-link">Login</Link>
       ) : (

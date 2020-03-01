@@ -6,7 +6,7 @@ import { ENDPOINT } from '../../../../config';
 import Cropper from './Cropper';
 import '../../../../../../../node_modules/croppie/croppie.css';
 
-const defaultCover = require('../../../../assets/default-cover.png');
+const defaultCover = require('../../../../assets/default-cover.jpg');
 
 const SmallMenu = (onClick, userDetail) => (
   <Menu>
