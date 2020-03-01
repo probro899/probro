@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import * as actions from '../actions';
 import HomePage from './home';
 import { Login, Registration } from './auth';
 import DashBoard from './dashboard/Home';
@@ -16,7 +17,7 @@ import { PublicProfile } from './home/component';
 import { SearchResult } from './home/component/search';
 import TakeTour from './home/take-a-tour';
 import { About, Privacy, Terms, Support, Career, Report, Business, Services } from '../common/footer/footer-links';
-import ClassReport from './class/report';
+import NotifyBar from '../common/NotifyBar';
 
 class MainScreen extends React.Component {
   constructor(props) {
@@ -25,11 +26,11 @@ class MainScreen extends React.Component {
   }
 
   render() {
-    // console.log('Props in main screen', this.props);
-    const { account } = this.props;
+    const { account, navigate, updateNav } = this.props;
     return (
       <Router>
         <div className="home-screen">
+          {navigate.popNotification.active && <NotifyBar onClose={() => updateNav({ schema: 'popNotification', data: { message: '', active: false, intent: '' } })} message={navigate.popNotification.message} intent={navigate.popNotification.intent} />}
           <Switch>
             <Route exact path="/about" component={About} />
             <Route exact path="/privacy-policy" component={Privacy} />
@@ -62,7 +63,9 @@ class MainScreen extends React.Component {
   }
 }
 const mapStateToProps = state => state;
-export default connect(mapStateToProps)(MainScreen);
+export default connect(mapStateToProps, { ...actions })(MainScreen);
 MainScreen.propTypes = {
   account: PropTypes.objectOf(PropTypes.any).isRequired,
+  navigate: PropTypes.objectOf(PropTypes.any).isRequired,
+  updateNav: PropTypes.func.isRequired,
 };

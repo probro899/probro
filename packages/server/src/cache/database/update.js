@@ -2,7 +2,6 @@ import database from './cache';
 
 export default (tabelId, action) => {
   const state = database.get(tabelId);
-  console.log('previousState', action, state);
   const newState = () => {
     switch (action.type) {
       case 'schema.add':

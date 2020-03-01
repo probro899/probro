@@ -66,7 +66,6 @@ top attachment etc.
 .o-log-or-reg .log-or-reg div div label .label-text { font-size: 18px; font-weight: 300; }
 .o-log-or-reg .log-or-reg div div .btn-group { padding: 0 10px 0 10px; }
 .o-log-or-reg .auth-with-others { padding: 0px 10px; }
-.o-log-or-reg .auth-with-others .linkedin-default { background-repeat: no-repeat; background-size: contain; }
 .o-log-or-reg .auth-with-others button.google-default { width: 100%; }
 
 .post-container { width: 100%; }

@@ -20,8 +20,6 @@ function deleteBoard(record) {
 function deleteBoardColumn(record) {
   const { session } = this;
   // console.log('record in deleteBoardColumn', record);
-  const broadCastArr = record.broadCastId.split('-');
-  const boardId = broadCastArr[broadCastArr.length - 1];
   const dbColDelete = Delete.bind(this);
   deleteBoardColumnHelper(dbColDelete, record);
   addBoardActivity({ userId: session.values.user.id, timeStamp: Date.now(), boardId: record.boardId, columnId: record.id, message: 'Delete Column' });

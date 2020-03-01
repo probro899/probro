@@ -12,7 +12,7 @@ export default [
     hidden: true,
     required: true,
     name: 'Password',
-    placeholder: 'Eg, ........',
+    placeholder: 'Eg, Xyz@123peQ',
     icon: {
       side: 'right',
       name: 'eye-open',

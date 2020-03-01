@@ -2,14 +2,47 @@ import React, { Component } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import * as actions from '../../../actions';
 import Log from './login';
 import GoogleLogin from './GoogleLogin';
+import { login } from '../helper-functions';
 
 class Login extends Component {
-  state = {};
+  state = { redirect: false, slug: '' };
+
+  loginHandler = async (data) => {
+    const { updateNav } = this.props;
+    const res = await login(data);
+    if (res.response === 200) {
+      updateNav({ schema: 'popNotification', data: { active: true, message: 'Login successful. Welcome to Dashboard.', intent: 'success' } });
+      this.setState({
+        redirect: true,
+        slug: res.data.slug,
+      });
+    }
+    return res;
+  }
+
+  googleLogin = async (response) => {
+    const { updateNav } = this.props;
+    try {
+      const res = await login({ loginType: 'google', record: response.profileObj });
+      if (res.response === 200) {
+        updateNav({ schema: 'popNotification', data: { active: true, message: 'Login successful. Welcome to Dashboard.', intent: 'success' } });
+        this.setState({
+          redirect: true,
+          slug: res.data.slug,
+        });
+      }
+      return res;
+    } catch (e) {
+      updateNav({ schema: 'popNotification', data: { active: true, message: 'Could not login with google', intent: 'danger' } });
+    }
+  }
 
   render() {
     const { account } = this.props;
+    const { redirect, slug } = this.state;
     return (
       <div className="o-log-or-reg">
         <div className="log-or-reg">
@@ -17,12 +50,11 @@ class Login extends Component {
             <p>Login to Proper Class</p>
             <Link to="/register"><u>or create an account</u></Link>
           </div>
-          {/* just trying to redirect incase of logged in */}
           {
-            account.user ? <Redirect push to={`/${account.user.slug}/profile`} /> : <Log />
+            redirect || account.user ? <Redirect push to={`/${slug || account.user.slug}/profile`} /> : <Log loginHandler={this.loginHandler} />
           }
           <div className="auth-with-others">
-            <GoogleLogin />
+            <GoogleLogin googleLogin={this.googleLogin} />
           </div>
           <div className="auth-footer">
             <p>
@@ -38,7 +70,8 @@ class Login extends Component {
 
 Login.propTypes = {
   account: PropTypes.objectOf(PropTypes.any).isRequired,
+  updateNav: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = (state, ownprops) => ({ ...state, ...ownprops });
-export default connect(mapStateToProps)(Login);
+const mapStateToProps = state => state;
+export default connect(mapStateToProps, { ...actions })(Login);

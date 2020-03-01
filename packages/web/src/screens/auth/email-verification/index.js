@@ -1,54 +1,44 @@
 import React from 'react';
 import axios from 'axios';
 import PropTypes from 'prop-types';
-import { Spinner } from '@blueprintjs/core';
-import Login from '../login';
+import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
+import * as actions from '../../../actions';
 import { ENDPOINT } from '../../../config';
-import NotifyBar from '../../../common/NotifyBar';
+import { Spinner } from '../../../common';
 
 class VerifyEmail extends React.Component {
   state={
-    emailVerification: null,
+    emailVerified: false,
     loading: true,
   };
 
   async componentDidMount() {
-    // console.log('hello there coming');
-    const { match } = this.props;
+    const { match, updateNav } = this.props;
     try {
       const res = await axios.get(`${ENDPOINT}/auth/email-verification?token=${match.params.token}`);
       if (res.status === 200) {
-        this.setState({ emailVerification: true, loading: false });
+        updateNav({ schema: 'popNotification', data: { active: true, message: 'Email is verified. Please login.', intent: 'success' } });
+        this.setState({ emailVerified: true, loading: false });
       }
     } catch (e) {
-      this.setState({ emailVerification: false, loading: false });
+      updateNav({ schema: 'popNotification', data: { active: true, message: 'Could not verify your email.', intent: 'danger' } });
+      this.setState({ emailVerified: false, loading: false });
     }
   }
 
   render() {
-    const { emailVerification, loading } = this.state;
-    return (
-      <div>
-        {loading ? <Spinner size={30} />
-          : (
-            <div>
-              <NotifyBar
-                message={emailVerification ? 'You have been verified' : 'Verification failed'}
-                intent={emailVerification ? 'success' : 'danger'}
-              />
-              <div style={{ marginTop: 50 }}>
-                {emailVerification && <Login />}
-              </div>
-            </div>
-          )
-        }
-      </div>
-    );
+    const { emailVerified, loading } = this.state;
+    if (loading) return <Spinner />;
+    if (emailVerified) return <Redirect to="/login" />;
+    return <Redirect to="/registration" />;
   }
 }
 
 VerifyEmail.propTypes = {
   match: PropTypes.objectOf(PropTypes.any).isRequired,
+  updateNav: PropTypes.func.isRequired,
 };
 
-export default VerifyEmail;
+const mapStateToProps = state => state;
+export default connect(mapStateToProps, { ...actions })(VerifyEmail);
