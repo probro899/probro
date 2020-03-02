@@ -57,7 +57,7 @@ class ResultList extends React.Component {
 }
 
 ResultList.propTypes = {
-  data: PropTypes.objectOf(PropTypes.any).isRequired,
+  data: PropTypes.arrayOf(PropTypes.any).isRequired,
 };
 
 export default ResultList;

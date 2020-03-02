@@ -35,6 +35,7 @@ class MainScreen extends React.Component {
             <Route exact path="/about" component={About} />
             <Route exact path="/privacy-policy" component={Privacy} />
             <Route exact path="/terms-and-conditions" component={Terms} />
+            <Route path="/search" component={SearchResult} />
             <Route exact path="/support" component={Support} />
             <Route exact path="/career" component={Career} />
             <Route exact path="/report" component={Report} />
@@ -52,7 +53,6 @@ class MainScreen extends React.Component {
             <Route exact path="/email-verification/:token" component={EmailVerification} />
             <Route path="/blog/:userSlug/:blogSlug" component={PublicBlog} />
             <Route path="/user/:userId" component={PublicProfile} />
-            <Route path="/search/key=:searchKey" component={SearchResult} />
             <Route path="/:id" component={DashBoard} />
             <Route exact path="/" component={HomePage} />
           </Switch>

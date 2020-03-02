@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Redirect, Link } from 'react-router-dom';
+import * as actions from '../../../../actions';
 
 class SearchElement extends React.Component {
   state={
@@ -17,17 +18,10 @@ class SearchElement extends React.Component {
 
   submitSearch = (e) => {
     e.preventDefault();
+    const { updateNav } = this.props;
     const { search } = this.state;
-    if (search.replace(/\s/g, '').length !== 0) {
-      this.setState({
-        gotKey: true,
-      });
-    }
-  }
-
-  findMentor = () => {
+    updateNav({ schema: 'search', data: { key: search } });
     this.setState({
-      search: 'no-key',
       gotKey: true,
     });
   }
@@ -37,7 +31,7 @@ class SearchElement extends React.Component {
     const { account } = this.props;
     return (
       <div className="search-box-container">
-        {gotKey && <Redirect push to={`/search/key=${search}`} />}
+        {gotKey && <Redirect push to="/search" />}
         <div className="search-form">
           <form>
             <input
@@ -56,7 +50,7 @@ class SearchElement extends React.Component {
           </span>
           {
             account.user ? (
-              <button type="button" onClick={this.findMentor}>
+              <button type="button" onClick={this.submitSearch}>
                 Find Mentor
               </button>
             ) : (
@@ -75,7 +69,8 @@ class SearchElement extends React.Component {
 
 SearchElement.propTypes = {
   account: PropTypes.objectOf(PropTypes.any).isRequired,
+  updateNav: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => state;
-export default connect(mapStateToProps)(SearchElement);
+export default connect(mapStateToProps, { ...actions })(SearchElement);
