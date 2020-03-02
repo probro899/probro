@@ -11,7 +11,6 @@ import doSearch from './request-handler/doSearch';
 import getUser from './request-handler/getUser';
 import getBlog from './request-handler/getBlog';
 import getIndex from './request-handler/getIndex';
-import advanceSearch from './request-handler/advanceSearch';
 
 export default function (app) {
   app.use((req, res, next) => {
@@ -28,7 +27,6 @@ export default function (app) {
   app.post('/web/upload-file', uploadFile);
   app.post('/web/delete-file', deleteFile);
   app.get('/web/do-search', doSearch);
-  app.get('/web/advance-search', advanceSearch);
   app.get('/web/get-user', getUser);
   app.get('/web/get-blog', getBlog);
   app.get('/web/get-index', getIndex);
