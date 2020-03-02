@@ -49,6 +49,25 @@ const AddressSchema = [
   },
 ];
 
+const CountrySchema = [
+  {
+    id: 'country',
+    fieldtype: 'input',
+    name: 'Country',
+    placeholder: '',
+    required: true,
+  },
+  {
+    id: 'submit',
+    fieldtype: 'button',
+    text: 'Submit',
+    type: 'submit',
+    fill: 'fill',
+    intent: 'primary',
+    large: 'large',
+  },
+];
+
 const GenderSchema = [
   {
     id: 'gender',
@@ -73,4 +92,4 @@ const GenderSchema = [
   },
 ];
 
-export { NameSchema, GenderSchema, AddressSchema };
+export { NameSchema, GenderSchema, AddressSchema, CountrySchema };

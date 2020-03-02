@@ -37,6 +37,7 @@
         border-width: 0.5px;
         vertical-align: middle;
         border-color: $normalBorder;
+        outline: none;
       }
       button {
         background: $darkBlue;
@@ -48,6 +49,7 @@
         padding: 3px;
         font-size: 20px;
         &:hover {
+          cursor: pointer;
           box-shadow: 1px 1px 3px 0px $darkBlue;
         }
       }
@@ -73,6 +75,7 @@
         font-size: 18px;
         &:hover {
           box-shadow: 1px 1px 3px 0px red;
+          cursor: pointer;
         }
       }
     }

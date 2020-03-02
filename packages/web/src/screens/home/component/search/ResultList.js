@@ -37,6 +37,7 @@ class ResultList extends React.Component {
 
   render() {
     const { data } = this.props;
+    console.log('hello data', data);
     return (
       <div className="result-list">
         <p className="label">
@@ -57,7 +58,7 @@ class ResultList extends React.Component {
 }
 
 ResultList.propTypes = {
-  data: PropTypes.objectOf(PropTypes.any).isRequired,
+  data: PropTypes.arrayOf(PropTypes.any).isRequired,
 };
 
 export default ResultList;

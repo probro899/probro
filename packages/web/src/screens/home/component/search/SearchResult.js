@@ -1,6 +1,8 @@
 import React from 'react';
 import axios from 'axios';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import * as actions from '../../../../actions';
 import FilterToolbar from './FilterToolbar';
 import Navbar from '../navbar';
 import ResultList from './ResultList';
@@ -9,18 +11,21 @@ import { ENDPOINT } from '../../../../config';
 import { Spinner } from '../../../../common';
 
 class SearchResult extends React.Component {
-  state={ loading: true, data: {}, changeStyle: false };
+  constructor(props) {
+    super(props);
+    this.state = { loading: true, data: {}, changeStyle: false };
+  }
 
-  async componentDidMount() {
+  componentDidMount() {
     window.addEventListener('scroll', this.fireScroll, { passive: true });
-    const { match } = this.props;
+    const { navigate } = this.props;
+    this.getSearchResult(navigate.search);
+  }
+
+  getSearchResult = async (obj) => {
     try {
-      let res;
-      if (match.params.searchKey !== 'no-key') {
-        res = await axios.get(`${ENDPOINT}/web/do-search?keyword=${match.params.searchKey}`);
-      } else {
-        res = await axios.get(`${ENDPOINT}/web/get-mentor`);
-      }
+      const res = await axios.get(`${ENDPOINT}/web/do-search?key=${obj.key}&country=${obj.country}&industry=${obj.industry}`);
+      console.log('data response', res);
       this.setState({
         data: res.data.users,
         loading: false,
@@ -30,7 +35,7 @@ class SearchResult extends React.Component {
     }
   }
 
-  fireScroll = (e) => {
+  fireScroll = () => {
     const { changeStyle } = this.state;
     if (window.scrollY > 65 && !changeStyle) {
       this.setState({
@@ -44,13 +49,20 @@ class SearchResult extends React.Component {
     }
   }
 
+  filterSearch = (data) => {
+    const { updateNav } = this.props;
+    updateNav({ schema: 'search', data });
+    return { response: 200 };
+  }
+
   render() {
+    const { navigate } = this.props;
     const { loading, data, changeStyle } = this.state;
     return loading ? <Spinner /> : (
       <div>
         <Navbar className={!changeStyle ? 'pcm-nav' : ''} />
         <div className="search-result">
-          <FilterToolbar />
+          <FilterToolbar searchKey={navigate.search.key} filterSearch={this.filterSearch} />
           <ResultList data={data} />
         </div>
         <Footer />
@@ -60,7 +72,9 @@ class SearchResult extends React.Component {
 }
 
 SearchResult.propTypes = {
-  match: PropTypes.objectOf(PropTypes.any).isRequired,
+  navigate: PropTypes.objectOf(PropTypes.any).isRequired,
+  updateNav: PropTypes.func.isRequired,
 };
 
-export default SearchResult;
+const mapStateToProps = state => state;
+export default connect(mapStateToProps, { ...actions })(SearchResult);

@@ -1,23 +1,18 @@
 import React from 'react';
-import axios from 'axios';
-import { Button } from '@blueprintjs/core';
+import PropTypes from 'prop-types';
 import { Control } from '../../../../common';
 import filterSchema from './structure';
-import { ENDPOINT } from '../../../../config';
 
 class FilterToolbar extends React.Component {
-  state = {};
-
-  apply = (data) => {
-    console.log(data);
-  }
-
-  advanceSearchHandler = async () => {
-    const res = await axios.get(`${ENDPOINT}/web/advance-search?country=nepal&interest=computer&keyword=bhagya sah`);
-    console.log('advance search result', res);
+  constructor(props) {
+    super(props);
+    const { searchKey } = this.props;
+    this.state = { schema: filterSchema.map(obj => (obj.id === 'key' ? { ...obj, val: searchKey } : obj)) };
   }
 
   render() {
+    const { schema } = this.state;
+    const { filterSearch } = this.props;
     return (
       <div className="filter-toolbar">
         <div className="left set">
@@ -26,13 +21,17 @@ class FilterToolbar extends React.Component {
           </span>
         </div>
         <div className="center set">
-          <Control data={filterSchema} callback={this.apply} />
+          <Control data={schema} callback={filterSearch} />
         </div>
-        <Button text="search" onClick={this.advanceSearchHandler} />
         <div className="right set" />
       </div>
     );
   }
 }
+
+FilterToolbar.propTypes = {
+  filterSearch: PropTypes.func.isRequired,
+  searchKey: PropTypes.string.isRequired,
+};
 
 export default FilterToolbar;
