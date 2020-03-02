@@ -37,6 +37,7 @@ class ResultList extends React.Component {
 
   render() {
     const { data } = this.props;
+    console.log('hello data', data);
     return (
       <div className="result-list">
         <p className="label">

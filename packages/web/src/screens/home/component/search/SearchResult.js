@@ -25,6 +25,7 @@ class SearchResult extends React.Component {
   getSearchResult = async (obj) => {
     try {
       const res = await axios.get(`${ENDPOINT}/web/do-search?key=${obj.key}&country=${obj.country}&industry=${obj.industry}`);
+      console.log('data response', res);
       this.setState({
         data: res.data.users,
         loading: false,
