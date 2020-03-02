@@ -7,7 +7,7 @@ const BlogCoverImage = ({ blog }) => {
   const coverImage = blog.blog.coverImage ? `${ENDPOINT}/user/${10000000 + parseInt(blog.blog.userId, 10)}/blog/${blog.blog.coverImage}` : null;
   return (
     <div className="pc-blog-cover-image">
-      <img alt="blog cover" src={coverImage} />
+      {coverImage && <img alt="blog cover" src={coverImage} />}
     </div>
   );
 };

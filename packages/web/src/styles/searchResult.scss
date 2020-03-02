@@ -67,9 +67,15 @@
         }
         .location {
           opacity: 0.8;
-          font-weight: bold;
+          display: flex;
+          .country {
+            margin-left: 5px;
+          }
         }
       }
+    }
+    &.blogs {
+      margin-top: 10px;
     }
   }
   @media screen and (max-width: 855px) {

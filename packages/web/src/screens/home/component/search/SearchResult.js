@@ -9,6 +9,7 @@ import ResultList from './ResultList';
 import Footer from '../../../../common/footer';
 import { ENDPOINT } from '../../../../config';
 import { Spinner } from '../../../../common';
+import BlogResult from './BlogResult';
 
 class SearchResult extends React.Component {
   constructor(props) {
@@ -25,9 +26,8 @@ class SearchResult extends React.Component {
   getSearchResult = async (obj) => {
     try {
       const res = await axios.get(`${ENDPOINT}/web/do-search?key=${obj.key}&country=${obj.country}&industry=${obj.industry}`);
-      console.log('data response', res);
       this.setState({
-        data: res.data.users,
+        data: res.data,
         loading: false,
       });
     } catch (e) {
@@ -52,18 +52,21 @@ class SearchResult extends React.Component {
   filterSearch = (data) => {
     const { updateNav } = this.props;
     updateNav({ schema: 'search', data });
+    this.getSearchResult(data);
     return { response: 200 };
   }
 
   render() {
     const { navigate } = this.props;
     const { loading, data, changeStyle } = this.state;
+    console.log(data);
     return loading ? <Spinner /> : (
       <div>
         <Navbar className={!changeStyle ? 'pcm-nav' : ''} />
         <div className="search-result">
           <FilterToolbar searchKey={navigate.search.key} filterSearch={this.filterSearch} />
-          <ResultList data={data} />
+          <ResultList data={data.users} />
+          <BlogResult data={data.blogs} />
         </div>
         <Footer />
       </div>
