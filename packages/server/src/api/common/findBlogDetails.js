@@ -30,6 +30,6 @@ export default function findBlogDetails(blogId, userId, getBlog) {
   const userList = allUserIds.map(uid => allUser.find(u => u.id === uid));
   const userDetailList = allUserIds.map(uid => allUserDetails.find(ud => ud.userId === uid));
   // console.log('usreList', userList);
-  const userDetails = userList.map((u, idx) => ({ user: { id: u.id, slug: u.slug, firstName: u.firstName, lastName: u.lastName, middleName: u.middleName }, userDetail: userDetailList[idx] }));
+  const userDetails = userList.filter(u => u).map((u, idx) => ({ user: { id: u.id, slug: u.slug, firstName: u.firstName, lastName: u.lastName, middleName: u.middleName }, userDetail: userDetailList[idx] }));
   return { blogComment, blogLike, userDetails, blog };
 }
