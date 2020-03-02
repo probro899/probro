@@ -59,7 +59,6 @@ class SearchResult extends React.Component {
   render() {
     const { navigate } = this.props;
     const { loading, data, changeStyle } = this.state;
-    console.log(data);
     return loading ? <Spinner /> : (
       <div>
         <Navbar className={!changeStyle ? 'pcm-nav' : ''} />
