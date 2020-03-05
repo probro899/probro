@@ -2,10 +2,8 @@ import lodash from 'lodash';
 import cacheDatabase from '../../cache/database/cache';
 
 export default function findBlogDetails(blogId, userId, getBlog) {
-  let blog;
-  if (getBlog) {
-    blog = cacheDatabase.get('Blog').find(b => b[getBlog ? 'slug' : 'id'] === blogId);
-  }
+  const blog = cacheDatabase.get('Blog').find(b => b[getBlog ? 'slug' : 'id'] === blogId);
+
   // const blogDetail = await find('BlogDetail', { blogId });
   const blogComment = cacheDatabase.get('BlogComment').filter(bc => (bc.blogId === getBlog ? blog.id : blogId));
   const blogLike = cacheDatabase.get('BlogLike').filter(bl => (bl.blogId === getBlog ? blog.id : blogId));
@@ -18,6 +16,7 @@ export default function findBlogDetails(blogId, userId, getBlog) {
   } else {
     blogerId = userId;
   }
+
   const allUserIds = lodash.uniq([parseInt(blogerId, 10), ...blogComment.map(bc => bc.userId), ...blogLike.map(bl => bl.userId)]);
   // console.log('allUserIds', allUserIds);
   // const userListPromises = [];

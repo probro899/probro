@@ -6,6 +6,7 @@ import ConnectionElement from './ConnectionElement';
 class Connections extends React.Component {
   state = {
     type: '',
+    loading: false,
   };
 
   componentDidMount() {
@@ -16,7 +17,7 @@ class Connections extends React.Component {
     this.checkConnection(nextProps);
   }
 
-  sendMessage = async () => {
+  sendMessage = () => {
     const { updateWebRtc, details, database, account } = this.props;
     const connectionId = Object.values(database.UserConnection.byId).find(con => con.mId === details.id || con.userId === details.id);
     updateWebRtc('showCommunication', details.id);
@@ -52,17 +53,20 @@ class Connections extends React.Component {
           timeStamp: Date.now(),
           status: 'pending',
         };
+        this.setState({ loading: true });
         try {
           const res = await apis.connectUser(info);
           addDatabaseSchema('UserConnection', { id: res, ...info });
           this.setState({
             type: 'pending',
+            loading: false,
           });
         } catch (e) {
           console.log('Error =>', e);
         }
         break;
       case 'accept':
+        this.setState({ loading: true });
         try {
           await apis.updateUserConnection([{
             status: 'connected',
@@ -72,6 +76,7 @@ class Connections extends React.Component {
           updateDatabaseSchema('UserConnection', { id: existingCon.id, status: 'connected' });
           this.setState({
             type: 'connected',
+            loading: false,
           });
         } catch (e) {
           console.log('Error =>', e);
@@ -108,14 +113,15 @@ class Connections extends React.Component {
   };
 
   render() {
-    const { type } = this.state;
+    const { type, loading } = this.state;
     return (
       <div className="con">
-        {ConnectionElement({
-          sendMessage: this.sendMessage,
-          connectMentor: this.connectMentor,
-          type,
-        })}
+        <ConnectionElement
+          loading={loading}
+          sendMessage={this.sendMessage}
+          connectMentor={this.connectMentor}
+          type={type}
+        />
       </div>
     );
   }

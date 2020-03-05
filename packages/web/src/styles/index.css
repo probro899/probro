@@ -366,7 +366,7 @@ top attachment etc.
 .blogs .blog-list .blog-container { margin: 10px; max-width: 250px; max-height: 340px; box-shadow: 0px 1px 2px 1px rgba(57, 73, 76, 0.35); }
 .blogs .blog-list .blog-container .img-container { max-width: 100%; height: 250px; position: relative; display: flex; overflow: hidden; justify-content: center; }
 .blogs .blog-list .blog-container .img-container .more-button { position: absolute; top: 0; right: 0; }
-.blogs .blog-list .blog-container .img-container img { width: 100%; object-fit: contain; }
+.blogs .blog-list .blog-container .img-container img { width: 100%; object-fit: cover; }
 .blogs .blog-list .blog-container .detail-container { height: 90px; padding: 10px; display: flex; flex-direction: column-reverse; }
 .blogs .blog-list .blog-container .detail-container .blog-title p { margin-bottom: 0; }
 .blogs .blog-list .blog-container .detail-container .blog-title p.title { text-align: end; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 18px; font-weight: 800; }
@@ -513,19 +513,20 @@ top attachment etc.
 .archive .ar-top span { color: #696969; }
 .archive .ar-content { display: flex; }
 .archive .ar-content .ar-left { flex: 0.7; }
-.archive .ar-content .ar-left .ar-left-i { margin-top: 15px; padding: 5px; display: flex; border-bottom: 1px solid #e0e0e0; }
-.archive .ar-content .ar-left .ar-left-i .ar-i-img { height: 250px; width: 250px; }
-.archive .ar-content .ar-left .ar-left-i .ar-i-img img { object-fit: contain; }
-.archive .ar-content .ar-left .ar-left-i .ar-i-detail { flex-direction: column; margin-left: 10px; }
-.archive .ar-content .ar-left .ar-left-i .ar-i-detail .pc-date { font-size: 12px; color: #696969; }
-.archive .ar-content .ar-left .ar-left-i .ar-i-detail .ar-i-title { color: #222; font-size: 22px; }
-.archive .ar-content .ar-left .ar-left-i .ar-i-detail .pc-blog-desc { padding: 5px 0px; }
-.archive .ar-content .ar-left .ar-left-i .ar-i-detail .ar-i-counts { display: flex; }
-.archive .ar-content .ar-left .ar-left-i .ar-i-detail .ar-i-counts .label { color: #696969; margin: 0px 3px 0px 0px; }
-.archive .ar-content .ar-left .ar-left-i .ar-i-detail .ar-i-counts .label .count { margin: 0px 2px; font-weight: bolder; }
 .archive .ar-content .ar-right { flex: 0.3; }
 .archive .ar-content .ar-right p.ar-right-top { font-size: 20px; font-weight: bold; }
 .archive .ar-content .ar-right hr { border: 0.5px solid #e0e0e0; }
+
+.ar-left-i { margin-top: 15px; padding: 5px; display: flex; border-bottom: 1px solid #e0e0e0; }
+.ar-left-i .ar-i-img { height: 250px; width: 250px; }
+.ar-left-i .ar-i-img img { width: 100%; object-fit: cover; }
+.ar-left-i .ar-i-detail { flex-direction: column; margin-left: 10px; }
+.ar-left-i .ar-i-detail .pc-date { font-size: 12px; color: #696969; }
+.ar-left-i .ar-i-detail .ar-i-title { color: #222; font-size: 22px; }
+.ar-left-i .ar-i-detail .pc-blog-desc { padding: 5px 0px; }
+.ar-left-i .ar-i-detail .ar-i-counts { display: flex; }
+.ar-left-i .ar-i-detail .ar-i-counts .label { color: #696969; margin: 0px 3px 0px 0px; }
+.ar-left-i .ar-i-detail .ar-i-counts .label .count { margin: 0px 2px; font-weight: bolder; }
 
 .public-blog { margin-top: 60px; min-height: calc(100vh - 60px - 125px); }
 .public-blog .public-blog-title { padding-top: 10px; }
@@ -615,7 +616,9 @@ top attachment etc.
 .search-result .result-list .i-result .img-con img.landscape { height: 100%; width: auto; }
 .search-result .result-list .i-result .desc-con { padding-left: 5px; }
 .search-result .result-list .i-result .desc-con .name { font-size: 16px; font-weight: bold; }
-.search-result .result-list .i-result .desc-con .location { opacity: 0.8; font-weight: bold; }
+.search-result .result-list .i-result .desc-con .location { opacity: 0.8; display: flex; }
+.search-result .result-list .i-result .desc-con .location .country { margin-left: 5px; }
+.search-result .result-list.blogs { margin-top: 10px; }
 @media screen and (max-width: 855px) { .search-result .filter-toolbar .filter-label { display: none; } }
 
 .footer { margin-top: 20px; min-height: 125px; padding: 5px; background: #1d4354; color: #fff; }
@@ -710,3 +713,5 @@ body { margin: 0; padding: 0; background-color: #fff; font-family: "Gotham-Pro";
 .pc-date-picker .bp3-input-action { top: 6px; right: 5px !important; }
 
 a, button, div { outline: none !important; }
+
+p { margin-bottom: 5px; }

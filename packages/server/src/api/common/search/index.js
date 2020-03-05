@@ -1,4 +1,4 @@
 import globalSearch from './globalSearch';
-import advanceSearch from './getEmpty';
+import getPopular from './getPopular';
 
-export { globalSearch, advanceSearch };
+export { globalSearch, getPopular };

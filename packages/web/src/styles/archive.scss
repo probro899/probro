@@ -13,46 +13,6 @@
     display: flex;
     .ar-left {
       flex: 0.7;
-      .ar-left-i {
-        margin-top: 15px;
-        padding: 5px;
-        display: flex;
-        border-bottom: 1px solid $normalBorder;
-        .ar-i-img {
-          height: 250px;
-          width: 250px;
-          img {
-            object-fit: contain;
-          }
-        }
-        .ar-i-detail {
-          flex-direction: column;
-          margin-left: 10px;
-          .pc-date {
-            font-size: 12px;
-            color: $lightTextColor;
-          }
-          .ar-i-title {
-            color: $textColor;
-            font-size: 22px;
-          }
-          .pc-blog-desc {
-            padding: 5px 0px;
-          }
-          .ar-i-counts {
-            display: flex;
-            .label {
-              color: $lightTextColor;
-              margin: 0px 3px 0px 0px;
-              .count {
-                margin: 0px 2px;
-                // color: $textColor;
-                font-weight: bolder;
-              }
-            }
-          }
-        }
-      }
     }
     .ar-right {
       flex: 0.3;
@@ -62,6 +22,49 @@
       }
       hr {
         border: 0.5px solid $normalBorder;
+      }
+    }
+  }
+}
+
+// styling single archive element to make it global
+
+.ar-left-i {
+  margin-top: 15px;
+  padding: 5px;
+  display: flex;
+  border-bottom: 1px solid $normalBorder;
+  .ar-i-img {
+    height: 250px;
+    width: 250px;
+    img {
+      width: 100%;
+      object-fit: cover;
+    }
+  }
+  .ar-i-detail {
+    flex-direction: column;
+    margin-left: 10px;
+    .pc-date {
+      font-size: 12px;
+      color: $lightTextColor;
+    }
+    .ar-i-title {
+      color: $textColor;
+      font-size: 22px;
+    }
+    .pc-blog-desc {
+      padding: 5px 0px;
+    }
+    .ar-i-counts {
+      display: flex;
+      .label {
+        color: $lightTextColor;
+        margin: 0px 3px 0px 0px;
+        .count {
+          margin: 0px 2px;
+          font-weight: bolder;
+        }
       }
     }
   }

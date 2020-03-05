@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { MdMyLocation } from 'react-icons/md';
 import { ENDPOINT } from '../../../../config/index';
 import { RoundPicture } from '../../../../components';
 
@@ -22,7 +23,10 @@ const User = ({ item }) => {
             {userName}
           </Link>
         </p>
-        <p className="location">{userDetail.address}</p>
+        <div className="location">
+          <div><MdMyLocation /></div>
+          <div className="country">{userDetail.country ? userDetail.country : '---'}</div>
+        </div>
       </div>
     </div>
   );
@@ -37,7 +41,6 @@ class ResultList extends React.Component {
 
   render() {
     const { data } = this.props;
-    console.log('hello data', data);
     return (
       <div className="result-list">
         <p className="label">

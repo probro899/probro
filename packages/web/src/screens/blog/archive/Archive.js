@@ -22,7 +22,8 @@ class Archive extends React.Component {
       data: { name: 'archive' },
     });
     try {
-      const res = await axios.get(`${ENDPOINT}/web/get-index`);
+      const res = await axios.get(`${ENDPOINT}/web/get-archive?userId=bhagya-sah-1582995650174`);
+      console.log('archive value', res);
       this.setState({
         data: res.data,
         loading: false,
@@ -44,7 +45,7 @@ class Archive extends React.Component {
           <div className="ar-content">
             <div className="ar-left">
               {
-                data.archive.map((obj, index) => <SingleArchive key={index} obj={obj} />)
+               data.archive ?  data.archive.map((obj, index) => <SingleArchive key={index} obj={obj} />) : null
               }
             </div>
             <div className="ar-right">

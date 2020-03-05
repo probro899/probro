@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Button } from '@blueprintjs/core';
 
 const ConnectionElement = (props) => {
-  const { sendMessage, connectMentor, type } = props;
+  const { sendMessage, connectMentor, type, loading } = props;
   switch (type) {
     case 'connected':
       return (
@@ -35,6 +35,8 @@ const ConnectionElement = (props) => {
       return (
         <Button
           text="Accept"
+          loading={loading}
+          disabled={loading}
           large
           fill
           onClick={() => connectMentor('accept')}
@@ -48,6 +50,8 @@ const ConnectionElement = (props) => {
           onClick={() => connectMentor('request')}
           text="Connect"
           large
+          loading={loading}
+          disabled={loading}
           fill
           intent="primary"
           icon="new-person"
@@ -59,6 +63,7 @@ const ConnectionElement = (props) => {
 ConnectionElement.propTypes = {
   sendMessage: PropTypes.func.isRequired,
   connectMentor: PropTypes.func.isRequired,
+  loading: PropTypes.bool.isRequired,
   type: PropTypes.string.isRequired,
 };
 

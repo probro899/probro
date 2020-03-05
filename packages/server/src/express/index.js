@@ -11,6 +11,7 @@ import doSearch from './request-handler/doSearch';
 import getUser from './request-handler/getUser';
 import getBlog from './request-handler/getBlog';
 import getIndex from './request-handler/getIndex';
+import getArchive from './request-handler/getArchive';
 
 export default function (app) {
   app.use((req, res, next) => {
@@ -30,6 +31,7 @@ export default function (app) {
   app.get('/web/get-user', getUser);
   app.get('/web/get-blog', getBlog);
   app.get('/web/get-index', getIndex);
+  app.get('/web/get-archive', getArchive);
   app.use(express.static(path.resolve(__dirname, '..', 'public')));
   app.get('/reset/:token', (req, res) => {
     res.sendFile(path.resolve(__dirname, '..', 'public', 'index.html'));

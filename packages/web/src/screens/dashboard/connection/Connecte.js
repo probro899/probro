@@ -8,7 +8,7 @@ import { ENDPOINT } from '../../../config';
 const icon = require('../../../assets/icons/64w/uploadicon64.png');
 
 class Connecte extends React.Component {
-  state = {};
+  state = { loading: false };
 
   getImage = (userDetail, user) => {
     const imgUrl = userDetail && userDetail.image ? `${ENDPOINT}/user/${10000000 + parseInt(userDetail.userId, 10)}/profile/${userDetail.image}` : icon;
@@ -32,18 +32,23 @@ class Connecte extends React.Component {
 
   deleteRequest = async () => {
     const { id, apis, deleteDatabaseSchema, connection } = this.props;
+    this.setState({ loading: true });
     await apis.deleteUserConnection({ id });
     deleteDatabaseSchema('UserConnection', { id: connection.id });
+    this.setState({ loading: false });
   };
 
   acceptRequest = async () => {
     const { apis, updateDatabaseSchema, connection } = this.props;
+    this.setState({ loading: true });
     await apis.updateUserConnection([{ status: 'connected', mId: connection.mId, userId: connection.userId }, { id: connection.id }]);
     updateDatabaseSchema('UserConnection', { id: connection.id, status: 'connected' });
+    this.setState({ loading: false });
   };
 
   getConfigButtons = () => {
     const { account, connection } = this.props;
+    const { loading } = this.state;
     if (account.user.id === connection.userId) {
       if (connection.status === 'pending') {
         return (
@@ -56,8 +61,23 @@ class Connecte extends React.Component {
     if (connection.status === 'pending') {
       return (
         <div className="con-buttons">
-          <Button text="Decline" icon="delete" intent="danger" onClick={this.deleteRequest} />
-          <Button text="Accept" icon="following" className="pc-accept" intent="success" onClick={this.acceptRequest} />
+          <Button
+            text="Decline"
+            icon="delete"
+            intent="danger"
+            loading={loading}
+            disabled={loading}
+            onClick={this.deleteRequest}
+          />
+          <Button
+            loading={loading}
+            disabled={loading}
+            text="Accept"
+            icon="following"
+            className="pc-accept"
+            intent="success"
+            onClick={this.acceptRequest}
+          />
         </div>
       );
     }

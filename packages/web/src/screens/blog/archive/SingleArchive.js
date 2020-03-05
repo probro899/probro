@@ -13,7 +13,6 @@ const SingleArchive = ({ obj }) => {
       <div className="ar-i-img">
         <img
           alt="test here"
-          height="170px"
           src={coverImage}
         />
       </div>

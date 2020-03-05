@@ -1,5 +1,5 @@
 import { globalSearch } from '../../api/common/search/index';
-import getEmptySearch from '../../api/common/search/getEmpty';
+import getPopular from '../../api/common/search/getPopular';
 
 export default async function doSearch(req, res) {
   console.log('search request handler', req.query);
@@ -7,7 +7,7 @@ export default async function doSearch(req, res) {
     const { key, country, industry } = req.query;
     let result;
     if (!key && !country && !industry) {
-      result = await getEmptySearch();
+      result = await getPopular();
     } else {
       result = await globalSearch(key, country, industry);
     }

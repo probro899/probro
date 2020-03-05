@@ -30,9 +30,9 @@ export default async () => {
     const allUserDetailsPromises = [];
     indexUserId.forEach(obj => allUserDetailsPromises.push(findUserDetails(obj.id)));
     const allIndexUsers = await Promise.all(allUserDetailsPromises);
-    console.log('indexUserId', allIndexUsers);
-    return { blogs, users: allIndexUsers };
+    // console.log('indexUserId', allIndexUsers);
+    return { blogs: blogs || [], users: allIndexUsers };
   });
-  console.log('search response', dataRes);
+  // console.log('search response', dataRes);
   return dataRes;
 };
