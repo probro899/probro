@@ -132,6 +132,9 @@ top attachment etc.
     color: $navTextColor;
     font-weight: bold;
     border-bottom: 1px solid $normalBorder;
+    &.active {
+      color: $skyBlueMain;
+    }
   }
 }
 .pc-dropdown-drawer {

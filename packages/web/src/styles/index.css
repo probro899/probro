@@ -54,6 +54,7 @@ top attachment etc.
 
 .pc-drop-menu { display: flex; flex-direction: column; padding: 10px; }
 .pc-drop-menu .pc-drop-menu-link { padding: 10px; text-transform: uppercase; color: #666; font-weight: bold; border-bottom: 1px solid #e0e0e0; }
+.pc-drop-menu .pc-drop-menu-link.active { color: #137cbd; }
 
 .pc-dropdown-drawer .bp3-drawer-header h4 { text-align: center; color: #137cbd; }
 .pc-dropdown-drawer .bp3-drawer-header svg { height: 25px; width: 25px; color: #666; }
@@ -511,22 +512,42 @@ top attachment etc.
 .archive { margin-top: 60px; min-height: calc(100vh - 60px - 125px); padding: 5px; }
 .archive .ar-top { padding: 5px; }
 .archive .ar-top span { color: #696969; }
-.archive .ar-content { display: flex; }
-.archive .ar-content .ar-left { flex: 0.7; }
-.archive .ar-content .ar-right { flex: 0.3; }
+.archive .ar-content { display: flex; flex-wrap: wrap; }
+.archive .ar-content .ar-left { width: 70%; padding-right: 20px; }
+.archive .ar-content .ar-right { width: 30%; }
 .archive .ar-content .ar-right p.ar-right-top { font-size: 20px; font-weight: bold; }
-.archive .ar-content .ar-right hr { border: 0.5px solid #e0e0e0; }
+.archive .ar-content .ar-right .popular-on-pc .popular-blog { display: flex; margin-bottom: 10px; }
+.archive .ar-content .ar-right .popular-on-pc .popular-blog .ar-i-img { min-height: 115px; min-width: 115px; background-size: cover !important; }
+.archive .ar-content .ar-right .popular-on-pc .popular-blog .ar-i-detail { padding: 0px 5px; }
+.archive .ar-content .ar-right .popular-on-pc .popular-blog .ar-i-detail .blog-title { font-size: 18px; font-weight: 400; margin-bottom: 5px; color: #1d4354; }
+.archive .ar-content .ar-right .popular-on-pc .popular-blog .ar-i-detail .pc-date { color: #696969; }
+.archive .ar-content .ar-right .popular-on-pc .users-head { margin-top: 20px; font-size: 16px; text-transform: uppercase; color: #696969; }
+.archive .ar-content .ar-right .popular-on-pc .popular-user { margin: 10px 0px; display: flex; }
+.archive .ar-content .ar-right .popular-on-pc .popular-user .user-image { width: 80px; height: 80px; border-radius: 50%; overflow: hidden; }
+.archive .ar-content .ar-right .popular-on-pc .popular-user .user-image img.portrait { width: 100%; height: auto; }
+.archive .ar-content .ar-right .popular-on-pc .popular-user .user-image img.landscape { height: 100%; width: auto; }
+.archive .ar-content .ar-right .popular-on-pc .popular-user .user-detail { margin-left: 5px; padding-top: 5px; }
+.archive .ar-content .ar-right .popular-on-pc .popular-user .user-detail .name { font-size: 15px; font-weight: bold; }
+@media screen and (min-height: 720px) and (max-width: 800px) { .archive .ar-content .ar-left { width: 60%; }
+  .archive .ar-content .ar-right { width: 40%; } }
+@media screen and (max-width: 720px) { .archive .ar-content .ar-left { width: 100%; }
+  .archive .ar-content .ar-right { margin-top: 20px; width: 100%; } }
 
 .ar-left-i { margin-top: 15px; padding: 5px; display: flex; border-bottom: 1px solid #e0e0e0; }
 .ar-left-i .ar-i-img { height: 250px; width: 250px; }
-.ar-left-i .ar-i-img img { width: 100%; object-fit: cover; }
-.ar-left-i .ar-i-detail { flex-direction: column; margin-left: 10px; }
+.ar-left-i .ar-i-img img { width: 100%; height: 100%; object-fit: cover; }
+.ar-left-i .ar-i-detail { flex-direction: column; margin-left: 10px; width: calc(100% - 250px); }
 .ar-left-i .ar-i-detail .pc-date { font-size: 12px; color: #696969; }
 .ar-left-i .ar-i-detail .ar-i-title { color: #222; font-size: 22px; }
 .ar-left-i .ar-i-detail .pc-blog-desc { padding: 5px 0px; }
 .ar-left-i .ar-i-detail .ar-i-counts { display: flex; }
 .ar-left-i .ar-i-detail .ar-i-counts .label { color: #696969; margin: 0px 3px 0px 0px; }
 .ar-left-i .ar-i-detail .ar-i-counts .label .count { margin: 0px 2px; font-weight: bolder; }
+@media screen and (max-width: 500px) { .ar-left-i .ar-i-img { height: 200px; width: 200px; }
+  .ar-left-i .ar-i-detail { width: calc(100% - 200px); } }
+@media screen and (max-width: 400px) { .ar-left-i .ar-i-img { height: 150px; width: 150px; }
+  .ar-left-i .ar-i-detail { width: calc(100% - 150px); }
+  .ar-left-i .ar-i-detail .pc-blog-desc { display: none; } }
 
 .public-blog { margin-top: 60px; min-height: calc(100vh - 60px - 125px); }
 .public-blog .public-blog-title { padding-top: 10px; }
@@ -617,7 +638,7 @@ top attachment etc.
 .search-result .result-list .i-result .desc-con { padding-left: 5px; }
 .search-result .result-list .i-result .desc-con .name { font-size: 16px; font-weight: bold; }
 .search-result .result-list .i-result .desc-con .location { opacity: 0.8; display: flex; }
-.search-result .result-list .i-result .desc-con .location .country { margin-left: 5px; }
+.search-result .result-list .i-result .desc-con .location .country { text-transform: capitalize; margin-left: 5px; }
 .search-result .result-list.blogs { margin-top: 10px; }
 @media screen and (max-width: 855px) { .search-result .filter-toolbar .filter-label { display: none; } }
 

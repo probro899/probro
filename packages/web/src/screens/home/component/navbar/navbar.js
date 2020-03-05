@@ -98,17 +98,17 @@ class Navbar extends Component {
               </span>
             </div>
           </Link>
-          {/* <Link
-            to="#"
-            className={navigate.mainNav === 'help' ? 'active' : null}
+          <Link
+            to="/search"
+            className={navigate.mainNav.name === 'search' ? 'active' : null}
           >
             <div className="navbar-item">
               <span>
-                Get Help
+                Find Mentor
               </span>
             </div>
           </Link>
-          <Link
+          {/* <Link
             to="/take-a-tour"
             className={navigate.mainNav.name === 'tour' ? 'active' : null}
           >

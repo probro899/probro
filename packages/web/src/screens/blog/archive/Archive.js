@@ -3,11 +3,13 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import * as actions from '../../../actions';
+import cookie from '../../../redux/account/cookies';
 import Navbar from '../../home/component/navbar';
 import Footer from '../../../common/footer';
 import { ENDPOINT } from '../../../config';
 import { Spinner } from '../../../common';
 import SingleArchive from './SingleArchive';
+import PopularOnPc from './PopularOnPc';
 
 class Archive extends React.Component {
   state = {
@@ -17,12 +19,14 @@ class Archive extends React.Component {
 
   async componentDidMount() {
     const { updateNav } = this.props;
+    const cookieVal = cookie.get('pc-session');
     updateNav({
       schema: 'mainNav',
       data: { name: 'archive' },
     });
     try {
-      const res = await axios.get(`${ENDPOINT}/web/get-index`);
+      const res = await axios.get(`${ENDPOINT}/web/get-archive?userId=${cookieVal || ''}`);
+      console.log('response', res);
       this.setState({
         data: res.data,
         loading: false,
@@ -44,14 +48,14 @@ class Archive extends React.Component {
           <div className="ar-content">
             <div className="ar-left">
               {
-                data.archive.map((obj, index) => <SingleArchive key={index} obj={obj} />)
+                data.basedOnHistory.blogs.map((obj, index) => <SingleArchive key={index} obj={obj} />)
               }
             </div>
             <div className="ar-right">
               <p className="ar-right-top">
                 Popular on PC
               </p>
-              <hr />
+              <PopularOnPc data={data.popularOnPc} />
             </div>
           </div>
         </div>
