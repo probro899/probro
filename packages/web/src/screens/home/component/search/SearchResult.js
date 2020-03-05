@@ -19,7 +19,8 @@ class SearchResult extends React.Component {
 
   componentDidMount() {
     window.addEventListener('scroll', this.fireScroll, { passive: true });
-    const { navigate } = this.props;
+    const { navigate, updateNav } = this.props;
+    updateNav({ schema: 'mainNav', data: { name: 'search' } });
     this.getSearchResult(navigate.search);
   }
 

@@ -21,7 +21,7 @@ const SingleArchive = ({ obj }) => {
           {obj.blog.title}
         </Link>
         <p>
-          <span>Author-</span>
+          <span>Author: </span>
           <Link to={`/user/${user.user.slug}/`}>
             {
               ` ${user.user.firstName} ${user.user.middleName ? `${user.user.middleName} ` : ''}${user.user.lastName}`

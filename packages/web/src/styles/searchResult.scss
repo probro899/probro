@@ -69,6 +69,7 @@
           opacity: 0.8;
           display: flex;
           .country {
+            text-transform: capitalize;
             margin-left: 5px;
           }
         }
