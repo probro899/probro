@@ -164,7 +164,7 @@ class Classes extends Component {
         columns: newColumns,
       });
       await api.updateBoardColumnCard([
-        { position: newTask.position, todo: 'withinColumn', timestamp: Date.now(), broadCastId: `Board-${classId}` }, { id: dragable }]);
+        { position: newTask.position, fColId: source.droppableId, tColId: destination.droppableId, todo: 'withinColumn', timestamp: Date.now(), broadCastId: `Board-${classId}` }, { id: dragable }]);
       return;
     }
     // cards movement within the column ends here
@@ -223,6 +223,8 @@ class Classes extends Component {
     await api.updateBoardColumnCard([
       {
         todo: 'outsideColumn',
+        fColId: source.droppableId,
+        tColId: destination.droppableId,
         position: newTask.position,
         timeStamp: Date.now(),
         boardColumnId: destinationDropable,
@@ -284,7 +286,7 @@ class Classes extends Component {
                   ref={provided.innerRef}
                 >
                   {
-                    columns.map((column, index) => {
+                    columns.filter(o => !o.deleteStatus).map((column, index) => {
                       if (column.boardId === classId) {
                         return (
                           <Column

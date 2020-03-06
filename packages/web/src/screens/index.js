@@ -11,7 +11,7 @@ import Forget from './auth/forgot-password';
 import Reset from './auth/change-password';
 import { CreateBlog, PublicBlog } from './blog';
 import EmailVerification from './auth/email-verification';
-import { Communication } from '../common';
+import Communication from '../common/communication';
 import Archive from './blog/archive';
 import { PublicProfile } from './home/component';
 import { SearchResult } from './home/component/search';

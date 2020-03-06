@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
-import { Dialog, Button, TextArea, Tag, Icon } from '@blueprintjs/core';
-import { Link } from 'react-router-dom';
 import moment from 'moment';
+import { Dialog, Button, TextArea, Tag, Icon } from '@blueprintjs/core';
 import PropTypes from 'prop-types';
 import { timeStampSorting } from '../../../common/utility-functions';
 import TaskComment from './TaskComment';
 import TaskDetailRight from './TaskDetailRight';
 import { ENDPOINT } from '../../../config';
 import CommentBox from './CommentBox';
+import { AttachmentList } from './attachment';
 
 class TaskOverlay extends Component {
   state = {
@@ -34,34 +34,17 @@ class TaskOverlay extends Component {
       descriptions,
       tags,
     } = nextProps;
-    // console.log('description', descriptions);
-    const commentsCard = comments.filter((obj) => {
-      if (taskId === obj.boardColumnCardId) {
-        return obj;
-      }
-    });
-    const attachmentsCard = attachments.filter((obj) => {
-      if (taskId === obj.boardColumnCardId) {
-        return obj;
-      }
-    });
-    // finding the latest description
-    const latestDesription = descriptions.filter((obj) => {
-      if (taskId === obj.boardColumnCardId) {
-        return obj;
-      }
-    }).sort(timeStampSorting)[0];
-    // finding all the tags here
-    const allTags = Object.values(tags.byId).filter((obj) => {
-      if (taskId === obj.boardColumnCardId) {
-        return obj;
-      }
-    });
 
-    let desc = '';
-    if (latestDesription) {
-      desc = latestDesription.title;
-    }
+    // filter deleted
+    const commentsCard = comments.filter(obj => taskId === obj.boardColumnCardId && !obj.deleteStatus);
+    const attachmentsCard = attachments.filter(obj => taskId === obj.boardColumnCardId && !obj.deleteStatus);
+    // finding the latest description
+    const latestDesription = descriptions.filter(obj => taskId === obj.boardColumnCardId).sort(timeStampSorting)[0];
+    // finding all the tags here
+    const allTags = Object.values(tags.byId).filter(obj => taskId === obj.boardColumnCardId && !obj.deleteStatus);
+
+    const desc = latestDesription ? latestDesription.title : '';
+
     tasks.map((obj) => {
       if (obj.id === taskId) {
         this.setState({
@@ -147,13 +130,7 @@ class TaskOverlay extends Component {
   getTags = () => {
     const { tags } = this.props;
     const { task } = this.state;
-    if (task.id) {
-      return Object.values(tags.byId).filter((obj) => {
-        if (obj.boardColumnCardId === task.id) {
-          return obj;
-        }
-      });
-    }
+    if (task.id) return Object.values(tags.byId).filter(obj => obj.boardColumnCardId === task.id && !obj.deleteStatus);
     return [];
   }
 
@@ -166,11 +143,14 @@ class TaskOverlay extends Component {
   };
 
   deleteAttachment = async (id, url) => {
-    const { apis, deleteDatabaseSchema, account } = this.props;
+    const { task } = this.state;
+    const { apis, deleteDatabaseSchema, account, boardId } = this.props;
     try {
       await axios.post(`${ENDPOINT}/web/delete-file`, { token: account.sessionId, content: 'board', fileName: url });
       await apis.deleteBoardColumnCardAttachment({
         id,
+        broadCastId: `Board-${boardId}`,
+        cardId: task.id,
       });
       deleteDatabaseSchema('BoardColumnCardAttachment', { id });
     } catch (e) {
@@ -182,6 +162,13 @@ class TaskOverlay extends Component {
     this.setState({
       comment: name,
     });
+  }
+
+  getCardActivity = async () => {
+    const { apis } = this.props;
+    const { task } = this.state;
+    const res = await apis.getCardActivity({ cardId: task.id });
+    console.log('ersult ', res);
   }
 
   render() {
@@ -209,6 +196,7 @@ class TaskOverlay extends Component {
       <Dialog
         isOpen={isOpen}
         onClose={this.onClose}
+        onOpening={this.getCardActivity}
         className="overlay-container"
         style={{ width: '800px' }}
       >
@@ -258,27 +246,16 @@ class TaskOverlay extends Component {
             <div className="left">
               <div className="pc-tags-and-deadline">
                 <div className="pc-tag-view">
-                  {
-                    this.getTags().map((obj, index) => {
-                      return (
-                        <Tag
-                          key={index}
-                          large
-                          intent={obj.tag}
-                          style={{ margin: '5px' }}
-                        />
-                      );
-                    })
-                  }
+                  {this.getTags().map(obj => <Tag key={obj.id} large intent={obj.tag} style={{ margin: 5 }} />)}
                 </div>
                 <div className="pc-deadline-view">
-                  {task.Deadline && (
+                  {task.Deadline ? (
                     <p
                       className={task.Deadline < new Date() ? 'expire' : 'no-expire'}
                     >
                       {`Deadline: ${moment(task.Deadline).format('YYYY-MM-DD')}`}
                     </p>
-                  )}
+                  ) : ' '}
                 </div>
               </div>
               <div className="overlay-description">
@@ -321,43 +298,12 @@ class TaskOverlay extends Component {
                     )}
                 </div>
               </div>
-              <div className="attach-container">
-                {attachments.length !== 0 && <u>Attachments</u>}
-                <div className="attach-list">
-                  <ul>
-                    {
-                      attachments.map((obj) => {
-                        const name = this.getName(obj.userId);
-                        const link = `${ENDPOINT}/user/${10000000 + parseInt(obj.userId, 10)}/board/${obj.url}`;
-                        return (
-                          <li key={obj.id}>
-                            <div className="file-type">
-                              <span>
-                                {obj.url.split('.')[1]}
-                              </span>
-                              <Icon
-                                iconSize={11}
-                                icon="cross"
-                                className="pc-attach-delete"
-                                onClick={() => this.deleteAttachment(obj.id, obj.url)}
-                              />
-                            </div>
-                            <div className="file-detail">
-                              <a rel="noopener noreferrer" target="_blank" href={link} className="attach-title">
-                                {obj.name}
-                              </a>
-                              <span>
-                                {moment(obj.timeStamp).format('DD-MM-YYYY')}
-                                <Link to={`/user/${obj.userId}`}>{` - ${name}`}</Link>
-                              </span>
-                            </div>
-                          </li>
-                        );
-                      })
-                    }
-                  </ul>
-                </div>
-              </div>
+              <AttachmentList
+                attachments={attachments}
+                getName={this.getName}
+                Users={database.User}
+                deleteAttachment={this.deleteAttachment}
+              />
               <CommentBox
                 apis={apis}
                 addDatabaseSchema={addDatabaseSchema}

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Button, Popover, Tag } from '@blueprintjs/core';
 import Form from '../../../common/Form';
 import DeletePopOver from '../../../common/DeletePopOver';
-import Attachment from './Attachment';
+import { Attachment } from './attachment';
 import SelectColumn from './SelectColumn';
 
 const TagPopover = ({ tags, addTag }) => {
@@ -123,6 +123,7 @@ class TaskDetailRight extends React.Component {
       await apis.deleteBoardColumnCardTag({
         broadCastId: `Board-${boardId}`,
         id: tag.id,
+        cardId: task.id,
       });
       deleteDatabaseSchema('BoardColumnCardTag', { id: tag.id });
       return;
@@ -248,6 +249,7 @@ TaskDetailRight.propTypes = {
   onClose: PropTypes.func.isRequired,
   account: PropTypes.objectOf(PropTypes.any).isRequired,
   boardId: PropTypes.number.isRequired,
+  database: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 export default TaskDetailRight;

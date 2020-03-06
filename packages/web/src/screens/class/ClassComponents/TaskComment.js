@@ -75,7 +75,7 @@ class TaskComment extends React.Component {
     const { apis, boardId, deleteDatabaseSchema } = this.props;
     const { activeComment } = this.state;
     if (type === 'confirm') {
-      await apis.deleteBoardColumnCardComment({ id: activeComment.id, broadCastId: `Board-${boardId}` });
+      await apis.deleteBoardColumnCardComment({ id: activeComment.id, cardId: activeComment.boardColumnCardId, broadCastId: `Board-${boardId}` });
       deleteDatabaseSchema('BoardColumnCardComment', { id: activeComment.id });
     }
     this.setState({
@@ -159,8 +159,8 @@ class TaskComment extends React.Component {
                         </small>
                       )
                     }
-                  </div>)
-                }
+                  </div>
+                  )}
               </div>
             </div>
           );

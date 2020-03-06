@@ -118,7 +118,7 @@ class Class extends Component {
   updateClass = async (data) => {
     const { updateClass, api } = this.state;
     const { updateDatabaseSchema } = this.props;
-    await api.updateBoard([{...data, broadCastId: `Board-${updateClass.id}`}, { id: updateClass.id }]);
+    await api.updateBoard([{ ...data, broadCastId: `Board-${updateClass.id}` }, { id: updateClass.id }]);
     updateDatabaseSchema('Board', { id: updateClass.id, ...data });
     this.setState({
       updateClass: {

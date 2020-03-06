@@ -120,7 +120,7 @@ class Column extends Component {
                     ref={provided.innerRef}
                     {...provided.droppableProps}
                   >
-                    {column.tasks.map((obj, index) => {
+                    {column.tasks.filter(o => !o.deleteStatus).map((obj, index) => {
                       const task = obj;
                       return (
                         <Task

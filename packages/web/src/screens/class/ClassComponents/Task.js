@@ -8,11 +8,7 @@ class Task extends Component {
   constructor(props) {
     super(props);
     const { tags, task } = this.props;
-    const allTags = Object.values(tags.byId).filter((obj) => {
-      if (task.id === obj.boardColumnCardId) {
-        return obj;
-      }
-    });
+    const allTags = Object.values(tags.byId).filter(obj => task.id === obj.boardColumnCardId && !obj.deleteStatus);
     this.state = {
       allTags,
     };
@@ -21,11 +17,7 @@ class Task extends Component {
   componentDidUpdate(prevProps) {
     const { tags, task } = this.props;
     if (tags.allIds !== prevProps.tags.allIds) {
-      const allTags = Object.values(tags.byId).filter((obj) => {
-        if (task.id === obj.boardColumnCardId) {
-          return obj;
-        }
-      });
+      const allTags = Object.values(tags.byId).filter(obj => task.id === obj.boardColumnCardId && !obj.deleteStatus);
       this.setState({
         allTags,
       });
