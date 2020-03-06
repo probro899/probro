@@ -65,11 +65,9 @@ function updateBoardColumnCardDescription(records) {
   const broadCastArr = records[0].broadCastId.split('-');
   const boardId = broadCastArr[broadCastArr.length - 1];
   const record = records[0];
-  const { cardId, todo } = record;
-  delete record.cardId;
-  delete record.todo;
+  const { boardColumnCardId } = record;
   update.call(this, 'BoardColumnCardDescription', record, records[1]);
-  addBoardActivity({ userId: session.values.user.id, boardId, message: todo, attachmentId: records[1].id, cardId, timeStamp: Date.now() });
+  addBoardActivity({ userId: session.values.user.id, boardId, message: 'Update Description', descriptionId: records[1].id, cardId: boardColumnCardId, timeStamp: Date.now() });
 }
 
 export default [
