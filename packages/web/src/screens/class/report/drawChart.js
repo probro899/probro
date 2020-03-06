@@ -6,10 +6,11 @@ class DrawChart extends React.Component {
   state = {};
 
   render() {
+    const { boardCommunicationActivities } = this.props;
     return (
       <div className="pc-report-charts">
         <BoardActivityReport {...this.props} />
-        <CommunicationReport {...this.props} />
+        {boardCommunicationActivities.length > 0 ? <CommunicationReport {...this.props} /> : null}
       </div>
     );
   }

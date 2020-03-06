@@ -11,6 +11,16 @@ async function getBoardActivity(record) {
   return res;
 }
 
+async function getCardActivity(record) {
+  const { cardId } = record;
+  const res = await db.execute(async ({ find }) => {
+    const cardActivities = await find('BoardActivity', { cardId });
+    return { cardActivities };
+  });
+  return res;
+}
+
 export default [
   getBoardActivity,
+  getCardActivity,
 ];

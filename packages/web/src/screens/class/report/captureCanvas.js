@@ -6,6 +6,7 @@ const convertCanvasToImage = (canvas, name) => {
     format: 'jpeg',
     quality: 1,
   });
+
   const arr = dataUrl.split(',');
   const mime = arr[0].match(/:(.*?);/)[1];
   const bstr = window.atob(arr[1]);
