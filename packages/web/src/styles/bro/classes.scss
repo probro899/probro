@@ -428,18 +428,12 @@
             display: flex;
             justify-content: stretch;
             padding-bottom: 10px;
+            padding-left: 10px;
             padding-top: 10px;
-            div {
-              img {
-                border: 1px solid white;
-                border-radius: 50%;
-                padding: 1px;
-              }
-            }
             .com-con {
               margin-left: 10px;
+              padding-top: 2px;
               display: flex;
-              width: 100%;
               flex-direction: column;
               .com-desc {
                 .pc-comment-edit {
@@ -458,11 +452,43 @@
                   }
                   &.primary u {
                     &:hover {
-                      color: rgba(19, 124, 189, 1);
+                      color: $skyBlueMain;
                     }
                   }
                 }
               }
+            }
+          }
+          .pc-task-activity {
+            padding: 10px 0px;
+            padding-left: 10px;
+            display: flex;
+            .activity-detail {
+              margin-left: 10px;
+              padding-top: 2px;
+              display: flex;
+              flex-direction: column;
+            }
+            .activity-user {
+              font-size: 16px;
+              font-weight: bold;
+            }
+            .activity-col {
+              font-weight: bold;
+            }
+          }
+          .img-con {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            overflow: hidden;
+            img.portrait {
+              width: 100%;
+              height: auto;
+            }
+            img.landscape {
+              height: 100%;
+              width: auto;
             }
           }
         }

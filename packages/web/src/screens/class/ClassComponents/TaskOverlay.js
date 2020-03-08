@@ -5,7 +5,7 @@ import moment from 'moment';
 import { Dialog, Button, TextArea, Tag, Icon } from '@blueprintjs/core';
 import PropTypes from 'prop-types';
 import { timeStampSorting } from '../../../common/utility-functions';
-import TaskComment from './TaskComment';
+import TaskComment from './history/TaskComment';
 import TaskDetailRight from './TaskDetailRight';
 import { ENDPOINT } from '../../../config';
 import CommentBox from './CommentBox';
@@ -15,6 +15,7 @@ class TaskOverlay extends Component {
   state = {
     editHead: false,
     editDesc: false,
+    loading: true,
     task: {},
     comments: [],
     description: {},
@@ -23,6 +24,7 @@ class TaskOverlay extends Component {
     title: '',
     desc: '',
     comment: '',
+    activities: [],
   };
 
   componentWillReceiveProps(nextProps) {
@@ -66,6 +68,7 @@ class TaskOverlay extends Component {
     onClose(taskId);
     this.setState({
       editHead: false,
+      loading: true,
       editDesc: false,
     });
   };
@@ -168,11 +171,13 @@ class TaskOverlay extends Component {
     const { apis } = this.props;
     const { task } = this.state;
     const res = await apis.getCardActivity({ cardId: task.id });
-    console.log('ersult ', res);
+    this.setState({
+      loading: false,
+      activities: res.cardActivities.filter(o => (o.message === 'createCard' || o.message === 'outsideColumn') && o.tColId && o.fColId),
+    });
   }
 
   render() {
-    const { isOpen, database } = this.props;
     const {
       editHead,
       editDesc,
@@ -184,6 +189,8 @@ class TaskOverlay extends Component {
       desc,
       tags,
       comment,
+      activities,
+      loading,
     } = this.state;
     const {
       userList, apis, boardId, onClose,
@@ -191,6 +198,8 @@ class TaskOverlay extends Component {
       updateDatabaseSchema,
       addDatabaseSchema,
       account,
+      isOpen,
+      database,
     } = this.props;
     return (
       <Dialog
@@ -200,146 +209,150 @@ class TaskOverlay extends Component {
         className="overlay-container"
         style={{ width: '800px' }}
       >
-        <div className="task-detail-overlay">
-          <div className="overlay-title">
-            <div className="head">
-              {editHead ? <TextArea value={title} onChange={e => this.titleChange(e)} />
-                : (
-                  <span className="title">
-                    {task.name}
-                  </span>
-                )
-              }
-              {editHead
-                ? (
-                  <div className="buttons-group">
-                    <Button
-                      icon="tick"
-                      intent="success"
-                      onClick={this.saveTitle}
-                    />
-                    <Button
-                      icon="cross"
-                      onClick={this.toggleElemTitle}
-                    />
-                  </div>
-                )
-                : (
-                  <div className="buttons-group">
-                    <Icon
-                      className="edit-title"
-                      icon="edit"
-                      onClick={this.toggleElemTitle}
-                    />
-                  </div>
-                )
-              }
-            </div>
-            <Button
-              icon="cross"
-              style={{ float: 'right' }}
-              minimal
-              onClick={this.onClose}
-            />
-          </div>
-          <div className="overlay-body">
-            <div className="left">
-              <div className="pc-tags-and-deadline">
-                <div className="pc-tag-view">
-                  {this.getTags().map(obj => <Tag key={obj.id} large intent={obj.tag} style={{ margin: 5 }} />)}
-                </div>
-                <div className="pc-deadline-view">
-                  {task.Deadline ? (
-                    <p
-                      className={task.Deadline < new Date() ? 'expire' : 'no-expire'}
-                    >
-                      {`Deadline: ${moment(task.Deadline).format('YYYY-MM-DD')}`}
-                    </p>
-                  ) : ' '}
-                </div>
-              </div>
-              <div className="overlay-description">
-                <div className="desc-head">
-                  <u>Description</u>
-                  {editDesc
-                    ? (
-                      <span className="buttons-group">
-                        <Button
-                          icon="tick"
-                          onClick={this.saveDesc}
-                          intent="success"
-                          small
-                          className="edit-button"
-                        />
-                        <Button
-                          icon="cross"
-                          onClick={this.toggleElemDesc}
-                          small
-                          className="edit-button"
-                        />
-                      </span>
-                    )
-                    : (
-                      <Icon
-                        icon="edit"
-                        onClick={this.toggleElemDesc}
-                        className="edit-button"
+        {!loading ? (
+          <div className="task-detail-overlay">
+            <div className="overlay-title">
+              <div className="head">
+                {editHead ? <TextArea value={title} onChange={e => this.titleChange(e)} />
+                  : (
+                    <span className="title">
+                      {task.name}
+                    </span>
+                  )
+                }
+                {editHead
+                  ? (
+                    <div className="buttons-group">
+                      <Button
+                        icon="tick"
+                        intent="success"
+                        onClick={this.saveTitle}
                       />
-                    )
-                  }
-                </div>
-                <div className="desc">
-                  {editDesc
-                    ? <TextArea value={desc} onChange={this.descChange} />
-                    : (
-                      <span>
-                        { description && description.title }
-                      </span>
-                    )}
-                </div>
+                      <Button
+                        icon="cross"
+                        onClick={this.toggleElemTitle}
+                      />
+                    </div>
+                  )
+                  : (
+                    <div className="buttons-group">
+                      <Icon
+                        className="edit-title"
+                        icon="edit"
+                        onClick={this.toggleElemTitle}
+                      />
+                    </div>
+                  )
+                }
               </div>
-              <AttachmentList
-                attachments={attachments}
-                getName={this.getName}
-                Users={database.User}
-                deleteAttachment={this.deleteAttachment}
+              <Button
+                icon="cross"
+                style={{ float: 'right' }}
+                minimal
+                onClick={this.onClose}
               />
-              <CommentBox
-                apis={apis}
-                addDatabaseSchema={addDatabaseSchema}
-                account={account}
+            </div>
+            <div className="overlay-body">
+              <div className="left">
+                <div className="pc-tags-and-deadline">
+                  <div className="pc-tag-view">
+                    {this.getTags().map(obj => <Tag key={obj.id} large intent={obj.tag} style={{ margin: 5 }} />)}
+                  </div>
+                  <div className="pc-deadline-view">
+                    {task.Deadline ? (
+                      <p
+                        className={task.Deadline < new Date() ? 'expire' : 'no-expire'}
+                      >
+                        {`Deadline: ${moment(task.Deadline).format('YYYY-MM-DD')}`}
+                      </p>
+                    ) : ' '}
+                  </div>
+                </div>
+                <div className="overlay-description">
+                  <div className="desc-head">
+                    <u>Description</u>
+                    {editDesc
+                      ? (
+                        <span className="buttons-group">
+                          <Button
+                            icon="tick"
+                            onClick={this.saveDesc}
+                            intent="success"
+                            small
+                            className="edit-button"
+                          />
+                          <Button
+                            icon="cross"
+                            onClick={this.toggleElemDesc}
+                            small
+                            className="edit-button"
+                          />
+                        </span>
+                      )
+                      : (
+                        <Icon
+                          icon="edit"
+                          onClick={this.toggleElemDesc}
+                          className="edit-button"
+                        />
+                      )
+                    }
+                  </div>
+                  <div className="desc">
+                    {editDesc
+                      ? <TextArea value={desc} onChange={this.descChange} />
+                      : (
+                        <span>
+                          { description && description.title }
+                        </span>
+                      )}
+                  </div>
+                </div>
+                <AttachmentList
+                  attachments={attachments}
+                  getName={this.getName}
+                  Users={database.User}
+                  deleteAttachment={this.deleteAttachment}
+                />
+                <CommentBox
+                  apis={apis}
+                  addDatabaseSchema={addDatabaseSchema}
+                  account={account}
+                  boardId={boardId}
+                  task={task}
+                  writeComment={this.writeComment}
+                  comment={comment}
+                />
+                <TaskComment
+                  comments={[...comments, ...activities]}
+                  account={account}
+                  apis={apis}
+                  userList={userList}
+                  userDetailList={database.UserDetail}
+                  columns={database.BoardColumn}
+                  commentReply={this.writeComment}
+                  boardId={boardId}
+                  deleteDatabaseSchema={deleteDatabaseSchema}
+                  updateDatabaseSchema={updateDatabaseSchema}
+                />
+              </div>
+              <TaskDetailRight
+                tags={tags}
+                onClose={onClose}
                 boardId={boardId}
                 task={task}
-                writeComment={this.writeComment}
-                comment={comment}
-              />
-              <TaskComment
-                comments={comments}
-                account={account}
                 apis={apis}
-                userList={userList}
-                commentReply={this.writeComment}
-                boardId={boardId}
+                account={account}
+                database={database}
+                description={description}
+                attachments={attachments}
                 deleteDatabaseSchema={deleteDatabaseSchema}
                 updateDatabaseSchema={updateDatabaseSchema}
+                addDatabaseSchema={addDatabaseSchema}
               />
             </div>
-            <TaskDetailRight
-              tags={tags}
-              onClose={onClose}
-              boardId={boardId}
-              task={task}
-              apis={apis}
-              account={account}
-              database={database}
-              description={description}
-              attachments={attachments}
-              deleteDatabaseSchema={deleteDatabaseSchema}
-              updateDatabaseSchema={updateDatabaseSchema}
-              addDatabaseSchema={addDatabaseSchema}
-            />
           </div>
-        </div>
+        ) : <div />}
       </Dialog>
     );
   }
