@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import Moment from 'react-moment';
 import { RoundPicture } from '../../../../components';
 import { ENDPOINT } from '../../../../config';
 

@@ -197,7 +197,7 @@ class Class extends Component {
           </div>
         </div>
         {/* create new class popover */}
-        <ClassTemplate />
+        <ClassTemplate data={{ classes: database.Board.byId, users: database.User.byId }} />
         <PopoverForm
           isOpen={createBool}
           onClose={this.newClass}
