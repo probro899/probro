@@ -46,13 +46,21 @@ const postImageToServer = async (file, account) => {
 };
 
 export default async (data) => {
-  const { account, apis, boardDetail, tableData } = data;
-  const imageName = ['BoarActivityBarChart.jpeg', 'BoardActivityLineChart.jpeg', 'CommunicationActivityBarChart.jpeg', 'CommunicationActivityLineChart.jpeg'];
-  const canvasNameNeedToCapture = ['board-activity-bar-chart', 'board-activity-line-chart', 'communication-activity-bar-chart', 'communication-activity-line-chart'];
-  const canvasElements = canvasNameNeedToCapture.map(c => document.getElementById(c));
-  const imageFiles = canvasElements.map((ce, idx) => convertCanvasToImage(ce, imageName[idx]));
-  const postReq = imageFiles.map(file => postImageToServer(file, account));
-  const postedImages = await Promise.all(postReq);
-  const reportRes = await apis.generateReport({ allImages: postedImages, boardDetail, tableData });
-  return { images: postedImages, pdf: reportRes };
+  try {
+    const { account, apis, boardDetail, tableData } = data;
+    const imageName = ['BoarActivityBarChart.jpeg', 'BoardActivityLineChart.jpeg', 'CommunicationActivityBarChart.jpeg', 'CommunicationActivityLineChart.jpeg'];
+    const canvasNameNeedToCapture = ['board-activity-bar-chart', 'board-activity-line-chart', 'communication-activity-bar-chart', 'communication-activity-line-chart'];
+    const canvasElements = canvasNameNeedToCapture.map(c => document.getElementById(c));
+
+    console.log('canvas elements', canvasElements);
+
+    const imageFiles = canvasElements.filter(ce => ce).map((ce, idx) => convertCanvasToImage(ce, imageName[idx]));
+    const postReq = imageFiles.map(file => postImageToServer(file, account));
+    const postedImages = await Promise.all(postReq);
+    console.log('posted image res', postedImages);
+    const reportRes = await apis.generateReport({ allImages: postedImages, boardDetail, tableData });
+    return { images: postedImages, pdf: reportRes };
+  } catch (e) {
+    console.log('Error in capturing canvas', e);
+  }
 };

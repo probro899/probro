@@ -6675,6 +6675,14 @@ globby@^8.0.1:
     pify "^3.0.0"
     slash "^1.0.0"
 
+google-id-token-verifier@^0.2.3:
+  version "0.2.3"
+  resolved "https://registry.yarnpkg.com/google-id-token-verifier/-/google-id-token-verifier-0.2.3.tgz#9e6b78d4589e2d050da81613fb890adba30a4ea8"
+  dependencies:
+    request "^2.65.0"
+    rsa-pem-from-mod-exp "^0.8.4"
+    underscore "^1.8.3"
+
 got@^6.7.1:
   version "6.7.1"
   resolved "https://registry.yarnpkg.com/got/-/got-6.7.1.tgz#240cd05785a9a18e561dc1b44b41c763ef1e8db0"
@@ -11902,7 +11910,7 @@ request-promise-native@^1.0.5, request-promise-native@^1.0.7:
     stealthy-require "^1.1.1"
     tough-cookie "^2.3.3"
 
-request@^2.81.0:
+request@^2.65.0, request@^2.81.0:
   version "2.88.2"
   resolved "https://registry.yarnpkg.com/request/-/request-2.88.2.tgz#d73c918731cb5a87da047e207234146f664d12b3"
   dependencies:
@@ -12070,6 +12078,10 @@ ripemd160@^2.0.0, ripemd160@^2.0.1:
   dependencies:
     hash-base "^3.0.0"
     inherits "^2.0.1"
+
+rsa-pem-from-mod-exp@^0.8.4:
+  version "0.8.4"
+  resolved "https://registry.yarnpkg.com/rsa-pem-from-mod-exp/-/rsa-pem-from-mod-exp-0.8.4.tgz#362a42c6d304056d493b3f12bceabb2c6576a6d4"
 
 rsvp@^3.3.3:
   version "3.6.2"
@@ -13303,6 +13315,10 @@ umask@^1.1.0:
 unc-path-regex@^0.1.0:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/unc-path-regex/-/unc-path-regex-0.1.2.tgz#e73dd3d7b0d7c5ed86fbac6b0ae7d8c6a69d50fa"
+
+underscore@^1.8.3:
+  version "1.9.2"
+  resolved "https://registry.yarnpkg.com/underscore/-/underscore-1.9.2.tgz#0c8d6f536d6f378a5af264a72f7bec50feb7cf2f"
 
 unicode-canonical-property-names-ecmascript@^1.0.4:
   version "1.0.4"
