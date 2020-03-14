@@ -1,15 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import axios from 'axios';
 import moment from 'moment';
 import { Dialog, Button, TextArea, Tag, Icon } from '@blueprintjs/core';
 import PropTypes from 'prop-types';
 import { timeStampSorting } from '../../../common/utility-functions';
-import TaskComment from './history/TaskComment';
-import TaskDetailRight from './TaskDetailRight';
-import { ENDPOINT } from '../../../config';
-import CommentBox from './CommentBox';
-import { AttachmentList } from './attachment';
+import TaskComment from '../ClassComponents/history/TaskComment';
+import { AttachmentList } from '../ClassComponents/attachment';
 
 class TaskOverlay extends Component {
   state = {
@@ -20,10 +16,8 @@ class TaskOverlay extends Component {
     comments: [],
     description: {},
     attachments: [],
-    tags: [],
     title: '',
     desc: '',
-    comment: '',
     activities: [],
   };
 
@@ -34,7 +28,6 @@ class TaskOverlay extends Component {
       comments,
       attachments,
       descriptions,
-      tags,
     } = nextProps;
 
     // filter deleted
@@ -42,8 +35,6 @@ class TaskOverlay extends Component {
     const attachmentsCard = attachments.filter(obj => taskId === obj.boardColumnCardId && !obj.deleteStatus);
     // finding the latest description
     const latestDesription = descriptions.filter(obj => taskId === obj.boardColumnCardId).sort(timeStampSorting)[0];
-    // finding all the tags here
-    const allTags = Object.values(tags.byId).filter(obj => taskId === obj.boardColumnCardId && !obj.deleteStatus);
 
     const desc = latestDesription ? latestDesription.title : '';
 
@@ -53,7 +44,6 @@ class TaskOverlay extends Component {
           comments: commentsCard,
           attachments: attachmentsCard,
           task: obj,
-          tags: allTags,
           description: latestDesription,
           title: obj.name,
           desc,
@@ -66,68 +56,38 @@ class TaskOverlay extends Component {
   onClose = () => {
     const { onClose, taskId } = this.props;
     onClose(taskId);
-    this.setState({
-      editHead: false,
-      loading: true,
-      editDesc: false,
-    });
   };
+
+  writeComment = () => {
+    // do nothing
+  }
 
   // toggle between the element of title
   toggleElemTitle = () => {
-    const { editHead } = this.state;
-    this.setState({ editHead: !editHead });
+    // do nothing
   };
 
   // changing title of the task
   titleChange = (e) => {
-    this.setState({
-      title: e.target.value,
-    });
+    // do nothing
   }
 
   saveTitle = async () => {
-    const { apis, boardId, updateDatabaseSchema } = this.props;
-    const { task, title } = this.state;
-    await apis.updateBoardColumnCard([{
-      name: title,
-      broadCastId: `Board-${boardId}`,
-    }, { id: task.id }]);
-    updateDatabaseSchema('BoardColumnCard', { id: task.id, name: title });
-    this.toggleElemTitle();
+    // do nothing
   }
 
   // toggle between the element of description
   toggleElemDesc = () => {
-    const { editDesc } = this.state;
-    this.setState({ editDesc: !editDesc });
+    // do nothing
   };
 
   // description change of the task
   descChange = (e) => {
-    this.setState({
-      desc: e.target.value,
-    });
+    // do nothing
   }
 
   saveDesc = async () => {
-    const { apis, account, boardId, addDatabaseSchema } = this.props;
-    const { task, desc } = this.state;
-    const res = await apis.addBoardColumnCardDescription({
-      boardColumnCardId: task.id,
-      title: desc,
-      timeStamp: Date.now(),
-      userId: account.user.id,
-      broadCastId: `Board-${boardId}`,
-    });
-    addDatabaseSchema('BoardColumnCardDescription', {
-      boardColumnCardId: task.id,
-      title: desc,
-      timeStamp: Date.now(),
-      userId: account.user.id,
-      id: res,
-    });
-    this.toggleElemDesc();
+    // do nothing
   }
 
   getTags = () => {
@@ -146,25 +106,7 @@ class TaskOverlay extends Component {
   };
 
   deleteAttachment = async (id, url) => {
-    const { task } = this.state;
-    const { apis, deleteDatabaseSchema, account, boardId } = this.props;
-    try {
-      await axios.post(`${ENDPOINT}/web/delete-file`, { token: account.sessionId, content: 'board', fileName: url });
-      await apis.deleteBoardColumnCardAttachment({
-        id,
-        broadCastId: `Board-${boardId}`,
-        cardId: task.id,
-      });
-      deleteDatabaseSchema('BoardColumnCardAttachment', { id });
-    } catch (e) {
-      console.log('Error');
-    }
-  }
-
-  writeComment = (name) => {
-    this.setState({
-      comment: name,
-    });
+    // delete function 
   }
 
   getCardActivity = async () => {
@@ -187,16 +129,13 @@ class TaskOverlay extends Component {
       title,
       description,
       desc,
-      tags,
-      comment,
       activities,
       loading,
     } = this.state;
     const {
-      userList, apis, boardId, onClose,
+      userList, apis, boardId,
       deleteDatabaseSchema,
       updateDatabaseSchema,
-      addDatabaseSchema,
       account,
       isOpen,
       database,
@@ -314,15 +253,6 @@ class TaskOverlay extends Component {
                   Users={database.User}
                   deleteAttachment={this.deleteAttachment}
                 />
-                <CommentBox
-                  apis={apis}
-                  addDatabaseSchema={addDatabaseSchema}
-                  account={account}
-                  boardId={boardId}
-                  task={task}
-                  writeComment={this.writeComment}
-                  comment={comment}
-                />
                 <TaskComment
                   comments={[...comments, ...activities]}
                   account={account}
@@ -336,20 +266,6 @@ class TaskOverlay extends Component {
                   updateDatabaseSchema={updateDatabaseSchema}
                 />
               </div>
-              <TaskDetailRight
-                tags={tags}
-                onClose={onClose}
-                boardId={boardId}
-                task={task}
-                apis={apis}
-                account={account}
-                database={database}
-                description={description}
-                attachments={attachments}
-                deleteDatabaseSchema={deleteDatabaseSchema}
-                updateDatabaseSchema={updateDatabaseSchema}
-                addDatabaseSchema={addDatabaseSchema}
-              />
             </div>
           </div>
         ) : <div />}
@@ -370,7 +286,6 @@ TaskOverlay.propTypes = {
   tasks: PropTypes.arrayOf(PropTypes.any).isRequired,
   deleteDatabaseSchema: PropTypes.func.isRequired,
   boardId: PropTypes.number.isRequired,
-  addDatabaseSchema: PropTypes.func.isRequired,
   updateDatabaseSchema: PropTypes.func.isRequired,
   comments: PropTypes.arrayOf(PropTypes.any).isRequired,
   attachments: PropTypes.arrayOf(PropTypes.any).isRequired,

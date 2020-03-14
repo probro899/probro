@@ -18,7 +18,6 @@ class HomePage extends Component {
 
   render() {
     const { account, match } = this.props;
-    console.log('Props in main', this.props);
     if (!account.sessionId) {
       return <Redirect to="/" />;
     }

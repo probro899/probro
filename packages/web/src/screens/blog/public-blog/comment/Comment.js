@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import Moment from 'react-moment';
 import { RoundPicture } from '../../../../components';
 import { ENDPOINT } from '../../../../config';
 
@@ -16,7 +15,7 @@ const Comment = (props) => {
         <RoundPicture imgUrl={imgUrl} />
       </div>
       <div className="comment-content">
-        <div>
+        <div style={{ fontSize: 16 }}>
           {
             user.user.middleName ? (
               <Link to={`/user/${user.user.slug}/`} key={`user-${user.user.id}`}>
@@ -29,14 +28,9 @@ const Comment = (props) => {
                 </Link>
               )
           }
-          <small>
-            <Moment
-              style={{ fontSize: 12, color: '#757575' }}
-              format="YYYY-MM-DD hh:mm"
-            >
-              {comment.timeStamp}
-            </Moment>
-          </small>
+          <span style={{ opacity: 0.8, fontSize: 10 }}>
+            {new Date(comment.timeStamp).toDateString()}
+          </span>
         </div>
         <p>
           {comment.comment}

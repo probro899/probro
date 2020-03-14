@@ -118,7 +118,7 @@ class Class extends Component {
   updateClass = async (data) => {
     const { updateClass, api } = this.state;
     const { updateDatabaseSchema } = this.props;
-    await api.updateBoard([{...data, broadCastId: `Board-${updateClass.id}`}, { id: updateClass.id }]);
+    await api.updateBoard([{ ...data, broadCastId: `Board-${updateClass.id}` }, { id: updateClass.id }]);
     updateDatabaseSchema('Board', { id: updateClass.id, ...data });
     this.setState({
       updateClass: {
@@ -197,7 +197,7 @@ class Class extends Component {
           </div>
         </div>
         {/* create new class popover */}
-        <ClassTemplate />
+        <ClassTemplate data={{ classes: database.Board.byId, users: database.User.byId }} />
         <PopoverForm
           isOpen={createBool}
           onClose={this.newClass}

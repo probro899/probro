@@ -13,7 +13,8 @@ function addBoardActivity(record) {
 
 async function addBoard(record) {
   const { session } = this;
-  const boardId = await add.call(this, 'Board', record);
+  console.log('user type', session.values.user.type);
+  const boardId = await add.call(this, 'Board', { type: session.values.user.type === 'admin' ? 'template' : 'private', ...record });
   await add.call(this, 'BoardMember', { boardId, tuserId: record.userId, fuserId: record.userId, joinStatus: true, timeStamp: Date.now(), userType: 'creator' });
   session.subscribe(`Board-${boardId}`);
   addBoardActivity({ boardId, timeStamp: Date.now(), userId: record.userId, message: 'createBoard' });

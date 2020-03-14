@@ -281,13 +281,19 @@ top attachment etc.
 .overlay-container .task-detail-overlay .overlay-body .left textarea { background: transparent; border: none; border-color: transparent; resize: none; }
 .overlay-container .task-detail-overlay .overlay-body .left .comment-container { padding: 5px; display: flex; justify-content: stretch; }
 .overlay-container .task-detail-overlay .overlay-body .left .comments { padding: 5px; }
-.overlay-container .task-detail-overlay .overlay-body .left .comments .s-comment { display: flex; justify-content: stretch; padding-bottom: 10px; padding-top: 10px; }
-.overlay-container .task-detail-overlay .overlay-body .left .comments .s-comment div img { border: 1px solid white; border-radius: 50%; padding: 1px; }
-.overlay-container .task-detail-overlay .overlay-body .left .comments .s-comment .com-con { margin-left: 10px; display: flex; width: 100%; flex-direction: column; }
+.overlay-container .task-detail-overlay .overlay-body .left .comments .s-comment { display: flex; justify-content: stretch; padding-bottom: 10px; padding-left: 10px; padding-top: 10px; }
+.overlay-container .task-detail-overlay .overlay-body .left .comments .s-comment .com-con { margin-left: 10px; padding-top: 2px; display: flex; flex-direction: column; }
 .overlay-container .task-detail-overlay .overlay-body .left .comments .s-comment .com-con .com-desc .pc-comment-edit { display: flex; }
 .overlay-container .task-detail-overlay .overlay-body .left .comments .s-comment .com-con .com-config small { cursor: pointer; color: #666; margin-right: 5px; }
 .overlay-container .task-detail-overlay .overlay-body .left .comments .s-comment .com-con .com-config small.danger u:hover { color: red; }
 .overlay-container .task-detail-overlay .overlay-body .left .comments .s-comment .com-con .com-config small.primary u:hover { color: #137cbd; }
+.overlay-container .task-detail-overlay .overlay-body .left .comments .pc-task-activity { padding: 10px 0px; padding-left: 10px; display: flex; }
+.overlay-container .task-detail-overlay .overlay-body .left .comments .pc-task-activity .activity-detail { margin-left: 10px; padding-top: 2px; display: flex; flex-direction: column; }
+.overlay-container .task-detail-overlay .overlay-body .left .comments .pc-task-activity .activity-user { font-size: 16px; font-weight: bold; }
+.overlay-container .task-detail-overlay .overlay-body .left .comments .pc-task-activity .activity-col { font-weight: bold; }
+.overlay-container .task-detail-overlay .overlay-body .left .comments .img-con { width: 50px; height: 50px; border-radius: 50%; overflow: hidden; }
+.overlay-container .task-detail-overlay .overlay-body .left .comments .img-con img.portrait { width: 100%; height: auto; }
+.overlay-container .task-detail-overlay .overlay-body .left .comments .img-con img.landscape { height: 100%; width: auto; }
 .overlay-container .task-detail-overlay .overlay-body .right { display: flex; flex: 0.3; justify-content: flex-end; }
 .overlay-container .task-detail-overlay .overlay-body .right .rt-in { padding: 5px 5px 5px 5px; display: flex; flex-direction: column; }
 .overlay-container .task-detail-overlay .overlay-body .right .rt-in .rt-tools { display: flex; flex-direction: column; }

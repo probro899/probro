@@ -3,14 +3,14 @@ import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
-import { Column, NewColumn, TaskOverlay, ToolBar } from './ClassComponents';
-import { Navbar } from '../home/component';
-import * as actions from '../../actions';
-import client from '../../socket';
-import posSorting, { timeStampSorting } from '../../common/utility-functions';
-import { Spinner } from '../../common';
-import checkColumnMove from './helper-functions/checkColumnMove';
-import { withinColumn, outsideColumn } from './helper-functions/checkTaskMove';
+import TaskOverlay from './TaskOverlay';
+import Column from './Column';
+import ToolBar from './Toolbar';
+import { Navbar } from '../../home/component';
+import * as actions from '../../../actions';
+import client from '../../../socket';
+import posSorting, { timeStampSorting } from '../../../common/utility-functions';
+import { Spinner } from '../../../common';
 
 class Classes extends Component {
   state = {
@@ -65,39 +65,7 @@ class Classes extends Component {
 
   // all the drag and drop will be handled here
   onDragEnd = async (result) => {
-    const { source, destination, draggableId, type } = result;
-    const { api, columns, classId } = this.state;
-    if (!destination) {
-      return;
-    }
-    // column moving around
-    if (type === 'column') {
-      if (source.index === destination.index) {
-        return;
-      }
-      const res = checkColumnMove(columns, draggableId, destination, source);
-      this.setState({ columns: res.newColumns });
-      await api.updateBoardColumn([
-        { position: res.column.position, timeStamp: Date.now(), broadCastId: `Board-${classId}` }, { id: res.column.id }]);
-      return;
-    }
-    // finished column moving around here
-
-    // cards movement within the column
-    if (source.droppableId === destination.droppableId) {
-      const dragable = Number(draggableId.split('task')[1]);
-      const res = withinColumn(source, destination, columns, dragable);
-      this.setState({ columns: res.newColumns });
-      await api.updateBoardColumnCard([{ position: res.newTask.position, fColId: source.droppableId, tColId: destination.droppableId, todo: 'withinColumn', timestamp: Date.now(), broadCastId: `Board-${classId}` }, { id: dragable }]);
-      return;
-    }
-    // cards movement within the column ends here
-    // inter column task move using state
-    const destinationDropable = Number(destination.droppableId);
-    const dragable = Number(draggableId.split('task')[1]);
-    const res = outsideColumn(source, destination, columns, destinationDropable, dragable);
-    this.setState({ columns: res.newColumns });
-    await api.updateBoardColumnCard([{ todo: 'outsideColumn', fColId: source.droppableId, tColId: destination.droppableId, position: res.newTask.position, timeStamp: Date.now(), boardColumnId: destinationDropable, broadCastId: `Board-${classId}` }, { id: dragable }]);
+    // what to do when they swap the cards
   }
 
   toggleTaskOverlay = (id) => {
@@ -129,7 +97,7 @@ class Classes extends Component {
     return (
       <div style={{ position: 'relative' }}>
         <Navbar className="pcm-nav" />
-        <ToolBar boardId={classId} apis={api} />
+        <ToolBar classId={classId} apis={api} />
         <div
           className="class-wrapper"
           style={{ height: window.innerHeight }}
@@ -171,7 +139,6 @@ class Classes extends Component {
                     })
                   }
                   {provided.placeholder}
-                  <NewColumn classId={classId} />
                 </div>
               )}
             </Droppable>

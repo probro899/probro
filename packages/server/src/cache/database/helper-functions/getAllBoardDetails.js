@@ -25,7 +25,7 @@ export default (id, session) => {
   const Board = allDbBoard.filter(b => b.userId === id);
   const allBoardsTemp = BoardMember.map(bm => allDbBoard.find(b => b.id === bm.boardId));
   // const allBoards = allBoardsTemp.filter(b => b).map(b => ({ ...b, activeStatus: findBoardActiveStatus(session, b.id) }));
-  const allBoards = allBoardsTemp.filter(b => b);
+  const allBoards = allBoardsTemp.filter(b => b).filter(b => b.deleteStatus !== 1);
   // console.log('all board', allBoards);
 
   const BoardMessage = allBoards.map(b => allDbBoardMessage.filter(bm => bm.boardId === b.id));

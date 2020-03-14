@@ -11,13 +11,14 @@ import Forget from './auth/forgot-password';
 import Reset from './auth/change-password';
 import { CreateBlog, PublicBlog } from './blog';
 import EmailVerification from './auth/email-verification';
-import { Communication } from '../common';
+import Communication from '../common/communication';
 import Archive from './blog/archive';
 import { PublicProfile } from './home/component';
 import { SearchResult } from './home/component/search';
 import TakeTour from './home/take-a-tour';
 import { About, Privacy, Terms, Support, Career, Report, Business, Services } from '../common/footer/footer-links';
 import NotifyBar from '../common/NotifyBar';
+import ClassTemplate from './class/template';
 
 class MainScreen extends React.Component {
   constructor(props) {
@@ -47,6 +48,7 @@ class MainScreen extends React.Component {
             <Route path="/register" component={Registration} />
             <Route path="/forgot-password" component={Forget} />
             <Route path="/class-work/:userSlug/:classId" component={ClassManager} />
+            <Route path="/class-template/:userSlug/:classId" component={ClassTemplate} />
             <Route path="/edit-blog/:id/:blogId" component={CreateBlog} />
             <Route path="/create-blog/:id" component={CreateBlog} />
             <Route exact path="/reset/:token" component={Reset} />

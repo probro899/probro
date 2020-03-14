@@ -23,7 +23,7 @@ const loginHelper = async (rec, userDetails) => {
     userDetails: userDetails || {},
   };
   cache.users.set(token, user, SESSION_AGE);
-  return { id: rec.id, token, slug: rec.slug };
+  return { id: rec.id, token, slug: rec.slug, userType: rec.type };
 };
 
 const googleLogin = async (grec) => {

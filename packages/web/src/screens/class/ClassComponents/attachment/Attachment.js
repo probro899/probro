@@ -1,8 +1,8 @@
 import React from 'react';
 import axios from 'axios';
 import PropTypes from 'prop-types';
-import Form from '../../../common/Form';
-import { ENDPOINT } from '../../../config';
+import Form from '../../../../common/Form';
+import { ENDPOINT } from '../../../../config';
 
 const structure = [
   {
@@ -16,7 +16,6 @@ const structure = [
     id: 'attachment',
     fieldtype: 'image',
     name: 'Attachment',
-    text: 'Choose a file...',
   },
   {
     id: 'submit',
