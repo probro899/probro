@@ -25,7 +25,7 @@ async function deleteBoardColumn(record) {
   // const dbColDelete = Delete.bind(this);
   // deleteBoardColumnHelper(dbColDelete, record);
   const res = await update.call(this, 'BoardColumn', { deleteStatus: true, broadCastId: record.broadCastId }, { id: record.id });
-  addBoardActivity({ userId: session.values.user.id, timeStamp: Date.now(), boardId: record.boardId, columnId: record.id, message: 'Delete Column' });
+  addBoardActivity({ userId: session.values.user.id, timeStamp: Date.now(), boardId: record.boardId, columnId: record.id, message: 'deleteColumn' });
   return res;
 }
 
@@ -35,7 +35,7 @@ async function deleteBoardColumnCard(record) {
   const boardId = broadCastArr[broadCastArr.length - 1];
   // deleteBoardColumnCardHelper(Delete.bind(this), [record]);
   const res = await update.call(this, 'BoardColumnCard', { deleteStatus: true, broadCastId: record.broadCastId }, { id: record.id });
-  addBoardActivity({ userId: session.values.user.id, timeStamp: Date.now(), boardId, cardId: record.id, message: 'Delete Card' });
+  addBoardActivity({ userId: session.values.user.id, timeStamp: Date.now(), boardId, cardId: record.id, message: 'deleteCard' });
   return res;
 }
 
@@ -45,7 +45,7 @@ async function deleteBoardColumnCardAttachment(record) {
   const boardId = broadCastArr[broadCastArr.length - 1];
   // Delete.call(this, 'BoardColumnCardAttachment', record);
   const res = await update.call(this, 'BoardColumnCardAttachment', { deleteStatus: true, broadCastId: 1 }, { id: record.id });
-  addBoardActivity({ attachmentId: record.id, userId: session.values.user.id, timeStamp: Date.now(), boardId, cardId: record.cardId, message: 'Delete Attachment' });
+  addBoardActivity({ attachmentId: record.id, userId: session.values.user.id, timeStamp: Date.now(), boardId, cardId: record.cardId, message: 'deleteAttachment' });
   return res;
 }
 
@@ -55,7 +55,7 @@ async function deleteBoardColumnCardComment(record) {
   const boardId = broadCastArr[broadCastArr.length - 1];
   // Delete.call(this, 'BoardColumnCardComment', record);
   const res = await update.call(this, 'BoardColumnCardComment', { deleteStatus: true, broadCastId: 1 }, { id: record.id });
-  addBoardActivity({ commentId: record.id, userId: session.values.user.id, timeStamp: Date.now(), boardId, cardId: record.cardId, message: 'Delete Comment' });
+  addBoardActivity({ commentId: record.id, userId: session.values.user.id, timeStamp: Date.now(), boardId, cardId: record.cardId, message: 'deleteComment' });
   return res;
 }
 
@@ -65,7 +65,7 @@ async function deleteBordColumnDescription(record) {
   const boardId = broadCastArr[broadCastArr.length - 1];
   // Delete.call(this, 'BoardColumnCardDescription', record);
   const res = await update.call(this, 'BoardColumnCardDescription', {deleteStatus: true, broadCastId: record.broadCastId }, { id: record.id });
-  addBoardActivity({ descriptionId: record.id, userId: session.values.user.id, timeStamp: Date.now(), boardId, cardId: record.id, message: 'Delete Descripion' });
+  addBoardActivity({ descriptionId: record.id, userId: session.values.user.id, timeStamp: Date.now(), boardId, cardId: record.id, message: 'deleteDescripion' });
   return res;
 }
 
@@ -75,7 +75,7 @@ async function deleteBordColumnDescription(record) {
   const boardId = broadCastArr[broadCastArr.length - 1];
   // Delete.call(this, 'BoardColumnCardTag', record);
   const res = await update.call(this, 'BoardColumnCardTag', { deleteStatus: true, broadCastId: record.broadCastId }, { id: record.id });
-  addBoardActivity({ tagId: record.id, userId: session.values.user.id, timeStamp: Date.now(), boardId, cardId: record.cardId, message: 'Delete Tag' });
+  addBoardActivity({ tagId: record.id, userId: session.values.user.id, timeStamp: Date.now(), boardId, cardId: record.cardId, message: 'deleteTag' });
   return res;
 }
 

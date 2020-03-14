@@ -131,7 +131,7 @@ class Blogs extends Component {
             )
           }
           {
-            Object.values(database.Blog.byId).map((obj, index) => {
+            Object.values(database.Blog.byId).filter(b => b.userId === account.user.id).map((obj, index) => {
               return <EachBlog onMore={this.onMore} users={database.User} obj={obj} key={index} />;
             })
           }

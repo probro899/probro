@@ -12,21 +12,19 @@ function updateBoard(records) {
   // console.log('updateBoard func', records, session.values);
   const boardId = records[1].id;
   const record = records[0];
-  const { todo } = record;
   delete record.todo;
   update.call(this, 'Board', record, records[1]);
-  addBoardActivity({ userId: session.values.user.id, boardId, message: todo, timeStamp: Date.now() });
+  addBoardActivity({ userId: session.values.user.id, boardId, message: 'updateBoard', timeStamp: Date.now() });
 }
 
 function updateBoardColumn(records) {
+  console.log('update Board Coulumn called', records);
   const { session } = this;
   const record = records[0];
-  const { todo } = record;
-  delete record.todo;
-  update.call(this, 'BoardColumn', record, records[1]);
-  const broadCastArr = records[0].broadCastId.split('-');
+  const broadCastArr = record.broadCastId.split('-');
   const boardId = broadCastArr[broadCastArr.length - 1];
-  addBoardActivity({ userId: session.values.user.id, boardId, message: todo, timeStamp: Date.now() });
+  update.call(this, 'BoardColumn', record, records[1]);
+  addBoardActivity({ userId: session.values.user.id, boardId, message: 'updateColumn', timeStamp: Date.now() });
 }
 
 function updateBoardColumnCard(records) {
@@ -53,7 +51,7 @@ function updateBoardColumnCardAttachment(records) {
   delete record.cardId;
   delete record.todo;
   update.call(this, 'BoardColumnCardAttachment', record, records[1]);
-  addBoardActivity({ userId: session.values.user.id, boardId, message: todo, attachmentId: records[1].id, cardId, timeStamp: Date.now() });
+  addBoardActivity({ userId: session.values.user.id, boardId, message: 'updateAttachment', attachmentId: records[1].id, cardId, timeStamp: Date.now() });
 }
 
 function updateBoardColumnCardComment(records) {
@@ -67,7 +65,7 @@ function updateBoardColumnCardDescription(records) {
   const record = records[0];
   const { boardColumnCardId } = record;
   update.call(this, 'BoardColumnCardDescription', record, records[1]);
-  addBoardActivity({ userId: session.values.user.id, boardId, message: 'Update Description', descriptionId: records[1].id, cardId: boardColumnCardId, timeStamp: Date.now() });
+  addBoardActivity({ userId: session.values.user.id, boardId, message: 'updateDescription', descriptionId: records[1].id, cardId: boardColumnCardId, timeStamp: Date.now() });
 }
 
 export default [

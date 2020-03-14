@@ -12,7 +12,7 @@ class ClassTemplate extends React.Component {
   render() {
     const { data } = this.props;
     const cls = Object.values(data.classes)[0];
-    const user = data.users[cls.userId];
+    // const user = data.users[cls.userId];
     return (
       <div className="pc-class-template-container">
         <div className="header">
@@ -22,7 +22,7 @@ class ClassTemplate extends React.Component {
         <div className="content-list">
           <div style={{ position: 'relative' }}>
             <div className="template-icon"><FiStar size={30} /></div>
-            <Link to={`/class-template/${user.slug}/${cls.id}`} className="content-link">
+            {/* <Link to={`/class-template/${user.slug}/${cls.id}`} className="content-link"> */}
               <div className="class-repr">
                 <span>
                   Software Development
@@ -34,7 +34,7 @@ class ClassTemplate extends React.Component {
                 </span>
                 <span className="date">{new Date().toDateString()}</span>
               </div>
-            </Link>
+            {/* </Link> */}
           </div>
         </div>
       </div>

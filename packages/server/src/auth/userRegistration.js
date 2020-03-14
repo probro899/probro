@@ -22,8 +22,9 @@ export default async (record) => {
       const hasPassword = await genHashPassword(record.password);
       const firstNameLowerCase = `${record.firstName}`.toLowerCase();
       const lastNameLowerCase = `${record.lastName}`.toLowerCase();
-      const insertRes = await insert('User', { ...record, password: hasPassword, verify: false, verificationToken: token, slug: `${firstNameLowerCase}-${lastNameLowerCase}-${Date.now()}` });
-      database.update('User', schema.add('User', { id: insertRes, ...record, password: hasPassword, verify: false, verificationToken: token, slug: `${firstNameLowerCase}-${lastNameLowerCase}-${Date.now()}` }));
+      const slug = `${firstNameLowerCase}-${lastNameLowerCase}-${Date.now()}`;
+      const insertRes = await insert('User', { ...record, password: hasPassword, verify: false, verificationToken: token, slug });
+      database.update('User', schema.add('User', { id: insertRes, ...record, password: hasPassword, verify: false, verificationToken: token, slug }));
       if (insertRes) {
         cache.users.set(token, record.email, RESET_TOKEN_AGE);
         mailer({

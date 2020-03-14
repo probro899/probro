@@ -8,7 +8,6 @@ import Table from '../../../common/Table';
 import findTableData from './helper-functions/findTableData';
 import { ENDPOINT } from '../../../config';
 
-
 class Report extends React.Component {
   constructor(props) {
     super(props);

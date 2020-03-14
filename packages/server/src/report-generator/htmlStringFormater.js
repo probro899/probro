@@ -1,3 +1,5 @@
+import path from 'path';
+
 const renderCols = (cols, obj) => {
   return (
     cols.map((col, idx) => `<td style="padding: 8px; text-align: center;">${obj[col] || ''}</td>`)
@@ -18,7 +20,8 @@ const renderRow = (keys, values) => {
   );
 };
 
-export default (reportData) => {
+export default (reportData, session) => {
+  const filePath = path.join(__dirname, '..', 'public', 'user', `${10000000 + parseInt(session.values.user.id, 10)}`, 'report');
   const { allImages, boardDetail, tableData } = reportData;
   const headers = { userName: 'Name',
     noOfCreateCard: 'No Of Create Cards',
@@ -36,7 +39,7 @@ export default (reportData) => {
         </h1>
         <hr />
         <div>
-          ${allImages.map(img => `<img src="file:///Users/Nabin/workspace/probro/packages/server/src/public/user/10000001/report/${img}" style="height: 400px; width: 400px;" />`)}
+          ${allImages.map(img => `<img src="file://${filePath}/${img}" style="height: 400px; width: 400px;" />`)}
         </div>
         <div style="width: 100%;">
           <div style="padding: 10px;"><h4 style="color: #1d4354;">Tabulated Data</h4><div/>

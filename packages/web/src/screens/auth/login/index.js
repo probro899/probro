@@ -24,9 +24,10 @@ class Login extends Component {
   }
 
   googleLogin = async (response) => {
+    console.log('Google resposne', response);
     const { updateNav } = this.props;
     try {
-      const res = await login({ loginType: 'google', record: response.profileObj });
+      const res = await login({ loginType: 'google', record: response });
       if (res.response === 200) {
         updateNav({ schema: 'popNotification', data: { active: true, message: 'Login successful. Welcome to Dashboard.', intent: 'success' } });
         this.setState({

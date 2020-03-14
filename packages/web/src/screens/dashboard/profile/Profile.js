@@ -47,6 +47,7 @@ class Profile extends Component {
         userDetail = obj;
       }
     });
+    // console.log(this.props);
     return (
       <div className="profile bro-right">
         <CoverPic
