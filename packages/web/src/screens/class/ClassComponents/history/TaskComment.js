@@ -163,6 +163,7 @@ TaskComment.propTypes = {
   commentReply: PropTypes.func.isRequired,
   comments: PropTypes.arrayOf(PropTypes.any).isRequired,
   account: PropTypes.objectOf(PropTypes.any).isRequired,
+  columns: PropTypes.objectOf(PropTypes.any).isRequired,
   updateDatabaseSchema: PropTypes.func.isRequired,
 };
 

@@ -151,7 +151,7 @@ class CommentContainer extends React.Component {
             </div>
             {allComments.sort(timeStampSorting).map((obj) => {
               const user = users.find(u => u.user.id === obj.userId);
-              return <Comment user={user} comment={obj} key={obj.id} />;
+              return <Comment user={user} account={account} comment={obj} key={obj.id} />;
             })}
           </div>
         </div>
