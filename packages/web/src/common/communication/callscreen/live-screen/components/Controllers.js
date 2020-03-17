@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
-import { Button, Position, Tooltip } from '@blueprintjs/core';
+import { Button, Position } from '@blueprintjs/core';
+import Tooltip from 'react-tooltip';
 import { TiMediaRecord } from 'react-icons/ti';
 import { FiMic, FiMicOff, FiEdit2, FiCopy, FiVideo, FiPhone } from 'react-icons/fi';
 import callUpgrader from '../helper-functions/callUpgrader';
@@ -56,42 +57,45 @@ class Controllers extends React.Component {
     const { showWhiteBoard, startRecording } = this.state;
     return (
       <div className="controllers">
+        <Tooltip />
         {showWhiteBoard && <Redirect to={`/${account.user.slug}/drawing-board`} />}
-        <Tooltip content="CallEnd" className="tooltip">
-          <Button className="pc-control-btn bg-red" onClick={this.callReject}>
-            <FiPhone size={20} />
-          </Button>
-        </Tooltip>
+        <Button data-tip="Call End" className="pc-control-btn bg-red" onClick={this.callReject}>
+          <FiPhone size={20} />
+        </Button>
         <Button
+          data-tip="Video"
           className={webRtc.localCallHistory.mediaType === 'video' ? 'pc-control-btn active' : 'pc-control-btn'}
           onClick={() => this.callUpGradeController('video')}
         >
           <FiVideo size={20} />
         </Button>
         <Button
+          data-tip="ScreenShare"
           className={webRtc.localCallHistory.mediaType === 'screenshare' ? 'pc-control-btn active' : 'pc-control-btn'}
           onClick={() => this.callUpGradeController('screenshare')}
         >
           <FiCopy size={20} />
         </Button>
         <Button
+          data-tip="Recording"
           onClick={() => this.recordingHandler()}
           className={startRecording ? 'pc-control-btn active record' : 'pc-control-btn'}
         >
           <TiMediaRecord size={20} />
         </Button>
         <Button
+          data-tip="White Board"
           className={webRtc.localCallHistory.mediaType === 'whiteBoard' ? 'pc-control-btn active' : 'pc-control-btn'}
           onClick={() => this.callUpGradeController('whiteBoard')}
         >
           <FiEdit2 size={20} />
         </Button>
-        <Button
+        {/* <Button
           className="pc-control-btn"
           onClick={this.muteToggle}
         >
           <FiMic size={20} />
-        </Button>
+        </Button> */}
       </div>
     );
   }

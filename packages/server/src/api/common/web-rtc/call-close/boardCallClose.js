@@ -1,6 +1,7 @@
 /* eslint-disable import/no-cycle */
 import schema from '@probro/common/source/src/schema';
 import updateUserCache from '../../updateUserCache';
+import updateDatabaseCache from '../../../../cache/database/update';
 
 const updateUserData = async (insert, callCloseDetail, session) => {
   const insertRes = await insert('BoardMessage', {
@@ -23,6 +24,7 @@ const updateUserData = async (insert, callCloseDetail, session) => {
     },
   };
   updateUserCache(dataTobeUpdate, session, 'add');
+  updateDatabaseCache('BoardMessage', schema.add('BoardMessage', dataTobeUpdate.BoardMessage));
 };
 
 export default async (insert, callCloseDetail, userList, session) => {
