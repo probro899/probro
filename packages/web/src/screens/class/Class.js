@@ -14,15 +14,8 @@ class Class extends Component {
   state = {
     // create holds bool for the add new class popover
     createBool: false,
-    deleteClass: {
-      id: 0,
-      name: '',
-      deletePopOverBool: false,
-    },
-    updateClass: {
-      id: 0,
-      updateClassBool: false,
-    },
+    deleteClass: { id: 0, name: '', deletePopOverBool: false },
+    updateClass: { id: 0, updateClassBool: false },
     api: {},
   };
 

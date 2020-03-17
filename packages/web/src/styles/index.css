@@ -582,6 +582,10 @@ top attachment etc.
 .public-blog .response .comment-section .responses .i-response .pc-profile-icon img.portrait { width: 100%; height: auto; }
 .public-blog .response .comment-section .responses .i-response .pc-profile-icon img.landscape { height: 100%; width: auto; }
 .public-blog .response .comment-section .responses .i-response .comment-content { padding: 5px; }
+.public-blog .response .comment-section .responses .i-response .comment-content .com-desc .pc-comment-edit { display: flex; }
+.public-blog .response .comment-section .responses .i-response .comment-content .com-config small { cursor: pointer; color: #666; margin-right: 5px; }
+.public-blog .response .comment-section .responses .i-response .comment-content .com-config small.danger u:hover { color: red; }
+.public-blog .response .comment-section .responses .i-response .comment-content .com-config small.primary u:hover { color: #137cbd; }
 .public-blog .response .right { flex: 0.1; }
 
 .public-profile { margin-top: 60px; min-height: calc(100vh - 60px - 125px); flex: 0.8; display: flex; align-items: center; flex-direction: column; padding: 1px 3px; position: relative; }
