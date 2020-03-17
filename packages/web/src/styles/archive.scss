@@ -170,23 +170,34 @@
 .public-blog {
   margin-top: $navbarHeight;
   min-height: calc(100vh - #{$navbarHeight} - #{$footerHeight});
+  margin-left: 10%;
+  margin-right: 10%;
+  @media screen and (max-width: 700px){
+    margin-left: 7%;
+    margin-right:7%;
+  }
+  @media screen and (max-width: 600px){
+    margin-left: 5%;
+    margin-right: 5%;
+  }
   .public-blog-title {
     padding-top: 10px;
     p {
-      width: 100%;
-      text-align: center;
-      font-size: 30px;
+      margin-left: 17px;
+      margin-top: 20px;
+      display: flex;
+      font-size: 35px;
       font-weight: bold;
     }
     .author-user {
       display: flex;
-      justify-content: center;
+      justify-content: space-between;
       margin-bottom: 10px;
       .auth-con {
         display: flex;
         .profile-icon {
-          width: 100px;
-          height: 100px;
+          width: 80px;
+          height: 80px;
           border-radius: 50%;
           overflow: hidden;
           margin: 10px;
@@ -225,27 +236,17 @@
     font-size: 21px;
     display: flex;
     margin-bottom: 50px;
-    .left {
-      flex: 0.1;
-    }
     #blogContent {
-      flex: 0.8;
       img {
         max-width: 100%;
         // object-fit: contain;
       }
     }
-    .right {
-      flex: 0.1;
-    }
   }
   .response {
     display: flex;
-    .left {
-      flex: 0.1;
-    }
     .comment-section {
-      flex: 0.8;
+      flex: 1;
       display: flex;
       flex-direction: column;
       .top-label{
@@ -311,9 +312,6 @@
           }
         }
       }
-    }
-    .right {
-      flex: 0.1;
     }
   }
 }

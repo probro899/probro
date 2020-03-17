@@ -555,25 +555,23 @@ top attachment etc.
   .ar-left-i .ar-i-detail { width: calc(100% - 150px); }
   .ar-left-i .ar-i-detail .pc-blog-desc { display: none; } }
 
-.public-blog { margin-top: 60px; min-height: calc(100vh - 60px - 125px); }
+.public-blog { margin-top: 60px; min-height: calc(100vh - 60px - 125px); margin-left: 10%; margin-right: 10%; }
+@media screen and (max-width: 700px) { .public-blog { margin-left: 7%; margin-right: 7%; } }
+@media screen and (max-width: 600px) { .public-blog { margin-left: 5%; margin-right: 5%; } }
 .public-blog .public-blog-title { padding-top: 10px; }
-.public-blog .public-blog-title p { width: 100%; text-align: center; font-size: 30px; font-weight: bold; }
-.public-blog .public-blog-title .author-user { display: flex; justify-content: center; margin-bottom: 10px; }
+.public-blog .public-blog-title p { margin-left: 17px; margin-top: 20px; display: flex; font-size: 35px; font-weight: bold; }
+.public-blog .public-blog-title .author-user { display: flex; justify-content: space-between; margin-bottom: 10px; }
 .public-blog .public-blog-title .author-user .auth-con { display: flex; }
-.public-blog .public-blog-title .author-user .auth-con .profile-icon { width: 100px; height: 100px; border-radius: 50%; overflow: hidden; margin: 10px; }
+.public-blog .public-blog-title .author-user .auth-con .profile-icon { width: 80px; height: 80px; border-radius: 50%; overflow: hidden; margin: 10px; }
 .public-blog .public-blog-title .author-user .auth-con .profile-icon img.portrait { width: 100%; height: auto; }
 .public-blog .public-blog-title .author-user .auth-con .profile-icon img.landscape { height: 100%; width: auto; }
 .public-blog .public-blog-title .author-user .auth-con .author-detail { display: flex; justify-content: center; align-items: flex-start; flex-direction: column; }
 .public-blog .pc-blog-cover-image { display: flex; justify-content: center; width: 100%; padding: 0 15%; overflow: hidden; margin-bottom: 25px; }
 .public-blog .pc-blog-cover-image img { width: 100%; object-fit: contain; }
 .public-blog .public-blog-content { width: 100%; font-size: 21px; display: flex; margin-bottom: 50px; }
-.public-blog .public-blog-content .left { flex: 0.1; }
-.public-blog .public-blog-content #blogContent { flex: 0.8; }
 .public-blog .public-blog-content #blogContent img { max-width: 100%; }
-.public-blog .public-blog-content .right { flex: 0.1; }
 .public-blog .response { display: flex; }
-.public-blog .response .left { flex: 0.1; }
-.public-blog .response .comment-section { flex: 0.8; display: flex; flex-direction: column; }
+.public-blog .response .comment-section { flex: 1; display: flex; flex-direction: column; }
 .public-blog .response .comment-section .comment-area { display: flex; }
 .public-blog .response .comment-section .comment-area textarea { font-size: 21px; flex: 0.8; height: 62px; line-height: 40px; resize: none; }
 .public-blog .response .comment-section .comment-area button { font-size: 21px; flex: 0.2; }
@@ -586,7 +584,6 @@ top attachment etc.
 .public-blog .response .comment-section .responses .i-response .comment-content .com-config small { cursor: pointer; color: #666; margin-right: 5px; }
 .public-blog .response .comment-section .responses .i-response .comment-content .com-config small.danger u:hover { color: red; }
 .public-blog .response .comment-section .responses .i-response .comment-content .com-config small.primary u:hover { color: #137cbd; }
-.public-blog .response .right { flex: 0.1; }
 
 .public-profile { margin-top: 60px; min-height: calc(100vh - 60px - 125px); flex: 0.8; display: flex; align-items: center; flex-direction: column; padding: 1px 3px; position: relative; }
 .public-profile .cover-pic { overflow: hidden; width: 100%; height: calc((100vw * 0.81) * 0.33); }
