@@ -15,7 +15,7 @@ export default async (uid, all, slug) => {
     const allDbEducation = databaseCache.get('UserEducation');
     const allDbWorkExperience = databaseCache.get('UserWorkExperience');
     const allDbUserPortal = databaseCache.get('UserPortal');
-
+    console.log('allUserSkill', allDbUserSkill);
     userSkill = allDbUserSkill.filter(uk => uk.userId === user.id);
     userEducation = allDbEducation.filter(ue => ue.userId === user.id);
     userWorkExperience = allDbWorkExperience.filter(we => we.userId === user.id);
