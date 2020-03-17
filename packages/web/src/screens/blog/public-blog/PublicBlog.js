@@ -66,7 +66,7 @@ class PublicBlog extends React.Component {
     }
     const { account } = this.props;
     const user = data.userDetails.find(obj => obj.user.id === data.blog.userId);
-    const imgUrl = user.userDetail.image ? `${ENDPOINT}/user/${10000000 + parseInt(user.user.id, 10)}/profile/${user.userDetail.image}` : file;
+    const imgUrl = user.userDetail && user.userDetail.image ? `${ENDPOINT}/user/${10000000 + parseInt(user.user.id, 10)}/profile/${user.userDetail.image}` : file;
     const { userDetails } = data;
     return (
       <div>

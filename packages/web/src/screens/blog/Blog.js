@@ -9,7 +9,7 @@ import client from '../../socket';
 import { MoreButton } from '../../components';
 import { ENDPOINT } from '../../config';
 
-const blogImg = require('../../assets/blog-img.jpeg');
+const blogImg = require('../../assets/blog-img.jpg');
 
 const EachBlog = ({ onMore, users, obj }) => {
   const coverImage = obj.coverImage ? `${ENDPOINT}/user/${10000000 + parseInt(obj.userId, 10)}/blog/${obj.coverImage}` : blogImg;
@@ -101,8 +101,8 @@ class Blogs extends Component {
     const { database } = this.props;
     return (
       <div className="blogs bro-right">
-        { createBlog && <Redirect push to={`/create-blog/${account.sessionId}`} /> }
-        { blogId && editBlog && <Redirect push to={`/edit-blog/${account.sessionId}/${blogId}`} /> }
+        { createBlog && <Redirect push to={`/create-blog/${account.user.slug}`} /> }
+        { blogId && editBlog && <Redirect push to={`/edit-blog/${account.user.slug}/${blogId}`} /> }
         <DeletePopOver
           isOpen={deletePopOverIsOpen}
           action={this.deleteBlog}

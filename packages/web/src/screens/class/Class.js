@@ -136,6 +136,7 @@ class Class extends Component {
   render() {
     const { account, database } = this.props;
     const { createBool, deleteClass, updateClass } = this.state;
+    // console.log(database.Board);
     return (
       <div className="classes bro-right">
         <DeletePopOver
@@ -190,7 +191,7 @@ class Class extends Component {
           </div>
         </div>
         {/* create new class popover */}
-        <ClassTemplate data={{ classes: database.Board.byId, users: database.User.byId }} />
+        <ClassTemplate data={{ classes: Object.values(database.Board.byId).filter(obj => obj.type === 'template'), users: database.User.byId }} />
         <PopoverForm
           isOpen={createBool}
           onClose={this.newClass}

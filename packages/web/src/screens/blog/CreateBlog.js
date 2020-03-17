@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 import axios from 'axios';
 import { TextArea } from '@blueprintjs/core';
 import * as actions from '../../actions';
@@ -10,6 +11,7 @@ import { addBlog, updateBlog } from './helper-functions';
 import { ENDPOINT } from '../../config';
 import BlogToolbar from './BlogToolbar';
 import CoverImage from './CoverImage';
+
 
 class Blogs extends Component {
   state = {
@@ -366,6 +368,8 @@ class Blogs extends Component {
       title,
       coverImage,
     } = this.state;
+    const { account } = this.props;
+    if (!account.user) return <Redirect to="/" />;
     return (
       <div>
         <Navbar className="pcm-nav" />

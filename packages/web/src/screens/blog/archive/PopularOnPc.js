@@ -4,7 +4,7 @@ import { MdMyLocation } from 'react-icons/md';
 import { ENDPOINT } from '../../../config';
 import { RoundPicture } from '../../../components';
 
-const blogImg = require('../../../assets/blog-img.jpeg');
+const blogImg = require('../../../assets/blog-img.jpg');
 const file = require('../../../assets/icons/64w/uploadicon64.png');
 
 const PopularUser = ({ obj }) => {

@@ -4,7 +4,7 @@
 import React from 'react';
 import { FiUpload } from 'react-icons/fi';
 
-const defaultBlogImg = require('../../assets/blog-img.jpeg');
+const defaultBlogImg = require('../../assets/blog-img.jpg');
 
 class CoverImage extends React.Component {
   constructor(props) {
