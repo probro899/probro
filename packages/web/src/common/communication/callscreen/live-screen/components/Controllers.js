@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
-import { Button } from '@blueprintjs/core';
+import { Button, Position, Tooltip } from '@blueprintjs/core';
 import { TiMediaRecord } from 'react-icons/ti';
 import { FiMic, FiMicOff, FiEdit2, FiCopy, FiVideo, FiPhone } from 'react-icons/fi';
 import callUpgrader from '../helper-functions/callUpgrader';
@@ -57,9 +57,11 @@ class Controllers extends React.Component {
     return (
       <div className="controllers">
         {showWhiteBoard && <Redirect to={`/${account.user.slug}/drawing-board`} />}
-        <Button className="pc-control-btn bg-red" onClick={this.callReject}>
-          <FiPhone size={20} />
-        </Button>
+        <Tooltip content="CallEnd" className="tooltip">
+          <Button className="pc-control-btn bg-red" onClick={this.callReject}>
+            <FiPhone size={20} />
+          </Button>
+        </Tooltip>
         <Button
           className={webRtc.localCallHistory.mediaType === 'video' ? 'pc-control-btn active' : 'pc-control-btn'}
           onClick={() => this.callUpGradeController('video')}
