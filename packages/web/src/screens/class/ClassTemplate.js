@@ -39,7 +39,7 @@ class ClassTemplate extends React.Component {
     const { data } = this.props;
     const templates = data.classes.map((obj) => {
       const user = data.users[obj.userId];
-      return <Template user={user} obj={obj} />
+      return <Template key={`template-${obj.id}`} user={user} obj={obj} />;
     });
     return templates;
   }

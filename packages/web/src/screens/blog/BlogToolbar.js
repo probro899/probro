@@ -24,21 +24,27 @@ const BlogToolbar = ({
   onClick,
   onPublish,
   saveBlog,
+  saveLoading,
   uploadImg,
+  blogId,
 }) => {
   return (
     <div className="toolbar">
       <div className="left">
-        <Switch
-          innerLabel="Draft"
-          innerLabelChecked="Public"
-          alignIndicator="right"
-          large
-          // label="Status"
-          checked={publish === 'publish'}
-          className="switch"
-          onChange={onPublish}
-        />
+        {
+          blogId && (
+            <Switch
+              innerLabel="Draft"
+              innerLabelChecked="Public"
+              alignIndicator="right"
+              large
+              // label="Status"
+              checked={publish === 'publish'}
+              className="switch"
+              onChange={onPublish}
+            />
+          )
+        }
       </div>
       <div className="center">
         <HTMLSelect
@@ -96,6 +102,8 @@ const BlogToolbar = ({
       <div className="right">
         <Button
           type="button"
+          disabled={saveLoading}
+          loading={saveLoading}
           intent="success"
           text="save"
           onClick={saveBlog}
@@ -105,7 +113,13 @@ const BlogToolbar = ({
   );
 };
 
+BlogToolbar.defaultProps = {
+  blogId: null,
+};
+
 BlogToolbar.propTypes = {
+  blogId: PropTypes.number,
+  saveLoading: PropTypes.bool.isRequired,
   onClick: PropTypes.func.isRequired,
   saveBlog: PropTypes.func.isRequired,
   uploadImg: PropTypes.func.isRequired,

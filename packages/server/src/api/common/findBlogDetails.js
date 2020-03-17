@@ -10,8 +10,8 @@ export default function findBlogDetails(blogId, userId, getBlog) {
   }
 
   // const blogDetail = await find('BlogDetail', { blogId });
-  const blogComment = cacheDatabase.get('BlogComment').filter(bc => (bc.blogId === getBlog ? blog.id : blogId));
-  const blogLike = cacheDatabase.get('BlogLike').filter(bl => (bl.blogId === getBlog ? blog.id : blogId));
+  const blogComment = cacheDatabase.get('BlogComment').filter(bc => (bc.blogId === blog.id));
+  const blogLike = cacheDatabase.get('BlogLike').filter(bl => (bl.blogId === blog.id));
   let blogerId = null;
   const allUser = cacheDatabase.get('User');
   const allUserDetails = cacheDatabase.get('UserDetail');

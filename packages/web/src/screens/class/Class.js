@@ -136,7 +136,6 @@ class Class extends Component {
   render() {
     const { account, database } = this.props;
     const { createBool, deleteClass, updateClass } = this.state;
-    console.log(database.Board);
     return (
       <div className="classes bro-right">
         <DeletePopOver
@@ -150,7 +149,7 @@ class Class extends Component {
         </div>
         <div className="content-list">
           {
-            Object.values(database.Board.byId).map((obj, index) => {
+            Object.values(database.Board.byId).filter(o => o.type === 'private').map((obj, index) => {
               const user = database.User.byId[obj.userId];
               const len = obj.name.length > 30;
               const name = len ? obj.name.substring(0, 29) : obj.name;

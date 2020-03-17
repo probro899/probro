@@ -38,6 +38,7 @@ class HomePage extends Component {
   render() {
     const { data, loading } = this.state;
     const { account } = this.props;
+    console.log('loading', this.props.account);
     return loading ? <Spinner /> : (
       <div>
         <Navbar />

@@ -89,11 +89,9 @@ class Classes extends Component {
     const {
       addDatabaseSchema, tags, account, updateDatabaseSchema,
       deleteDatabaseSchema,
-      match,
     } = this.props;
     if (!account.sessionId) return <Redirect to="/" />;
     if (!account.user || loading) return <Spinner />;
-    if (account.user.slug !== match.params.userSlug) return <Redirect to="/" />;
     return (
       <div style={{ position: 'relative' }}>
         <Navbar className="pcm-nav" />
@@ -191,4 +189,5 @@ const mapStateToProps = (state) => {
     tags: database.BoardColumnCardTag,
   };
 };
+
 export default connect(mapStateToProps, { ...actions })(Classes);

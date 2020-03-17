@@ -11,6 +11,7 @@ import { addBlog, updateBlog } from './helper-functions';
 import { ENDPOINT } from '../../config';
 import BlogToolbar from './BlogToolbar';
 import CoverImage from './CoverImage';
+import { Spinner } from '../../common';
 
 
 class Blogs extends Component {
@@ -19,10 +20,11 @@ class Blogs extends Component {
     italic: false,
     underline: false,
     publish: 'draft',
+    saveLoading: false,
     apis: {},
     title: '',
     description: '',
-    blogId: '',
+    blogId: null,
     imageSource: 'Choose a picture...',
     coverImage: {
       actualFile: null,
@@ -204,6 +206,10 @@ class Blogs extends Component {
       coverImage,
     } = this.state;
     let uploadedUrl = null;
+
+    // for loading while saving blog
+    this.setState({ saveLoading: true });
+
     const { account, addDatabaseSchema, updateDatabaseSchema } = this.props;
     if (coverImage.actualFile) {
       const formData = new FormData();
@@ -234,7 +240,7 @@ class Blogs extends Component {
         console.log('Error', e);
       }
     }
-    if (blogId === '') {
+    if (!blogId) {
       const res = await addBlog(apis.addBlog,
         {
           userId: account.user.id,
@@ -244,10 +250,6 @@ class Blogs extends Component {
           coverImage: uploadedUrl,
           content: description,
         });
-      this.setState({
-        blogId: res,
-        publish: 'draft',
-      });
       addDatabaseSchema('Blog', {
         id: res,
         userId: account.user.id,
@@ -257,6 +259,7 @@ class Blogs extends Component {
         title,
         content: description,
       });
+      this.setState({ saveLoading: false, blogId: res, publish: 'draft' });
       return;
     }
     await updateBlog(apis.updateBlog, [
@@ -277,6 +280,7 @@ class Blogs extends Component {
       content: description,
       coverImage: (!coverImage.url && !uploadedUrl) ? null : (uploadedUrl || coverImage.serverImageName),
     });
+    this.setState({ saveLoading: false });
   }
 
   publish = async (e) => {
@@ -286,6 +290,7 @@ class Blogs extends Component {
       title,
       description,
     } = this.state;
+    this.setState({ saveLoading: true });
     const { updateDatabaseSchema } = this.props;
     const saveStatus = e.target.checked ? 'publish' : 'draft';
     if (blogId !== '') {
@@ -309,6 +314,7 @@ class Blogs extends Component {
         content: description,
       });
     }
+    this.setState({ saveLoading: false });
   }
 
   uploadImg = async (e) => {
@@ -366,20 +372,24 @@ class Blogs extends Component {
       imageSource,
       publish,
       title,
+      saveLoading,
       coverImage,
+      blogId,
     } = this.state;
     const { account } = this.props;
-    if (!account.user) return <Redirect to="/" />;
     return (
       <div>
+        {!account.sessionId && <Redirect to="/" />}
         <Navbar className="pcm-nav" />
         <div className="create-blog">
           <BlogToolbar
+            saveLoading={saveLoading}
             onClick={this.onClick}
             onPublish={this.publish}
             uploadImg={this.uploadImg}
             saveBlog={this.saveBlog}
             bold={bold}
+            blogId={blogId}
             italic={italic}
             underline={underline}
             imageSource={imageSource}
