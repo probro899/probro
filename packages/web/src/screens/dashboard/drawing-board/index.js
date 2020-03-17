@@ -109,6 +109,8 @@ class DrawingBoard extends Component {
   clearCanvas = () => {
     const { canvas } = this.state;
     canvas.clear();
+    // reset the color of canvas background
+    canvas.backgroundColor = 'white';
     this.addInitialAnimation();
     this.setState({
       canvas,
