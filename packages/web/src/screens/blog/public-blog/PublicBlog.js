@@ -30,6 +30,7 @@ class PublicBlog extends React.Component {
         apis = await client.scope('Mentee');
       }
       const res = await axios.get(`${ENDPOINT}/web/get-blog?blogId=${match.params.blogSlug}&userId=${match.params.userSlug}`);
+      console.log('Blog details', res);
       this.setState({
         data: res.data,
         apis,

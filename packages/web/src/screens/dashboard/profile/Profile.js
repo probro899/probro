@@ -31,6 +31,7 @@ class Profile extends Component {
   }
 
   render() {
+    console.log('Props in profile', this.props);
     const {
       account,
       database, deleteDatabaseSchema, updateDatabaseSchema,
