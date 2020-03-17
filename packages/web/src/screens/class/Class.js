@@ -136,7 +136,7 @@ class Class extends Component {
   render() {
     const { account, database } = this.props;
     const { createBool, deleteClass, updateClass } = this.state;
-    // console.log(database.Board);
+    console.log(database.Board);
     return (
       <div className="classes bro-right">
         <DeletePopOver
