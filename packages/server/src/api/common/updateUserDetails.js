@@ -23,7 +23,7 @@ export default async function updateUserDetails(record) {
       }
       const insertRes = await insert('UserDetail', record);
       if (insertRes) {
-        const userRes = await findOne('UserDetail', { userId: insertRes });
+        const userRes = await findOne('UserDetail', { id: insertRes });
         session.dispatch(schema.add('UserDetail', userRes));
         database.update('UserDetail', schema.add('UserDetail', userRes));
         return 'User details inserted successfully';

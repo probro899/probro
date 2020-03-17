@@ -15,7 +15,7 @@ export default (id, userConnectionListDetails, blogDetails, boardDetails) => {
   const UserSkill = allDbUserSkill.filter(d => d.userId === id);
   const UserPortal = allDbUserPortal.filter(d => d.userId === id);
   const UserCarrierInterest = allDbUserCarrierInterest.filter(d => d.userId === id);
-
+  console.log('allDbUserDetial', allDbUserDetail);
   const allUserDetailsList = lodash.uniq([...boardDetails.allBoardUserList, ...userConnectionListDetails.allConnectionUserList, ...blogDetails.allBlogUsers, id]).map(uid => allDbUserDetail.find(u => u.userId === uid)).filter(obj => obj);
   // console.log('all user details list', allUserDetailsList);
   const allUser = lodash.uniq([

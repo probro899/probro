@@ -55,8 +55,8 @@ const googleLogin = async (grec) => {
     const randomPassword = uuid();
     const addUserRes = await insert('User', { firstName: given_name, lastName: family_name, middleName: '', password: randomPassword, email, verificationToken: null, verify: 1, slug });
     database.update('User', schema.add('User', { id: addUserRes, firstName: given_name, lastName: family_name, middleName: '', password: randomPassword, email, verificationToken: null, verify: 1, slug }));
-    const addUserDetailRes = await insert('UserDetail', { userId: addUserRes, image: picture });
-    database.update('UserDetail', schema.add('UserDetail', { id: addUserDetailRes, userId: addUserRes, image: picture }));
+    // const addUserDetailRes = await insert('UserDetail', { userId: addUserRes, image: picture });
+    // database.update('UserDetail', schema.add('UserDetail', { id: addUserDetailRes, userId: addUserRes, image: picture }));
     const finalUserDetailRes = await findOne('UserDetail', { userId: addUserRes });
     const finalUserRes = await findOne('User', { id: addUserRes });
     return loginHelper(finalUserRes, finalUserDetailRes);

@@ -2,7 +2,12 @@ import lodash from 'lodash';
 import cacheDatabase from '../../cache/database/cache';
 
 export default function findBlogDetails(blogId, userId, getBlog) {
-  const blog = cacheDatabase.get('Blog').find(b => b[getBlog ? 'slug' : 'id'] === blogId);
+  let blog = {};
+  if (getBlog) {
+    blog = cacheDatabase.get('Blog').find(b => (b[getBlog ? 'slug' : 'id'] === blogId) && (b.saveStatus === 'publish'));
+  } else {
+    blog = cacheDatabase.get('Blog').find(b => b[getBlog ? 'slug' : 'id'] === blogId);
+  }
 
   // const blogDetail = await find('BlogDetail', { blogId });
   const blogComment = cacheDatabase.get('BlogComment').filter(bc => (bc.blogId === getBlog ? blog.id : blogId));
@@ -29,6 +34,6 @@ export default function findBlogDetails(blogId, userId, getBlog) {
   const userList = allUserIds.map(uid => allUser.find(u => u.id === uid));
   const userDetailList = allUserIds.map(uid => allUserDetails.find(ud => ud.userId === uid));
   // console.log('usreList', userList);
-  const userDetails = userList.filter(u => u).map((u, idx) => ({ user: { id: u.id, slug: u.slug, firstName: u.firstName, lastName: u.lastName, middleName: u.middleName }, userDetail: userDetailList[idx] }));
+  const userDetails = userList.filter(u => u).map((u, idx) => ({ user: { id: u.id, slug: u.slug, firstName: u.firstName, lastName: u.lastName, middleName: u.middleName }, userDetail: userDetailList[idx] || {} }));
   return { blogComment, blogLike, userDetails, blog };
 }

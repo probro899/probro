@@ -20,12 +20,12 @@ export default (id, session) => {
   const allDbBoard = cacheDatabase.get('Board');
   const allDbBoardMessageSeenStatus = cacheDatabase.get('BoardMessageSeenStatus');
   const allDbBoardMessage = cacheDatabase.get('BoardMessage');
-
+  const templatesBoards = allDbBoard.filter(b => b.type === 'template');
   const BoardMember = allDbBoardMembers.filter(bm => bm.tuserId === id);
   const Board = allDbBoard.filter(b => b.userId === id);
   const allBoardsTemp = BoardMember.map(bm => allDbBoard.find(b => b.id === bm.boardId));
   // const allBoards = allBoardsTemp.filter(b => b).map(b => ({ ...b, activeStatus: findBoardActiveStatus(session, b.id) }));
-  const allBoards = allBoardsTemp.filter(b => b).filter(b => b.deleteStatus !== 1);
+  const allBoards = ([...allBoardsTemp, ...templatesBoards]).filter(b => b).filter(b => b.deleteStatus !== 1);
   // console.log('all board', allBoards);
 
   const BoardMessage = allBoards.map(b => allDbBoardMessage.filter(bm => bm.boardId === b.id));
