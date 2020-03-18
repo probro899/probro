@@ -92,7 +92,7 @@ class PublicBlog extends React.Component {
                   </span>
                 </div>
               </div>
-              <SocialShare />
+              <SocialShare url={window.location.href} />
             </div>
           </div>
           <BlogCoverImage blog={data} />
@@ -104,6 +104,7 @@ class PublicBlog extends React.Component {
             />
           </div>
           <CommentContainer
+            imgUrl={imgUrl}
             account={account}
             apis={apis}
             users={userDetails}

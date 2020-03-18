@@ -249,21 +249,40 @@
       flex: 1;
       display: flex;
       flex-direction: column;
-      .top-label{
-        // text-align: center;
-      }
       .comment-area {
         display: flex;
+        position: relative;
+        .profile-icon {
+          width: 40px;
+          height: 40px;
+          position: absolute;
+          border-radius: 50%;
+          overflow: hidden;
+          top: 11px;
+          left: 5px;
+          img.portrait {
+            width: 100%;
+            height: auto;
+          }
+          img.landscape {
+            height: 100%;
+            width: auto;
+          }
+        }
         textarea {
           font-size: 21px;
-          flex: 0.8;
+          flex: 0.93;
           height: 62px;
           line-height: 40px;
+          padding-left: 60px;
           resize: none;
         }
         button {
-          font-size: 21px;
-          flex: 0.2;
+          font-size: 30px;
+          flex: 0.07;
+          span {
+            display: flex;
+          }
         }
       }
       .responses {

@@ -1,9 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { MdSend } from 'react-icons/md';
 import { TextArea, Button } from '@blueprintjs/core';
 import Comment from './Comment';
 import { timeStampSorting } from '../../../../common/utility-functions';
 import { DeletePopOver } from '../../../../common';
+import { RoundPicture } from '../../../../components';
 
 class CommentContainer extends React.Component {
   state = {
@@ -163,7 +165,7 @@ class CommentContainer extends React.Component {
       allLikes,
       deletePopover,
     } = this.state;
-    const { users, account } = this.props;
+    const { users, imgUrl, account } = this.props;
     return (
       <div className="response">
         <div className="left" />
@@ -188,17 +190,21 @@ class CommentContainer extends React.Component {
           )}
           {account.user && (
             <div className="comment-area">
+              <div className="profile-icon">
+                <RoundPicture imgUrl={imgUrl} />
+              </div>
               <TextArea
-                placeholder="put a comment in here"
+                placeholder="Write your thoughts on this..."
                 onChange={this.setComment}
                 value={comment}
               />
               <Button
-                text="Submit"
-                intent="success"
+                intent="primary"
                 fill
                 onClick={this.submitComment}
-              />
+              >
+                <MdSend size={30} />
+              </Button>
             </div>
           )}
           <div className="responses">
@@ -219,6 +225,7 @@ class CommentContainer extends React.Component {
 }
 
 CommentContainer.propTypes = {
+  imgUrl: PropTypes.string.isRequired,
   apis: PropTypes.objectOf(PropTypes.any).isRequired,
   account: PropTypes.objectOf(PropTypes.any).isRequired,
   users: PropTypes.arrayOf(PropTypes.any).isRequired,

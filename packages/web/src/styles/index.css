@@ -572,9 +572,13 @@ top attachment etc.
 .public-blog .public-blog-content #blogContent img { max-width: 100%; }
 .public-blog .response { display: flex; }
 .public-blog .response .comment-section { flex: 1; display: flex; flex-direction: column; }
-.public-blog .response .comment-section .comment-area { display: flex; }
-.public-blog .response .comment-section .comment-area textarea { font-size: 21px; flex: 0.8; height: 62px; line-height: 40px; resize: none; }
-.public-blog .response .comment-section .comment-area button { font-size: 21px; flex: 0.2; }
+.public-blog .response .comment-section .comment-area { display: flex; position: relative; }
+.public-blog .response .comment-section .comment-area .profile-icon { width: 40px; height: 40px; position: absolute; border-radius: 50%; overflow: hidden; top: 11px; left: 5px; }
+.public-blog .response .comment-section .comment-area .profile-icon img.portrait { width: 100%; height: auto; }
+.public-blog .response .comment-section .comment-area .profile-icon img.landscape { height: 100%; width: auto; }
+.public-blog .response .comment-section .comment-area textarea { font-size: 21px; flex: 0.93; height: 62px; line-height: 40px; padding-left: 60px; resize: none; }
+.public-blog .response .comment-section .comment-area button { font-size: 30px; flex: 0.07; }
+.public-blog .response .comment-section .comment-area button span { display: flex; }
 .public-blog .response .comment-section .responses .i-response { margin: 10px 0; display: flex; }
 .public-blog .response .comment-section .responses .i-response .pc-profile-icon { width: 60px; height: 60px; border-radius: 50%; overflow: hidden; margin: 0 10px; }
 .public-blog .response .comment-section .responses .i-response .pc-profile-icon img.portrait { width: 100%; height: auto; }
