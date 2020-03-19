@@ -8,7 +8,7 @@ import CommentContainer from './comment';
 import Footer from '../../../common/footer';
 import client from '../../../socket';
 import { ENDPOINT } from '../../../config';
-import { Spinner } from '../../../common';
+import { Spinner, SocialShare } from '../../../common';
 import { RoundPicture } from '../../../components';
 import BlogCoverImage from './BlogCoverImage';
 
@@ -92,19 +92,19 @@ class PublicBlog extends React.Component {
                   </span>
                 </div>
               </div>
+              <SocialShare url={window.location.href} />
             </div>
           </div>
           <BlogCoverImage blog={data} />
           <div className="public-blog-content">
-            <div className="left" />
             <div
               id="blogContent"
               // eslint-disable-next-line react/no-danger
               dangerouslySetInnerHTML={this.createMarkup(data.blog.content)}
             />
-            <div className="right" />
           </div>
           <CommentContainer
+            imgUrl={imgUrl}
             account={account}
             apis={apis}
             users={userDetails}
