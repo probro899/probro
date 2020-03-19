@@ -14,15 +14,8 @@ class Class extends Component {
   state = {
     // create holds bool for the add new class popover
     createBool: false,
-    deleteClass: {
-      id: 0,
-      name: '',
-      deletePopOverBool: false,
-    },
-    updateClass: {
-      id: 0,
-      updateClassBool: false,
-    },
+    deleteClass: { id: 0, name: '', deletePopOverBool: false },
+    updateClass: { id: 0, updateClassBool: false },
     api: {},
   };
 
@@ -156,7 +149,7 @@ class Class extends Component {
         </div>
         <div className="content-list">
           {
-            Object.values(database.Board.byId).map((obj, index) => {
+            Object.values(database.Board.byId).filter(o => o.type === 'private').map((obj, index) => {
               const user = database.User.byId[obj.userId];
               const len = obj.name.length > 30;
               const name = len ? obj.name.substring(0, 29) : obj.name;
@@ -197,7 +190,7 @@ class Class extends Component {
           </div>
         </div>
         {/* create new class popover */}
-        <ClassTemplate data={{ classes: database.Board.byId, users: database.User.byId }} />
+        <ClassTemplate data={{ classes: Object.values(database.Board.byId).filter(obj => obj.type === 'template'), users: database.User.byId }} />
         <PopoverForm
           isOpen={createBool}
           onClose={this.newClass}

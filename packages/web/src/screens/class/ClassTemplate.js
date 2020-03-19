@@ -1,7 +1,33 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import { FiStar } from 'react-icons/fi';
 
+const Template = ({ user, obj }) => {
+  return (
+    <div style={{ position: 'relative' }}>
+      <div className="template-icon"><FiStar size={30} /></div>
+      <Link to={`/class-template/${user.slug}/${obj.id}`} className="content-link">
+        <div className="class-repr">
+          <span>
+            {obj.name}
+          </span>
+        </div>
+        <div className="class-detail">
+          <span className="name">
+            Properclass
+          </span>
+          <span className="date">{new Date().toDateString()}</span>
+        </div>
+      </Link>
+    </div>
+  );
+};
+
+Template.propTypes = {
+  user: PropTypes.objectOf(PropTypes.any).isRequired,
+  obj: PropTypes.objectOf(PropTypes.any).isRequired,
+};
 
 class ClassTemplate extends React.Component {
   constructor(props) {
@@ -9,10 +35,16 @@ class ClassTemplate extends React.Component {
     this.state = {};
   }
 
-  render() {
+  getTemplates = () => {
     const { data } = this.props;
-    const cls = Object.values(data.classes)[0];
-    // const user = data.users[cls.userId];
+    const templates = data.classes.map((obj) => {
+      const user = data.users[obj.userId];
+      return <Template key={`template-${obj.id}`} user={user} obj={obj} />;
+    });
+    return templates;
+  }
+
+  render() {
     return (
       <div className="pc-class-template-container">
         <div className="header">
@@ -20,26 +52,15 @@ class ClassTemplate extends React.Component {
           <small>Start with a template</small>
         </div>
         <div className="content-list">
-          <div style={{ position: 'relative' }}>
-            <div className="template-icon"><FiStar size={30} /></div>
-            {/* <Link to={`/class-template/${user.slug}/${cls.id}`} className="content-link"> */}
-              <div className="class-repr">
-                <span>
-                  Software Development
-                </span>
-              </div>
-              <div className="class-detail">
-                <span className="name">
-                  Properclass
-                </span>
-                <span className="date">{new Date().toDateString()}</span>
-              </div>
-            {/* </Link> */}
-          </div>
+          {this.getTemplates()}
         </div>
       </div>
     );
   }
 }
+
+ClassTemplate.propTypes = {
+  data: PropTypes.objectOf(PropTypes.any).isRequired,
+};
 
 export default ClassTemplate;

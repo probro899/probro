@@ -286,6 +286,28 @@
           }
           .comment-content {
             padding: 5px;
+            .com-desc {
+              .pc-comment-edit {
+                display: flex;
+              }
+            }
+            .com-config {
+              small {
+                cursor: pointer;
+                color: $navTextColor;
+                margin-right: 5px;
+                &.danger u {
+                  &:hover {
+                    color: red;
+                  }
+                }
+                &.primary u {
+                  &:hover {
+                    color: $skyBlueMain;
+                  }
+                }
+              }
+            }
           }
         }
       }

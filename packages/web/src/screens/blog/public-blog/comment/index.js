@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { TextArea, Button } from '@blueprintjs/core';
 import Comment from './Comment';
 import { timeStampSorting } from '../../../../common/utility-functions';
+import { DeletePopOver } from '../../../../common';
 
 class CommentContainer extends React.Component {
   state = {
@@ -10,6 +11,8 @@ class CommentContainer extends React.Component {
     liked: null,
     allComments: [],
     allLikes: [],
+    deletePopover: false,
+    commentToDelete: {},
   };
 
   componentDidMount() {
@@ -69,6 +72,58 @@ class CommentContainer extends React.Component {
     }
   }
 
+  saveEditedComment = async (commentText, comment) => {
+    const { apis, blogId } = this.props;
+    const { allComments } = this.state;
+    try {
+      const data = {
+        comment: commentText,
+        broadCastId: `Blog-${blogId}`,
+      };
+      await apis.updateBlogComment([data, { id: comment.id }]);
+      const filteredComments = allComments.filter(obj => obj.id !== comment.id);
+      this.setState({
+        allComments: [...filteredComments, { ...comment, comment: commentText }],
+        comment: '',
+      });
+    } catch (e) {
+      console.log('Error', e);
+    }
+  }
+
+  replyComment = (comment) => {
+    const { users } = this.props;
+    const user = users.find(obj => obj.user.id === comment.userId);
+    this.setState({ comment: `@${user.user.firstName}` });
+  }
+
+  toggleDelete = (comment) => {
+    const { deletePopover } = this.state;
+    this.setState({
+      deletePopover: !deletePopover,
+      commentToDelete: comment,
+    });
+  }
+
+  deleteComment = async (type) => {
+    const { apis, blogId } = this.props;
+    const { commentToDelete, allComments } = this.state;
+    if (type === 'confirm') {
+      await apis.deleteBlogComment({ id: commentToDelete.id, broadCastId: `Blog-${blogId}` });
+      const filteredComments = allComments.filter(obj => obj.id !== commentToDelete.id);
+      this.setState({
+        deletePopover: false,
+        commentToDelete: {},
+        allComments: filteredComments,
+      });
+      return;
+    }
+    this.setState({
+      deletePopover: false,
+      commentToDelete: {},
+    });
+  }
+
   likeBlog = async () => {
     const { liked, allLikes } = this.state;
     const {
@@ -106,6 +161,7 @@ class CommentContainer extends React.Component {
       liked,
       allComments,
       allLikes,
+      deletePopover,
     } = this.state;
     const { users, account } = this.props;
     return (
@@ -151,8 +207,9 @@ class CommentContainer extends React.Component {
             </div>
             {allComments.sort(timeStampSorting).map((obj) => {
               const user = users.find(u => u.user.id === obj.userId);
-              return <Comment user={user} comment={obj} key={obj.id} />;
+              return <Comment deleteComment={this.toggleDelete} replyComment={this.replyComment} saveComment={this.saveEditedComment} user={user} account={account} comment={obj} key={obj.id} />;
             })}
+            <DeletePopOver isOpen={deletePopover} name="Comment" action={this.deleteComment} />
           </div>
         </div>
         <div className="right" />

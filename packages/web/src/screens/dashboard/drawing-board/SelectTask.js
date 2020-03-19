@@ -6,7 +6,7 @@ class SelectTask extends React.Component {
   constructor(props) {
     super(props);
     const { database } = this.props;
-    const classes = Object.values(database.Board.byId);
+    const classes = Object.values(database.Board.byId).filter(o => o.type === 'private');
     const tasks = [];
     Object.values(database.BoardColumnCard.byId).map((obj) => {
       Object.values(database.BoardColumn.byId).map((i) => {

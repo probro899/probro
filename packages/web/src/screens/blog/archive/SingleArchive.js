@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { ENDPOINT } from '../../../config';
 
-const blogImg = require('../../../assets/blog-img.jpeg');
+const blogImg = require('../../../assets/blog-img.jpg');
 
 const SingleArchive = ({ obj }) => {
   const description = obj.blog.content.replace(/<[^>]+>/g, '').replace(/&nbsp;/g, ' ').substring(0, 300);
