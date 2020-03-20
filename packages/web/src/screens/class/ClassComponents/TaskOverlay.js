@@ -173,7 +173,7 @@ class TaskOverlay extends Component {
     const res = await apis.getCardActivity({ cardId: task.id });
     this.setState({
       loading: false,
-      activities: res.cardActivities.filter(o => (o.message === 'createCard' || o.message === 'outsideColumn') && o.tColId && o.fColId),
+      activities: res.cardActivities.filter(o => o.message === 'createCard' || o.message === 'outsideColumn'),
     });
   }
 

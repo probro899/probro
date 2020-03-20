@@ -40,9 +40,8 @@ class Class extends Component {
     data.timeStamp = Date.now();
     try {
       const res = await api.addBoard(data);
-      addDatabaseSchema('Board', { ...data, id: res });
+      addDatabaseSchema('Board', { ...data, type: 'private', id: res });
     } catch (e) {
-      console.log('Error: ', e);
       return { response: 404 };
     }
     this.newClass();

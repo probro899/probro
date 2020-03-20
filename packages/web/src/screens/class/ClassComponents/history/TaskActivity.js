@@ -8,7 +8,7 @@ const profileIcon = require('../../../../assets/icons/64w/uploadicon64.png');
 export default ({ activity, userList, userDetailList, color, columns }) => {
   const user = userList.byId[activity.userId];
   const userDetail = Object.values(userDetailList.byId).find(obj => obj.userId === user.id);
-  const imgUrl = userDetail.image ? `${ENDPOINT}/user/${10000000 + parseInt(user.id, 10)}/profile/${userDetail.image}` : profileIcon;
+  const imgUrl = userDetail && userDetail.image ? `${ENDPOINT}/user/${10000000 + parseInt(user.id, 10)}/profile/${userDetail.image}` : profileIcon;
   const name = user.middleName ? `${user.firstName} ${user.middleName} ${user.lastName}` : `${user.firstName} ${user.lastName}`;
   switch (activity.message) {
     case 'createCard':
