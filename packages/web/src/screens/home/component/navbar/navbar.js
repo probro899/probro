@@ -120,7 +120,7 @@ class Navbar extends Component {
           </Link> */}
         </div>
         <div className="navbar-more-container">
-          <Icon icon="menu" className="more-icon" onClick={this.toggleSmallScreen} iconSize={25} color="#666" />
+          <Icon icon="menu" className="more-icon" onClick={this.toggleSmallScreen} />
           <SmallScreenMenu
             smallScreenToggle={this.toggleSmallScreen}
             open={smallScreen}

@@ -132,7 +132,6 @@ class Classes extends Component {
         <ToolBar boardId={classId} apis={api} />
         <div
           className="class-wrapper"
-          style={{ height: window.innerHeight }}
         >
           <DragDropContext
             onDragEnd={this.onDragEnd}

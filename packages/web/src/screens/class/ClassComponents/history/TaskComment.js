@@ -81,7 +81,7 @@ class TaskComment extends React.Component {
     if (com.message) return <TaskActivity color={color} userList={userList} userDetailList={userDetailList} columns={columns} key={`activity${com.id}`} activity={com} />;
     const userInfo = this.getCommentUser(com);
     const name = userInfo.user.middleName ? `${userInfo.user.firstName} ${userInfo.user.middleName} ${userInfo.user.lastName}` : `${userInfo.user.firstName} ${userInfo.user.lastName}`;
-    const imgUrl = userInfo.userDetail.image ? `${ENDPOINT}/user/${10000000 + parseInt(userInfo.user.id, 10)}/profile/${userInfo.userDetail.image}` : profileIcon;
+    const imgUrl = userInfo.userDetail && userInfo.userDetail.image ? `${ENDPOINT}/user/${10000000 + parseInt(userInfo.user.id, 10)}/profile/${userInfo.userDetail.image}` : profileIcon;
     return (
       <div className="s-comment" style={{ backgroundColor: color }} key={com.id}>
         <div className="img-con">

@@ -89,7 +89,13 @@ p {
   margin-bottom: 5px;
 }
 
+.bp3-dialog {
+  margin-left: 5%;
+  margin-right: 5%;
+  background-color: $backgroundColor;
+}
+
 .tooltip {
-  background: white;
-  color: black;
+  background: $backgroundColor;
+  color: $darkBlue;
 }

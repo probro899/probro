@@ -117,6 +117,11 @@ top attachment etc.
       .more-icon {
         display: block;
       }
+      svg {
+        fill: $darkBlue;
+        height: 27px;
+        width: 27px;
+      }
     }
   }
 }
@@ -129,7 +134,7 @@ top attachment etc.
   .pc-drop-menu-link {
     padding: 10px;
     text-transform: uppercase;
-    color: $navTextColor;
+    color: $darkBlue;
     font-weight: bold;
     border-bottom: 1px solid $normalBorder;
     &.active {
@@ -140,13 +145,15 @@ top attachment etc.
 .pc-dropdown-drawer {
   .bp3-drawer-header {
     h4 {
-      text-align: center;
-      color: $skyBlueMain;
+      margin-right: 25px;
     }
-    svg {
-      height: 25px;
-      width: 25px;
-      color: $navTextColor;
+    button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      svg {
+        color: $darkBlue;
+      } 
     }
   }
 }

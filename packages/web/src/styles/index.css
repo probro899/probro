@@ -50,14 +50,16 @@ top attachment etc.
 .navbar a.active .navbar-item { color: #137cbd; }
 @media screen and (min-width: 575px) and (max-width: 700px) { .navbar .navbar-item { font-size: 13px; } }
 @media screen and (min-width: 200px) and (max-width: 575px) { .navbar .navbar-left { display: none; }
-  .navbar .navbar-more-container .more-icon { display: block; } }
+  .navbar .navbar-more-container .more-icon { display: block; }
+  .navbar .navbar-more-container svg { fill: #1d4354; height: 27px; width: 27px; } }
 
 .pc-drop-menu { display: flex; flex-direction: column; padding: 10px; }
-.pc-drop-menu .pc-drop-menu-link { padding: 10px; text-transform: uppercase; color: #666; font-weight: bold; border-bottom: 1px solid #e0e0e0; }
+.pc-drop-menu .pc-drop-menu-link { padding: 10px; text-transform: uppercase; color: #1d4354; font-weight: bold; border-bottom: 1px solid #e0e0e0; }
 .pc-drop-menu .pc-drop-menu-link.active { color: #137cbd; }
 
-.pc-dropdown-drawer .bp3-drawer-header h4 { text-align: center; color: #137cbd; }
-.pc-dropdown-drawer .bp3-drawer-header svg { height: 25px; width: 25px; color: #666; }
+.pc-dropdown-drawer .bp3-drawer-header h4 { margin-right: 25px; }
+.pc-dropdown-drawer .bp3-drawer-header button { position: absolute; top: 0; right: 0; }
+.pc-dropdown-drawer .bp3-drawer-header button svg { color: #1d4354; }
 
 .o-log-or-reg { display: flex; justify-content: space-around; }
 .o-log-or-reg .log-or-reg { max-width: 40%; }
@@ -105,7 +107,7 @@ top attachment etc.
 .popularContainer .popularHeader p { text-align: center; color: #1d4354; font-size: 40px; font-weight: 600; }
 .popularContainer .popularCover { display: flex; justify-content: space-around; flex-wrap: wrap; padding: 10px; }
 .popularContainer .popularCover .popular { display: flex; padding: 10px; }
-.popularContainer .popularCover .popular .popularImage { height: 150px; width: 150px; overflow: hidden; border: 1px solid #e0e0e0; border-radius: 50%; }
+.popularContainer .popularCover .popular .popularImage { height: 150px; width: 150px; overflow: hidden; border: 1px solid #e0e0e0; border-radius: 50%; flex-shrink: 0; }
 .popularContainer .popularCover .popular .popularImage img.landscape { height: 100%; width: auto; }
 .popularContainer .popularCover .popular .popularImage img.portrait { width: 100%; height: auto; }
 .popularContainer .popularCover .popular .popularDesc { display: flex; flex-direction: column; justify-content: center; padding: 10px; }
@@ -226,6 +228,7 @@ top attachment etc.
 .tool-bar .toolbar-container .right-tools button { margin: 0px 3px; padding: 1px; color: #222; border: 1px solid #222; }
 .tool-bar .toolbar-container .right-tools button svg { fill: #222; }
 
+.class-wrapper { height: 100vh; }
 .class-wrapper .columns { height: 100%; padding-top: 100px; display: flex; flex-direction: row; align-items: flex-start; overflow-y: scroll; -ms-overflow-style: none; scrollbar-color: none; }
 .class-wrapper .columns ::-webkit-scrollbar { display: none; }
 .class-wrapper .columns .column-container { height: 100%; padding-bottom: 18px; }
@@ -245,7 +248,7 @@ top attachment etc.
 .class-wrapper .columns .add-new-column .title { padding: 8px; margin: 8px; background-color: #f9f9f9; width: 200px; box-shadow: 0px 1px 2px 1px rgba(57, 73, 76, 0.35); cursor: pointer; }
 .class-wrapper .columns .add-new-column .title span { font-size: 16px; font-weight: 500; }
 
-.overlay-container { padding: 0; }
+.overlay-container { margin-left: 2%; margin-right: 2%; padding: 0; }
 .overlay-container .task-detail-overlay .overlay-title { padding: 7px; display: flex; justify-content: space-between; background: #f9f9f9; color: #222; border: 1px solid #e0e0e0; }
 .overlay-container .task-detail-overlay .overlay-title svg { fill: #222; }
 .overlay-container .task-detail-overlay .overlay-title .head { display: flex; flex-direction: row; font-size: 20px; font-weight: bold; width: 100%; }
@@ -291,7 +294,7 @@ top attachment etc.
 .overlay-container .task-detail-overlay .overlay-body .left .comments .pc-task-activity .activity-detail { margin-left: 10px; padding-top: 2px; display: flex; flex-direction: column; }
 .overlay-container .task-detail-overlay .overlay-body .left .comments .pc-task-activity .activity-user { font-size: 16px; font-weight: bold; }
 .overlay-container .task-detail-overlay .overlay-body .left .comments .pc-task-activity .activity-col { font-weight: bold; }
-.overlay-container .task-detail-overlay .overlay-body .left .comments .img-con { width: 50px; height: 50px; border-radius: 50%; overflow: hidden; }
+.overlay-container .task-detail-overlay .overlay-body .left .comments .img-con { width: 50px; height: 50px; border-radius: 50%; overflow: hidden; flex-shrink: 0; }
 .overlay-container .task-detail-overlay .overlay-body .left .comments .img-con img.portrait { width: 100%; height: auto; }
 .overlay-container .task-detail-overlay .overlay-body .left .comments .img-con img.landscape { height: 100%; width: auto; }
 .overlay-container .task-detail-overlay .overlay-body .right { display: flex; flex: 0.3; justify-content: flex-end; }
@@ -529,7 +532,7 @@ top attachment etc.
 .archive .ar-content .ar-right .popular-on-pc .popular-blog .ar-i-detail .pc-date { color: #696969; }
 .archive .ar-content .ar-right .popular-on-pc .users-head { margin-top: 20px; font-size: 16px; text-transform: uppercase; color: #696969; }
 .archive .ar-content .ar-right .popular-on-pc .popular-user { margin: 10px 0px; display: flex; }
-.archive .ar-content .ar-right .popular-on-pc .popular-user .user-image { width: 80px; height: 80px; border-radius: 50%; overflow: hidden; }
+.archive .ar-content .ar-right .popular-on-pc .popular-user .user-image { width: 80px; height: 80px; border-radius: 50%; overflow: hidden; flex-shrink: 0; }
 .archive .ar-content .ar-right .popular-on-pc .popular-user .user-image img.portrait { width: 100%; height: auto; }
 .archive .ar-content .ar-right .popular-on-pc .popular-user .user-image img.landscape { height: 100%; width: auto; }
 .archive .ar-content .ar-right .popular-on-pc .popular-user .user-detail { margin-left: 5px; padding-top: 5px; }
@@ -747,3 +750,7 @@ body { margin: 0; padding: 0; background-color: #fff; font-family: "Gotham-Pro";
 a, button, div { outline: none !important; }
 
 p { margin-bottom: 5px; }
+
+.bp3-dialog { margin-left: 5%; margin-right: 5%; background-color: #fff; }
+
+.tooltip { background: #fff; color: #1d4354; }
