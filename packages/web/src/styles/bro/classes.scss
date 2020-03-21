@@ -163,7 +163,7 @@
   }
 }
 .class-wrapper {
-  // background: orange;
+  height: 100vh;
   .columns {
     height: 100%;
     padding-top: $navbarHeight + $toolbarHeight;
@@ -265,6 +265,8 @@
 }
 // contains the details of the task.
 .overlay-container {
+  margin-left: 2%;
+  margin-right: 2%;
   padding: 0;
   .task-detail-overlay {
     .overlay-title {
@@ -482,6 +484,7 @@
             height: 50px;
             border-radius: 50%;
             overflow: hidden;
+            flex-shrink: 0;
             img.portrait {
               width: 100%;
               height: auto;
