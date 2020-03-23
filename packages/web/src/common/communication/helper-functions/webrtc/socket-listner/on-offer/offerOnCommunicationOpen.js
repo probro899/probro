@@ -7,7 +7,7 @@ import offerHandler from '../../offerHandler';
 import localStreamHandler from '../../onLocalStream';
 
 const onNotLiveHandler = async (updateWebRtc, broadCastId, database, type, webRtc, connectionId) => {
-  // console.log('Communication is not live');
+  console.log('Communication is not live', database);
   await updateWebRtc('communicationContainer', 'list');
   await updateWebRtc('showCommunication', broadCastId);
   await updateWebRtc('localCallHistory', { ...webRtc.localCallHistory, chatHistory: { connectionId, type, user: { user: database.User.byId[broadCastId] }, broadCastId } });
@@ -49,7 +49,8 @@ const onLiveHandler = async (props, state, data) => {
 
 export default async (props, state, data) => {
   // console.log('Offer on Live handler called');
-  const { updateWebRtc, database } = props;
+  const { database } = store.getState();
+  const { updateWebRtc } = props;
   const { broadCastId, broadCastType, connectionId } = data;
   const type = broadCastType === 'UserConnection' ? 'user' : 'board';
   const { webRtc } = store.getState();
