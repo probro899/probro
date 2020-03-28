@@ -29,7 +29,7 @@ const AllUsers = ({ userList, boardMembers, boardId }) => {
   return (
     <div
       style={{
-        padding: '10px 5px 5px 10px',
+        padding: '10px 0px 5px 0px',
         display: 'flex',
         alignItems: 'center',
         flexDirection: 'column',
@@ -46,20 +46,34 @@ const AllUsers = ({ userList, boardMembers, boardId }) => {
         }}
       >
         {
-          Object.values(boardMembers.byId).map((o) => {
-            if (o.boardId === boardId) {
-              return (
-                <div
-                  style={{
-                    padding: '5px',
-                  }}
-                >
-                  <Link to={`/user/${userList.byId[o.tuserId].slug}`}>
-                    {userList.byId[o.tuserId].middleName ? `${userList.byId[o.tuserId].firstName} ${userList.byId[o.tuserId].middleName} ${userList.byId[o.tuserId].lastName}` : `${userList.byId[o.tuserId].firstName} ${userList.byId[o.tuserId].lastName}`}
-                  </Link>
-                </div>
-              );
-            }
+          Object.values(boardMembers.byId).filter(o => o.boardId === boardId).map((o) => {
+            return (
+              <div
+                style={{
+                  padding: '5px',
+                  position: 'relative',
+                }}
+              >
+                <Link style={{ marginLeft: 10, marginRight: 10 }} to={`/user/${userList.byId[o.tuserId].slug}`}>
+                  {userList.byId[o.tuserId].middleName ? `${userList.byId[o.tuserId].firstName} ${userList.byId[o.tuserId].middleName} ${userList.byId[o.tuserId].lastName}` : `${userList.byId[o.tuserId].firstName} ${userList.byId[o.tuserId].lastName}`}
+                </Link>
+                {
+                userList.byId[o.tuserId].activeStatus && (
+                  <span
+                    style={{
+                      position: 'absolute',
+                      height: 10,
+                      width: 10,
+                      backgroundColor: 'green',
+                      borderRadius: '50%',
+                      top: 8,
+                      left: 0,
+                    }}
+                  />
+                )
+                }
+              </div>
+            );
           })
         }
       </div>
@@ -76,30 +90,32 @@ AllUsers.propTypes = {
 class UserList extends React.Component {
   state = {};
 
+  getSmallList = () => {
+    const { boardId, boardMembers, userList } = this.props;
+    const thisBoardMembers = Object.values(boardMembers.byId).filter(o => o.boardId === boardId).slice(0, 4);
+    return thisBoardMembers.map((o, index) => {
+      return (
+        <Popover
+          position="bottom"
+          content={<UserDetail detail={userList.byId[o.tuserId]} />}
+          // eslint-disable-next-line react/no-array-index-key
+          key={index}
+        >
+          <div className="i-user">
+            {userList.byId[o.tuserId].firstName[0]}
+            {userList.byId[o.tuserId].lastName[0]}
+            {userList.byId[o.tuserId].activeStatus && <span className="green-dot" />}
+          </div>
+        </Popover>
+      );
+    });
+  }
+
   render() {
     const { userList, boardMembers, boardId } = this.props;
     return (
       <div className="each-item user-list">
-        {
-          Object.values(boardMembers.byId).map((o, index) => {
-            if (o.boardId === boardId) {
-              return (
-                <Popover
-                  position="bottom"
-                  content={<UserDetail detail={userList.byId[o.tuserId]} />}
-                  // eslint-disable-next-line react/no-array-index-key
-                  key={index}
-                >
-                  <div className="i-user">
-                    {userList.byId[o.tuserId].firstName[0].toUpperCase()}
-                    {userList.byId[o.tuserId].lastName[0].toUpperCase()}
-                    {userList.byId[o.tuserId].activeStatus && <span className="green-dot" />}
-                  </div>
-                </Popover>
-              );
-            }
-          })
-        }
+        {this.getSmallList()}
         <Popover
           position="right-top"
           content={
