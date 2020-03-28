@@ -1,6 +1,7 @@
 /* eslint-disable import/no-cycle */
 import schema from "@probro/common/source/src/schema";
 import updateUserCache from '../updateUserCache';
+import { database } from '../../../cache';
 
 export default async function createOffer(data) {
   const { session } = this;
@@ -19,6 +20,8 @@ export default async function createOffer(data) {
       liveBoardChannel.emit('offer', data.offerDetail, data.userList);
       const allLiveSessions = session.getChannel(`Board-${offerDetail.broadCastId}`);
       allLiveSessions.forEach(s => updateUserCache({ Board: { id: offerDetail.broadCastId, activeStatus: offerDetail.uid } }, s, 'update'));
+      // udpate active status true in cache database
+      database.update('Board', schema.update('Board', { id: offerDetail.broadCastId, activeStatus: true }));
       // liveBoardChannel.dispatch(schema.update('Board', { id: offerDetail.broadCastId, activeStatus: offerDetail.uid }));
     } else if (liveBoardChannelBefore.length <= 1) {
       console.log('only one or zoro user are live', liveBoardChannelBefore.length);
@@ -39,3 +42,5 @@ export default async function createOffer(data) {
     }
   }
 }
+
+

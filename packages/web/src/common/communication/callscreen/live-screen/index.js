@@ -97,7 +97,7 @@ class LiveCallScreen extends React.Component {
           <Button minimal onClick={() => this.handleClickChatBox(webRtc.showCommunication, true)}>
             <div style={{ position: 'relative'}}>
               <MdMessage size={18} />
-              {unMessageCount.unSeenNo !== 0 && <Badge number={unMessageCount.unSeenNo} size={10} top={-5} />}
+              {unMessageCount ? (unMessageCount.unSeenNo !== 0 && <Badge number={unMessageCount.unSeenNo} size={10} top={-5} />) : null}
             </div>
           </Button>
         </div>

@@ -44,7 +44,7 @@ export default async (insert, callCloseDetail, userList, session) => {
 
     const allLiveSessions = session.getChannel(`Board-${callCloseDetail.broadCastId}`);
     allLiveSessions.forEach(s => updateUserCache({ Board: { id: callCloseDetail.broadCastId, activeStatus: false } }, s, 'update'));
-
+    updateDatabaseCache('Board', schema.update('Board', { id: callCloseDetail.broadCastId, activeStatus: false }))
     // session.channel(`${callCloseDetail.broadCastType}-${callCloseDetail.broadCastId}`).dispatch(schema.update('Board', { id: callCloseDetail.broadCastId, activeStatus: false }));
     channel.emit('callEnd', callCloseDetail);
   }
