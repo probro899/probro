@@ -247,16 +247,38 @@
           overflow-y: hidden;
           .pc-each-screen {
             display: flex;
+            flex-shrink: 0;
             width: 100px;
             height: 100px;
-            background-color: black;
+            background-color: $backgroundColor;
             justify-content: center;
             align-items: center;
             flex-direction: column;
-            border: 3px solid $backgroundColor;
-            border-radius: 50px;
+            border-radius: 50%;
             margin: 10px;
             overflow: hidden;
+            video {
+              height: 100px;
+              width: 100px;
+            }
+            .pc-info {
+              position: absolute;
+              .pc-short-name {
+                color: $skyBlueMain;
+                font-size: 25px;
+                font-weight: bold;
+                display: flex;
+                justify-content: center;
+                text-transform: uppercase;
+              }
+              .pc-ice {
+                display: flex;
+                justify-content: center;
+                color: $skyBlueMain;
+                font-size: 8px;
+                text-transform: capitalize;
+              }
+            }
           }
         }
         .pc-maxmin-btn {

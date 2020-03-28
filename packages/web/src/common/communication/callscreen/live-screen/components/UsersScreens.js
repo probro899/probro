@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 import { ENDPOINT } from '../../../../../config';
 
 const UserView = ({ pc, database, mute }) => {
-  console.log('pc in USerView', pc);
   const user = Object.values(database.UserDetail.byId).find(u => u.userId === pc.user.id);
   return (
     pc.user ? (
@@ -17,15 +16,14 @@ const UserView = ({ pc, database, mute }) => {
           poster={user ? `${ENDPOINT}/user/${10000000 + parseInt(pc.user.id, 10)}/profile/${user.image}` : null}
           // controls
           autoPlay
-          style={{ height: 90, width: 90, background: 'black', borderRadius: 20 }}
         />
-        <div style={{ position: 'absolute', marginTop: 20, marginLeft: 20, width: 100, height: 100 }}>
-          <div>
-            <span style={{ color: 'white' }}>{ pc.online ? 'You' : `${pc.user.firstName[0].toUpperCase()}${pc.user.lastName[0].toUpperCase()}`}</span>
+        <div className="pc-info">
+          <div className="pc-short-name">
+            <span >{ pc.online ? 'You' : `${pc.user.firstName[0]}${pc.user.lastName[0]}`}</span>
             {/* <span>{mute ? <IoMdMicOff /> : <IoMdMic />}</span> */}
           </div>
-          <div>
-            <span style={{ color: 'yellow' }}>{pc.iceCandidateStatus}</span>
+          <div className="pc-ice">
+            <span className="pc-ice-status">{pc.iceCandidateStatus}</span>
           </div>
         </div>
       </div>
