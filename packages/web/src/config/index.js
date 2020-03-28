@@ -3,10 +3,10 @@
 // const PORT = 443;
 // const SOCKET_PROTOCOL = 'wss';
 
-// const ENDPOINT = 'http://localhost:4001';
-// const SOCKETURL = 'localhost';
-const ENDPOINT = 'http://192.168.100.10:4001';
-const SOCKETURL = '192.168.100.10';
+const ENDPOINT = 'http://localhost:4001';
+const SOCKETURL = 'localhost';
+// const ENDPOINT = 'http://192.168.100.10:4001';
+// const SOCKETURL = '192.168.100.10';
 
 // const ENDPOINT = 'http://192.168.1.66:4001';
 // const SOCKETURL = '192.168.1.66';
