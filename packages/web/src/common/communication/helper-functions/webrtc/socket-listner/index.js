@@ -23,13 +23,13 @@ export default (props, state, maximize) => {
 
   // change call Status handler
   client.on('callStatus', async (data) => {
-    console.log('call Status', data);
+    // console.log('call Status', data);
     onCallStatusChangeHandler(props, state, data);
   });
 
   // Handling Call End event
   client.on('callEnd', async (data) => {
-    console.log('callend event called', data);
+    // console.log('callend event called', data);
     onCallEndHandler(props, state, data, maximize);
   });
 };

@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { ENDPOINT } from '../../../../../config';
 
 const UserView = ({ pc, database, mute }) => {
-  console.log('pc in USerView', pc);
+  // console.log('pc in USerView', pc);
   const user = Object.values(database.UserDetail.byId).find(u => u.userId === pc.user.id);
   return (
     pc.user ? (

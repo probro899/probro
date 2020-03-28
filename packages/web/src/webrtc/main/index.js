@@ -20,7 +20,7 @@ function setLocalStream(stream, userId, onLocalStream) {
 }
 
 async function gotRemoteStream(e, userId, gotRemoteStreamHandler) {
-  console.log('Hey got remote stream');
+  console.log('got remote stream', userId, e);
   await gotRemoteStreamHandler(e, userId);
   const { webRtc, database, account } = store.getState();
   const lastVideoElement = document.getElementById('video-mentor');
@@ -89,7 +89,7 @@ export default async function main(onIceCandidateHandler, uid, gotRemoteStreamHa
 
     pc.onicecandidateerror = e => console.error('Error on onIceCandidate', e);
 
-    pc.onicegatheringstatechange = info => console.info('OnICeGatheringsStateChange', info);
+    // pc.onicegatheringstatechange = info => console.info('OnICeGatheringsStateChange', info);
 
     // seting Local Description
     const setLocalDescription = (data) => {

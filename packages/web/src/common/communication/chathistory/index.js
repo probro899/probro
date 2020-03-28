@@ -70,26 +70,26 @@ class ChatHistory extends React.Component {
     }
   }
 
-  containerHandler = (msg, account, type) => {
+  containerHandler = (msg, account, type, idx) => {
     // console.log('message type', msg);
     const { webRtc } = this.props;
     switch (msg.type) {
       case 'date':
         return (
-          <div style={{ width: '95%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: 10 }}>
+          <div key={idx} style={{ width: '95%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: 10 }}>
             <Moment style={{ color: '#757575', padding: 5, border: '1px solid #757575', borderRadius: 10, fontSize: 10 }} format="YYYY MMM DD">{msg.timeStamp}</Moment>
           </div>
         );
       case 'Incoming':
         return (
-          incomingCallLogHandler(msg, account, webRtc.chatHistory.type)
+          incomingCallLogHandler(msg, account, webRtc.chatHistory.type, idx)
         );
       case 'Outgoing':
         return (
-          outgoingCallLogHandler(msg, account, webRtc.chatHistory.type)
+          outgoingCallLogHandler(msg, account, webRtc.chatHistory.type, idx)
         );
       default:
-        return <Message own={isOwnFinder(msg, this.props)} obj={msg} props={this.props} type={type} />;
+        return <Message key={msg.id} own={isOwnFinder(msg, this.props)} obj={msg} props={this.props} type={type} />;
     }
   }
 
@@ -145,7 +145,7 @@ class ChatHistory extends React.Component {
 }
 
 ChatHistory.propTypes = {
-  style: PropTypes.objectOf(PropTypes.any).isRequired,
+  // style: PropTypes.objectOf(PropTypes.any).isRequired,
   _callHandler: PropTypes.func.isRequired,
   change: PropTypes.func.isRequired,
   apis: PropTypes.objectOf(PropTypes.any).isRequired,
@@ -154,7 +154,7 @@ ChatHistory.propTypes = {
   database: PropTypes.objectOf(PropTypes.any).isRequired,
   addDatabaseSchema: PropTypes.func.isRequired,
   updateWebRtc: PropTypes.func.isRequired,
-  fromLive: PropTypes.bool.isRequired,
+  // fromLive: PropTypes.bool.isRequired,
 };
 
 export default ChatHistory;
