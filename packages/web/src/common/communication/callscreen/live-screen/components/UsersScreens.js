@@ -3,33 +3,33 @@ import React from 'react';
 import PropTypes from 'prop-types';
 // import { IoMdMic, IoMdMicOff } from 'react-icons/io';
 import { ENDPOINT } from '../../../../../config';
+import store from '../../../../../store';
 
-const UserView = ({ pc, database, mute }) => {
-  // console.log('pc in USerView', pc);
-  const user = Object.values(database.UserDetail.byId).find(u => u.userId === pc.user.id);
+const UserView = ({ pc, database, mute, userId }) => {
+  const userDetail = Object.values(database.UserDetail.byId).find(u => u.userId === userId);
+  // console.log('Data in userView', database, userId);
+  const user = database.User.byId[userId];
+  // console.log('user', user);
   return (
-    pc.user ? (
-      <div className="pc-each-screen">
-        <video
-          muted={mute}
-          id={`video-${pc.user.id}`}
-          playsInline
-          poster={user ? `${ENDPOINT}/user/${10000000 + parseInt(pc.user.id, 10)}/profile/${user.image}` : null}
-          // controls
-          autoPlay
-          style={{ height: 90, width: 90, background: 'black', borderRadius: 20 }}
-        />
-        <div style={{ position: 'absolute', marginTop: 20, marginLeft: 20, width: 100, height: 100 }}>
-          <div>
-            <span style={{ color: 'white' }}>{ pc.online ? 'You' : `${pc.user.firstName[0].toUpperCase()}${pc.user.lastName[0].toUpperCase()}`}</span>
-            {/* <span>{mute ? <IoMdMicOff /> : <IoMdMic />}</span> */}
-          </div>
-          <div>
-            <span style={{ color: 'yellow' }}>{pc.iceCandidateStatus}</span>
-          </div>
+    <div className="pc-each-screen">
+      <video
+        muted={mute}
+        id={`video-${user.id}`}
+        playsInline
+        poster={userDetail ? `${ENDPOINT}/user/${10000000 + parseInt(userId, 10)}/profile/${userDetail.image}` : null}
+        // controls
+        autoPlay
+      />
+      <div className="pc-info">
+        <div className="pc-short-name">
+          <span>{`${user.firstName[0]}${user.lastName[0]}`}</span>
+          {/* <span>{mute ? <IoMdMicOff /> : <IoMdMic />}</span> */}
+        </div>
+        <div className="pc-ice">
+          {/* { pc ? <span className="pc-ice-status">{pc.iceCandidateStatus}</span> : null} */}
         </div>
       </div>
-    ) : null
+    </div>
   );
 };
 
@@ -37,19 +37,24 @@ UserView.propTypes = {
   pc: PropTypes.objectOf(PropTypes.any).isRequired,
   database: PropTypes.objectOf(PropTypes.any).isRequired,
   mute: PropTypes.bool.isRequired,
+  userId: PropTypes.number.isRequired,
 };
 
 const UsersView = (props) => {
-  const { webRtc, account, database } = props;
+  const { account, database } = props;
+  const { webRtc } = store.getState();
   // console.log('Account', account);
   const { type, connectionId } = webRtc.localCallHistory.chatHistory;
   const muteId = type === 'user' ? webRtc.mainStreamId : database.Board.byId[connectionId].activeStatus;
   // console.log('mute user', muteId);
-  const peerConnection = Object.values(webRtc.peerConnections).filter(obj => obj.iceCandidateStatus !== 'disconnected');
+  // const peerConnection = Object.values(webRtc.peerConnections).filter(obj => obj.iceCandidateStatus !== 'disconnected');
   // console.log('all perconnection', peerConnection);
-  const allOtherUser = peerConnection.map(pc => <UserView pc={pc} key={pc.user.id} database={database} mute={muteId === pc.user.id} />);
-  const finalUserList = webRtc.localCallHistory.chatHistory.type === 'user' ? [<UserView pc={account} mute key={account.user.id} database={database} />] : [...allOtherUser, <UserView mute pc={account} key={account.user.id} database={database} />];
-  return finalUserList;
+  const allActiveUserIds = Object.keys(webRtc.connectedUsers).filter(uid => webRtc.connectedUsers[uid].streams.length > 0);
+  // console.log('All Connected ids', allActiveUserIds);
+  const allActiveUserUis = allActiveUserIds.map(uid => <UserView userId={parseInt(uid, 10)} pc={webRtc.peerConnections[parseInt(uid, 10)]} database={database} mute={muteId === parseInt(uid, 10)} />);
+  // const allOtherUser = peerConnection.map(pc => <UserView pc={pc} key={pc.user.id} database={database} mute={muteId === pc.user.id} />);
+  // const finalUserList = webRtc.localCallHistory.chatHistory.type === 'user' ? [<UserView pc={account} mute key={account.user.id} database={database} />] : [...allOtherUser, <UserView mute pc={account} key={account.user.id} database={database} />];
+  return allActiveUserUis;
 };
 
 class UsersScreen extends React.Component {
@@ -58,7 +63,32 @@ class UsersScreen extends React.Component {
     this.state = {};
   }
 
+  shouldComponentUpdate(nextProps) {
+    if (JSON.stringify(nextProps.webRtc.connectedUsers) !== JSON.stringify(this.props.webRtc.connectedUsers)) {
+      return true;
+    }
+    return false;
+  }
+
+  componentDidUpdate() {
+    // console.log('User View DidUpdte called', this.props);
+    const { webRtc } = this.props;
+    const userIds = Object.keys(webRtc.connectedUsers);
+    const allVideoElements = userIds.map(uid => document.getElementById(`video-${uid}`));
+    // console.log('all Video Elements', allVideoElements, userIds);
+    allVideoElements.forEach((ve, idx) => {
+      if (ve) {
+        webRtc.connectedUsers[userIds[idx]].streams.forEach((stream) => {
+          if (stream.streams) {
+            ve.srcObject = stream.streams[0];
+          }
+        });
+      }
+    });
+  }
+
   render() {
+    // console.log('Props in UserView', this.props);
     return (
       <div className="pc-user-screens">
         <UsersView {...this.props} />

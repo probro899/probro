@@ -5,6 +5,7 @@ import gotRemoteStreamHandler from '../../gotRemoteStreamHandler';
 import iceCandidateStatusHandler from '../../iceCandidateStatusHandler';
 import offerHandler from '../../offerHandler';
 import localStreamHandler from '../../onLocalStream';
+import iceGaterCompleteHandler from '../../onIceGatherCompleteHandler';
 
 const onNotLiveHandler = async (updateWebRtc, broadCastId, database, type, webRtc, connectionId) => {
   // console.log('Communication is not live', database);
@@ -23,12 +24,24 @@ const onLiveHandler = async (props, state, data) => {
   try {
     const { pc, iceCandidateStatus } = webRtc.peerConnections[data.uid];
     let answer = null;
+    let isConnected = false;
     if (iceCandidateStatus === 'connected') {
+      console.log(`${uid}) ANSER IN CONNECTED SATATE`, offer);
       answer = await pc.createAnswer(offer, null);
+      isConnected = true;
     } else {
-      pc.pc.close();
+      console.log(`${uid}) ANSER IN NOT CONNECTED SATATE`, offer);
+      await pc.pc.close();
       delete webRtc.peerConnections[uid];
-      const newPc = await main(onIceCandidateHandler(props, state), uid, gotRemoteStreamHandler(props), iceCandidateStatusHandler(props), offerHandler(props, state), localStreamHandler(props));
+      const newPc = await main(
+        onIceCandidateHandler(props, state),
+        uid,
+        gotRemoteStreamHandler(props),
+        iceCandidateStatusHandler(props),
+        offerHandler(props, state),
+        localStreamHandler(props),
+        iceGaterCompleteHandler(props, state)
+      );
       answer = await newPc.createAnswer(offer, webRtc.streams[account.user.id].stream[0]);
       updateWebRtc('peerConnections', { ...webRtc.peerConnections, [uid]: { pc: newPc, user: database.User.byId[uid] } });
     }
@@ -39,6 +52,7 @@ const onLiveHandler = async (props, state, data) => {
         broadCastId: webRtc.localCallHistory.chatHistory.type === 'user' ? account.user.id : webRtc.showCommunication,
         broadCastType: webRtc.localCallHistory.chatHistory.type === 'user' ? 'UserConnection' : 'Board',
         callType: webRtc.localCallHistory.mediaType,
+        isConnected,
       },
       userList: [{ userId: uid }],
     });
@@ -48,7 +62,7 @@ const onLiveHandler = async (props, state, data) => {
 };
 
 export default async (props, state, data) => {
-  // console.log('Offer on Live handler called');
+  // console.log('Offer on Live handler called', data);
   const { database } = store.getState();
   const { updateWebRtc } = props;
   const { broadCastId, broadCastType, connectionId } = data;

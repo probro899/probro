@@ -37,7 +37,7 @@ const declineCall = async (status, props, state, data, webRtc) => {
 
 export default async (props, state, data) => {
   const { webRtc } = store.getState();
-  // console.log('offer arrived', data, webRtc, props);
+  console.log(`${data.uid}) OFFER ARRIVED`, data);
 
   const { uid, connectionId, broadCastType, broadCastId } = data;
   const type = broadCastType === 'Board' ? 'board' : 'user';
@@ -48,7 +48,7 @@ export default async (props, state, data) => {
     declineCall('Call is busy', props, state, data, webRtc);
   } else {
     if (!webRtc.isLive) {
-      autoCloseHandler(props, state);
+      // autoCloseHandler(props, state);
       apis.callStatusChange({
         callStatusDetails: {
           broadCastType,

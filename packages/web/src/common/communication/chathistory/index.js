@@ -47,14 +47,14 @@ class ChatHistory extends React.Component {
     try {
       const { _callHandler, apis, change, updateWebRtc, webRtc, account, database } = this.props;
       const stream = await mediaSelector(mediaType);
-      updateWebRtc('isCallUpgraded', false);
-      updateWebRtc('isConnecting', true);
-      updateWebRtc('streams', { [account.user.id]: { stream: [stream] } });
-      updateWebRtc('localCallHistory', { chatHistory: webRtc.chatHistory, stream, mediaType, callType: 'Outgoing', callEnd: false });
-      autoCloseHandler(this.props, { apis }, 22000);
+      await updateWebRtc('isCallUpgraded', false);
+      await updateWebRtc('isConnecting', true);
+      await updateWebRtc('streams', { [account.user.id]: { stream: [stream] } });
+      await updateWebRtc('localCallHistory', { chatHistory: webRtc.chatHistory, stream, mediaType, callType: 'Outgoing', callEnd: false });
+      // autoCloseHandler(this.props, { apis }, 22000);
       if (webRtc.chatHistory.type === 'user') {
-        updateWebRtc('mainStreamId', webRtc.chatHistory.user.user.id);
-        updateWebRtc('streams', { ...webRtc.streams, [webRtc.chatHistory.user.user.id]: { stream: [] } });
+        await updateWebRtc('mainStreamId', webRtc.chatHistory.user.user.id);
+        await updateWebRtc('streams', { ...webRtc.streams, [webRtc.chatHistory.user.user.id]: { stream: [] } });
       }
       if (webRtc.chatHistory.type === 'board') {
         if (database.Board.byId[webRtc.chatHistory.connectionId].activeStatus) {
