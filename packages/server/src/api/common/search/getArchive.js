@@ -6,7 +6,7 @@ import flat from '../../flat';
 import findBlogDetails from '../findBlogDetails';
 
 export default async (userId) => {
-  console.log('User id in getArchive api', userId);
+  // console.log('User id in getArchive api', userId);
   const popularRes = await getPopular();
   if (!userId) {
     return { basedOnHistory: { blogs: popularRes.blogs }, popularOnPc: { blogs: popularRes.blogs, users: popularRes.users } };
@@ -36,7 +36,7 @@ export default async (userId) => {
     // const finalBlogDetals = allBlogResult.map((blog, idx) => ({ blog, ...allBlogDetails[idx] })) || [];
     return { blogs: allBlogDetails };
   });
-  console.log('Main Response', mainRes);
+  // console.log('Main Response', mainRes);
   const finalBlogsRes = mainRes.blogs.length > 0 ? mainRes.blogs : popularRes.blogs;
   return { basedOnHistory: { blogs: finalBlogsRes }, popularOnPc: { blogs: popularRes.blogs, users: popularRes.users } };
 };

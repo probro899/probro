@@ -27,7 +27,7 @@ const loginHelper = async (rec, userDetails) => {
 };
 
 const googleLogin = async (grec) => {
-  console.log('user google login called', grec);
+  // console.log('user google login called', grec);
   const { record } = grec;
   const googleInfo = await new Promise((resolve, reject) => {
     googleTokenVerifier.verify(record.tokenId, googleClientId, (err, info) => {
@@ -65,7 +65,7 @@ const googleLogin = async (grec) => {
 };
 
 export default async function login(record) {
-  console.log('record in login', record);
+  // console.log('record in login', record);
   const { password, loginType } = record;
   let googleRes;
   if (loginType) {

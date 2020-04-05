@@ -8,7 +8,7 @@ import localStreamHandler from '../../onLocalStream';
 import iceGaterCompleteHandler from '../../onIceGatherCompleteHandler';
 
 const onNotLiveHandler = async (updateWebRtc, broadCastId, database, type, webRtc, connectionId) => {
-  // console.log('Communication is not live', database);
+  console.log('Communication is not live', database);
   await updateWebRtc('communicationContainer', 'list');
   await updateWebRtc('showCommunication', broadCastId);
   await updateWebRtc('localCallHistory', { ...webRtc.localCallHistory, chatHistory: { connectionId, type, user: { user: database.User.byId[broadCastId] }, broadCastId } });
@@ -37,7 +37,7 @@ const onLiveHandler = async (props, state, data) => {
         onIceCandidateHandler(props, state),
         uid,
         gotRemoteStreamHandler(props),
-        iceCandidateStatusHandler(props),
+        iceCandidateStatusHandler(props, state),
         offerHandler(props, state),
         localStreamHandler(props),
         iceGaterCompleteHandler(props, state)

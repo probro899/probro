@@ -10,6 +10,34 @@ class MainScreen extends React.Component {
     this.state = {};
   }
 
+  // shouldComponentUpdate(nextProps) {
+  //   const { database, webRtc } = this.props;
+
+  //   const currentMainUiId = database.Board.byId[webRtc.localCallHistory.chatHistory.connectionId];
+  //   const newMainId = nextProps.database.Board.byId[webRtc.localCallHistory.chatHistory.connectionId]
+  //   if (currentMainUiId !== newMainId) {
+  //     return true;
+  //   }
+  //   return false;
+  // }
+
+  // componentDidUpdate() {
+  //   // console.log('User View DidUpdte called', this.props);
+  //   const { webRtc, database } = this.props;
+  //   const userIds = Object.keys(webRtc.connectedUsers);
+  //   const videoElment = userIds.map(uid => document.getElementById(`video-${uid}`));
+  //   // console.log('all Video Elements', allVideoElements, userIds);
+  //   const mentorId = database.Board.byId[webRtc.localCallHistory.chatHistory.connectionId].activeStatus;
+  //   console.log('Mentor id', mentorId);
+  //   if (videoElment) {
+  //     webRtc.connectedUsers[mentorId].streams.forEach((stream) => {
+  //       if (stream.streams) {
+  //         videoElment.srcObject = stream.streams[0];
+  //       }
+  //     });
+  //   }
+  // }
+
   render() {
     const { database, webRtc } = this.props;
     // console.log('MainScreenProps', this.props);

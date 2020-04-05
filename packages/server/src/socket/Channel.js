@@ -9,9 +9,9 @@ class Channel {
     return Channel.provider.publish(this.id, PKT_ACTION(action), userList, userId);
   }
 
-  emit(event, data, userList) {
+  emit(event, data, userList, userId) {
     // console.log(' Channel emit called', event, data, userList);
-    return Channel.provider.publish(this.id, PKT_EVENT(event, data), userList);
+    return Channel.provider.publish(this.id, PKT_EVENT(event, data), userList, userId);
   }
 }
 

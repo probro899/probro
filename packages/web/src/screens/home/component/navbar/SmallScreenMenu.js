@@ -5,7 +5,16 @@ import { connect } from 'react-redux';
 import { Drawer } from '@blueprintjs/core';
 import * as actions from '../../../../actions';
 
-const DropMenu = ({ account, activeNav, apis }) => {
+const logOutHandler = (apis, webRtc) => {
+  // console.log('Log out handler called', webRtc);
+  try {
+    apis.logout();
+  } catch (e) {
+    // console.error('Logout faild', e);
+  }
+};
+
+const DropMenu = ({ account, activeNav, apis, webRtc }) => {
   return (
     <div className="pc-drop-menu">
       <Link to="/" className={activeNav === 'properClass' ? 'pc-drop-menu-link active' : 'pc-drop-menu-link'}>Home</Link>
@@ -15,7 +24,7 @@ const DropMenu = ({ account, activeNav, apis }) => {
       {!account.sessionId ? (
         <Link to="/login" className="pc-drop-menu-link">Login</Link>
       ) : (
-        <Link to="#" onClick={async () => await apis.logout()} className="pc-drop-menu-link">Logout</Link>
+        <Link to="#" onClick={logOutHandler(apis, webRtc)} className="pc-drop-menu-link">Logout</Link>
       )}
     </div>
   );
@@ -31,7 +40,7 @@ class SmallScreenMenu extends React.Component {
   state = {};
 
   render() {
-    const { open, smallScreenToggle, account, pcLogo, navigate, apis } = this.props;
+    const { open, smallScreenToggle, account, pcLogo, navigate, apis, webRtc } = this.props;
     return (
       <Drawer
         className="pc-dropdown-drawer"
@@ -44,7 +53,7 @@ class SmallScreenMenu extends React.Component {
         title={<img alt="Proper Class Logo" style={{ objectFit: 'contain', width: '100%' }} src={pcLogo} />}
         transitionDuration={200}
       >
-        <DropMenu account={account} activeNav={navigate.mainNav.name} apis={apis} />
+        <DropMenu account={account} activeNav={navigate.mainNav.name} apis={apis} webRtc />
       </Drawer>
     );
   }
@@ -57,6 +66,7 @@ SmallScreenMenu.propTypes = {
   apis: PropTypes.objectOf(PropTypes.any).isRequired,
   pcLogo: PropTypes.string.isRequired,
   navigate: PropTypes.objectOf(PropTypes.any).isRequired,
+
 };
 
 const mapStateToProps = state => state;

@@ -5,7 +5,7 @@ import store from '../../../../../../store';
 import autoCloseHandler from '../../autoCloseHandler';
 
 const initCall = async (props, state, data, webRtc) => {
-  // console.log('call init', data);
+  console.log('call init', data);
   await offerInitialization(props, state, data);
   if (webRtc.showCommunication) {
     await offerOnCommunicationOpen(props, state, data);
@@ -45,6 +45,14 @@ export default async (props, state, data) => {
   // const { uid, broadCastId, broadCastType, connectionId } = data;
   const { apis } = state;
   if (webRtc.showIncommingCall || webRtc.isConnecting) {
+    // console.log('inside call is budy mode', broadCastId);
+    if (webRtc.localCallHistory.chatHistory.connectionId === broadCastId) {
+      console.log('updating incomming offers');
+      await updateWebRtc('pendingOffers', [...webRtc.pendingOffers, data]);
+      await updateWebRtc('connectedUsers', { ...webRtc.connectedUsers, [data.uid]: { streams: [], type: data.callType } });
+      await updateWebRtc('streams', { ...webRtc.streams, [data.uid]: { ...webRtc.streams[data.uid], callEnd: false, stream: [], callType: 'Incoming' } });
+      // await updateWebRtc('localCallHistory', { ...webRtc.localCallHistory, callType: webRtc.localCallHistory.callType || 'Incoming', callEnd: false });
+    }
     declineCall('Call is busy', props, state, data, webRtc);
   } else {
     if (!webRtc.isLive) {

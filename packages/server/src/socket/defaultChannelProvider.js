@@ -29,7 +29,7 @@ export default function createDefaultProvider() {
         list.push(session);
         // console.log('chanel record after another user login', channels.Board[0].scopes);
       } else {
-        console.log('user session is already in channel');
+        // console.log('user session is already in channel');
       }
       // console.log('ALll channels', channels);
       return true;
@@ -57,6 +57,7 @@ export default function createDefaultProvider() {
 
     publish: (channelId, message, userList, userId) => {
       const list = channels[channelId];
+      // console.log('publish called', channelId, message, userId);
       if (userList) {
         // console.log('default Channel data', list[0].values.user.user, userList);
         const shortedUserList = list.filter(session => presentorTestor(session.values.user.id, userList));

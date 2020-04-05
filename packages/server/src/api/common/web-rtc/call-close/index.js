@@ -13,7 +13,7 @@ export default async function callClose(data) {
       await userCallCloseHandler(insert, callCloseDetail, userList, session);
     }
     if (callCloseDetail.type === 'board') {
-      await boardCallCloseHandler(insert, callCloseDetail, userList, session);
+      await boardCallCloseHandler(callCloseDetail, session);
     }
   });
 }

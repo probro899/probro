@@ -17,14 +17,17 @@ export default props => async (stream, userId) => {
   const { updateWebRtc } = props;
   const { webRtc } = store.getState();
   // console.log('remote stream handler', stream, userId);
+
   await updateWebRtc('connectedUsers',
     {
       ...webRtc.connectedUsers,
       [userId]: {
         ...webRtc.connectedUsers[userId],
-        streams: [...webRtc.connectedUsers[userId].streams, stream],
+        streams: webRtc.connectedUsers[userId] ? [...webRtc.connectedUsers[userId].streams, stream] : [stream],
       },
     });
+
+
   await updateWebRtc('streams', {
     ...webRtc.streams,
     [userId]: {

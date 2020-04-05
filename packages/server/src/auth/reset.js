@@ -4,7 +4,7 @@ import { genHashPassword } from './passwordHandler';
 
 export default async function resetPassword(resetToken, newPassword) {
   const userId = cache.users.get(resetToken);
-  console.log('reset handlercalled', resetToken, newPassword, userId);
+  // console.log('reset handlercalled', resetToken, newPassword, userId);
   if (!userId) {
     throw new Error('Invalid token');
   }

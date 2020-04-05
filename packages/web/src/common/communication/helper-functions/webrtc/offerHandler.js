@@ -5,6 +5,7 @@ export default (props, state) => async (offer, userId) => {
     const { account, webRtc } = store.getState();
     const { updateWebRtc } = props;
     // console.log('offer handler called', offer, userId, webRtc);
+    // updateWebRtc('connectedUsers', { ...webRtc.connectedUsers, [userId]: { streams: [] } });
     updateWebRtc('streams', { ...webRtc.streams, [userId]: { ...webRtc.streams[userId], callEnd: false, stream: [] } });
     // updateWebRtc('peerConnections', {...webRtc.peerConnections, [userId]: { ...webRtc.peerConnections[userId], offer, type: 'offer' } });
     const broadCastType = webRtc.localCallHistory.chatHistory.type === 'user' ? 'UserConnection' : 'Board';

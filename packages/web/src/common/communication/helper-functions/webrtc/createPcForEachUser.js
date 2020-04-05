@@ -19,14 +19,14 @@ export default async (boardId, props, state) => {
     } else {
       const boardmembers = Object.values(database.BoardMember.byId).filter(bm => bm.boardId === boardId);
       const userListAll = boardmembers.map(bm => database.User.byId[bm.tuserId]);
-      userList = userListAll.filter(user => user.id !== account.user.id);
+      userList = userListAll.filter(user => user.id !== account.user.id).filter(u => u.activeStatus);
     }
-    // console.log('userList', userList);
+    console.log('userList', userList);
     const peerConnectionPromises = userList.map(
       user => main(
         onIceCandidateHandler(props, state),
         user.id, gotRemoteStreamHandler(props),
-        iceCandidateStatusHandler(props),
+        iceCandidateStatusHandler(props, state),
         offerHandler(props, state),
         localStreamHandler(props),
         iceGatherCompleteHandler(props, state)

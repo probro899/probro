@@ -29,7 +29,7 @@ export default (props, state, maximize) => {
 
   // Handling Call End event
   client.on('callEnd', async (data) => {
-    // console.log('callend event called', data);
+    console.log('callend event called', data);
     onCallEndHandler(props, state, data, maximize);
   });
 };

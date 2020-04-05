@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { ENDPOINT } from '../../../../../config';
 import store from '../../../../../store';
 
-const UserView = ({ pc, database, mute, userId }) => {
+const UserView = ({ pc, database, mute, userId, status, account }) => {
   const userDetail = Object.values(database.UserDetail.byId).find(u => u.userId === userId);
   // console.log('Data in userView', database, userId);
   const user = database.User.byId[userId];
@@ -22,11 +22,11 @@ const UserView = ({ pc, database, mute, userId }) => {
       />
       <div className="pc-info">
         <div className="pc-short-name">
-          <span>{`${user.firstName[0]}${user.lastName[0]}`}</span>
+          <span>{user.id === account.user.id ? 'You' : `${user.firstName[0]}${user.lastName[0]}`}</span>
           {/* <span>{mute ? <IoMdMicOff /> : <IoMdMic />}</span> */}
         </div>
         <div className="pc-ice">
-          {/* { pc ? <span className="pc-ice-status">{pc.iceCandidateStatus}</span> : null} */}
+          { pc ? <span className="pc-ice-status">{status}</span> : null}
         </div>
       </div>
     </div>
@@ -49,12 +49,23 @@ const UsersView = (props) => {
   // console.log('mute user', muteId);
   // const peerConnection = Object.values(webRtc.peerConnections).filter(obj => obj.iceCandidateStatus !== 'disconnected');
   // console.log('all perconnection', peerConnection);
-  const allActiveUserIds = Object.keys(webRtc.connectedUsers).filter(uid => webRtc.connectedUsers[uid].streams.length > 0);
+  const allActiveUserIds = Object.keys(webRtc.connectedUsers).filter(uid => parseInt(uid, 10) !== account.user.id).filter(uid => webRtc.connectedUsers[uid].iceCandidateStatus !== 'disconnected');
   // console.log('All Connected ids', allActiveUserIds);
-  const allActiveUserUis = allActiveUserIds.map(uid => <UserView userId={parseInt(uid, 10)} pc={webRtc.peerConnections[parseInt(uid, 10)]} database={database} mute={muteId === parseInt(uid, 10)} />);
+  const allActiveUserUis = allActiveUserIds.map(uid => (
+    <UserView
+      account={account}
+      status={webRtc.connectedUsers[uid].iceCandidateStatus}
+      userId={parseInt(uid, 10)}
+      pc={webRtc.peerConnections[parseInt(uid, 10)]}
+      database={database}
+      mute={muteId === parseInt(uid, 10)}
+    />
+  ));
   // const allOtherUser = peerConnection.map(pc => <UserView pc={pc} key={pc.user.id} database={database} mute={muteId === pc.user.id} />);
-  // const finalUserList = webRtc.localCallHistory.chatHistory.type === 'user' ? [<UserView pc={account} mute key={account.user.id} database={database} />] : [...allOtherUser, <UserView mute pc={account} key={account.user.id} database={database} />];
-  return allActiveUserUis;
+  const finalUserList = webRtc.localCallHistory.chatHistory.type === 'user'
+    ? [<UserView account={account} userId={account.user.id} pc={account} mute key={account.user.id} database={database} />]
+    : [...allActiveUserUis, <UserView userId={account.user.id} mute account={account} pc={account} key={account.user.id} database={database} />];
+  return finalUserList;
 };
 
 class UsersScreen extends React.Component {

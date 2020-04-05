@@ -10,11 +10,21 @@ import MessageNotification from './MessageNotification';
 import SmallScreenMenu from './SmallScreenMenu';
 import { ENDPOINT } from '../../../../config';
 import DashboardMenu from './DashboardMenu';
-
+import callClosehandler from '../../../../common/communication/helper-functions/webrtc/closeHandler';
 
 const pcLogo = require('../../../../assets/logo.png');
 
-const DropDownMenu = (onclick, apis) => {
+const logOutHandler = async (apis, props) => {
+  // console.log('Log out handler called', props);
+  try {
+    await callClosehandler(props, null, apis)();
+    apis.logout();
+  } catch (e) {
+    console.error('Logout error', e);
+  }
+};
+
+const DropDownMenu = (onclick, apis, props) => {
   return (
     <Menu>
       <MenuItem
@@ -28,7 +38,7 @@ const DropDownMenu = (onclick, apis) => {
         icon="log-out"
         intent={Intent.DANGER}
         text="Logout"
-        onClick={() => apis.logout()}
+        onClick={() => logOutHandler(apis, props)}
       />
     </Menu>
   );
@@ -68,6 +78,7 @@ class Navbar extends Component {
     const {
       account, database, navigate, className,
       updateWebRtc,
+      webRtc,
     } = this.props;
     let profilePic;
     Object.values(database.UserDetail.byId).map((obj) => {
@@ -141,7 +152,7 @@ class Navbar extends Component {
             )}
           {account.user && <Notifications {...this.props} apis={apis} />}
           { account.user
-            ? <DashboardMenu navigate={navigate} profilePic={profilePic} content={DropDownMenu(this.onClickHandler, apis)} />
+            ? <DashboardMenu navigate={navigate} profilePic={profilePic} content={DropDownMenu(this.onClickHandler, apis, this.props)} />
             : (
               <Link
                 to="/login"

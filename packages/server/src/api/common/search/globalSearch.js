@@ -19,7 +19,7 @@ const flat = (arr) => {
 // Todo make baninary tree for searching it is expensive for now it is ok
 
 export default async (keyword, country, industry) => {
-  console.log('search keyword in search api', keyword, country, industry);
+  // console.log('search keyword in search api', keyword, country, industry);
   const keywordArrtemp = keyword.split(' ');
   // console.log('all keyword', keywordArrtemp);
   const keywordArr = keywordArrtemp.filter(key => key.length > 0);
@@ -74,11 +74,11 @@ export default async (keyword, country, industry) => {
       ...flat(userSkillResult).map(u => u.userId),
     ]);
 
-    console.log('keyword User list', keywordUsers, userCarrierInterestResult);
+    // console.log('keyword User list', keywordUsers, userCarrierInterestResult);
     // console.log('All uniq user', uniqUsers);
     const uniqueCarrierInterestUsers = lodash.uniq(flat(userCarrierInterestResult).map(u => u.userId));
     const uniqueCountryUsers = lodash.uniq(flat(userDetailCountryResult).map(u => u.userId));
-    console.log('uniqueCarrier', uniqueCarrierInterestUsers, 'unique country', uniqueCountryUsers);
+    // console.log('uniqueCarrier', uniqueCarrierInterestUsers, 'unique country', uniqueCountryUsers);
     let countryAndIndustryUserList = [];
     if (country && industry) {
       countryAndIndustryUserList = lodash.uniq([
@@ -110,7 +110,7 @@ export default async (keyword, country, industry) => {
       finalUsers = countryAndIndustryUserList;
     }
 
-    console.log('final user list', finalUsers, countryAndIndustryUserList);
+    // console.log('final user list', finalUsers, countryAndIndustryUserList);
     finalUsers.filter(u => u).forEach(id => finalUserListPromises.push(findUserDetail(id, 'all')));
     const finalUserList = await Promise.all(finalUserListPromises);
     let allUserResult = [];
@@ -132,6 +132,6 @@ export default async (keyword, country, industry) => {
     // console.log('final User Result', finalUserList);
     return { blogs: allBlogResult, users: finalUserList };
   });
-  console.log('search response', res);
+  // console.log('search response', res);
   return res;
 };

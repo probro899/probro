@@ -38,7 +38,7 @@ export default (props, state, apis) => async (remoteData) => {
               connectionId: webRtc.localCallHistory.chatHistory.connectionId,
               callEndReply: remoteData,
             },
-            userList: [{ userId: webRtc.localCallHistory.chatHistory.user.user.id }],
+            userList: [{ userId: webRtc.localCallHistory.chatHistory.connectionId  }],
           });
         }
       }
@@ -82,6 +82,7 @@ export default (props, state, apis) => async (remoteData) => {
     updateWebRtc('localCallHistory', { callEnd: true });
     updateWebRtc('mainStreamId', null);
     updateWebRtc('streams', {});
+    updateWebRtc('connectedUsers', {});
   } else {
     updateWebRtc('showIncommingCall', false);
   }
