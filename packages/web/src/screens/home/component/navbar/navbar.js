@@ -17,7 +17,9 @@ const pcLogo = require('../../../../assets/logo.png');
 const logOutHandler = async (apis, props) => {
   // console.log('Log out handler called', props);
   try {
-    await callClosehandler(props, null, apis)();
+    if (props.webRtc.isLive) {
+      await callClosehandler(props, null, apis)();
+    }
     apis.logout();
   } catch (e) {
     console.error('Logout error', e);
