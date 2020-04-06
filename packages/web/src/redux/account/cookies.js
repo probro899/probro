@@ -15,7 +15,7 @@ export default {
   },
 
   set: (cookie, value) => {
-    document.cookie = `${cookie.trim()}=${value}`;
+    document.cookie = `${cookie.trim()}=${value}; max-age=${60 * 60 * 24 * 7};`;
   },
 
   clear: (cookie) => {

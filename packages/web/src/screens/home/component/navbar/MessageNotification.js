@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import { Icon } from '@blueprintjs/core';
 import { Badge } from '../../../../components';
 import { getChatList } from '../../../../common/communication/chatlist/helper-function';
+import SoudComponent from '../../../../common/communication/components/SoundComponent';
+import notificationUrl from '../../../../assets/notification.mp3';
 
 class MessageNotification extends React.Component {
   state = { unReadMessage: 0 };
@@ -37,7 +39,13 @@ class MessageNotification extends React.Component {
       <Link to="#" onClick={this.showMessage}>
         <div className="navbar-item">
           <Icon icon="chat" iconSize={Icon.SIZE_LARGE} />
-          {unReadMessage !== 0 && <Badge number={unReadMessage} size={25} />}
+          {unReadMessage !== 0 && (
+          <div>
+            <Badge number={unReadMessage} size={25} />
+            <SoudComponent url={notificationUrl} noLoop />
+          </div>
+          )
+          }
         </div>
       </Link>
     );

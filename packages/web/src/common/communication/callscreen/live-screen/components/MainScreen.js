@@ -47,6 +47,9 @@ class MainScreen extends React.Component {
     const user = Object.values(database.UserDetail.byId).find(u => u.userId === userId);
     return (
       <div className="pc-main-screen">
+        <div style={{ width: '100%', height: '100%', zIndex: 1, position: 'absolute', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+          <div style={{ height: 50, width: 50, borderRadius: '50%', background: 'red' }} />
+        </div>
         <video
           // controls
           id="video-mentor"
@@ -56,6 +59,7 @@ class MainScreen extends React.Component {
           className="pc-main-video"
           poster={user && `${ENDPOINT}/user/${10000000 + parseInt(userId, 10)}/profile/${Object.values(database.UserDetail.byId).find(u => u.userId === userId).image}`}
         />
+
       </div>
     );
   }

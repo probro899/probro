@@ -47,7 +47,6 @@ export default async (props, state, data) => {
   if (webRtc.showIncommingCall || webRtc.isConnecting) {
     // console.log('inside call is budy mode', broadCastId);
     if (webRtc.localCallHistory.chatHistory.connectionId === broadCastId) {
-      console.log('updating incomming offers');
       await updateWebRtc('pendingOffers', [...webRtc.pendingOffers, data]);
       await updateWebRtc('connectedUsers', { ...webRtc.connectedUsers, [data.uid]: { streams: [], type: data.callType } });
       await updateWebRtc('streams', { ...webRtc.streams, [data.uid]: { ...webRtc.streams[data.uid], callEnd: false, stream: [], callType: 'Incoming' } });

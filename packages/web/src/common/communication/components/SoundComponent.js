@@ -7,12 +7,13 @@ class SoundComponent extends React.Component {
   state = {};
 
   render() {
+    const { url, noLoop } = this.props;
     return (
       <audio
         autoPlay
         // controls
-        src={ringtone}
-        loop
+        src={url}
+        loop={!noLoop}
         type="audio/mpeg"
       />
     );

@@ -4,6 +4,7 @@ import { Button } from '@blueprintjs/core';
 import RoundPicture from '../../components/RoundPicture';
 import mediaSelector from './mediaSelector';
 import { SoundComponent } from './components';
+import ringtoneUrl from '../../assets/ringtone.mp3';
 import { ENDPOINT } from '../../config';
 
 const callingPerson = require('../../assets/icons/128w/uploadicon128.png');
@@ -45,7 +46,7 @@ class IncomingCallScreen extends React.Component {
         style={style}
         className="incoming-call-screen"
       >
-        {webRtc.showIncommingCall && <SoundComponent />}
+        {webRtc.showIncommingCall && <SoundComponent url={ringtoneUrl} />}
         <div
           className="person-icon-container"
           style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}
