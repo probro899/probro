@@ -39,7 +39,7 @@ class MainScreen extends React.Component {
   // }
 
   render() {
-    const { database, webRtc } = this.props;
+    const { database, webRtc, account } = this.props;
     // console.log('MainScreenProps', this.props);
     const { type, connectionId } = webRtc.localCallHistory.chatHistory;
     const isUser = type === 'user';
@@ -56,6 +56,7 @@ class MainScreen extends React.Component {
           playsInline
           controlsList="noremoteplayback"
           autoPlay
+          muted={database.Board.byId[webRtc.localCallHistory.chatHistory.connectionId].activeStatus === account.user.id}
           className="pc-main-video"
           poster={user && `${ENDPOINT}/user/${10000000 + parseInt(userId, 10)}/profile/${Object.values(database.UserDetail.byId).find(u => u.userId === userId).image}`}
         />

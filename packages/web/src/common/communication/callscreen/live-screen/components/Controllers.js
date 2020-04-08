@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Redirect } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
 import { Button, Position } from '@blueprintjs/core';
 import Tooltip from 'react-tooltip';
 import { TiMediaRecord } from 'react-icons/ti';
@@ -13,6 +13,15 @@ class Controllers extends React.Component {
     super(props);
     this.state = { showWhiteBoard: false, startRecording: false };
   }
+
+  // shouldComponentUpdate(nextProps, nextState) {
+  //   const { webRtc } = this.props;
+  //   console.log(webRtc);
+  //   if (webRtc.localCallHistory.mediaType !== nextProps.webRtc.localCallHistory.mediaType) {
+  //     return true;
+  //   }
+  //   return false;
+  // }
 
   recordingHandler = async () => {
     const { startRecording } = this.state;
@@ -83,6 +92,7 @@ class Controllers extends React.Component {
         >
           <TiMediaRecord size={20} />
         </Button>
+        {/* <Link to={`/${account.user.slug}/drawing-board`}> */}
         <Button
           data-tip="White Board"
           className={webRtc.localCallHistory.mediaType === 'whiteBoard' ? 'pc-control-btn active' : 'pc-control-btn'}
@@ -90,9 +100,11 @@ class Controllers extends React.Component {
         >
           <FiEdit2 size={20} />
         </Button>
+        {/* </Link> */}
         {/* <Button
-          className="pc-control-btn"
-          onClick={this.muteToggle}
+          data-tip="Mute"
+          className={webRtc.localCallHistory.mediaType === 'audio' ? 'pc-control-btn active' : 'pc-control-btn'}
+          onClick={() => this.callUpGradeController('audio')}
         >
           <FiMic size={20} />
         </Button> */}

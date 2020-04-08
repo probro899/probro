@@ -34,6 +34,8 @@ export default async (mediaType) => {
         const whiteBoardTracks = whiteBoardstream.getTracks();
         stream = new MediaStream([...audioTracksforWhiteBoard, ...whiteBoardTracks]);
         return stream;
+      case 'mute':
+        return null;
       default:
         return stream;
     }

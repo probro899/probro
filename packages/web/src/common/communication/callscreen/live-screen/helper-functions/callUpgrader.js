@@ -22,5 +22,10 @@ export default async (mediaType, props) => {
     updateDatabaseSchema('Board', { id: webRtc.localCallHistory.chatHistory.connectionId, activeStatus: account.user.id });
   }
   updateWebRtc('localCallHistory', { ...webRtc.localCallHistory, stream, mediaType, callEnd: false });
+
+  // console.log('In mute Test before', stream.getTracks());
+  // const changeStream = stream.getTracks()[0].enabled = false;
+  // console.log('after mute', changeStream);
+
   _callHandler(apis, stream);
 };

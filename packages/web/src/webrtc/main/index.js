@@ -66,7 +66,8 @@ export default async function main(
     iceServers: [
       { urls: ['stun:stun.l.google.com:19302'] },
       {
-        urls: ['turn:properclass.com:3478?transport=tcp'],
+        urls: ['turn:properclass.com:3478?transport=udp'],
+        // urls: ['turn:properclass.com:3478?transport=tcp'],
         username: 'properclass',
         credential: 'proper199201',
       },
