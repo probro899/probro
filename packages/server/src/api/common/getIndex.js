@@ -36,7 +36,7 @@ export default async () => {
     const allUserDetailsPromises = [];
     indexUserId.forEach(obj => allUserDetailsPromises.push(findUserDetails(obj.id)));
     const allIndexUsers = await Promise.all(allUserDetailsPromises);
-    console.log('indexUserId', allIndexUsers);
+    // console.log('indexUserId', allIndexUsers);
     return { blogs, indexUserList: allIndexUsers };
   });
   return { sliderImages, bannerImages, archive: dataRes.blogs, indexUsers: dataRes.indexUserList };

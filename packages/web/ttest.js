@@ -1,5 +1,7 @@
-const _ = require('lodash');
 
-const arr = [1,2,3,4,5,6];
+
+const arr = [1, 2, 3, 4, 5];
 // const arr1 = _.reverse(arr);
-console.log(arr, arr.slice().reverse());
+console.log('before', arr);
+console.log(arr.shift(1));
+console.log('after', arr);

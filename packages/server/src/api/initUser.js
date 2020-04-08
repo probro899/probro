@@ -66,6 +66,7 @@ export default async function initUser(id) {
   // console.log('boardWIth live status', boardWithLiveStatus);
   // const finalBoard = u.Board.map((b, idx) => ({ ...b, activeStatus: boardWithLiveStatus[idx] > 1 }));
   session.subscribe('Main');
+
   // console.log('board member', u.BoardMember);
   session.dispatch(schema.init('User', finalUserList));
   session.dispatch(schema.init('UserDetail', u.UserDetail));

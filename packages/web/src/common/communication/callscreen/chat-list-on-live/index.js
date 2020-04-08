@@ -25,6 +25,7 @@ const ScChatList = (props) => {
 
 ScChatList.propTypes = {
   onClose: PropTypes.func.isRequired,
+  onClickItem: PropTypes.func.isRequired,
 };
 
 export default ScChatList;

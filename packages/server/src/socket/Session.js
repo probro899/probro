@@ -24,7 +24,7 @@ class Session {
 
     ws.on('close', () => {
       // Remove all subscriptions
-      console.log('onclose method called');
+      // console.log('onclose method called');
       this.subscriptions.forEach(channelId => Channel.unsubscribe(channelId, this));
 
       // Trigger all the close listeners

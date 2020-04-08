@@ -14,6 +14,7 @@ const initialState = {
   peerConnections: {},
   pendingOffers: [],
   streams: {},
+  connectedUsers: {},
   currentOffer: null,
   iceCandidates: {},
   liveIncomingCall: false,

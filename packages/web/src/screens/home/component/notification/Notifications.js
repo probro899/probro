@@ -5,9 +5,11 @@ import { Drawer, Icon } from '@blueprintjs/core';
 import NotificationContainer from './NotificationContainer';
 import { Badge } from '../../../../components';
 import getUnReadNotification from './helper-functions/getUnreadNotification';
+import SoundComponent from '../../../../common/communication/components/SoundComponent';
+import notificaitonUrl from '../../../../assets/notification.mp3';
 
 class Notifications extends React.Component {
-  state = { drawerOpen: false, notiNo: null, lastNotifId: null };
+  state = { drawerOpen: false, notiNo: 0, lastNotifId: null };
 
   componentDidMount() {
     const notiDetails = getUnReadNotification(this.props);
@@ -42,7 +44,13 @@ class Notifications extends React.Component {
       <Link to="#" onClick={this.onDrawerToggle}>
         <div className="navbar-item">
           <Icon icon="notifications" iconSize={Icon.SIZE_LARGE} />
-          {notiNo > 0 && <Badge number={notiNo} size={20} />}
+          {notiNo > 0 && (
+          <div>
+            <SoundComponent url={notificaitonUrl} noLoop />
+            <Badge number={notiNo} size={20} />
+          </div>
+          )
+            }
           <Drawer
             isOpen={drawerOpen}
             onClose={this.onDrawerToggle}

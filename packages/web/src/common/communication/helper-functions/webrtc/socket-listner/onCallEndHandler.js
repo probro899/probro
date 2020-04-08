@@ -31,7 +31,7 @@ export default async (props, state, data, maximizeHandler) => {
   }
 
   if (type === 'board') {
-    if (webRtc.isLive && webRtc.showCommunication === broadCastId) {
+    if (webRtc.localCallHistory.chatHistory.connectionId === broadCastId) {
       maximizeHandler(true);
       closeCall(props, state, data);
     } else {

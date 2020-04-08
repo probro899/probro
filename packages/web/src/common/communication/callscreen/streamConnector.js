@@ -30,7 +30,7 @@ export default (streams, props) => {
       });
     }
     const allVideoElements = userIds.map(uid => document.getElementById(`video-${uid}`));
-    console.log('all Video Elements', allVideoElements, userIds);
+    // console.log('all Video Elements', allVideoElements, userIds);
     allVideoElements.forEach((ve, idx) => {
       if (ve) {
         streams[userIds[idx]].stream.forEach((stream) => {

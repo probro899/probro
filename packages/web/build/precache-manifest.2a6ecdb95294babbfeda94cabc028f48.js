@@ -1,19 +1,19 @@
 self.__precacheManifest = [
   {
-    "revision": "68a71c2409ca19a34f0a",
-    "url": "/static/css/main.f4d0d9e6.chunk.css"
+    "revision": "9e734561b5a41bbf3a1b",
+    "url": "/static/css/main.80d7070f.chunk.css"
   },
   {
-    "revision": "68a71c2409ca19a34f0a",
-    "url": "/static/js/main.68a71c24.chunk.js"
+    "revision": "9e734561b5a41bbf3a1b",
+    "url": "/static/js/main.9e734561.chunk.js"
   },
   {
-    "revision": "8e7f2b19955abcd8b506",
+    "revision": "cb6197a7bd3b9c2f4b4e",
     "url": "/static/css/1.c71b7355.chunk.css"
   },
   {
-    "revision": "8e7f2b19955abcd8b506",
-    "url": "/static/js/1.8e7f2b19.chunk.js"
+    "revision": "cb6197a7bd3b9c2f4b4e",
+    "url": "/static/js/1.cb6197a7.chunk.js"
   },
   {
     "revision": "229c360febb4351a89df",
@@ -52,6 +52,10 @@ self.__precacheManifest = [
     "url": "/static/media/ringtone.da570d5f.mp3"
   },
   {
+    "revision": "6fdb722c94434811f89a68eafc4531f8",
+    "url": "/static/media/icons-16.6fdb722c.eot"
+  },
+  {
     "revision": "5fa1b8f25b4aa8787f70d5b6b7f0b90f",
     "url": "/static/media/icons-16.5fa1b8f2.ttf"
   },
@@ -64,20 +68,12 @@ self.__precacheManifest = [
     "url": "/static/media/icons-20.14279fa7.eot"
   },
   {
-    "revision": "6fdb722c94434811f89a68eafc4531f8",
-    "url": "/static/media/icons-16.6fdb722c.eot"
-  },
-  {
-    "revision": "657723dc996cf0ae6b4c6110f5d4ddab",
-    "url": "/static/media/icons-20.657723dc.woff"
-  },
-  {
     "revision": "90247cfdde1bd7b76d804a797d5dec56",
     "url": "/static/media/icons-20.90247cfd.ttf"
   },
   {
-    "revision": "e19c20e966bde501f94e41cd0322dbe8",
-    "url": "/static/media/gotham-medium.e19c20e9.otf"
+    "revision": "657723dc996cf0ae6b4c6110f5d4ddab",
+    "url": "/static/media/icons-20.657723dc.woff"
   },
   {
     "revision": "056353a27c68233bab7e618c8b191d65",
@@ -88,7 +84,11 @@ self.__precacheManifest = [
     "url": "/static/media/gotham-light.bceda3fa.otf"
   },
   {
-    "revision": "11f78aa1544980c27a244d09fab878f7",
+    "revision": "e19c20e966bde501f94e41cd0322dbe8",
+    "url": "/static/media/gotham-medium.e19c20e9.otf"
+  },
+  {
+    "revision": "2f639aea3c23be54fafeb3f7b10d6d7d",
     "url": "/index.html"
   }
 ];

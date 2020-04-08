@@ -20,7 +20,7 @@ function setLocalStream(stream, userId, onLocalStream) {
 }
 
 async function gotRemoteStream(e, userId, gotRemoteStreamHandler) {
-  console.log('Hey got remote stream');
+  console.log(`${userId}) GOT REMOTE STREAM`, e);
   await gotRemoteStreamHandler(e, userId);
   const { webRtc, database, account } = store.getState();
   const lastVideoElement = document.getElementById('video-mentor');
@@ -51,7 +51,15 @@ async function gotRemoteStream(e, userId, gotRemoteStreamHandler) {
   }
 }
 
-export default async function main(onIceCandidateHandler, uid, gotRemoteStreamHandler, onIceConnectionStateChange, offerHandler, onLocalStream) {
+export default async function main(
+  onIceCandidateHandler,
+  uid,
+  gotRemoteStreamHandler,
+  onIceConnectionStateChange,
+  offerHandler,
+  onLocalStream,
+  iceGatherCompleteHandler
+) {
   // server configuration
   const userId = uid;
   const server = {
@@ -63,15 +71,6 @@ export default async function main(onIceCandidateHandler, uid, gotRemoteStreamHa
         credential: 'proper199201',
       },
     ],
-
-    // iceServers: [
-    //   { "urls": ["stun:stun.l.google.com:19302"]},
-    //   {
-    //     "urls": ["turn:properclass.com:3478?transport=tcp"],
-    //     "username": "properclass",
-    //     "credential": "proper199201",
-    //   },
-    // ],
   };
 
   // Initialize peerconnection
@@ -89,7 +88,12 @@ export default async function main(onIceCandidateHandler, uid, gotRemoteStreamHa
 
     pc.onicecandidateerror = e => console.error('Error on onIceCandidate', e);
 
-    pc.onicegatheringstatechange = info => console.info('OnICeGatheringsStateChange', info);
+    // tracking the ice canidate gather complete
+    pc.onicegatheringstatechange = (info) => {
+      if (info.target.iceGatheringState === 'complete') {
+        iceGatherCompleteHandler(userId);
+      }
+    };
 
     // seting Local Description
     const setLocalDescription = (data) => {
@@ -108,6 +112,7 @@ export default async function main(onIceCandidateHandler, uid, gotRemoteStreamHa
 
     // creating offer for list of users
     const createOffer = async (stream) => {
+      console.log(`${userId}) CREATE OFFER`, stream);
       setLocalStream(stream, userId, onLocalStream);
       stream.getTracks().forEach(track => pc.addTrack(track, stream));
       pc.createOffer((offer) => {
@@ -120,19 +125,24 @@ export default async function main(onIceCandidateHandler, uid, gotRemoteStreamHa
 
     // creating Answer for offer
     const createAnswer = async (data, stream) => {
-      // console.log('createAnswer called', data, stream);
-      if (stream) {
-        stream.getTracks().forEach(track => pc.addTrack(track, stream));
-        setLocalStream(stream, userId, onLocalStream);
+      try {
+        console.log(`${userId}) CREATE ANSWER`, data);
+        if (stream) {
+          stream.getTracks().forEach(track => pc.addTrack(track, stream));
+          setLocalStream(stream, userId, onLocalStream);
+        }
+        setRemoteDescription(data);
+        const answer = await pc.createAnswer();
+        setLocalDescription(answer);
+        return answer;
+      } catch (e) {
+        console.error('Error in Create Answer', userId, data);
       }
-      setRemoteDescription(data);
-      const answer = await pc.createAnswer();
-      setLocalDescription(answer);
-      return answer;
     };
 
     // Adding remoteIceCandidate
     const addIceCandidate = (candidate) => {
+      console.log(`${userId}) ADD REMOTE ICECANDIDATE`, candidate);
       pc.addIceCandidate(new RTCIceCandidate(JSON.parse(candidate)));
     };
 

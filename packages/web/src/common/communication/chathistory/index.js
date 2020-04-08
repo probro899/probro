@@ -47,14 +47,15 @@ class ChatHistory extends React.Component {
     try {
       const { _callHandler, apis, change, updateWebRtc, webRtc, account, database } = this.props;
       const stream = await mediaSelector(mediaType);
-      updateWebRtc('isCallUpgraded', false);
-      updateWebRtc('isConnecting', true);
-      updateWebRtc('streams', { [account.user.id]: { stream: [stream] } });
-      updateWebRtc('localCallHistory', { chatHistory: webRtc.chatHistory, stream, mediaType, callType: 'Outgoing', callEnd: false });
-      autoCloseHandler(this.props, { apis }, 22000);
+      await updateWebRtc('isCallUpgraded', false);
+      await updateWebRtc('isConnecting', true);
+      await updateWebRtc('streams', { [account.user.id]: { stream: [stream] } });
+      await updateWebRtc('connectedUsers', { ...webRtc.connectedUsers, [account.user.id]: { streams: [stream] } });
+      await updateWebRtc('localCallHistory', { chatHistory: webRtc.chatHistory, stream, mediaType, callType: 'Outgoing', callEnd: false });
+      // autoCloseHandler(this.props, { apis }, 22000);
       if (webRtc.chatHistory.type === 'user') {
-        updateWebRtc('mainStreamId', webRtc.chatHistory.user.user.id);
-        updateWebRtc('streams', { ...webRtc.streams, [webRtc.chatHistory.user.user.id]: { stream: [] } });
+        await updateWebRtc('mainStreamId', webRtc.chatHistory.user.user.id);
+        await updateWebRtc('streams', { ...webRtc.streams, [webRtc.chatHistory.user.user.id]: { stream: [] } });
       }
       if (webRtc.chatHistory.type === 'board') {
         if (database.Board.byId[webRtc.chatHistory.connectionId].activeStatus) {
@@ -70,26 +71,26 @@ class ChatHistory extends React.Component {
     }
   }
 
-  containerHandler = (msg, account, type) => {
+  containerHandler = (msg, account, type, idx) => {
     // console.log('message type', msg);
     const { webRtc } = this.props;
     switch (msg.type) {
       case 'date':
         return (
-          <div style={{ width: '95%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: 10 }}>
+          <div key={idx} style={{ width: '95%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: 10 }}>
             <Moment style={{ color: '#757575', padding: 5, border: '1px solid #757575', borderRadius: 10, fontSize: 10 }} format="YYYY MMM DD">{msg.timeStamp}</Moment>
           </div>
         );
       case 'Incoming':
         return (
-          incomingCallLogHandler(msg, account, webRtc.chatHistory.type)
+          incomingCallLogHandler(msg, account, webRtc.chatHistory.type, idx)
         );
       case 'Outgoing':
         return (
-          outgoingCallLogHandler(msg, account, webRtc.chatHistory.type)
+          outgoingCallLogHandler(msg, account, webRtc.chatHistory.type, idx)
         );
       default:
-        return <Message own={isOwnFinder(msg, this.props)} obj={msg} props={this.props} type={type} />;
+        return <Message key={msg.id} own={isOwnFinder(msg, this.props)} obj={msg} props={this.props} type={type} />;
     }
   }
 
@@ -145,7 +146,7 @@ class ChatHistory extends React.Component {
 }
 
 ChatHistory.propTypes = {
-  style: PropTypes.objectOf(PropTypes.any).isRequired,
+  // style: PropTypes.objectOf(PropTypes.any).isRequired,
   _callHandler: PropTypes.func.isRequired,
   change: PropTypes.func.isRequired,
   apis: PropTypes.objectOf(PropTypes.any).isRequired,
@@ -154,7 +155,7 @@ ChatHistory.propTypes = {
   database: PropTypes.objectOf(PropTypes.any).isRequired,
   addDatabaseSchema: PropTypes.func.isRequired,
   updateWebRtc: PropTypes.func.isRequired,
-  fromLive: PropTypes.bool.isRequired,
+  // fromLive: PropTypes.bool.isRequired,
 };
 
 export default ChatHistory;

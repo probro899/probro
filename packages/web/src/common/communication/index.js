@@ -45,7 +45,9 @@ class Communication extends React.Component {
 
   cutWindow = () => {
     const { updateWebRtc } = this.props;
+    const { apis } = this.state;
     this.setState({ maximize: false });
+    closeHandler(this.props, this.state, apis)();
     updateWebRtc('showCommunication', false);
     updateWebRtc('showIncommingCall', false);
   }

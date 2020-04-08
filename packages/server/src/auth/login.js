@@ -27,8 +27,11 @@ const loginHelper = async (rec, userDetails) => {
 };
 
 const googleLogin = async (grec) => {
-  console.log('user google login called', grec);
+  // console.log('user google login called', grec);
   const { record } = grec;
+  const { profileObj } = record;
+  const { imageUrl, name, givenName, familyName } = profileObj;
+
   const googleInfo = await new Promise((resolve, reject) => {
     googleTokenVerifier.verify(record.tokenId, googleClientId, (err, info) => {
       if (err) {
@@ -42,19 +45,19 @@ const googleLogin = async (grec) => {
     });
   });
 
-  const { email, given_name, family_name, picture } = googleInfo;
+  const { email } = googleInfo;
   const res = await db.execute(async ({ findOne, insert }) => {
     const rec = await findOne('User', { email });
     if (rec) {
       const userDetails = await findOne('UserDetail', { userId: rec.id });
       return loginHelper(rec, userDetails);
     }
-    const firstNameLowerCase = `${given_name}`.toLowerCase();
-    const lastNameLowerCase = `${family_name}`.toLowerCase();
+    const firstNameLowerCase = `${givenName}`.toLowerCase();
+    const lastNameLowerCase = `${familyName}`.toLowerCase();
     const slug = `${firstNameLowerCase}-${lastNameLowerCase}-${Date.now()}`;
     const randomPassword = uuid();
-    const addUserRes = await insert('User', { firstName: given_name, lastName: family_name, middleName: '', password: randomPassword, email, verificationToken: null, verify: 1, slug });
-    database.update('User', schema.add('User', { id: addUserRes, firstName: given_name, lastName: family_name, middleName: '', password: randomPassword, email, verificationToken: null, verify: 1, slug }));
+    const addUserRes = await insert('User', { firstName: givenName, lastName: familyName, middleName: '', password: randomPassword, email, verificationToken: null, verify: 1, slug });
+    database.update('User', schema.add('User', { id: addUserRes, firstName: givenName, lastName: familyName, middleName: '', password: randomPassword, email, verificationToken: null, verify: 1, slug }));
     // const addUserDetailRes = await insert('UserDetail', { userId: addUserRes, image: picture });
     // database.update('UserDetail', schema.add('UserDetail', { id: addUserDetailRes, userId: addUserRes, image: picture }));
     const finalUserDetailRes = await findOne('UserDetail', { userId: addUserRes });
@@ -65,7 +68,7 @@ const googleLogin = async (grec) => {
 };
 
 export default async function login(record) {
-  console.log('record in login', record);
+  // console.log('record in login', record);
   const { password, loginType } = record;
   let googleRes;
   if (loginType) {

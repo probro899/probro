@@ -5,6 +5,8 @@ import { MdHourglassEmpty } from 'react-icons/md';
 import { Button, Icon } from '@blueprintjs/core';
 import RoundPicture from '../../../../components/RoundPicture';
 import { ENDPOINT } from '../../../../config';
+import SoundComponent from '../../components/SoundComponent';
+import outgoingRingtoneUrl from '../../../../assets/outgoing.mp3';
 
 const callingPerson = require('../../../../assets/icons/128w/uploadicon128.png');
 
@@ -78,6 +80,7 @@ class Index extends React.Component {
     const isUser = webRtc.localCallHistory.chatHistory.type === 'user';
     return (
       <div className="outgoing-call-screen">
+        <SoundComponent url={outgoingRingtoneUrl} />
         <div
           className="person-icon-container"
         >
