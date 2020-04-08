@@ -9,7 +9,6 @@ import { MessageSender } from '../components';
 import Message from './Message';
 import { normalTimeStampSorting } from '../../utility-functions';
 import { findChatHistory, isOwnFinder, markLastMessageRead, incomingCallLogHandler, outgoingCallLogHandler } from './helper-function';
-import autoCloseHandler from '../helper-functions/webrtc/autoCloseHandler';
 
 class ChatHistory extends React.Component {
   constructor(props) {
