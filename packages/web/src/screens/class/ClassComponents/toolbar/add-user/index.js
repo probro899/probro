@@ -1,6 +1,7 @@
 import React from 'react';
-import { Popover, Button } from '@blueprintjs/core';
+import { Popover } from '@blueprintjs/core';
 import PropTypes from 'prop-types';
+import { FaUserPlus } from 'react-icons/fa';
 import addUserToBoard from './structure';
 import { Form } from '../../../../../common';
 
@@ -41,7 +42,9 @@ const AddUser = (props) => {
 
   return (
     <Popover content={<PopoverContent callback={addUserToBoardHandler} />}>
-      <Button minimal text="Add user +" />
+      <div className="add-user-btn">
+        <FaUserPlus size={20} />
+      </div>
     </Popover>
   );
 };

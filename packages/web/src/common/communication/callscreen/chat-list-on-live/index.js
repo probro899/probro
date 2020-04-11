@@ -10,9 +10,9 @@ const ScChatList = (props) => {
     <div className="sc-chat-list">
       <div className="sc-cl-header">
         <div />
-        <div className="sc-cl-title">CHATS</div>
-        <div style={{ cursor: 'pointer' }}>
-          <Icon onClick={onClose} icon="double-chevron-left" />
+        <div className="sc-cl-title">Chats</div>
+        <div className="icon-con">
+          <Icon className="arrow-btn" onClick={onClose} icon="double-chevron-left" />
         </div>
       </div>
       <div className="sc-cl-content">

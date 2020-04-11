@@ -8,28 +8,38 @@
   right: 2px;
   background: $backgroundColor;
   z-index: 3;
-  border: 1px solid $normalBorder;
+  box-shadow: 0 0 0 1px rgba(16, 22, 26, 0.1), 0 4px 8px rgba(16, 22, 26, 0.2), 0 18px 46px 6px rgba(16, 22, 26, 0.2);
+
+  // common all over the box
+  .arrow-btn {
+    svg {fill: $darkBlue}
+  }
   .header {
-    height: 30px;
+    height: 40px;
     font-size: 16px;
     display: flex;
+    background-color: $darkBlue;
+    cursor: pointer;
     color: $backgroundColor;
     justify-content: space-between;
     .win-title {
-      margin-left: 5px;
+      margin-left: 10px;
       font-weight: bold;
       display: flex;
       align-items: center;
     }
     .control-icons {
-      display: flex;
-      align-items: center;
+      min-width: 30px;
+      display: flex; justify-content: center; align-items: center; position: absolute; right: 0; height: 40px; z-index: 4;
+      span {
+        margin-right: 5px;
+      }
     }
   }
   .content {
-    height: -webkit-calc(100% - 30px);
-    height:    -moz-calc(100% - 30px);
-    height:         calc(100% - 30px);
+    height: -webkit-calc(100% - 40px);
+    height:    -moz-calc(100% - 40px);
+    height:         calc(100% - 40px);
     // design chat list from here
     .chat-list {
       padding-bottom: 5px;
@@ -147,7 +157,7 @@
       height: 100%;
       // chat-screen inside call screen
       .sc-chat-list {
-        height: 95%;
+        height: calc(100% - 40px);
         position: absolute;
         background-color: $backgroundColor;
         z-index: 3;
@@ -157,11 +167,12 @@
           display: flex;
           justify-content: space-between;
           padding: 5px;
-          height: 30px;
+          height: 35px;
           border-bottom: 1px solid $normalBorder;
+          .icon-con {display: flex; align-items: center; cursor: pointer;}
           .sc-cl-title {
             color: $darkBlue;
-            font-size: 16;
+            display: flex; align-items: center;
             font-weight: bold;
           }
         }
@@ -183,7 +194,7 @@
         }
       }
       .sc-chat-history {
-        height: 95%;
+        height: calc(100% - 40px);
         position: absolute;
         align-self: flex-end;
         background-color: $backgroundColor;
@@ -194,17 +205,18 @@
           display: flex;
           justify-content: space-between;
           padding: 5px;
-          height: 30px;
+          height: 35px;
           border-bottom: 1px solid $normalBorder;
+          .icon-con {display: flex; align-items: center; cursor: pointer;}
           .sc-ch-title {
             color: $darkBlue;
-            font-size: 16;
+            display: flex; align-items: center;
             font-weight: bold;
           }
         }
         .sc-ch-content {
           overflow-x: hidden;
-          height: calc(100% - 33px);
+          height: calc(100% - 35px);
         }
         .sc-ch-footer {
           height: 10px;
@@ -550,11 +562,11 @@
 
   @keyframes slideDown {
     from { height: 75%; }
-    to { height: 31px; }
+    to { height: 40px; }
   }
 
   @keyframes slideUp {
-    from { height: 31px; }
+    from { height: 40px; }
     to { height: 75%; }
   }
 }

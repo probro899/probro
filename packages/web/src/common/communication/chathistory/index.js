@@ -113,6 +113,7 @@ class ChatHistory extends React.Component {
         <div className="top" style={{ background: 'white' }}>
           <div>
             <Button
+              className="arrow-btn"
               minimal
               intent="default"
               icon="double-chevron-left"
