@@ -9,7 +9,6 @@ import { MessageSender } from '../components';
 import Message from './Message';
 import { normalTimeStampSorting } from '../../utility-functions';
 import { findChatHistory, isOwnFinder, markLastMessageRead, incomingCallLogHandler, outgoingCallLogHandler } from './helper-function';
-import autoCloseHandler from '../helper-functions/webrtc/autoCloseHandler';
 
 class ChatHistory extends React.Component {
   constructor(props) {
@@ -50,7 +49,7 @@ class ChatHistory extends React.Component {
       await updateWebRtc('isCallUpgraded', false);
       await updateWebRtc('isConnecting', true);
       await updateWebRtc('streams', { [account.user.id]: { stream: [stream] } });
-      await updateWebRtc('connectedUsers', { ...webRtc.connectedUsers, [account.user.id]: { streams: [stream] } });
+      await updateWebRtc('connectedUsers', { ...webRtc.connectedUsers, [account.user.id]: { streams: [stream], type: mediaType } });
       await updateWebRtc('localCallHistory', { chatHistory: webRtc.chatHistory, stream, mediaType, callType: 'Outgoing', callEnd: false });
       // autoCloseHandler(this.props, { apis }, 22000);
       if (webRtc.chatHistory.type === 'user') {

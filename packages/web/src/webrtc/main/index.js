@@ -1,55 +1,3 @@
-import store from '../../store';
-
-function setLocalStream(stream, userId, onLocalStream) {
-  // console.log('stream in local stream', stream);
-  onLocalStream(stream, userId);
-  const videoElement = document.getElementById(`video-${store.getState().account.user.id}`);
-  if (stream && videoElement) {
-    videoElement.srcObject = stream;
-  }
-
-  const { webRtc, database, account } = store.getState();
-  if (webRtc.chatHistory.type === 'board') {
-    if (database.Board.byId[webRtc.localCallHistory.chatHistory.connectionId].activeStatus === account.user.id) {
-      const lastVideoElement = document.getElementById('video-mentor');
-      if (lastVideoElement) {
-        lastVideoElement.srcObject = webRtc.streams[account.user.id].stream[0];
-      }
-    }
-  }
-}
-
-async function gotRemoteStream(e, userId, gotRemoteStreamHandler) {
-  console.log(`${userId}) GOT REMOTE STREAM`, e);
-  await gotRemoteStreamHandler(e, userId);
-  const { webRtc, database, account } = store.getState();
-  const lastVideoElement = document.getElementById('video-mentor');
-  // console.log('got remote stream', e, userId, database.Board.byId[1].activeStatus);
-  if (webRtc.localCallHistory.chatHistory.type === 'board') {
-    const videoElement = document.getElementById(`video-${userId}`);
-    if (videoElement) {
-      if (videoElement.srcObject !== e.streams[0]) {
-        videoElement.srcObject = e.streams[0];
-      }
-    }
-
-    if (userId === database.Board.byId[webRtc.localCallHistory.chatHistory.connectionId].activeStatus && lastVideoElement) {
-      if (lastVideoElement.srcObject !== e.streams[0]) {
-        lastVideoElement.srcObject = e.streams[0];
-      }
-    }
-
-    if (database.Board.byId[webRtc.localCallHistory.chatHistory.connectionId].activeStatus === account.user.id && lastVideoElement) {
-      if (webRtc.streams[account.user.id].stream[0] !== lastVideoElement.srcObject) {
-        lastVideoElement.srcObject = webRtc.streams[account.user.id].stream[0];
-      }
-    }
-  }
-
-  if (webRtc.localCallHistory.chatHistory.type === 'user' && lastVideoElement) {
-    lastVideoElement.srcObject = e.streams[0];
-  }
-}
 
 export default async function main(
   onIceCandidateHandler,
@@ -66,7 +14,7 @@ export default async function main(
     iceServers: [
       { urls: ['stun:stun.l.google.com:19302'] },
       {
-        urls: ['turn:properclass.com:3478?transport=udp'],
+        urls: ['turn:properclass.com:3478?transport=tcp'],
         // urls: ['turn:properclass.com:3478?transport=tcp'],
         username: 'properclass',
         credential: 'proper199201',
@@ -85,7 +33,7 @@ export default async function main(
     pc.addEventListener('iceconnectionstatechange', e => onIceConnectionStateChange(e, pc, userId));
 
     // Adding Ontrack listner
-    pc.addEventListener('track', e => gotRemoteStream(e, userId, gotRemoteStreamHandler));
+    pc.addEventListener('track', e => gotRemoteStreamHandler(e, userId));
 
     pc.onicecandidateerror = e => console.error('Error on onIceCandidate', e);
 
@@ -114,7 +62,7 @@ export default async function main(
     // creating offer for list of users
     const createOffer = async (stream) => {
       console.log(`${userId}) CREATE OFFER`, stream);
-      setLocalStream(stream, userId, onLocalStream);
+      onLocalStream(stream, userId);
       stream.getTracks().forEach(track => pc.addTrack(track, stream));
       pc.createOffer((offer) => {
         setLocalDescription(offer);
@@ -130,7 +78,7 @@ export default async function main(
         console.log(`${userId}) CREATE ANSWER`, data);
         if (stream) {
           stream.getTracks().forEach(track => pc.addTrack(track, stream));
-          setLocalStream(stream, userId, onLocalStream);
+          onLocalStream(stream, userId);
         }
         setRemoteDescription(data);
         const answer = await pc.createAnswer();

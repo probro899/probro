@@ -14,15 +14,6 @@ class Controllers extends React.Component {
     this.state = { showWhiteBoard: false, startRecording: false };
   }
 
-  // shouldComponentUpdate(nextProps, nextState) {
-  //   const { webRtc } = this.props;
-  //   console.log(webRtc);
-  //   if (webRtc.localCallHistory.mediaType !== nextProps.webRtc.localCallHistory.mediaType) {
-  //     return true;
-  //   }
-  //   return false;
-  // }
-
   recordingHandler = async () => {
     const { startRecording } = this.state;
     const { updateWebRtc, webRtc } = this.props;
@@ -38,8 +29,7 @@ class Controllers extends React.Component {
   }
 
   callReject = () => {
-    // console.log('PROPS IN CALL REJECT', this.props);
-    const { closeHandler, change, toggleMaximize, remoteCallEndMinimizer} = this.props;
+    const { closeHandler, change, remoteCallEndMinimizer } = this.props;
     remoteCallEndMinimizer();
     closeHandler();
     change('history');
@@ -117,7 +107,7 @@ Controllers.propTypes = {
   closeHandler: PropTypes.func.isRequired,
   change: PropTypes.func.isRequired,
   updateWebRtc: PropTypes.func.isRequired,
-  toggleMaximize: PropTypes.func.isRequired,
+  remoteCallEndMinimizer: PropTypes.func.isRequired,
   webRtc: PropTypes.objectOf(PropTypes.any).isRequired,
   account: PropTypes.objectOf(PropTypes.any).isRequired,
 };

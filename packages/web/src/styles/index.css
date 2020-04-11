@@ -468,6 +468,11 @@ top attachment etc.
 .communicate .content .call-screen .video-container .pc-user-screens .pc-each-screen .pc-info { position: absolute; }
 .communicate .content .call-screen .video-container .pc-user-screens .pc-each-screen .pc-info .pc-short-name { color: #137cbd; font-size: 25px; font-weight: bold; display: flex; justify-content: center; text-transform: uppercase; }
 .communicate .content .call-screen .video-container .pc-user-screens .pc-each-screen .pc-info .pc-ice { display: flex; justify-content: center; color: #137cbd; font-size: 8px; text-transform: capitalize; }
+.communicate .content .call-screen .video-container .img-main-screen { height: 88%; width: 100%; position: absolute; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+.communicate .content .call-screen .video-container .img-main-screen .user { height: 140px; width: 140px; border-radius: 50%; overflow: hidden; border-width: 1px; border-style: solid; border-color: #fff; }
+.communicate .content .call-screen .video-container .img-main-screen .user img.portrait { width: 100%; height: auto; }
+.communicate .content .call-screen .video-container .img-main-screen .user img.landscape { height: 100%; width: auto; }
+.communicate .content .call-screen .video-container .img-main-screen .board { border: 1px solid #fff; padding: 0px 6px; border-radius: 10px; }
 .communicate .content .call-screen .video-container .pc-maxmin-btn { position: absolute; right: 0; display: none; padding: 5px; z-index: 3; }
 .communicate .content .call-screen .video-container .pc-maxmin-btn .pc-control-btn { background: #1d4354; color: #fff; height: 40px; width: 40px; font-size: 30px; border-radius: 40px; }
 .communicate .content .call-screen .video-container:hover .pc-maxmin-btn { display: block; }

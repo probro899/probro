@@ -281,6 +281,37 @@
             }
           }
         }
+        .img-main-screen {
+          height: 88%;
+          width: 100%;
+          position: absolute;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          .user {
+            height: 140px;
+            width: 140px;
+            border-radius: 50%;
+            overflow: hidden;
+            border-width: 1px;
+            border-style: solid;
+            border-color: $backgroundColor;
+            img.portrait {
+              width: 100%;
+              height: auto;
+            }
+            img.landscape {
+              height: 100%;
+              width: auto;
+            }
+          }
+          .board {
+            border: 1px solid $backgroundColor;
+            padding: 0px 6px;
+            border-radius: 10px;
+          }
+        }
         .pc-maxmin-btn {
           position: absolute;
           right: 0;

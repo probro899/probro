@@ -11,6 +11,7 @@ import Controllers from './components/Controllers';
 import MainScreen from './components/MainScreen';
 import UsersScreen from './components/UsersScreens';
 import { getChatList } from '../../chatlist/helper-function';
+import ImageOnMainScreen from './components/ImageOnMainScreen';
 
 class LiveCallScreen extends React.Component {
   constructor(props) {
@@ -74,14 +75,14 @@ class LiveCallScreen extends React.Component {
 
   render() {
     // console.log('Live Screen called', this.state);
-    const { style, webRtc, database, toggleMaximize, minimize, remoteCallEndMinimizer } = this.props;
+    const { style, webRtc, database, toggleMaximize, minimize } = this.props;
     const { user, type } = webRtc.localCallHistory.chatHistory;
     const {
       showChatBox,
       showChatList,
       unMessageCount,
     } = this.state;
-    // console.log('webRtc value in Live Screen', webRtc, database);
+    // console.log('webRtc value in Live Screen', webRtc);
     return (
       <div
         className="call-screen"
@@ -107,6 +108,7 @@ class LiveCallScreen extends React.Component {
               <TiArrowMaximise size={25} />
             </Button>
           </div>
+          <ImageOnMainScreen {...this.props} />
           <UsersScreen {...this.props} />
           <MainScreen {...this.props} />
         </div>

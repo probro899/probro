@@ -1,15 +1,14 @@
 /* eslint-disable jsx-a11y/media-has-caption */
 import React from 'react';
 import PropTypes from 'prop-types';
-// import { IoMdMic, IoMdMicOff } from 'react-icons/io';
 import { ENDPOINT } from '../../../../../config';
 import store from '../../../../../store';
 
 const UserView = ({ pc, database, mute, userId, status, account }) => {
   const userDetail = Object.values(database.UserDetail.byId).find(u => u.userId === userId);
-  // console.log('Data in userView', database, userId);
+
   const user = database.User.byId[userId];
-  // console.log('user', user);
+
   return (
     <div className="pc-each-screen">
       <video
@@ -23,7 +22,6 @@ const UserView = ({ pc, database, mute, userId, status, account }) => {
       <div className="pc-info">
         <div className="pc-short-name">
           <span>{user.id === account.user.id ? 'You' : `${user.firstName[0]}${user.lastName[0]}`}</span>
-          {/* <span>{mute ? <IoMdMicOff /> : <IoMdMic />}</span> */}
         </div>
         <div className="pc-ice">
           { pc ? <span className="pc-ice-status">{status}</span> : null}
@@ -38,20 +36,20 @@ UserView.propTypes = {
   database: PropTypes.objectOf(PropTypes.any).isRequired,
   mute: PropTypes.bool.isRequired,
   userId: PropTypes.number.isRequired,
+  status: PropTypes.string.isRequired,
+  account: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 const UsersView = (props) => {
   const { account, database } = props;
   const { webRtc } = store.getState();
-  // console.log('Account', account);
+
   const { type, connectionId } = webRtc.localCallHistory.chatHistory;
   const muteId = type === 'user' ? webRtc.mainStreamId : database.Board.byId[connectionId].activeStatus;
-  // console.log('mute user', muteId);
-  // const peerConnection = Object.values(webRtc.peerConnections).filter(obj => obj.iceCandidateStatus !== 'disconnected');
-  // console.log('all perconnection', peerConnection);
+
   const allActiveUserIds = Object.keys(webRtc.connectedUsers).filter(uid => parseInt(uid, 10) !== account.user.id).filter(uid => webRtc.connectedUsers[uid].iceCandidateStatus !== 'disconnected');
-  // console.log('All Connected ids', allActiveUserIds);
-  const allActiveUserUis = allActiveUserIds.map(uid => (
+
+  const allActiveUserUis = allActiveUserIds.filter(uid => parseInt(uid, 10) !== parseInt(muteId, 10)).map(uid => (
     <UserView
       account={account}
       status={webRtc.connectedUsers[uid].iceCandidateStatus}
@@ -61,7 +59,7 @@ const UsersView = (props) => {
       mute={muteId === parseInt(uid, 10)}
     />
   ));
-  // const allOtherUser = peerConnection.map(pc => <UserView pc={pc} key={pc.user.id} database={database} mute={muteId === pc.user.id} />);
+
   const finalUserList = webRtc.localCallHistory.chatHistory.type === 'user'
     ? [<UserView account={account} userId={account.user.id} pc={account} mute key={account.user.id} database={database} />]
     : [...allActiveUserUis, <UserView userId={account.user.id} mute account={account} pc={account} key={account.user.id} database={database} />];
@@ -75,23 +73,29 @@ class UsersScreen extends React.Component {
   }
 
   shouldComponentUpdate(nextProps) {
-    if (JSON.stringify(nextProps.webRtc.connectedUsers) !== JSON.stringify(this.props.webRtc.connectedUsers)) {
+    const { webRtc } = this.props;
+    if (JSON.stringify(nextProps.webRtc.connectedUsers) !== JSON.stringify(webRtc.connectedUsers)) {
       return true;
     }
     return false;
   }
 
   componentDidUpdate() {
-    // console.log('User View DidUpdte called', this.props);
-    const { webRtc } = this.props;
+
+    const { webRtc, account } = this.props;
     const userIds = Object.keys(webRtc.connectedUsers);
     const allVideoElements = userIds.map(uid => document.getElementById(`video-${uid}`));
-    // console.log('all Video Elements', allVideoElements, userIds);
+
     allVideoElements.forEach((ve, idx) => {
       if (ve) {
         webRtc.connectedUsers[userIds[idx]].streams.forEach((stream) => {
-          if (stream.streams) {
-            ve.srcObject = stream.streams[0];
+          if (stream) {
+            if (stream.streams) {
+              ve.srcObject = stream.streams[0];
+            }
+            if (parseInt(userIds[idx], 10) === account.user.id) {
+              ve.srcObject = stream;
+            }
           }
         });
       }
@@ -99,7 +103,6 @@ class UsersScreen extends React.Component {
   }
 
   render() {
-    // console.log('Props in UserView', this.props);
     return (
       <div className="pc-user-screens">
         <UsersView {...this.props} />
@@ -109,3 +112,7 @@ class UsersScreen extends React.Component {
 }
 
 export default UsersScreen;
+UsersScreen.propTypes = {
+  webRtc: PropTypes.objectOf(PropTypes.any).isRequired,
+  account: PropTypes.objectOf(PropTypes.any).isRequired,
+};
