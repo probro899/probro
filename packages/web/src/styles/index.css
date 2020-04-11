@@ -225,6 +225,8 @@ top attachment etc.
 .tool-bar .toolbar-container .left-tools .user-list .i-user:hover { background: #1d4354; }
 .tool-bar .toolbar-container .left-tools .user-list .i-user .green-dot { position: absolute; height: 10px; width: 10px; background-color: #71f971; border-radius: 50%; top: 20px; left: 20px; }
 .tool-bar .toolbar-container .right-tools { display: flex; }
+.tool-bar .toolbar-container .right-tools .add-user-btn { margin: 0px 3px; padding: 3px 3px 0px 3px; color: #222; border: 1px solid #222; }
+.tool-bar .toolbar-container .right-tools .add-user-btn svg { fill: #222; }
 .tool-bar .toolbar-container .right-tools button { margin: 0px 3px; padding: 1px; color: #222; border: 1px solid #222; }
 .tool-bar .toolbar-container .right-tools button svg { fill: #222; }
 
@@ -417,11 +419,13 @@ top attachment etc.
 .tag-input { display: flex !important; }
 .tag-input div { margin-top: 0px; }
 
-.communicate { position: fixed; width: 35%; bottom: 0; right: 2px; background: #fff; z-index: 3; border: 1px solid #e0e0e0; }
-.communicate .header { height: 30px; font-size: 16px; display: flex; color: #fff; justify-content: space-between; }
-.communicate .header .win-title { margin-left: 5px; font-weight: bold; display: flex; align-items: center; }
-.communicate .header .control-icons { display: flex; align-items: center; }
-.communicate .content { height: -webkit-calc(100% - 30px); height: -moz-calc(100% - 30px); height: calc(100% - 30px); }
+.communicate { position: fixed; width: 35%; bottom: 0; right: 2px; background: #fff; z-index: 3; box-shadow: 0 0 0 1px rgba(16, 22, 26, 0.1), 0 4px 8px rgba(16, 22, 26, 0.2), 0 18px 46px 6px rgba(16, 22, 26, 0.2); }
+.communicate .arrow-btn svg { fill: #1d4354; }
+.communicate .header { height: 40px; font-size: 16px; display: flex; background-color: #1d4354; cursor: pointer; color: #fff; justify-content: space-between; }
+.communicate .header .win-title { margin-left: 10px; font-weight: bold; display: flex; align-items: center; }
+.communicate .header .control-icons { min-width: 30px; display: flex; justify-content: center; align-items: center; position: absolute; right: 0; height: 40px; z-index: 4; }
+.communicate .header .control-icons span { margin-right: 5px; }
+.communicate .content { height: -webkit-calc(100% - 40px); height: -moz-calc(100% - 40px); height: calc(100% - 40px); }
 .communicate .content .chat-list { padding-bottom: 5px; overflow-y: scroll; }
 .communicate .content .chat-list .i-chat { border-bottom: 1px solid #e0e0e0; margin: 3px 0px; padding: 5px; }
 .communicate .content .chat-list .i-chat.unseen { background: #f9f9f9; }
@@ -445,17 +449,19 @@ top attachment etc.
 .communicate .content .chat-history .chat-box textarea { flex: 0.8; resize: none; }
 .communicate .content .chat-history .chat-box button { flex: 0.2; }
 .communicate .content .call-screen { display: flex; flex-direction: column; height: 100%; }
-.communicate .content .call-screen .sc-chat-list { height: 95%; position: absolute; background-color: #fff; z-index: 3; box-shadow: 0px 0px 3px 0px rgba(57, 73, 76, 0.35); width: 80%; }
-.communicate .content .call-screen .sc-chat-list .sc-cl-header { display: flex; justify-content: space-between; padding: 5px; height: 30px; border-bottom: 1px solid #e0e0e0; }
-.communicate .content .call-screen .sc-chat-list .sc-cl-header .sc-cl-title { color: #1d4354; font-size: 16; font-weight: bold; }
+.communicate .content .call-screen .sc-chat-list { height: calc(100% - 40px); position: absolute; background-color: #fff; z-index: 3; box-shadow: 0px 0px 3px 0px rgba(57, 73, 76, 0.35); width: 80%; }
+.communicate .content .call-screen .sc-chat-list .sc-cl-header { display: flex; justify-content: space-between; padding: 5px; height: 35px; border-bottom: 1px solid #e0e0e0; }
+.communicate .content .call-screen .sc-chat-list .sc-cl-header .icon-con { display: flex; align-items: center; cursor: pointer; }
+.communicate .content .call-screen .sc-chat-list .sc-cl-header .sc-cl-title { color: #1d4354; display: flex; align-items: center; font-weight: bold; }
 .communicate .content .call-screen .sc-chat-list .sc-cl-content { overflow-x: hidden; height: calc(100% - 40px); }
 .communicate .content .call-screen .sc-chat-list .sc-cl-content .sc-cl-i-chat { padding: 20px 0px; border-bottom: 1px solid #e0e0e0; background-color: #f9f9f9; cursor: pointer; }
 .communicate .content .call-screen .sc-chat-list .sc-cl-content .sc-cl-i-chat:hover { background-color: #88e0e9; }
 .communicate .content .call-screen .sc-chat-list .sc-cl-footer { height: 10px; }
-.communicate .content .call-screen .sc-chat-history { height: 95%; position: absolute; align-self: flex-end; background-color: #fff; z-index: 4; box-shadow: 0px 0px 3px 0px rgba(57, 73, 76, 0.35); width: 80%; }
-.communicate .content .call-screen .sc-chat-history .sc-ch-header { display: flex; justify-content: space-between; padding: 5px; height: 30px; border-bottom: 1px solid #e0e0e0; }
-.communicate .content .call-screen .sc-chat-history .sc-ch-header .sc-ch-title { color: #1d4354; font-size: 16; font-weight: bold; }
-.communicate .content .call-screen .sc-chat-history .sc-ch-content { overflow-x: hidden; height: calc(100% - 33px); }
+.communicate .content .call-screen .sc-chat-history { height: calc(100% - 40px); position: absolute; align-self: flex-end; background-color: #fff; z-index: 4; box-shadow: 0px 0px 3px 0px rgba(57, 73, 76, 0.35); width: 80%; }
+.communicate .content .call-screen .sc-chat-history .sc-ch-header { display: flex; justify-content: space-between; padding: 5px; height: 35px; border-bottom: 1px solid #e0e0e0; }
+.communicate .content .call-screen .sc-chat-history .sc-ch-header .icon-con { display: flex; align-items: center; cursor: pointer; }
+.communicate .content .call-screen .sc-chat-history .sc-ch-header .sc-ch-title { color: #1d4354; display: flex; align-items: center; font-weight: bold; }
+.communicate .content .call-screen .sc-chat-history .sc-ch-content { overflow-x: hidden; height: calc(100% - 35px); }
 .communicate .content .call-screen .sc-chat-history .sc-ch-footer { height: 10px; }
 .communicate .content .call-screen .top { display: flex; justify-content: space-between; align-items: center; padding: 5px 0px; border-bottom: 1px solid #e0e0e0; height: 35px; }
 .communicate .content .call-screen .top .op-name { display: flex; flex-direction: column; justify-content: center; color: #1d4354; font-weight: bold; font-size: 16px; }
@@ -522,8 +528,8 @@ top attachment etc.
   90% { border-color: #ffff00; }
   100% { border-color: #ff8000; } }
 @keyframes slideDown { from { height: 75%; }
-  to { height: 31px; } }
-@keyframes slideUp { from { height: 31px; }
+  to { height: 40px; } }
+@keyframes slideUp { from { height: 40px; }
   to { height: 75%; } }
 .archive { margin-top: 60px; min-height: calc(100vh - 60px - 125px); padding: 5px; }
 .archive .ar-top { padding: 5px; }

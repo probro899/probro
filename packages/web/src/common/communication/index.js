@@ -38,9 +38,12 @@ class Communication extends React.Component {
   }
 
   toggleMinMax = () => {
-    this.setState({
-      minimize: false,
-    });
+    const { minimize } = this.state;
+    if (minimize) {
+      this.setState({ minimize: false });
+      return;
+    }
+    this.setState({ minimize: true, maximize: false });
   }
 
   cutWindow = () => {
@@ -53,17 +56,8 @@ class Communication extends React.Component {
   }
 
   switchScreen = async (target) => {
-    const { updateWebRtc, webRtc } = this.props;
-    // console.log('close handler in index', webRtc);
-    if (webRtc.isLive) {
-      // console.log('close handler called in index');
-      // closeHandler(this.props)();
-    }
+    const { updateWebRtc } = this.props;
     updateWebRtc('communicationContainer', target);
-  }
-
-  minimizeCommunication = () => {
-    this.setState({ minimize: true, maximize: false });
   }
 
   maximize = () => {
@@ -81,7 +75,7 @@ class Communication extends React.Component {
       height = '100%';
     }
     if (minimize) {
-      height = '31px';
+      height = '40px';
     }
     const {
       webRtc,
@@ -99,23 +93,12 @@ class Communication extends React.Component {
           }
         }
       >
-        <div className="header" style={{ background: '#154155', cursor: 'pointer' }}>
+        <div className="header" onClick={this.toggleMinMax}>
           <div className="win-title">
             Messaging
           </div>
           <div className="control-icons">
-            <div>
-              { minimize ? <Icon iconSize={20} icon="expand-all" style={{ cursor: 'pointer' }} onClick={this.toggleMinMax} />
-                : <Icon iconSize={20} icon="minus" style={{ cursor: 'pointer' }} onClick={this.minimizeCommunication} />
-              }
-              {/* <Icon icon="maximize" style={{ cursor: 'pointer' }} iconSize={14} /> */}
-              <Icon
-                iconSize={20}
-                icon="small-cross"
-                style={{ cursor: 'pointer' }}
-                onClick={this.cutWindow}
-              />
-            </div>
+            <Icon iconSize={20} icon="small-cross" style={{ cursor: 'pointer' }} onClick={this.cutWindow} />
           </div>
         </div>
         <div

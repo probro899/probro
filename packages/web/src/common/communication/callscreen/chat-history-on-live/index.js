@@ -11,8 +11,8 @@ const ScChatList = (props) => {
   return (
     <div className="sc-chat-history">
       <div className="sc-ch-header">
-        <div style={{ cursor: 'pointer' }}>
-          <Icon onClick={() => onClose(null)} icon="double-chevron-right" />
+        <div className="icon-con">
+          <Icon className="arrow-btn" onClick={() => onClose(null)} icon="double-chevron-right" />
         </div>
         <div className="sc-ch-title">
           {webRtc.chatHistory.type === 'user' ? `${user.user.firstName} ${user.user.lastName}` : database.Board.byId[webRtc.chatHistory.connectionId].name}

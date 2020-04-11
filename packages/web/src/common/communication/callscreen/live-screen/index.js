@@ -91,11 +91,11 @@ class LiveCallScreen extends React.Component {
         {showChatList && <ScChatList onClose={this.handleClickChatList} onClickItem={this.handleClickChatBox} {...this.props} />}
         {showChatBox && <ScChatHistory onClose={this.handleClickChatBox} {...this.props} />}
         <div className="top">
-          <Button minimal intent="default" icon="menu" onClick={this.handleClickChatList} />
+          <Button minimal className="arrow-btn" intent="default" icon="menu" onClick={this.handleClickChatList} />
           <div className="op-name">
             {type === 'user' ? `${user.user.firstName} ${user.user.lastName}` : database.Board.byId[webRtc.localCallHistory.chatHistory.connectionId].name}
           </div>
-          <Button minimal onClick={() => this.handleClickChatBox(webRtc.showCommunication, true)}>
+          <Button className="arrow-btn" minimal onClick={() => this.handleClickChatBox(webRtc.showCommunication, true)}>
             <div style={{ position: 'relative'}}>
               <MdMessage size={18} />
               {unMessageCount ? (unMessageCount.unSeenNo !== 0 && <Badge number={unMessageCount.unSeenNo} size={10} top={-5} />) : null}
