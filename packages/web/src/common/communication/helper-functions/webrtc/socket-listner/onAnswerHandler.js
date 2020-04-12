@@ -12,7 +12,7 @@ export default async (props, state, data) => {
     // Getting current IceCandidates
     const iceCandidate = webRtc.iceCandidates[uid];
 
-    if (data) {
+    if (answer) {
 
       // Setting the remote answer to the related pc
       pc.setRemoteDescription(answer);

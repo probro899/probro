@@ -8,7 +8,7 @@ export default (props, state, data) => {
   const { webRtc, account } = store.getState();
   const { pc } = webRtc.peerConnections[uid];
   const iceCand = webRtc.iceCandidates[uid];
-  // console.log('local iceCandidate status', iceCand);
+  console.log('local iceCandidate status', iceCand);
   if (iceCandidate) {
     // Setting the remote iceCandite to the related pc
     iceCandidate.forEach((candidate) => {
@@ -26,7 +26,7 @@ export default (props, state, data) => {
           iceCandidateDetail: {
             iceCandidate: finalIceCandidates,
             uid: account.user.id,
-            broadCastId: webRtc.localCallHistory.chatHistory.type === 'user' ? account.user.id : webRtc.showCommunication,
+            broadCastId: webRtc.localCallHistory.chatHistory.type === 'user' ? account.user.id : webRtc.localCallHistory.chatHistory.connectionId,
             broadCastType: webRtc.localCallHistory.chatHistory.type === 'user' ? 'UserConnection' : 'Board',
           },
           userList: [{ userId: uid }],

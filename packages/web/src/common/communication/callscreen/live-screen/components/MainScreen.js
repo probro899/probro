@@ -10,6 +10,7 @@ class MainScreen extends React.Component {
   }
 
   shouldComponentUpdate(nextProps) {
+    // console.log('Props in main screen', nextProps);
     const { database, webRtc } = this.props;
     const mentorId = webRtc.localCallHistory.chatHistory.type === 'user' ? webRtc.mainStreamId : database.Board.byId[webRtc.localCallHistory.chatHistory.connectionId].activeStatus;
     const currentStream = JSON.stringify(webRtc.connectedUsers[mentorId]);
@@ -26,7 +27,6 @@ class MainScreen extends React.Component {
     const videoElment = document.getElementById('video-mentor');
 
     const mentorId = webRtc.localCallHistory.chatHistory.type === 'user' ? webRtc.mainStreamId : database.Board.byId[webRtc.localCallHistory.chatHistory.connectionId].activeStatus;
-
     if (videoElment && mentorId) {
       webRtc.connectedUsers[mentorId].streams.forEach((stream) => {
         if (stream.streams) {

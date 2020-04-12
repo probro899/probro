@@ -38,11 +38,7 @@ export default async function main(
     pc.onicecandidateerror = e => console.error('Error on onIceCandidate', e);
 
     // tracking the ice canidate gather complete
-    pc.onicegatheringstatechange = (info) => {
-      if (info.target.iceGatheringState === 'complete') {
-        iceGatherCompleteHandler(userId);
-      }
-    };
+    pc.onicegatheringstatechange = info => iceGatherCompleteHandler(userId, info.target.iceGatheringState);
 
     // seting Local Description
     const setLocalDescription = (data) => {

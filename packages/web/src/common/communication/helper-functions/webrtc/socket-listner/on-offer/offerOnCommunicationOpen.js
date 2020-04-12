@@ -8,7 +8,7 @@ import localStreamHandler from '../../onLocalStream';
 import iceGaterCompleteHandler from '../../onIceGatherCompleteHandler';
 
 const onNotLiveHandler = async (updateWebRtc, broadCastId, database, type, webRtc, connectionId) => {
-  console.log('Communication is not live', database);
+  // console.log('Communication is not live', database);
   await updateWebRtc('communicationContainer', 'list');
   await updateWebRtc('showCommunication', broadCastId);
   await updateWebRtc('localCallHistory', { ...webRtc.localCallHistory, chatHistory: { connectionId, type, user: { user: database.User.byId[broadCastId] }, broadCastId } });
@@ -16,7 +16,7 @@ const onNotLiveHandler = async (updateWebRtc, broadCastId, database, type, webRt
 };
 
 const onLiveHandler = async (props, state, data) => {
-  console.log('communication is live');
+
   const { uid, offer } = data;
   const { updateWebRtc, database } = props;
   const { webRtc, account } = store.getState();
@@ -28,11 +28,11 @@ const onLiveHandler = async (props, state, data) => {
     if (isPcCreated) {
       const { pc, iceCandidateStatus } = webRtc.peerConnections[data.uid];
       if (iceCandidateStatus === 'connected') {
-        console.log(`${uid}) ANSER IN CONNECTED SATATE`, offer);
+        console.log(`${uid}) ANSER IN CONNECTED SATATE`, data);
         answer = await pc.createAnswer(offer, null);
         isConnected = true;
       } else {
-        console.log(`${uid}) ANSER IN NOT CONNECTED SATATE`, offer);
+        console.log(`${uid}) ANSER IN NOT CONNECTED SATATE`, data);
         await pc.pc.close();
         delete webRtc.peerConnections[uid];
         const newPc = await main(
@@ -44,11 +44,11 @@ const onLiveHandler = async (props, state, data) => {
           localStreamHandler(props),
           iceGaterCompleteHandler(props, state)
         );
-        answer = await newPc.createAnswer(offer, webRtc.streams[account.user.id].stream[0]);
+        answer = await newPc.createAnswer(offer, webRtc.connectedUsers[account.user.id].streams[0]);
         updateWebRtc('peerConnections', { ...webRtc.peerConnections, [uid]: { pc: newPc, user: database.User.byId[uid] } });
       }
     } else {
-      console.log('Creating new pc');
+      console.log(`${uid})CREATING NEW PC`);
       const newPc = await main(
         onIceCandidateHandler(props, state),
         uid,
