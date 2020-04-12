@@ -31,11 +31,13 @@ export default async (props, state, data, maximizeHandler) => {
   }
 
   if (type === 'board') {
-    if (webRtc.localCallHistory.chatHistory.connectionId === broadCastId) {
-      maximizeHandler(true);
-      closeCall(props, state, data);
-    } else {
-      declineCloseCall('Permission denied to end call');
+    if (webRtc.isLive) {
+      if (webRtc.localCallHistory.chatHistory.connectionId === broadCastId) {
+        maximizeHandler(true);
+        closeCall(props, state, data);
+      } else {
+        declineCloseCall('Permission denied to end call');
+      }
     }
   }
 };

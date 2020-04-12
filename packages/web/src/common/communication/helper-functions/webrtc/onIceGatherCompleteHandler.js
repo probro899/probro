@@ -31,6 +31,8 @@ export default (props, state) => async (userId, iceState) => {
           }
         );
         await updateWebRtc('iceCandidates', { ...webRtc.iceCandidates, [userId]: { ...webRtc.iceCandidates[userId], sendStatus: true } });
+      } else {
+        await updateWebRtc('iceCandidates', { ...webRtc.iceCandidates, [userId]: { ...webRtc.iceCandidates[userId], isGatherComplete: true, sendStatus: false } });
       }
     }
   } catch (e) {

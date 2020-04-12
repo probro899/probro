@@ -10,23 +10,25 @@ class MainScreen extends React.Component {
   }
 
   shouldComponentUpdate(nextProps) {
-    // console.log('Props in main screen', nextProps);
+    // console.log('MAIN SCREEN PROPS', nextProps.webRtc, this.props.webRtc);
     const { database, webRtc } = this.props;
-    const mentorId = webRtc.localCallHistory.chatHistory.type === 'user' ? webRtc.mainStreamId : database.Board.byId[webRtc.localCallHistory.chatHistory.connectionId].activeStatus;
+    const currentmentorId = webRtc.localCallHistory.chatHistory.type === 'user' ? webRtc.mainStreamId : database.Board.byId[webRtc.localCallHistory.chatHistory.connectionId].activeStatus;
+    const mentorId = webRtc.localCallHistory.chatHistory.type === 'user' ? webRtc.mainStreamId : nextProps.database.Board.byId[webRtc.localCallHistory.chatHistory.connectionId].activeStatus;
+
     const currentStream = JSON.stringify(webRtc.connectedUsers[mentorId]);
     const newStream = JSON.stringify(nextProps.webRtc.connectedUsers[mentorId]);
-    if (currentStream !== newStream) {
+    if ((currentStream !== newStream) || (currentmentorId !== mentorId)) {
       return true;
     }
     return false;
   }
 
   componentDidUpdate() {
-
     const { webRtc, database, account } = this.props;
     const videoElment = document.getElementById('video-mentor');
 
     const mentorId = webRtc.localCallHistory.chatHistory.type === 'user' ? webRtc.mainStreamId : database.Board.byId[webRtc.localCallHistory.chatHistory.connectionId].activeStatus;
+
     if (videoElment && mentorId) {
       webRtc.connectedUsers[mentorId].streams.forEach((stream) => {
         if (stream.streams) {

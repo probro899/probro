@@ -45,7 +45,8 @@ const onLiveHandler = async (props, state, data) => {
           iceGaterCompleteHandler(props, state)
         );
         answer = await newPc.createAnswer(offer, webRtc.connectedUsers[account.user.id].streams[0]);
-        updateWebRtc('peerConnections', { ...webRtc.peerConnections, [uid]: { pc: newPc, user: database.User.byId[uid] } });
+        await updateWebRtc('peerConnections', { ...webRtc.peerConnections, [uid]: { pc: newPc, user: database.User.byId[uid] } });
+        delete webRtc.iceCandidates[uid];
       }
     } else {
       console.log(`${uid})CREATING NEW PC`);
