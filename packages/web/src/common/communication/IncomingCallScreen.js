@@ -46,7 +46,7 @@ class IncomingCallScreen extends React.Component {
         style={style}
         className="incoming-call-screen"
       >
-        {webRtc.showIncommingCall && <SoundComponent url={ringtoneUrl} />}
+        {/* {webRtc.showIncommingCall && <SoundComponent url={ringtoneUrl} />} */}
         <div
           className="person-icon-container"
           style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}

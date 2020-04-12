@@ -80,7 +80,7 @@ class Index extends React.Component {
     const isUser = webRtc.localCallHistory.chatHistory.type === 'user';
     return (
       <div className="outgoing-call-screen">
-        <SoundComponent url={outgoingRingtoneUrl} />
+        {/* <SoundComponent url={outgoingRingtoneUrl} /> */}
         <div
           className="person-icon-container"
         >

@@ -1,31 +1,35 @@
 self.__precacheManifest = [
   {
-    "revision": "9e734561b5a41bbf3a1b",
-    "url": "/static/css/main.80d7070f.chunk.css"
+    "revision": "aee5ff7ef0282bd3744d",
+    "url": "/static/css/main.e1a69e59.chunk.css"
   },
   {
-    "revision": "9e734561b5a41bbf3a1b",
-    "url": "/static/js/main.9e734561.chunk.js"
+    "revision": "aee5ff7ef0282bd3744d",
+    "url": "/static/js/main.aee5ff7e.chunk.js"
   },
   {
-    "revision": "cb6197a7bd3b9c2f4b4e",
-    "url": "/static/css/1.c71b7355.chunk.css"
+    "revision": "2062ece1b1f1ab955594",
+    "url": "/static/css/1.800f96a4.chunk.css"
   },
   {
-    "revision": "cb6197a7bd3b9c2f4b4e",
-    "url": "/static/js/1.cb6197a7.chunk.js"
+    "revision": "2062ece1b1f1ab955594",
+    "url": "/static/js/1.2062ece1.chunk.js"
   },
   {
     "revision": "229c360febb4351a89df",
     "url": "/static/js/runtime~main.229c360f.js"
   },
   {
+    "revision": "d4c77ff23f10f741ec67fda4499ef24a",
+    "url": "/static/media/uploadicon512.d4c77ff2.png"
+  },
+  {
     "revision": "156d4d8515aec93cffde1bbd8fd4404c",
     "url": "/static/media/blog-img.156d4d85.jpg"
   },
   {
-    "revision": "d4c77ff23f10f741ec67fda4499ef24a",
-    "url": "/static/media/uploadicon512.d4c77ff2.png"
+    "revision": "abf5aa80eec3384158baa47d76ef0f9e",
+    "url": "/static/media/notification.abf5aa80.mp3"
   },
   {
     "revision": "938bb86b36603784693fa681294217a6",
@@ -34,6 +38,14 @@ self.__precacheManifest = [
   {
     "revision": "c700728d5e4e171a2d8451a629526386",
     "url": "/static/media/default-cover.c700728d.jpg"
+  },
+  {
+    "revision": "c176c843d3f890362612472ed2d64768",
+    "url": "/static/media/outgoing.c176c843.mp3"
+  },
+  {
+    "revision": "da570d5fa70391e358e5a4c90da47cc5",
+    "url": "/static/media/ringtone.da570d5f.mp3"
   },
   {
     "revision": "b4cb6006625fcf26a4acd58a71c61f4a",
@@ -46,10 +58,6 @@ self.__precacheManifest = [
   {
     "revision": "f068a8c1c51aa3d024e2764ef1331e9c",
     "url": "/static/media/insight.f068a8c1.png"
-  },
-  {
-    "revision": "da570d5fa70391e358e5a4c90da47cc5",
-    "url": "/static/media/ringtone.da570d5f.mp3"
   },
   {
     "revision": "6fdb722c94434811f89a68eafc4531f8",
@@ -80,15 +88,15 @@ self.__precacheManifest = [
     "url": "/static/media/gotham-pro.056353a2.ttf"
   },
   {
-    "revision": "bceda3fae660177ae570735feec62811",
-    "url": "/static/media/gotham-light.bceda3fa.otf"
-  },
-  {
     "revision": "e19c20e966bde501f94e41cd0322dbe8",
     "url": "/static/media/gotham-medium.e19c20e9.otf"
   },
   {
-    "revision": "2f639aea3c23be54fafeb3f7b10d6d7d",
+    "revision": "bceda3fae660177ae570735feec62811",
+    "url": "/static/media/gotham-light.bceda3fa.otf"
+  },
+  {
+    "revision": "7f9287a32d4faf1a948a03f6577e93e8",
     "url": "/index.html"
   }
 ];

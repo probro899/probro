@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Redirect } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
 import { Button, Position } from '@blueprintjs/core';
 import Tooltip from 'react-tooltip';
 import { TiMediaRecord } from 'react-icons/ti';
@@ -29,8 +29,7 @@ class Controllers extends React.Component {
   }
 
   callReject = () => {
-    // console.log('PROPS IN CALL REJECT', this.props);
-    const { closeHandler, change, toggleMaximize, remoteCallEndMinimizer} = this.props;
+    const { closeHandler, change, remoteCallEndMinimizer } = this.props;
     remoteCallEndMinimizer();
     closeHandler();
     change('history');
@@ -83,6 +82,7 @@ class Controllers extends React.Component {
         >
           <TiMediaRecord size={20} />
         </Button>
+        {/* <Link to={`/${account.user.slug}/drawing-board`}> */}
         <Button
           data-tip="White Board"
           className={webRtc.localCallHistory.mediaType === 'whiteBoard' ? 'pc-control-btn active' : 'pc-control-btn'}
@@ -90,9 +90,11 @@ class Controllers extends React.Component {
         >
           <FiEdit2 size={20} />
         </Button>
+        {/* </Link> */}
         {/* <Button
-          className="pc-control-btn"
-          onClick={this.muteToggle}
+          data-tip="Mute"
+          className={webRtc.localCallHistory.mediaType === 'audio' ? 'pc-control-btn active' : 'pc-control-btn'}
+          onClick={() => this.callUpGradeController('audio')}
         >
           <FiMic size={20} />
         </Button> */}
@@ -105,7 +107,7 @@ Controllers.propTypes = {
   closeHandler: PropTypes.func.isRequired,
   change: PropTypes.func.isRequired,
   updateWebRtc: PropTypes.func.isRequired,
-  toggleMaximize: PropTypes.func.isRequired,
+  remoteCallEndMinimizer: PropTypes.func.isRequired,
   webRtc: PropTypes.objectOf(PropTypes.any).isRequired,
   account: PropTypes.objectOf(PropTypes.any).isRequired,
 };

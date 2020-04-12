@@ -1,3 +1,4 @@
+/* eslint-disable import/no-cycle */
 import { liveBoard } from '../../../../../cache';
 
 const initializeUser = (boardId, userId, pcId) => {
@@ -16,7 +17,7 @@ const initializeUser = (boardId, userId, pcId) => {
 
 export default (offerDetail, userId) => {
   const { broadCastId, uid, isLive } = offerDetail;
-  // console.log('User registercalled', broadCastId, uid, userId);
+  console.log('User registercalled', broadCastId, uid, userId, isLive);
   // initialize fUser
   initializeUser(broadCastId, uid, userId);
 
@@ -25,6 +26,7 @@ export default (offerDetail, userId) => {
 
   // checking is tuser made offer to me
   const { offer, callClose } = liveBoard.getPc(broadCastId, userId, uid);
+  console.log('offer and callClose', offer, callClose);
   if (!offer) {
     // setting fuser is making offer to tuser
     liveBoard.updatePc(broadCastId, uid, userId, { offer: true });

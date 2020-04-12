@@ -9,41 +9,40 @@ class MainScreen extends React.Component {
     this.state = {};
   }
 
-  // shouldComponentUpdate(nextProps) {
-  //   const { database, webRtc } = this.props;
+  shouldComponentUpdate(nextProps) {
+    // console.log('Props in main screen', nextProps);
+    const { database, webRtc } = this.props;
+    const mentorId = webRtc.localCallHistory.chatHistory.type === 'user' ? webRtc.mainStreamId : database.Board.byId[webRtc.localCallHistory.chatHistory.connectionId].activeStatus;
+    const currentStream = JSON.stringify(webRtc.connectedUsers[mentorId]);
+    const newStream = JSON.stringify(nextProps.webRtc.connectedUsers[mentorId]);
+    if (currentStream !== newStream) {
+      return true;
+    }
+    return false;
+  }
 
-  //   const currentMainUiId = database.Board.byId[webRtc.localCallHistory.chatHistory.connectionId];
-  //   const newMainId = nextProps.database.Board.byId[webRtc.localCallHistory.chatHistory.connectionId]
-  //   if (currentMainUiId !== newMainId) {
-  //     return true;
-  //   }
-  //   return false;
-  // }
+  componentDidUpdate() {
 
-  // componentDidUpdate() {
-  //   // console.log('User View DidUpdte called', this.props);
-  //   const { webRtc, database } = this.props;
-  //   const userIds = Object.keys(webRtc.connectedUsers);
-  //   const videoElment = userIds.map(uid => document.getElementById(`video-${uid}`));
-  //   // console.log('all Video Elements', allVideoElements, userIds);
-  //   const mentorId = database.Board.byId[webRtc.localCallHistory.chatHistory.connectionId].activeStatus;
-  //   console.log('Mentor id', mentorId);
-  //   if (videoElment) {
-  //     webRtc.connectedUsers[mentorId].streams.forEach((stream) => {
-  //       if (stream.streams) {
-  //         videoElment.srcObject = stream.streams[0];
-  //       }
-  //     });
-  //   }
-  // }
+    const { webRtc, database, account } = this.props;
+    const videoElment = document.getElementById('video-mentor');
+
+    const mentorId = webRtc.localCallHistory.chatHistory.type === 'user' ? webRtc.mainStreamId : database.Board.byId[webRtc.localCallHistory.chatHistory.connectionId].activeStatus;
+    if (videoElment && mentorId) {
+      webRtc.connectedUsers[mentorId].streams.forEach((stream) => {
+        if (stream.streams) {
+          videoElment.srcObject = stream.streams[0];
+        }
+        if (parseInt(mentorId, 10) === account.user.id) {
+          videoElment.srcObject = stream;
+        }
+      });
+    }
+  }
 
   render() {
-    // const { database, webRtc } = this.props;
-    // console.log('MainScreenProps', this.props);
-    // const { type, connectionId } = webRtc.localCallHistory.chatHistory;
-    // const isUser = type === 'user';
-    // const userId = isUser ? webRtc.mainStreamId : database.Board.byId[connectionId].activeStatus;
-    // const user = Object.values(database.UserDetail.byId).find(u => u.userId === userId);
+    const { database, webRtc, account } = this.props;
+    const muted = webRtc.localCallHistory.chatHistory.type === 'board' ? database.Board.byId[webRtc.localCallHistory.chatHistory.connectionId].activeStatus === account.user.id : false;
+
     return (
       <div className="pc-main-screen">
         <video
@@ -52,6 +51,7 @@ class MainScreen extends React.Component {
           playsInline
           controlsList="noremoteplayback"
           autoPlay
+          muted={muted}
           className="pc-main-video"
           // poster={user && `${ENDPOINT}/user/${10000000 + parseInt(userId, 10)}/profile/${Object.values(database.UserDetail.byId).find(u => u.userId === userId).image}`}
         />
@@ -63,6 +63,7 @@ class MainScreen extends React.Component {
 
 export default MainScreen;
 MainScreen.propTypes = {
-  // database: PropTypes.objectOf(PropTypes.any).isRequired,
-  // webRtc: PropTypes.objectOf(PropTypes.any).isRequired,
+  database: PropTypes.objectOf(PropTypes.any).isRequired,
+  webRtc: PropTypes.objectOf(PropTypes.any).isRequired,
+  account: PropTypes.objectOf(PropTypes.any).isRequired,
 };
