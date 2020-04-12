@@ -21,19 +21,16 @@
     background-color: $darkBlue;
     cursor: pointer;
     color: $backgroundColor;
-    justify-content: space-between;
     .win-title {
+      flex: 0.9;
       margin-left: 10px;
       font-weight: bold;
       display: flex;
       align-items: center;
     }
     .control-icons {
-      min-width: 30px;
-      display: flex; justify-content: center; align-items: center; position: absolute; right: 0; height: 40px; z-index: 4;
-      span {
-        margin-right: 5px;
-      }
+      flex: 0.1;
+      display: flex; justify-content: center; align-items: center;
     }
   }
   .content {
