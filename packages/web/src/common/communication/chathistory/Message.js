@@ -8,10 +8,8 @@ import { ENDPOINT } from '../../../config';
 import sendMessage from '../helper-functions/message/index';
 
 const findSeenUser = (props, seenStatus) => {
-  // console.log('findSeenUser data', props, seenStatus);
   const { database, account } = props;
   const userList = _.uniq(seenStatus.filter(obj => obj.userId !== account.user.id).map(obj => obj.userId));
-  // console.log('userList', userList);
   const userNameList = [];
   userList.forEach((id) => {
     const userDetails = Object.values(database.UserDetail.byId).find(ud => ud.userId === id);
@@ -25,7 +23,6 @@ const findSeenUser = (props, seenStatus) => {
 };
 
 const Message = ({ own, obj, props, type }) => {
-  // console.log('own obj props', own, obj, props);
   return (
     <div
       className={own.isOwn ? 'i-chat right' : 'i-chat left'}
@@ -54,8 +51,6 @@ const Message = ({ own, obj, props, type }) => {
             marginRight: 5,
             marginLeft: (!obj.showImage && !own.isOwn) ? (type ? 3 : 33) : 3,
             marginBottom: !obj.showImage && 0,
-            borderBottomRightRadius: own.isOwn && 0,
-            borderBottomLeftRadius: !own.isOwn && 0,
           }}
         >
           {obj.message}

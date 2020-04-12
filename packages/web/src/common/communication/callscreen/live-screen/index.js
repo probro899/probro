@@ -3,7 +3,7 @@ import React from 'react';
 import { Button } from '@blueprintjs/core';
 import PropTypes from 'prop-types';
 import { MdMessage } from 'react-icons/md';
-import { TiArrowMaximise } from 'react-icons/ti';
+import { TiArrowMaximise, TiArrowMinimise } from 'react-icons/ti';
 import ScChatList from '../chat-list-on-live';
 import ScChatHistory from '../chat-history-on-live';
 import { Badge } from '../../../../components';
@@ -75,7 +75,7 @@ class LiveCallScreen extends React.Component {
 
   render() {
     // console.log('Live Screen called', this.state);
-    const { style, webRtc, database, toggleMaximize, minimize } = this.props;
+    const { style, webRtc, isMaximum, database, toggleMaximize, minimize } = this.props;
     const { user, type } = webRtc.localCallHistory.chatHistory;
     const {
       showChatBox,
@@ -105,7 +105,7 @@ class LiveCallScreen extends React.Component {
         <div className="video-container">
           <div className="pc-maxmin-btn">
             <Button onClick={toggleMaximize} className="pc-control-btn">
-              <TiArrowMaximise size={25} />
+              {isMaximum ? <TiArrowMinimise size={25} /> : <TiArrowMaximise size={25} />}
             </Button>
           </div>
           <ImageOnMainScreen {...this.props} />

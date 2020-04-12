@@ -126,6 +126,7 @@ class Communication extends React.Component {
           {!webRtc.showIncommingCall && webRtc.communicationContainer === 'connecting' && webRtc.localCallHistory.chatHistory && (
           <CallScreen
             toggleMaximize={this.maximize}
+            isMaximum={maximize}
             minimize={minimize}
             remoteCallEndMinimizer={this.remoteCallEndMinimizer}
             change={this.switchScreen}

@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { TextArea, Button, Icon } from '@blueprintjs/core';
 import { sendMessage } from '../helper-functions';
 
@@ -16,12 +15,7 @@ class MessageSender extends React.Component {
 
   handleKeyPress = async (e) => {
     if (e.key === 'Enter') {
-      const { message } = this.state;
-      if (message.replace(/\s/g, '').length === 0) {
-        return;
-      }
-      await sendMessage({ ...this.props, message });
-      this.setState({ message: '' });
+      this.sendMessage();
     }
   }
 
@@ -30,8 +24,8 @@ class MessageSender extends React.Component {
     if (message.replace(/\s/g, '').length === 0) {
       return;
     }
-    await sendMessage({ ...this.props, message });
     this.setState({ message: '' });
+    try { await sendMessage({ ...this.props, message }); } catch { console.log('Error'); }
   }
 
   render() {

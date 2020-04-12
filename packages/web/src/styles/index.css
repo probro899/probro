@@ -441,10 +441,10 @@ top attachment etc.
 .communicate .content .chat-history .chats .i-chat time { margin: 0px 10px; font-size: 9px; color: #696969; font-weight: bold; }
 .communicate .content .chat-history .chats .i-chat .img-wrap img { border-radius: 50%; border: 1px solid #e0e0e0; }
 .communicate .content .chat-history .chats .i-chat.left { margin-right: 12%; flex-direction: row; }
-.communicate .content .chat-history .chats .i-chat.left .text { margin: 0px 10px; border: 1px solid #1d4354; padding: 2px; border-top-right-radius: 10px; border-bottom-right-radius: 10px; border-bottom-left-radius: 10px; }
+.communicate .content .chat-history .chats .i-chat.left .text { margin: 0px 10px; border: 1px solid #1d4354; padding: 2px; border-top-right-radius: 7px; border-bottom-right-radius: 7px; border-bottom-left-radius: 7px; }
 .communicate .content .chat-history .chats .i-chat.right { margin-left: 12%; flex-direction: row-reverse; }
 .communicate .content .chat-history .chats .i-chat.right .text-contain { display: flex; flex-direction: column; align-items: flex-end; }
-.communicate .content .chat-history .chats .i-chat.right .text { margin: 0px 10px; padding: 2px; border: 1px solid #1d4354; border-top-left-radius: 10px; border-bottom-right-radius: 10px; border-bottom-left-radius: 10px; }
+.communicate .content .chat-history .chats .i-chat.right .text { margin: 0px 10px; padding: 2px; border: 1px solid #1d4354; border-top-left-radius: 7px; border-bottom-right-radius: 7px; border-bottom-left-radius: 7px; }
 .communicate .content .chat-history .chat-box { display: flex; }
 .communicate .content .chat-history .chat-box textarea { flex: 0.8; resize: none; }
 .communicate .content .chat-history .chat-box button { flex: 0.2; }
