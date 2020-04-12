@@ -14,19 +14,7 @@ import callClosehandler from '../../../../common/communication/helper-functions/
 
 const pcLogo = require('../../../../assets/logo.png');
 
-const logOutHandler = async (apis, props) => {
-  // console.log('Log out handler called', props);
-  try {
-    if (props.webRtc.isLive) {
-      await callClosehandler(props, null, apis)();
-    }
-    apis.logout();
-  } catch (e) {
-    console.error('Logout error', e);
-  }
-};
-
-const DropDownMenu = (onclick, apis, props) => {
+const DropDownMenu = (onclick, logoutAction, loading) => {
   return (
     <Menu>
       <MenuItem
@@ -37,10 +25,12 @@ const DropDownMenu = (onclick, apis, props) => {
         onClick={onclick}
       />
       <MenuItem
+        disabled={loading}
+        loading={loading}
         icon="log-out"
         intent={Intent.DANGER}
         text="Logout"
-        onClick={() => logOutHandler(apis, props)}
+        onClick={logoutAction}
       />
     </Menu>
   );
@@ -51,18 +41,26 @@ class Navbar extends Component {
     apis: {},
     redirectDashboard: false,
     smallScreen: false,
+    loading: false,
   };
 
   async componentDidMount() {
     const apis = await client.scope('Mentee');
     this.setState({ apis });
-    // eslint-disable-next-line no-undef
-    window.addEventListener('resize', this.screenResize);
   }
 
-  // checks for the resize of window
-  screenResize = (e) => {
-    // console.log('to be done for it to be responsive', e.currentTarget.innerWidth);
+  logoutAction = async () => {
+    const { webRtc } = this.props;
+    const { apis } = this.state;
+    this.setState({ loading: true });
+    try {
+      if (webRtc.isLive) {
+        await callClosehandler(this.props, null, apis)();
+      }
+      apis.logout();
+    } catch (e) {
+      this.setState({ loading: false });
+    }
   }
 
   onClickHandler = () => {
@@ -80,15 +78,13 @@ class Navbar extends Component {
     const {
       account, database, navigate, className,
       updateWebRtc,
-      webRtc,
     } = this.props;
     let profilePic;
-    Object.values(database.UserDetail.byId).map((obj) => {
-      if (account.user && account.user.id === obj.userId) {
-        profilePic = obj.image ? `${ENDPOINT}/user/${10000000 + parseInt(account.user.id, 10)}/profile/${obj.image}` : null;
-      }
-    });
-    const { apis, redirectDashboard, smallScreen } = this.state;
+    if (account.user) {
+      const profile = Object.values(database.UserDetail.byId).find(o => o.userId === account.user.id);
+      profilePic = profile && profile.image ? `${ENDPOINT}/user/${10000000 + parseInt(profile.userId, 10)}/profile/${profile.image}` : null;
+    }
+    const { apis, redirectDashboard, loading, smallScreen } = this.state;
     return (
       <div className={`navbar ${className}`}>
         {redirectDashboard && <Redirect exact push to={`/${account.user.slug}/profile`} />}
@@ -121,16 +117,6 @@ class Navbar extends Component {
               </span>
             </div>
           </Link>
-          {/* <Link
-            to="/take-a-tour"
-            className={navigate.mainNav.name === 'tour' ? 'active' : null}
-          >
-            <div className="navbar-item">
-              <span>
-                Take a Tour
-              </span>
-            </div>
-          </Link> */}
         </div>
         <div className="navbar-more-container">
           <Icon icon="menu" className="more-icon" onClick={this.toggleSmallScreen} />
@@ -154,7 +140,7 @@ class Navbar extends Component {
             )}
           {account.user && <Notifications {...this.props} apis={apis} />}
           { account.user
-            ? <DashboardMenu navigate={navigate} profilePic={profilePic} content={DropDownMenu(this.onClickHandler, apis, this.props)} />
+            ? <DashboardMenu navigate={navigate} profilePic={profilePic} content={DropDownMenu(this.onClickHandler, this.logoutAction, loading)} />
             : (
               <Link
                 to="/login"
@@ -182,6 +168,7 @@ Navbar.propTypes = {
   database: PropTypes.objectOf(PropTypes.any).isRequired,
   navigate: PropTypes.objectOf(PropTypes.any).isRequired,
   updateWebRtc: PropTypes.func.isRequired,
+  webRtc: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 const mapStateToProps = state => state;

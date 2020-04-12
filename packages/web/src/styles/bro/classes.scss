@@ -197,11 +197,9 @@
       .column-inner-container {
         display: flex;
         flex-direction: column;
-        min-width: 300px;
-        max-width: 300px;
+        width: 300px;
         max-height: 100%;
-        margin: 8px 8px 8px 8px;
-        // border-radius: 3px;
+        margin: 10px;
         background-color: $darkBlue;
         .column-title {
           padding: 8px;
@@ -209,7 +207,7 @@
           color: $backgroundColor;
           span {
             font-size: 20px;
-            font-weight: 600;
+            font-weight: bold;
           }
           .more-button {
             top: 5px;
@@ -261,17 +259,11 @@
     }
     .add-new-column {
       .title {
-        padding: 8px;
-        margin: 8px;
-        background-color: $fadedBackground;
-        width: 200px;
-        // border: 1px solid $normalBorder;
+        padding: 8px; margin: 10px; background-color: $fadedBackground; width: 200px;
         box-shadow: 0px 1px 2px 1px $normalShadowColor;
-        // border-radius: 2px;
         cursor: pointer;
         span {
           font-size: 16px;
-          font-weight: 500;
         }
       }
     }

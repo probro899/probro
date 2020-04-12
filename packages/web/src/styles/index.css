@@ -234,9 +234,9 @@ top attachment etc.
 .class-wrapper .columns { height: 100%; padding-top: 100px; display: flex; flex-direction: row; align-items: flex-start; overflow-y: scroll; -ms-overflow-style: none; scrollbar-color: none; }
 .class-wrapper .columns ::-webkit-scrollbar { display: none; }
 .class-wrapper .columns .column-container { height: 100%; padding-bottom: 18px; }
-.class-wrapper .columns .column-container .column-inner-container { display: flex; flex-direction: column; min-width: 300px; max-width: 300px; max-height: 100%; margin: 8px 8px 8px 8px; background-color: #1d4354; }
+.class-wrapper .columns .column-container .column-inner-container { display: flex; flex-direction: column; width: 300px; max-height: 100%; margin: 10px; background-color: #1d4354; }
 .class-wrapper .columns .column-container .column-inner-container .column-title { padding: 8px; position: relative; color: #fff; }
-.class-wrapper .columns .column-container .column-inner-container .column-title span { font-size: 20px; font-weight: 600; }
+.class-wrapper .columns .column-container .column-inner-container .column-title span { font-size: 20px; font-weight: bold; }
 .class-wrapper .columns .column-container .column-inner-container .column-title .more-button { top: 5px; right: 7px; position: absolute; }
 .class-wrapper .columns .column-container .column-inner-container .column-title .more-button svg { fill: #fff; }
 .class-wrapper .columns .column-container .column-inner-container .task-list { min-height: 200px; max-height: 100%; overflow-y: scroll; }
@@ -247,8 +247,8 @@ top attachment etc.
 .class-wrapper .columns .column-container .column-inner-container .task-list .task-container .pc-task-flag .pc-deadline-view p.expire { background-color: red; }
 .class-wrapper .columns .column-container .column-inner-container .task-list .task-container .pc-task-name { margin: 0; font-weight: bold; }
 .class-wrapper .columns .column-container .column-inner-container .column-footer { color: #fff; padding: 10px; cursor: pointer; }
-.class-wrapper .columns .add-new-column .title { padding: 8px; margin: 8px; background-color: #f9f9f9; width: 200px; box-shadow: 0px 1px 2px 1px rgba(57, 73, 76, 0.35); cursor: pointer; }
-.class-wrapper .columns .add-new-column .title span { font-size: 16px; font-weight: 500; }
+.class-wrapper .columns .add-new-column .title { padding: 8px; margin: 10px; background-color: #f9f9f9; width: 200px; box-shadow: 0px 1px 2px 1px rgba(57, 73, 76, 0.35); cursor: pointer; }
+.class-wrapper .columns .add-new-column .title span { font-size: 16px; }
 
 .overlay-container { margin-left: 2%; margin-right: 2%; padding: 0; }
 .overlay-container .task-detail-overlay .overlay-title { padding: 7px; display: flex; justify-content: space-between; background: #f9f9f9; color: #222; border: 1px solid #e0e0e0; }
