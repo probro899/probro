@@ -9,10 +9,11 @@ const NavElement = (props) => {
     name,
     active,
     match,
+    toggleMenu,
     url,
   } = props;
   return (
-    <Link to={`${match.url}/${url}`} className={active ? 'sideNavElement active' : 'sideNavElement'}>
+    <Link to={`${match.url}/${url}`} onClick={toggleMenu} className={active ? 'sideNavElement active' : 'sideNavElement'}>
       <span>
       &nbsp;&nbsp;
         {name}
@@ -30,6 +31,7 @@ NavElement.propTypes = {
   url: PropTypes.string.isRequired,
   match: PropTypes.objectOf(PropTypes.any).isRequired,
   active: PropTypes.bool,
+  toggleMenu: PropTypes.func.isRequired,
 };
 
 class SmallScreenSideNav extends React.Component {
@@ -50,7 +52,6 @@ class SmallScreenSideNav extends React.Component {
       { name: 'Blog', url: 'blog' },
       { name: 'Settings', url: 'settings' },
       { name: 'Drawing Board', url: 'drawing-board' },
-      // { name: 'Messages', url: 'messages' },
       { name: 'Connections', url: 'connection' },
     ];
     return (
@@ -72,6 +73,7 @@ class SmallScreenSideNav extends React.Component {
               navElements.map((obj) => {
                 return (
                   <NavElement
+                    toggleMenu={this.toggleMenu}
                     match={match}
                     url={obj.url}
                     name={obj.name}

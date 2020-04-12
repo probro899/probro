@@ -421,10 +421,9 @@ top attachment etc.
 
 .communicate { position: fixed; width: 35%; bottom: 0; right: 2px; background: #fff; z-index: 3; box-shadow: 0 0 0 1px rgba(16, 22, 26, 0.1), 0 4px 8px rgba(16, 22, 26, 0.2), 0 18px 46px 6px rgba(16, 22, 26, 0.2); }
 .communicate .arrow-btn svg { fill: #1d4354; }
-.communicate .header { height: 40px; font-size: 16px; display: flex; background-color: #1d4354; cursor: pointer; color: #fff; justify-content: space-between; }
-.communicate .header .win-title { margin-left: 10px; font-weight: bold; display: flex; align-items: center; }
-.communicate .header .control-icons { min-width: 30px; display: flex; justify-content: center; align-items: center; position: absolute; right: 0; height: 40px; z-index: 4; }
-.communicate .header .control-icons span { margin-right: 5px; }
+.communicate .header { height: 40px; font-size: 16px; display: flex; background-color: #1d4354; cursor: pointer; color: #fff; }
+.communicate .header .win-title { flex: 0.9; margin-left: 10px; font-weight: bold; display: flex; align-items: center; }
+.communicate .header .control-icons { flex: 0.1; display: flex; justify-content: center; align-items: center; }
 .communicate .content { height: -webkit-calc(100% - 40px); height: -moz-calc(100% - 40px); height: calc(100% - 40px); }
 .communicate .content .chat-list { padding-bottom: 5px; overflow-y: scroll; }
 .communicate .content .chat-list .i-chat { border-bottom: 1px solid #e0e0e0; margin: 3px 0px; padding: 5px; }
@@ -441,10 +440,10 @@ top attachment etc.
 .communicate .content .chat-history .chats .i-chat time { margin: 0px 10px; font-size: 9px; color: #696969; font-weight: bold; }
 .communicate .content .chat-history .chats .i-chat .img-wrap img { border-radius: 50%; border: 1px solid #e0e0e0; }
 .communicate .content .chat-history .chats .i-chat.left { margin-right: 12%; flex-direction: row; }
-.communicate .content .chat-history .chats .i-chat.left .text { margin: 0px 10px; border: 1px solid #1d4354; padding: 2px; border-top-right-radius: 10px; border-bottom-right-radius: 10px; border-bottom-left-radius: 10px; }
+.communicate .content .chat-history .chats .i-chat.left .text { margin: 0px 10px; border: 1px solid #1d4354; padding: 2px; border-top-right-radius: 7px; border-bottom-right-radius: 7px; border-bottom-left-radius: 7px; }
 .communicate .content .chat-history .chats .i-chat.right { margin-left: 12%; flex-direction: row-reverse; }
 .communicate .content .chat-history .chats .i-chat.right .text-contain { display: flex; flex-direction: column; align-items: flex-end; }
-.communicate .content .chat-history .chats .i-chat.right .text { margin: 0px 10px; padding: 2px; border: 1px solid #1d4354; border-top-left-radius: 10px; border-bottom-right-radius: 10px; border-bottom-left-radius: 10px; }
+.communicate .content .chat-history .chats .i-chat.right .text { margin: 0px 10px; padding: 2px; border: 1px solid #1d4354; border-top-left-radius: 7px; border-bottom-right-radius: 7px; border-bottom-left-radius: 7px; }
 .communicate .content .chat-history .chat-box { display: flex; }
 .communicate .content .chat-history .chat-box textarea { flex: 0.8; resize: none; }
 .communicate .content .chat-history .chat-box button { flex: 0.2; }

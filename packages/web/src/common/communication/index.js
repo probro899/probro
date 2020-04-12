@@ -20,17 +20,14 @@ class Communication extends React.Component {
     maximize: false,
   };
 
-  async componentWillMount() {
-    let apisRes = null;
-    // console.log('Communication Will Mount');
+  async componentDidMount() {
     try {
-      apisRes = await client.scope('Mentee');
-      // console.log('api fetched in Communication', apisRes);
+      const apisRes = await client.scope('Mentee');
+      await this.setState({ apis: apisRes });
+      socketListner(this.props, this.state, this.remoteCallEndMinimizer);
     } catch (e) {
       console.error('error in fetching apis in communication');
     }
-    await this.setState({ apis: apisRes });
-    socketListner(this.props, this.state, this.remoteCallEndMinimizer);
   }
 
   remoteCallEndMinimizer = () => {
@@ -49,7 +46,7 @@ class Communication extends React.Component {
   cutWindow = () => {
     const { updateWebRtc, webRtc } = this.props;
     const { apis } = this.state;
-    this.setState({ maximize: false });
+    this.setState({ maximize: false, minimize: false });
 
     if (webRtc.isLive) {
       closeHandler(this.props, this.state, apis)();
@@ -97,8 +94,8 @@ class Communication extends React.Component {
           }
         }
       >
-        <div className="header" onClick={this.toggleMinMax}>
-          <div className="win-title">
+        <div className="header">
+          <div className="win-title" onClick={this.toggleMinMax}>
             Messaging
           </div>
           <div className="control-icons">
@@ -130,6 +127,7 @@ class Communication extends React.Component {
           {!webRtc.showIncommingCall && webRtc.communicationContainer === 'connecting' && webRtc.localCallHistory.chatHistory && (
           <CallScreen
             toggleMaximize={this.maximize}
+            isMaximum={maximize}
             minimize={minimize}
             remoteCallEndMinimizer={this.remoteCallEndMinimizer}
             change={this.switchScreen}

@@ -8,7 +8,7 @@ import GoogleLogin from './GoogleLogin';
 import { login } from '../helper-functions';
 
 class Login extends Component {
-  state = { redirect: false, slug: '' };
+  state = { redirect: false, slug: '', loading: false };
 
   loginHandler = async (data) => {
     const { updateNav } = this.props;
@@ -24,8 +24,8 @@ class Login extends Component {
   }
 
   googleLogin = async (response) => {
-    console.log('Google resposne', response);
     const { updateNav } = this.props;
+    this.setState({ loading: true });
     try {
       const res = await login({ loginType: 'google', record: response });
       if (res.response === 200) {
@@ -37,13 +37,14 @@ class Login extends Component {
       }
       return res;
     } catch (e) {
+      this.setState({ loading: false });
       updateNav({ schema: 'popNotification', data: { active: true, message: 'Could not login with google', intent: 'danger' } });
     }
   }
 
   render() {
     const { account } = this.props;
-    const { redirect, slug } = this.state;
+    const { redirect, slug, loading } = this.state;
     return (
       <div className="o-log-or-reg">
         <div className="log-or-reg">
@@ -55,7 +56,7 @@ class Login extends Component {
             redirect || account.user ? <Redirect push to={`/${slug || account.user.slug}/profile`} /> : <Log loginHandler={this.loginHandler} />
           }
           <div className="auth-with-others">
-            <GoogleLogin googleLogin={this.googleLogin} />
+            <GoogleLogin loading={loading} googleLogin={this.googleLogin} />
           </div>
           <div className="auth-footer">
             <p>
