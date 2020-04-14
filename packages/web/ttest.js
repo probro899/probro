@@ -1,7 +1,11 @@
-
-
-const arr = [1, 2, 3, 4, 5];
-// const arr1 = _.reverse(arr);
-console.log('before', arr);
-console.log(arr.shift(1));
-console.log('after', arr);
+const a = false;
+const b = true;
+if (a) {
+  console.log('1');
+} else if (b){
+   console.log('2');
+ } else if (b) {
+   console.log('3');
+ } else {
+   console.log('4');
+ }
