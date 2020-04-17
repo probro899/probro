@@ -11,7 +11,7 @@ export default (props) => {
   let lastMessageSeenIdAndUnseenNo = null;
   let userShowTestFlag = null;
   let isSameDayFlag = null;
-
+ 
   messages = Object.values(database.BoardMessage.byId).filter(msg => msg.boardId === webRtc.chatHistory.connectionId);
   if (messages.length > 0) {
     messages.forEach((umd, idx, arr) => {

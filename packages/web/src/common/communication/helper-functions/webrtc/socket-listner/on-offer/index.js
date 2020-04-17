@@ -55,7 +55,7 @@ export default async (props, state, data) => {
     declineCall('Call is busy', props, state, data, webRtc);
   } else {
     if (!webRtc.isLive) {
-      // autoCloseHandler(props, state);
+      autoCloseHandler(props, state);
       apis.callStatusChange({
         callStatusDetails: {
           broadCastType,

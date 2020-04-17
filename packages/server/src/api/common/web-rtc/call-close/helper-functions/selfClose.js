@@ -5,3 +5,4 @@ export default (session, callCloseDetail) => {
   session.unsubscribe(`${callCloseDetail.broadCastType}-live-${callCloseDetail.broadCastId}`);
   updateUserData(callCloseDetail, session);
 };
+ 

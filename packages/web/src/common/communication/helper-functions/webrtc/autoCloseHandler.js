@@ -12,5 +12,5 @@ export default (props, state, time) => {
       updateWebRtc('communicationContainer', 'history');
       // change('history');
     }
-  }, time || 20000);
+  }, time || 60000);
 };

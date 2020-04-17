@@ -18,7 +18,7 @@ async function connectUser(record) {
   const fUserDetails = allDbUser.find(u => u.id === userId);
   const tUserDetails = allDbUser.find(u => u.id === mId);
 
-  console.log('from user', fUserDetails, 'to user', tUserDetails);
+  // console.log('from user', fUserDetails, 'to user', tUserDetails);
   const htmlStringValue = await mailBody();
 
   mailer({

@@ -7,7 +7,7 @@ import schema from '@probro/common/source/src/schema';
 import { liveBoard } from '../../../../../cache';
 
 export default async (session, callCloseDetail) => {
-  console.log('Board close Call', callCloseDetail);
+  // console.log('Board close Call', callCloseDetail);
 
   const channel = session.channel(`${callCloseDetail.broadCastType}-live-${callCloseDetail.broadCastId}`);
 
@@ -16,15 +16,17 @@ export default async (session, callCloseDetail) => {
 
   // gather all the acitve boardUser
   const allLiveSessions = session.getChannel(`Board-${callCloseDetail.broadCastId}`);
-
-  // saying all  user to board active false
-  allLiveSessions.forEach(s => updateUserCache({ Board: { id: callCloseDetail.broadCastId, activeStatus: false } }, s, 'update'));
+  // console.log('AllLive sessions', allLiveSessions);
 
   // final call end to the live channel
   channel.emit('callEnd', callCloseDetail, null, callCloseDetail.uid);
 
-  // unsubscribe the all user from board
-  allLiveSessions.forEach(s => s.unsubscribe(`${callCloseDetail.broadCastType}-live-${callCloseDetail.broadCastId}`));
+  // saying all  user to board active false
+  if (allLiveSessions) {
+    allLiveSessions.forEach(s => updateUserCache({ Board: { id: callCloseDetail.broadCastId, activeStatus: false } }, s, 'update'));
+    // unsubscribe the all user from board
+    allLiveSessions.forEach(s => s.unsubscribe(`${callCloseDetail.broadCastType}-live-${callCloseDetail.broadCastId}`));
+  }
 
   // upate own session to active false
   updateDatabaseCache('Board', schema.update('Board', { id: callCloseDetail.broadCastId, activeStatus: false }));

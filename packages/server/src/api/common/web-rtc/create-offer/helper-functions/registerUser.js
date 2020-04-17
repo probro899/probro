@@ -3,7 +3,7 @@ import { liveBoard } from '../../../../../cache';
 
 const initializeUser = (boardId, userId, pcId) => {
   if (!liveBoard.getBoard(boardId)) {
-    liveBoard.setBoard(boardId, {});
+    liveBoard.setBoard(boardId, { });
   }
 
   if (!liveBoard.getUser(boardId, userId)) {
@@ -17,7 +17,7 @@ const initializeUser = (boardId, userId, pcId) => {
 
 export default (offerDetail, userId) => {
   const { broadCastId, uid, isLive } = offerDetail;
-  console.log('User registercalled', broadCastId, uid, userId, isLive);
+  // console.log('User registercalled', broadCastId, uid, userId, isLive);
   // initialize fUser
   initializeUser(broadCastId, uid, userId);
 
@@ -25,18 +25,16 @@ export default (offerDetail, userId) => {
   initializeUser(broadCastId, userId, uid);
 
   // checking is tuser made offer to me
-  const { offer, callClose } = liveBoard.getPc(broadCastId, userId, uid);
-  console.log('offer and callClose', offer, callClose);
-  if (!offer) {
-    // setting fuser is making offer to tuser
-    liveBoard.updatePc(broadCastId, uid, userId, { offer: true });
-  }
-  // console.log('Current Board Live Details', liveBoard.getBoard(broadCastId), 'doOffer', offer);
-  if (isLive) {
-    return true;
-  }
+  const { callClose } = liveBoard.getPc(broadCastId, userId, uid);
+
+  const { offer } = liveBoard.getPc(broadCastId, userId, uid);
+  // console.log('offer and callClose', offer, callClose);
 
   if (callClose) {
+    return false;
+  }
+
+  if (isLive) {
     return true;
   }
 

@@ -4,7 +4,7 @@ import userCallCloseHandler from './userCallCloseHandler';
 import boardCallCloseHandler from './boardCallClose';
 
 export default async function callClose(data) {
-  console.log('call close method called', data);
+  // console.log('call close method called', data);
   const { session } = this;
   // console.log('sesssion', session);
   const { callCloseDetail, userList } = data;

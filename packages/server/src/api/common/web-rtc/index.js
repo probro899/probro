@@ -1,6 +1,6 @@
 /* eslint-disable import/no-cycle */
 import { createOffer } from './create-offer';
-import createAnswer from './createAnswer';
+import createAnswer from './create-answer/createAnswer';
 import addICeCandidate from './addIceCandidate';
 import callClose from './call-close';
 import callStatusChange from './call-status-handler';

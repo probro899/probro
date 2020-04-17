@@ -1,3 +1,3 @@
 import createOffer from './createOffer';
 
-export { createOffer };
+export { createOffer }; 

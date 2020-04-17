@@ -1,5 +1,15 @@
+/* eslint-disable import/no-cycle */
+import callCloseHandler from './closeHandler';
 import store from '../../../../store';
 import reconnectHandler from './reconnectHandler';
+
+const isReconnect = (webRtc) => {
+  if (webRtc.localCallHistory.chatHistory.type === 'board') {
+    const isAnyoneConnected = Object.values(webRtc.connectedUsers).find(c => c.iceCandidateStatus === 'connected');
+    return isAnyoneConnected;
+  }
+  return false;
+};
 
 export default (props, mainStateApis) => async (e, state, userId) => {
   console.log(`${userId}) ICECANDIDATE STATUS`, state.iceConnectionState, mainStateApis);
@@ -13,7 +23,7 @@ export default (props, mainStateApis) => async (e, state, userId) => {
     const uid = account.user.id;
     const pcId = userId;
     const status = state.iceConnectionState;
-    console.log('Connection state', boardId, uid, pcId, status);
+    // console.log('Connection state', boardId, uid, pcId, status);
     apis.onPcStatusChange({
       boardId, userId: uid, pcId, status });
   } catch (e) {
@@ -31,7 +41,12 @@ export default (props, mainStateApis) => async (e, state, userId) => {
   });
 
   if (state.iceConnectionState === 'disconnected' || state.iceConnectionState === 'failed') {
-    console.log(`${userId}) RECONNECT HANDLER CALLED`);
-    reconnectHandler(userId, { webRtc, account, updateWebRtc, database }, { apis });
+    if (isReconnect(store.getState().webRtc)) {
+      console.log(`${userId}) RECONNECT HANDLER CALLED`);
+      reconnectHandler(userId, { webRtc, account, updateWebRtc, database }, { apis });
+    } else {
+      console.log('CLOSE CALL');
+      // callCloseHandler(props, null, apis)();
+    }
   }
 };

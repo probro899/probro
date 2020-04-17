@@ -123,7 +123,7 @@ class Session {
     };
 
     parser.onRpcRequest = (tracker, scopeId, api, args) => {
-      console.log('onRpcRequest', tracker, scopeId, api, args);
+      // console.log('onRpcRequest', tracker, scopeId, api, args);
       const apiInstance = { session: this, scope: scopeId };
       const scope = this.scopes[scopeId];
       if (!scope) {

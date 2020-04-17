@@ -4,7 +4,7 @@ import db from '../../../db';
 import { database } from '../../../cache';
 
 export default async function add(table, record) {
-  console.log('add api called', table, record);
+  // console.log('add api called', table, record);
   const { session } = this;
   const { broadCastId, broadCastUserList } = record;
   delete record.broadCastId;

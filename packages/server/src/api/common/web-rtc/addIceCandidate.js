@@ -1,6 +1,6 @@
 
 export default async function addIceCandidate(data) {
-  console.log('addIcecandidate called', data);
+  // console.log('addIcecandidate called', data);
   const { session } = this;
   if (data.iceCandidateDetail.broadCastType === 'UserConnection') {
     const channel = session.channel(`${data.iceCandidateDetail.broadCastType}-${data.iceCandidateDetail.broadCastId}`);
