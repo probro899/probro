@@ -18,7 +18,7 @@ export default (session, data) => {
 
     if (!liveBoardChannelBefore) {
 
-      console.log('Offer Lelel 1');
+      // console.log('Offer Lelel 1');
       allBoardUserSession.forEach(s => s.subscribe(`${offerDetail.broadCastType}-live-${offerDetail.broadCastId}`));
 
       const liveBoardChannel = session.channel(`${offerDetail.broadCastType}-live-${offerDetail.broadCastId}`);
@@ -42,7 +42,7 @@ export default (session, data) => {
       registerOffer(offerDetail, data.userList[0].userId);
 
     } else if (liveBoardChannelBefore.length <= 1) {
-      console.log('Offer Level 2');
+      // console.log('Offer Level 2');
       // console.log('inside one session board');
       liveBoardChannelBefore.forEach(s => s.unsubscribe(`${offerDetail.broadCastType}-live-${offerDetail.broadCastId}`));
 
@@ -56,7 +56,7 @@ export default (session, data) => {
       registerOffer(offerDetail, data.userList[0].userId);
 
     } else {
-      console.log('Offer Level 3');
+      // console.log('Offer Level 3');
       session.subscribe(`${offerDetail.broadCastType}-live-${offerDetail.broadCastId}`);
 
       const liveBoardChannel = session.channel(`${offerDetail.broadCastType}-live-${offerDetail.broadCastId}`);

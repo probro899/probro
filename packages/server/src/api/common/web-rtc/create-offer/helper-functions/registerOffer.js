@@ -9,5 +9,5 @@ export default (offerDetail, userId) => {
     liveBoard.updatePc(broadCastId, uid, userId, { offer: true, callClose: false });
   }
 
-  console.log(`${userId})REGISTER OFFER`, liveBoard.getBoard(broadCastId));
+  // console.log(`${userId})REGISTER OFFER`, liveBoard.getBoard(broadCastId));
 };

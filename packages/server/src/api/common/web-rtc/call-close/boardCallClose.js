@@ -6,7 +6,7 @@ import { liveBoard } from '../../../../cache';
 
 export default async (callCloseDetail, session) => {
   const isCloseCall = informLiveBoardToClose(callCloseDetail.broadCastId, callCloseDetail.uid);
-  console.log('BoardClose Call', liveBoard.getBoard(callCloseDetail.broadCastId), isCloseCall);
+  // console.log('BoardClose Call', liveBoard.getBoard(callCloseDetail.broadCastId), isCloseCall);
   if (!isCloseCall && liveBoard.getBoard(callCloseDetail.broadCastId)) {
     callClose(session, callCloseDetail);
   } else {
