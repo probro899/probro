@@ -58,7 +58,7 @@ const Message = ({ own, obj, props, type }) => {
         <div style={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: 0 }}>
           { obj.status === 'loading' && <Spinner size="15" intent="primary" /> }
           {obj.status === 'error' && <Icon icon="repeat" iconSize="15" style={{ cursor: 'pointer' }} onClick={() => sendMessage({ ...props, message: obj.message, resend: obj.id })} />}
-          <div style={{ marginTop: 2, display: 'flex', width: '100%', justifyContent: 'center'}}>
+          <div style={{ marginTop: 2, display: 'flex', width: '100%' }}>
             {findSeenUser(props, obj.seenStatus)}
           </div>
         </div>
