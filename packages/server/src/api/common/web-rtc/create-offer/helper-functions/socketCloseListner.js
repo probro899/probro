@@ -5,6 +5,8 @@ import callEndMessageAnalyser from './callEndMessageAnalyser';
 export default function closeSocketListner(session, boardId, userId) {
   return function socketCloseListner() {
     const callCloseDetails = callEndMessageAnalyser(boardId, userId);
-    boardCallClose(callCloseDetails, session);
+    if (callCloseDetails) {
+      boardCallClose(callCloseDetails, session);
+    }
   };
 }
