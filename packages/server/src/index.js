@@ -14,13 +14,13 @@ import initCachDB from './cache/database/initCacheDB';
 // const port = process.env.PORT || 443;
 const port = process.env.PORT || 4001;
 const app = express();
-app.use((req, res, next) => {
-  if (!req.secure && req.hostname === 'properclass.com' && req.get('X-Forwarded-Proto') === 'http') {
-    res.redirect(301, `https://${req.get('Host')}${req.url}`);
-  } else {
-    next();
-  }
-});
+// app.use((req, res, next) => {
+//   if (!req.secure && req.hostname === 'properclass.com' && req.get('X-Forwarded-Proto') === 'http') {
+//     res.redirect(301, `https://${req.get('Host')}${req.url}`);
+//   } else {
+//     next();
+//   }
+// });
 
 app.use(bodyParser.urlencoded({ limit: '10mb', extended: false }));
 app.use(bodyParser.json({ limit: '10mb', extended: true }));

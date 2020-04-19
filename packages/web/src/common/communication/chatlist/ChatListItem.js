@@ -9,6 +9,9 @@ import { Icon } from '@blueprintjs/core';
 import { ENDPOINT } from '../../../config';
 import store from '../../../store';
 import { incomingCallLogHandler, outgoingCallLogHandler } from '../chathistory/helper-function';
+import { RoundPicture } from '../../../components';
+
+const profileIcon = require('../../../assets/icons/64w/uploadicon64.png');
 
 export default ({ clo, idx }) => {
   const isUser = clo.type === 'user';
@@ -16,29 +19,26 @@ export default ({ clo, idx }) => {
     <div
       key={idx}
       style={
-        { cursor: 'pointer', padding: 5, background: clo.mouseHoverId === idx ? '#d6f4fe' : 'white' }
+        { cursor: 'pointer', padding: '5px 10px 5px 5px', background: clo.mouseHoverId === idx ? '#d6f4fe' : 'white' }
         }
 
       onClick={() => clo.onClick(clo)}
       onMouseOver={() => clo.onMouseHover(idx)}
     >
       <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
-        <div style={{ display: 'flex' }}>
-          <div style={{ display: 'flex' }}>
-            {(isUser ? clo.user.userDetails && clo.user.userDetails.image : clo.boardDetails.image)
-              ? <img alt="profile-img" src={`${ENDPOINT}/user/${10000000 + parseInt(clo.user.user.id, 10)}/profile/${clo.user.userDetails.image}`} style={{ height: 30, width: 30, borderRadius: '50%'}} />
-              : <Icon icon={isUser ? 'user' : 'application'} iconSize={30} style={{ color: '#757575' }} />
-            }
-            {isUser ? clo.user.user.activeStatus ? <div style={{ marginLeft: -5, marginTop: 20, height: 8, width: 8, borderRadius: '50%', background: '#A4DE02' }} /> : <div style={{ marginLeft: -5, marginTop: 20, height: 8, width: 8, borderRadius: '50%', background: '#f5f5f5' }} /> : null}
-            {/* {!isUser && clo.boardDetails.activeStatus ? <div style={{ marginLeft: -5, marginTop: 20, height: 8, width: 8, borderRadius: '50%', background: '#A4DE02' }} /> : <div style={{ marginLeft: -5, marginTop: 20, height: 8, width: 8, borderRadius: '50%', background: '#f5f5f5' }} />} */}
-          </div>
+        <div style={{ display: 'flex', position: 'relative' }}>
+          {isUser
+            ? <div className="profile-icon"><RoundPicture imgUrl={clo.user.userDetails && clo.user.userDetails.image ? `${ENDPOINT}/user/${10000000 + parseInt(clo.user.user.id, 10)}/profile/${clo.user.userDetails.image}` : profileIcon} /></div>
+            : <div className="class-icon"><Icon icon="application" iconSize={40} /></div>
+          }
+          {isUser && clo.user.user.activeStatus && <div className="green-dot" />}
           <div style={{ display: 'flex', flexDirection: 'column', marginLeft: 10 }}>
             <div style={{ fontWeight: 'bold' }}>
               <span style={{ padding: 3 }}>{isUser ? clo.user.user.firstName : clo.boardDetails.name}</span>
               {!isUser && clo.boardDetails.activeStatus && <span style={{ background: 'green', padding: 3, fontSize: 10, marginLeft: 5, fontWeight: 'lighter', borderRadius: 5, color: 'white' }}>Live</span>}
             </div>
             <span
-              style={{ fontSize: 14, color: '#757575', width: 200, overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis' }}
+              className="last-text"
             >
               {clo.lastMessage.type
                 ? (clo.lastMessage.type === 'Incoming' ? incomingCallLogHandler(clo.lastMessage, store.getState().account, clo.type, true) : outgoingCallLogHandler(clo.lastMessage, store.getState().account, clo.type, true))

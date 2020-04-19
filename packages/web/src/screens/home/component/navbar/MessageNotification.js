@@ -11,6 +11,8 @@ class MessageNotification extends React.Component {
   state = { unReadMessage: 0 };
 
   componentDidMount() {
+    const { account } = this.props;
+    if (!account.user) return;
     const chatList = getChatList(this.props);
     const unReadMessage = chatList.reduce((t, next) => {
       t += next.unSeenNo;
@@ -20,6 +22,8 @@ class MessageNotification extends React.Component {
   }
 
   componentWillReceiveProps(props) {
+    const { account } = this.props;
+    if (!account.user) return;
     const chatList = getChatList(props);
     const unReadMessage = chatList.reduce((t, next) => {
       t += next.unSeenNo;
@@ -53,6 +57,7 @@ class MessageNotification extends React.Component {
 }
 
 MessageNotification.propTypes = {
+  account: PropTypes.objectOf(PropTypes.any).isRequired,
   updateWebRtc: PropTypes.func.isRequired,
 };
 

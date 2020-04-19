@@ -423,9 +423,17 @@ top attachment etc.
 .communicate .arrow-btn svg { fill: #1d4354; }
 .communicate .header { height: 40px; font-size: 16px; display: flex; background-color: #1d4354; cursor: pointer; color: #fff; }
 .communicate .header .win-title { flex: 0.9; margin-left: 10px; font-weight: bold; display: flex; align-items: center; }
-.communicate .header .control-icons { flex: 0.1; display: flex; justify-content: center; align-items: center; }
+.communicate .header .control-icons { flex: 0.1; display: flex; justify-content: flex-end; align-items: center; padding-right: 5px; }
 .communicate .content { height: -webkit-calc(100% - 40px); height: -moz-calc(100% - 40px); height: calc(100% - 40px); }
 .communicate .content .chat-list { padding-bottom: 5px; overflow-y: scroll; }
+.communicate .content .chat-list .last-text { font-size: 14px; max-width: 200px; color: #696969; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.communicate .content .chat-list .green-dot { position: absolute; height: 10px; width: 10px; background-color: #71f971; border-radius: 50%; top: 35px; left: 39px; }
+.communicate .content .chat-list .profile-icon { position: relative; height: 50px; width: 50px; display: flex; justify-content: center; align-items: center; border-radius: 50%; overflow: hidden; }
+.communicate .content .chat-list .profile-icon img { object-fit: contain; }
+.communicate .content .chat-list .profile-icon img.portrait { width: 100%; height: auto; }
+.communicate .content .chat-list .profile-icon img.landscape { height: 100%; width: auto; }
+.communicate .content .chat-list .class-icon { height: 50px; width: 50px; display: flex; justify-content: center; }
+.communicate .content .chat-list .class-icon svg { color: #1d4354; }
 .communicate .content .chat-list .i-chat { border-bottom: 1px solid #e0e0e0; margin: 3px 0px; padding: 5px; }
 .communicate .content .chat-list .i-chat.unseen { background: #f9f9f9; }
 .communicate .content .chat-list .i-chat:hover { box-shadow: 1px 1px 10px 0px rgba(57, 73, 76, 0.35); }
@@ -435,15 +443,20 @@ top attachment etc.
 .communicate .content .chat-history .top { display: flex; justify-content: space-between; padding: 5px 0px; border-bottom: 1px solid #e0e0e0; }
 .communicate .content .chat-history .top .op-name { display: flex; flex-direction: column; justify-content: center; color: #1d4354; font-weight: bold; font-size: 16px; }
 .communicate .content .chat-history .top .call-control button { margin: 0px 1px; }
+.communicate .content .chat-history .seen-user { height: 20px; width: 20px; border-radius: 50%; overflow: hidden; }
+.communicate .content .chat-history .seen-user img.portrait { width: 100%; height: auto; }
+.communicate .content .chat-history .seen-user img.landscape { height: 100%; width: auto; }
 .communicate .content .chat-history .chats { padding: 5px 5px 0px 5px; overflow-y: scroll; height: 100%; }
 .communicate .content .chat-history .chats .i-chat { margin: 0; display: flex; }
 .communicate .content .chat-history .chats .i-chat time { margin: 0px 10px; font-size: 9px; color: #696969; font-weight: bold; }
-.communicate .content .chat-history .chats .i-chat .img-wrap img { border-radius: 50%; border: 1px solid #e0e0e0; }
+.communicate .content .chat-history .chats .i-chat .img-wrap { height: 45px; width: 45px; border-radius: 50%; overflow: hidden; }
+.communicate .content .chat-history .chats .i-chat .img-wrap img.portrait { width: 100%; height: auto; }
+.communicate .content .chat-history .chats .i-chat .img-wrap img.landscape { height: 100%; width: auto; }
 .communicate .content .chat-history .chats .i-chat.left { margin-right: 12%; flex-direction: row; }
-.communicate .content .chat-history .chats .i-chat.left .text { margin: 0px 10px; border: 1px solid #1d4354; padding: 2px; border-top-right-radius: 7px; border-bottom-right-radius: 7px; border-bottom-left-radius: 7px; }
+.communicate .content .chat-history .chats .i-chat.left .text { margin: 0px 10px; padding: 2px; border-top-right-radius: 7px; border-bottom-right-radius: 7px; border-bottom-left-radius: 7px; }
 .communicate .content .chat-history .chats .i-chat.right { margin-left: 12%; flex-direction: row-reverse; }
 .communicate .content .chat-history .chats .i-chat.right .text-contain { display: flex; flex-direction: column; align-items: flex-end; }
-.communicate .content .chat-history .chats .i-chat.right .text { margin: 0px 10px; padding: 2px; border: 1px solid #1d4354; border-top-left-radius: 7px; border-bottom-right-radius: 7px; border-bottom-left-radius: 7px; }
+.communicate .content .chat-history .chats .i-chat.right .text { margin: 0px 10px; padding: 2px; border-top-left-radius: 7px; border-bottom-right-radius: 7px; border-bottom-left-radius: 7px; }
 .communicate .content .chat-history .chat-box { display: flex; }
 .communicate .content .chat-history .chat-box textarea { flex: 0.8; resize: none; }
 .communicate .content .chat-history .chat-box button { flex: 0.2; }
@@ -506,6 +519,7 @@ top attachment etc.
 .communicate .content .outgoing-call-screen .person-icon-container .img-container img.portrait { width: 100%; height: auto; }
 .communicate .content .outgoing-call-screen .person-icon-container .img-container img.landscape { height: 100%; width: auto; }
 .communicate .content .outgoing-call-screen .person-icon-container .controllers { margin-top: 5%; padding: 10px 0px; display: flex; justify-content: space-around; }
+@media screen and (max-width: 410px) { .communicate .content .chat-list .last-text { max-width: 150px; } }
 @media screen and (min-width: 500px) and (max-width: 800px) { .communicate { width: 60%; } }
 @media screen and (min-width: 800px) and (max-width: 1000px) { .communicate { width: 50%; } }
 @media screen and (max-width: 500px) { .communicate { width: 90%; }
