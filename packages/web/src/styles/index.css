@@ -452,7 +452,9 @@ top attachment etc.
 .communicate .content .chat-history .chats .i-chat .img-wrap { height: 45px; width: 45px; border-radius: 50%; overflow: hidden; }
 .communicate .content .chat-history .chats .i-chat .img-wrap img.portrait { width: 100%; height: auto; }
 .communicate .content .chat-history .chats .i-chat .img-wrap img.landscape { height: 100%; width: auto; }
-.communicate .content .chat-history .chats .i-chat.left { margin-right: 12%; flex-direction: row; }
+.communicate .content .chat-history .chats .i-chat.left { display: flex; margin-right: 12%; flex-direction: row; }
+.communicate .content .chat-history .chats .i-chat.left .text-contain { max-width: calc(100% - 45px); }
+.communicate .content .chat-history .chats .i-chat.left .text-contain.spaced { margin-left: 3px; }
 .communicate .content .chat-history .chats .i-chat.left .text { margin: 0px 10px; padding: 2px; border-top-right-radius: 7px; border-bottom-right-radius: 7px; border-bottom-left-radius: 7px; }
 .communicate .content .chat-history .chats .i-chat.right { margin-left: 12%; flex-direction: row-reverse; }
 .communicate .content .chat-history .chats .i-chat.right .text-contain { display: flex; flex-direction: column; align-items: flex-end; }

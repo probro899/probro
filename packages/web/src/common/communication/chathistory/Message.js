@@ -31,11 +31,11 @@ const Message = ({ own, obj, props, type }) => {
     >
       {(obj.showImage && !own.isOwn) && (
       <div className="img-wrap">
-        {<RoundPicture imgUrl={(own.user.userDetails && own.user.userDetails.image) ? `${ENDPOINT}/user/${10000000 + parseInt(own.user.id, 10)}/profile/${own.user.userDetails.image}` : profileIcon} />}
+        <RoundPicture imgUrl={(own.user.userDetails && own.user.userDetails.image) ? `${ENDPOINT}/user/${10000000 + parseInt(own.user.id, 10)}/profile/${own.user.userDetails.image}` : profileIcon} />
       </div>
       )
       }
-      <div className="text-contain">
+      <div className={`text-contain${(!obj.showImage && !own.isOwn) ? ' spaced' : ''}`}>
         {obj.showImage && !own.isOwn && <span style={{ fontSize: 10, color: '#757575', marginLeft: 5 }}>{own.user.firstName}</span>}
         <div
           className="text"
@@ -46,7 +46,7 @@ const Message = ({ own, obj, props, type }) => {
             paddingBottom: 0,
             margin: 0,
             marginRight: 5,
-            marginLeft: (!obj.showImage && !own.isOwn) ? (type ? 3 : 33) : 3,
+            marginLeft: (!obj.showImage && !own.isOwn) ? (type ? 3 : 45) : 3,
             marginBottom: !obj.showImage && 0,
           }}
         >
