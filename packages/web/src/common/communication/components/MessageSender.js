@@ -15,6 +15,7 @@ class MessageSender extends React.Component {
 
   handleKeyPress = async (e) => {
     if (e.key === 'Enter') {
+      e.preventDefault();
       this.sendMessage();
     }
   }
@@ -33,7 +34,8 @@ class MessageSender extends React.Component {
     return (
       <div className="chat-box" style={{ marginTop: 10 }}>
         <TextArea
-          placeholder="Type here something..."
+          rows={2}
+          placeholder="Message..."
           onChange={this.onMessageType}
           value={message}
           onKeyPress={this.handleKeyPress}

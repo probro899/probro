@@ -36,7 +36,6 @@ class HomePage extends Component {
   }
 
   render() {
-    // console.log('Props in Main page', this.props);
     const { data, loading } = this.state;
     const { account } = this.props;
     return loading ? <Spinner /> : (

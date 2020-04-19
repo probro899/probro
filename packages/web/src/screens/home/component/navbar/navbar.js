@@ -130,7 +130,7 @@ class Navbar extends Component {
         </div>
         <div className="navbar-right">
           {/* Notifications in navigation */}
-          {account.user
+          {account.sessionId
             && (
             <MessageNotification
               account={account}
@@ -138,8 +138,8 @@ class Navbar extends Component {
               updateWebRtc={updateWebRtc}
             />
             )}
-          {account.user && <Notifications {...this.props} apis={apis} />}
-          { account.user
+          {account.sessionId && <Notifications {...this.props} apis={apis} />}
+          { account.sessionId
             ? <DashboardMenu navigate={navigate} profilePic={profilePic} content={DropDownMenu(this.onClickHandler, this.logoutAction, loading)} />
             : (
               <Link

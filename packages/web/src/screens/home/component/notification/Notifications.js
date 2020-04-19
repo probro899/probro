@@ -12,11 +12,15 @@ class Notifications extends React.Component {
   state = { drawerOpen: false, notiNo: 0, lastNotifId: null };
 
   componentDidMount() {
+    const { account } = this.props;
+    if (!account.user) return;
     const notiDetails = getUnReadNotification(this.props);
     this.setState({ notiNo: notiDetails.unSeenNo, lastNotifId: notiDetails.lastNotifId });
   }
 
   componentWillReceiveProps(newPorps) {
+    const { account } = this.props;
+    if (!account.user) return;
     const notiDetails = getUnReadNotification(newPorps);
     this.setState({ notiNo: notiDetails.unSeenNo, lastNotifId: notiDetails.lastNotifId });
   }

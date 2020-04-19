@@ -147,7 +147,6 @@ class ChatHistory extends React.Component {
 }
 
 ChatHistory.propTypes = {
-  // style: PropTypes.objectOf(PropTypes.any).isRequired,
   _callHandler: PropTypes.func.isRequired,
   change: PropTypes.func.isRequired,
   apis: PropTypes.objectOf(PropTypes.any).isRequired,
@@ -156,7 +155,6 @@ ChatHistory.propTypes = {
   database: PropTypes.objectOf(PropTypes.any).isRequired,
   addDatabaseSchema: PropTypes.func.isRequired,
   updateWebRtc: PropTypes.func.isRequired,
-  // fromLive: PropTypes.bool.isRequired,
 };
 
 export default ChatHistory;

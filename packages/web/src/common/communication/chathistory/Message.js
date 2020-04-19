@@ -6,6 +6,9 @@ import _ from 'lodash';
 import { Spinner, Icon } from '@blueprintjs/core';
 import { ENDPOINT } from '../../../config';
 import sendMessage from '../helper-functions/message/index';
+import { RoundPicture } from '../../../components';
+
+const profileIcon = require('../../../assets/icons/64w/uploadicon64.png');
 
 const findSeenUser = (props, seenStatus) => {
   const { database, account } = props;
@@ -13,11 +16,7 @@ const findSeenUser = (props, seenStatus) => {
   const userNameList = [];
   userList.forEach((id) => {
     const userDetails = Object.values(database.UserDetail.byId).find(ud => ud.userId === id);
-    if (userDetails && userDetails.image) {
-      userNameList.push(<img alt="profile-img" src={`${ENDPOINT}/user/${10000000 + parseInt(userDetails.userId, 10)}/profile/${userDetails.image}`} style={{ marginRight: 2, height: 15, width: 15, borderRadius: '50%' }} />);
-    } else {
-      userNameList.push(<div style={{ marginRight: 2, color: 'white', display: 'flex', justifyContent: 'center', alignItems: 'center', background: '#154155', height: 15, width: 15, borderRadius: '50%'}}><span style={{ fontSize: 7 }}>{`${database.User.byId[id].firstName.charAt(0).toUpperCase()}${database.User.byId[id].lastName.charAt(0).toUpperCase()}`}</span></div>);
-    }
+    userNameList.push(<div className="seen-user"><RoundPicture imgUrl={userDetails && userDetails.image ? `${ENDPOINT}/user/${10000000 + parseInt(userDetails.userId, 10)}/profile/${userDetails.image}` : profileIcon} /></div>);
   });
   return userNameList;
 };
@@ -31,10 +30,7 @@ const Message = ({ own, obj, props, type }) => {
     >
       {(obj.showImage && !own.isOwn) && (
       <div className="img-wrap">
-          {(own.user.userDetails && own.user.userDetails.image)
-            ? <img alt="profile-img" src={`${ENDPOINT}/user/${10000000 + parseInt(own.user.id, 10)}/profile/${own.user.userDetails.image}`} style={{ height: 30, width: 30, borderRadius: '50%'}} />
-            : <div style={{ color: 'white', display: 'flex', justifyContent: 'center', alignItems: 'center', background: '#154155', height: 30, width: 30, borderRadius: '50%'}}>{`${own.user.firstName.charAt(0).toUpperCase()}${own.user.lastName.charAt(0).toUpperCase()}`}</div>
-                }
+        {<RoundPicture imgUrl={(own.user.userDetails && own.user.userDetails.image) ? `${ENDPOINT}/user/${10000000 + parseInt(own.user.id, 10)}/profile/${own.user.userDetails.image}` : profileIcon} />}
       </div>
       )
       }
