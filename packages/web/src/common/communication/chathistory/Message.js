@@ -31,11 +31,11 @@ const Message = ({ own, obj, props, type }) => {
     >
       {(obj.showImage && !own.isOwn) && (
       <div className="img-wrap">
-        {<RoundPicture imgUrl={(own.user.userDetails && own.user.userDetails.image) ? `${ENDPOINT}/user/${10000000 + parseInt(own.user.id, 10)}/profile/${own.user.userDetails.image}` : profileIcon} />}
+        <RoundPicture imgUrl={(own.user.userDetails && own.user.userDetails.image) ? `${ENDPOINT}/user/${10000000 + parseInt(own.user.id, 10)}/profile/${own.user.userDetails.image}` : profileIcon} />
       </div>
       )
       }
-      <div className="text-contain">
+      <div className={`text-contain${(!obj.showImage && !own.isOwn) ? ' spaced' : ''}`}>
         {obj.showImage && !own.isOwn && <span style={{ fontSize: 10, color: '#757575', marginLeft: 5 }}>{own.user.firstName}</span>}
         <div
           className="text"
@@ -46,7 +46,7 @@ const Message = ({ own, obj, props, type }) => {
             paddingBottom: 0,
             margin: 0,
             marginRight: 5,
-            marginLeft: (!obj.showImage && !own.isOwn) ? (type ? 3 : 33) : 3,
+            marginLeft: (!obj.showImage && !own.isOwn) ? (type ? 3 : 45) : 3,
             marginBottom: !obj.showImage && 0,
           }}
         >
@@ -58,7 +58,7 @@ const Message = ({ own, obj, props, type }) => {
         <div style={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: 0 }}>
           { obj.status === 'loading' && <Spinner size="15" intent="primary" /> }
           {obj.status === 'error' && <Icon icon="repeat" iconSize="15" style={{ cursor: 'pointer' }} onClick={() => sendMessage({ ...props, message: obj.message, resend: obj.id })} />}
-          <div style={{ marginTop: 2, display: 'flex', width: '100%', justifyContent: 'center'}}>
+          <div style={{ marginTop: 2, display: 'flex', width: '100%' }}>
             {findSeenUser(props, obj.seenStatus)}
           </div>
         </div>

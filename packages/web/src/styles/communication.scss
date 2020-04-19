@@ -125,7 +125,11 @@
             img.landscape { height: 100%; width: auto; }
           }
           &.left {
-            margin-right: 12%; flex-direction: row;
+            display: flex; margin-right: 12%; flex-direction: row;
+            .text-contain {
+              max-width: calc(100% - 45px);
+              &.spaced { margin-left: 3px;}
+            }
             .text {
               margin: 0px 10px; padding: 2px;
               border-top-right-radius: 7px;
