@@ -72,7 +72,6 @@ class ChatHistory extends React.Component {
   }
 
   containerHandler = (msg, account, type, idx) => {
-    // console.log('message type', msg);
     const { webRtc } = this.props;
     switch (msg.type) {
       case 'date':

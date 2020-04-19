@@ -22,6 +22,7 @@ const findSeenUser = (props, seenStatus) => {
 };
 
 const Message = ({ own, obj, props, type }) => {
+
   return (
     <div
       className={own.isOwn ? 'i-chat right' : 'i-chat left'}

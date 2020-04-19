@@ -50,5 +50,5 @@ export default (liveBoard, boardId, userId) => {
 
   const callCloseSatus = eachUserPcs.filter(obj => _.isObject(obj)).map(pcs => checkCallCloseStatus(pcs));
 
-  return callCloseSatus.filter(cs => cs).length > 1;
+  return callCloseSatus.filter(cs => cs).length;
 };

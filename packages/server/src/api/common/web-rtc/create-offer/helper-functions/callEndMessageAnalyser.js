@@ -7,11 +7,13 @@ export default (boardId, userId) => {
   // console.log('Call end Anyliser called', board);
   const user = board[userId];
   if (user) {
-    const callType = Object.values(user).find(pc => !pc.offer) ? 'Incoming' : 'Outgoing';
-
-    const startTime = _.min(Object.values(user).map(pc => pc.startTime).filter(t => t));
-    const callDuration = Date.now() - startTime;
-
-    return { callType, callDuration, uid: userId, broadCastId: boardId };
+    const isClose = Object.values(user).find(pc => !pc.callClose);
+    if (isClose) {
+      const callType = Object.values(user).find(pc => !pc.offer) ? 'Incoming' : 'Outgoing';
+      const startTime = _.min(Object.values(user).map(pc => pc.startTime).filter(t => t));
+      const callDuration = Date.now() - startTime;
+      return { callType, callDuration, uid: userId, broadCastId: boardId };
+    }
   }
+  return null;
 };

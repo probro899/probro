@@ -12,7 +12,7 @@ const initialState = {
   outGoingCallType: null,
   messages: [],
   peerConnections: {},
-  pendingOffers: [],
+  pendingOffers: {},
   streams: {},
   connectedUsers: {},
   currentOffer: null,

@@ -1,5 +1,5 @@
 import store from '../../../../store';
- 
+
 export default (props, state, apis) => async (remoteData) => {
 
   const { updateWebRtc, account } = props;
@@ -73,7 +73,7 @@ export default (props, state, apis) => async (remoteData) => {
     updateWebRtc('outGoingCallType', null);
     updateWebRtc('showOutgoingCall', false);
     updateWebRtc('peerConnections', {});
-    updateWebRtc('pendingOffers', []);
+    updateWebRtc('pendingOffers', {});
     updateWebRtc('remoteStream', {});
     updateWebRtc('currentOffer', null);
     updateWebRtc('iceCandidates', {});

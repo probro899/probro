@@ -4,9 +4,11 @@ import store from '../../../../store';
 import reconnectHandler from './reconnectHandler';
 
 const isReconnect = (webRtc) => {
-  if (webRtc.localCallHistory.chatHistory.type === 'board') {
-    const isAnyoneConnected = Object.values(webRtc.connectedUsers).find(c => c.iceCandidateStatus === 'connected');
-    return isAnyoneConnected;
+  if (webRtc.isLive) {
+    if (webRtc.localCallHistory.chatHistory.type === 'board') {
+      const isAnyoneConnected = Object.values(webRtc.connectedUsers).find(c => c.iceCandidateStatus === 'connected');
+      return isAnyoneConnected;
+    }
   }
   return false;
 };

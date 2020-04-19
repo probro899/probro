@@ -11,6 +11,7 @@ export default (props) => {
   let lastMessageSeenIdAndUnseenNo = null;
   let userShowTestFlag = null;
   let isSameDayFlag = null;
+  let isSameDayFlagImage = null;
 
   messages = Object.values(database.UserMessage.byId).filter(msg => msg.connectionId === webRtc.chatHistory.connectionId);
   if (messages.length > 0) {
@@ -27,6 +28,11 @@ export default (props) => {
         if (idx !== 0) {
           if (arr[idx - 1].type) {
             arrWithSeenStatus.push({ ...umd, showImage: true, seenStatus: findMessageSeenStatus(umd.id, 'user', props) });
+          } else if (!isSameDay(isSameDayFlagImage, new Date(umd.timeStamp))) {
+            arrWithSeenStatus.push({ ...umd, showImage: true, seenStatus: findMessageSeenStatus(umd.id, 'user', props) });
+            isSameDayFlagImage = umd.timeStamp;
+          } else {
+            arrWithSeenStatus.push({ ...umd, showImage: false, seenStatus: findMessageSeenStatus(umd.id, 'user', props) });
           }
         } else {
           arrWithSeenStatus.push({ ...umd, showImage: false, seenStatus: findMessageSeenStatus(umd.id, 'user', props) });

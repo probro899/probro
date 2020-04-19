@@ -83,11 +83,11 @@ export default async (props, state, data) => {
   // console.log('Offer on Live handler called', data);
   const { database } = store.getState();
   const { updateWebRtc } = props;
-  const { broadCastId, broadCastType, connectionId } = data;
+  const { broadCastId, broadCastType, connectionId, uid } = data;
   const type = broadCastType === 'UserConnection' ? 'user' : 'board';
   const { webRtc } = store.getState();
   updateWebRtc('currentOffer', data);
-  updateWebRtc('pendingOffers', [...webRtc.pendingOffers, data]);
+  updateWebRtc('pendingOffers', { ...webRtc.pendingOffers, [uid]: data });
 
   if (!webRtc.isLive) {
     await onNotLiveHandler(updateWebRtc, broadCastId, database, type, webRtc, connectionId);

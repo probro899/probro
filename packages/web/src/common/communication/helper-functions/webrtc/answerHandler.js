@@ -38,7 +38,7 @@ export default (props, state) => async (apis, stream) => {
     updateWebRtc('showOutgoingCall', true);
 
     // Collecting all the offer arrived at this moment
-    const previousOffers = webRtc.pendingOffers;
+    const previousOffers = Object.values(webRtc.pendingOffers);
     console.log('pending Offers in anser handler', previousOffers);
     // Collecting all the pcs for offer and answer
     const pcs = Object.values(webRtc.peerConnections);
