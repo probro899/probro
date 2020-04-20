@@ -16,6 +16,7 @@ export default (chatHistory) => {
     const connection = Object.values(database.UserConnection.byId).find(con => con.userId === id || con.mId === id);
     updateWebRtc('connectionId', connection.id);
   }
+
   updateWebRtc('peerType', type);
   updateWebRtc('showCommunication', id);
   if (unSeenNo > 0) {
