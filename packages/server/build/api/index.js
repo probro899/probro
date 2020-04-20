@@ -15,7 +15,7 @@ var _updateUserDetails = require('./common/updateUserDetails');
 
 var _updateUserDetails2 = _interopRequireDefault(_updateUserDetails);
 
-var _initUser = require('./initUser');
+var _initUser = require('./initializers/initUser');
 
 var _initUser2 = _interopRequireDefault(_initUser);
 
@@ -39,12 +39,16 @@ var _update = require('./common/update');
 
 var _update2 = _interopRequireDefault(_update);
 
+var _get = require('./common/get');
+
+var _get2 = _interopRequireDefault(_get);
+
 var _webRtc = require('./common/web-rtc');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-/* eslint-disable import/no-cycle */
-const mentor = (0, _socket.createScope)('Mentor', () => {});
+const mentor = (0, _socket.createScope)('Mentor', () => {}); /* eslint-disable import/no-cycle */
+
 
 const mentee = (0, _socket.createScope)('Mentee', () => {});
 // all create api scoping
@@ -59,17 +63,23 @@ _delete2.default.forEach(func => mentor(func));
 _update2.default.forEach(func => mentee(func));
 _update2.default.forEach(func => mentor(func));
 
+// all get api scoping
+_get2.default.forEach(func => mentee(func));
+_get2.default.forEach(func => mentor(func));
+
 mentor(_webRtc.createOffer);
 mentor(_webRtc.createAnswer);
 mentor(_webRtc.addICeCandidate);
 mentor(_webRtc.callClose);
 mentor(_webRtc.callStatusChange);
+mentor(_webRtc.onPcStatusChange);
 
 mentee(_webRtc.createOffer);
 mentee(_webRtc.createAnswer);
 mentee(_webRtc.addICeCandidate);
 mentee(_webRtc.callClose);
 mentee(_webRtc.callStatusChange);
+mentee(_webRtc.onPcStatusChange);
 
 mentor(_logout2.default);
 mentor(_updateUserDetails2.default);

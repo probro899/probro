@@ -42,7 +42,7 @@ class Session {
 
     ws.on('close', () => {
       // Remove all subscriptions
-      console.log('onclose method called');
+      // console.log('onclose method called');
       this.subscriptions.forEach(channelId => _Channel2.default.unsubscribe(channelId, this));
 
       // Trigger all the close listeners
@@ -141,7 +141,7 @@ class Session {
     };
 
     parser.onRpcRequest = (tracker, scopeId, api, args) => {
-      console.log('onRpcRequest', tracker, scopeId, api, args);
+      // console.log('onRpcRequest', tracker, scopeId, api, args);
       const apiInstance = { session: this, scope: scopeId };
       const scope = this.scopes[scopeId];
       if (!scope) {

@@ -3,17 +3,15 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.callStatusChange = exports.callClose = exports.addICeCandidate = exports.createAnswer = exports.createOffer = undefined;
+exports.onPcStatusChange = exports.callStatusChange = exports.callClose = exports.addICeCandidate = exports.createAnswer = exports.createOffer = undefined;
 
-var _createOffer = require('./createOffer');
+var _createOffer = require('./create-offer');
 
-var _createOffer2 = _interopRequireDefault(_createOffer);
-
-var _createAnswer = require('./createAnswer');
+var _createAnswer = require('./create-answer/createAnswer');
 
 var _createAnswer2 = _interopRequireDefault(_createAnswer);
 
-var _addIceCandidate = require('./addIceCandidate');
+var _addIceCandidate = require('./send-icecandidate/addIceCandidate');
 
 var _addIceCandidate2 = _interopRequireDefault(_addIceCandidate);
 
@@ -25,10 +23,16 @@ var _callStatusHandler = require('./call-status-handler');
 
 var _callStatusHandler2 = _interopRequireDefault(_callStatusHandler);
 
+var _onPcStatusChange = require('./pc-status-change-handler/onPcStatusChange');
+
+var _onPcStatusChange2 = _interopRequireDefault(_onPcStatusChange);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-exports.createOffer = _createOffer2.default;
+/* eslint-disable import/no-cycle */
+exports.createOffer = _createOffer.createOffer;
 exports.createAnswer = _createAnswer2.default;
 exports.addICeCandidate = _addIceCandidate2.default;
 exports.callClose = _callClose2.default;
-exports.callStatusChange = _callStatusHandler2.default; /* eslint-disable import/no-cycle */
+exports.callStatusChange = _callStatusHandler2.default;
+exports.onPcStatusChange = _onPcStatusChange2.default;

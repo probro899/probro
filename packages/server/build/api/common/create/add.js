@@ -17,7 +17,7 @@ var _cache = require('../../../cache');
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = async function add(table, record) {
-  console.log('add api called', table, record);
+  // console.log('add api called', table, record);
   const { session } = this;
   const { broadCastId, broadCastUserList } = record;
   delete record.broadCastId;
@@ -35,33 +35,25 @@ exports.default = async function add(table, record) {
       boardDetails = await findOne(table, { id: boardId });
     }
     if (boardDetails) {
-      // console.log('inisside borad detils', boardDetails);
       if (broadCastId) {
-        // console.log('inside baordcaseid', broadCastId);
         if (broadCastUserList) {
-          // console.log('inside boardcastUserliSt', broadCastUserList);
           const channel = session.channel(broadCastId);
           const allChannelSession = session.getChannel(broadCastId);
           const allUserSession = [];
           broadCastUserList.forEach(userIdObj => allUserSession.push(allChannelSession.find(s => s.values.user.id === userIdObj.userId)));
           channel.dispatch(_schema2.default.add(table, boardDetails), broadCastUserList);
-          [...allUserSession, session].forEach(s => _cache.user.update(_schema2.default.add(table, boardDetails), s));
+          _cache.database.update(table, _schema2.default.add(table, boardDetails));
         } else {
           const channel = session.channel(broadCastId);
-          const allChannelSession = session.getChannel(broadCastId);
-          // console.log('current channel', allChannelSession);
           channel.dispatch(_schema2.default.add(table, boardDetails), null, session.values.user.id);
-          allChannelSession.forEach(s => _cache.user.update(_schema2.default.add(table, boardDetails), s));
+          _cache.database.update(table, _schema2.default.add(table, boardDetails));
         }
       } else {
-        // session.dispatch(schema.add(table, boardDetails));
-        _cache.user.update(_schema2.default.add(table, boardDetails), session);
+        _cache.database.update(table, _schema2.default.add(table, boardDetails));
       }
     }
-    // console.log('boardId', boardId);
     return boardId;
   });
-  console.log('res', res);
   return res;
 };
 // eslint-disable-next-line import/no-cycle

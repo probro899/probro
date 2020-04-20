@@ -1,5 +1,6 @@
 import express from 'express';
 import https from 'https';
+import compression from 'compression';
 import http from 'http';
 import run from 'app-node';
 import fs from 'fs';
@@ -13,7 +14,7 @@ import initCachDB from './cache/database/initCacheDB';
 
 const port = process.env.PORT || 443;
 // const port = process.env.PORT || 4001;
-const app = express();
+const app = express(compression());
 app.use((req, res, next) => {
   if (!req.secure && req.hostname === 'properclass.com' && req.get('X-Forwarded-Proto') === 'http') {
     res.redirect(301, `https://${req.get('Host')}${req.url}`);

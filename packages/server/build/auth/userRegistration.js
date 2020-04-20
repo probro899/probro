@@ -11,6 +11,10 @@ var _v = require('uuid/v4');
 
 var _v2 = _interopRequireDefault(_v);
 
+var _schema = require('@probro/common/src/schema');
+
+var _schema2 = _interopRequireDefault(_schema);
+
 var _db = require('../db');
 
 var _db2 = _interopRequireDefault(_db);
@@ -29,6 +33,10 @@ var _cache = require('../cache');
 
 var _cache2 = _interopRequireDefault(_cache);
 
+var _database = require('../cache/database');
+
+var _database2 = _interopRequireDefault(_database);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 const RESET_TOKEN_AGE = 7 * 24 * 60 * 60 * 1000; // 7 days
@@ -45,7 +53,9 @@ exports.default = async record => {
       const hasPassword = await (0, _passwordHandler.genHashPassword)(record.password);
       const firstNameLowerCase = `${record.firstName}`.toLowerCase();
       const lastNameLowerCase = `${record.lastName}`.toLowerCase();
-      const insertRes = await insert('User', _extends({}, record, { password: hasPassword, verify: false, verificationToken: token, slug: `${firstNameLowerCase}-${lastNameLowerCase}-${Date.now()}` }));
+      const slug = `${firstNameLowerCase}-${lastNameLowerCase}-${Date.now()}`;
+      const insertRes = await insert('User', _extends({}, record, { password: hasPassword, verify: false, verificationToken: token, slug }));
+      _database2.default.update('User', _schema2.default.add('User', _extends({ id: insertRes }, record, { password: hasPassword, verify: false, verificationToken: token, slug })));
       if (insertRes) {
         _cache2.default.users.set(token, record.email, RESET_TOKEN_AGE);
         (0, _mailer2.default)({

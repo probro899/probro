@@ -17,7 +17,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 /* eslint-disable import/no-cycle */
 exports.default = async function callStatusChange(data) {
   const { session } = this;
-  console.log('data in Call status handler', data);
+  // console.log('data in Call status handler', data);
   const { callStatusDetails, userList } = data;
   const { uid, broadCastId, broadCastType, callType, callDuration, type, connectionId } = callStatusDetails;
 

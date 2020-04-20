@@ -22,6 +22,7 @@ exports.default = function (app) {
   app.get('/web/get-user', _getUser2.default);
   app.get('/web/get-blog', _getBlog2.default);
   app.get('/web/get-index', _getIndex2.default);
+  app.get('/web/get-archive', _getArchive2.default);
   app.use(_express2.default.static(_path2.default.resolve(__dirname, '..', 'public')));
   app.get('/reset/:token', (req, res) => {
     res.sendFile(_path2.default.resolve(__dirname, '..', 'public', 'index.html'));
@@ -82,5 +83,9 @@ var _getBlog2 = _interopRequireDefault(_getBlog);
 var _getIndex = require('./request-handler/getIndex');
 
 var _getIndex2 = _interopRequireDefault(_getIndex);
+
+var _getArchive = require('./request-handler/getArchive');
+
+var _getArchive2 = _interopRequireDefault(_getArchive);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
