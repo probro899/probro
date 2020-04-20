@@ -1,8 +1,8 @@
 {
-  "main.css": "/static/css/main.54cdd27a.chunk.css",
-  "main.js": "/static/js/main.4c7430a7.chunk.js",
+  "main.css": "/static/css/main.4bf86d7c.chunk.css",
+  "main.js": "/static/js/main.eae436e1.chunk.js",
   "static/css/1.800f96a4.chunk.css": "/static/css/1.800f96a4.chunk.css",
-  "static/js/1.5c7e7deb.chunk.js": "/static/js/1.5c7e7deb.chunk.js",
+  "static/js/1.583d0310.chunk.js": "/static/js/1.583d0310.chunk.js",
   "runtime~main.js": "/static/js/runtime~main.229c360f.js",
   "static/media/uploadicon512.png": "/static/media/uploadicon512.d4c77ff2.png",
   "static/media/blog-img.jpg": "/static/media/blog-img.156d4d85.jpg",
@@ -14,9 +14,9 @@
   "static/media/index.png": "/static/media/index.b4cb6006.png",
   "static/media/class.png": "/static/media/class.9d40f54e.png",
   "static/media/insight.png": "/static/media/insight.f068a8c1.png",
-  "static/media/blueprint-icons.css": "/static/media/icons-16.6fdb722c.eot",
-  "static/media/index.css": "/static/media/gotham-light.bceda3fa.otf",
+  "static/media/blueprint-icons.css": "/static/media/icons-20.90247cfd.ttf",
+  "static/media/index.css": "/static/media/gotham-medium.e19c20e9.otf",
   "index.html": "/index.html",
-  "precache-manifest.01775879d8b93762a7dd1c51bfdff5f6.js": "/precache-manifest.01775879d8b93762a7dd1c51bfdff5f6.js",
+  "precache-manifest.5799544f2ead72715feab4a99207539e.js": "/precache-manifest.5799544f2ead72715feab4a99207539e.js",
   "service-worker.js": "/service-worker.js"
 }
