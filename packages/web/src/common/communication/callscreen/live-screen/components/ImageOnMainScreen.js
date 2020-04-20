@@ -6,7 +6,7 @@ import { ENDPOINT } from '../../../../../config';
 const userIcon = require('../../../../../assets/icons/512h/uploadicon512.png');
 
 export default (props) => {
-  const { webRtc, database } = props;
+  const { webRtc, database, minimize } = props;
   let showImage = false;
   let imgUrl = '';
   const conId = webRtc.localCallHistory.chatHistory.type === 'user' ? webRtc.mainStreamId : database.Board.byId[webRtc.localCallHistory.chatHistory.connectionId].activeStatus;
@@ -21,7 +21,7 @@ export default (props) => {
   }
   if (!showImage) return <div />;
   return (
-    <div className="img-main-screen">
+    <div className="img-main-screen" style={{ display: minimize ? 'none' : 'flex' }}>
       <div className={webRtc.localCallHistory.chatHistory.type === 'user' ? 'user' : 'board'}>
         {
           webRtc.localCallHistory.chatHistory.type === 'user' ? <RoundPicture imgUrl={imgUrl} /> : <Icon icon="application" iconSize={130} style={{ color: '#757575' }} />
