@@ -14,7 +14,7 @@ import callClosehandler from '../../../../common/communication/helper-functions/
 
 const pcLogo = require('../../../../assets/logo.png');
 
-const DropDownMenu = (onclick, logoutAction, loading) => {
+const DropDownMenu = (onclick, logoutAction, loading, account) => {
   return (
     <Menu>
       <MenuItem
@@ -23,10 +23,10 @@ const DropDownMenu = (onclick, logoutAction, loading) => {
         intent={Intent.PRIMARY}
         text="Goto Dashboard"
         onClick={onclick}
+        disabled={!account.user}
       />
       <MenuItem
-        disabled={loading}
-        loading={loading}
+        disabled={loading || !account.user}
         icon="log-out"
         intent={Intent.DANGER}
         text="Logout"
@@ -140,7 +140,7 @@ class Navbar extends Component {
             )}
           {account.sessionId && <Notifications {...this.props} apis={apis} />}
           { account.sessionId
-            ? <DashboardMenu navigate={navigate} profilePic={profilePic} content={DropDownMenu(this.onClickHandler, this.logoutAction, loading)} />
+            ? <DashboardMenu navigate={navigate} profilePic={profilePic} content={DropDownMenu(this.onClickHandler, this.logoutAction, loading, account)} />
             : (
               <Link
                 to="/login"
