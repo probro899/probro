@@ -18,6 +18,7 @@
     "bcrypt": "^3.0.6",
     "bluebird": "^3.5.3",
     "body-parser": "^1.18.3",
+    "compression": "^1.7.4",
     "concat-stream": "^2.0.0",
     "dotenv": "^6.2.0",
     "express": "^4.16.4",
