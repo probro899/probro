@@ -1,5 +1,6 @@
 import express from 'express';
 import https from 'https';
+import compression from 'compression';
 import http from 'http';
 import run from 'app-node';
 import fs from 'fs';

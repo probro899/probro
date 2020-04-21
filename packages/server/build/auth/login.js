@@ -8,6 +8,14 @@ var _uuid = require('uuid');
 
 var _uuid2 = _interopRequireDefault(_uuid);
 
+var _schema = require('@probro/common/src/schema');
+
+var _schema2 = _interopRequireDefault(_schema);
+
+var _googleIdTokenVerifier = require('google-id-token-verifier');
+
+var _googleIdTokenVerifier2 = _interopRequireDefault(_googleIdTokenVerifier);
+
 var _db = require('../db');
 
 var _db2 = _interopRequireDefault(_db);
@@ -17,6 +25,12 @@ var _cache = require('../cache');
 var _cache2 = _interopRequireDefault(_cache);
 
 var _passwordHandler = require('./passwordHandler');
+
+var _database = require('../cache/database');
+
+var _database2 = _interopRequireDefault(_database);
+
+var _config = require('../config');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -36,22 +50,43 @@ const loginHelper = async (rec, userDetails) => {
     userDetails: userDetails || {}
   };
   _cache2.default.users.set(token, user, SESSION_AGE);
-  return { id: rec.id, token };
+  return { id: rec.id, token, slug: rec.slug, userType: rec.type };
 };
 
 const googleLogin = async grec => {
-  console.log('user login called', grec);
+  // console.log('user google login called', grec);
   const { record } = grec;
-  const { email, givenName, familyName, name, googleId, imageUrl } = record;
+  const { profileObj } = record;
+  const { imageUrl, name, givenName, familyName } = profileObj;
 
+  const googleInfo = await new Promise((resolve, reject) => {
+    _googleIdTokenVerifier2.default.verify(record.tokenId, _config.googleClientId, (err, info) => {
+      if (err) {
+        console.log('Google token verification faild', info);
+        reject();
+        return;
+      }
+      if (info) {
+        resolve(info);
+      }
+    });
+  });
+
+  const { email } = googleInfo;
   const res = await _db2.default.execute(async ({ findOne, insert }) => {
-    const rec = await findOne('User', { email: record.email });
+    const rec = await findOne('User', { email });
     if (rec) {
       const userDetails = await findOne('UserDetail', { userId: rec.id });
       return loginHelper(rec, userDetails);
     }
-    const addUserRes = await insert('User', { firstName: givenName, lastName: familyName, middleName: '', password: 'googlepassword', email, verificationToken: null, verify: 1 });
-    const addUserDetailRes = await insert('UserDetail', { userId: addUserRes, image: imageUrl });
+    const firstNameLowerCase = `${givenName}`.toLowerCase();
+    const lastNameLowerCase = `${familyName}`.toLowerCase();
+    const slug = `${firstNameLowerCase}-${lastNameLowerCase}-${Date.now()}`;
+    const randomPassword = (0, _uuid2.default)();
+    const addUserRes = await insert('User', { firstName: givenName, lastName: familyName, middleName: '', password: randomPassword, email, verificationToken: null, verify: 1, slug });
+    _database2.default.update('User', _schema2.default.add('User', { id: addUserRes, firstName: givenName, lastName: familyName, middleName: '', password: randomPassword, email, verificationToken: null, verify: 1, slug }));
+    // const addUserDetailRes = await insert('UserDetail', { userId: addUserRes, image: picture });
+    // database.update('UserDetail', schema.add('UserDetail', { id: addUserDetailRes, userId: addUserRes, image: picture }));
     const finalUserDetailRes = await findOne('UserDetail', { userId: addUserRes });
     const finalUserRes = await findOne('User', { id: addUserRes });
     return loginHelper(finalUserRes, finalUserDetailRes);
@@ -60,7 +95,7 @@ const googleLogin = async grec => {
 };
 
 exports.default = async function login(record) {
-  console.log('record in login', record);
+  // console.log('record in login', record);
   const { password, loginType } = record;
   let googleRes;
   if (loginType) {

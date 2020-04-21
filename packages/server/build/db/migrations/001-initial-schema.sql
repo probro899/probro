@@ -8,10 +8,12 @@ CREATE TABLE IF NOT EXISTS User(
   middleName TEXT NOT NULL,
   email TEXT NOT NULL,
   verificationToken TEXT,
-  verify TEXT
+  verify TEXT,
+  type TEXT
 );
 
 CREATE INDEX User_ix_id ON User(id);
+
 
 CREATE TABLE IF NOT EXISTS UserDetail(
   id INTEGER PRIMARY KEY,
@@ -39,7 +41,7 @@ CREATE TABLE IF NOT EXISTS Board(
   name TEXT NOT NULL,
   userId INTEGER NOT NULL,
   image TEXT,
-
+  type TEXT,
   -- Constraints
   CONSTRAINT Board_creator_userId FOREIGN KEY (userId) REFERENCES User(id)
 );

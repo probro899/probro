@@ -19,7 +19,7 @@ var _boardCallClose2 = _interopRequireDefault(_boardCallClose);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = async function callClose(data) {
-  console.log('call close method called', data);
+  // console.log('call close method called', data);
   const { session } = this;
   // console.log('sesssion', session);
   const { callCloseDetail, userList } = data;
@@ -28,7 +28,7 @@ exports.default = async function callClose(data) {
       await (0, _userCallCloseHandler2.default)(insert, callCloseDetail, userList, session);
     }
     if (callCloseDetail.type === 'board') {
-      await (0, _boardCallClose2.default)(insert, callCloseDetail, userList, session);
+      await (0, _boardCallClose2.default)(callCloseDetail, session);
     }
   });
 }; /* eslint-disable import/no-cycle */

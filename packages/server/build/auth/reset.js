@@ -18,12 +18,12 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 exports.default = async function resetPassword(resetToken, newPassword) {
   const userId = _cache2.default.users.get(resetToken);
-
+  // console.log('reset handlercalled', resetToken, newPassword, userId);
   if (!userId) {
     throw new Error('Invalid token');
   }
 
-  const password = (0, _passwordHandler.genHashPassword)(newPassword);
+  const password = await (0, _passwordHandler.genHashPassword)(newPassword);
 
   await _db2.default.execute(({ update }) => {
     update('User', { password }, { id: userId });

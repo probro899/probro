@@ -2,7 +2,7 @@
 import { createScope } from '../socket';
 import logout from './common/logout';
 import updateUserDetails from './common/updateUserDetails';
-import initUser from './initUser';
+import initUser from './initializers/initUser';
 import findBoardDetail from './common/findBoradDetail';
 import findBlogDetail from './common/findBlogDetails';
 import addHandlerApi from './common/create';

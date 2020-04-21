@@ -38,8 +38,13 @@ var _validateToken2 = _interopRequireDefault(_validateToken);
 
 var _api = require('./api');
 
+var _initCacheDB = require('./cache/database/initCacheDB');
+
+var _initCacheDB2 = _interopRequireDefault(_initCacheDB);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+// const port = process.env.PORT || 443;
 const port = process.env.PORT || 4001;
 const app = (0, _express2.default)();
 app.use((req, res, next) => {
@@ -49,10 +54,11 @@ app.use((req, res, next) => {
     next();
   }
 });
+
 app.use(_bodyParser2.default.urlencoded({ limit: '10mb', extended: false }));
 app.use(_bodyParser2.default.json({ limit: '10mb', extended: true }));
 
-// // Certificate
+// Certificate
 // const privateKey = fs.readFileSync('/etc/letsencrypt/live/properclass.com/privkey.pem', 'utf8');
 // const certificate = fs.readFileSync('/etc/letsencrypt/live/properclass.com/cert.pem', 'utf8');
 // const ca = fs.readFileSync('/etc/letsencrypt/live/properclass.com/chain.pem', 'utf8');
@@ -70,6 +76,9 @@ const server = _http2.default.createServer(app);
   const url = '/shocked/:origin/:token';
   // initialise database
   await (0, _db.init)();
+  // initialise cache database
+  (0, _initCacheDB2.default)();
+
   // starting socket
 
   const socket = (0, _socket.start)({ server, url }, async session => {

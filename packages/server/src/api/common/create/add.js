@@ -22,11 +22,8 @@ export default async function add(table, record) {
       boardDetails = await findOne(table, { id: boardId });
     }
     if (boardDetails) {
-      // console.log('inisside borad detils', boardDetails);
       if (broadCastId) {
-        // console.log('inside baordcaseid', broadCastId);
         if (broadCastUserList) {
-          // console.log('inside boardcastUserliSt', broadCastUserList);
           const channel = session.channel(broadCastId);
           const allChannelSession = session.getChannel(broadCastId);
           const allUserSession = [];
@@ -35,19 +32,14 @@ export default async function add(table, record) {
           database.update(table, schema.add(table, boardDetails));
         } else {
           const channel = session.channel(broadCastId);
-          const allChannelSession = session.getChannel(broadCastId);
-          // console.log('current channel', allChannelSession);
           channel.dispatch(schema.add(table, boardDetails), null, session.values.user.id);
           database.update(table, schema.add(table, boardDetails));
         }
       } else {
-        // session.dispatch(schema.add(table, boardDetails));
         database.update(table, schema.add(table, boardDetails));
       }
     }
-    // console.log('boardId', boardId);
     return boardId;
   });
-  console.log('res', res);
   return res;
 }

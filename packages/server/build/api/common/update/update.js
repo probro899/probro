@@ -17,25 +17,29 @@ var _cache = require('../../../cache');
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = async function Update(table, value, condition) {
-  const { session } = this;
-  const { broadCastId } = value;
-  // console.log('update value', value, value);
-  delete value.broadCastId;
-  const res = await _db2.default.execute(async ({ update, findOne }) => {
-    await update(table, value, condition);
-    const findOneRes = await findOne(table, { id: condition.id });
-    return findOneRes;
-  });
-  if (broadCastId) {
-    const channel = session.channel(broadCastId);
-    const allChannelSession = session.getChannel(broadCastId);
-    // console.log('current channel', allChannelSession);
-    channel.dispatch(_schema2.default.update(table, res));
-    allChannelSession.forEach(s => _cache.user.update(_schema2.default.update(table, res), s));
-  } else {
-    // session.dispatch(schema.update(table, res));
-    _cache.user.update(_schema2.default.update(table, res), session);
+  try {
+    console.log('Main update called', table, value, condition);
+    delete value.todo;
+    const { session } = this;
+    const { broadCastId } = value;
+    // console.log('update value', value, value);
+    delete value.broadCastId;
+    const res = await _db2.default.execute(async ({ update, findOne }) => {
+      await update(table, value, condition);
+      const findOneRes = await findOne(table, { id: condition.id });
+      return findOneRes;
+    });
+    if (broadCastId) {
+      console.log('res', res);
+      const channel = session.channel(broadCastId);
+      channel.dispatch(_schema2.default.update(table, res));
+      _cache.database.update(table, _schema2.default.update(table, res));
+    } else {
+      _cache.database.update(table, _schema2.default.update(table, res));
+    }
+    return res;
+  } catch (e) {
+    console.log('error in update', e);
   }
-  return res;
 };
 // eslint-disable-next-line import/no-cycle

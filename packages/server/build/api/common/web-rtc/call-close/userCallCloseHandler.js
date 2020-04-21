@@ -8,6 +8,14 @@ var _updateUserCache = require('../../updateUserCache');
 
 var _updateUserCache2 = _interopRequireDefault(_updateUserCache);
 
+var _update = require('../../../../cache/database/update');
+
+var _update2 = _interopRequireDefault(_update);
+
+var _schema = require('@probro/common/src/schema');
+
+var _schema2 = _interopRequireDefault(_schema);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = async (insert, callCloseDetail, userList, session) => {
@@ -35,6 +43,8 @@ exports.default = async (insert, callCloseDetail, userList, session) => {
     }
   };
 
+  (0, _update2.default)('UserMessage', _schema2.default.add('UserMessage', dataTobeUpdate.UserMessage));
+
   const allUserSession = session.getChannel(`${callCloseDetail.broadCastType}-${callCloseDetail.broadCastId}`);
   const remoteSession = allUserSession.find(s => s.values.user.id === userList[0].userId);
   (0, _updateUserCache2.default)(dataTobeUpdate, session, 'add');
@@ -42,4 +52,5 @@ exports.default = async (insert, callCloseDetail, userList, session) => {
 
   const channel = session.channel(`${callCloseDetail.broadCastType}-${callCloseDetail.broadCastId}`);
   channel.emit('callEnd', callCloseDetail, userList);
-}; /* eslint-disable import/no-cycle */
+}; /* eslint-disable import/order */
+/* eslint-disable import/no-cycle */

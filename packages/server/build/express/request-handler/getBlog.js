@@ -15,7 +15,7 @@ exports.default = async function getBlog(req, res) {
   try {
     const { userId, blogId } = req.query;
     const result = await (0, _findBlogDetails2.default)(blogId, userId, true);
-    // console.log('getBlog result in do request handler', result);
+    console.log('getBlog result in do request handler', result);
     res.status(200);
     res.send(JSON.stringify(result));
   } catch (e) {

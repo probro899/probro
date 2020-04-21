@@ -4,9 +4,9 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _db = require('../../db');
+var _cache = require('../../cache/database/cache');
 
-var _db2 = _interopRequireDefault(_db);
+var _cache2 = _interopRequireDefault(_cache);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -22,42 +22,32 @@ const flat = arr => {
   return flatArray;
 };
 
-exports.default = async boardId => {
+exports.default = boardId => {
   // console.log('findBoard details board id', boardId);
-  const res = await _db2.default.execute(async ({ find }) => {
+  const allDbBoardColumn = _cache2.default.get('BoardColumn');
+  const allDbBoardColumnCard = _cache2.default.get('BoardColumnCard');
+  const allDbBoardColumnCardAttachment = _cache2.default.get('BoardColumnCardAttachment');
+  const allDbBaordColumnCardComment = _cache2.default.get('BoardColumnCardComment');
+  const allDbBoardColumnCardDescription = _cache2.default.get('BoardColumnCardDescription');
+  const allDbBoardColumnCardTag = _cache2.default.get('BoardColumnCardTag');
 
-    const boardColumn = await find('BoardColumn', { boardId });
-    const columnCardPromise = [];
-    boardColumn.forEach(b => columnCardPromise.push(find('BoardColumnCard', { boardColumnId: b.id })));
-    const boardColumnCard = await Promise.all(columnCardPromise);
-    // console.log('boardColumnCard data', boardColumnCard);
-    const boardColumnCardMap = flat(boardColumnCard.map(a => a.map(o => o.id)));
+  const boardColumn = allDbBoardColumn.filter(bc => bc.boardId === boardId);
 
-    const boardColumnCardAttachmentPromises = [];
-    const boardColumnCardCommentPromises = [];
-    const boardColumnCardDescriptionPromises = [];
-    const boardColumnCardTagPromises = [];
+  const boardColumnCard = boardColumn.map(bc => allDbBoardColumnCard.filter(bcc => bcc.boardColumnId === bc.id));
+  // console.log('boardColumnCard data', boardColumnCard);
+  const boardColumnCardMap = flat(boardColumnCard.map(a => a.map(o => o.id)));
 
-    boardColumnCardMap.forEach(id => {
-      boardColumnCardAttachmentPromises.push(find('BoardColumnCardAttachment', { boardColumnCardId: id }));
-      boardColumnCardCommentPromises.push(find('BoardColumnCardComment', { boardColumnCardId: id }));
-      boardColumnCardDescriptionPromises.push(find('BoardColumnCardDescription', { boardColumnCardId: id }));
-      boardColumnCardTagPromises.push(find('BoardColumnCardTag', { boardColumnCardId: id }));
-    });
+  const boardColumnCardAttachment = boardColumnCardMap.map(id => allDbBoardColumnCardAttachment.filter(bcca => bcca.boardColumnCardId === id));
+  const boardColumnCardComment = boardColumnCardMap.map(id => allDbBaordColumnCardComment.filter(bccc => bccc.boardColumnCardId === id));
+  const boardColumnCardDescription = boardColumnCardMap.map(id => allDbBoardColumnCardDescription.filter(bccd => bccd.boardColumnCardId === id));
+  const boardColumnCardTag = boardColumnCardMap.map(id => allDbBoardColumnCardTag.filter(bcct => bcct.boardColumnCardId === id));
 
-    const boardColumnCardAttachment = await Promise.all(boardColumnCardAttachmentPromises);
-    const boardColumnCardComment = await Promise.all(boardColumnCardCommentPromises);
-    const boardColumnCardDescription = await Promise.all(boardColumnCardDescriptionPromises);
-    const boardColumnCardTag = await Promise.all(boardColumnCardTagPromises);
-
-    return {
-      boardColumn,
-      boardColumnCard,
-      boardColumnCardAttachment,
-      boardColumnCardComment,
-      boardColumnCardDescription,
-      boardColumnCardTag
-    };
-  });
-  return res;
+  return {
+    boardColumn,
+    boardColumnCard,
+    boardColumnCardAttachment,
+    boardColumnCardComment,
+    boardColumnCardDescription,
+    boardColumnCardTag
+  };
 };

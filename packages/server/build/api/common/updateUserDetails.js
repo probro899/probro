@@ -29,16 +29,16 @@ exports.default = async function updateUserDetails(record) {
           // console.log('updateRes', updateRes);
           const newRecord = await findOne('UserDetail', { userId: record.userId });
           session.dispatch(_schema2.default.update('UserDetail', newRecord));
-          _cache.user.update(_schema2.default.update('UserDetail', newRecord), session);
+          _cache.database.update('UserDetail', _schema2.default.update('UserDetail', newRecord));
           return 'User details updated successfully';
         }
         throw new Error('update Faild');
       }
       const insertRes = await insert('UserDetail', record);
       if (insertRes) {
-        const userRes = await findOne('UserDetail', { userId: insertRes });
+        const userRes = await findOne('UserDetail', { id: insertRes });
         session.dispatch(_schema2.default.add('UserDetail', userRes));
-        _cache.user.update(_schema2.default.add('UserDetail', userRes), session);
+        _cache.database.update('UserDetail', _schema2.default.add('UserDetail', userRes));
         return 'User details inserted successfully';
       }
       throw new Error('User details insertion faild');
