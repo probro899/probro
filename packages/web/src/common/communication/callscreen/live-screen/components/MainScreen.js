@@ -28,14 +28,16 @@ class MainScreen extends React.Component {
     const videoElment = document.getElementById('video-mentor');
 
     const mentorId = webRtc.localCallHistory.chatHistory.type === 'user' ? webRtc.mainStreamId : database.Board.byId[webRtc.localCallHistory.chatHistory.connectionId].activeStatus;
-
-    if (videoElment && mentorId) {
-      webRtc.connectedUsers[mentorId].streams.forEach((stream) => {
-        if (stream.streams) {
-          videoElment.srcObject = stream.streams[0];
-        }
-        if (parseInt(mentorId, 10) === account.user.id) {
-          videoElment.srcObject = stream;
+    const mentorStream = webRtc.connectedUsers[mentorId];
+    if (videoElment && mentorStream) {
+      mentorStream.streams.forEach((stream) => {
+        if (stream) {
+          if (stream.streams) {
+            videoElment.srcObject = stream.streams[0];
+          }
+          if (parseInt(mentorId, 10) === account.user.id) {
+            videoElment.srcObject = stream;
+          }
         }
       });
     }

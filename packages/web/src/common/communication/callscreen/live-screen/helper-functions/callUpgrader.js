@@ -18,7 +18,7 @@ export default async (mediaType, props) => {
     await updateWebRtc('connectedUsers', { ...webRtc.connectedUsers, [account.user.id]: { streams: [stream], type: mediaType } });
     await updateWebRtc('streams', { [account.user.id]: { stream: [stream] } });
     if (webRtc.localCallHistory.chatHistory.type === 'user') {
-      updateWebRtc('mainStreamId', webRtc.chatHistory.user.user.id);
+      updateWebRtc('mainStreamId', webRtc.localCallHistory.chatHistory.user.user.id);
       updateWebRtc('streams', { ...webRtc.streams, [webRtc.chatHistory.user.user.id]: { stream: [] } });
     }
     if (webRtc.localCallHistory.chatHistory.type === 'board') {

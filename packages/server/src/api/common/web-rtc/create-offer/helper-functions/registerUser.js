@@ -17,7 +17,7 @@ const initializeUser = (boardId, userId, pcId) => {
 
 export default (offerDetail, userId) => {
   const { broadCastId, uid, isLive } = offerDetail;
-  // console.log('User registercalled', broadCastId, uid, userId, isLive);
+  // console.log('User registercalled', liveBoard.getBoard(broadCastId), uid, userId, isLive);
   // initialize fUser
   initializeUser(broadCastId, uid, userId);
 
@@ -34,7 +34,7 @@ export default (offerDetail, userId) => {
     return false;
   }
 
-  if (isLive) {
+  if (isLive && !callClose) {
     return true;
   }
 
