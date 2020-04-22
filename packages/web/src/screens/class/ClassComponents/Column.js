@@ -105,10 +105,10 @@ class Column extends Component {
                 className="column-title"
                 {...provided.dragHandleProps}
               >
-                <MoreButton id={columnId} onMore={this.onMore} />
-                <span>
+                <div className="text">
                   {column.name}
-                </span>
+                </div>
+                <MoreButton id={columnId} onMore={this.onMore} />
               </div>
               <Droppable
                 droppableId={`${column.id}`}

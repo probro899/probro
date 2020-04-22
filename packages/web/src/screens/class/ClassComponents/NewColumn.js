@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { MdLibraryAdd } from 'react-icons/md';
 import * as actions from '../../../actions';
 import client from '../../../socket';
 import { PopoverForm } from '../../../components';
@@ -42,7 +43,6 @@ class NewColumn extends Component {
       }
       return count;
     }, 16384);
-    // console.log('add column', classId);
     const res = await api.addBoardColumn({
       userId: account.user.id,
       timeStamp: Date.now(),
@@ -68,7 +68,6 @@ class NewColumn extends Component {
 
   render() {
     const { popOpen } = this.state;
-    // console.log('new column', this.props);
     return (
       <div className="add-new-column">
         <PopoverForm
@@ -78,7 +77,8 @@ class NewColumn extends Component {
           structure={ColumnFormStructure}
         />
         <div role="button" tabIndex={0} onKeyDown={this.handlePopOverForm} className="title" onClick={this.handlePopOverForm}>
-          <span>+ New Column</span>
+          <MdLibraryAdd />
+          <span>New Column</span>
         </div>
       </div>
     );

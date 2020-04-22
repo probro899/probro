@@ -231,24 +231,25 @@ top attachment etc.
 .tool-bar .toolbar-container .right-tools button svg { fill: #222; }
 
 .class-wrapper { height: 100vh; }
-.class-wrapper .columns { height: 100%; padding-top: 100px; display: flex; flex-direction: row; align-items: flex-start; overflow-y: scroll; -ms-overflow-style: none; scrollbar-color: none; }
+.class-wrapper .columns { height: 100%; padding-top: 100px; padding-left: 10px; display: flex; flex-direction: row; align-items: flex-start; overflow-y: scroll; -ms-overflow-style: none; scrollbar-color: none; }
 .class-wrapper .columns ::-webkit-scrollbar { display: none; }
 .class-wrapper .columns .column-container { height: 100%; padding-bottom: 18px; }
-.class-wrapper .columns .column-container .column-inner-container { display: flex; flex-direction: column; width: 300px; max-height: 100%; margin: 10px; background-color: #1d4354; }
-.class-wrapper .columns .column-container .column-inner-container .column-title { padding: 8px; position: relative; color: #fff; }
-.class-wrapper .columns .column-container .column-inner-container .column-title span { font-size: 20px; font-weight: bold; }
-.class-wrapper .columns .column-container .column-inner-container .column-title .more-button { top: 5px; right: 7px; position: absolute; }
+.class-wrapper .columns .column-container .column-inner-container { display: flex; flex-direction: column; width: 300px; max-height: 100%; margin: 10px 10px 10px 0px; background-color: #1d4354; }
+.class-wrapper .columns .column-container .column-inner-container .column-title { padding: 8px; display: flex; justify-content: space-between; position: relative; color: #fff; }
+.class-wrapper .columns .column-container .column-inner-container .column-title .text { font-size: 18px; font-weight: bold; }
 .class-wrapper .columns .column-container .column-inner-container .column-title .more-button svg { fill: #fff; }
-.class-wrapper .columns .column-container .column-inner-container .task-list { min-height: 200px; max-height: 100%; overflow-y: scroll; }
-.class-wrapper .columns .column-container .column-inner-container .task-list .task-container { margin: 8px; padding: 5px; background-color: #fff; border: 1px solid #e0e0e0; flex-grow: 1; }
+.class-wrapper .columns .column-container .column-inner-container .task-list { min-height: 230px; max-height: 100%; overflow-y: scroll; padding: 0px 8px 8px 8px; }
+.class-wrapper .columns .column-container .column-inner-container .task-list .task-container { margin-bottom: 8px; padding: 5px; background-color: #fff; }
 .class-wrapper .columns .column-container .column-inner-container .task-list .task-container .pc-task-flag { display: flex; justify-content: space-between; }
 .class-wrapper .columns .column-container .column-inner-container .task-list .task-container .pc-task-flag .pc-deadline-view { color: #fff; }
-.class-wrapper .columns .column-container .column-inner-container .task-list .task-container .pc-task-flag .pc-deadline-view p { padding: 5px; border-radius: 2.5px; background-color: green; color: #fff; }
+.class-wrapper .columns .column-container .column-inner-container .task-list .task-container .pc-task-flag .pc-deadline-view p { font-size: 12px; padding: 3px; border-radius: 2.5px; background-color: green; color: #fff; }
 .class-wrapper .columns .column-container .column-inner-container .task-list .task-container .pc-task-flag .pc-deadline-view p.expire { background-color: red; }
 .class-wrapper .columns .column-container .column-inner-container .task-list .task-container .pc-task-name { margin: 0; font-weight: bold; }
-.class-wrapper .columns .column-container .column-inner-container .column-footer { color: #fff; padding: 10px; cursor: pointer; }
-.class-wrapper .columns .add-new-column .title { padding: 8px; margin: 10px; background-color: #f9f9f9; width: 200px; box-shadow: 0px 1px 2px 1px rgba(57, 73, 76, 0.35); cursor: pointer; }
-.class-wrapper .columns .add-new-column .title span { font-size: 16px; }
+.class-wrapper .columns .column-container .column-inner-container .column-footer { display: flex; align-items: flex-start; color: #fff; padding: 10px; cursor: pointer; }
+.class-wrapper .columns .column-container .column-inner-container .column-footer svg { color: #fff; margin-right: 4px; }
+.class-wrapper .columns .column-container .column-inner-container .column-footer:hover { opacity: 0.7; font-weight: bold; }
+.class-wrapper .columns .add-new-column .title { display: flex; align-items: flex-start; padding: 8px; margin: 10px 10px 10px 0px; background-color: #f9f9f9; width: 200px; box-shadow: 0px 1px 2px 1px rgba(57, 73, 76, 0.35); cursor: pointer; font-size: 16px; }
+.class-wrapper .columns .add-new-column .title svg { color: #1d4354; height: 18px; width: 18px; margin-right: 5px; }
 
 .overlay-container { margin-left: 2%; margin-right: 2%; padding: 0; }
 .overlay-container .task-detail-overlay .overlay-title { padding: 7px; display: flex; justify-content: space-between; background: #f9f9f9; color: #222; border: 1px solid #e0e0e0; }

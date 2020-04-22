@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { AiFillFileAdd } from 'react-icons/ai';
 import client from '../../../socket';
 import * as actions from '../../../actions';
 import { PopoverForm } from '../../../components';
@@ -85,7 +86,8 @@ class NewTask extends Component {
           structure={TaskFormStructure}
         />
         <div className="column-footer" role="button" tabIndex={0} onKeyDown={this.handlePopOverForm} onClick={this.handlePopOverForm}>
-          + New Task
+          <AiFillFileAdd />
+          New Task
         </div>
       </div>
     );
