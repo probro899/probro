@@ -62,14 +62,6 @@
             border-radius: 50%;
             overflow: hidden;
             flex-shrink: 0;
-            img.portrait {
-              width: 100%;
-              height: auto;
-            }
-            img.landscape {
-              height: 100%;
-              width: auto;
-            }
           }
           .user-detail {
             margin-left: 5px;
@@ -202,14 +194,6 @@
           border-radius: 50%;
           overflow: hidden;
           margin: 10px;
-          img.portrait {
-            width: 100%;
-            height: auto;
-          }
-          img.landscape {
-            height: 100%;
-            width: auto;
-          }
         }
         .author-detail {
           display: flex;
@@ -261,14 +245,6 @@
           overflow: hidden;
           top: 11px;
           left: 5px;
-          img.portrait {
-            width: 100%;
-            height: auto;
-          }
-          img.landscape {
-            height: 100%;
-            width: auto;
-          }
         }
         textarea {
           font-size: 21px;
@@ -296,14 +272,6 @@
             border-radius: 50%;
             overflow: hidden;
             margin: 0 10px;
-            img.portrait {
-              width: 100%;
-              height: auto;
-            }
-            img.landscape {
-              height: 100%;
-              width: auto;
-            }
           }
           .comment-content {
             padding: 5px;

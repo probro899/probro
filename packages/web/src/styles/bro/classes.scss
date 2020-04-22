@@ -208,7 +208,10 @@
           overflow-y: scroll;
           padding: 0px 8px 8px 8px;
           .task-container {
-            margin-bottom: 8px; padding: 5px; background-color: $backgroundColor;
+            margin-bottom: 8px; padding: 5px; background-color: $backgroundColor; transition: 0.3s;
+            &:hover {
+              box-shadow: 1px 1px 1px 1px $backgroundColor;
+            }
             .pc-task-flag {
               display: flex; justify-content: space-between;
               .pc-deadline-view {
@@ -378,7 +381,7 @@
           button { margin-left: 0; }
         }
         .comments {
-          padding: 5px;
+          padding-bottom: 5px;
           h3 { margin: 15px 0px 7px 0px; }
           .s-comment {
             display: flex; justify-content: stretch; padding: 10px 0px 10px 10px;
@@ -414,19 +417,7 @@
             .activity-col { font-weight: bold; }
           }
           .img-con {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            overflow: hidden;
-            flex-shrink: 0;
-            img.portrait {
-              width: 100%;
-              height: auto;
-            }
-            img.landscape {
-              height: 100%;
-              width: auto;
-            }
+            width: 50px; height: 50px; border-radius: 50%; overflow: hidden; flex-shrink: 0;
           }
         }
       }

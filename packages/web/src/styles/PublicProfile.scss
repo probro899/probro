@@ -31,14 +31,6 @@
     height: calc((100vw * 0.81 * 0.33) * 0.55);
     overflow: hidden;
     top: calc((100vw * 0.81) * 0.33 * 0.4);
-    img.portrait {
-      width: 100%;
-      height: auto;
-    }
-    img.landscape {
-      height: 100%;
-      width: auto;
-    }
     @media screen and (max-width: 855px) {
       top: calc(100vw * 0.33 * 0.4);
       left: 20px;

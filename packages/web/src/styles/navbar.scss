@@ -49,14 +49,6 @@ top attachment etc.
       border-radius: 50%;
       overflow: hidden;
       border: 2px solid $backgroundColor;
-      img.portrait {
-        width: 100%;
-        height: auto;
-      }
-      img.landscape {
-        height: 100%;
-        width: auto;
-      }
     }
     &.pc-dashboard-icon {
       display: flex;
