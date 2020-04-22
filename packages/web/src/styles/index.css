@@ -213,9 +213,9 @@ top attachment etc.
 .tool-bar { top: 60px; height: 40px; position: absolute; width: 100%; padding: 5px 0px; background: #f9f9f9; }
 .tool-bar .toolbar-container { height: 100%; padding: 2px; display: flex; justify-content: space-between; }
 .tool-bar .toolbar-container .left-tools { display: flex; flex-direction: row; }
-.tool-bar .toolbar-container .left-tools .each-item { padding: 0px 5px 0px 5px; display: flex; align-items: center; }
+.tool-bar .toolbar-container .left-tools .each-item { padding: 0px 5px; display: flex; align-items: center; }
 .tool-bar .toolbar-container .left-tools .class-name { color: #222; font-weight: 600; font-size: 16px; }
-.tool-bar .toolbar-container .left-tools .user-list .i-user { position: relative; padding: 4px; height: 30px; width: 30px; margin-right: 2px; border-radius: 50%; text-transform: uppercase; cursor: pointer; background: #137cbd; color: #fff; display: flex; justify-content: center; flex-direction: column; align-items: center; }
+.tool-bar .toolbar-container .left-tools .user-list .i-user { position: relative; padding: 4px; height: 30px; width: 30px; margin-right: 2px; border-radius: 50%; text-transform: uppercase; cursor: pointer; background: #137cbd; color: #fff; display: flex; justify-content: center; align-items: center; }
 .tool-bar .toolbar-container .left-tools .user-list .i-user:hover { background: #1d4354; }
 .tool-bar .toolbar-container .left-tools .user-list .i-user .green-dot { position: absolute; height: 10px; width: 10px; background-color: #71f971; border-radius: 50%; top: 20px; left: 20px; }
 .tool-bar .toolbar-container .right-tools { display: flex; }
@@ -269,16 +269,17 @@ top attachment etc.
 .overlay-container .task-detail-overlay .overlay-body .left .overlay-description .desc { padding: 5px 5px 5px 0px; font-size: 15px; }
 .overlay-container .task-detail-overlay .overlay-body .left .overlay-description .desc textarea { width: 100%; }
 .overlay-container .task-detail-overlay .overlay-body .left .overlay-description .bp3-icon-tick svg { fill: #fff; }
-.overlay-container .task-detail-overlay .overlay-body .left .overlay-description .bp3-icon-cross svg { fill: black; }
-.overlay-container .task-detail-overlay .overlay-body .left .attach-container { padding: 5px; }
-.overlay-container .task-detail-overlay .overlay-body .left .attach-container u { font-weight: bold; font-size: 17px; }
-.overlay-container .task-detail-overlay .overlay-body .left .attach-container .attach-list ul { padding-inline-start: 20px; }
+.overlay-container .task-detail-overlay .overlay-body .left .overlay-description .bp3-icon-cross svg { fill: #1d4354; }
+.overlay-container .task-detail-overlay .overlay-body .left .attach-container { padding: 5px 5px 5px 0px; }
+.overlay-container .task-detail-overlay .overlay-body .left .attach-container .attach-head { font-weight: bold; font-size: 16px; }
+.overlay-container .task-detail-overlay .overlay-body .left .attach-container .attach-list ul { padding-inline-start: 10px; }
 .overlay-container .task-detail-overlay .overlay-body .left .attach-container .attach-list ul li { margin-bottom: 3px; display: flex; list-style-type: none; }
-.overlay-container .task-detail-overlay .overlay-body .left .attach-container .attach-list ul li .file-type { width: 60px; height: 60px; display: flex; flex-direction: column; justify-content: center; font-size: 18px; font-weight: bold; align-items: center; color: #222; background: #f9f9f9; text-transform: uppercase; box-shadow: 0px 1px 2px 0px #383535; position: relative; }
+.overlay-container .task-detail-overlay .overlay-body .left .attach-container .attach-list ul li .file-type { width: 60px; height: 60px; display: flex; justify-content: center; font-size: 18px; align-items: center; color: #222; background: #f9f9f9; text-transform: uppercase; box-shadow: 0px 1px 2px 0px #383535; position: relative; }
 .overlay-container .task-detail-overlay .overlay-body .left .attach-container .attach-list ul li .file-type .pc-attach-delete { border-radius: 50%; top: 0; right: 0; position: absolute; }
 .overlay-container .task-detail-overlay .overlay-body .left .attach-container .attach-list ul li .file-type .pc-attach-delete svg { fill: #666; }
-.overlay-container .task-detail-overlay .overlay-body .left .attach-container .attach-list ul li .file-detail { padding-left: 10px; display: flex; flex-direction: column; justify-content: center; }
-.overlay-container .task-detail-overlay .overlay-body .left .attach-container .attach-list ul li .file-detail .attach-title { font-weight: bold; color: #1d4354; font-size: 16px; }
+.overlay-container .task-detail-overlay .overlay-body .left .attach-container .attach-list ul li .file-detail { margin-left: 10px; display: flex; flex-direction: column; justify-content: center; }
+.overlay-container .task-detail-overlay .overlay-body .left .attach-container .attach-list ul li .file-detail .attach-title { font-size: 16px; }
+.overlay-container .task-detail-overlay .overlay-body .left .attach-container .attach-list ul li .file-detail .date { color: #696969; }
 .overlay-container .task-detail-overlay .overlay-body .left .edit-button { margin-left: 10px; vertical-align: inherit !important; }
 .overlay-container .task-detail-overlay .overlay-body .left .edit-button svg { fill: #137cbd; }
 .overlay-container .task-detail-overlay .overlay-body .left textarea { background: transparent; border: none; border-color: transparent; resize: none; }
@@ -329,6 +330,16 @@ top attachment etc.
 .pc-report-overlay .pc-report-content .pc-pdf-gen-btn-con { margin-top: 10px; width: 100%; display: flex; justify-content: flex-end; }
 .pc-report-overlay .pc-report-content .pc-pdf-gen-btn-con .pdf-link { background-color: #137cbd; margin-right: 10px; border-radius: 15px; display: flex; align-items: center; padding: 5px; }
 .pc-report-overlay .pc-report-content .pc-pdf-gen-btn-con .pdf-link a { color: #fff; }
+
+.all-users { padding: 10px 0px 5px 0px; display: flex; align-items: center; flex-direction: column; }
+.all-users .header { font-weight: bold; padding: 2px; }
+.all-users .user-con { padding: 2px; }
+.all-users .user-con .user { padding: 5px; position: relative; display: flex; }
+.all-users .user-con .user:hover .remover svg { color: red; }
+.all-users .user-con .user a { margin: 0px 10px; width: 80%; }
+.all-users .user-con .user .active { position: absolute; height: 10px; width: 10px; background-color: #71f971; border-radius: 50%; top: 8px; left: 0; }
+.all-users .user-con .user .remover { width: 20%; cursor: pointer; }
+.all-users .user-con .user .remover svg { color: rgba(255, 0, 0, 0.336); height: 20px; width: 20px; }
 
 .settings { display: flex; padding: 5px 5px 5px 10px; flex-direction: column; }
 .settings .setting-types { display: flex; flex-direction: row; justify-content: space-around; font-size: 18px; font-weight: bold; border-bottom: 1px solid #d6d9d9; }

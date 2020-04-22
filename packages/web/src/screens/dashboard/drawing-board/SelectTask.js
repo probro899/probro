@@ -7,14 +7,7 @@ class SelectTask extends React.Component {
     super(props);
     const { database } = this.props;
     const classes = Object.values(database.Board.byId).filter(o => o.type === 'private');
-    const tasks = [];
-    Object.values(database.BoardColumnCard.byId).map((obj) => {
-      Object.values(database.BoardColumn.byId).map((i) => {
-        if (i.boardId === classes[0].id && i.id === obj.boardColumnId) {
-          tasks.push(obj);
-        }
-      });
-    });
+    const tasks = Object.values(database.BoardColumnCard.byId).filter(obj => !obj.deleteStatus && Object.values(database.BoardColumn.byId).find(o => o.boardId === classes[0].id && o.id === obj.boardColumnId));
     this.state = {
       error: null,
       message: null,

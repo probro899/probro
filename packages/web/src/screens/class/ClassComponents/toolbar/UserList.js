@@ -3,16 +3,13 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { Popover } from '@blueprintjs/core';
 import { IoIosMore } from 'react-icons/io';
+import { MdDeleteForever } from 'react-icons/md';
 
 const UserDetail = (props) => {
   const { detail } = props;
   return (
-    <div
-      style={{ padding: '10px 5px 5px 5px' }}
-    >
-      <div
-        style={{ padding: '2px' }}
-      >
+    <div style={{ padding: '10px 5px 5px 5px' }}>
+      <div style={{ padding: '2px' }}>
         <Link to={`/user/${detail.slug}`}>
           {detail.middleName ? `${detail.firstName} ${detail.middleName} ${detail.lastName}` : `${detail.firstName} ${detail.lastName}`}
         </Link>
@@ -27,51 +24,20 @@ UserDetail.propTypes = {
 
 const AllUsers = ({ userList, boardMembers, boardId }) => {
   return (
-    <div
-      style={{
-        padding: '10px 0px 5px 0px',
-        display: 'flex',
-        alignItems: 'center',
-        flexDirection: 'column',
-      }}
-    >
-      <div
-        style={{ fontWeight: 600, padding: '2px' }}
-      >
-        <span>Members</span>
-      </div>
-      <div
-        style={{
-          padding: '2px',
-        }}
-      >
+    <div className="all-users">
+      <div className="header">Members</div>
+      <div className="user-con">
         {
           Object.values(boardMembers.byId).filter(o => o.boardId === boardId).map((o) => {
             return (
-              <div
-                style={{
-                  padding: '5px',
-                  position: 'relative',
-                }}
-              >
-                <Link style={{ marginLeft: 10, marginRight: 10 }} to={`/user/${userList.byId[o.tuserId].slug}`}>
+              <div className="user">
+                <Link to={`/user/${userList.byId[o.tuserId].slug}`}>
                   {userList.byId[o.tuserId].middleName ? `${userList.byId[o.tuserId].firstName} ${userList.byId[o.tuserId].middleName} ${userList.byId[o.tuserId].lastName}` : `${userList.byId[o.tuserId].firstName} ${userList.byId[o.tuserId].lastName}`}
                 </Link>
-                {
-                userList.byId[o.tuserId].activeStatus && (
-                  <span
-                    style={{
-                      position: 'absolute',
-                      height: 10,
-                      width: 10,
-                      backgroundColor: 'green',
-                      borderRadius: '50%',
-                      top: 8,
-                      left: 0,
-                    }}
-                  />
-                )
-                }
+                {userList.byId[o.tuserId].activeStatus && <span className="active" />}
+                <div className="remover">
+                  <MdDeleteForever />
+                </div>
               </div>
             );
           })
