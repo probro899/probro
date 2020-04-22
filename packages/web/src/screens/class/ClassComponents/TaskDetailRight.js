@@ -173,9 +173,7 @@ class TaskDetailRight extends React.Component {
     return (
       <div className="right">
         <div className="rt-in">
-          <div style={{ padding: '5px' }}>
-            <span style={{ color: '#696969' }}>Tools</span>
-          </div>
+          <div className="tool-header">Tools</div>
           <div className="rt-tools">
             <Popover
               content={<TagPopover addTag={this.addTag} tags={tags} />}
@@ -216,7 +214,7 @@ class TaskDetailRight extends React.Component {
               />
             </Popover>
           </div>
-          <div style={{ padding: '5px' }}><span style={{ color: '#696969' }}>Actions</span></div>
+          <div className="tool-header">Actions</div>
           <div className="rt-actions">
             <Popover content={<SelectColumn callback={this.copyCard} database={database} />}>
               <Button

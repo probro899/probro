@@ -245,18 +245,13 @@ class TaskOverlay extends Component {
                   )
                 }
               </div>
-              <Button
-                icon="cross"
-                style={{ float: 'right' }}
-                minimal
-                onClick={this.onClose}
-              />
+              <Button icon="cross" className="task-close" minimal onClick={this.onClose} />
             </div>
             <div className="overlay-body">
               <div className="left">
                 <div className="pc-tags-and-deadline">
                   <div className="pc-tag-view">
-                    {this.getTags().map(obj => <Tag key={obj.id} large intent={obj.tag} style={{ margin: 5 }} />)}
+                    {this.getTags().map(obj => <Tag className="tag" key={obj.id} large intent={obj.tag} />)}
                   </div>
                   <div className="pc-deadline-view">
                     {task.Deadline ? (
@@ -270,7 +265,7 @@ class TaskOverlay extends Component {
                 </div>
                 <div className="overlay-description">
                   <div className="desc-head">
-                    <u>Description</u>
+                    <span>Description</span>
                     {editDesc
                       ? (
                         <span className="buttons-group">

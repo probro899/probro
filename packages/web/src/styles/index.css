@@ -252,24 +252,26 @@ top attachment etc.
 .class-wrapper .columns .add-new-column .title svg { color: #1d4354; height: 18px; width: 18px; margin-right: 5px; }
 
 .overlay-container { margin-left: 2%; margin-right: 2%; padding: 0; }
-.overlay-container .task-detail-overlay .overlay-title { padding: 7px; display: flex; justify-content: space-between; background: #f9f9f9; color: #222; border: 1px solid #e0e0e0; }
+.overlay-container .task-detail-overlay .overlay-title { padding: 7px; display: flex; justify-content: space-between; align-items: center; background: #f9f9f9; color: #222; border: 1px solid #e0e0e0; }
 .overlay-container .task-detail-overlay .overlay-title svg { fill: #222; }
-.overlay-container .task-detail-overlay .overlay-title .head { display: flex; flex-direction: row; font-size: 20px; font-weight: bold; width: 100%; }
+.overlay-container .task-detail-overlay .overlay-title .head { display: flex; flex-direction: row; font-size: 18px; font-weight: bold; width: 100%; }
 .overlay-container .task-detail-overlay .overlay-title .head textarea { width: 100%; resize: none; padding: 0px 3px; overflow-y: scroll; height: 40px; line-height: 35px; font-size: 18px; font-weight: bold; background: transparent; }
 .overlay-container .task-detail-overlay .overlay-title .head .buttons-group { display: flex; justify-content: center; }
 .overlay-container .task-detail-overlay .overlay-title .head .buttons-group button { margin-left: 5px; }
 .overlay-container .task-detail-overlay .overlay-title .head .buttons-group .edit-title { margin-left: 5px; }
 .overlay-container .task-detail-overlay .overlay-title .head .buttons-group .edit-title svg { fill: #137cbd; }
 .overlay-container .task-detail-overlay .overlay-title .head .bp3-icon-tick svg { fill: #fff; }
-.overlay-container .task-detail-overlay .overlay-body { display: flex; background: #fff; }
+.overlay-container .task-detail-overlay .overlay-title .task-close { align-self: flex-start; }
+.overlay-container .task-detail-overlay .overlay-body { display: flex; background: #fff; padding: 5px 5px 5px 8px; }
 .overlay-container .task-detail-overlay .overlay-body .left { flex: 0.7; }
 .overlay-container .task-detail-overlay .overlay-body .left .pc-tags-and-deadline { display: flex; justify-content: space-between; }
-.overlay-container .task-detail-overlay .overlay-body .left .pc-tags-and-deadline .pc-deadline-view { display: flex; padding: 5px; }
+.overlay-container .task-detail-overlay .overlay-body .left .pc-tags-and-deadline .tag { margin-right: 5px; }
+.overlay-container .task-detail-overlay .overlay-body .left .pc-tags-and-deadline .pc-deadline-view { display: flex; padding: 3px; font-size: 12px; }
 .overlay-container .task-detail-overlay .overlay-body .left .pc-tags-and-deadline .pc-deadline-view p { padding: 5px; border-radius: 3px; background-color: green; color: #fff; }
 .overlay-container .task-detail-overlay .overlay-body .left .pc-tags-and-deadline .pc-deadline-view p.expire { background-color: red; }
-.overlay-container .task-detail-overlay .overlay-body .left .overlay-description { padding: 5px; }
-.overlay-container .task-detail-overlay .overlay-body .left .overlay-description .desc-head u { font-weight: bold; font-size: 17px; }
-.overlay-container .task-detail-overlay .overlay-body .left .overlay-description .desc { padding: 5px; font-size: 15px; font-weight: 400; }
+.overlay-container .task-detail-overlay .overlay-body .left .overlay-description { padding: 5px 5px 5px 0px; }
+.overlay-container .task-detail-overlay .overlay-body .left .overlay-description .desc-head { font-weight: bold; font-size: 16px; }
+.overlay-container .task-detail-overlay .overlay-body .left .overlay-description .desc { padding: 5px 5px 5px 0px; font-size: 15px; }
 .overlay-container .task-detail-overlay .overlay-body .left .overlay-description .desc textarea { width: 100%; }
 .overlay-container .task-detail-overlay .overlay-body .left .overlay-description .bp3-icon-tick svg { fill: #fff; }
 .overlay-container .task-detail-overlay .overlay-body .left .overlay-description .bp3-icon-cross svg { fill: black; }
@@ -285,23 +287,26 @@ top attachment etc.
 .overlay-container .task-detail-overlay .overlay-body .left .edit-button { margin-left: 10px; vertical-align: inherit !important; }
 .overlay-container .task-detail-overlay .overlay-body .left .edit-button svg { fill: #137cbd; }
 .overlay-container .task-detail-overlay .overlay-body .left textarea { background: transparent; border: none; border-color: transparent; resize: none; }
-.overlay-container .task-detail-overlay .overlay-body .left .comment-container { padding: 5px; display: flex; justify-content: stretch; }
+.overlay-container .task-detail-overlay .overlay-body .left .comment-container { display: flex; justify-content: stretch; }
+.overlay-container .task-detail-overlay .overlay-body .left .comment-container button { margin-left: 0; }
 .overlay-container .task-detail-overlay .overlay-body .left .comments { padding: 5px; }
-.overlay-container .task-detail-overlay .overlay-body .left .comments .s-comment { display: flex; justify-content: stretch; padding-bottom: 10px; padding-left: 10px; padding-top: 10px; }
+.overlay-container .task-detail-overlay .overlay-body .left .comments h3 { margin: 15px 0px 7px 0px; }
+.overlay-container .task-detail-overlay .overlay-body .left .comments .s-comment { display: flex; justify-content: stretch; padding: 10px 0px 10px 10px; }
 .overlay-container .task-detail-overlay .overlay-body .left .comments .s-comment .com-con { margin-left: 10px; padding-top: 2px; display: flex; flex-direction: column; }
 .overlay-container .task-detail-overlay .overlay-body .left .comments .s-comment .com-con .com-desc .pc-comment-edit { display: flex; }
-.overlay-container .task-detail-overlay .overlay-body .left .comments .s-comment .com-con .com-config small { cursor: pointer; color: #666; margin-right: 5px; }
+.overlay-container .task-detail-overlay .overlay-body .left .comments .s-comment .com-con .com-config small { cursor: pointer; color: #666; margin-right: 5px; font-size: 10px; }
 .overlay-container .task-detail-overlay .overlay-body .left .comments .s-comment .com-con .com-config small.danger u:hover { color: red; }
 .overlay-container .task-detail-overlay .overlay-body .left .comments .s-comment .com-con .com-config small.primary u:hover { color: #137cbd; }
-.overlay-container .task-detail-overlay .overlay-body .left .comments .pc-task-activity { padding: 10px 0px; padding-left: 10px; display: flex; }
+.overlay-container .task-detail-overlay .overlay-body .left .comments .pc-task-activity { padding: 10px 0px 0px 10px; display: flex; }
 .overlay-container .task-detail-overlay .overlay-body .left .comments .pc-task-activity .activity-detail { margin-left: 10px; padding-top: 2px; display: flex; flex-direction: column; }
-.overlay-container .task-detail-overlay .overlay-body .left .comments .pc-task-activity .activity-user { font-size: 16px; font-weight: bold; }
+.overlay-container .task-detail-overlay .overlay-body .left .comments .pc-task-activity .activity-user { font-size: 15px; font-weight: bold; }
 .overlay-container .task-detail-overlay .overlay-body .left .comments .pc-task-activity .activity-col { font-weight: bold; }
 .overlay-container .task-detail-overlay .overlay-body .left .comments .img-con { width: 50px; height: 50px; border-radius: 50%; overflow: hidden; flex-shrink: 0; }
 .overlay-container .task-detail-overlay .overlay-body .left .comments .img-con img.portrait { width: 100%; height: auto; }
 .overlay-container .task-detail-overlay .overlay-body .left .comments .img-con img.landscape { height: 100%; width: auto; }
 .overlay-container .task-detail-overlay .overlay-body .right { display: flex; flex: 0.3; justify-content: flex-end; }
-.overlay-container .task-detail-overlay .overlay-body .right .rt-in { padding: 5px 5px 5px 5px; display: flex; flex-direction: column; }
+.overlay-container .task-detail-overlay .overlay-body .right .rt-in { padding: 5px; display: flex; flex-direction: column; }
+.overlay-container .task-detail-overlay .overlay-body .right .rt-in .tool-header { color: #666; margin: 7px 0px 2px 0px; }
 .overlay-container .task-detail-overlay .overlay-body .right .rt-in .rt-tools { display: flex; flex-direction: column; }
 .overlay-container .task-detail-overlay .overlay-body .right .rt-in .rt-tools .bp3-popover-target { width: 100%; }
 .overlay-container .task-detail-overlay .overlay-body .right .rt-in .rt-tools .bp3-popover-target button { width: 100%; }

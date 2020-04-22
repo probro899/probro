@@ -46,7 +46,6 @@ class CommentBox extends React.Component {
           onChange={e => this.commentChange(e)}
         />
         <Button
-          style={{ marginLeft: '5px' }}
           text="submit"
           intent="primary"
           onClick={this.saveComment}

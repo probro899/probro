@@ -249,21 +249,11 @@
   padding: 0;
   .task-detail-overlay {
     .overlay-title {
-      padding: 7px;
-      display: flex;
-      justify-content: space-between;
-      background: $fadedBackground;
-      color: $textColor;
-      border: 1px solid $normalBorder;
-      svg {
-        fill: $textColor;
-      }
+      padding: 7px; display: flex; justify-content: space-between; align-items: center;
+      background: $fadedBackground; color: $textColor; border: 1px solid $normalBorder;
+      svg { fill: $textColor; }
       .head {
-        display: flex;
-        flex-direction: row;
-        font-size: 20px;
-        font-weight: bold;
-        width: 100%;
+        display: flex; flex-direction: row; font-size: 18px; font-weight: bold; width: 100%;
         textarea {
           width: 100%;
           resize: none;
@@ -291,44 +281,29 @@
         }
         .bp3-icon-tick { svg { fill: $backgroundColor; } }
       }
+      .task-close { align-self: flex-start; }
     }
     .overlay-body {
-      display: flex;
-      background: $backgroundColor;
+      display: flex; background: $backgroundColor; padding: 5px 5px 5px 8px;
       .left {
         flex: 0.7;
         .pc-tags-and-deadline {
-          display: flex;
-          justify-content: space-between;
+          display: flex; justify-content: space-between;
+          .tag { margin-right: 5px; }
           .pc-deadline-view {
-            display: flex;
-            padding: 5px;
+            display: flex; padding: 3px; font-size: 12px;
             p {
-              padding: 5px;
-              border-radius: 3px;
-              background-color: green;
-              color: $backgroundColor; 
-              &.expire {
-                background-color: red;
-              }
+              padding: 5px; border-radius: 3px; background-color: green; color: $backgroundColor; 
+              &.expire { background-color: red; }
             }
           }
         }
         .overlay-description {
-          padding: 5px;
-          .desc-head {
-            u {
-              font-weight: bold;
-              font-size: 17px;
-            }
-          }
+          padding: 5px 5px 5px 0px;
+          .desc-head { font-weight: bold; font-size: 16px; }
           .desc {
-            textarea {
-              width: 100%;
-            }
-            padding: 5px;
-            font-size: 15px;
-            font-weight: 400;
+            textarea { width: 100%; }
+            padding: 5px 5px 5px 0px; font-size: 15px;
           }
           .bp3-icon-tick { svg { fill: $backgroundColor; } }
           .bp3-icon-cross { svg { fill: black; } }
@@ -399,18 +374,14 @@
           resize: none;
         }
         .comment-container {
-          padding: 5px;
-          display: flex;
-          justify-content: stretch;
+          display: flex; justify-content: stretch;
+          button { margin-left: 0; }
         }
         .comments {
           padding: 5px;
+          h3 { margin: 15px 0px 7px 0px; }
           .s-comment {
-            display: flex;
-            justify-content: stretch;
-            padding-bottom: 10px;
-            padding-left: 10px;
-            padding-top: 10px;
+            display: flex; justify-content: stretch; padding: 10px 0px 10px 10px;
             .com-con {
               margin-left: 10px;
               padding-top: 2px;
@@ -423,40 +394,24 @@
               }
               .com-config {
                 small {
-                  cursor: pointer;
-                  color: $navTextColor;
-                  margin-right: 5px;
+                  cursor: pointer; color: $navTextColor; margin-right: 5px; font-size: 10px;
                   &.danger u {
-                    &:hover {
-                      color: red;
-                    }
+                    &:hover { color: red; }
                   }
                   &.primary u {
-                    &:hover {
-                      color: $skyBlueMain;
-                    }
+                    &:hover { color: $skyBlueMain; }
                   }
                 }
               }
             }
           }
           .pc-task-activity {
-            padding: 10px 0px;
-            padding-left: 10px;
-            display: flex;
+            padding: 10px 0px 0px 10px; display: flex;
             .activity-detail {
-              margin-left: 10px;
-              padding-top: 2px;
-              display: flex;
-              flex-direction: column;
+              margin-left: 10px; padding-top: 2px; display: flex; flex-direction: column;
             }
-            .activity-user {
-              font-size: 16px;
-              font-weight: bold;
-            }
-            .activity-col {
-              font-weight: bold;
-            }
+            .activity-user { font-size: 15px; font-weight: bold; }
+            .activity-col { font-weight: bold; }
           }
           .img-con {
             width: 50px;
@@ -480,17 +435,14 @@
         flex: 0.3;
         justify-content: flex-end;
         .rt-in {
-          padding: 5px 5px 5px 5px;
-          display: flex;
-          flex-direction: column;
+          padding: 5px;
+          display: flex; flex-direction: column;
+          .tool-header { color: $navTextColor; margin: 7px 0px 2px 0px; }
           .rt-tools {
-            display: flex;
-            flex-direction: column;
+            display: flex; flex-direction: column;
             .bp3-popover-target {
               width: 100%;
-              button {
-                width: 100%;
-              }
+              button { width: 100%; }
             }
           }
           .rt-actions {
