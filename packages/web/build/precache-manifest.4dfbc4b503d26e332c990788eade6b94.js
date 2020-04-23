@@ -1,11 +1,11 @@
 self.__precacheManifest = [
   {
-    "revision": "b56b1fac126fcceabdcb",
+    "revision": "3c6bb0cf30308c6e2774",
     "url": "/static/css/main.4bf86d7c.chunk.css"
   },
   {
-    "revision": "b56b1fac126fcceabdcb",
-    "url": "/static/js/main.b56b1fac.chunk.js"
+    "revision": "3c6bb0cf30308c6e2774",
+    "url": "/static/js/main.3c6bb0cf.chunk.js"
   },
   {
     "revision": "583d0310773e062a6cf3",
@@ -60,10 +60,6 @@ self.__precacheManifest = [
     "url": "/static/media/insight.f068a8c1.png"
   },
   {
-    "revision": "6fdb722c94434811f89a68eafc4531f8",
-    "url": "/static/media/icons-16.6fdb722c.eot"
-  },
-  {
     "revision": "cd1a26696ebf17a89545a3f9067d7028",
     "url": "/static/media/icons-16.cd1a2669.woff"
   },
@@ -84,6 +80,10 @@ self.__precacheManifest = [
     "url": "/static/media/icons-20.90247cfd.ttf"
   },
   {
+    "revision": "6fdb722c94434811f89a68eafc4531f8",
+    "url": "/static/media/icons-16.6fdb722c.eot"
+  },
+  {
     "revision": "056353a27c68233bab7e618c8b191d65",
     "url": "/static/media/gotham-pro.056353a2.ttf"
   },
@@ -96,7 +96,7 @@ self.__precacheManifest = [
     "url": "/static/media/gotham-light.bceda3fa.otf"
   },
   {
-    "revision": "51424831162a2fd15874263aa394ed14",
+    "revision": "91dde9add2dac8eda6877c584c7056b1",
     "url": "/index.html"
   }
 ];
