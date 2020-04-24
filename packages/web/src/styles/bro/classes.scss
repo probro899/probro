@@ -95,60 +95,29 @@
 
 //styling the classManager component. 
 .tool-bar {
-  top: $navbarHeight;
-  height: $toolbarHeight;
-  position: absolute;
-  width: 100%;
-  padding: 5px 0px;
+  top: $navbarHeight; height: $toolbarHeight; position: absolute; width: 100%; padding: 5px 0px;
   background: $fadedBackground;
   .toolbar-container {
-    height: 100%;
-    padding: 2px;
-    display: flex;
-    justify-content: space-between;
+    height: 100%; padding: 2px; display: flex; justify-content: space-between;
     .left-tools {
-      display: flex;
-      flex-direction: row;
+      display: flex; flex-direction: row;
       // style for each items in the toolbar
       .each-item {
-        padding: 0px 5px 0px 5px;
-        display: flex;
-        align-items: center;
+        padding: 0px 5px; display: flex; align-items: center;
       }
       // styling the name of the class in the toolbar
-      .class-name {
-        color: $textColor;
-        font-weight: 600;
-        font-size: 16px;
-      }
+      .class-name { color: $textColor; font-weight: 600; font-size: 16px; }
       .user-list {
         // styling the short user popover content
         .i-user {
-          position: relative;
-          padding: 4px;
-          height: 30px;
-          width: 30px;
-          margin-right: 2px;
-          border-radius: 50%;
-          text-transform: uppercase;
-          cursor: pointer;
-          background: $skyBlueMain;
-          color: $backgroundColor;
-          display: flex;
-          justify-content: center;
-          flex-direction: column;
-          align-items: center;
-          &:hover {
-            background: $darkBlue;
-          }
+          position: relative; padding: 4px;
+          height: 30px; width: 30px; margin-right: 2px; border-radius: 50%; text-transform: uppercase; cursor: pointer;
+          background: $skyBlueMain; color: $backgroundColor;
+          display: flex; justify-content: center; align-items: center;
+          &:hover { background: $darkBlue; }
           .green-dot {
-            position: absolute;
-            height: 10px;
-            width: 10px;
-            background-color: $pcGreen;
-            border-radius: 50%;
-            top: 20px;
-            left: 20px;
+            position: absolute; height: 10px; width: 10px; background-color: $pcGreen;
+            border-radius: 50%; top: 20px; left: 20px;
           }
         }
       }
@@ -179,14 +148,9 @@
 .class-wrapper {
   height: 100vh;
   .columns {
-    height: 100%;
-    padding-top: $navbarHeight + $toolbarHeight;
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    overflow-y: scroll;
-    -ms-overflow-style: none;
-    scrollbar-color: none; 
+    height: 100%; padding-top: $navbarHeight + $toolbarHeight; padding-left: 10px;
+    display: flex; flex-direction: row; align-items: flex-start;
+    overflow-y: scroll; -ms-overflow-style: none; scrollbar-color: none; 
     ::-webkit-scrollbar {
       display: none;
     }
@@ -199,72 +163,53 @@
         flex-direction: column;
         width: 300px;
         max-height: 100%;
-        margin: 10px;
+        margin: 10px 10px 10px 0px;
         background-color: $darkBlue;
         .column-title {
-          padding: 8px;
+          padding: 8px; display: flex; justify-content: space-between;
           position: relative;
           color: $backgroundColor;
-          span {
-            font-size: 20px;
-            font-weight: bold;
-          }
-          .more-button {
-            top: 5px;
-            right: 7px;
-            position: absolute;
-            svg {
-              fill: $backgroundColor;
-            }
-          }
+          .text { font-size: 18px; font-weight: bold; }
+          .more-button svg { fill: $backgroundColor; }
         }
         .task-list {
-          min-height: 200px;
-          max-height: 100%; // to set task list a scrollview
+          min-height: 230px; max-height: 100%; // to set task list a scrollview
           overflow-y: scroll;
+          padding: 0px 8px 8px 8px;
           .task-container {
-            margin: 8px;
-            padding: 5px;
-            background-color: $backgroundColor;
-            border: 1px solid $normalBorder;
-            flex-grow: 1;
+            margin-bottom: 8px; padding: 5px; background-color: $backgroundColor; transition: 0.3s;
+            &:hover {
+              box-shadow: 1px 1px 1px 1px $backgroundColor;
+            }
             .pc-task-flag {
-              display: flex;
-              justify-content: space-between;
+              display: flex; justify-content: space-between;
               .pc-deadline-view {
                 color: $backgroundColor;
                 p {
-                  padding: 5px;
-                  border-radius: 2.5px;
-                  background-color: green;
-                  color: $backgroundColor; 
-                  &.expire {
-                    background-color: red;
-                  }
+                  font-size: 12px;
+                  padding: 3px; border-radius: 2.5px; background-color: green; color: $backgroundColor; 
+                  &.expire { background-color: red; }
                 }
               }
             }
-            .pc-task-name {
-              margin: 0;
-              font-weight: bold;
-            }
+            .pc-task-name { margin: 0; font-weight: bold; }
           }
         }
         .column-footer {
-          color: $backgroundColor;
-          padding: 10px;
-          cursor: pointer;
+          display: flex; align-items: flex-start;
+          svg { color: $backgroundColor; margin-right: 4px; }
+          color: $backgroundColor; padding: 10px; cursor: pointer;
+          &:hover {opacity: 0.7; font-weight: bold;}
         }
       }
     }
     .add-new-column {
       .title {
-        padding: 8px; margin: 10px; background-color: $fadedBackground; width: 200px;
+        display: flex; align-items: flex-start;
+        svg { color: $darkBlue; height: 18px; width: 18px; margin-right: 5px; }
+        padding: 8px; margin: 10px 10px 10px 0px; background-color: $fadedBackground; width: 200px;
         box-shadow: 0px 1px 2px 1px $normalShadowColor;
-        cursor: pointer;
-        span {
-          font-size: 16px;
-        }
+        cursor: pointer; font-size: 16px;
       }
     }
   }
@@ -276,21 +221,11 @@
   padding: 0;
   .task-detail-overlay {
     .overlay-title {
-      padding: 7px;
-      display: flex;
-      justify-content: space-between;
-      background: $fadedBackground;
-      color: $textColor;
-      border: 1px solid $normalBorder;
-      svg {
-        fill: $textColor;
-      }
+      padding: 7px; display: flex; justify-content: space-between; align-items: center;
+      background: $fadedBackground; color: $textColor; border: 1px solid $normalBorder;
+      svg { fill: $textColor; }
       .head {
-        display: flex;
-        flex-direction: row;
-        font-size: 20px;
-        font-weight: bold;
-        width: 100%;
+        display: flex; flex-direction: row; font-size: 18px; font-weight: bold; width: 100%;
         textarea {
           width: 100%;
           resize: none;
@@ -318,96 +253,54 @@
         }
         .bp3-icon-tick { svg { fill: $backgroundColor; } }
       }
+      .task-close { align-self: flex-start; }
     }
     .overlay-body {
-      display: flex;
-      background: $backgroundColor;
+      display: flex; background: $backgroundColor; padding: 5px 5px 5px 8px;
       .left {
         flex: 0.7;
         .pc-tags-and-deadline {
-          display: flex;
-          justify-content: space-between;
+          display: flex; justify-content: space-between;
+          .tag { margin-right: 5px; }
           .pc-deadline-view {
-            display: flex;
-            padding: 5px;
+            display: flex; padding: 3px; font-size: 12px;
             p {
-              padding: 5px;
-              border-radius: 3px;
-              background-color: green;
-              color: $backgroundColor; 
-              &.expire {
-                background-color: red;
-              }
+              padding: 5px; border-radius: 3px; background-color: green; color: $backgroundColor; 
+              &.expire { background-color: $pcRed; }
             }
           }
         }
         .overlay-description {
-          padding: 5px;
-          .desc-head {
-            u {
-              font-weight: bold;
-              font-size: 17px;
-            }
-          }
+          padding: 5px 5px 5px 0px;
+          .desc-head { font-weight: bold; font-size: 16px; }
           .desc {
-            textarea {
-              width: 100%;
-            }
-            padding: 5px;
-            font-size: 15px;
-            font-weight: 400;
+            textarea { width: 100%; }
+            padding: 5px 5px 5px 0px; font-size: 15px;
           }
           .bp3-icon-tick { svg { fill: $backgroundColor; } }
-          .bp3-icon-cross { svg { fill: black; } }
+          .bp3-icon-cross { svg { fill: $darkBlue; } }
         }
         .attach-container {
-          padding: 5px;
-          u {
-            font-weight: bold;
-            font-size: 17px;
-          }
+          padding: 5px 5px 5px 0px;
+          .attach-head { font-weight: bold; font-size: 16px; }
           .attach-list {
-            ul {
-              padding-inline-start: 20px;
-            }
+            ul { padding-inline-start: 10px; }
             ul li {
-              margin-bottom: 3px;
-              display: flex;
-              list-style-type: none;
+              margin-bottom: 3px; display: flex; list-style-type: none;
               .file-type {
-                width: 60px;
-                height: 60px;
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-                font-size: 18px;
-                font-weight: bold;
-                align-items: center;
-                color: $textColor;
-                background: $fadedBackground;
-                text-transform: uppercase;
-                box-shadow: 0px 1px 2px 0px $shadowColor;
-                position: relative;
+                width: 60px; height: 60px;
+                display: flex; justify-content: center;
+                font-size: 18px; align-items: center; color: $textColor; background: $fadedBackground;
+                text-transform: uppercase; box-shadow: 0px 1px 2px 0px $shadowColor; position: relative;
                 .pc-attach-delete {
-                  border-radius: 50%;
-                  top: 0;
-                  right: 0;
-                  position: absolute;
-                  svg {
-                    fill: $navTextColor;
-                  }
+                  border-radius: 50%; top: 0; right: 0; position: absolute;
+                  svg { fill: $navTextColor; }
                 }
               }
               .file-detail {
-                padding-left: 10px;
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-                .attach-title {
-                  font-weight: bold;
-                  color: $darkBlue;
-                  font-size: 16px;
-                }
+                margin-left: 10px; display: flex; flex-direction: column; justify-content: center;
+                .attach-title { font-size: 16px; }
+                .date { color: $lightTextColor; }
               }
             }
           }
@@ -426,18 +319,14 @@
           resize: none;
         }
         .comment-container {
-          padding: 5px;
-          display: flex;
-          justify-content: stretch;
+          display: flex; justify-content: stretch;
+          button { margin-left: 0; }
         }
         .comments {
-          padding: 5px;
+          padding-bottom: 5px;
+          h3 { margin: 15px 0px 7px 0px; }
           .s-comment {
-            display: flex;
-            justify-content: stretch;
-            padding-bottom: 10px;
-            padding-left: 10px;
-            padding-top: 10px;
+            display: flex; justify-content: stretch; padding: 10px 0px 10px 10px;
             .com-con {
               margin-left: 10px;
               padding-top: 2px;
@@ -450,55 +339,27 @@
               }
               .com-config {
                 small {
-                  cursor: pointer;
-                  color: $navTextColor;
-                  margin-right: 5px;
+                  cursor: pointer; color: $navTextColor; margin-right: 5px; font-size: 10px;
                   &.danger u {
-                    &:hover {
-                      color: red;
-                    }
+                    &:hover { color: red; }
                   }
                   &.primary u {
-                    &:hover {
-                      color: $skyBlueMain;
-                    }
+                    &:hover { color: $skyBlueMain; }
                   }
                 }
               }
             }
           }
           .pc-task-activity {
-            padding: 10px 0px;
-            padding-left: 10px;
-            display: flex;
+            padding: 10px 0px 0px 10px; display: flex;
             .activity-detail {
-              margin-left: 10px;
-              padding-top: 2px;
-              display: flex;
-              flex-direction: column;
+              margin-left: 10px; padding-top: 2px; display: flex; flex-direction: column;
             }
-            .activity-user {
-              font-size: 16px;
-              font-weight: bold;
-            }
-            .activity-col {
-              font-weight: bold;
-            }
+            .activity-user { font-size: 15px; font-weight: bold; }
+            .activity-col { font-weight: bold; }
           }
           .img-con {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            overflow: hidden;
-            flex-shrink: 0;
-            img.portrait {
-              width: 100%;
-              height: auto;
-            }
-            img.landscape {
-              height: 100%;
-              width: auto;
-            }
+            width: 50px; height: 50px; border-radius: 50%; overflow: hidden; flex-shrink: 0;
           }
         }
       }
@@ -507,17 +368,14 @@
         flex: 0.3;
         justify-content: flex-end;
         .rt-in {
-          padding: 5px 5px 5px 5px;
-          display: flex;
-          flex-direction: column;
+          padding: 5px;
+          display: flex; flex-direction: column;
+          .tool-header { color: $navTextColor; margin: 7px 0px 2px 0px; }
           .rt-tools {
-            display: flex;
-            flex-direction: column;
+            display: flex; flex-direction: column;
             .bp3-popover-target {
               width: 100%;
-              button {
-                width: 100%;
-              }
+              button { width: 100%; }
             }
           }
           .rt-actions {
@@ -629,6 +487,28 @@
         a {
           color: $backgroundColor;
         }
+      }
+    }
+  }
+}
+
+// all user list overlay 
+.all-users {
+  padding: 10px 0px 5px 0px; display: flex; align-items: center; flex-direction: column;
+  .header { font-weight: bold; padding: 2px;}
+  .user-con {
+    padding: 2px;
+    .user {
+      padding: 5px; position: relative; display: flex;
+      &:hover { .remover { svg { color: $pcRed; } } }
+      a { margin: 0px 10px; width: 80%; }
+      .active {
+        position: absolute; height: 10px; width: 10px; background-color: $pcGreen; border-radius: 50%;
+        top: 8px; left: 0;
+      }
+      .remover {
+        width: 20%; cursor: pointer;
+        svg { color: $pcLightRed; height: 20px; width: 20px; }
       }
     }
   }

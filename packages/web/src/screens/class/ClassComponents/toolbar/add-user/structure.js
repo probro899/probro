@@ -3,8 +3,8 @@ export default [
   {
     id: 'email',
     fieldtype: 'input',
-    name: 'Email',
-    placeholder: 'Example: nabin@properclass.com',
+    name: 'Add new member',
+    placeholder: 'Eg, nameofuser@gmail.com',
   },
   {
     id: 'submit',

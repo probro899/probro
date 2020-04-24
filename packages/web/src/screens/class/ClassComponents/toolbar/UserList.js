@@ -3,16 +3,13 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { Popover } from '@blueprintjs/core';
 import { IoIosMore } from 'react-icons/io';
+import { MdDeleteForever } from 'react-icons/md';
 
 const UserDetail = (props) => {
   const { detail } = props;
   return (
-    <div
-      style={{ padding: '10px 5px 5px 5px' }}
-    >
-      <div
-        style={{ padding: '2px' }}
-      >
+    <div style={{ padding: '10px 5px 5px 5px' }}>
+      <div style={{ padding: '2px' }}>
         <Link to={`/user/${detail.slug}`}>
           {detail.middleName ? `${detail.firstName} ${detail.middleName} ${detail.lastName}` : `${detail.firstName} ${detail.lastName}`}
         </Link>
@@ -25,53 +22,30 @@ UserDetail.propTypes = {
   detail: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
-const AllUsers = ({ userList, boardMembers, boardId }) => {
+const deleteBoardMember = (record, apis) => {
+  try {
+    apis.deleteBoardMember({ boardId: record.boardId, userId: record.tuserId, id: record.id });
+  } catch (e) {
+    console.error('Error in delete class member', e);
+  }
+};
+
+const AllUsers = ({ userList, boardMembers, boardId, apis, account }) => {
   return (
-    <div
-      style={{
-        padding: '10px 0px 5px 0px',
-        display: 'flex',
-        alignItems: 'center',
-        flexDirection: 'column',
-      }}
-    >
-      <div
-        style={{ fontWeight: 600, padding: '2px' }}
-      >
-        <span>Members</span>
-      </div>
-      <div
-        style={{
-          padding: '2px',
-        }}
-      >
+    <div className="all-users">
+      <div className="header">Members</div>
+      <div className="user-con">
         {
-          Object.values(boardMembers.byId).filter(o => o.boardId === boardId).map((o) => {
+          Object.values(boardMembers.byId).filter(o => o.boardId === boardId).filter(obj => !obj.deleteStatus && obj.tuserId !== account.user.id).map((o) => {
             return (
-              <div
-                style={{
-                  padding: '5px',
-                  position: 'relative',
-                }}
-              >
-                <Link style={{ marginLeft: 10, marginRight: 10 }} to={`/user/${userList.byId[o.tuserId].slug}`}>
+              <div className="user">
+                <Link to={`/user/${userList.byId[o.tuserId].slug}`}>
                   {userList.byId[o.tuserId].middleName ? `${userList.byId[o.tuserId].firstName} ${userList.byId[o.tuserId].middleName} ${userList.byId[o.tuserId].lastName}` : `${userList.byId[o.tuserId].firstName} ${userList.byId[o.tuserId].lastName}`}
                 </Link>
-                {
-                userList.byId[o.tuserId].activeStatus && (
-                  <span
-                    style={{
-                      position: 'absolute',
-                      height: 10,
-                      width: 10,
-                      backgroundColor: 'green',
-                      borderRadius: '50%',
-                      top: 8,
-                      left: 0,
-                    }}
-                  />
-                )
-                }
+                {userList.byId[o.tuserId].activeStatus && <span className="active" />}
+                <div className="remover">
+                  <MdDeleteForever onClick={() => deleteBoardMember(o, apis)} />
+                </div>
               </div>
             );
           })
@@ -85,6 +59,8 @@ AllUsers.propTypes = {
   boardMembers: PropTypes.objectOf(PropTypes.any).isRequired,
   userList: PropTypes.objectOf(PropTypes.any).isRequired,
   boardId: PropTypes.number.isRequired,
+  apis: PropTypes.objectOf(PropTypes.any).isRequired,
+  account: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 class UserList extends React.Component {
@@ -92,7 +68,7 @@ class UserList extends React.Component {
 
   getSmallList = () => {
     const { boardId, boardMembers, userList } = this.props;
-    const thisBoardMembers = Object.values(boardMembers.byId).filter(o => o.boardId === boardId).slice(0, 4);
+    const thisBoardMembers = Object.values(boardMembers.byId).filter(o => o.boardId === boardId).slice(0, 4).filter(o => !o.deleteStatus);
     return thisBoardMembers.map((o, index) => {
       return (
         <Popover
@@ -112,7 +88,7 @@ class UserList extends React.Component {
   }
 
   render() {
-    const { userList, boardMembers, boardId } = this.props;
+    const { userList, boardMembers, boardId, apis, account } = this.props;
     return (
       <div className="each-item user-list">
         {this.getSmallList()}
@@ -124,6 +100,8 @@ class UserList extends React.Component {
                 userList={userList}
                 boardMembers={boardMembers}
                 boardId={boardId}
+                apis={apis}
+                account={account}
               />
           )
         }
@@ -141,6 +119,8 @@ UserList.propTypes = {
   boardMembers: PropTypes.objectOf(PropTypes.any).isRequired,
   userList: PropTypes.objectOf(PropTypes.any).isRequired,
   boardId: PropTypes.number.isRequired,
+  apis: PropTypes.objectOf(PropTypes.any).isRequired,
+  account: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 export default UserList;

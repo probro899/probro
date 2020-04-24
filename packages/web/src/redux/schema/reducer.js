@@ -55,13 +55,24 @@ export default function schemaReducer(...schemes) {
       // Remove the data from specific schema
       case schemaRedux.remove.TYPE:
         // eslint-disable-next-line
-        const temp = Object.assign({}, state[schema].byId);
-        delete temp[action.payload.id];
+        const tempObj = Object.assign({}, state[schema].byId);
+        let tempArr = [];
+
+        if (Array.isArray(action.payload)) {
+          action.payload.forEach((p) => {
+            delete tempObj[p.id];
+          });
+          tempArr = state[schema].allIds.filter(id => !action.payload.find(p => p.id === id));
+        } else {
+          delete tempObj[action.payload.id];
+          tempArr = state[schema].allIds.filter(id => id !== action.payload.id);
+        }
+
         return {
           ...state,
           [schema]: {
-            allIds: state[schema].allIds.filter(id => id !== action.payload.id),
-            byId: temp,
+            allIds: tempArr,
+            byId: tempObj,
           },
         };
 

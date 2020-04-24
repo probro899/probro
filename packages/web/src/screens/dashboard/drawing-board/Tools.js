@@ -55,7 +55,6 @@ class Tools extends React.Component {
           url: res.data,
         };
         const apiRes = await apis.addBoardColumnCardAttachment({ ...info, broadCastId: `Board-${data.class}` });
-        // console.log(info, apiRes, addDatabaseSchema);
         addDatabaseSchema('BoardColumnCardAttachment', { ...info, id: apiRes });
       }
       return { response: 200, message: 'Uploaded' };

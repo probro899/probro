@@ -99,3 +99,6 @@ p {
   background: $backgroundColor;
   color: $darkBlue;
 }
+
+// default round image css
+img.portrait { width: 100%; height: auto; } img.landscape { height: 100%; width: auto; }

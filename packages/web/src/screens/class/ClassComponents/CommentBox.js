@@ -41,12 +41,11 @@ class CommentBox extends React.Component {
       <div className="comment-container">
         <TextArea
           fill
-          placeholder="Put your comments."
+          placeholder="Comment..."
           value={comment}
           onChange={e => this.commentChange(e)}
         />
         <Button
-          style={{ marginLeft: '5px' }}
           text="submit"
           intent="primary"
           onClick={this.saveComment}

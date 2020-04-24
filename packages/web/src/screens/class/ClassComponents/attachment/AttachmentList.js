@@ -25,11 +25,11 @@ const SingleAttachment = ({ obj, user, getName, deleteAttachment }) => {
         <a rel="noopener noreferrer" target="_blank" href={link} className="attach-title">
           {obj.name}
         </a>
-        <span>
-          {moment(obj.timeStamp).format('DD-MM-YYYY')}
+        <div>
+          <span className="date">{moment(obj.timeStamp).format('DD-MM-YYYY')}</span>
           {' - '}
           <Link to={`/user/${user.slug}`}>{name}</Link>
-        </span>
+        </div>
       </div>
     </li>
   );
@@ -38,7 +38,7 @@ const SingleAttachment = ({ obj, user, getName, deleteAttachment }) => {
 export default ({ attachments, Users, getName, deleteAttachment }) => {
   return (
     <div className="attach-container">
-      {attachments.length !== 0 && <u>Attachments</u>}
+      {attachments.length !== 0 && <div className="attach-head">Attachments</div>}
       <div className="attach-list">
         <ul>
           {attachments.map(obj => <SingleAttachment user={Users.byId[obj.userId]} getName={getName} deleteAttachment={deleteAttachment} obj={obj} key={obj.id} />)}

@@ -57,8 +57,6 @@
         border-radius: 50%;
         overflow: hidden;
         img {object-fit: contain;}
-        img.portrait { width: 100%; height: auto; }
-        img.landscape { height: 100%; width: auto; }
       }
       .class-icon {
         height: 50px; width: 50px; 
@@ -111,8 +109,6 @@
       }
       .seen-user {
         height: 20px; width: 20px; border-radius: 50%; overflow: hidden;
-        img.portrait { width: 100%; height: auto; }
-        img.landscape { height: 100%; width: auto; }
       }
       .chats {
         padding: 5px 5px 0px 5px; overflow-y: scroll; height: 100%;
@@ -121,8 +117,6 @@
           time { margin: 0px 10px; font-size: 9px; color: $lightTextColor; font-weight: bold; }
           .img-wrap {
             height: 45px; width: 45px; border-radius: 50%; overflow: hidden;
-            img.portrait { width: 100%; height: auto; }
-            img.landscape { height: 100%; width: auto; }
           }
           &.left {
             display: flex; margin-right: 12%; flex-direction: row;
@@ -314,14 +308,6 @@
             border-width: 1px;
             border-style: solid;
             border-color: $backgroundColor;
-            img.portrait {
-              width: 100%;
-              height: auto;
-            }
-            img.landscape {
-              height: 100%;
-              width: auto;
-            }
           }
           .board {
             border: 1px solid $backgroundColor;
@@ -423,14 +409,6 @@
           border-style: solid;
           border-color: $backgroundColor;
           animation: rotate 2s ease infinite;
-          img.portrait {
-            width: 100%;
-            height: auto;
-          }
-          img.landscape {
-            height: 100%;
-            width: auto;
-          }
         }
         .controllers {
           padding: 10px 0px;
@@ -489,14 +467,6 @@
           border-style: solid;
           border-color: $backgroundColor;
           animation: rotate 2s ease infinite;
-          img.portrait {
-            width: 100%;
-            height: auto;
-          }
-          img.landscape {
-            height: 100%;
-            width: auto;
-          }
         }
         .controllers {
           margin-top: 5%;

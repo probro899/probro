@@ -6,6 +6,7 @@ import databaseChache from '../../../../../cache/database/cache';
 import updateUserCache from '../../../updateUserCache';
 import flat from '../../../../flat';
 import add from '../../add';
+import update from '../../../update/update';
 import sendNotification from '../../../sendNotification';
 
 async function addBoardMember(record) {
@@ -43,13 +44,16 @@ async function addBoardMember(record) {
 
     // checking user is already in board or not
     if (boardMember) {
-      return { status: 201, message: 'User is already added to this board' };
+      if (!boardMember.deleteStatus) {
+        return { status: 201, message: 'User is already added to this board' };
+      }
+      addMemberRes = boardMember.id;
+      await update.call(this, 'BoardMember', { id: boardMember.id, deleteStatus: false }, { id: boardMember.id });
+    } else {
+      // adding user to the BoardMember
+      delete record.email;
+      addMemberRes = await add.call(this, 'BoardMember', { ...record, tuserId: user.id });
     }
-
-    delete record.email;
-
-    // adding user to the BoardMember
-    addMemberRes = await add.call(this, 'BoardMember', { ...record, tuserId: user.id });
 
     // getting all the session for finding tuser is currently active or not
     // Note: it is replace by UserConnection because only connected friend is allowed to add board
@@ -105,7 +109,7 @@ async function addBoardMember(record) {
       const dataTobeupdateAllUser = {
         // Notification: notiDetails,
         User: { ...user, activeStatus: true },
-        BoardMember: { id: addMemberRes, ...record, tuserId: user.id },
+        BoardMember: { id: addMemberRes, ...record, tuserId: user.id, deleteStatus: false },
       };
       boardChannel.forEach(s => updateUserCache(dataTobeupdateAllUser, s, 'add'));
     } else {
@@ -114,7 +118,7 @@ async function addBoardMember(record) {
       const dataTobeupdateAllUser = {
         // Notification: notiDetails,
         User: { ...user, activeStatus: false },
-        BoardMember: { id: addMemberRes, ...record, tuserId: user.id },
+        BoardMember: { id: addMemberRes, ...record, tuserId: user.id, deleteStatus: false },
       };
       boardChannel.forEach(s => updateUserCache(dataTobeupdateAllUser, s, 'add'));
     }
@@ -134,7 +138,7 @@ async function addBoardMember(record) {
       userId: user.id,
       boardId: record.boardId,
       timeStamp: Date.now(),
-      body: `Added ${user.firstName} to the board ${board.name}`,
+      body: `${user.firstName} added to the class ${board.name}`,
       title: 'Class Invitation',
       type: 'board',
       typeId: record.boardId,

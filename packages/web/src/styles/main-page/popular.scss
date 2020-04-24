@@ -26,14 +26,6 @@
         border: 1px solid $normalBorder;
         border-radius: 50%;
         flex-shrink: 0; // prevents from shrinking the width
-        img.landscape {
-          height: 100%;
-          width: auto;
-        }
-        img.portrait {
-          width: 100%;
-          height: auto;
-        }
       }
       .popularDesc {
         display: flex;

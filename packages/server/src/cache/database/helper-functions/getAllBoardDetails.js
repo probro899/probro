@@ -4,27 +4,15 @@ import { findBoardDetail } from '../../../api';
 import flat from '../../../api/flat';
 import cacheDatabase from '../cache';
 
-const findBoardActiveStatus = (session, boardId) => {
-  const liveBoardSessions = session.getChannel(`Board-live-${boardId}`) || [];
-  // console.log('Live Board Sessions', liveBoardSessions);
-  if (liveBoardSessions.length > 1) {
-    const { activeStatus } = liveBoardSessions[0].userData.Board.find(b => b.id === boardId);
-    // console.log('session to be extracted', anySession);
-    return activeStatus;
-  }
-  return false;
-};
-
 export default (id, session) => {
   const allDbBoardMembers = cacheDatabase.get('BoardMember');
   const allDbBoard = cacheDatabase.get('Board');
   const allDbBoardMessageSeenStatus = cacheDatabase.get('BoardMessageSeenStatus');
   const allDbBoardMessage = cacheDatabase.get('BoardMessage');
   const templatesBoards = allDbBoard.filter(b => b.type === 'template');
-  const BoardMember = allDbBoardMembers.filter(bm => bm.tuserId === id);
+  const BoardMember = allDbBoardMembers.filter(bm => bm.tuserId === id && !bm.deleteStatus);
   const Board = allDbBoard.filter(b => b.userId === id);
   const allBoardsTemp = BoardMember.map(bm => allDbBoard.find(b => b.id === bm.boardId));
-  // const allBoards = allBoardsTemp.filter(b => b).map(b => ({ ...b, activeStatus: findBoardActiveStatus(session, b.id) }));
   const allBoards = ([...allBoardsTemp, ...templatesBoards]).filter(b => b).filter(b => b.deleteStatus !== 1);
   // console.log('all board', allBoards);
 

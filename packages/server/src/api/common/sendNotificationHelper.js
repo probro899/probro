@@ -68,9 +68,34 @@ const messageBody = (message, record) => {
         body: `${user.firstName} update description of card ${card.name} in class ${board.name}`,
         title: 'Description updated',
       };
+    case 'deleteColumn':
+      return {
+        body: `${user.firstName} delete column "${boardColumn.name}" in class ${board.name}`,
+        title: 'Delete Column',
+      };
+    case 'deleteCard':
+      return {
+        body: `${user.firstName} delete card "${card.name}" in class ${board.name}`,
+        title: 'Delete Card'
+      };
+    case 'deleteAttachment':
+      return {
+        body: `${user.firstName} delete attachment  on card "${card.name}" in class ${board.name}`,
+        title: 'Delete Attachment',
+      };
+    case 'deleteComment':
+      return {
+        body: `${user.firstName} detele comment on card "${card.name}" in class ${board.name}`,
+        title: 'Delete Comment',
+      };
+    case 'deleteTag':
+      return {
+        body: `${user.firstName} delete tag on card "${card.name}" in class ${board.name}`,
+        title: 'Delete Tag',
+      };
     default:
       return null;
-  };
+  }
 };
 
 const findNotificationBody = (record) => {
