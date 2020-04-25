@@ -49,10 +49,10 @@ class SmallScreenSideNav extends React.Component {
     const { navigate, match } = this.props;
     const navElements = [{ name: 'Profile', url: 'profile' },
       { name: 'Classes', url: 'classes' },
+      { name: 'Connections', url: 'connection' },
+      { name: 'Drawing Board', url: 'drawing-board' },
       { name: 'Blog', url: 'blog' },
       { name: 'Settings', url: 'settings' },
-      { name: 'Drawing Board', url: 'drawing-board' },
-      { name: 'Connections', url: 'connection' },
     ];
     return (
       <div className="pc-small-screen-sidenav">
