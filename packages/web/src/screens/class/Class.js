@@ -22,13 +22,8 @@ class Class extends Component {
   async componentDidMount() {
     const { updateNav } = this.props;
     const api = await client.scope('Mentee');
-    this.setState({
-      api,
-    });
-    updateNav({
-      schema: 'sideNav',
-      data: { name: 'Classes' },
-    });
+    this.setState({ api });
+    updateNav({ schema: 'sideNav', data: { name: 'Classes' } });
   }
 
   // create new class from here

@@ -41,16 +41,10 @@ class NotificationContainer extends React.Component {
         url = '';
     }
     return (
-      <Link
-        to={`/${url}`}
-        className="pc-noti-wrapper"
-        key={notification.id}
-      >
+      <Link to={`/${url}`} className="pc-noti-wrapper" key={notification.id}>
         {imageIcon}
         <div className="pc-noti-body">
-          <p className="pc-noti-desc">
-            {notification.body}
-          </p>
+          <p className="pc-noti-desc">{notification.body}</p>
           <p className="pc-ago-date">{moment(notification.timeStamp).fromNow()}</p>
         </div>
       </Link>
@@ -62,16 +56,8 @@ class NotificationContainer extends React.Component {
     const notifications = Object.values(database.Notification.byId).sort(timeStampSorting);
     return (
       <div className="notification-list">
-        {
-          notifications.length === 0 && (
-            <div className="pc-no-notis">
-              <p>You do not have any notifications at the moment.</p>
-            </div>
-          )
-        }
-        {
-          notifications.map(obj => this.getNotification(obj))
-        }
+        {notifications.length === 0 && <div className="pc-no-notis"><p>You do not have any notifications at the moment.</p></div>}
+        {notifications.map(obj => this.getNotification(obj))}
       </div>
     );
   }

@@ -30,7 +30,7 @@ const deleteBoardMember = (record, apis) => {
   }
 };
 
-const AllUsers = ({ userList, boardMembers, boardId, apis, account }) => {
+const AllUsers = ({ userList, extUser, boardMembers, boardId, apis, account }) => {
   return (
     <div className="all-users">
       <div className="header">Members</div>
@@ -43,9 +43,11 @@ const AllUsers = ({ userList, boardMembers, boardId, apis, account }) => {
                   {userList.byId[o.tuserId].middleName ? `${userList.byId[o.tuserId].firstName} ${userList.byId[o.tuserId].middleName} ${userList.byId[o.tuserId].lastName}` : `${userList.byId[o.tuserId].firstName} ${userList.byId[o.tuserId].lastName}`}
                 </Link>
                 {userList.byId[o.tuserId].activeStatus && <span className="active" />}
-                <div className="remover">
-                  <MdDeleteForever onClick={() => deleteBoardMember(o, apis)} />
-                </div>
+                {extUser && extUser.type === 'mentor' && (
+                  <div className="remover">
+                    <MdDeleteForever onClick={() => deleteBoardMember(o, apis)} />
+                  </div>
+                )}
               </div>
             );
           })
@@ -61,6 +63,7 @@ AllUsers.propTypes = {
   boardId: PropTypes.number.isRequired,
   apis: PropTypes.objectOf(PropTypes.any).isRequired,
   account: PropTypes.objectOf(PropTypes.any).isRequired,
+  extUser: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 class UserList extends React.Component {
@@ -88,7 +91,7 @@ class UserList extends React.Component {
   }
 
   render() {
-    const { userList, boardMembers, boardId, apis, account } = this.props;
+    const { userList, boardMembers, boardId, extUser, apis, account } = this.props;
     return (
       <div className="each-item user-list">
         {this.getSmallList()}
@@ -102,6 +105,7 @@ class UserList extends React.Component {
                 boardId={boardId}
                 apis={apis}
                 account={account}
+                extUser={extUser}
               />
           )
         }
@@ -119,6 +123,7 @@ UserList.propTypes = {
   boardMembers: PropTypes.objectOf(PropTypes.any).isRequired,
   userList: PropTypes.objectOf(PropTypes.any).isRequired,
   boardId: PropTypes.number.isRequired,
+  extUser: PropTypes.objectOf(PropTypes.any).isRequired,
   apis: PropTypes.objectOf(PropTypes.any).isRequired,
   account: PropTypes.objectOf(PropTypes.any).isRequired,
 };
