@@ -15,82 +15,82 @@ const messageBody = (message, record) => {
   switch (message) {
     case 'createColumn':
       return {
-        body: `${user.firstName} create cloumn "${boardColumn ? boardColumn.name : null }" in class ${board.name}`,
+        body: `${user.firstName} created "${boardColumn ? boardColumn.name : null }" in class ${board.name}`,
         title: 'Create Coulumn',
       };
     case 'createCard':
       return {
-        body: `${user.firstName} create card "${card.name}" in class ${board.name}`,
+        body: `${user.firstName} created "${card.name}" in class ${board.name}`,
         title: 'Create Card',
       };
     case 'createAttachment':
       return {
-        body: `${user.firstName} add attachment on card "${card.name}" in class ${board.name}`,
+        body: `${user.firstName} added attachment on "${card.name}" in class ${board.name}`,
         title: 'Add Attachment',
       };
     case 'createComment':
       return {
-        body: `${user.firstName} add comment on card "${card.name}" in class ${board.name}`,
+        body: `${user.firstName} added new comment on "${card.name}" in class ${board.name}`,
         title: 'Add Comment',
       };
     case 'createDescription':
       return {
-        body: `${user.firstName} add description on card "${card.name}" in class ${board.name}`,
+        body: `${user.firstName} added description on "${card.name}" in class ${board.name}`,
         title: 'Add Description',
       };
     case 'createTag':
       return {
-        body: `${user.firstName} add tag on card "${card.name}" in class ${board.name}`,
+        body: `${user.firstName} added tag on "${card.name}" in class ${board.name}`,
         title: 'Add Tag',
       };
     case 'updateBoard':
       return {
-        body: `${user.firstName} update class name "${board.name}"`,
+        body: `${user.firstName} updated class name "${board.name}"`,
         title: 'Update Class',
       };
     case 'updateColumn':
       return {
-        body: `${user.firstName} change column "${boardColumn ? boardColumn.name : null}" in class ${board.name}"`,
+        body: `${user.firstName} changed title to "${boardColumn ? boardColumn.name : null}" in class ${board.name}"`,
         title: 'Update Column',
       };
     case 'outsideColumn':
       return {
-        body: `${user.firstName} move card "${card.name}" from ${dataPropvider('BoardColumn', parseInt(record.fColId, 10)).name} to ${dataPropvider('BoardColumn', parseInt(record.tColId, 10)).name} in calss ${board.name}`,
+        body: `${user.firstName} moved "${card.name}" from ${dataPropvider('BoardColumn', parseInt(record.fColId, 10)).name} to ${dataPropvider('BoardColumn', parseInt(record.tColId, 10)).name} in class ${board.name}`,
         title: 'Move Card',
       };
     case 'withinColumn':
       return {
-        body: `${user.firstName} swap card "${card.name}" in column ${dataPropvider('BoardColumn', parseInt(record.fColId, 10)).name} in class ${board.name}`,
+        body: `${user.firstName} moved "${card.name}" within ${dataPropvider('BoardColumn', parseInt(record.fColId, 10)).name} in class ${board.name}`,
         title: 'Swap Card',
       };
     case 'updateDescription':
       return {
-        body: `${user.firstName} update description of card ${card.name} in class ${board.name}`,
+        body: `${user.firstName} changed description as "${card.name}" in class ${board.name}`,
         title: 'Description updated',
       };
     case 'deleteColumn':
       return {
-        body: `${user.firstName} delete column "${boardColumn.name}" in class ${board.name}`,
+        body: `${user.firstName} deleted column "${boardColumn.name}" in class ${board.name}`,
         title: 'Delete Column',
       };
     case 'deleteCard':
       return {
-        body: `${user.firstName} delete card "${card.name}" in class ${board.name}`,
+        body: `${user.firstName} deleted card "${card.name}" in class ${board.name}`,
         title: 'Delete Card'
       };
     case 'deleteAttachment':
       return {
-        body: `${user.firstName} delete attachment  on card "${card.name}" in class ${board.name}`,
+        body: `${user.firstName} deleted attachment  on card "${card.name}" in class ${board.name}`,
         title: 'Delete Attachment',
       };
     case 'deleteComment':
       return {
-        body: `${user.firstName} detele comment on card "${card.name}" in class ${board.name}`,
+        body: `${user.firstName} deleted comment on card "${card.name}" in class ${board.name}`,
         title: 'Delete Comment',
       };
     case 'deleteTag':
       return {
-        body: `${user.firstName} delete tag on card "${card.name}" in class ${board.name}`,
+        body: `${user.firstName} deleted tag on card "${card.name}" in class ${board.name}`,
         title: 'Delete Tag',
       };
     default:
