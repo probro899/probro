@@ -68,7 +68,7 @@ class ToolBar extends React.Component {
               icon="chat"
               onClick={this.onChat}
             />
-            {isYourBoard && (
+            {(
               <AddUser
                 apis={apis}
                 account={account}
