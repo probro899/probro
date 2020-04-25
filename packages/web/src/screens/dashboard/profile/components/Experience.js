@@ -19,7 +19,7 @@ const ExperienceInfo = ({ data, editPopover }) => {
         <br />
         <span>{data.summary}</span>
       </p>
-      <p><Icon icon="edit" onClick={() => editPopover(data)} /></p>
+      <p><Icon style={{ cursor: 'pointer' }} icon="edit" onClick={() => editPopover(data)} /></p>
     </div>
   );
 };
@@ -117,6 +117,7 @@ class Experience extends React.Component {
               startTime: '02/02/2018',
               endTime: '02/02/2018',
             })}
+            style={{ cursor: 'pointer' }}
           />
         </p>
         <div className="p-exp-list">
