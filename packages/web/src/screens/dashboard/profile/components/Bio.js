@@ -101,7 +101,7 @@ class Bio extends React.Component {
         <p className="bio-content">About</p>
         <div className="bio-info">
           {bio ? <p>{bio.bio}</p> : <p style={{ color: '#696969' }}>No bio added</p>}
-          <p className="edit">
+          <p className="edit" style={{ cursor: 'pointer' }}>
             <Icon icon="edit" onClick={this.togglePopover} />
           </p>
         </div>

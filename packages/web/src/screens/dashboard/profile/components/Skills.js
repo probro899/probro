@@ -137,7 +137,7 @@ class Skills extends React.Component {
         </Dialog>
         <p className="p-top">
           <span>Skills</span>
-          <Icon icon="plus" onClick={this.togglePopover} />
+          <Icon icon="plus" style={{ cursor: 'pointer' }} onClick={this.togglePopover} />
         </p>
         {skill ? (
           <div className="skills-container">

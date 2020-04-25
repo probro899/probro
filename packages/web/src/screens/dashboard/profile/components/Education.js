@@ -17,7 +17,7 @@ const SchoolInfo = ({ data, editPopover }) => {
         <br />
         <span className="p-timeline">{`${data.startTime} - ${data.endTime}`}</span>
       </p>
-      <p><Icon icon="edit" onClick={() => editPopover(data)} /></p>
+      <p><Icon style={{ cursor: 'pointer' }} icon="edit" onClick={() => editPopover(data)} /></p>
     </div>
   );
 };
@@ -115,6 +115,7 @@ class Education extends React.Component {
               startTime: '02/02/2018',
               endTime: '02/02/2018',
             })}
+            style={{ cursor: 'pointer' }}
           />
         </p>
         {schools.length !== 0 ? (
