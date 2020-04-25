@@ -91,6 +91,8 @@ async function addBoardMember(record) {
 
       // data to be updated in remote user
       const dataTobeUpdated = {
+        User: finalUserList,
+        UserDetail: allBoardUserDetails,
         Board: boardDetail,
         BoardColumn: flat(boardDetails.boardColumn),
         BoardColumnCard: flat(flat(boardDetails.boardColumnCard)),
@@ -98,8 +100,6 @@ async function addBoardMember(record) {
         BoardColumnCardComment: flat(flat(boardDetails.boardColumnCardComment)),
         BoardColumnCardDescription: flat(flat(boardDetails.boardColumnCardDescription)),
         BoardMember: boardMembers,
-        User: finalUserList,
-        UserDetail: allBoardUserDetails,
       };
 
       // update remote user cache
@@ -112,6 +112,28 @@ async function addBoardMember(record) {
         BoardMember: { id: addMemberRes, ...record, tuserId: user.id, deleteStatus: false },
       };
       boardChannel.forEach(s => updateUserCache(dataTobeupdateAllUser, s, 'add'));
+
+      const emailObj = {
+        email,
+        html: htmlStringValue.boardNotificationHtml(
+          `You are added to the class ${board.name}`,
+          `Please follow the link to join the class ${board.name}.`,
+          `https://properclass.com`),
+        subject: `Class inivitation from ${fuser.firstName} `,
+      };
+
+      const notiObj = {
+        userId: user.id,
+        boardId: record.boardId,
+        timeStamp: Date.now(),
+        body: `You are added to the class ${board.name}`,
+        title: 'Class Invitation',
+        type: 'board',
+        typeId: record.boardId,
+        viewStatus: false,
+        imageUrl: null,
+      };
+      sendNotification(this, emailObj, notiObj, [remoteUserSession]);
     } else {
       // data tobe update all board members
       const boardChannel = session.getChannel(`Board-${record.boardId}`);
@@ -125,10 +147,14 @@ async function addBoardMember(record) {
 
     // sending notification to all board members
     const sessions = session.getChannel(`Board-${record.boardId}`);
+    let finalSessions = sessions.filter(s => s.values.user.id !== session.values.user.id);
+    if (remoteUserSession) {
+      finalSessions = finalSessions.filter(s => s.values.user.id !== remoteUserSession.values.user.id);
+    }
     const emailObj = {
       email,
       html: htmlStringValue.boardNotificationHtml(
-        `You have invitation from ${fuser.firstName} to join the class ${board.name}`,
+        `${user.firstName} added to the class ${board.name}`,
         `Please follow the link to join the class ${board.name}.`,
         `https://properclass.com`),
       subject: `Class inivitation from ${fuser.firstName} `,
@@ -145,7 +171,7 @@ async function addBoardMember(record) {
       viewStatus: false,
       imageUrl: null,
     };
-    sendNotification(this, emailObj, notiObj, sessions);
+    sendNotification(this, emailObj, notiObj, finalSessions);
   } else {
     throw new Error('User Not Found');
   }

@@ -1,7 +1,6 @@
 import store from '../../../../store';
 
 export default (props, state, apis) => async (remoteData) => {
-
   const { updateWebRtc, account } = props;
   const { webRtc } = store.getState();
   const pcs = Object.values(webRtc.peerConnections);
@@ -38,7 +37,7 @@ export default (props, state, apis) => async (remoteData) => {
               connectionId: webRtc.localCallHistory.chatHistory.connectionId,
               callEndReply: remoteData,
             },
-            userList: [{ userId: webRtc.localCallHistory.chatHistory.connectionId  }],
+            userList: [{ userId: webRtc.localCallHistory.chatHistory.type === 'user' ? webRtc.localCallHistory.chatHistory.user.user.id : webRtc.localCallHistory.chatHistory.connectionId  }],
           });
         }
       }

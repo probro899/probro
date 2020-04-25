@@ -42,9 +42,35 @@ async function deleteBoardMember(record, leave) {
     // getting all the session for finding tuser is currently active or not
     // Note: it is replace by UserConnection because only connected friend is allowed to add board
 
+
+    // sending notification to all board members
+
     const mainchannel = session.getChannel('Main');
     const remoteUserSession = mainchannel.find(s => s.values.user.id === user.id);
+
     if (remoteUserSession) {
+
+      const emailObj = {
+        html: htmlStringValue.boardNotificationHtml(
+          `You are ${leave ? 'leave' : 'removed from'} the class ${board.name}`,
+          'Please follow the link to check details',
+          'https://properclass.com'),
+        subject: `You are ${leave ? 'leave' : 'removed from'} the class ${board.name}`,
+      };
+
+      const notiObj = {
+        userId: fuser.id,
+        boardId: record.boardId,
+        timeStamp: Date.now(),
+        body: `You are ${leave ? 'leave' : 'removed from'}  the class ${board.name}`,
+        title: 'Member Remove',
+        type: 'board',
+        typeId: null,
+        viewStatus: false,
+        imageUrl: null,
+      };
+      sendNotification(this, emailObj, notiObj, [remoteUserSession]);
+
       remoteUserSession.unsubscribe(`Board-${board.id}`);
       const boardDetail = allDbBoards.find(b => b.id === record.boardId);
 
@@ -72,8 +98,8 @@ async function deleteBoardMember(record, leave) {
     };
     boardChannel.forEach(s => updateUserCache(dataTobeupdateAllUser, s, 'update'));
 
-    // sending notification to all board members
     const sessions = session.getChannel(`Board-${record.boardId}`);
+    const finalSessions = sessions.filter(s => s.values.user.id !== session.values.user.id);
     const emailObj = {
       html: htmlStringValue.boardNotificationHtml(
         `${user.firstName} ${leave ? 'leave' : 'removed from'} the class ${board.name}`,
@@ -93,7 +119,8 @@ async function deleteBoardMember(record, leave) {
       viewStatus: false,
       imageUrl: null,
     };
-    sendNotification(this, emailObj, notiObj, sessions);
+    sendNotification(this, emailObj, notiObj, finalSessions);
+
   } else {
     throw new Error('User Not Found');
   }

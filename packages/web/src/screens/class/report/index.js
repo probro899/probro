@@ -20,7 +20,7 @@ class Report extends React.Component {
     if (reportData) {
       this.setState({ boardActivities: reportData.boardActivities, boardCommunicationActivities: reportData.boardCommunicationActivities });
     } else {
-      this.setState({ error: 'Faild to fetch report data.'});
+      this.setState({ error: 'Faild to fetch report data.' });
     }
   }
 
