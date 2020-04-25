@@ -6,6 +6,10 @@ import mailer from '../../../../../mailer';
 import findUserDetails from '../../../findBlogDetails';
 import updateUserCache from '../../../updateUserCache';
 
+function updateUser(record) {
+  update.call(this, 'User', ...record);
+}
+
 function updateUserWorkExperience(record) {
   update.call(this, 'UserWorkExperience', ...record);
 }
@@ -93,4 +97,5 @@ export default [
   updateUserConnection,
   updateUserCarrierInterest,
   updateUserMessage,
+  updateUser,
 ];
