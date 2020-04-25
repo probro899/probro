@@ -51,10 +51,10 @@ class SideNav extends Component {
   render() {
     const navElements = [{ iconName: 'PERSON', name: 'Profile', url: 'profile' },
       { iconName: 'PROJECTS', name: 'Classes', url: 'classes' },
+      { iconName: 'PEOPLE', name: 'Connections', url: 'connection' },
+      { iconName: 'DRAW', name: 'Drawing Board', url: 'drawing-board' },
       { iconName: 'PARAGRAPH', name: 'Blog', url: 'blog' },
       { iconName: 'COG', name: 'Settings', url: 'settings' },
-      { iconName: 'DRAW', name: 'Drawing Board', url: 'drawing-board' },
-      { iconName: 'PEOPLE', name: 'Connections', url: 'connection' },
     ];
     const { match, navigate } = this.props;
     return (
