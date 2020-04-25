@@ -96,7 +96,7 @@ class BasicSettings extends React.Component {
         });
         break;
       case 'country':
-        GenderSchema.map((obj) => {
+        CountrySchema.map((obj) => {
           if (obj.id === 'country') {
             let con = '';
             Object.values(database.UserDetail.byId).map((o) => {
@@ -172,52 +172,60 @@ class BasicSettings extends React.Component {
           callback={this.editCountry}
           onClose={() => this.togglePopover('country')}
         />
-        <p className="basic">
-          <span className="label">Full Name</span>
-          {account.user
-            && (
-              <span className="value">
-                {account.user.middleName ? `${account.user.firstName} ${account.user.middleName} ${account.user.lastName}` : `${account.user.firstName} ${account.user.lastName}`}
-              </span>
-            )
-          }
-          <Icon
-            icon="edit"
-            color="rgba(167, 182, 194, 1)"
-            className="edit-icon"
-            onClick={() => this.togglePopover('name')}
-          />
-        </p>
-        <p className="basic">
-          <span className="label">Gender</span>
-          <span className="value">{gen.charAt(0).toUpperCase() + gen.slice(1)}</span>
-          <Icon
-            icon="edit"
-            color="rgba(167, 182, 194, 1)"
-            className="edit-icon"
-            onClick={() => this.togglePopover('gender')}
-          />
-        </p>
-        <p className="basic">
-          <span className="label">Country</span>
-          <span className="value">{country.charAt(0).toUpperCase() + country.slice(1)}</span>
-          <Icon
-            icon="edit"
-            color="rgba(167, 182, 194, 1)"
-            className="edit-icon"
-            onClick={() => this.togglePopover('country')}
-          />
-        </p>
-        <p className="basic">
-          <span className="label">Address</span>
-          <span className="value">{address}</span>
-          <Icon
-            icon="edit"
-            color="rgba(167, 182, 194, 1)"
-            className="edit-icon"
-            onClick={() => this.togglePopover('address')}
-          />
-        </p>
+        <div className="basic">
+          <div className="label">Full Name</div>
+          <div className="value">
+            {account.user
+              && (
+                <span>
+                  {account.user.middleName ? `${account.user.firstName} ${account.user.middleName} ${account.user.lastName}` : `${account.user.firstName} ${account.user.lastName}`}
+                </span>
+              )
+            }
+            <Icon
+              icon="edit"
+              color="rgba(167, 182, 194, 1)"
+              className="edit-icon"
+              onClick={() => this.togglePopover('name')}
+            />
+          </div>
+        </div>
+        <div className="basic">
+          <div className="label">Gender</div>
+          <div className="value">
+            <span style={{ textTransform: 'capitalize' }}>{gen}</span>
+            <Icon
+              icon="edit"
+              color="rgba(167, 182, 194, 1)"
+              className="edit-icon"
+              onClick={() => this.togglePopover('gender')}
+            />
+          </div>
+        </div>
+        <div className="basic">
+          <div className="label">Country</div>
+          <div className="value">
+            <span style={{ textTransform: 'capitalize' }}>{country}</span>
+            <Icon
+              icon="edit"
+              color="rgba(167, 182, 194, 1)"
+              className="edit-icon"
+              onClick={() => this.togglePopover('country')}
+            />
+          </div>
+        </div>
+        <div className="basic">
+          <div className="label">Address</div>
+          <div className="value">
+            <span>{address}</span>
+            <Icon
+              icon="edit"
+              color="rgba(167, 182, 194, 1)"
+              className="edit-icon"
+              onClick={() => this.togglePopover('address')}
+            />
+          </div>
+        </div>
         <CarrierInterestSetting
           updateDatabaseSchema={updateDatabaseSchema}
           userDetail={userDetail}

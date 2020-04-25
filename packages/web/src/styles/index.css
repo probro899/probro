@@ -346,13 +346,14 @@ top attachment etc.
 .settings .setting-types .i-setting { width: 100%; padding: 10px; text-align: center; }
 .settings .setting-types .active { color: #137cbd; border-bottom: 5px solid #137cbd; text-align: center; width: 100%; padding: 10px; }
 .settings .container-settings { padding-top: 5px; }
-.settings .container-settings .basic .label { font-size: 16px; font-weight: bold; }
+.settings .container-settings .basic { padding: 5px 0px; display: flex; justify-content: center; }
+.settings .container-settings .basic .label { flex: 2; font-size: 15px; font-weight: bold; }
 .settings .container-settings .basic .label:hover { text-decoration: underline; }
-.settings .container-settings .basic .value { margin-left: 5px; padding: 2px; font-size: 15px; }
-.settings .container-settings .basic .edit-icon { margin-left: 5px; vertical-align: text-top; }
-.settings .container-settings .basic .edit-icon:hover svg { fill: #137cbd; }
-.settings .container-settings .basic ul { display: flex; }
-.settings .container-settings .basic ul li { color: #fff; padding: 5px; margin-left: 2px; background-color: #137cbd; list-style-type: none; }
+.settings .container-settings .basic .value { flex: 8; padding: 2px; font-size: 15px; display: flex; }
+.settings .container-settings .basic .value .edit-icon { margin-left: 5px; vertical-align: baseline; }
+.settings .container-settings .basic .value .edit-icon:hover svg { fill: #137cbd; }
+.settings .container-settings .basic .value ul { margin: 0; display: flex; padding: 0; }
+.settings .container-settings .basic .value ul li { color: #fff; padding: 5px; background-color: #137cbd; list-style-type: none; margin-right: 2px; }
 .settings .container-settings .switch-adv-con { display: flex; flex-direction: column; align-items: center; }
 .settings .container-settings .switch-adv-con p { text-align: center; color: #696969; line-height: 18px; }
 .settings .container-settings .switch-adv-con button.switch-button { color: #fff; }

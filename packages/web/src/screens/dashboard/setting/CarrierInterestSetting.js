@@ -1,3 +1,4 @@
+/* eslint-disable react/no-array-index-key */
 import React from 'react';
 import { Icon, Dialog, Button } from '@blueprintjs/core';
 import { Taginput } from '../../../common';
@@ -69,6 +70,7 @@ class CarrierInterestSetting extends React.Component {
     const data = { id: 'interest', name: 'Carrier Interests', placeholder: 'Type and press enter' };
     return (
       <div className="basic">
+        <div className="label">Carrier Interests</div>
         <Dialog
           onClose={this.togglePopover}
           isOpen={open}
@@ -80,21 +82,15 @@ class CarrierInterestSetting extends React.Component {
             callback={this.editInterest}
           />
         </Dialog>
-        <span className="label">Carrier Interests</span>
-        <Icon
-          icon="edit"
-          color="rgba(167, 182, 194, 1)"
-          className="edit-icon"
-          onClick={() => this.togglePopover('career')}
-        />
-        {!userDetail.field || JSON.parse(userDetail.field).length === 0 ? <ul>---</ul>
-          : (
-            <ul>
-              {
-                JSON.parse(userDetail.field).map((obj, idx) => <li key={idx}>{obj}</li>)
-              }
-            </ul>
-          )}
+        <div className="value">
+          {!userDetail.field || JSON.parse(userDetail.field).length === 0 ? <ul>---</ul> : <ul>{JSON.parse(userDetail.field).map((obj, idx) => <li key={idx}>{obj}</li>)}</ul>}
+          <Icon
+            icon="edit"
+            color="rgba(167, 182, 194, 1)"
+            className="edit-icon"
+            onClick={() => this.togglePopover('career')}
+          />
+        </div>
       </div>
     );
   }
