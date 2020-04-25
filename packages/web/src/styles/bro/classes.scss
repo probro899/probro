@@ -125,22 +125,16 @@
     .right-tools {
       display: flex;
       .add-user-btn {
-        margin: 0px 3px;
-        padding: 3px 3px 0px 3px;
-        color: $textColor;
-        border: 1px solid $textColor;
-        svg {
-          fill: $textColor;
-        }
+        margin: 0px 3px; padding: 3px 3px 0px 3px; color: $textColor;
+        border: 1px solid $textColor; cursor: pointer;
+        svg { fill: $textColor; }
       }
       button {
         margin: 0px 3px;
         padding: 1px;
         color: $textColor;
         border: 1px solid $textColor;
-        svg {
-          fill: $textColor;
-        }
+        svg { fill: $textColor; }
       }
     }
   }
@@ -508,7 +502,7 @@
       }
       .remover {
         width: 20%; cursor: pointer;
-        svg { color: $pcLightRed; height: 20px; width: 20px; }
+        svg { color: $pcLightBlue; height: 20px; width: 20px; }
       }
     }
   }

@@ -49,7 +49,6 @@ class ToolBar extends React.Component {
     } = this.props;
     const extUser = Object.values(UserDetail.byId).find(obj => obj.userId === account.user.id);
     const board = Object.values(boards.byId).find(obj => obj.id === boardId);
-    const isYourBoard = board.userId === account.user.id;
     const { showReport } = this.state;
     return (
       <div className="tool-bar">
@@ -60,7 +59,7 @@ class ToolBar extends React.Component {
               {board.name}
             </div>
             <Divider />
-            <UserList userList={users} boardId={boardId} boardMembers={boardMembers} apis={apis} account={account} />
+            <UserList extUser={extUser} userList={users} boardId={boardId} boardMembers={boardMembers} apis={apis} account={account} />
           </div>
           <div className="right-tools">
             <Button
@@ -68,7 +67,7 @@ class ToolBar extends React.Component {
               icon="chat"
               onClick={this.onChat}
             />
-            {(
+            {extUser && extUser.type === 'mentor' && (
               <AddUser
                 apis={apis}
                 account={account}

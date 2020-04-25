@@ -64,7 +64,7 @@ async function deleteBoardMember(record, leave) {
         timeStamp: Date.now(),
         body: `You are ${leave ? 'leave' : 'removed from'}  the class ${board.name}`,
         title: 'Member Remove',
-        type: '',
+        type: 'board',
         typeId: null,
         viewStatus: false,
         imageUrl: null,

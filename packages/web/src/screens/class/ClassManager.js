@@ -44,17 +44,14 @@ class Classes extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { tasks, columns, comments, attachments, descriptions, match } = nextProps;
+    const { tasks, columns, account, comments, attachments, descriptions, match } = nextProps;
+    const classId = Number(match.params.classId);
+    if (!account.user) return;
     const wholeColumns = [];
     Object.values(columns.byId).map((obj) => {
-      if (obj.boardId === Number(match.params.classId)) {
+      if (obj.boardId === classId) {
         const column = { ...obj };
-        const task = [];
-        Object.values(tasks.byId).map((ob) => {
-          if (ob.boardColumnId === obj.id) {
-            task.push(ob);
-          }
-        });
+        const task = Object.values(tasks.byId).filter(ob => ob.boardColumnId === obj.id);
         task.sort(posSorting);
         column.tasks = task;
         wholeColumns.push(column);
@@ -107,25 +104,18 @@ class Classes extends Component {
 
   render() {
     const {
-      classId,
-      columns,
-      tasks,
-      api,
-      taskIdInOverlay,
-      taskOverlayIsOpen,
-      comments,
-      attachments,
-      descriptions,
-      loading,
+      classId, columns, tasks, api, taskIdInOverlay, taskOverlayIsOpen,
+      comments, attachments, descriptions, loading,
     } = this.state;
     const {
       addDatabaseSchema, tags, account, updateDatabaseSchema,
-      deleteDatabaseSchema,
-      match,
+      deleteDatabaseSchema, match, classMembers,
     } = this.props;
     if (!account.sessionId) return <Redirect to="/" />;
     if (!account.user || loading) return <Spinner />;
     if (account.user.slug !== match.params.userSlug) return <Redirect to="/" />;
+    const member = Object.values(classMembers.byId).find(obj => obj.boardId === classId && !obj.deleteStatus && account.user.id === obj.tuserId);
+    if (!member) { return <Redirect to="/" />; }
     return (
       <div style={{ position: 'relative' }}>
         <Navbar className="pcm-nav" />
@@ -202,6 +192,7 @@ Classes.propTypes = {
   columns: PropTypes.objectOf(PropTypes.any).isRequired,
   match: PropTypes.objectOf(PropTypes.any).isRequired,
   account: PropTypes.objectOf(PropTypes.any).isRequired,
+  classMembers: PropTypes.objectOf(PropTypes.any).isRequired,
   comments: PropTypes.objectOf(PropTypes.any).isRequired,
   descriptions: PropTypes.objectOf(PropTypes.any).isRequired,
   attachments: PropTypes.objectOf(PropTypes.any).isRequired,
@@ -214,6 +205,7 @@ const mapStateToProps = (state) => {
   const { database, account } = state;
   return {
     account,
+    classMembers: database.BoardMember,
     columns: database.BoardColumn,
     tasks: database.BoardColumnCard,
     comments: database.BoardColumnCardComment,

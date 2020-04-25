@@ -219,7 +219,7 @@ top attachment etc.
 .tool-bar .toolbar-container .left-tools .user-list .i-user:hover { background: #1d4354; }
 .tool-bar .toolbar-container .left-tools .user-list .i-user .green-dot { position: absolute; height: 10px; width: 10px; background-color: #71f971; border-radius: 50%; top: 20px; left: 20px; }
 .tool-bar .toolbar-container .right-tools { display: flex; }
-.tool-bar .toolbar-container .right-tools .add-user-btn { margin: 0px 3px; padding: 3px 3px 0px 3px; color: #222; border: 1px solid #222; }
+.tool-bar .toolbar-container .right-tools .add-user-btn { margin: 0px 3px; padding: 3px 3px 0px 3px; color: #222; border: 1px solid #222; cursor: pointer; }
 .tool-bar .toolbar-container .right-tools .add-user-btn svg { fill: #222; }
 .tool-bar .toolbar-container .right-tools button { margin: 0px 3px; padding: 1px; color: #222; border: 1px solid #222; }
 .tool-bar .toolbar-container .right-tools button svg { fill: #222; }
@@ -339,7 +339,7 @@ top attachment etc.
 .all-users .user-con .user a { margin: 0px 10px; width: 80%; }
 .all-users .user-con .user .active { position: absolute; height: 10px; width: 10px; background-color: #71f971; border-radius: 50%; top: 8px; left: 0; }
 .all-users .user-con .user .remover { width: 20%; cursor: pointer; }
-.all-users .user-con .user .remover svg { color: rgba(255, 0, 0, 0.336); height: 20px; width: 20px; }
+.all-users .user-con .user .remover svg { color: rgba(29, 67, 84, 0.7); height: 20px; width: 20px; }
 
 .settings { display: flex; padding: 5px 5px 5px 10px; flex-direction: column; }
 .settings .setting-types { display: flex; flex-direction: row; justify-content: space-around; font-size: 18px; font-weight: bold; border-bottom: 1px solid #d6d9d9; }
@@ -398,8 +398,8 @@ top attachment etc.
 
 .notification-list { padding: 5px; overflow: auto; }
 .notification-list .pc-noti-wrapper { padding: 5px; cursor: pointer; border-bottom: 1px solid #e0e0e0; display: flex; flex-direction: row; }
-.notification-list .pc-noti-wrapper .pc-noti-img { width: 55px; height: 55px; position: relative; border-radius: 50%; overflow: hidden; }
-.notification-list .pc-noti-wrapper .pc-noti-icon { width: 55px; height: 55px; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+.notification-list .pc-noti-wrapper .pc-noti-img { width: 55px; height: 55px; position: relative; flex-shrink: 0; border-radius: 50%; overflow: hidden; }
+.notification-list .pc-noti-wrapper .pc-noti-icon { width: 55px; height: 55px; display: flex; justify-content: center; align-items: center; flex-shrink: 0; }
 .notification-list .pc-noti-wrapper .pc-noti-icon svg { fill: #1d4354; }
 .notification-list .pc-noti-wrapper .pc-noti-body { margin-left: 10px; padding: 5px; display: flex; justify-content: center; flex-direction: column; }
 .notification-list .pc-noti-wrapper .pc-noti-body p { margin: 0; word-wrap: break-word; }
