@@ -1,11 +1,7 @@
+/* eslint-disable import/no-cycle */
 import update from '../../update';
 import db from '../../../../../db';
-
-function addBoardActivity(record) {
-  db.execute(async ({ insert }) => {
-    insert('BoardActivity', record);
-  });
-}
+import addBoardActivity from '../../../addBoardActivity';
 
 function updateBoard(records) {
   const { session } = this;
@@ -14,17 +10,17 @@ function updateBoard(records) {
   const record = records[0];
   delete record.todo;
   update.call(this, 'Board', record, records[1]);
-  addBoardActivity({ userId: session.values.user.id, boardId, message: 'updateBoard', timeStamp: Date.now() });
+  addBoardActivity(this, db, { userId: session.values.user.id, boardId, message: 'updateBoard', timeStamp: Date.now() });
 }
 
 function updateBoardColumn(records) {
-  console.log('update Board Coulumn called', records);
+  // console.log('update Board Coulumn called', records);
   const { session } = this;
   const record = records[0];
   const broadCastArr = record.broadCastId.split('-');
   const boardId = broadCastArr[broadCastArr.length - 1];
   update.call(this, 'BoardColumn', record, records[1]);
-  addBoardActivity({ userId: session.values.user.id, boardId, message: 'updateColumn', timeStamp: Date.now() });
+  addBoardActivity(this, db, { userId: session.values.user.id, boardId, message: 'updateColumn', timeStamp: Date.now() });
 }
 
 function updateBoardColumnCard(records) {
@@ -39,7 +35,7 @@ function updateBoardColumnCard(records) {
   delete record.tColId;
   delete record.fColId;
   update.call(this, 'BoardColumnCard', record, records[1]);
-  addBoardActivity({ boardId, userId: session.values.user.id, tColId, fColId, message: todo, cardId, timeStamp: Date.now() });
+  addBoardActivity(this, db, { boardId, userId: session.values.user.id, tColId, fColId, message: todo, cardId, timeStamp: Date.now() });
 }
 
 function updateBoardColumnCardAttachment(records) {
@@ -51,7 +47,7 @@ function updateBoardColumnCardAttachment(records) {
   delete record.cardId;
   delete record.todo;
   update.call(this, 'BoardColumnCardAttachment', record, records[1]);
-  addBoardActivity({ userId: session.values.user.id, boardId, message: 'updateAttachment', attachmentId: records[1].id, cardId, timeStamp: Date.now() });
+  addBoardActivity(this, db, { userId: session.values.user.id, boardId, message: 'updateAttachment', attachmentId: records[1].id, cardId, timeStamp: Date.now() });
 }
 
 function updateBoardColumnCardComment(records) {
@@ -65,7 +61,7 @@ function updateBoardColumnCardDescription(records) {
   const record = records[0];
   const { boardColumnCardId } = record;
   update.call(this, 'BoardColumnCardDescription', record, records[1]);
-  addBoardActivity({ userId: session.values.user.id, boardId, message: 'updateDescription', descriptionId: records[1].id, cardId: boardColumnCardId, timeStamp: Date.now() });
+  addBoardActivity(this, db, { userId: session.values.user.id, boardId, message: 'updateDescription', descriptionId: records[1].id, cardId: boardColumnCardId, timeStamp: Date.now() });
 }
 
 export default [

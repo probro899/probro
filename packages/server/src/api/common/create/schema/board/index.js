@@ -4,12 +4,7 @@ import db from '../../../../../db';
 import buildPdfHelper from '../../../../../report-generator';
 import addBoardMember from './addBoardMember';
 import copyBoardColumnCard from './copyBoardColumnCard';
-
-function addBoardActivity(record) {
-  db.execute(async ({ insert }) => {
-    insert('BoardActivity', record);
-  });
-}
+import addBoardActivity from '../../../addBoardActivity';
 
 async function addBoard(record) {
   const { session } = this;
@@ -17,14 +12,14 @@ async function addBoard(record) {
   const boardId = await add.call(this, 'Board', { type: session.values.user.type === 'admin' ? 'template' : 'private', ...record });
   await add.call(this, 'BoardMember', { boardId, tuserId: record.userId, fuserId: record.userId, joinStatus: true, timeStamp: Date.now(), userType: 'creator' });
   session.subscribe(`Board-${boardId}`);
-  addBoardActivity({ boardId, timeStamp: Date.now(), userId: record.userId, message: 'createBoard' });
+  addBoardActivity(this, db, { boardId, timeStamp: Date.now(), userId: record.userId, message: 'createBoard' });
   // console.log('boardid in addBorad', boardId);
   return boardId;
 }
 
 async function addBoardColumn(record) {
   const res = await add.call(this, 'BoardColumn', record);
-  addBoardActivity({ userId: record.userId, timeStamp: Date.now(), boardId: record.boardId, columnId: res, message: 'createColumn' });
+  addBoardActivity(this, db, { userId: record.userId, timeStamp: Date.now(), boardId: record.boardId, columnId: res, message: 'createColumn' });
   return res;
 }
 
@@ -33,7 +28,7 @@ async function addBoardColumnCard(record) {
   const broadCastArr = record.broadCastId.split('-');
   const boardId = broadCastArr[broadCastArr.length - 1];
   const res = await add.call(this, 'BoardColumnCard', record);
-  addBoardActivity({ userId: record.userId, boardId, cardId: res, timeStamp: Date.now(), columnId: record.boardColumnId, message: 'createCard' });
+  addBoardActivity(this, db, { userId: record.userId, boardId, cardId: res, timeStamp: Date.now(), columnId: record.boardColumnId, message: 'createCard' });
   return res;
 }
 
@@ -41,7 +36,7 @@ async function addBoardColumnCardAttachment(record) {
   const broadCastArr = record.broadCastId.split('-');
   const boardId = broadCastArr[broadCastArr.length - 1];
   const res = await add.call(this, 'BoardColumnCardAttachment', record);
-  addBoardActivity({ attachmentId: res, userId: record.userId, timeStamp: Date.now(), boardId, cardId: record.boardColumnCardId, message: 'createAttachment' });
+  addBoardActivity(this, db, { attachmentId: res, userId: record.userId, timeStamp: Date.now(), boardId, cardId: record.boardColumnCardId, message: 'createAttachment' });
   return res;
 }
 
@@ -49,7 +44,7 @@ async function addBoardColumnCardComment(record) {
   const broadCastArr = record.broadCastId.split('-');
   const boardId = broadCastArr[broadCastArr.length - 1];
   const res = add.call(this, 'BoardColumnCardComment', record);
-  addBoardActivity({ commentId: res, userId: record.userId, timeStamp: Date.now(), boardId, cardId: record.boardColumnCardId, message: 'createComment' });
+  addBoardActivity(this, db, { commentId: res, userId: record.userId, timeStamp: Date.now(), boardId, cardId: record.boardColumnCardId, message: 'createComment' });
   return res;
 }
 
@@ -57,7 +52,7 @@ async function addBoardColumnCardDescription(record) {
   const broadCastArr = record.broadCastId.split('-');
   const boardId = broadCastArr[broadCastArr.length - 1];
   const res = await add.call(this, 'BoardColumnCardDescription', record);
-  addBoardActivity({ descriptionId: res, userId: record.userId, timeStamp: Date.now(), boardId, cardId: record.boardColumnCardId, message: 'createDescription' });
+  addBoardActivity(this, db, { descriptionId: res, userId: record.userId, timeStamp: Date.now(), boardId, cardId: record.boardColumnCardId, message: 'createDescription' });
   return res;
 }
 
@@ -75,7 +70,7 @@ async function addBoardColumnCardTag(record) {
   const broadCastArr = record.broadCastId.split('-');
   const boardId = broadCastArr[broadCastArr.length - 1];
   const res = await add.call(this, 'BoardColumnCardTag', record);
-  addBoardActivity({ tagId: res, userId: record.userId, timeStamp: Date.now(), boardId, cardId: record.boardColumnCardId, message: 'createTag' });
+  addBoardActivity(this, db, { tagId: res, userId: record.userId, timeStamp: Date.now(), boardId, cardId: record.boardColumnCardId, message: 'createTag' });
   return res;
 }
 

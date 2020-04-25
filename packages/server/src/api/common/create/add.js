@@ -36,7 +36,7 @@ export default async function add(table, record) {
           database.update(table, schema.add(table, boardDetails));
         }
       } else {
-        database.update(table, schema.add(table, boardDetails));
+        await database.update(table, schema.add(table, boardDetails));
       }
     }
     return boardId;

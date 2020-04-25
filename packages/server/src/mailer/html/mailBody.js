@@ -16,7 +16,7 @@ export default async () => {
       <body class="body" style="background: white;">
       <div class="container" style="width: 500; height: 400; background: white; text-align: center;">
         <div class="content" style="width: 500; height: 400; background: white; text-align: center; align-self: center; border-width: 1; border-color: #757575; border-style: solid; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0;">
-          <div class="banner" style="background: #00B0FF; height: 80; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0;">
+          <div class="banner" style="background: #154155; height: 80; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0;">
             <h1 style="color: white; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0;">Proper Class</h1>
         </div>
         <div class="main-body" style="background: white; width: 500; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; height: auto;">
@@ -33,21 +33,21 @@ export default async () => {
   </html>`;
   };
 
-  const boardMemberInvitationHtmlString = (boardDetial, fuser, tuser) => {
+  const boardNotificationHtml = (header, body, link) => {
     return `<html>
     <head>
     </head>
       <body class="body" style="background: white;">
       <div class="container" style="width: 500; height: 400; background: white; text-align: center;">
         <div class="content" style="width: 500; height: 400; background: white; text-align: center; align-self: center; border-width: 1; border-color: #757575; border-style: solid; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0;">
-          <div class="banner" style="background: #00B0FF; height: 80; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0;">
+          <div class="banner" style="background: #154155; height: 80; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0;">
             <h1 style="color: white; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0;">Proper Class</h1>
         </div>
         <div class="main-body" style="background: white; width: 500; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; height: auto;">
-          <h2>You have invitation from ${fuser.firstName} to join the Board ${boardDetial.name} </h2>
-          <p style="color: black;">Please follow the link to join the board ${boardDetial.name}.</p>
-        <a style="background: white; text-align: center; width: 100;" href="https://www.properclass.com/join-board/" target="_blank">
-          http://www.properclass.com/join-board/
+          <h2>${header}</h2>
+          <p style="color: black;">${body}</p>
+        <a style="background: white; text-align: center; width: 100;" href=${link} target="_blank">
+          ${link}
         </a>
         <p style="color: black;">If you have any type of issue then please send email to probro899@gmail.com <br> Thank You! </p>
       </div>
@@ -64,7 +64,7 @@ export default async () => {
       <body class="body" style="background: white;">
       <div class="container" style="width: 500; height: 400; background: white; text-align: center;">
         <div class="content" style="width: 500; height: 400; background: white; text-align: center; align-self: center; border-width: 1; border-color: #757575; border-style: solid; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0;">
-          <div class="banner" style="background: #00B0FF; height: 80; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0;">
+          <div class="banner" style="background: #154155; height: 80; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0;">
             <h1 style="color: white; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0;">Proper Class</h1>
         </div>
         <div class="main-body" style="background: white; width: 500; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; height: auto;">
@@ -88,7 +88,7 @@ export default async () => {
       <body class="body" style="background: white;">
       <div class="container" style="width: 500; height: 400; background: white; text-align: center;">
         <div class="content" style="width: 500; height: 400; background: white; text-align: center; align-self: center; border-width: 1; border-color: #757575; border-style: solid; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0;">
-          <div class="banner" style="background: #00B0FF; height: 80; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0;">
+          <div class="banner" style="background: #154155; height: 80; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0;">
             <h1 style="color: white; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0;">Proper Class</h1>
         </div>
         <div class="main-body" style="background: white; width: 500; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; height: auto;">
@@ -105,5 +105,5 @@ export default async () => {
     </html>`;
   };
 
-  return { registrationHtmlString, boardMemberInvitationHtmlString, friendRequestHtmlString, friendRequestAcceptHtmlString };
+  return { registrationHtmlString, boardNotificationHtml, friendRequestHtmlString, friendRequestAcceptHtmlString };
 };

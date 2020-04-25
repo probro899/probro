@@ -22,13 +22,21 @@ UserDetail.propTypes = {
   detail: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
-const AllUsers = ({ userList, boardMembers, boardId }) => {
+const deleteBoardMember = (record, apis) => {
+  try {
+    apis.deleteBoardMember({ boardId: record.boardId, userId: record.tuserId, id: record.id });
+  } catch (e) {
+    console.error('Error in delete class member', e);
+  }
+};
+
+const AllUsers = ({ userList, boardMembers, boardId, apis, account }) => {
   return (
     <div className="all-users">
       <div className="header">Members</div>
       <div className="user-con">
         {
-          Object.values(boardMembers.byId).filter(o => o.boardId === boardId).map((o) => {
+          Object.values(boardMembers.byId).filter(o => o.boardId === boardId).filter(obj => !obj.deleteStatus && obj.tuserId !== account.user.id).map((o) => {
             return (
               <div className="user">
                 <Link to={`/user/${userList.byId[o.tuserId].slug}`}>
@@ -36,7 +44,7 @@ const AllUsers = ({ userList, boardMembers, boardId }) => {
                 </Link>
                 {userList.byId[o.tuserId].activeStatus && <span className="active" />}
                 <div className="remover">
-                  <MdDeleteForever />
+                  <MdDeleteForever onClick={() => deleteBoardMember(o, apis)} />
                 </div>
               </div>
             );
@@ -51,6 +59,8 @@ AllUsers.propTypes = {
   boardMembers: PropTypes.objectOf(PropTypes.any).isRequired,
   userList: PropTypes.objectOf(PropTypes.any).isRequired,
   boardId: PropTypes.number.isRequired,
+  apis: PropTypes.objectOf(PropTypes.any).isRequired,
+  account: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 class UserList extends React.Component {
@@ -58,7 +68,7 @@ class UserList extends React.Component {
 
   getSmallList = () => {
     const { boardId, boardMembers, userList } = this.props;
-    const thisBoardMembers = Object.values(boardMembers.byId).filter(o => o.boardId === boardId).slice(0, 4);
+    const thisBoardMembers = Object.values(boardMembers.byId).filter(o => o.boardId === boardId).slice(0, 4).filter(o => !o.deleteStatus);
     return thisBoardMembers.map((o, index) => {
       return (
         <Popover
@@ -78,7 +88,7 @@ class UserList extends React.Component {
   }
 
   render() {
-    const { userList, boardMembers, boardId } = this.props;
+    const { userList, boardMembers, boardId, apis, account } = this.props;
     return (
       <div className="each-item user-list">
         {this.getSmallList()}
@@ -90,6 +100,8 @@ class UserList extends React.Component {
                 userList={userList}
                 boardMembers={boardMembers}
                 boardId={boardId}
+                apis={apis}
+                account={account}
               />
           )
         }
@@ -107,6 +119,8 @@ UserList.propTypes = {
   boardMembers: PropTypes.objectOf(PropTypes.any).isRequired,
   userList: PropTypes.objectOf(PropTypes.any).isRequired,
   boardId: PropTypes.number.isRequired,
+  apis: PropTypes.objectOf(PropTypes.any).isRequired,
+  account: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 export default UserList;
