@@ -78,6 +78,7 @@ export default function schemaReducer(...schemes) {
 
       // Update the data of specific schema
       case schemaRedux.update.TYPE:
+        console.log('update called', schema, action);
         return {
           ...state,
           [schema]: {

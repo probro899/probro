@@ -62,17 +62,18 @@ class BasicSettings extends React.Component {
   togglePopover = (type) => {
     const { namePopover, genderPopover, addressPopover, countryPopover } = this.state;
     const { account, database } = this.props;
+    const user = Object.values(database.User.byId).find(u => u.id === account.user.id);
     switch (type) {
       case 'name':
         NameSchema.map((obj) => {
           if (obj.id === 'firstName') {
-            obj.val = account.user.firstName;
+            obj.val = user.firstName;
           }
           if (obj.id === 'lastName') {
-            obj.val = account.user.lastName;
+            obj.val = user.lastName;
           }
           if (obj.id === 'middleName') {
-            obj.val = account.user.middleName;
+            obj.val = user.middleName;
           }
         });
         this.setState({
@@ -146,6 +147,7 @@ class BasicSettings extends React.Component {
         country = obj.country ? obj.country : '---';
       }
     });
+    const user = Object.values(database.User.byId).find(u => u.id === account.user.id);
     return (
       <div className="container-settings">
         <PopoverForm
@@ -178,7 +180,7 @@ class BasicSettings extends React.Component {
             {account.user
               && (
                 <span>
-                  {account.user.middleName ? `${account.user.firstName} ${account.user.middleName} ${account.user.lastName}` : `${account.user.firstName} ${account.user.lastName}`}
+                  {user.middleName ? `${user.firstName} ${user.middleName} ${user.lastName}` : `${user.firstName} ${user.lastName}`}
                 </span>
               )
             }

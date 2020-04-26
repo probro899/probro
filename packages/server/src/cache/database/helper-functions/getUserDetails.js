@@ -23,6 +23,6 @@ export default (id, userConnectionListDetails, blogDetails, boardDetails) => {
     ...userConnectionListDetails.allConnectionUserList,
     ...blogDetails.allBlogUsers,
     id,
-  ]).map(uid => allDbUsers.find(u => u.id === uid)).map(u => ({ id: u.id, firstName: u.firstName, email: u.email, lastName: u.lastName, slug: u.slug, activeStatus: null }));
+  ]).map(uid => allDbUsers.find(u => u.id === uid)).map(u => ({ id: u.id, firstName: u.firstName, email: u.email, lastName: u.lastName, middleName: u.middleName, slug: u.slug, activeStatus: null }));
   return { UserCarrierInterest, UserEducation, UserPortal, UserSkill, UserWorkExperience, allUser, allUserDetailsList };
 };

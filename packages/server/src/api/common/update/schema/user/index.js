@@ -6,8 +6,13 @@ import mailer from '../../../../../mailer';
 import findUserDetails from '../../../findBlogDetails';
 import updateUserCache from '../../../updateUserCache';
 
-function updateUser(record) {
-  update.call(this, 'User', ...record);
+async function updateUser(record) {
+  const { session } = this;
+  const res = await update.call(this, 'User', ...record);
+  const datatobeUpdate = {
+    User: res,
+  };
+  updateUserCache(datatobeUpdate, session, 'update');
 }
 
 function updateUserWorkExperience(record) {

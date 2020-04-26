@@ -19,15 +19,21 @@ export default (offerDetail, userId) => {
   const { broadCastId, uid, isLive } = offerDetail;
   // console.log('User registercalled', liveBoard.getBoard(broadCastId), uid, userId, isLive);
   // initialize fUser
+
   initializeUser(broadCastId, uid, userId);
 
   // initialize tUser
   initializeUser(broadCastId, userId, uid);
+  const board = liveBoard.getBoard(broadCastId);
+  const allUser = Object.keys(board[uid]);
+  allUser.forEach((pcId) => {
+    liveBoard.updatePc(broadCastId, uid, pcId, { ...liveBoard.getPc(broadCastId, userId, pcId), callClose: false });
+  });
 
   // checking is tuser made offer to me
   const { callClose } = liveBoard.getPc(broadCastId, userId, uid);
 
-  const { offer } = liveBoard.getPc(broadCastId, userId, uid);
+  // const { offer } = liveBoard.getPc(broadCastId, userId, uid);
   // console.log('offer and callClose', offer, callClose);
 
   if (callClose) {
@@ -38,5 +44,5 @@ export default (offerDetail, userId) => {
     return true;
   }
 
-  return !offer;
+  return true;
 };

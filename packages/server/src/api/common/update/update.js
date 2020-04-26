@@ -5,7 +5,6 @@ import { database } from '../../../cache';
 
 export default async function Update(table, value, condition) {
   try {
-    console.log('Main update called', table, value, condition);
     delete value.todo;
     const { session } = this;
     const { broadCastId } = value;
