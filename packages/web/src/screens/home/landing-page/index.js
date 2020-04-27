@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import axios from 'axios';
-import * as actions from '../../../actions';
+import store from '../../../store';
+import updateNav from '../../../actions/navigate';
 import { Navbar } from '../component';
 import Slider from './slider';
 import Banner from './banner';
@@ -19,11 +18,7 @@ class HomePage extends Component {
   };
 
   async componentDidMount() {
-    const { updateNav } = this.props;
-    updateNav({
-      schema: 'mainNav',
-      data: { name: 'properClass' },
-    });
+    store.dispatch(updateNav({ schema: 'mainNav', data: { name: 'properClass' } }));
     try {
       const res = await axios.get(`${ENDPOINT}/web/get-index`);
       this.setState({
@@ -37,12 +32,11 @@ class HomePage extends Component {
 
   render() {
     const { data, loading } = this.state;
-    const { account } = this.props;
     return loading ? <Spinner /> : (
       <div>
         <Navbar />
         <Slider data={data.sliderImages} />
-        <Banner account={account} />
+        <Banner />
         <Post />
         <Popular data={data.indexUsers} />
         <Footer />
@@ -51,10 +45,4 @@ class HomePage extends Component {
   }
 }
 
-HomePage.propTypes = {
-  updateNav: PropTypes.func.isRequired,
-  account: PropTypes.objectOf(PropTypes.any).isRequired,
-};
-
-const mapStateToProps = state => state;
-export default connect(mapStateToProps, { ...actions })(HomePage);
+export default HomePage;

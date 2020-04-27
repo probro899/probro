@@ -27,11 +27,11 @@ class MainScreen extends React.Component {
   }
 
   render() {
-    const { account, navigate, updateNav } = this.props;
+    const { user, popNotification, updateNav } = this.props;
     return (
       <Router>
         <div className="home-screen">
-          {navigate.popNotification.active && <NotifyBar onClose={() => updateNav({ schema: 'popNotification', data: { message: '', active: false, intent: '' } })} message={navigate.popNotification.message} intent={navigate.popNotification.intent} />}
+          {popNotification.active && <NotifyBar onClose={() => updateNav({ schema: 'popNotification', data: { message: '', active: false, intent: '' } })} message={popNotification.message} intent={popNotification.intent} />}
           <Switch>
             <Route exact path="/about" component={About} />
             <Route exact path="/privacy-policy" component={Privacy} />
@@ -58,16 +58,24 @@ class MainScreen extends React.Component {
             <Route path="/:id" component={DashBoard} />
             <Route exact path="/" component={HomePage} />
           </Switch>
-          {account.user && <Communication />}
+          {user && <Communication />}
         </div>
       </Router>
     );
   }
 }
-const mapStateToProps = state => state;
-export default connect(mapStateToProps, { ...actions })(MainScreen);
+const mapStateToProps = ({ account, navigate }) => {
+  return { user: account.user, popNotification: navigate.popNotification };
+};
+
+MainScreen.defaultProps = {
+  user: null,
+};
+
 MainScreen.propTypes = {
-  account: PropTypes.objectOf(PropTypes.any).isRequired,
-  navigate: PropTypes.objectOf(PropTypes.any).isRequired,
+  user: PropTypes.objectOf(PropTypes.any),
+  popNotification: PropTypes.objectOf(PropTypes.any).isRequired,
   updateNav: PropTypes.func.isRequired,
 };
+
+export default connect(mapStateToProps, { ...actions })(MainScreen);

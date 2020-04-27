@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 import { IoIosLogIn, IoIosSearch, IoIosCreate, IoIosPersonAdd, IoMdInformationCircleOutline } from 'react-icons/io';
 import { MdContentPaste, MdScreenShare, MdGroupWork, MdArtTrack } from 'react-icons/md';
+import * as actions from '../../../actions';
 
 const idx = require('../../../assets/index.png');
 const cls = require('../../../assets/class.png');
@@ -121,4 +123,5 @@ Banner.propTypes = {
   account: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
-export default Banner;
+const mapStateToProps = ({ account }) => { return { account }; };
+export default connect(mapStateToProps, { ...actions })(Banner);
