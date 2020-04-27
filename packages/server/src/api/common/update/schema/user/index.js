@@ -6,6 +6,15 @@ import mailer from '../../../../../mailer';
 import findUserDetails from '../../../findBlogDetails';
 import updateUserCache from '../../../updateUserCache';
 
+async function updateUser(record) {
+  const { session } = this;
+  const res = await update.call(this, 'User', ...record);
+  const datatobeUpdate = {
+    User: res,
+  };
+  updateUserCache(datatobeUpdate, session, 'update');
+}
+
 function updateUserWorkExperience(record) {
   update.call(this, 'UserWorkExperience', ...record);
 }
@@ -93,4 +102,5 @@ export default [
   updateUserConnection,
   updateUserCarrierInterest,
   updateUserMessage,
+  updateUser,
 ];

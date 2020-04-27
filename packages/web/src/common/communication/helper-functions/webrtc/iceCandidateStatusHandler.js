@@ -42,7 +42,7 @@ export default (props, mainStateApis) => async (e, state, userId) => {
     [userId]: { ...webRtc.peerConnections[userId], iceCandidateStatus: state.iceConnectionState },
   });
 
-  if (state.iceConnectionState === 'disconnected' || state.iceConnectionState === 'failed') {
+  if (state.iceConnectionState === 'failed') {
     if (isReconnect(store.getState().webRtc)) {
       console.log(`${userId}) RECONNECT HANDLER CALLED`);
       reconnectHandler(userId, { webRtc, account, updateWebRtc, database }, { apis });

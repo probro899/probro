@@ -115,7 +115,7 @@ class Classes extends Component {
     if (!account.user || loading) return <Spinner />;
     if (account.user.slug !== match.params.userSlug) return <Redirect to="/" />;
     const member = Object.values(classMembers.byId).find(obj => obj.boardId === classId && !obj.deleteStatus && account.user.id === obj.tuserId);
-    if (!member) { return <Redirect to="/" />; }
+    if (!member) { return <Redirect to={`/${match.params.userSlug}/classes`} />; }
     return (
       <div style={{ position: 'relative' }}>
         <Navbar className="pcm-nav" />

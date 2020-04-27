@@ -48,8 +48,14 @@ async function deleteBoardMember(record, leave) {
     const mainchannel = session.getChannel('Main');
     const remoteUserSession = mainchannel.find(s => s.values.user.id === user.id);
 
-    if (remoteUserSession) {
+    const boardChannel = session.getChannel(`Board-${record.boardId}`);
+    const dataTobeupdateAllUser = {
+      // Notification: notiDetails,
+      BoardMember: { id, deleteStatus: true },
+    };
+    boardChannel.forEach(s => updateUserCache(dataTobeupdateAllUser, s, 'update'));
 
+    if (remoteUserSession) {
       const emailObj = {
         html: htmlStringValue.boardNotificationHtml(
           `You are ${leave ? 'leave' : 'removed from'} the class ${board.name}`,
@@ -90,13 +96,6 @@ async function deleteBoardMember(record, leave) {
       // update remote user cache
       updateUserCache(dataTobeUpdated, remoteUserSession, 'remove');
     }
-
-    const boardChannel = session.getChannel(`Board-${record.boardId}`);
-    const dataTobeupdateAllUser = {
-      // Notification: notiDetails,
-      BoardMember: { id, deleteStatus: true },
-    };
-    boardChannel.forEach(s => updateUserCache(dataTobeupdateAllUser, s, 'update'));
 
     const sessions = session.getChannel(`Board-${record.boardId}`);
     const finalSessions = sessions.filter(s => s.values.user.id !== session.values.user.id);

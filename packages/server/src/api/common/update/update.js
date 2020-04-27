@@ -5,7 +5,6 @@ import { database } from '../../../cache';
 
 export default async function Update(table, value, condition) {
   try {
-    console.log('Main update called', table, value, condition);
     delete value.todo;
     const { session } = this;
     const { broadCastId } = value;
@@ -17,7 +16,7 @@ export default async function Update(table, value, condition) {
       return findOneRes;
     });
     if (broadCastId) {
-      console.log('res', res);
+      // console.log('res', res);
       const channel = session.channel(broadCastId);
       channel.dispatch(schema.update(table, res));
       database.update(table, schema.update(table, res));
