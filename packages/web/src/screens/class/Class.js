@@ -27,7 +27,7 @@ class Class extends Component {
   }
 
   // create new class from here
-  createNewBoard = async (arg) => {
+  createNewClass = async (arg) => {
     const data = arg;
     const { account, addDatabaseSchema } = this.props;
     const { api } = this.state;
@@ -36,6 +36,7 @@ class Class extends Component {
     try {
       const res = await api.addBoard(data);
       addDatabaseSchema('Board', { ...data, type: 'private', id: res });
+      addDatabaseSchema('BoardMember', { id: Date.now(), boardId: res, tuserId: account.user.id, fuserId: account.user.id, joinStatus: 1, timeStamp: Date.now(), userType: 'creator' });
     } catch (e) {
       return { response: 404 };
     }
@@ -188,7 +189,7 @@ class Class extends Component {
         <PopoverForm
           isOpen={createBool}
           onClose={this.newClass}
-          callback={this.createNewBoard}
+          callback={this.createNewClass}
           structure={boardStructure}
         />
         <PopoverForm

@@ -590,7 +590,7 @@ top attachment etc.
 .public-blog .public-blog-title .author-user .auth-con { display: flex; }
 .public-blog .public-blog-title .author-user .auth-con .profile-icon { width: 80px; height: 80px; border-radius: 50%; overflow: hidden; margin: 10px; }
 .public-blog .public-blog-title .author-user .auth-con .author-detail { display: flex; justify-content: center; align-items: flex-start; flex-direction: column; }
-.public-blog .pc-blog-cover-image { display: flex; justify-content: center; width: 100%; padding: 0 15%; overflow: hidden; margin-bottom: 25px; }
+.public-blog .pc-blog-cover-image { display: flex; justify-content: center; width: 100%; overflow: hidden; margin-bottom: 25px; }
 .public-blog .pc-blog-cover-image img { width: 100%; object-fit: contain; }
 .public-blog .public-blog-content { width: 100%; font-size: 21px; display: flex; margin-bottom: 50px; }
 .public-blog .public-blog-content #blogContent img { max-width: 100%; }

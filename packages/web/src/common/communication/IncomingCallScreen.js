@@ -38,15 +38,12 @@ class IncomingCallScreen extends React.Component {
   render() {
     const { style, webRtc, database } = this.props;
     const isUser = webRtc.localCallHistory.chatHistory.type === 'user';
-    // console.log('props in incomming call screen', this.props);
-    // console.log('webRtc value inComming call screen', webRtc);
-    // console.log('user url', `${ENDPOINT}/user/${10000000 + parseInt(webRtc.localCallHistory.chatHistory.broadCastId, 10)}/profile/${database.UserDetail.byId[webRtc.localCallHistory.chatHistory.broadCastId].image}`);
     return (
       <div
         style={style}
         className="incoming-call-screen"
       >
-        {webRtc.showIncommingCall && <SoundComponent url={ringtoneUrl} />}
+        {webRtc.showIncommingCall && <SoundComponent incoming url={ringtoneUrl} />}
         <div
           className="person-icon-container"
           style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}
