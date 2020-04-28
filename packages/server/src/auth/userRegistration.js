@@ -1,5 +1,6 @@
 /* eslint-disable import/no-cycle */
 import uuid from 'uuid/v4';
+import urlSlug from 'url-slug';
 import schema from '@probro/common/src/schema';
 import db from '../db';
 import { genHashPassword } from './passwordHandler';
@@ -20,8 +21,8 @@ export default async (record) => {
         throw new Error('Emailisalreadytaken');
       }
       const hasPassword = await genHashPassword(record.password);
-      const firstNameLowerCase = `${record.firstName}`.toLowerCase();
-      const lastNameLowerCase = `${record.lastName}`.toLowerCase();
+      const firstNameLowerCase = urlSlug(`${record.firstName}`);
+      const lastNameLowerCase = urlSlug(`${record.lastName}`);
       const slug = `${firstNameLowerCase}-${lastNameLowerCase}-${Date.now()}`;
       const insertRes = await insert('User', { ...record, password: hasPassword, verify: false, verificationToken: token, slug });
       database.update('User', schema.add('User', { id: insertRes, ...record, password: hasPassword, verify: false, verificationToken: token, slug }));
