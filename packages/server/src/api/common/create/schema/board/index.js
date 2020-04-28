@@ -10,11 +10,11 @@ async function addBoard(record) {
   const { session } = this;
   // console.log('user type', session.values.user.type);
   const boardId = await add.call(this, 'Board', { type: session.values.user.type === 'admin' ? 'template' : 'private', ...record });
-  await add.call(this, 'BoardMember', { boardId, tuserId: record.userId, fuserId: record.userId, joinStatus: true, timeStamp: Date.now(), userType: 'creator' });
+  const boardMemberId = await add.call(this, 'BoardMember', { boardId, tuserId: record.userId, fuserId: record.userId, joinStatus: true, timeStamp: Date.now(), userType: 'creator' });
   session.subscribe(`Board-${boardId}`);
   addBoardActivity(this, db, { boardId, timeStamp: Date.now(), userId: record.userId, message: 'createBoard' });
   // console.log('boardid in addBorad', boardId);
-  return boardId;
+  return { boardId, boardMemberId };
 }
 
 async function addBoardColumn(record) {
