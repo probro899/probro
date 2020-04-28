@@ -40,7 +40,7 @@ class Profile extends Component {
     if (!account.user) {
       return <div />;
     }
-    const { user } = account;
+    const user = database.User.byId[account.user.id];
     let userDetail = {};
     Object.values(database.UserDetail.byId).map((obj) => {
       if (user && user.id === obj.userId) {
