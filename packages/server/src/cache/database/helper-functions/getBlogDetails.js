@@ -6,11 +6,17 @@ import cacheDatabase from '../cache';
 export default (id) => {
   const allDbBlogs = cacheDatabase.get('Blog');
   const Blog = allDbBlogs.filter(b => b.userId === id);
+
   const allLike = cacheDatabase.get('BlogLike').filter(bl => bl.userId === id);
   const allComments = cacheDatabase.get('BlogComment').filter(bc => bc.userId === id);
   const BlogPublish = allDbBlogs.filter(bp => bp.saveStatus === 'publish');
   // console.log('all blog data', Blog, allLike, allComments, BlogPublish);
-  const allAssociateBlogsId = lodash.uniq([...allComments.map(obj => obj.blogId), ...allLike.map(obj => obj.blogId), ...Blog.map(obj => obj.id), ...BlogPublish.map(obj => obj.id)]);
+  const allAssociateBlogsId = lodash.uniq([
+    ...allComments.map(obj => obj.blogId),
+    ...allLike.map(obj => obj.blogId),
+    ...Blog.map(obj => obj.id),
+    ...BlogPublish.map(obj => obj.id)]).filter(bid => allDbBlogs.find(bl => bl.id === bid));
+  console.log('blog ids', allAssociateBlogsId);
 
   const blogDetails = allAssociateBlogsId.map(bid => findBlogDetail(bid));
   const allBlogs = allAssociateBlogsId.map(bid => allDbBlogs.find(b => b.id === bid));

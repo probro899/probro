@@ -1,16 +1,11 @@
 /* eslint-disable import/no-cycle */
+import urlSlug from 'url-slug';
 import add from '../../add';
 
 async function addBlog(record) {
-  const arrOfTitleWord = `${record.title}`.split(' ');
-  console.log('Array of Title', arrOfTitleWord);
-  const arrOfTitleWordLowerCase = arrOfTitleWord.map(w => w.toLowerCase());
-  console.log('arrof title word lower case', arrOfTitleWordLowerCase);
-  const slugWord = arrOfTitleWordLowerCase.reduce((slug, w) => {
-    slug = `${slug}-${w}`;
-    return slug;
-  }, '');
-  const tempSlug = slugWord.slice(1);
+  const { title } = record;
+
+  const tempSlug = urlSlug(title);
   const slug = `${tempSlug}-${Date.now()}`;
   const res = await add.call(this, 'Blog', { ...record, slug });
   return res;
