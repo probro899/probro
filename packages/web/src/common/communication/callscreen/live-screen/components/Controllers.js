@@ -14,6 +14,20 @@ class Controllers extends React.Component {
     this.state = { showWhiteBoard: false, startRecording: false };
   }
 
+  componentWillReceiveProps(newProps) {
+    const { webRtc, database } = newProps;
+    if (webRtc.isLive) {
+      const { type, connectionId } = webRtc.localCallHistory.chatHistory;
+      if (type === 'board') {
+        const { activeStatus } = Object.values(database.Board.byId).find(b => b.id === parseInt(connectionId, 10));
+        // console.log('Board active status', activeStatus);
+        if (!activeStatus) {
+          this.callReject();
+        }
+      }
+    }
+  }
+
   recordingHandler = async () => {
     const { startRecording } = this.state;
     const { updateWebRtc, webRtc } = this.props;

@@ -12,14 +12,14 @@ export default async (session, callCloseDetail) => {
   const channel = session.channel(`${callCloseDetail.broadCastType}-live-${callCloseDetail.broadCastId}`);
 
   // update User data to database and cache
-  await updateUserData(callCloseDetail, session);
+  // await updateUserData(callCloseDetail, session);
 
   // gather all the acitve boardUser
   const allLiveSessions = session.getChannel(`Board-${callCloseDetail.broadCastId}`);
   // console.log('AllLive sessions', allLiveSessions);
 
   // final call end to the live channel
-  channel.emit('callEnd', callCloseDetail, null, callCloseDetail.uid);
+  channel.emit('callEnd', callCloseDetail);
 
   // saying all  user to board active false
   if (allLiveSessions) {
@@ -35,5 +35,5 @@ export default async (session, callCloseDetail) => {
   const { heartbitChecker } = liveBoard.getBoard(callCloseDetail.broadCastId);
   clearInterval(heartbitChecker);
   // update live cache to empty
-  liveBoard.setBoard(callCloseDetail.broadCastId, {});
+  liveBoard.setBoard(callCloseDetail.broadCastId, undefined);
 };

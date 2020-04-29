@@ -9,7 +9,7 @@ import addHandlerApi from './common/create';
 import deleteHandler from './common/delete';
 import updateHandler from './common/update';
 import getHandler from './common/get';
-import { createOffer, createAnswer, addICeCandidate, callClose, callStatusChange, onPcStatusChange } from './common/web-rtc';
+import { createOffer, createAnswer, addICeCandidate, callClose, callStatusChange, onPcStatusChange, commPingPong } from './common/web-rtc';
 
 const mentor = createScope('Mentor', () => {
 
@@ -40,6 +40,7 @@ mentor(addICeCandidate);
 mentor(callClose);
 mentor(callStatusChange);
 mentor(onPcStatusChange);
+mentor(commPingPong);
 
 mentee(createOffer);
 mentee(createAnswer);
@@ -47,6 +48,7 @@ mentee(addICeCandidate);
 mentee(callClose);
 mentee(callStatusChange);
 mentee(onPcStatusChange);
+mentee(commPingPong);
 
 mentor(logout);
 mentor(updateUserDetails);

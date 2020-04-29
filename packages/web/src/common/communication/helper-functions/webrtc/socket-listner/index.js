@@ -4,6 +4,7 @@ import onAnswerHandler from './onAnswerHandler';
 import onIceCandidateHandler from './onIceCandidateHandler';
 import onCallEndHandler from './onCallEndHandler';
 import onCallStatusChangeHandler from './onCallStatusHandler';
+import commPingPong from './commPingPong';
 
 export default (props, state, maximize) => {
   // Handle offer request
@@ -43,7 +44,9 @@ export default (props, state, maximize) => {
     }
   });
 
-  client.on('ping', () => {
-    console.log('Client comm ping called');
+  client.on('ping', (data) => {
+    if (data) {
+      commPingPong(props, state, data);
+    }
   });
 };
