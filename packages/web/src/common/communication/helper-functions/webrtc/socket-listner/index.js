@@ -42,4 +42,8 @@ export default (props, state, maximize) => {
       onCallEndHandler(props, state, data, maximize);
     }
   });
+
+  client.on('ping', () => {
+    console.log('Client comm ping called');
+  });
 };

@@ -31,6 +31,9 @@ export default async (session, callCloseDetail) => {
   // upate own session to active false
   updateDatabaseCache('Board', schema.update('Board', { id: callCloseDetail.broadCastId, activeStatus: false }));
 
+  // stop heartbit checker
+  const { heartbitChecker } = liveBoard.getBoard(callCloseDetail.broadCastId);
+  clearInterval(heartbitChecker);
   // update live cache to empty
   liveBoard.setBoard(callCloseDetail.broadCastId, {});
 };

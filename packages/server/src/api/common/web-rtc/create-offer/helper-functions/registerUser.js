@@ -1,9 +1,15 @@
 /* eslint-disable import/no-cycle */
 import { liveBoard } from '../../../../../cache';
 
-const initializeUser = (boardId, userId, pcId) => {
+const heartbitChecker = (session, boardId) => {
+  console.log('ping method called', boardId);
+  const liveBoardChannel = session.channel(`Board-live-${boardId}`);
+  liveBoardChannel.emit('ping');
+};
+
+const initializeUser = (boardId, userId, pcId, session) => {
   if (!liveBoard.getBoard(boardId)) {
-    liveBoard.setBoard(boardId, { });
+    liveBoard.setBoard(boardId, { users: [], heartbitChecker: setInterval(() => heartbitChecker(session, boardId), 20000) });
   }
 
   if (!liveBoard.getUser(boardId, userId)) {
@@ -15,12 +21,12 @@ const initializeUser = (boardId, userId, pcId) => {
   }
 };
 
-export default (offerDetail, userId) => {
+export default (offerDetail, userId, session) => {
   const { broadCastId, uid, isLive } = offerDetail;
   // console.log('User registercalled', liveBoard.getBoard(broadCastId), uid, userId, isLive);
   // initialize fUser
 
-  initializeUser(broadCastId, uid, userId);
+  initializeUser(broadCastId, uid, userId, session);
 
   // initialize tUser
   initializeUser(broadCastId, userId, uid);

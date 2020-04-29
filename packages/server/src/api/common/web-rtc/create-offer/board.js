@@ -10,7 +10,7 @@ export default (session, data) => {
   const { offerDetail } = data;
 
   // Checking either do offer or not
-  const doOffer = registerUser(offerDetail, data.userList[0].userId);
+  const doOffer = registerUser(offerDetail, data.userList[0].userId, session);
   if (doOffer) {
     const allBoardUserSession = session.getChannel(`${offerDetail.broadCastType}-${offerDetail.broadCastId}`);
     const liveBoardChannelBefore = session.getChannel(`${offerDetail.broadCastType}-live-${offerDetail.broadCastId}`);
