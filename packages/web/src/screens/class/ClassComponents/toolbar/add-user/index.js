@@ -63,11 +63,13 @@ class AddUser extends React.Component {
       </Popover>
     );
   }
-};
+}
 
 AddUser.propTypes = {
   apis: PropTypes.objectOf(PropTypes.any).isRequired,
   boardId: PropTypes.number.isRequired,
+  connections: PropTypes.arrayOf(PropTypes.any).isRequired,
+  users: PropTypes.objectOf(PropTypes.any).isRequired,
   account: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 

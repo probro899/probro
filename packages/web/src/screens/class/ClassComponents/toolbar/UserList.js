@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { Popover } from '@blueprintjs/core';
 import { IoIosMore } from 'react-icons/io';
 import { MdDeleteForever } from 'react-icons/md';
+import { getName } from '../../../../common/utility-functions';
 
 const UserDetail = (props) => {
   const { detail } = props;
@@ -38,9 +39,9 @@ const AllUsers = ({ userList, extUser, boardMembers, boardId, apis, account }) =
         {
           Object.values(boardMembers.byId).filter(o => o.boardId === boardId).filter(obj => !obj.deleteStatus && obj.tuserId !== account.user.id).map((o) => {
             return (
-              <div className="user">
+              <div className="user" key={`user-${o.id}`}>
                 <Link to={`/user/${userList.byId[o.tuserId].slug}`}>
-                  {userList.byId[o.tuserId].middleName ? `${userList.byId[o.tuserId].firstName} ${userList.byId[o.tuserId].middleName} ${userList.byId[o.tuserId].lastName}` : `${userList.byId[o.tuserId].firstName} ${userList.byId[o.tuserId].lastName}`}
+                  {getName(userList.byId[o.tuserId])}
                 </Link>
                 {userList.byId[o.tuserId].activeStatus && <span className="active" />}
                 {extUser && extUser.type === 'mentor' && (

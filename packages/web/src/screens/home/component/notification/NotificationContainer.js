@@ -52,8 +52,8 @@ class NotificationContainer extends React.Component {
   }
 
   render() {
-    const { database } = this.props;
-    const notifications = Object.values(database.Notification.byId).sort(timeStampSorting);
+    const { database, account } = this.props;
+    const notifications = account.user ? Object.values(database.Notification.byId).sort(timeStampSorting) : [];
     return (
       <div className="notification-list">
         {notifications.length === 0 && <div className="pc-no-notis"><p>You do not have any notifications at the moment.</p></div>}
