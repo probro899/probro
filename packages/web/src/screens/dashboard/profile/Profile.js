@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Icon } from '@blueprintjs/core';
+import { getName } from '../../../common/utility-functions';
 import client from '../../../socket';
 import * as actions from '../../../actions';
 import { Education, Experience, Skills, Bio, CoverPic, ProfilePic } from './components';
@@ -66,7 +67,7 @@ class Profile extends Component {
         />
         <div className="top-details">
           <span className="name">
-            {user.middleName ? `${user.firstName} ${user.middleName} ${user.lastName}` : `${user.firstName} ${user.lastName}`}
+            {getName(user)}
           </span>
           <br />
           <Icon icon="locate" />

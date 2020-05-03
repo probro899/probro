@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import countryList from 'react-select-country-list';
 import { Icon } from '@blueprintjs/core';
 import * as actions from '../../../actions';
 import { PopoverForm } from '../../../components';
@@ -99,13 +100,11 @@ class BasicSettings extends React.Component {
       case 'country':
         CountrySchema.map((obj) => {
           if (obj.id === 'country') {
-            let con = '';
-            Object.values(database.UserDetail.byId).map((o) => {
-              if (o.userId === account.user.id) {
-                con = o.country;
-              }
-            });
-            obj.val = con;
+            const countries = countryList().getData().map(obj => ({ label: obj.label, value: obj.label }));
+            const con = Object.values(database.UserDetail.byId).find(o => o.userId === account.user.id);
+            if (con) { obj.val = con.country; }
+            obj.options = [...obj.options, ...countries];
+            return obj;
           }
         });
         this.setState({

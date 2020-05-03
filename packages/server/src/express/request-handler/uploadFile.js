@@ -4,6 +4,7 @@ import multer from 'multer';
 import fs from 'fs';
 import validateToken from '../../auth/validateToken';
 import uploadFile from '../../api/uploadFile';
+import fileCompressor from './fileCompressor';
 
 const storage = multer.diskStorage({
   destination: async (request, file, cb) => {
@@ -85,6 +86,7 @@ export default async (req, res) => {
         res.send(err.message);
       } else {
         delete req.body.token;
+        fileCompressor(JSON.parse(req.body.data), req.file.filename);
         const updateRes = await uploadFile({ ...req.body, image: req.file.filename });
         if (updateRes) {
           res.statusCode = 200;

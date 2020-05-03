@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import countryList from 'react-select-country-list';
 import { Control } from '../../../../common';
 import filterSchema from './structure';
 
@@ -7,7 +8,17 @@ class FilterToolbar extends React.Component {
   constructor(props) {
     super(props);
     const { searchKey } = this.props;
-    this.state = { schema: filterSchema.map(obj => (obj.id === 'key' ? { ...obj, val: searchKey } : obj)) };
+    const countries = countryList().getData().map(obj => ({ label: obj.label, value: obj.label }));
+    this.state = {
+      schema: filterSchema.map((obj) => {
+        if (obj.id === 'key') { return { ...obj, val: searchKey }; }
+        if (obj.id === 'country') {
+          obj.options = [...obj.options, ...countries];
+          return obj;
+        }
+        return obj;
+      }),
+    };
   }
 
   render() {

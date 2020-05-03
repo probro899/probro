@@ -11,7 +11,7 @@ import sendNotification from '../../../sendNotification';
 
 async function addBoardMember(record) {
   const { session } = this;
-  const { email } = record;
+  const { userId } = record;
 
   // getting all the Required tables from cache database
   const allDbUsers = databaseChache.get('User');
@@ -20,7 +20,7 @@ async function addBoardMember(record) {
   const allDbUserDetails = databaseChache.get('UserDetail');
 
   // finding details of the user that is going to be add in this board
-  const user = allDbUsers.find(u => u.email === email);
+  const user = allDbUsers.find(u => u.id === parseInt(userId, 10));
 
   // deleting some privated info
   delete user.password;
@@ -51,7 +51,7 @@ async function addBoardMember(record) {
       await update.call(this, 'BoardMember', { id: boardMember.id, deleteStatus: false }, { id: boardMember.id });
     } else {
       // adding user to the BoardMember
-      delete record.email;
+      delete record.userId;
       addMemberRes = await add.call(this, 'BoardMember', { ...record, tuserId: user.id });
     }
 
@@ -114,7 +114,7 @@ async function addBoardMember(record) {
       boardChannel.forEach(s => updateUserCache(dataTobeupdateAllUser, s, 'add'));
 
       const emailObj = {
-        email,
+        email: user.email,
         html: htmlStringValue.boardNotificationHtml(
           `You are added to the class ${board.name}`,
           `Please follow the link to join the class ${board.name}.`,
@@ -152,7 +152,7 @@ async function addBoardMember(record) {
       finalSessions = finalSessions.filter(s => s.values.user.id !== remoteUserSession.values.user.id);
     }
     const emailObj = {
-      email,
+      email: user.email,
       html: htmlStringValue.boardNotificationHtml(
         `${user.firstName} added to the class ${board.name}`,
         `Please follow the link to join the class ${board.name}.`,
