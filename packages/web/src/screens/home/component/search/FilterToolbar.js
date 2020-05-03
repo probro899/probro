@@ -24,7 +24,6 @@ class FilterToolbar extends React.Component {
   render() {
     const { schema } = this.state;
     const { filterSearch } = this.props;
-    console.log('data', schema, countryList().getData());
     return (
       <div className="filter-toolbar">
         <div className="left set">
