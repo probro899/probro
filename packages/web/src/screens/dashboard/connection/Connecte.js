@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { Button } from '@blueprintjs/core';
+import { getName } from '../../../common/utility-functions';
 import { RoundPicture } from '../../../components';
 import { ENDPOINT } from '../../../config';
 
@@ -102,7 +103,7 @@ class Connecte extends React.Component {
             {
             }
             <Link to={`/user/${user.slug}/`}>
-              {user.middleName ? `${user.firstName} ${user.middleName} ${user.lastName}` : `${user.firstName} ${user.lastName}`}
+              {getName(user)}
             </Link>
           </p>
           <p className="location">{userDetail && userDetail.address ? userDetail.address : '---'}</p>

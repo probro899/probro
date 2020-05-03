@@ -52,7 +52,8 @@ const AddressSchema = [
 const CountrySchema = [
   {
     id: 'country',
-    fieldtype: 'input',
+    fieldtype: 'select',
+    options: [{ label: '---', value: '' }],
     name: 'Country',
     placeholder: '',
     required: true,

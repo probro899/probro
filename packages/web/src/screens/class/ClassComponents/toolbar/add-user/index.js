@@ -3,6 +3,7 @@ import { Popover } from '@blueprintjs/core';
 import PropTypes from 'prop-types';
 import { FaUserPlus } from 'react-icons/fa';
 import addUserToBoard from './structure';
+import { getName } from '../../../../../common/utility-functions';
 import { Form } from '../../../../../common';
 
 const PopoverContent = ({ callback }) => {
@@ -17,11 +18,24 @@ PopoverContent.propTypes = {
   callback: PropTypes.func.isRequired,
 };
 
-const AddUser = (props) => {
-  const addUserToBoardHandler = async (data) => {
-    const { apis, boardId, account } = props;
+class AddUser extends React.Component {
+  state = {};
+
+  componentDidMount() {
+    const { connections, users, account } = this.props;
+    const userId = account.user.id;
+    addUserToBoard.map((obj) => {
+      if (obj.id === 'user') {
+        obj.options = [{ label: '---', value: '' }, ...connections.map(o => ({ label: getName(users[userId === o.mId ? o.userId : o.mId]), value: userId === o.mId ? o.userId : o.mId }))];
+      }
+      return obj;
+    });
+  }
+
+  addUserToBoardHandler = async (data) => {
+    const { apis, boardId, account } = this.props;
     const obj = {
-      ...data,
+      userId: data.user,
       joinStatus: true,
       userType: 'normal',
       fuserId: account.user.id,
@@ -40,13 +54,15 @@ const AddUser = (props) => {
     }
   };
 
-  return (
-    <Popover content={<PopoverContent callback={addUserToBoardHandler} />}>
-      <div className="add-user-btn">
-        <FaUserPlus size={20} />
-      </div>
-    </Popover>
-  );
+  render() {
+    return (
+      <Popover content={<PopoverContent callback={this.addUserToBoardHandler} />}>
+        <div className="add-user-btn">
+          <FaUserPlus size={20} />
+        </div>
+      </Popover>
+    );
+  }
 };
 
 AddUser.propTypes = {

@@ -1,10 +1,13 @@
 
 export default [
   {
-    id: 'email',
-    fieldtype: 'input',
+    id: 'user',
+    fieldtype: 'select',
+    options: [
+      { label: '---', value: '' },
+    ],
+    required: true,
     name: 'Add new member',
-    placeholder: 'Eg, nameofuser@gmail.com',
   },
   {
     id: 'submit',

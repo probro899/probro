@@ -1,3 +1,5 @@
+import getName from './getName';
+
 // for sorting both position as well as timestamp
 const posSorting = (a, b) => {
   if (a.position > b.position) {
@@ -26,4 +28,4 @@ const normalTimeStampSorting = (a, b) => {
   return -1;
 };
 
-export { timeStampSorting, normalTimeStampSorting };
+export { timeStampSorting, normalTimeStampSorting, getName };

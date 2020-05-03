@@ -4,10 +4,6 @@ const filterSchema = [
     fieldtype: 'select',
     options: [
       { label: '---', value: '' },
-      { label: 'Nepal', value: 'nepal' },
-      { label: 'India', value: 'india' },
-      { label: 'US', value: 'us' },
-      { label: 'Australia', value: 'australia' },
     ],
     val: '',
   },

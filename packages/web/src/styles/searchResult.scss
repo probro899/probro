@@ -5,23 +5,14 @@
   min-height: calc(100vh - #{$navbarHeight} - #{$footerHeight});
   margin-top: $navbarHeight;
   .filter-toolbar {
-    min-height: $toolbarHeight;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+    min-height: $toolbarHeight; display: flex; flex-direction: row; justify-content: space-between;
     background: $backgroundColor;
-    padding: 5px;
-    width: 100%;
-    box-shadow: 1px 1px 3px 0px $normalShadowColor;
+    padding: 5px; width: 100%; box-shadow: 1px 1px 3px 0px $normalShadowColor;
     .set {
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      display: flex; justify-content: center; align-items: center;
     }
     .filter-label {
-      font-size: 20px;
-      font-weight: bold;
-      opacity: 0.8;
+      font-size: 20px; font-weight: bold; opacity: 0.8;
     }
     .btn-group {
       padding-top: 6px;
@@ -31,6 +22,7 @@
         min-height: 0;
       }
     }
+    select#country { max-width: 200px;}
   }
   .result-list {
     padding: 5px;

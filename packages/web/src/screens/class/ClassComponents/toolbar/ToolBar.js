@@ -45,6 +45,7 @@ class ToolBar extends React.Component {
       boardMembers,
       account,
       apis,
+      database,
       UserDetail,
     } = this.props;
     const extUser = Object.values(UserDetail.byId).find(obj => obj.userId === account.user.id);
@@ -70,6 +71,8 @@ class ToolBar extends React.Component {
             {extUser && extUser.type === 'mentor' && (
               <AddUser
                 apis={apis}
+                users={database.User.byId}
+                connections={Object.values(database.UserConnection.byId)}
                 account={account}
                 boardId={boardId}
               />
