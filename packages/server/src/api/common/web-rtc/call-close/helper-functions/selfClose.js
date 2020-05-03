@@ -6,6 +6,6 @@ export default (session, callCloseDetail) => {
   console.log('Self close called', callCloseDetail);
   if (liveBoard.getBoard(callCloseDetail.broadCastId)) {
     session.unsubscribe(`${callCloseDetail.broadCastType}-live-${callCloseDetail.broadCastId}`);
-    updateUserData(callCloseDetail, session);
   }
+  updateUserData(callCloseDetail, session);
 };

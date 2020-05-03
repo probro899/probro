@@ -6,6 +6,9 @@ import Comment from './Comment';
 import { timeStampSorting } from '../../../../common/utility-functions';
 import { DeletePopOver } from '../../../../common';
 import { RoundPicture } from '../../../../components';
+import { ENDPOINT } from '../../../../config';
+
+const file = require('../../../../assets/icons/64w/uploadicon64.png');
 
 class CommentContainer extends React.Component {
   state = {
@@ -166,6 +169,7 @@ class CommentContainer extends React.Component {
       deletePopover,
     } = this.state;
     const { users, imgUrl, account } = this.props;
+    const image = (account.user && account.user.userDetails.image) ? `${ENDPOINT}/user/${10000000 + parseInt(account.user.id, 10)}/profile/${account.user.userDetails.image}` : file;
     return (
       <div className="response">
         <div className="left" />
@@ -191,7 +195,7 @@ class CommentContainer extends React.Component {
           {account.user && (
             <div className="comment-area">
               <div className="profile-icon">
-                <RoundPicture imgUrl={imgUrl} />
+                <RoundPicture imgUrl={image} />
               </div>
               <TextArea
                 placeholder="Write your thoughts on this..."

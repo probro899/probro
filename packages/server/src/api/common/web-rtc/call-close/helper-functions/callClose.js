@@ -12,7 +12,7 @@ export default async (session, callCloseDetail) => {
   const channel = session.channel(`${callCloseDetail.broadCastType}-live-${callCloseDetail.broadCastId}`);
 
   // update User data to database and cache
-  // await updateUserData(callCloseDetail, session);
+  await updateUserData(callCloseDetail, session);
 
   // gather all the acitve boardUser
   const allLiveSessions = session.getChannel(`Board-${callCloseDetail.broadCastId}`);
