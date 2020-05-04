@@ -64,14 +64,10 @@ class Classes extends Component {
   onDragEnd = async (result) => {
     const { source, destination, draggableId, type } = result;
     const { api, columns, classId } = this.state;
-    if (!destination) {
-      return;
-    }
+    if (!destination) { return; }
     // column moving around
     if (type === 'column') {
-      if (source.index === destination.index) {
-        return;
-      }
+      if (source.index === destination.index) { return; }
       const res = checkColumnMove(columns, draggableId, destination, source);
       this.setState({ columns: res.newColumns });
       await api.updateBoardColumn([

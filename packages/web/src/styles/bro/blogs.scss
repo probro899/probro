@@ -76,14 +76,9 @@
   .editor-container {
     padding: 5px 10px 5px 10px;
     #editor {
-      background-color: white;
-      min-height: 500px;
-      padding: 10px;
-      font-size: 21px;
-      img {
-        max-width: 100%;
-        // object-fit: contain;
-      }
+      background-color: $backgroundColor; min-height: 500px; padding: 10px; font-size: 25px;
+      p { font-size: 30px; }
+      img { max-width: 100%; }
     }
   }
 }

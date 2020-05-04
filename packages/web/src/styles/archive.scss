@@ -214,15 +214,10 @@
     }
   }
   .public-blog-content {
-    width: 100%;
-    font-size: 21px;
-    display: flex;
-    margin-bottom: 50px;
+    width: 100%; display: flex; margin-bottom: 50px; font-size: 25px;
     #blogContent {
-      img {
-        max-width: 100%;
-        // object-fit: contain;
-      }
+      p { font-size: 25px;}
+      img { max-width: 100%; }
     }
   }
   .response {

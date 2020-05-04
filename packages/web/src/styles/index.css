@@ -376,7 +376,8 @@ top attachment etc.
 .create-blog .title { margin: 10px; }
 .create-blog .title textarea { font-size: 30px; font-weight: bold; }
 .create-blog .editor-container { padding: 5px 10px 5px 10px; }
-.create-blog .editor-container #editor { background-color: white; min-height: 500px; padding: 10px; font-size: 21px; }
+.create-blog .editor-container #editor { background-color: #fff; min-height: 500px; padding: 10px; font-size: 25px; }
+.create-blog .editor-container #editor p { font-size: 30px; }
 .create-blog .editor-container #editor img { max-width: 100%; }
 
 .blogs { padding: 5px; width: 100%; }
@@ -592,7 +593,8 @@ top attachment etc.
 .public-blog .public-blog-title .author-user .auth-con .author-detail { display: flex; justify-content: center; align-items: flex-start; flex-direction: column; }
 .public-blog .pc-blog-cover-image { display: flex; justify-content: center; width: 100%; overflow: hidden; margin-bottom: 25px; }
 .public-blog .pc-blog-cover-image img { width: 100%; object-fit: contain; }
-.public-blog .public-blog-content { width: 100%; font-size: 21px; display: flex; margin-bottom: 50px; }
+.public-blog .public-blog-content { width: 100%; display: flex; margin-bottom: 50px; font-size: 25px; }
+.public-blog .public-blog-content #blogContent p { font-size: 25px; }
 .public-blog .public-blog-content #blogContent img { max-width: 100%; }
 .public-blog .response { display: flex; }
 .public-blog .response .comment-section { flex: 1; display: flex; flex-direction: column; }
