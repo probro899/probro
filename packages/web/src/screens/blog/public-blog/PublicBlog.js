@@ -27,11 +27,12 @@ class PublicBlog extends React.Component {
     const { account, match } = this.props;
     try {
       let apis = {};
+      let uid;
       if (account.user) {
         apis = await client.scope('Mentee');
+        uid = account.user.id;
       }
-      const res = await axios.get(`${ENDPOINT}/web/get-blog?blogId=${match.params.blogSlug}&userId=${match.params.userSlug}`);
-      console.log('Blog details', res, match.params);
+      const res = await axios.get(`${ENDPOINT}/web/get-blog?blogId=${match.params.blogSlug}&userId=${match.params.userSlug}&uid=${uid}`);
       this.setState({
         data: res.data,
         apis,

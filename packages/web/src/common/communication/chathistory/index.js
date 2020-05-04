@@ -89,7 +89,7 @@ class ChatHistory extends React.Component {
           outgoingCallLogHandler(msg, account, webRtc.chatHistory.type, idx)
         );
       default:
-        return <Message key={msg.id} own={isOwnFinder(msg, this.props)} obj={msg} props={this.props} type={type} />;
+        return msg.message ? <Message key={msg.id} own={isOwnFinder(msg, this.props)} obj={msg} props={this.props} type={type} /> : null;
     }
   }
 

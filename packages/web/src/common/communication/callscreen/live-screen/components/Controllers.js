@@ -22,7 +22,7 @@ class Controllers extends React.Component {
         const { activeStatus } = Object.values(database.Board.byId).find(b => b.id === parseInt(connectionId, 10));
         // console.log('Board active status', activeStatus);
         if (!activeStatus) {
-          this.callReject();
+          this.callReject('autoClose');
         }
       }
     }
@@ -42,12 +42,12 @@ class Controllers extends React.Component {
     }
   }
 
-  callReject = () => {
+  callReject = (autoClose) => {
     const { closeHandler, change, remoteCallEndMinimizer } = this.props;
     remoteCallEndMinimizer();
-    closeHandler();
+    closeHandler(autoClose);
     change('history');
-  }
+  };
 
   callUpGradeController = async (currentMediaType) => {
     const { webRtc } = this.props;
