@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { DragDropContext, Droppable } from 'react-beautiful-dnd';
-import { Column, NewColumn, TaskOverlay, ToolBar } from './ClassComponents';
+import { DndProvider } from 'react-dnd';
+import HTML5Backend from 'react-dnd-html5-backend';
+import ColumnWrapper from './ClassComponents/dndComponents/ColumnWrapper';
+import { NewColumn, TaskOverlay, ToolBar } from './ClassComponents';
 import { Navbar } from '../home/component';
 import * as actions from '../../actions';
 import client from '../../socket';
@@ -11,6 +13,7 @@ import posSorting, { timeStampSorting } from '../../common/utility-functions';
 import { Spinner } from '../../common';
 import checkColumnMove from './helper-functions/checkColumnMove';
 import { withinColumn, outsideColumn } from './helper-functions/checkTaskMove';
+import ClassWrapper from './ClassComponents/dndComponents/ClassWrapper';
 
 class Classes extends Component {
   state = {
@@ -28,9 +31,7 @@ class Classes extends Component {
   };
 
   componentDidMount() {
-    const {
-      match,
-    } = this.props;
+    const { match } = this.props;
     client.scope('Mentee').then((result) => {
       // checking if the user's sessionid is real
       this.setState({
@@ -60,6 +61,28 @@ class Classes extends Component {
     this.setState({ tasks: Object.values(tasks.byId), columns: wholeColumns.sort(posSorting), comments: Object.values(comments.byId).sort(timeStampSorting), attachments: Object.values(attachments.byId), descriptions: Object.values(descriptions.byId) });
   }
 
+  // move columns while hovering
+  moveColumns = (sourceIndex, destinationIndex, draggableId) => {
+    const { columns } = this.state;
+    const res = checkColumnMove(columns, draggableId, { index: destinationIndex }, { index: sourceIndex });
+    this.setState({ columns: res.newColumns });
+  }
+
+  // move cards along the columns
+  moveTask = (source, destination, draggableId) => {
+    const { columns } = this.state;
+    if (source.dropableId === destination.dropableId) {
+      const dragable = Number(draggableId.split('task')[1]);
+      const res = withinColumn(source, destination, columns, dragable);
+      this.setState({ columns: res.newColumns });
+      return;
+    }
+    const destinationDropable = destination.dropableId;
+    const dragable = Number(draggableId.split('task')[1]);
+    const res = outsideColumn(source, destination, columns, destinationDropable, dragable);
+    this.setState({ columns: res.newColumns });
+  }
+
   // all the drag and drop will be handled here
   onDragEnd = async (result) => {
     const { source, destination, draggableId, type } = result;
@@ -69,7 +92,7 @@ class Classes extends Component {
     if (type === 'column') {
       if (source.index === destination.index) { return; }
       const res = checkColumnMove(columns, draggableId, destination, source);
-      this.setState({ columns: res.newColumns });
+      // this.setState({ columns: res.newColumns });
       await api.updateBoardColumn([
         { position: res.column.position, timeStamp: Date.now(), broadCastId: `Board-${classId}` }, { id: res.column.id }]);
       return;
@@ -80,7 +103,7 @@ class Classes extends Component {
     if (source.droppableId === destination.droppableId) {
       const dragable = Number(draggableId.split('task')[1]);
       const res = withinColumn(source, destination, columns, dragable);
-      this.setState({ columns: res.newColumns });
+      // this.setState({ columns: res.newColumns });
       await api.updateBoardColumnCard([{ position: res.newTask.position, fColId: source.droppableId, tColId: destination.droppableId, todo: 'withinColumn', timestamp: Date.now(), broadCastId: `Board-${classId}` }, { id: dragable }]);
       return;
     }
@@ -89,7 +112,7 @@ class Classes extends Component {
     const destinationDropable = Number(destination.droppableId);
     const dragable = Number(draggableId.split('task')[1]);
     const res = outsideColumn(source, destination, columns, destinationDropable, dragable);
-    this.setState({ columns: res.newColumns });
+    // this.setState({ columns: res.newColumns });
     await api.updateBoardColumnCard([{ todo: 'outsideColumn', fColId: source.droppableId, tColId: destination.droppableId, position: res.newTask.position, timeStamp: Date.now(), boardColumnId: destinationDropable, broadCastId: `Board-${classId}` }, { id: dragable }]);
   }
 
@@ -113,71 +136,58 @@ class Classes extends Component {
     const member = Object.values(classMembers.byId).find(obj => obj.boardId === classId && !obj.deleteStatus && account.user.id === obj.tuserId);
     if (!member) { return <Redirect to={`/${match.params.userSlug}/classes`} />; }
     return (
-      <div style={{ position: 'relative' }}>
-        <Navbar className="pcm-nav" />
-        <ToolBar boardId={classId} apis={api} />
-        <div
-          className="class-wrapper"
-        >
-          <DragDropContext
-            onDragEnd={this.onDragEnd}
+      <DndProvider backend={HTML5Backend}>
+        <div style={{ position: 'relative' }}>
+          <Navbar className="pcm-nav" />
+          <ToolBar boardId={classId} apis={api} />
+          <div
+            className="class-wrapper"
           >
-            <Droppable
-              droppableId="all-columns"
-              direction="horizontal"
-              type="column"
-            >
-              { provided => (
-                <div
-                  className="columns"
-                  {...provided.droppableProps}
-                  ref={provided.innerRef}
-                >
-                  {
-                    columns.filter(o => !o.deleteStatus).map((column, index) => {
-                      if (column.boardId === classId) {
-                        return (
-                          <Column
-                            key={`column${column.id}`}
-                            column={column}
-                            columnId={column.id}
-                            index={index}
-                            api={api}
-                            tags={tags}
-                            boardId={classId}
-                            addDatabaseSchema={addDatabaseSchema}
-                            updateDatabaseSchema={updateDatabaseSchema}
-                            deleteDatabaseSchema={deleteDatabaseSchema}
-                            // passing it for the task overlay open
-                            onTaskClick={this.toggleTaskOverlay}
-                          />
-                        );
-                      }
-                    })
+            <ClassWrapper>
+              {
+                columns.filter(o => !o.deleteStatus).map((column, index) => {
+                  if (column.boardId === classId) {
+                    return (
+                      <ColumnWrapper
+                        moveTask={this.moveTask}
+                        moveColumns={this.moveColumns}
+                        index={index}
+                        draggableId={`column${column.id}`}
+                        column={column}
+                        key={`column${column.id}`}
+                        columnId={column.id}
+                        api={api}
+                        tags={tags}
+                        boardId={classId}
+                        addDatabaseSchema={addDatabaseSchema}
+                        updateDatabaseSchema={updateDatabaseSchema}
+                        deleteDatabaseSchema={deleteDatabaseSchema}
+                        onTaskClick={this.toggleTaskOverlay}
+                      />
+                    );
                   }
-                  {provided.placeholder}
-                  <NewColumn classId={classId} />
-                </div>
-              )}
-            </Droppable>
-          </DragDropContext>
+                })
+              }
+              <NewColumn classId={classId} />
+            </ClassWrapper>
+          </div>
+          <TaskOverlay
+            apis={api}
+            isOpen={taskOverlayIsOpen}
+            taskId={taskIdInOverlay}
+            tasks={tasks}
+            onClose={this.toggleTaskOverlay}
+            comments={comments}
+            attachments={attachments}
+            descriptions={descriptions}
+            boardId={classId}
+            tags={tags}
+            addDatabaseSchema={addDatabaseSchema}
+            updateDatabaseSchema={updateDatabaseSchema}
+            deleteDatabaseSchema={deleteDatabaseSchema}
+          />
         </div>
-        <TaskOverlay
-          apis={api}
-          isOpen={taskOverlayIsOpen}
-          taskId={taskIdInOverlay}
-          tasks={tasks}
-          onClose={this.toggleTaskOverlay}
-          comments={comments}
-          attachments={attachments}
-          descriptions={descriptions}
-          boardId={classId}
-          tags={tags}
-          addDatabaseSchema={addDatabaseSchema}
-          updateDatabaseSchema={updateDatabaseSchema}
-          deleteDatabaseSchema={deleteDatabaseSchema}
-        />
-      </div>
+      </DndProvider>
     );
   }
 }

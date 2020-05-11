@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Droppable, Draggable } from 'react-beautiful-dnd';
 import Task from './Task';
 import NewTask from './NewTask';
 import { MoreButton, PopoverForm } from '../../../components';
 import DeletePopOver from '../../../common/DeletePopOver';
 import UpdateColumnStructure from './structure';
+import TaskWrapper from './dndComponents/TaskWrapper';
 
 class Column extends Component {
   state = {
@@ -72,76 +72,49 @@ class Column extends Component {
     const {
       column,
       columnId,
-      index,
       onTaskClick,
       boardId,
+      moveTask,
+      handle,
       tags,
     } = this.props;
     const { columnDeletePopOver, columnEditPopOver } = this.state;
     return (
-      <Draggable
-        draggableId={`column${column.id}`}
-        index={index}
-      >
-        {provided => (
-          <div
-            className="column-container"
-            ref={provided.innerRef}
-            {...provided.draggableProps}
-          >
-            <div className="column-inner-container">
-              <PopoverForm
-                onClose={this.closeUpdatePopOver}
-                callback={this.updateColumnName}
-                isOpen={columnEditPopOver}
-                structure={UpdateColumnStructure}
-              />
-              <DeletePopOver
-                isOpen={columnDeletePopOver}
-                action={this.deleteColumn}
-                name={column.name}
-              />
-              <div
-                className="column-title"
-                {...provided.dragHandleProps}
-              >
-                <div className="text">
-                  {column.name}
-                </div>
-                <MoreButton id={columnId} onMore={this.onMore} />
-              </div>
-              <Droppable
-                droppableId={`${column.id}`}
-                type="task"
-              >
-                {provided => (
-                  <div
-                    className="task-list"
-                    ref={provided.innerRef}
-                    {...provided.droppableProps}
-                  >
-                    {column.tasks.filter(o => !o.deleteStatus).map((obj, index) => {
-                      const task = obj;
-                      return (
-                        <Task
-                          key={`task${task.id}`}
-                          task={task}
-                          index={index}
-                          tags={tags}
-                          onClick={onTaskClick}
-                        />
-                      );
-                    })}
-                    {provided.placeholder}
-                  </div>
-                )}
-              </Droppable>
-              {provided.placeholder}
-              <NewTask columnId={column.id} boardId={boardId} />
-            </div>
+      <div className="column-inner-container">
+        <PopoverForm
+          onClose={this.closeUpdatePopOver}
+          callback={this.updateColumnName}
+          isOpen={columnEditPopOver}
+          structure={UpdateColumnStructure}
+        />
+        <DeletePopOver
+          isOpen={columnDeletePopOver}
+          action={this.deleteColumn}
+          name={column.name}
+        />
+        <div className="column-title" ref={handle}>
+          <div className="text">
+            {column.name}
           </div>
-        )}
-      </Draggable>
+          <MoreButton id={columnId} onMore={this.onMore} />
+        </div>
+        <div className="task-list">
+          {column.tasks.filter(o => !o.deleteStatus).map((obj, index) => {
+            const task = obj;
+            return (
+              <TaskWrapper moveTask={moveTask} index={index} task={task} key={`task${task.id}`} draggableId={`task${task.id}`}>
+                <Task
+                  task={task}
+                  index={index}
+                  tags={tags}
+                  onClick={onTaskClick}
+                />
+              </TaskWrapper>
+            );
+          })}
+        </div>
+        <NewTask columnId={column.id} boardId={boardId} />
+      </div>
     );
   }
 }
@@ -150,12 +123,12 @@ Column.propTypes = {
   column: PropTypes.objectOf(PropTypes.any).isRequired,
   tags: PropTypes.objectOf(PropTypes.any).isRequired,
   api: PropTypes.objectOf(PropTypes.any).isRequired,
-  index: PropTypes.number.isRequired,
   columnId: PropTypes.number.isRequired,
   onTaskClick: PropTypes.func.isRequired,
   updateDatabaseSchema: PropTypes.func.isRequired,
   deleteDatabaseSchema: PropTypes.func.isRequired,
   boardId: PropTypes.number.isRequired,
+  moveTask: PropTypes.func.isRequired,
 };
 
 export default Column;

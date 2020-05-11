@@ -161,17 +161,17 @@
         background-color: $darkBlue;
         .column-title {
           padding: 8px; display: flex; justify-content: space-between;
-          position: relative;
+          position: relative; cursor: pointer;
           color: $backgroundColor;
           .text { font-size: 18px; font-weight: bold; }
           .more-button svg { fill: $backgroundColor; }
         }
         .task-list {
-          min-height: 230px; max-height: 100%; // to set task list a scrollview
           overflow-y: scroll;
+          max-height: 100%; // to set task list a scrollview
           padding: 0px 8px 8px 8px;
           .task-container {
-            margin-bottom: 8px; padding: 5px; background-color: $backgroundColor; transition: 0.3s;
+            margin-bottom: 8px; cursor: pointer; padding: 5px; background-color: $backgroundColor; transition: 0.3s;
             &:hover {
               box-shadow: 1px 1px 1px 1px $backgroundColor;
             }
