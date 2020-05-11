@@ -38,7 +38,7 @@ class Setting extends Component {
             tabIndex={0}
             onKeyDown={() => this.handleClick('basic')}
             role="menuitem"
-            className={activeTab === 'basic' ? 'active' : 'i-setting'}
+            className={activeTab === 'basic' ? 'active i-setting' : 'i-setting'}
           >
             General
           </div>
@@ -47,7 +47,7 @@ class Setting extends Component {
             tabIndex={0}
             onKeyDown={() => this.handleClick('advanced')}
             role="menuitem"
-            className={activeTab === 'advanced' ? 'active' : 'i-setting'}
+            className={activeTab === 'advanced' ? 'active i-setting' : 'i-setting'}
           >
             Advanced
           </div>

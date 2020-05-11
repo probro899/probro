@@ -34,7 +34,7 @@ class ProfilePic extends React.Component {
         data: formData,
       });
       if (res.status === 200) {
-        await apis.updateUserDetails({
+        const response = await apis.updateUserDetails({
           userId: account.user.id,
           image: res.data,
         });
@@ -45,7 +45,7 @@ class ProfilePic extends React.Component {
           });
         } else {
           addDatabaseSchema('UserDetail', {
-            id: Date.now(),
+            id: response,
             type: 'mentee',
             image: res.data,
           });

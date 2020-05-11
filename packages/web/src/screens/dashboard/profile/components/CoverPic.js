@@ -64,7 +64,7 @@ class CoverPic extends React.Component {
         data: formData,
       });
       if (res.status === 200) {
-        await apis.updateUserDetails({
+        const response = await apis.updateUserDetails({
           userId: account.user.id,
           coverImage: res.data,
           coverEdit: null,
@@ -77,7 +77,7 @@ class CoverPic extends React.Component {
           });
         } else {
           addDatabaseSchema('UserDetail', {
-            id: Date.now(),
+            id: response,
             type: 'mentee',
             coverImage: res.data,
             coverEdit: null,
@@ -92,7 +92,6 @@ class CoverPic extends React.Component {
   render() {
     const { userDetail, account, updateDatabaseSchema, apis } = this.props;
     const { drag } = this.state;
-    // console.log(userDetail);
     const imgUrl = userDetail.coverImage ? `${ENDPOINT}/user/${10000000 + parseInt(account.user.id, 10)}/profile/${userDetail.coverImage}` : defaultCover;
     const editCoverUrl = userDetail.coverEdit && `${ENDPOINT}/user/${10000000 + parseInt(account.user.id, 10)}/profile/${userDetail.coverEdit}`;
     if (!drag) {
