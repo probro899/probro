@@ -51,6 +51,7 @@ class ToolBar extends React.Component {
     const extUser = Object.values(UserDetail.byId).find(obj => obj.userId === account.user.id);
     const board = Object.values(boards.byId).find(obj => obj.id === boardId);
     const { showReport } = this.state;
+    const classCreator = Object.values(boardMembers.byId).find(o => o.boardId === boardId && o.fuserId === o.tuserId);
     return (
       <div className="tool-bar">
         <Report isOpen={showReport} onClose={this.reportCloseHandler} boardId={boardId} {...this.props} boards={boards} apis={apis} users={users} />
@@ -63,19 +64,27 @@ class ToolBar extends React.Component {
             <UserList extUser={extUser} userList={users} boardId={boardId} boardMembers={boardMembers} apis={apis} account={account} />
           </div>
           <div className="right-tools">
-            <Button
-              minimal
-              icon="chat"
-              onClick={this.onChat}
-            />
-            {extUser && extUser.type === 'mentor' && (
-              <AddUser
-                apis={apis}
-                users={database.User.byId}
-                connections={Object.values(database.UserConnection.byId)}
-                account={account}
-                boardId={boardId}
+            <Tooltip
+              content={<span style={{ color: '#1d4354' }}>Chat</span>}
+            >
+              <Button
+                minimal
+                icon="chat"
+                onClick={this.onChat}
               />
+            </Tooltip>
+            {extUser && (extUser.type === 'mentor' || extUser.userId === classCreator.fuserId) && (
+              <Tooltip
+                content={<span style={{ color: '#1d4354' }}>Add user to this class</span>}
+              >
+                <AddUser
+                  apis={apis}
+                  users={database.User.byId}
+                  connections={Object.values(database.UserConnection.byId)}
+                  account={account}
+                  boardId={boardId}
+                />
+              </Tooltip>
             )}
             {
               extUser && extUser.type === 'mentor' && (

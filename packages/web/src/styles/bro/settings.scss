@@ -5,11 +5,8 @@
   .setting-types {
     display: flex; flex-direction: row; justify-content: space-around;
     font-size: 18px; font-weight: bold; border-bottom: 1px solid $borderColor;
-    .i-setting { width: 100%; padding: 10px; text-align: center; }
-    .active {
-      color: $skyBlueMain; border-bottom: 5px solid $skyBlueMain; text-align: center; width: 100%;
-      padding: 10px;
-    }
+    .i-setting { width: 100%; padding: 10px; text-align: center; cursor: pointer; }
+    .active { color: $skyBlueMain; border-bottom: 5px solid $skyBlueMain; }
   }
   .container-settings {
     padding-top: 5px;

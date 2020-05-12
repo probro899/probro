@@ -62,7 +62,7 @@ async function addBoardMessageSeenStatus(record) {
 }
 
 async function addBoardMessage(record) {
-  const res = await add.call(this, 'BoardMessage', record);
+  const res = await add.call(this, 'BoardMessage', { ...record, timeStamp: Date.now() });
   return res;
 }
 

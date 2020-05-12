@@ -17,7 +17,7 @@ export default async function updateUserDetails(record) {
           const newRecord = await findOne('UserDetail', { userId: record.userId });
           session.dispatch(schema.update('UserDetail', newRecord));
           database.update('UserDetail', schema.update('UserDetail', newRecord));
-          return 'User details updated successfully';
+          return newRecord.id;
         }
         throw new Error('update Faild');
       }
@@ -26,7 +26,7 @@ export default async function updateUserDetails(record) {
         const userRes = await findOne('UserDetail', { id: insertRes });
         session.dispatch(schema.add('UserDetail', userRes));
         database.update('UserDetail', schema.add('UserDetail', userRes));
-        return 'User details inserted successfully';
+        return userRes.id;
       }
       throw new Error('User details insertion faild');
     });

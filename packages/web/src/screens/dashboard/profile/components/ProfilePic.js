@@ -20,7 +20,7 @@ class ProfilePic extends React.Component {
       addDatabaseSchema,
     } = this.props;
     const formData = new FormData();
-    formData.append('data', JSON.stringify({ token: account.sessionId, fileType: 'image', content: 'profile' }));
+    formData.append('data', JSON.stringify({ token: account.sessionId, fileType: 'image', content: 'profile', type: 'profilePic' }));
     formData.append('file', data);
     try {
       const res = await axios({
@@ -34,9 +34,9 @@ class ProfilePic extends React.Component {
         data: formData,
       });
       if (res.status === 200) {
-        await apis.updateUserDetails({
+        const response = await apis.updateUserDetails({
           userId: account.user.id,
-          image: res.data,
+          // image: res.data,
         });
         if (userDetail.id) {
           updateDatabaseSchema('UserDetail', {
@@ -45,7 +45,7 @@ class ProfilePic extends React.Component {
           });
         } else {
           addDatabaseSchema('UserDetail', {
-            id: Date.now(),
+            id: response,
             type: 'mentee',
             image: res.data,
           });

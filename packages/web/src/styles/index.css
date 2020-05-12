@@ -343,8 +343,8 @@ top attachment etc.
 
 .settings { display: flex; padding: 5px 5px 5px 10px; flex-direction: column; }
 .settings .setting-types { display: flex; flex-direction: row; justify-content: space-around; font-size: 18px; font-weight: bold; border-bottom: 1px solid #d6d9d9; }
-.settings .setting-types .i-setting { width: 100%; padding: 10px; text-align: center; }
-.settings .setting-types .active { color: #137cbd; border-bottom: 5px solid #137cbd; text-align: center; width: 100%; padding: 10px; }
+.settings .setting-types .i-setting { width: 100%; padding: 10px; text-align: center; cursor: pointer; }
+.settings .setting-types .active { color: #137cbd; border-bottom: 5px solid #137cbd; }
 .settings .container-settings { padding-top: 5px; }
 .settings .container-settings .basic { padding: 5px 0px; display: flex; justify-content: center; }
 .settings .container-settings .basic .label { flex: 2; font-size: 15px; font-weight: bold; }
@@ -435,7 +435,7 @@ top attachment etc.
 .communicate .header .win-title { flex: 0.9; margin-left: 10px; font-weight: bold; display: flex; align-items: center; }
 .communicate .header .control-icons { flex: 0.1; display: flex; justify-content: flex-end; align-items: center; padding-right: 5px; }
 .communicate .content { height: -webkit-calc(100% - 40px); height: -moz-calc(100% - 40px); height: calc(100% - 40px); }
-.communicate .content .chat-list { padding-bottom: 5px; overflow-y: scroll; }
+.communicate .content .chat-list { padding-bottom: 5px; height: 100%; overflow-y: scroll; }
 .communicate .content .chat-list .last-text { font-size: 14px; max-width: 200px; color: #696969; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
 .communicate .content .chat-list .green-dot { position: absolute; height: 10px; width: 10px; background-color: #71f971; border-radius: 50%; top: 35px; left: 39px; }
 .communicate .content .chat-list .profile-icon { position: relative; height: 50px; width: 50px; display: flex; justify-content: center; align-items: center; border-radius: 50%; overflow: hidden; }
