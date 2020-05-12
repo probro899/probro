@@ -73,6 +73,7 @@ mentor(_webRtc.addICeCandidate);
 mentor(_webRtc.callClose);
 mentor(_webRtc.callStatusChange);
 mentor(_webRtc.onPcStatusChange);
+mentor(_webRtc.commPingPong);
 
 mentee(_webRtc.createOffer);
 mentee(_webRtc.createAnswer);
@@ -80,6 +81,7 @@ mentee(_webRtc.addICeCandidate);
 mentee(_webRtc.callClose);
 mentee(_webRtc.callStatusChange);
 mentee(_webRtc.onPcStatusChange);
+mentee(_webRtc.commPingPong);
 
 mentor(_logout2.default);
 mentor(_updateUserDetails2.default);

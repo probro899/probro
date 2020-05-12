@@ -17,19 +17,18 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 exports.default = (boardId, userId) => {
   const board = _cache.liveBoard.getBoard(boardId);
-  const allPCsObj = board[userId];
 
-  const allUser = Object.keys(board[userId]);
+  if (board) {
+    const userpcs = board[userId];
 
-  allUser.forEach(uid => {
-    _cache.liveBoard.updatePc(boardId, userId, uid, _extends({}, _cache.liveBoard.getPc(boardId, userId, uid), { callClose: true }));
-  });
+    if (userpcs) {
+      const allUser = Object.keys(userpcs);
+      allUser.forEach(uid => {
+        _cache.liveBoard.updatePc(boardId, userId, uid, _extends({}, _cache.liveBoard.getPc(boardId, userId, uid), { callClose: true }));
+      });
 
-  const isCloseCall = (0, _checkAndCloseBoard2.default)(_cache.liveBoard, boardId, userId);
-
-  // allUser.filter(uid => parseInt(uid, 10) === userId).filter(uid => uid !== 'isLive').forEach((uid) => {
-  //   liveBoard.updatePc(boardId, userId, uid, { ...liveBoard.getPc(boardId, userId, uid), offer: false });
-  // });
-
-  return isCloseCall;
+      const isCloseCall = (0, _checkAndCloseBoard2.default)(_cache.liveBoard, boardId, userId);
+      return isCloseCall;
+    }
+  }
 };

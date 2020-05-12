@@ -57,7 +57,7 @@ export default async function main(
 
     // creating offer for list of users
     const createOffer = async (stream) => {
-      console.log(`${userId}) CREATE OFFER`, stream);
+      // console.log(`${userId}) CREATE OFFER`, stream);
       onLocalStream(stream, userId);
       stream.getTracks().forEach(track => pc.addTrack(track, stream));
       pc.createOffer((offer) => {
@@ -71,7 +71,7 @@ export default async function main(
     // creating Answer for offer
     const createAnswer = async (data, stream) => {
       try {
-        console.log(`${userId}) CREATE ANSWER`, data);
+        // console.log(`${userId}) CREATE ANSWER`, data);
         if (stream) {
           stream.getTracks().forEach(track => pc.addTrack(track, stream));
           onLocalStream(stream, userId);
@@ -87,7 +87,7 @@ export default async function main(
 
     // Adding remoteIceCandidate
     const addIceCandidate = (candidate) => {
-      console.log(`${userId}) ADD REMOTE ICECANDIDATE`, candidate);
+      // console.log(`${userId}) ADD REMOTE ICECANDIDATE`, candidate);
       pc.addIceCandidate(new RTCIceCandidate(JSON.parse(candidate)));
     };
 

@@ -49,7 +49,7 @@ exports.default = async function add(table, record) {
           _cache.database.update(table, _schema2.default.add(table, boardDetails));
         }
       } else {
-        _cache.database.update(table, _schema2.default.add(table, boardDetails));
+        await _cache.database.update(table, _schema2.default.add(table, boardDetails));
       }
     }
     return boardId;

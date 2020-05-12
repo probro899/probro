@@ -10,7 +10,7 @@ import iceGaterCompleteHandler from './onIceGatherCompleteHandler';
 export default async (uid, props, state) => {
   const { webRtc, updateWebRtc, account, database } = props;
   const { pc } = webRtc.peerConnections[uid];
-  console.log(`${uid}) PC IN RECONNECT`, pc);
+  // console.log(`${uid}) PC IN RECONNECT`, pc);
   await pc.pc.close();
   delete webRtc.peerConnections[uid];
   const newPc = await main(

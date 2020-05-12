@@ -11,7 +11,7 @@ export default async (userId) => {
   if (!userId) {
     return { basedOnHistory: { blogs: popularRes.blogs }, popularOnPc: { blogs: popularRes.blogs, users: popularRes.users } };
   }
-
+ 
   const userDetails = await findUserDetails(userId, true, true);
   // console.log('User Detials', userDetails);
   const { country, field, address } = userDetails.userDetail;

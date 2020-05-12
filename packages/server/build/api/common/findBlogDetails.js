@@ -15,7 +15,7 @@ var _cache2 = _interopRequireDefault(_cache);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function findBlogDetails(blogId, userId, getBlog) {
+function findBlogDetails(blogId, userId, getBlog, uId) {
   let blog = {};
   if (getBlog) {
     blog = _cache2.default.get('Blog').find(b => b[getBlog ? 'slug' : 'id'] === blogId && b.saveStatus === 'publish');
@@ -36,7 +36,7 @@ function findBlogDetails(blogId, userId, getBlog) {
     blogerId = userId;
   }
 
-  const allUserIds = _lodash2.default.uniq([parseInt(blogerId, 10), ...blogComment.map(bc => bc.userId), ...blogLike.map(bl => bl.userId)]);
+  const allUserIds = _lodash2.default.uniq([parseInt(blogerId, 10), ...blogComment.map(bc => bc.userId), ...blogLike.map(bl => bl.userId), uId]);
   // console.log('allUserIds', allUserIds);
   // const userListPromises = [];
   // const userDetailPromises = [];

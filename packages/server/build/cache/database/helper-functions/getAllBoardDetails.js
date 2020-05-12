@@ -21,27 +21,15 @@ var _cache2 = _interopRequireDefault(_cache);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /* eslint-disable import/no-cycle */
-const findBoardActiveStatus = (session, boardId) => {
-  const liveBoardSessions = session.getChannel(`Board-live-${boardId}`) || [];
-  // console.log('Live Board Sessions', liveBoardSessions);
-  if (liveBoardSessions.length > 1) {
-    const { activeStatus } = liveBoardSessions[0].userData.Board.find(b => b.id === boardId);
-    // console.log('session to be extracted', anySession);
-    return activeStatus;
-  }
-  return false;
-};
-
 exports.default = (id, session) => {
   const allDbBoardMembers = _cache2.default.get('BoardMember');
   const allDbBoard = _cache2.default.get('Board');
   const allDbBoardMessageSeenStatus = _cache2.default.get('BoardMessageSeenStatus');
   const allDbBoardMessage = _cache2.default.get('BoardMessage');
   const templatesBoards = allDbBoard.filter(b => b.type === 'template');
-  const BoardMember = allDbBoardMembers.filter(bm => bm.tuserId === id);
+  const BoardMember = allDbBoardMembers.filter(bm => bm.tuserId === id && !bm.deleteStatus);
   const Board = allDbBoard.filter(b => b.userId === id);
   const allBoardsTemp = BoardMember.map(bm => allDbBoard.find(b => b.id === bm.boardId));
-  // const allBoards = allBoardsTemp.filter(b => b).map(b => ({ ...b, activeStatus: findBoardActiveStatus(session, b.id) }));
   const allBoards = [...allBoardsTemp, ...templatesBoards].filter(b => b).filter(b => b.deleteStatus !== 1);
   // console.log('all board', allBoards);
 

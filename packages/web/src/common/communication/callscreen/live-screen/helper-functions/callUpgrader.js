@@ -28,5 +28,5 @@ export default async (mediaType, props) => {
     _callHandler(apis, stream);
   }
 
-  console.log('Call upgraded', store.getState().webRtc.connectedUsers);
+  // console.log('Call upgraded', store.getState().webRtc.connectedUsers);
 };

@@ -13,9 +13,13 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 exports.default = async function getBlog(req, res) {
   // console.log('getBlog request handler', req.query);
   try {
-    const { userId, blogId } = req.query;
-    const result = await (0, _findBlogDetails2.default)(blogId, userId, true);
-    console.log('getBlog result in do request handler', result);
+    const { userId, blogId, uid } = req.query;
+    let result;
+    if (uid === 'undefined') {
+      result = await (0, _findBlogDetails2.default)(blogId, userId, true);
+    } else {
+      result = await (0, _findBlogDetails2.default)(blogId, userId, true, parseInt(uid, 10));
+    }
     res.status(200);
     res.send(JSON.stringify(result));
   } catch (e) {

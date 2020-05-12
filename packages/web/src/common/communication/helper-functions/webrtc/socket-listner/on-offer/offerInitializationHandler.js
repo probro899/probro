@@ -1,7 +1,7 @@
 import store from '../../../../../../store';
 
 export default async (props, state, data) => {
-  console.log(`${data.uid}) OFFER INIT`, data);
+  // console.log(`${data.uid}) OFFER INIT`, data);
   try {
     const { updateWebRtc } = props;
     const { connectionId, isLive } = data;

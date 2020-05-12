@@ -14,7 +14,7 @@ const isReconnect = (webRtc) => {
 };
 
 export default (props, mainStateApis) => async (e, state, userId) => {
-  console.log(`${userId}) ICECANDIDATE STATUS`, state.iceConnectionState, mainStateApis);
+  // console.log(`${userId}) ICECANDIDATE STATUS`, state.iceConnectionState, mainStateApis);
   const { updateWebRtc } = props;
   const { apis } = mainStateApis;
 
@@ -44,7 +44,7 @@ export default (props, mainStateApis) => async (e, state, userId) => {
 
   if (state.iceConnectionState === 'failed') {
     if (isReconnect(store.getState().webRtc)) {
-      console.log(`${userId}) RECONNECT HANDLER CALLED`);
+      // console.log(`${userId}) RECONNECT HANDLER CALLED`);
       reconnectHandler(userId, { webRtc, account, updateWebRtc, database }, { apis });
     } else {
       console.log('CLOSE CALL');

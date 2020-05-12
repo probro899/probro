@@ -28,11 +28,11 @@ const onLiveHandler = async (props, state, data) => {
     if (isPcCreated) {
       const { pc, iceCandidateStatus } = webRtc.peerConnections[data.uid];
       if (iceCandidateStatus === 'connected') {
-        console.log(`${uid}) ANSER IN CONNECTED SATATE`, data);
+        // console.log(`${uid}) ANSER IN CONNECTED SATATE`, data);
         answer = await pc.createAnswer(offer, null);
         isConnected = true;
       } else {
-        console.log(`${uid}) ANSER IN NOT CONNECTED SATATE`, data);
+        // console.log(`${uid}) ANSER IN NOT CONNECTED SATATE`, data);
         await pc.pc.close();
         delete webRtc.peerConnections[uid];
         const newPc = await main(
@@ -49,7 +49,7 @@ const onLiveHandler = async (props, state, data) => {
         delete webRtc.iceCandidates[uid];
       }
     } else {
-      console.log(`${uid})CREATING NEW PC`);
+      // console.log(`${uid})CREATING NEW PC`);
       const newPc = await main(
         onIceCandidateHandler(props, state),
         uid,
