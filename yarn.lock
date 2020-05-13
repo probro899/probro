@@ -11382,10 +11382,6 @@ react-error-overlay@^5.1.0:
 react-ga@^2.7.0:
   version "2.7.0"
   resolved "https://registry.yarnpkg.com/react-ga/-/react-ga-2.7.0.tgz#24328f157f31e8cffbf4de74a3396536679d8d7c"
-<<<<<<< HEAD
-  integrity sha512-AjC7UOZMvygrWTc2hKxTDvlMXEtbmA0IgJjmkhgmQQ3RkXrWR11xEagLGFGaNyaPnmg24oaIiaNPnEoftUhfXA==
-=======
->>>>>>> 1f355ada0891cac0fcde80c9cb6b52d82b26f8f1
 
 react-google-login@^5.0.5:
   version "5.0.5"
@@ -11628,10 +11624,6 @@ react-scroll-to-bottom@^1.3.2:
 react-select-country-list@^2.1.2:
   version "2.1.2"
   resolved "https://registry.yarnpkg.com/react-select-country-list/-/react-select-country-list-2.1.2.tgz#c46341bb845e95ecf3e89144422ec40b66a8d23d"
-<<<<<<< HEAD
-  integrity sha512-05D09+sK/51u3LI0+UkS0ZcDS/jsrHtv2b0zoIwJAkjXSmu7xCIt3wdUfCmvDNsqQP8GClzCGiwYPcGg8Qnkuw==
-=======
->>>>>>> 1f355ada0891cac0fcde80c9cb6b52d82b26f8f1
 
 react-share@^4.1.0:
   version "4.1.0"
