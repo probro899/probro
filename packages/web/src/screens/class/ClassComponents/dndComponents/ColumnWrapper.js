@@ -6,7 +6,7 @@ import Column from '../Column';
 
 export default (props) => {
   const ref = useRef(null);
-  const { api, tags, boardId, addDatabaseSchema, updateDatabaseSchema, deleteDatabaseSchema, onTaskClick, column, moveTask, index, draggableId, moveColumns } = props;
+  const { api, tags, boardId, xCoor, dragStartEnd, setDraggingContent, addDatabaseSchema, updateDatabaseSchema, deleteDatabaseSchema, onTaskClick, column, moveTask, index, draggableId, moveColumns } = props;
   const [, drop] = useDrop({
     accept: [Itemtype.COLUMN, Itemtype.TASK],
     hover: (item, monitor) => {
@@ -27,12 +27,14 @@ export default (props) => {
         const hoveredRect = ref.current.getBoundingClientRect(); // column being hovered
         const hoverMiddleX = hoveredRect.left + (hoveredRect.right - hoveredRect.left) / 2;
         const mousePosition = monitor.getClientOffset(); // mouse co-ordinated x,y
-        if (dragIndex > hoverIndex && hoverMiddleX > mousePosition.x) {
+        if (dragIndex > hoverIndex && hoverMiddleX > (mousePosition.x - xCoor.left)) {
+          // mouse left
           moveColumns(dragIndex, hoverIndex, item.draggableId);
           item.index = hoverIndex;
           return;
         }
-        if (dragIndex < hoverIndex && hoverMiddleX < mousePosition.x) {
+        if (dragIndex < hoverIndex && hoverMiddleX < (mousePosition.x + xCoor.right)) {
+          // drag right
           moveColumns(dragIndex, hoverIndex, item.draggableId);
           item.index = hoverIndex;
         }
@@ -45,19 +47,33 @@ export default (props) => {
     collect: monitor => ({
       isDragging: monitor.isDragging(),
     }),
+    begin: (monitor) => {
+      const itm = { type: Itemtype.COLUMN, id: column.id, draggableId, index };
+      setDraggingContent('start', itm);
+      dragStartEnd('start', itm, monitor.getInitialSourceClientOffset(), monitor.getInitialClientOffset());
+    },
+    end: (item, monitor) => {
+      setDraggingContent('end', item);
+      dragStartEnd('end', item);
+    },
   });
 
-  // drag(ref);
+  useEffect(() => {
+    preview(getEmptyImage(), { captureDraggingState: false });
+  }, []);
+
   drop(ref);
-  preview(ref);
 
   return (
-    <div className="column-container" style={{ opacity: isDragging ? 0 : 1 }} ref={ref}>
+    <div className="column-container" id={`id_column_${column.id}`} style={{ opacity: isDragging ? 0.1 : 1 }}>
       <Column
+        reference={ref}
         handle={drag}
         column={column}
         columnId={column.id}
         index={index}
+        dragStartEnd={dragStartEnd}
+        setDraggingContent={setDraggingContent}
         api={api}
         moveTask={moveTask}
         tags={tags}

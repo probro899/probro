@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
@@ -17,9 +18,7 @@ class Task extends Component {
     const { tags, task } = this.props;
     if (tags.allIds !== prevProps.tags.allIds) {
       const allTags = Object.values(tags.byId).filter(obj => task.id === obj.boardColumnCardId && !obj.deleteStatus);
-      this.setState({
-        allTags,
-      });
+      this.setState({ allTags});
     }
   }
 
@@ -33,9 +32,9 @@ class Task extends Component {
     const { allTags } = this.state;
     return (
       <div
+        id={`id_task_${task.id}`}
         className="task-container"
         onClick={this.onClick}
-        onKeyDown={this.onClick}
         role="menuitem"
         tabIndex={0}
       >

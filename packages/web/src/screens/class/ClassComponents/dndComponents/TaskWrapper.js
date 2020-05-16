@@ -1,10 +1,11 @@
-import React, { useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
+import { getEmptyImage } from 'react-dnd-html5-backend';
 import Itemtype from './types';
 
 export default (props) => {
   const ref = useRef(null);
-  const { children, task, index, draggableId, moveTask } = props;
+  const { children, setDraggingContent, dragStartEnd, task, index, draggableId, moveTask } = props;
   const [, drop] = useDrop({
     accept: Itemtype.TASK,
     hover: (item, monitor) => {
@@ -62,7 +63,7 @@ export default (props) => {
     },
   });
 
-  const [{ isDragging }, drag] = useDrag({
+  const [{ isDragging }, drag, preview] = useDrag({
     item: { type: Itemtype.TASK, id: task.id, draggableId, dropableId: task.boardColumnId, index },
     collect: monitor => ({
       isDragging: monitor.isDragging(),
@@ -70,12 +71,25 @@ export default (props) => {
     isDragging: (monitor) => {
       return task.id === monitor.getItem().id;
     },
+    begin: (monitor) => {
+      const itm = { type: Itemtype.TASK, id: task.id, draggableId, dropableId: task.boardColumnId, index };
+      setDraggingContent('start', itm);
+      dragStartEnd('start', itm, monitor.getInitialSourceClientOffset(), monitor.getInitialClientOffset());
+    },
+    end: (item, monitor) => {
+      setDraggingContent('end', item);
+      dragStartEnd('end', item);
+    },
   });
+
+  useEffect(() => {
+    preview(getEmptyImage(), { captureDraggingState: false });
+  }, []);
 
   drag(drop(ref));
 
   return (
-    <div style={{ opacity: isDragging ? 0 : 1 }} ref={ref}>
+    <div style={{ opacity: isDragging ? 0.2 : 1 }} ref={ref}>
       {React.cloneElement(children)}
     </div>
   );

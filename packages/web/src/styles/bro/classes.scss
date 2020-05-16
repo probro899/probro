@@ -1,4 +1,60 @@
 @import '../config.scss';
+
+// this is done outside of the scope because of the column dragging concept
+.column-container {
+  height: 100%;
+  // this 18px value has been calculated according to margins 18 px * 2
+  padding-bottom: 18px;
+  .column-inner-container {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    max-height: 100%;
+    margin: 10px 10px 10px 0px;
+    background-color: $darkBlue;
+    .column-title {
+      padding: 8px; display: flex; justify-content: space-between;
+      position: relative; cursor: pointer;
+      color: $backgroundColor;
+      .text { font-size: 18px; font-weight: bold; }
+      .more-button svg { fill: $backgroundColor; }
+    }
+    .task-list {
+      overflow-y: scroll;
+      max-height: 100%; // to set task list a scrollview
+      padding: 0px 8px 8px 8px;
+    }
+    .column-footer {
+      display: flex; align-items: flex-start;
+      svg { color: $backgroundColor; margin-right: 4px; }
+      color: $backgroundColor; padding: 10px; cursor: pointer;
+      &:hover {opacity: 0.7; font-weight: bold;}
+    }
+  }
+}
+
+// this is outside because of the task dragging concept
+.task-container {
+  width: 284px;
+  margin-bottom: 8px; cursor: pointer; padding: 5px; background-color: $backgroundColor; transition: 0.3s;
+  &:hover {
+    box-shadow: 1px 1px 1px 1px $backgroundColor;
+  }
+  .pc-task-flag {
+    display: flex; justify-content: space-between;
+    .pc-deadline-view {
+      color: $backgroundColor;
+      p {
+        font-size: 12px;
+        padding: 3px; border-radius: 2.5px; background-color: green; color: $backgroundColor; 
+        &.expire { background-color: red; }
+      }
+    }
+  }
+  .pc-task-name { margin: 0; font-weight: bold; }
+}
+
+
 // styling the class component here
 .classes {
   display: flex;
@@ -147,55 +203,6 @@
     overflow-y: scroll; -ms-overflow-style: none; scrollbar-color: none; 
     ::-webkit-scrollbar {
       display: none;
-    }
-    .column-container {
-      height: 100%;
-      // this 18px value has been calculated according to margins 18 px * 2
-      padding-bottom: 18px;
-      .column-inner-container {
-        display: flex;
-        flex-direction: column;
-        width: 300px;
-        max-height: 100%;
-        margin: 10px 10px 10px 0px;
-        background-color: $darkBlue;
-        .column-title {
-          padding: 8px; display: flex; justify-content: space-between;
-          position: relative; cursor: pointer;
-          color: $backgroundColor;
-          .text { font-size: 18px; font-weight: bold; }
-          .more-button svg { fill: $backgroundColor; }
-        }
-        .task-list {
-          overflow-y: scroll;
-          max-height: 100%; // to set task list a scrollview
-          padding: 0px 8px 8px 8px;
-          .task-container {
-            margin-bottom: 8px; cursor: pointer; padding: 5px; background-color: $backgroundColor; transition: 0.3s;
-            &:hover {
-              box-shadow: 1px 1px 1px 1px $backgroundColor;
-            }
-            .pc-task-flag {
-              display: flex; justify-content: space-between;
-              .pc-deadline-view {
-                color: $backgroundColor;
-                p {
-                  font-size: 12px;
-                  padding: 3px; border-radius: 2.5px; background-color: green; color: $backgroundColor; 
-                  &.expire { background-color: red; }
-                }
-              }
-            }
-            .pc-task-name { margin: 0; font-weight: bold; }
-          }
-        }
-        .column-footer {
-          display: flex; align-items: flex-start;
-          svg { color: $backgroundColor; margin-right: 4px; }
-          color: $backgroundColor; padding: 10px; cursor: pointer;
-          &:hover {opacity: 0.7; font-weight: bold;}
-        }
-      }
     }
     .add-new-column {
       .title {

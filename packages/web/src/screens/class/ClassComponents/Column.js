@@ -76,11 +76,15 @@ class Column extends Component {
       boardId,
       moveTask,
       handle,
+      dragStartEnd,
+      setDraggingContent,
+      reference,
       tags,
+      api,
     } = this.props;
     const { columnDeletePopOver, columnEditPopOver } = this.state;
     return (
-      <div className="column-inner-container">
+      <div className="column-inner-container" ref={reference}>
         <PopoverForm
           onClose={this.closeUpdatePopOver}
           callback={this.updateColumnName}
@@ -102,7 +106,7 @@ class Column extends Component {
           {column.tasks.filter(o => !o.deleteStatus).map((obj, index) => {
             const task = obj;
             return (
-              <TaskWrapper moveTask={moveTask} index={index} task={task} key={`task${task.id}`} draggableId={`task${task.id}`}>
+              <TaskWrapper dragStartEnd={dragStartEnd} setDraggingContent={setDraggingContent} moveTask={moveTask} index={index} task={task} key={`task${task.id}`} draggableId={`task${task.id}`}>
                 <Task
                   task={task}
                   index={index}
@@ -113,7 +117,7 @@ class Column extends Component {
             );
           })}
         </div>
-        <NewTask columnId={column.id} boardId={boardId} />
+        <NewTask api={api} columnId={column.id} boardId={boardId} />
       </div>
     );
   }
