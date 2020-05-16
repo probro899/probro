@@ -22,6 +22,7 @@ class ClassManager extends Component {
       // drag and drop properties
       draggingInitialItem: {},
       xCoor: {},
+      scrolling: false,
 
       columns: [],
       tasks: [],
@@ -64,6 +65,8 @@ class ClassManager extends Component {
       });
       return;
     }
+
+    this.stopScroll();
     // drag end
     const { draggingInitialItem, api, columns, classId } = this.state;
     if (item.type === Itemtype.COLUMN) {
@@ -121,6 +124,40 @@ class ClassManager extends Component {
     this.setState({ taskIdInOverlay: id, taskOverlayIsOpen: !taskOverlayIsOpen });
   }
 
+  scrollRight = () => {
+    this.setState({ scrolling: true });
+    function scroll() {
+      document.getElementById('allColumnWrapper').scrollLeft += 10;
+    }
+    this.scrollInterval = setInterval(scroll, 10);
+  }
+
+  scrollLeft = () => {
+    this.setState({ scrolling: true });
+    function scroll() {
+      document.getElementById('allColumnWrapper').scrollLeft -= 10;
+    }
+    this.scrollInterval = setInterval(scroll, 10);
+  }
+
+  stopScroll = () => {
+    this.setState({ scrolling: false });
+    clearInterval(this.scrollInterval);
+  }
+
+  startScroll = (coor) => {
+    const { scrolling } = this.state;
+    if (!scrolling) {
+      if (coor.x + 75 > window.innerWidth) {
+        this.scrollRight();
+      } else if (coor.x < 75) {
+        this.scrollLeft();
+      }
+    } else if (coor.x + 75 < window.innerWidth && coor.x > 75) {
+      this.stopScroll();
+    }
+  }
+
   render() {
     const {
       classId, columns, tasks, api, taskIdInOverlay, taskOverlayIsOpen,
@@ -144,6 +181,7 @@ class ClassManager extends Component {
             columns.filter(o => !o.deleteStatus && o.boardId === classId).map((column, index) => {
               return (
                 <ColumnWrapper
+                  startScroll={this.startScroll}
                   xCoor={xCoor}
                   dragStartEnd={this.dragStartEnd}
                   setDraggingContent={setDraggingContent}

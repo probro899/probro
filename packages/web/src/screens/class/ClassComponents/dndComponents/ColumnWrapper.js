@@ -6,11 +6,12 @@ import Column from '../Column';
 
 export default (props) => {
   const ref = useRef(null);
-  const { api, tags, boardId, xCoor, dragStartEnd, setDraggingContent, addDatabaseSchema, updateDatabaseSchema, deleteDatabaseSchema, onTaskClick, column, moveTask, index, draggableId, moveColumns } = props;
+  const { api, tags, startScroll, boardId, xCoor, dragStartEnd, setDraggingContent, addDatabaseSchema, updateDatabaseSchema, deleteDatabaseSchema, onTaskClick, column, moveTask, index, draggableId, moveColumns } = props;
   const [, drop] = useDrop({
     accept: [Itemtype.COLUMN, Itemtype.TASK],
     hover: (item, monitor) => {
       if (!ref.current) return;
+      startScroll(monitor.getClientOffset());
       if (item.type === Itemtype.TASK && monitor.isOver({ shallow: true })) {
         const task = monitor.getItem();
         if (task.dropableId !== column.id && column.tasks.filter(o => !o.deleteStatus).length === 0) {
@@ -21,6 +22,7 @@ export default (props) => {
         return;
       }
       if (item.type === Itemtype.COLUMN) {
+        // scroll implementation
         const dragIndex = item.index; // index of element being dragged
         const hoverIndex = index; // index of element being hovered
         if (dragIndex === hoverIndex) return;
@@ -42,7 +44,7 @@ export default (props) => {
     },
   });
 
-  const [{ isDragging }, drag, preview] = useDrag({
+  const [{ coor, isDragging }, drag, preview] = useDrag({
     item: { type: Itemtype.COLUMN, id: column.id, draggableId, index },
     collect: monitor => ({
       isDragging: monitor.isDragging(),
