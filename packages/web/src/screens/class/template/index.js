@@ -62,11 +62,6 @@ class Classes extends Component {
     this.setState({ tasks: Object.values(tasks.byId), columns: wholeColumns.sort(posSorting), comments: Object.values(comments.byId).sort(timeStampSorting), attachments: Object.values(attachments.byId), descriptions: Object.values(descriptions.byId) });
   }
 
-  // all the drag and drop will be handled here
-  onDragEnd = async (result) => {
-    // what to do when they swap the cards
-  }
-
   toggleTaskOverlay = (id) => {
     const { taskOverlayIsOpen } = this.state;
     this.setState({ taskIdInOverlay: id, taskOverlayIsOpen: !taskOverlayIsOpen });

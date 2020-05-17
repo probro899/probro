@@ -42,6 +42,7 @@ class ClassTemplate extends React.Component {
       const user = data.users[obj.userId];
       return <Template key={`template-${obj.id}`} user={user} obj={obj} />;
     });
+    if (templates.length === 0) return <p className="no-template">Templates coming soon!</p>;
     return templates;
   }
 
