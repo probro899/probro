@@ -15,7 +15,7 @@ const Template = ({ user, obj }) => {
         </div>
         <div className="class-detail">
           <span className="name">
-            Properclass
+            Proper Class
           </span>
           <span className="date">{new Date().toDateString()}</span>
         </div>
@@ -28,6 +28,7 @@ Template.propTypes = {
   user: PropTypes.objectOf(PropTypes.any).isRequired,
   obj: PropTypes.objectOf(PropTypes.any).isRequired,
 };
+
 
 class ClassTemplate extends React.Component {
   constructor(props) {
