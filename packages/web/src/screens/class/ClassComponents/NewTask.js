@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { AiFillFileAdd } from 'react-icons/ai';
+import posSorting from '../../../common/utility-functions';
 import * as actions from '../../../actions';
 import { PopoverForm } from '../../../components';
 import TaskFormStructure from './structure';
@@ -30,8 +31,8 @@ class NewTask extends Component {
       addDatabaseSchema,
       api,
     } = this.props;
-    const sortedCols = Object.values(database.BoardColumnCard.byId).filter(o => !o.deleteStatus && o.boardColumnId === columnId).sort(o => o.position);
-    const pos = sortedCols[0].position + 16384;
+    const sortedTasks = Object.values(database.BoardColumnCard.byId).filter(o => !o.deleteStatus && o.boardColumnId === columnId).sort(posSorting);
+    const pos = sortedTasks.length > 0 ? sortedTasks[sortedTasks.length - 1].position + 16384 : 16384;
     const res = await api.addBoardColumnCard({
       userId: account.user.id,
       timeStamp: Date.now(),

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { MdLibraryAdd } from 'react-icons/md';
+import posSorting from '../../../common/utility-functions';
 import * as actions from '../../../actions';
 import { PopoverForm } from '../../../components';
 import ColumnFormStructure from './structure';
@@ -23,8 +24,8 @@ class NewColumn extends Component {
 
   addNewColumn = async (data) => {
     const { classId, account, database, addDatabaseSchema, api } = this.props;
-    const sortedCols = Object.values(database.BoardColumn.byId).filter(o => !o.deleteStatus && o.boardId === classId).sort(o => o.position);
-    const pos = sortedCols[0].position + 16384;
+    const sortedCols = Object.values(database.BoardColumn.byId).filter(o => !o.deleteStatus && o.boardId === classId).sort(posSorting);
+    const pos = sortedCols.length > 0 ? sortedCols[sortedCols.length - 1].position + 16384 : 16384;
     const res = await api.addBoardColumn({
       userId: account.user.id,
       timeStamp: Date.now(),
