@@ -41,8 +41,10 @@ const isOffererHandler = pcs => {
 exports.default = (liveBoard, boardId, userId) => {
 
   const board = liveBoard.getBoard(boardId);
-
-  const eachUserPcs = Object.values(board);
+  const eachUserPcIds = Object.keys(board).filter(key => key !== 'users').filter(key => key !== 'heartbitChecker');
+  console.log('Each user pcs', eachUserPcIds);
+  const eachUserPcs = eachUserPcIds.map(id => board[id]);
+  console.log('Each User pc', eachUserPcs);
 
   const allUser = Object.keys(board[userId]);
 
