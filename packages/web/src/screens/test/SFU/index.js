@@ -1,18 +1,40 @@
 import React from 'react';
+import { Button } from '@blueprintjs/core';
+import EchoTest from './echo-test';
+import VideoCall from './videoCall';
+import VideoConference from './videoConference';
 
 class Index extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = { currentTest: null };
+  }
+
+  renderTest = () => {
+    const { currentTest } = this.state;
+    switch (currentTest) {
+      case 'echo':
+        return <EchoTest />;
+      case 'videoCall':
+        return <VideoCall />;
+      case 'videoConference':
+        return <VideoConference />;
+      default:
+        return null;
+    }
   }
 
   render() {
     return (
       <div>
-        <span>this is SFU test</span>
+        <div style={{ display: 'flex' }}>
+          <Button intent="success" text="Echo server" onClick={() => this.setState({ currentTest: 'echo' })} />
+          <Button intent="success" text="Video Call" onClick={() => this.setState({ currentTest: 'videoCall' })} />
+          <Button intent="success" text="Video Conference" onClick={() => this.setState({ currentTest: 'videoConference' })} />
+        </div>
+        {this.renderTest()}
       </div>
     );
   }
 }
-
 export default Index;
