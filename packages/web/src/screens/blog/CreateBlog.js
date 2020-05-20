@@ -334,6 +334,7 @@ class Blogs extends Component {
         url: `${ENDPOINT}/web/upload-file`,
         data: formData,
       });
+      console.log('response', uploadRes);
       if (uploadRes.status === 200) {
         // eslint-disable-next-line no-undef
         document.getElementById('editor').focus();
