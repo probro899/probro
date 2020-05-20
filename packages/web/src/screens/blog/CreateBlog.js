@@ -323,7 +323,7 @@ class Blogs extends Component {
     try {
       const formData = new FormData();
       formData.append('data', JSON.stringify({ token: account.sessionId, fileType: 'image', content: 'blog' }));
-      formData.append('image', e.target.files[0]);
+      formData.append('file', e.target.files[0]);
       const uploadRes = await axios({
         config: {
           headers: {
