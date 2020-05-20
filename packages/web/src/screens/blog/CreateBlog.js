@@ -11,7 +11,6 @@ import { addBlog, updateBlog } from './helper-functions';
 import { ENDPOINT } from '../../config';
 import BlogToolbar from './BlogToolbar';
 import CoverImage from './CoverImage';
-import { Spinner } from '../../common';
 
 
 class Blogs extends Component {
@@ -73,9 +72,12 @@ class Blogs extends Component {
 
   observeMutation = (mutationsList) => {
     const fileNames = [];
+    // console.log('mutt', mutationsList);
     for (let i = 0; i < mutationsList.length; i += 1) {
       const removeNodes = mutationsList[i].removedNodes;
+      const { addedNodes } = mutationsList[i];
       for (let j = 0; j < removeNodes.length; j += 1) {
+        if (addedNodes.length > j && addedNodes[i].src === removeNodes[j].src) return;
         if (removeNodes[j].localName === 'img') {
           const sp = removeNodes[j].src.split('/');
           fileNames.push(sp[sp.length - 1]);
@@ -339,9 +341,11 @@ class Blogs extends Component {
         document.getElementById('editor').focus();
         document.execCommand('insertImage', false, `${ENDPOINT}/user/${10000000 + parseInt(account.user.id, 10)}/blog/${uploadRes.data}`);
         this.saveBlog();
+      } else {
+        alert('Please try with different image');
       }
     } catch (err) {
-      console.log('update profile error', err);
+      alert('Please try with different image');
     }
   }
 
