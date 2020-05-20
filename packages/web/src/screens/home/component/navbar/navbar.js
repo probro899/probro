@@ -3,11 +3,14 @@ import { connect } from 'react-redux';
 import { Link, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { Menu, MenuItem, Intent, Icon } from '@blueprintjs/core';
+import MetaTags from 'react-meta-tags';
 import client from '../../../../socket';
 import * as actions from '../../../../actions';
 import Notifications from '../notification';
 import MessageNotification from './MessageNotification';
+import getUnReadNotification from '../notification/helper-functions/getUnreadNotification';
 import SmallScreenMenu from './SmallScreenMenu';
+import { getChatList } from '../../../../common/communication/chatlist/helper-function';
 import { ENDPOINT } from '../../../../config';
 import DashboardMenu from './DashboardMenu';
 import callClosehandler from '../../../../common/communication/helper-functions/webrtc/closeHandler';
@@ -42,11 +45,35 @@ class Navbar extends Component {
     redirectDashboard: false,
     smallScreen: false,
     loading: false,
+    unreadMessage: 0,
+    unreadNotis: 0,
+    lastNotifId: null,
   };
 
   async componentDidMount() {
     const apis = await client.scope('Mentee');
+    this.getUnreadNotifs();
     this.setState({ apis });
+  }
+
+  componentWillReceiveProps() {
+    this.getUnreadNotifs();
+  }
+
+  getUnreadNotifs = () => {
+    const { database, account } = this.props;
+    if (!account.user) return;
+    const chatList = getChatList({ database, account });
+    const unreadMessage = chatList.reduce((t, next) => {
+      t += next.unSeenNo;
+      return t;
+    }, 0);
+    const notiDetails = getUnReadNotification(this.props);
+    this.setState({
+      unreadMessage,
+      unreadNotis: notiDetails.unSeenNo,
+      lastNotifId: notiDetails.lastNotifId,
+    });
   }
 
   logoutAction = async () => {
@@ -74,6 +101,18 @@ class Navbar extends Component {
     });
   }
 
+  getMetaTags = () => {
+    const { unreadMessage, unreadNotis } = this.state;
+    const total = unreadMessage + unreadNotis > 9 ? '9+' : unreadNotis + unreadMessage;
+    return (
+      <MetaTags>
+        {
+          total === 0 ? <title>Proper Class</title> : <title>{`(${total}) Proper Class`}</title>
+        }
+      </MetaTags>
+    );
+  }
+
   render() {
     const {
       account, database, navigate, className,
@@ -84,9 +123,10 @@ class Navbar extends Component {
       const profile = Object.values(database.UserDetail.byId).find(o => o.userId === account.user.id);
       profilePic = profile && profile.image ? `${ENDPOINT}/user/${10000000 + parseInt(profile.userId, 10)}/profile/${profile.image}` : null;
     }
-    const { apis, redirectDashboard, loading, smallScreen } = this.state;
+    const { apis,unreadNotis, lastNotifId, redirectDashboard, unreadMessage, loading, smallScreen } = this.state;
     return (
       <div className={`navbar ${className}`}>
+        {this.getMetaTags()}
         {redirectDashboard && <Redirect exact push to={`/${account.user.slug}/profile`} />}
         <div className="navbar-left">
           <Link
@@ -134,11 +174,12 @@ class Navbar extends Component {
             && (
             <MessageNotification
               account={account}
+              unreadMessage={unreadMessage}
               database={database}
               updateWebRtc={updateWebRtc}
             />
             )}
-          {account.sessionId && <Notifications {...this.props} apis={apis} />}
+          {account.sessionId && <Notifications notiNo={unreadNotis} lastNotifId={lastNotifId} {...this.props} apis={apis} />}
           { account.sessionId
             ? <DashboardMenu navigate={navigate} profilePic={profilePic} content={DropDownMenu(this.onClickHandler, this.logoutAction, loading, account)} />
             : (

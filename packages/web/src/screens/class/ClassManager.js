@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import ColumnWrapper from './ClassComponents/dndComponents/ColumnWrapper';
 import { NewColumn, TaskOverlay } from './ClassComponents';
 import * as actions from '../../actions';
-import posSorting, { timeStampSorting } from '../../common/utility-functions';
+import posSorting from '../../common/utility-functions';
 import { Spinner } from '../../common';
 import checkColumnMove from './helper-functions/checkColumnMove';
 import { withinColumn, outsideColumn } from './helper-functions/checkTaskMove';
@@ -25,13 +25,9 @@ class ClassManager extends Component {
       scrolling: false,
 
       columns: [],
-      tasks: [],
-      comments: [],
-      attachments: [],
-      descriptions: [],
       taskOverlayIsOpen: false,
       // the task id contained in the overlay
-      taskIdInOverlay: 0,
+      taskIdInOverlay: null,
     };
   }
 
@@ -40,24 +36,19 @@ class ClassManager extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { tasks, columns, account, comments, attachments, descriptions, classId } = nextProps;
+    const { tasks, columns, account, classId } = nextProps;
     if (!account.user) return;
-    const wholeColumns = [];
-    Object.values(columns.byId).map((obj) => {
-      if (obj.boardId === classId) {
-        const column = { ...obj };
-        const task = Object.values(tasks.byId).filter(ob => ob.boardColumnId === obj.id);
-        task.sort(posSorting);
-        column.tasks = task;
-        wholeColumns.push(column);
-      }
-    });
-    this.setState({ tasks: Object.values(tasks.byId), columns: wholeColumns.sort(posSorting), comments: Object.values(comments.byId).sort(timeStampSorting), attachments: Object.values(attachments.byId), descriptions: Object.values(descriptions.byId) });
+    const wholeColumns = Object.values(columns.byId).filter(o => o.boardId === classId && !o.deleteStatus).map((obj) => {
+      const column = { ...obj };
+      const task = Object.values(tasks.byId).filter(ob => !ob.deleteStatus && ob.boardColumnId === obj.id).sort(posSorting);
+      column.tasks = task;
+      return column;
+    }).sort(posSorting);
+    this.setState({ columns: wholeColumns });
   }
 
   // dnd start implementation
   dragStartEnd = async (event, item, nodePoint, clientPoint) => {
-    // drag is start
     if (event === 'start') {
       this.setState({
         draggingInitialItem: item,
@@ -115,7 +106,7 @@ class ClassManager extends Component {
     }
     const destinationDropable = destination.dropableId;
     const dragable = Number(draggableId.split('task')[1]);
-    const res = outsideColumn(source, destination, columns, destinationDropable, dragable);
+    const res = outsideColumn(source, destination, columns.filter(o => !o.deleteStatus), destinationDropable, dragable);
     this.setState({ columns: res.newColumns });
   }
 
@@ -160,8 +151,7 @@ class ClassManager extends Component {
 
   render() {
     const {
-      classId, columns, tasks, api, taskIdInOverlay, taskOverlayIsOpen,
-      comments, attachments, descriptions, xCoor,
+      classId, columns, api, taskIdInOverlay, taskOverlayIsOpen, xCoor,
     } = this.state;
     const {
       addDatabaseSchema, tags, account, updateDatabaseSchema,
@@ -209,13 +199,8 @@ class ClassManager extends Component {
           apis={api}
           isOpen={taskOverlayIsOpen}
           taskId={taskIdInOverlay}
-          tasks={tasks}
           onClose={this.toggleTaskOverlay}
-          comments={comments}
-          attachments={attachments}
-          descriptions={descriptions}
           boardId={classId}
-          tags={tags}
           addDatabaseSchema={addDatabaseSchema}
           updateDatabaseSchema={updateDatabaseSchema}
           deleteDatabaseSchema={deleteDatabaseSchema}
@@ -232,9 +217,6 @@ ClassManager.propTypes = {
   columns: PropTypes.objectOf(PropTypes.any).isRequired,
   account: PropTypes.objectOf(PropTypes.any).isRequired,
   classMembers: PropTypes.objectOf(PropTypes.any).isRequired,
-  comments: PropTypes.objectOf(PropTypes.any).isRequired,
-  descriptions: PropTypes.objectOf(PropTypes.any).isRequired,
-  attachments: PropTypes.objectOf(PropTypes.any).isRequired,
   addDatabaseSchema: PropTypes.func.isRequired,
   userSlug: PropTypes.string.isRequired,
   classId: PropTypes.number.isRequired,
@@ -250,9 +232,6 @@ const mapStateToProps = (state) => {
     classMembers: database.BoardMember,
     columns: database.BoardColumn,
     tasks: database.BoardColumnCard,
-    comments: database.BoardColumnCardComment,
-    descriptions: database.BoardColumnCardDescription,
-    attachments: database.BoardColumnCardAttachment,
     boardUsers: database.User,
     tags: database.BoardColumnCardTag,
   };

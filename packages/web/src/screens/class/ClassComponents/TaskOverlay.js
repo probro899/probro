@@ -10,6 +10,7 @@ import TaskDetailRight from './TaskDetailRight';
 import { ENDPOINT } from '../../../config';
 import CommentBox from './CommentBox';
 import { AttachmentList } from './attachment';
+import Spinner from '../../../common/spinner';
 
 class TaskOverlay extends Component {
   state = {
@@ -30,35 +31,31 @@ class TaskOverlay extends Component {
   componentWillReceiveProps(nextProps) {
     const {
       taskId,
-      tasks,
-      comments,
-      attachments,
-      descriptions,
-      tags,
+      database,
     } = nextProps;
-
+    
+    const task = Object.values(database.BoardColumnCard.byId).find(o => o.id === taskId);
+    if (!task) {
+      this.setState({ loading: true });
+      return;
+    }
     // filter deleted
-    const commentsCard = comments.filter(obj => taskId === obj.boardColumnCardId && !obj.deleteStatus);
-    const attachmentsCard = attachments.filter(obj => taskId === obj.boardColumnCardId && !obj.deleteStatus);
+    const commentsCard = Object.values(database.BoardColumnCardComment.byId).filter(obj => taskId === obj.boardColumnCardId && !obj.deleteStatus).sort(timeStampSorting);
+    const attachmentsCard = Object.values(database.BoardColumnCardAttachment.byId).filter(obj => taskId === obj.boardColumnCardId && !obj.deleteStatus).sort(timeStampSorting);
     // finding the latest description
-    const latestDesription = descriptions.filter(obj => taskId === obj.boardColumnCardId).sort(timeStampSorting)[0];
+    const latestDesription = Object.values(database.BoardColumnCardDescription.byId).filter(obj => taskId === obj.boardColumnCardId).sort(timeStampSorting)[0];
     // finding all the tags here
-    const allTags = Object.values(tags.byId).filter(obj => taskId === obj.boardColumnCardId && !obj.deleteStatus);
+    const allTags = Object.values(database.BoardColumnCardTag.byId).filter(obj => taskId === obj.boardColumnCardId && !obj.deleteStatus);
 
     const desc = latestDesription ? latestDesription.title : '';
-
-    tasks.map((obj) => {
-      if (obj.id === taskId) {
-        this.setState({
-          comments: commentsCard,
-          attachments: attachmentsCard,
-          task: obj,
-          tags: allTags,
-          description: latestDesription,
-          title: obj.name,
-          desc,
-        });
-      }
+    this.setState({
+      comments: commentsCard,
+      attachments: attachmentsCard,
+      tags: allTags,
+      description: latestDesription,
+      title: task.name,
+      desc,
+      task,
     });
   }
 
@@ -128,13 +125,6 @@ class TaskOverlay extends Component {
       id: res,
     });
     this.toggleElemDesc();
-  }
-
-  getTags = () => {
-    const { tags } = this.props;
-    const { task } = this.state;
-    if (task.id) return Object.values(tags.byId).filter(obj => obj.boardColumnCardId === task.id && !obj.deleteStatus);
-    return [];
   }
 
   getName = (id) => {
@@ -251,7 +241,7 @@ class TaskOverlay extends Component {
               <div className="left">
                 <div className="pc-tags-and-deadline">
                   <div className="pc-tag-view">
-                    {this.getTags().map(obj => <Tag className="tag" key={obj.id} large intent={obj.tag} />)}
+                    {tags.map(obj => <Tag className="tag" key={obj.id} large intent={obj.tag} />)}
                   </div>
                   <div className="pc-deadline-view">
                     {task.Deadline ? (
@@ -347,29 +337,28 @@ class TaskOverlay extends Component {
               />
             </div>
           </div>
-        ) : <div />}
+        ) : <Spinner />}
       </Dialog>
     );
   }
 }
 
+TaskOverlay.defaultProps = {
+  taskId: null,
+};
+
 TaskOverlay.propTypes = {
   onClose: PropTypes.func.isRequired,
   isOpen: PropTypes.bool.isRequired,
-  taskId: PropTypes.number.isRequired,
+  taskId: PropTypes.number,
   userList: PropTypes.objectOf(PropTypes.any).isRequired,
   apis: PropTypes.objectOf(PropTypes.any).isRequired,
   account: PropTypes.objectOf(PropTypes.any).isRequired,
-  tags: PropTypes.objectOf(PropTypes.any).isRequired,
   database: PropTypes.objectOf(PropTypes.any).isRequired,
-  tasks: PropTypes.arrayOf(PropTypes.any).isRequired,
   deleteDatabaseSchema: PropTypes.func.isRequired,
   boardId: PropTypes.number.isRequired,
   addDatabaseSchema: PropTypes.func.isRequired,
   updateDatabaseSchema: PropTypes.func.isRequired,
-  comments: PropTypes.arrayOf(PropTypes.any).isRequired,
-  attachments: PropTypes.arrayOf(PropTypes.any).isRequired,
-  descriptions: PropTypes.arrayOf(PropTypes.any).isRequired,
 };
 
 const mapStateToProps = (state) => {
