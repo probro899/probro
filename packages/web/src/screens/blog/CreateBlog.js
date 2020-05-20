@@ -11,7 +11,6 @@ import { addBlog, updateBlog } from './helper-functions';
 import { ENDPOINT } from '../../config';
 import BlogToolbar from './BlogToolbar';
 import CoverImage from './CoverImage';
-import { Spinner } from '../../common';
 
 
 class Blogs extends Component {
@@ -73,9 +72,12 @@ class Blogs extends Component {
 
   observeMutation = (mutationsList) => {
     const fileNames = [];
+    // console.log('mutt', mutationsList);
     for (let i = 0; i < mutationsList.length; i += 1) {
       const removeNodes = mutationsList[i].removedNodes;
+      const { addedNodes } = mutationsList[i];
       for (let j = 0; j < removeNodes.length; j += 1) {
+        if (addedNodes.length > j && addedNodes[i].src === removeNodes[j].src) return;
         if (removeNodes[j].localName === 'img') {
           const sp = removeNodes[j].src.split('/');
           fileNames.push(sp[sp.length - 1]);
@@ -323,7 +325,7 @@ class Blogs extends Component {
     try {
       const formData = new FormData();
       formData.append('data', JSON.stringify({ token: account.sessionId, fileType: 'image', content: 'blog' }));
-      formData.append('image', e.target.files[0]);
+      formData.append('file', e.target.files[0]);
       const uploadRes = await axios({
         config: {
           headers: {
@@ -334,15 +336,16 @@ class Blogs extends Component {
         url: `${ENDPOINT}/web/upload-file`,
         data: formData,
       });
-      console.log('response', uploadRes);
       if (uploadRes.status === 200) {
         // eslint-disable-next-line no-undef
         document.getElementById('editor').focus();
         document.execCommand('insertImage', false, `${ENDPOINT}/user/${10000000 + parseInt(account.user.id, 10)}/blog/${uploadRes.data}`);
         this.saveBlog();
+      } else {
+        alert('Please try with different image');
       }
     } catch (err) {
-      console.log('update profile error', err);
+      alert('Please try with different image');
     }
   }
 
