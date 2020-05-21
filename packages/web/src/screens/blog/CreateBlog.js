@@ -212,7 +212,7 @@ class Blogs extends Component {
     // for loading while saving blog
     this.setState({ saveLoading: true });
 
-    const { account, addDatabaseSchema, updateDatabaseSchema } = this.props;
+    const { account, history, addDatabaseSchema, updateDatabaseSchema } = this.props;
     if (coverImage.actualFile) {
       const formData = new FormData();
       formData.append('data', JSON.stringify({ token: account.sessionId, fileType: 'image', content: 'blog' }));
@@ -261,6 +261,7 @@ class Blogs extends Component {
         title,
         content: description,
       });
+      history.push(`/edit-blog/${account.user.slug}/${res}`);
       this.setState({ saveLoading: false, blogId: res, publish: 'draft' });
       return;
     }
