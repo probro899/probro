@@ -84,8 +84,9 @@ class ToolBar extends React.Component {
                 >
                   <Button
                     minimal
+                    onClick={this.generateReportHandler}
                   >
-                    <GoGraph size={20} onClick={this.generateReportHandler} />
+                    <GoGraph size={20} />
                   </Button>
                 </Tooltip>
               )
