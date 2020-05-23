@@ -1,14 +1,15 @@
 /* eslint-disable jsx-a11y/media-has-caption */
 import React from 'react';
+import { InputGroup, Button, Intent } from '@blueprintjs/core';
 import adapter from 'webrtc-adapter';
 import Janus from '../janus';
-import { InputGroup, Button } from '@blueprintjs/core';
+import mediaSelector from '../../../../common/communication/mediaSelector';
 
 class Index extends React.Component {
   constructor(props) {
     super(props);
     this.videoCall = null;
-    this.state = { janus: null, isJanusConnected: false };
+    this.state = { janus: null, isJanusConnected: false, currentState: null };
   }
 
   componentWillMount() {
@@ -21,11 +22,12 @@ class Index extends React.Component {
     });
     const janus = new Janus(
       {
-        server: 'http://localhost:8088/janus',
+        server: 'http://properclass.com:8088/janus',
+        iceServers: [{ urls: 'turn:properclass.com:3478?transport=tcp', username: 'properclass', credential: 'proper199201' }],
         success: () => {
           // Done! attach to plugin XYZ
           console.log('server is conneted now go for plugin atatachment');
-          this.setState({ isJanusConnected: true });
+          this.janusAttachment();
         },
         error: (cause) => {
           // Error, can't go on...
@@ -39,7 +41,7 @@ class Index extends React.Component {
   }
 
   janusAttachment = () => {
-    const janus = this.state.janus;
+    const { janus } = this.state;
     janus.attach(
       {
         plugin: 'janus.plugin.videocall',
@@ -48,7 +50,7 @@ class Index extends React.Component {
           console.log('Puligin handle', pluginHandle);
 
           this.videoCall = pluginHandle;
-          const body = { audio: true, video: true };
+          const body = { audio: true, video: false };
           this.videoCall.send({ message: body });
         },
         error: (cause) => {
@@ -63,76 +65,75 @@ class Index extends React.Component {
           // We got a message/event (msg) from the plugin
           // If jsep is not null, this involves a WebRTC negotiation
           console.log('onmessage', msg, jsep);
-          Janus.debug(" ::: Got a message :::");
-          Janus.debug(msg);
-          const result = msg["result"];
+          Janus.log(' ::: Got a message :::', msg);
+          const { result } = msg;
           console.log('Result', result);
           if (result !== null && result !== undefined) {
             if (result.list !== undefined && result.list !== null) {
               const { list } = result;
               Janus.debug('Got a list of registered peers:');
               Janus.debug(list);
-              for(var mp in list) {
-                Janus.debug("  >> [" + list[mp] + "]");
-              }
             } else if (result.event !== undefined && result.event !== null) {
               const { event } = result;
+              this.setState({ currentState: event });
               if (event === 'registered') {
-                const myusername = result['username'];
-                Janus.log('Successfully registered as ' + myusername + "!");
+                const myusername = result.username;
+                Janus.log('Successfully registered as ', myusername);
 
                 // Get a list of available peers, just for fun
-                this.videoCall.send({"message": { "request": "list" }});
+                this.videoCall.send({ message: { request: 'list' } });
                 // TODO Enable buttons to call now
 
-              } else if ( event === 'calling') {
+              } else if (event === 'calling') {
                 Janus.log('Waiting for the peer to answer...');
+                this.setState({ currentState: event });
                 // TODO Any ringtone?
               } else if (event === 'incomingcall') {
-                Janus.log("Incoming call from " + result["username"] + "!");
-                const yourusername = result["username"];
+                Janus.log('Incoming call from', result.username);
+                const yourusername = result.username;
+                this.setState({ currentState: event });
                 // Notify user
                 this.videoCall.createAnswer(
                   {
-                    jsep: jsep,
-                    media: { data: true },
+                    jsep,
+                    media: { video: true, audio: true },
                     success: (jsep) => {
-                      Janus.debug("Got SDP!");
+                      Janus.log('Got SDP!');
                       Janus.debug(jsep);
-                      const body = { "request": "accept" };
-                      this.videoCall.send({"message": body, "jsep": jsep});
+                      const body = { request: 'accept' };
+                      this.videoCall.send({ message: body, jsep });
                     },
                     error: (error) => {
-                      Janus.error("WebRTC error:", error);
+                      Janus.error('WebRTC error:', error);
                     }
                   });
               } else if (event === 'accepted') {
-                var peer = result["username"];
-                if(peer === null || peer === undefined) {
-                  Janus.log("Call started!");
+                const peer = result.username;
+                if (peer === null || peer === undefined) {
+                  // this.setState({ currentState: `Call Started ${peer}` });
                 } else {
-                  Janus.log(peer + " accepted the call!");
+                  Janus.log(peer, ' accepted the call!');
                 }
                 // Video call can start
-                if (jsep) this.videoCall.handleRemoteJsep({jsep: jsep});
+                if (jsep) this.videoCall.handleRemoteJsep({ jsep });
               } else if (event === 'update') {
                 // An 'update' event may be used to provide renegotiation attempts
                 if (jsep) {
                   if (jsep.type === 'answer') {
-                    this.videoCall.handleRemoteJsep({jsep: jsep});
+                    this.videoCall.handleRemoteJsep({ jsep });
                   } else {
                     this.videoCall.createAnswer(
                       {
-                        jsep: jsep,
-                        media: { data: true }, // Let's negotiate data channels as well
+                        jsep,
+                        media: { video: true, audio: true }, // Let's negotiate data channels as well
                         success: (jsep) => {
-                          Janus.debug("Got SDP!");
+                          Janus.debug('Got SDP!');
                           Janus.debug(jsep);
                           const body = { request: 'set' };
-                          this.videoCall.send({ message: body, "jsep": jsep});
+                          this.videoCall.send({ message: body, jsep });
                         },
                         error: (error) => {
-                          Janus.error("WebRTC error:", error);
+                          Janus.error('WebRTC error:', error);
                         },
                       });
                   }
@@ -179,15 +180,21 @@ class Index extends React.Component {
     this.setState({ [type]: e.target.value });
   }
 
-  onCallHandler = () => {
+  onAnswerHandler = () => {
+
+  }
+
+  onCallHandler = async (media) => {
     const { remoteUserName } = this.state;
+    // const stream = await mediaSelector('screenshare');
     this.videoCall.createOffer(
       {
         // No media property provided: by default,
         // it's sendrecv for audio and video
+        media,
         success: (jsep) => {
           // Got our SDP! Send our OFFER to the plugin
-          const body = {request: 'call', username: remoteUserName };
+          const body = { request: 'call', username: remoteUserName };
           this.videoCall.send({ message: body, jsep });
         },
         error: (error) => {
@@ -202,19 +209,26 @@ class Index extends React.Component {
       });
   }
 
+  callCloseHandler = () => {
+    this.videoCall.hangup();
+  }
+
   render() {
     console.log('Video Call state value', this.state);
-    const { isJanusConnected } = this.state;
-    if (isJanusConnected) {
-      this.janusAttachment();
-    }
+    const { currentState } = this.state;
     return (
       <div>
+        <h1>{currentState}</h1>
         <div style={{ width: '50%', marginTop: 10, padding: 10 }}>
           <InputGroup onChange={e => this.onInputChange('username', e)} placeholder="Enter your name" />
           <Button style={{ margin: 10 }} text="Register" intent="success" onClick={this.onUserRegister} />
-          <InputGroup placeholder="Enter remote user name" onChange={ e => this.onInputChange('remoteUserName', e)} />
-          <Button text="Call" onClick={this.onCallHandler} />
+          <InputGroup placeholder="Enter remote user name" onChange={e => this.onInputChange('remoteUserName', e)} />
+          <div>
+            <Button intent={Intent.SUCCESS} style={{ margin: 10 }} text="Audio Call" onClick={() => this.onCallHandler({ audio: true, videoSend: false, videoRecv: true })} />
+            <Button intent={Intent.SUCCESS} style={{ margin: 10 }} text="Video Call" onClick={() => this.onCallHandler({ video: true, audio: true })} />
+            <Button intent={Intent.SUCCESS} style={{ margin: 10 }} text="Screen Share" onClick={() => this.onCallHandler({ video: 'screen' })} />
+            <Button intent={Intent.DANGER} style={{ margin: 10 }} text="Close Call" onClick={this.callCloseHandler} />
+          </div>
         </div>
         <div>
           <span>local</span>
@@ -222,6 +236,7 @@ class Index extends React.Component {
             playsInline
             controlsList="noremoteplayback"
             autoPlay
+            controls
             id="left-video"
             style={{ height: 300, width: 300 }}
           />
@@ -229,6 +244,7 @@ class Index extends React.Component {
           <video
             playsInline
             controlsList="noremoteplayback"
+            controls
             autoPlay
             id="right-video"
             style={{ height: 300, width: 300 }}

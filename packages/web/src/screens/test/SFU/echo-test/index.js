@@ -19,7 +19,8 @@ class Index extends React.Component {
     });
     const janus = new Janus(
       {
-        server: 'http://localhost:8088/janus',
+        server: 'http://properclass.com:8088/janus',
+        iceServers: [{ urls: 'turn:properclass.com:3478?transport=tcp', username: 'properclass', credential: 'proper199201' }],
         success: () => {
           // Done! attach to plugin XYZ
           console.log('server is conneted now go for plugin atatachment');
@@ -52,7 +53,8 @@ class Index extends React.Component {
           echotest.createOffer(
             {
               // No media property provided: by default,
-              // it's sendrecv for audio and video
+              // it's sendrecv for audio and
+              media: {video: true, audio: true },
               success: (jsep) => {
                 // Got our SDP! Send our OFFER to the plugin
                 echotest.send({ message: body, jsep: jsep });

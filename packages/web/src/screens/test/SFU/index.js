@@ -28,9 +28,9 @@ class Index extends React.Component {
     return (
       <div>
         <div style={{ display: 'flex' }}>
-          <Button intent="success" text="Echo server" onClick={() => this.setState({ currentTest: 'echo' })} />
-          <Button intent="success" text="Video Call" onClick={() => this.setState({ currentTest: 'videoCall' })} />
-          <Button intent="success" text="Video Conference" onClick={() => this.setState({ currentTest: 'videoConference' })} />
+          <Button style={{ margin: 10 }} intent="success" text="Echo server" onClick={() => this.setState({ currentTest: 'echo' })} />
+          <Button style={{ margin: 10 }} intent="success" text="Video Call" onClick={() => this.setState({ currentTest: 'videoCall' })} />
+          <Button style={{ margin: 10 }} intent="success" text="Video Conference" onClick={() => this.setState({ currentTest: 'videoConference' })} />
         </div>
         {this.renderTest()}
       </div>

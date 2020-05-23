@@ -16,7 +16,7 @@ class Index extends React.Component {
     // We use this other ID just to map our subscriptions to us
     this.mypvtid = null;
     this.feeds = [];
-    this.state = { janus: null, isJanusConnected: false };
+    this.state = { janus: null, isJanusConnected: false, mypvtid: null, myid: null, remoteStreams: {} };
     this.remoteFeed = null;
   }
 
@@ -32,6 +32,7 @@ class Index extends React.Component {
     const janus = new Janus(
       {
         server: 'http://localhost:8088/janus',
+        iceServers: [{ urls: 'turn:properclass.com:3478?transport=tcp', username: 'properclass', credential: 'proper199201' }],
         success: () => {
           // Done! attach to plugin XYZ
           console.log('server is conneted now go for plugin atatachment');
@@ -47,6 +48,17 @@ class Index extends React.Component {
       });
     this.setState({ janus });
   }
+
+  componentDidUpdate() {
+    const { remoteStreams } = this.state;
+    Object.keys(remoteStreams).forEach((id) => {
+      const videoElement = document.getElementById(id);
+      if (videoElement) {
+        videoElement.srcObject = remoteStreams[id].stream;
+      }
+    });
+  }
+
 
   janusAttachment = () => {
     const { janus } = this.state;
@@ -82,8 +94,9 @@ class Index extends React.Component {
             // Publisher/manager created, negotiate WebRTC and attach to existing feeds, if any
             this.myid = msg.id;
             this.mypvtid = msg.private_id;
+            this.setState({ myid: msg.id, mypvtid: msg.private_id });
             console.log('Successfully joined room ', msg.room, 'with ID', this.myid);
-            this.publishOwnFeed(true);
+            // this.publishOwnFeed(true);
             // Any new feed to attach to?
             if (msg.publishers !== undefined && msg.publishers !== null) {
               const list = msg.publishers;
@@ -108,6 +121,7 @@ class Index extends React.Component {
               // One of the publishers has gone away?
               const { leaving } = msg;
               Janus.log('Publisher left: ', leaving);
+              this.setState({ remoteStreams: { ...this.state.remoteStreams, [leaving]: { leave: true } } });
               let remoteFeed = null;
               for (let i = 1; i < 6; i += 1) {
                 if (this.feeds[i] !== null && this.feeds[i] !== undefined && this.feeds[i].rfid === leaving) {
@@ -184,24 +198,23 @@ class Index extends React.Component {
     this.sfutest.send({ message: register });
   }
 
-  publishOwnFeed = (useAudio) => {
+  publishOwnFeed = (media) => {
     // Publish our stream
     this.sfutest.createOffer(
       {
         // Add data:true here if you want to publish datachannels as well
-        media: { audioRecv: false, videoRecv: false, audioSend: true, videoSend: true }, // Publishers are sendonly
-        simulcast: false,
-        simulcast2: false,
+        media, // Publishers are sendonly
         success: (jsep) => {
           console.log('Got publisher SDP!', jsep);
-          const publish = { request: 'configure', audio: useAudio, video: true };
-          this.sfutest.send({ message: publish, jsep: jsep });
+          const publish = { request: 'configure', audio: true, video: true };
+          this.sfutest.send({ message: publish, jsep });
         },
         error: (error) => {
           console.error('error on publishing own feed', error);
         },
       });
   }
+
 
 
 newRemoteFeed = (id, display, audio, video) => {
@@ -243,6 +256,7 @@ newRemoteFeed = (id, display, audio, video) => {
         if (msg.error !== undefined && msg.error !== null) {
           console.error(msg.error);
         } else if (event != undefined && event != null) {
+          console.log('Remote Feed Event', msg);
           if (event === 'attached') {
             // Subscriber created and attached
             console.log('create element for remote video');
@@ -272,7 +286,7 @@ newRemoteFeed = (id, display, audio, video) => {
               jsep,
               // Add data:true here if you want to subscribe to datachannels as well
               // (obviously only works if the publisher offered them in the first place)
-              media: { audioSend: false, videoSend: false },	// We want recvonly audio/video
+              media: { audioSend: false, videoSend: false }, // We want recvonly audio/video
               success: (jsep) => {
                 console.log('Got SDP! in feed answer', jsep);
                 const body = { request: 'start', room: this.myroom };
@@ -293,25 +307,88 @@ newRemoteFeed = (id, display, audio, video) => {
       onremotestream: (stream) => {
         console.log('Remote feed #', remoteFeed.rfindex);
         console.log('remote stream', stream);
-        const remoteVideo = document.getElementById('remote-video');
-        remoteVideo.srcObject = stream;
+        this.setState({ remoteStreams: { ...this.state.remoteStreams, [id]: { id, stream, display, leave: false } } });
+        // const remoteVideo = document.getElementById('remote-video');
+        // remoteVideo.srcObject = stream;
       },
       oncleanup: () => {
         console.log(' ::: Got a cleanup notification (remote feed ', id, ') :::');
       },
     });
-  }
-
+}
 
   inputHandler = (e) => {
     this.setState({ username: e.target.value });
   }
 
+  onUnPublishHandler = () => {
+    const unpublish = { request: 'unpublish' };
+    this.sfutest.send({ message: unpublish });
+  }
+
+  onHangUp = () => {
+    this.sfutest.hangup();
+  }
+
+  videoElement = ({ id, display }) => {
+    return (
+      <div>
+        <video
+          playsInline
+          controlsList="noremoteplayback"
+          autoPlay
+          id={id}
+          controls
+          style={{ height: 300, width: 300 }}
+        />
+        <h2>{display}</h2>
+      </div>
+    );
+  }
+
+
   render() {
+    const { myid, mypvtid, remoteStreams } = this.state;
+    console.log('Remote Streams', this.state);
     return (
       <div>
         <InputGroup onChange={this.inputHandler} placeholder="enter your display name" />
         <Button intent="success" style={{ margin: 10 }} text="Join" onClick={this.joinHandler} />
+        {myid && mypvtid && (
+        <div>
+          <Button
+            intent="success"
+            style={{ margin: 10 }}
+            text="Audio"
+            onClick={() => this.publishOwnFeed({ audioRecv: false, videoRecv: false, audioSend: true, videoSend: false })}
+          />
+          <Button
+            intent="success"
+            style={{ margin: 10 }}
+            text="Video"
+            onClick={() => this.publishOwnFeed({ audioRecv: false, videoRecv: false, audioSend: true, videoSend: true })}
+          />
+          <Button
+            intent="success"
+            style={{ margin: 10 }}
+            text="Screenshare"
+            onClick={() => this.publishOwnFeed({ audioRecv: false, videoRecv: false, audioSend: true, video: 'screen' })}
+          />
+          <Button
+            intent="success"
+            style={{ margin: 10 }}
+            text="Un Publish"
+            onClick={this.onUnPublishHandler}
+          />
+          <Button
+            intent="danger"
+            style={{ margin: 10 }}
+            text="Close Call"
+            onClick={this.onHangUp}
+          />
+        </div>
+        )}
+
         <div>
           <span>local</span>
           <video
@@ -319,16 +396,10 @@ newRemoteFeed = (id, display, audio, video) => {
             controlsList="noremoteplayback"
             autoPlay
             id="my-video"
+            controls
             style={{ height: 300, width: 300 }}
           />
-          <span>remote</span>
-          <video
-            playsInline
-            controlsList="noremoteplayback"
-            autoPlay
-            id="remote-video"
-            style={{ height: 300, width: 300 }}
-          />
+          {Object.values(remoteStreams).filter(obj => !obj.leave).map(sObj => this.videoElement(sObj))}
         </div>
       </div>
     );

@@ -67,6 +67,7 @@ class MainScreen extends React.Component {
     );
   }
 }
+
 const mapStateToProps = ({ account, navigate }) => {
   return { user: account.user, popNotification: navigate.popNotification };
 };
