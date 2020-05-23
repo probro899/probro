@@ -2,24 +2,13 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { AiFillFileAdd } from 'react-icons/ai';
-import client from '../../../socket';
+import posSorting from '../../../common/utility-functions';
 import * as actions from '../../../actions';
 import { PopoverForm } from '../../../components';
 import TaskFormStructure from './structure';
 
 class NewTask extends Component {
-  state = {
-    // if to open the popover to add the title to the new task.
-    popOpen: false,
-    api: {},
-  };
-
-  async componentWillMount() {
-    const api = await client.scope('Mentee');
-    this.setState({
-      api,
-    });
-  }
+  state = { popOpen: false };
 
   handlePopOverForm = () => {
     const { popOpen } = this.state;
@@ -30,9 +19,7 @@ class NewTask extends Component {
         }
       });
     }
-    this.setState({
-      popOpen: !popOpen,
-    });
+    this.setState({ popOpen: !popOpen });
   }
 
   addNewTask = async (data) => {
@@ -42,15 +29,10 @@ class NewTask extends Component {
       boardId,
       database,
       addDatabaseSchema,
+      api,
     } = this.props;
-    const { api } = this.state;
-    const pos = Object.keys(database.BoardColumnCard.byId).reduce((count, obj) => {
-      if (database.BoardColumnCard.byId[obj].boardColumnId === columnId) {
-        // eslint-disable-next-line no-param-reassign
-        count += 16384;
-      }
-      return count;
-    }, 16384);
+    const sortedTasks = Object.values(database.BoardColumnCard.byId).filter(o => !o.deleteStatus && o.boardColumnId === columnId).sort(posSorting);
+    const pos = sortedTasks.length > 0 ? sortedTasks[sortedTasks.length - 1].position + 16384 : 16384;
     const res = await api.addBoardColumnCard({
       userId: account.user.id,
       timeStamp: Date.now(),
@@ -97,6 +79,7 @@ class NewTask extends Component {
 NewTask.propTypes = {
   columnId: PropTypes.number.isRequired,
   account: PropTypes.objectOf(PropTypes.any).isRequired,
+  api: PropTypes.objectOf(PropTypes.any).isRequired,
   database: PropTypes.objectOf(PropTypes.any).isRequired,
   boardId: PropTypes.number.isRequired,
   addDatabaseSchema: PropTypes.func.isRequired,

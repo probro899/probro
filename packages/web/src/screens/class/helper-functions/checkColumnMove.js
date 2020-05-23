@@ -1,12 +1,7 @@
 export default (columns, draggableId, destination, source) => {
   const columnId = Number(draggableId.split('column')[1]);
   const newColumns = columns;
-  let column = {};
-  columns.map((obj) => {
-    if (obj.id === columnId) {
-      column = obj;
-    }
-  });
+  const column = columns.find(obj => obj.id === columnId);
   // testing for the swapping either in start, middle or end.
   if (destination.index === 0) {
     column.position = columns[0].position / 2;

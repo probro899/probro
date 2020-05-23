@@ -1,5 +1,5 @@
 const withinColumn = (source, destination, columns, dragable) => {
-  const dropable = Number(source.droppableId);
+  const dropable = source.dropableId;
   const newColumns = columns;
   let columnIndex;
   let newColumn = {};
@@ -11,12 +11,7 @@ const withinColumn = (source, destination, columns, dragable) => {
       columnIndex = index;
     }
   });
-  let newTask = {};
-  newTasks.map((o) => {
-    if (o.id === dragable) {
-      newTask = o;
-    }
-  });
+  const newTask = newTasks.find(o => o.id === dragable);
   if (destination.index === 0) {
     newTask.position = newTasks[0].position / 2;
   } else if (destination.index === newTasks.length - 1) {
@@ -42,7 +37,7 @@ const withinColumn = (source, destination, columns, dragable) => {
 
 const outsideColumn = (source, destination, columns, destinationDropable, dragable) => {
   const newColumns = columns;
-  const sourceDropable = Number(source.droppableId);
+  const sourceDropable = source.dropableId;
   let sourceColumnIndex;
   let destinationColumnIndex;
   let fromColumn = {};
@@ -59,12 +54,7 @@ const outsideColumn = (source, destination, columns, destinationDropable, dragab
   });
   const fromTasks = fromColumn.tasks;
   const toTasks = toColumn.tasks;
-  let newTask;
-  fromTasks.map((obj) => {
-    if (obj.id === dragable) {
-      newTask = obj;
-    }
-  });
+  const newTask = fromTasks.find(o => o.id === dragable);
   fromTasks.splice(source.index, 1);
   if (destination.index === 0) {
     if (toTasks.length !== 0) {
@@ -78,6 +68,7 @@ const outsideColumn = (source, destination, columns, destinationDropable, dragab
     newTask.position = (toTasks[destination.index - 1].position
       + toTasks[destination.index].position) / 2;
   }
+  newTask.boardColumnId = destinationDropable;
   toTasks.splice(destination.index, 0, newTask);
   toColumn.tasks = toTasks;
   fromColumn.tasks = fromTasks;

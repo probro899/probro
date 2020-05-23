@@ -11,25 +11,13 @@ class Slider extends Component {
 
   componentDidMount() {
     const { data } = this.props;
-    const elems = [];
-    data.map((img) => {
-      elems.push(`${ENDPOINT}/images/slider/${img}`);
-    });
-    this.setState({
-      data: elems,
-    });
+    this.setState({ data: data.map(obj => `${ENDPOINT}/images/slider/${obj}`) });
   }
 
-  componentDidUpdate(prevProps) {
+  componentWillReceiveProps(nextProps) {
     const { data } = this.props;
-    if (data !== prevProps.data) {
-      const elems = [];
-      data.map((img) => {
-        elems.push(`${ENDPOINT}/images/slider/${img}`);
-      });
-      this.setState({
-        data,
-      });
+    if (data !== nextProps.data) {
+      this.setState({ data: nextProps.data.map(obj => `${ENDPOINT}/images/slider/${obj}`) });
     }
   }
 

@@ -31,7 +31,7 @@ export default (userList, data, ctx, allBoardActivities, type) => {
       boardActivitiesInDays = allFormater(allBoardActivities, isSameDay);
       labels = lableRenderHelper(allBoardActivities, differenceInDays);
   }
-  const title = 'Board Activities Chart';
+  const title = 'Class Activities Chart';
   const yAxesLabelString = 'Activities';
   const xAxesLabelString = 'No Of Days';
   const datasets = userList.map((user, idx) => ({

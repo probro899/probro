@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import TaskOverlay from './TaskOverlay';
 import Column from './Column';
 import ToolBar from './Toolbar';
@@ -63,11 +62,6 @@ class Classes extends Component {
     this.setState({ tasks: Object.values(tasks.byId), columns: wholeColumns.sort(posSorting), comments: Object.values(comments.byId).sort(timeStampSorting), attachments: Object.values(attachments.byId), descriptions: Object.values(descriptions.byId) });
   }
 
-  // all the drag and drop will be handled here
-  onDragEnd = async (result) => {
-    // what to do when they swap the cards
-  }
-
   toggleTaskOverlay = (id) => {
     const { taskOverlayIsOpen } = this.state;
     this.setState({ taskIdInOverlay: id, taskOverlayIsOpen: !taskOverlayIsOpen });
@@ -100,47 +94,30 @@ class Classes extends Component {
           className="class-wrapper"
           style={{ height: window.innerHeight }}
         >
-          <DragDropContext
-            onDragEnd={this.onDragEnd}
-          >
-            <Droppable
-              droppableId="all-columns"
-              direction="horizontal"
-              type="column"
-            >
-              { provided => (
-                <div
-                  className="columns"
-                  {...provided.droppableProps}
-                  ref={provided.innerRef}
-                >
-                  {
-                    columns.filter(o => !o.deleteStatus).map((column, index) => {
-                      if (column.boardId === classId) {
-                        return (
-                          <Column
-                            key={`column${column.id}`}
-                            column={column}
-                            columnId={column.id}
-                            index={index}
-                            api={api}
-                            tags={tags}
-                            boardId={classId}
-                            addDatabaseSchema={addDatabaseSchema}
-                            updateDatabaseSchema={updateDatabaseSchema}
-                            deleteDatabaseSchema={deleteDatabaseSchema}
-                            // passing it for the task overlay open
-                            onTaskClick={this.toggleTaskOverlay}
-                          />
-                        );
-                      }
-                    })
-                  }
-                  {provided.placeholder}
-                </div>
-              )}
-            </Droppable>
-          </DragDropContext>
+          <div className="columns">
+            {
+              columns.filter(o => !o.deleteStatus).map((column, index) => {
+                if (column.boardId === classId) {
+                  return (
+                    <Column
+                      key={`column${column.id}`}
+                      column={column}
+                      columnId={column.id}
+                      index={index}
+                      api={api}
+                      tags={tags}
+                      boardId={classId}
+                      addDatabaseSchema={addDatabaseSchema}
+                      updateDatabaseSchema={updateDatabaseSchema}
+                      deleteDatabaseSchema={deleteDatabaseSchema}
+                      // passing it for the task overlay open
+                      onTaskClick={this.toggleTaskOverlay}
+                    />
+                  );
+                }
+              })
+            }
+          </div>
         </div>
         <TaskOverlay
           apis={api}

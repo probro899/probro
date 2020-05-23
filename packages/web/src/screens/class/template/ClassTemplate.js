@@ -15,7 +15,7 @@ const Template = ({ user, obj }) => {
         </div>
         <div className="class-detail">
           <span className="name">
-            Properclass
+            Proper Class
           </span>
           <span className="date">{new Date().toDateString()}</span>
         </div>
@@ -29,6 +29,7 @@ Template.propTypes = {
   obj: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
+
 class ClassTemplate extends React.Component {
   constructor(props) {
     super(props);
@@ -41,6 +42,7 @@ class ClassTemplate extends React.Component {
       const user = data.users[obj.userId];
       return <Template key={`template-${obj.id}`} user={user} obj={obj} />;
     });
+    if (templates.length === 0) return <p className="no-template">Templates coming soon!</p>;
     return templates;
   }
 

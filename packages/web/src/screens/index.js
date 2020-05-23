@@ -6,7 +6,7 @@ import * as actions from '../actions';
 import HomePage from './home';
 import { Login, Registration } from './auth';
 import DashBoard from './dashboard/Home';
-import ClassManager from './class/ClassManager';
+import ClassManager from './class';
 import Forget from './auth/forgot-password';
 import Reset from './auth/change-password';
 import { CreateBlog, PublicBlog } from './blog';
