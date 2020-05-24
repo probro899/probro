@@ -15,13 +15,15 @@ var _cache2 = _interopRequireDefault(_cache);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = (id, boardDetails) => {
+  // console.log('get notification', id);
   const allDbNotifications = _cache2.default.get('Notification');
   const allDbNotificationsReadStatus = _cache2.default.get('NotificationReadStatus');
 
-  const boardNotifications = boardDetails.allBoards.map(b => allDbNotifications.filter(n => n.boardId === b.id && n.type === 'board'));
+  const boardNotifications = (0, _flat2.default)(boardDetails.allBoards.map(b => allDbNotifications.filter(n => n.boardId === b.id && n.type === 'board'))).filter(n => n.userId !== parseInt(id, 10));
   // console.log('all Board notification', flat(boardNotifications));
-  const userNotification = allDbNotifications.filter(n => n.userId === id);
-  const Notification = [...(0, _flat2.default)(boardNotifications), ...userNotification];
+  const userNotification = allDbNotifications.filter(n => n.userId === id && n.type !== 'board');
+  // console.log('board notifications', boardNotifications);
+  const Notification = [...boardNotifications, ...userNotification];
   // const notificationReadStatusPrmises = [];
   // Notification.forEach(n => notificationReadStatusPrmises.push(find('NotificationReadStatus', { notifId: n.id })));
 

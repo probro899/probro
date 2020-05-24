@@ -8,6 +8,10 @@ var _https = require('https');
 
 var _https2 = _interopRequireDefault(_https);
 
+var _compression = require('compression');
+
+var _compression2 = _interopRequireDefault(_compression);
+
 var _http = require('http');
 
 var _http2 = _interopRequireDefault(_http);
@@ -46,7 +50,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 // const port = process.env.PORT || 443;
 const port = process.env.PORT || 4001;
-const app = (0, _express2.default)();
+const app = (0, _express2.default)((0, _compression2.default)());
 app.use((req, res, next) => {
   if (!req.secure && req.hostname === 'properclass.com' && req.get('X-Forwarded-Proto') === 'http') {
     res.redirect(301, `https://${req.get('Host')}${req.url}`);
@@ -80,7 +84,6 @@ const server = _http2.default.createServer(app);
   (0, _initCacheDB2.default)();
 
   // starting socket
-
   const socket = (0, _socket.start)({ server, url }, async session => {
     const { origin, token } = session.params;
     if (origin === 'web') {

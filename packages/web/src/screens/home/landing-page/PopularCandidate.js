@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { ENDPOINT } from '../../../config';
+import getName from '../../../common/utility-functions/getName';
 
 const file = require('../../../assets/icons/512h/uploadicon512.png');
 
@@ -43,9 +44,7 @@ class PopularCandidate extends React.Component {
         </div>
         <div className="popularDesc">
           <Link to={`user/${user.slug}`} className="popularName">
-            {
-              `${user.firstName} ${user.middleName ? `${user.middleName} ` : ''}${user.lastName}`
-            }
+            {getName(user)}
           </Link>
           <p className="popularExpertize">
             { candidate.expertize }

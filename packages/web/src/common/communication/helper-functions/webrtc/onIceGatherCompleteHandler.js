@@ -12,7 +12,7 @@ export default (props, state) => async (userId, iceState) => {
 
     if (iceState === 'complete') {
       const iceCandidates = webRtc.iceCandidates[userId];
-      console.log(`${userId}) ICE GATHER COMPLETE`, iceCandidates);
+      // console.log(`${userId}) ICE GATHER COMPLETE`, iceCandidates);
       await updateWebRtc('iceCandidates', { ...webRtc.iceCandidates, [userId]: { ...webRtc.iceCandidates[userId], isGatherComplete: true } });
       if (iceCandidates && !iceCandidates.sendStatus && iceCandidates.doSend) {
         const finalCandidates = iceCandidates.candidates.map(c => JSON.stringify(c.candidate));

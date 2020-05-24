@@ -2,24 +2,13 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { MdLibraryAdd } from 'react-icons/md';
+import posSorting from '../../../common/utility-functions';
 import * as actions from '../../../actions';
-import client from '../../../socket';
 import { PopoverForm } from '../../../components';
 import ColumnFormStructure from './structure';
 
 class NewColumn extends Component {
-  state = {
-    // if to open the popover to add the title to the new column.
-    popOpen: false,
-    api: {},
-  };
-
-  async componentWillMount() {
-    const api = await client.scope('Mentee');
-    this.setState({
-      api,
-    });
-  }
+  state = { popOpen: false };
 
   handlePopOverForm = () => {
     const { popOpen } = this.state;
@@ -34,15 +23,9 @@ class NewColumn extends Component {
   }
 
   addNewColumn = async (data) => {
-    const { classId, account, database, addDatabaseSchema } = this.props;
-    const { api } = this.state;
-    const pos = Object.keys(database.BoardColumn.byId).reduce((count, obj) => {
-      if (database.BoardColumn.byId[obj].boardId === classId) {
-        // eslint-disable-next-line no-param-reassign
-        count += 16384;
-      }
-      return count;
-    }, 16384);
+    const { classId, account, database, addDatabaseSchema, api } = this.props;
+    const sortedCols = Object.values(database.BoardColumn.byId).filter(o => !o.deleteStatus && o.boardId === classId).sort(posSorting);
+    const pos = sortedCols.length > 0 ? sortedCols[sortedCols.length - 1].position + 16384 : 16384;
     const res = await api.addBoardColumn({
       userId: account.user.id,
       timeStamp: Date.now(),
@@ -93,6 +76,7 @@ NewColumn.propTypes = {
   account: PropTypes.objectOf(PropTypes.any).isRequired,
   database: PropTypes.objectOf(PropTypes.any).isRequired,
   classId: PropTypes.number,
+  api: PropTypes.objectOf(PropTypes.any).isRequired,
   addDatabaseSchema: PropTypes.func.isRequired,
 };
 

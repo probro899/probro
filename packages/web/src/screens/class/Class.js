@@ -8,7 +8,8 @@ import { DeletePopOver } from '../../common';
 import boardStructure from './ClassComponents/structure';
 import client from '../../socket';
 import { PopoverForm, MoreButton } from '../../components';
-import ClassTemplate from './ClassTemplate';
+import ClassTemplate from './template/ClassTemplate';
+import getName from '../../common/utility-functions/getName';
 
 class Class extends Component {
   state = {
@@ -161,9 +162,7 @@ class Class extends Component {
                     </div>
                     <div className="class-detail">
                       <span className="name">
-                        {
-                          user.middleName ? `${user.firstName} ${user.middleName} ${user.lastName}` : `${user.firstName} ${user.lastName}`
-                        }
+                        {getName(user)}
                       </span>
                       <span className="date">{new Date(obj.timeStamp).toDateString()}</span>
                     </div>

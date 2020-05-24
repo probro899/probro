@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.onPcStatusChange = exports.callStatusChange = exports.callClose = exports.addICeCandidate = exports.createAnswer = exports.createOffer = undefined;
+exports.commPingPong = exports.onPcStatusChange = exports.callStatusChange = exports.callClose = exports.addICeCandidate = exports.createAnswer = exports.createOffer = undefined;
 
 var _createOffer = require('./create-offer');
 
@@ -36,3 +36,4 @@ exports.addICeCandidate = _addIceCandidate2.default;
 exports.callClose = _callClose2.default;
 exports.callStatusChange = _callStatusHandler2.default;
 exports.onPcStatusChange = _onPcStatusChange2.default;
+exports.commPingPong = _createOffer.commPingPong;

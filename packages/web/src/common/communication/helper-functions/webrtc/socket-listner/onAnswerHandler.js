@@ -2,7 +2,7 @@ import store from '../../../../../store';
 
 export default async (props, state, data) => {
   try {
-    console.log(`${data.uid}) ANSWER ARRIVE`, data);
+    // console.log(`${data.uid}) ANSWER ARRIVE`, data);
     const { apis } = state;
     const { updateWebRtc } = props;
     const { webRtc, account, database } = store.getState();

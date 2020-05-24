@@ -23,7 +23,7 @@ async function addUserPortal(record) {
 }
 
 async function addUserMessage(record) {
-  const res = await add.call(this, 'UserMessage', record);
+  const res = await add.call(this, 'UserMessage', { ...record, timeStamp: Date.now() });
   return res;
 }
 

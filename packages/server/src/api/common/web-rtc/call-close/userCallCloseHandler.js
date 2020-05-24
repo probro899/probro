@@ -5,6 +5,7 @@ import updateDatabaseCache from '../../../../cache/database/update';
 import schema from '@probro/common/src/schema';
 
 export default async (insert, callCloseDetail, userList, session) => {
+  console.log('User clase handler called', callCloseDetail, userList);
   let insertRes = null;
   if (!callCloseDetail.callEndReply) {
     insertRes = await insert('UserMessage', {

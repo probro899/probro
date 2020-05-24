@@ -33,14 +33,12 @@ exports.default = (session, data) => {
   const { offerDetail } = data;
 
   // Checking either do offer or not
-  const doOffer = (0, _registerUser2.default)(offerDetail, data.userList[0].userId);
-
+  const doOffer = (0, _registerUser2.default)(offerDetail, data.userList[0].userId, session);
   if (doOffer) {
     const allBoardUserSession = session.getChannel(`${offerDetail.broadCastType}-${offerDetail.broadCastId}`);
     const liveBoardChannelBefore = session.getChannel(`${offerDetail.broadCastType}-live-${offerDetail.broadCastId}`);
 
     if (!liveBoardChannelBefore) {
-
       // console.log('Offer Lelel 1');
       allBoardUserSession.forEach(s => s.subscribe(`${offerDetail.broadCastType}-live-${offerDetail.broadCastId}`));
 
@@ -98,4 +96,5 @@ exports.default = (session, data) => {
       (0, _registerOffer2.default)(offerDetail, data.userList[0].userId);
     }
   }
+  // console.log('Live Board details', data.userList[0].userId, doOffer, liveBoard.getBoard(offerDetail.broadCastId));
 };

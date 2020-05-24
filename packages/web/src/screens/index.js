@@ -6,7 +6,7 @@ import * as actions from '../actions';
 import HomePage from './home';
 import { Login, Registration } from './auth';
 import DashBoard from './dashboard/Home';
-import ClassManager from './class/ClassManager';
+import ClassManager from './class';
 import Forget from './auth/forgot-password';
 import Reset from './auth/change-password';
 import { CreateBlog, PublicBlog } from './blog';
@@ -19,6 +19,7 @@ import TakeTour from './home/take-a-tour';
 import { About, Privacy, Terms, Support, Career, Report, Business, Services } from '../common/footer/footer-links';
 import NotifyBar from '../common/NotifyBar';
 import ClassTemplate from './class/template';
+import SfuTest from './test/SFU/index';
 
 class MainScreen extends React.Component {
   constructor(props) {
@@ -36,6 +37,7 @@ class MainScreen extends React.Component {
             <Route exact path="/about" component={About} />
             <Route exact path="/privacy-policy" component={Privacy} />
             <Route exact path="/terms-and-conditions" component={Terms} />
+            <Route exact path="/test/sfu" component={SfuTest} />
             <Route path="/search" component={SearchResult} />
             <Route exact path="/support" component={Support} />
             <Route exact path="/career" component={Career} />
@@ -57,6 +59,7 @@ class MainScreen extends React.Component {
             <Route path="/user/:userId" component={PublicProfile} />
             <Route path="/:id" component={DashBoard} />
             <Route exact path="/" component={HomePage} />
+
           </Switch>
           {user && <Communication />}
         </div>
@@ -64,6 +67,7 @@ class MainScreen extends React.Component {
     );
   }
 }
+
 const mapStateToProps = ({ account, navigate }) => {
   return { user: account.user, popNotification: navigate.popNotification };
 };

@@ -10,7 +10,7 @@ class Popular extends Component {
     return (
       <div className="popularContainer">
         <div className="popularHeader">
-          <p>Connect with the best Mentors in the Planet</p>
+          <p>Featured Mentors at Proper Class</p>
         </div>
         <div className="popularCover">
           {

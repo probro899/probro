@@ -46,7 +46,7 @@ class Report extends React.Component {
     const { isOpen, onClose, boardId, boards, users, boardMembers } = this.props;
     const { boardActivities, error, boardCommunicationActivities, loading, pdfUrl } = this.state;
     const boardName = boards.byId[boardId].name;
-    const boardMemberList = Object.values(boardMembers.byId).filter(bm => bm.boardId === boardId);
+    const boardMemberList = Object.values(boardMembers.byId).filter(bm => bm.boardId === boardId && !bm.deleteStatus);
     const userList = boardMemberList.map(bm => Object.values(users.byId).find(u => u.id === bm.tuserId));
     const tableData = boardActivities ? userList.map(u => findTableData(u, boardActivities, boardCommunicationActivities)) : [];
     return (
@@ -69,11 +69,11 @@ class Report extends React.Component {
                 <Table
                   headers={{
                     userName: 'Users',
-                    noOfCreateCard: 'No of cards created',
-                    noOfMoveCard: 'No of card moves',
-                    noOfComment: 'No of comments',
-                    noOfHours: 'Call time(hr)',
-                    noOfMessage: 'Total messages sent',
+                    noOfCreateCard: 'No of Tasks created',
+                    noOfMoveCard: 'No of Tasks moved',
+                    noOfComment: 'No of Comments',
+                    noOfHours: 'Call Time(hr)',
+                    noOfMessage: 'Total Messages sent',
                   }}
                   data={tableData}
                 />

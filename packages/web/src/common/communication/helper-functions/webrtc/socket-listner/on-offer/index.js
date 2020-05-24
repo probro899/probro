@@ -5,7 +5,7 @@ import store from '../../../../../../store';
 import autoCloseHandler from '../../autoCloseHandler';
 
 const initCall = async (props, state, data, webRtc) => {
-  console.log('call init', data);
+  // console.log('call init', data);
   await offerInitialization(props, state, data);
   if (webRtc.showCommunication) {
     await offerOnCommunicationOpen(props, state, data);
@@ -37,7 +37,7 @@ const declineCall = async (status, props, state, data, webRtc) => {
 
 export default async (props, state, data) => {
   const { webRtc } = store.getState();
-  console.log(`${data.uid}) OFFER ARRIVED`, data);
+  // console.log(`${data.uid}) OFFER ARRIVED`, data);
 
   const { uid, connectionId, broadCastType, broadCastId } = data;
   const type = broadCastType === 'Board' ? 'board' : 'user';

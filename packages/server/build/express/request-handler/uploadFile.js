@@ -30,6 +30,10 @@ var _uploadFile = require('../../api/uploadFile');
 
 var _uploadFile2 = _interopRequireDefault(_uploadFile);
 
+var _fileCompressor = require('./fileCompressor');
+
+var _fileCompressor2 = _interopRequireDefault(_fileCompressor);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 const storage = _multer2.default.diskStorage({
@@ -114,6 +118,7 @@ exports.default = async (req, res) => {
         res.send(err.message);
       } else {
         delete req.body.token;
+        (0, _fileCompressor2.default)(JSON.parse(req.body.data), req.file.filename);
         const updateRes = await (0, _uploadFile2.default)(_extends({}, req.body, { image: req.file.filename }));
         if (updateRes) {
           res.statusCode = 200;

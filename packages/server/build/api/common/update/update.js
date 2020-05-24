@@ -18,7 +18,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 exports.default = async function Update(table, value, condition) {
   try {
-    console.log('Main update called', table, value, condition);
     delete value.todo;
     const { session } = this;
     const { broadCastId } = value;
@@ -30,7 +29,7 @@ exports.default = async function Update(table, value, condition) {
       return findOneRes;
     });
     if (broadCastId) {
-      console.log('res', res);
+      // console.log('res', res);
       const channel = session.channel(broadCastId);
       channel.dispatch(_schema2.default.update(table, res));
       _cache.database.update(table, _schema2.default.update(table, res));

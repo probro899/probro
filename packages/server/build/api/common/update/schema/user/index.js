@@ -31,6 +31,15 @@ var _updateUserCache2 = _interopRequireDefault(_updateUserCache);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /* eslint-disable import/no-cycle */
+async function updateUser(record) {
+  const { session } = this;
+  const res = await _update2.default.call(this, 'User', ...record);
+  const datatobeUpdate = {
+    User: res
+  };
+  (0, _updateUserCache2.default)(datatobeUpdate, session, 'update');
+}
+
 function updateUserWorkExperience(record) {
   _update2.default.call(this, 'UserWorkExperience', ...record);
 }
@@ -110,4 +119,4 @@ function updateUserCarrierInterest(record) {
   _update2.default.call(this, 'UserCarrierInterest', record);
 }
 
-exports.default = [updateUserEducation, updateUserWorkExperience, updateUserSkill, updateUserPortal, updateUserConnection, updateUserCarrierInterest, updateUserMessage];
+exports.default = [updateUserEducation, updateUserWorkExperience, updateUserSkill, updateUserPortal, updateUserConnection, updateUserCarrierInterest, updateUserMessage, updateUser];

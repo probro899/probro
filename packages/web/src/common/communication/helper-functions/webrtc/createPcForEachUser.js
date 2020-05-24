@@ -21,7 +21,7 @@ export default async (boardId, props, state) => {
       const userListAll = boardmembers.map(bm => database.User.byId[bm.tuserId]);
       userList = userListAll.filter(user => user.id !== account.user.id).filter(u => u.activeStatus);
     }
-    console.log('userList', userList);
+    // console.log('userList', userList);
     const peerConnectionPromises = userList.map(
       user => main(
         onIceCandidateHandler(props, state),

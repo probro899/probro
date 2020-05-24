@@ -38,7 +38,7 @@ exports.default = async (session, callCloseDetail) => {
   // console.log('AllLive sessions', allLiveSessions);
 
   // final call end to the live channel
-  channel.emit('callEnd', callCloseDetail, null, callCloseDetail.uid);
+  channel.emit('callEnd', callCloseDetail);
 
   // saying all  user to board active false
   if (allLiveSessions) {
@@ -50,6 +50,9 @@ exports.default = async (session, callCloseDetail) => {
   // upate own session to active false
   (0, _update2.default)('Board', _schema2.default.update('Board', { id: callCloseDetail.broadCastId, activeStatus: false }));
 
+  // stop heartbit checker
+  const { heartbitChecker } = _cache.liveBoard.getBoard(callCloseDetail.broadCastId);
+  clearInterval(heartbitChecker);
   // update live cache to empty
-  _cache.liveBoard.setBoard(callCloseDetail.broadCastId, {});
+  _cache.liveBoard.setBoard(callCloseDetail.broadCastId, undefined);
 }; /* eslint-disable import/no-cycle */

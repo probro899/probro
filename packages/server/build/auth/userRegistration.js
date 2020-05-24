@@ -11,6 +11,10 @@ var _v = require('uuid/v4');
 
 var _v2 = _interopRequireDefault(_v);
 
+var _urlSlug = require('url-slug');
+
+var _urlSlug2 = _interopRequireDefault(_urlSlug);
+
 var _schema = require('@probro/common/src/schema');
 
 var _schema2 = _interopRequireDefault(_schema);
@@ -51,8 +55,8 @@ exports.default = async record => {
         throw new Error('Emailisalreadytaken');
       }
       const hasPassword = await (0, _passwordHandler.genHashPassword)(record.password);
-      const firstNameLowerCase = `${record.firstName}`.toLowerCase();
-      const lastNameLowerCase = `${record.lastName}`.toLowerCase();
+      const firstNameLowerCase = (0, _urlSlug2.default)(`${record.firstName}`);
+      const lastNameLowerCase = (0, _urlSlug2.default)(`${record.lastName}`);
       const slug = `${firstNameLowerCase}-${lastNameLowerCase}-${Date.now()}`;
       const insertRes = await insert('User', _extends({}, record, { password: hasPassword, verify: false, verificationToken: token, slug }));
       _database2.default.update('User', _schema2.default.add('User', _extends({ id: insertRes }, record, { password: hasPassword, verify: false, verificationToken: token, slug })));
