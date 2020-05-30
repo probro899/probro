@@ -13,6 +13,8 @@ import { ENDPOINT } from '../../../../config';
 import { Spinner } from '../../../../common';
 import RoundPicture from '../../../../components/RoundPicture';
 import UserPortal from './UserPortal';
+import getName from '../../../../common/utility-functions/getName';
+import Activities from './activities';
 
 const file = require('../../../../assets/icons/512h/uploadicon512.png');
 const school = require('../../../../assets/icons/64w/school64.png');
@@ -77,21 +79,11 @@ class PublicProfile extends React.Component {
       database, updateWebRtc, addDatabaseSchema,
       updateDatabaseSchema,
     } = this.props;
-    const { loading, data } = this.state;
-    if (loading) {
-      return <Spinner />;
-    }
-    let loggedUserDetail = {};
-    Object.values(database.UserDetail.byId).map((obj) => {
-      if (account.user && account.user.id === obj.userId) {
-        loggedUserDetail = obj;
-      }
-    });
+    const { loading, data, apis } = this.state;
+    if (loading) return <Spinner />;
+    const loggedUserDetail = Object.values(database.UserDetail.byId).find(obj => account.user && account.user.id === obj.userId);
     const userDetails = data.userDetail;
-    const { user } = data;
-    const { apis } = this.state;
-    const { userEducation } = data;
-    const { userWorkExperience } = data;
+    const { user, userEducation, userWorkExperience } = data;
     const portals = data.userPortal;
     const imgUrl = data.userDetail.coverImage ? `${ENDPOINT}/user/${10000000 + parseInt(data.user.id, 10)}/profile/${data.userDetail.coverImage}` : defaultCover;
     const editCoverUrl = data.userDetail.coverEdit && `${ENDPOINT}/user/${10000000 + parseInt(data.user.id, 10)}/profile/${data.userDetail.coverEdit}`;
@@ -112,9 +104,7 @@ class PublicProfile extends React.Component {
           </div>
           <div className="top-details">
             <div className="desc">
-              <span className="name">
-                {user.middleName ? `${user.firstName} ${user.middleName} ${user.lastName}` : `${user.firstName} ${user.lastName}`}
-              </span>
+              <span className="name">{getName(user)}</span>
               <br />
               <Icon icon="locate" />
               <span className="country">
@@ -149,72 +139,65 @@ class PublicProfile extends React.Component {
               {portals.map(obj => <UserPortal key={obj.id} data={obj} />)}
             </div>
           </div>
-          <div className="education">
-            <p className="p-top">
-              <span>Education</span>
-            </p>
-            <div className="p-edu-list">
-              {userEducation.length !== 0 ? (
+          <div className="adv-body">
+            <div className="left-body">
+              <div className="education">
+                <p className="p-top">
+                  <span>Education</span>
+                </p>
                 <div className="p-edu-list">
-                  {
-                    userEducation.map(obj => (
-                      <div className="p-edu-list-i">
-                        <img src={school} alt="school icon" />
-                        <p>
-                          <span className="p-name-i">{obj.degree}</span>
-                          <br />
-                          <span>{obj.address}</span>
-                          <br />
-                          <span className="p-timeline">{`${obj.startTime} - ${obj.endTime}`}</span>
-                          <br />
-                        </p>
-                      </div>
-                    ))
+                  {userEducation.length !== 0 ? (
+                    <div className="p-edu-list">
+                      {
+                        userEducation.map(obj => (
+                          <div className="p-edu-list-i">
+                            <img src={school} alt="school icon" />
+                            <p>
+                              <span className="p-name-i">{obj.degree}</span>
+                              <br />
+                              <span>{obj.address}</span>
+                              <br />
+                              <span className="p-timeline">{`${obj.startTime} - ${obj.endTime}`}</span>
+                              <br />
+                            </p>
+                          </div>
+                        ))
+                      }
+                    </div>
+                  )
+                    : <div><span style={{ color: '#696969' }}>No School Added</span></div>
                   }
                 </div>
-              )
-                : (
-                  <div>
-                    <span style={{ color: '#696969' }}>No School Added</span>
-                  </div>
-                )
-              }
-            </div>
-          </div>
-          <div className="experience">
-            <p className="p-top">
-              <span>Experience</span>
-            </p>
-            <div className="p-exp-list">
-              {userWorkExperience.length !== 0 ? (
-                <div className="p-edu-list">
-                  {
-                    userWorkExperience.map(obj => (
-                      <div className="p-exp-list-i">
-                        <img src={office} alt="school icon" />
-                        <p>
-                          <span className="p-title-i">{obj.title}</span>
-                          <br />
-                          <span className="p-company-i">{obj.company}</span>
-                          <br />
-                          <span className="p-timeline">{`${obj.startTime} - ${obj.endTime}`}</span>
-                          <br />
-                          <span>{obj.summary}</span>
-                        </p>
-                      </div>
-                    ))
+              </div>
+              <div className="experience">
+                <p className="p-top">
+                  <span>Experience</span>
+                </p>
+                <div className="p-exp-list">
+                  {userWorkExperience.length !== 0 ? (
+                    <div className="p-edu-list">
+                      {
+                        userWorkExperience.map(obj => (
+                          <div className="p-exp-list-i">
+                            <img src={office} alt="school icon" />
+                            <p>
+                              <span className="p-title-i">{obj.title}</span>
+                              <br />
+                              <span className="p-company-i">{obj.company}</span>
+                              <br />
+                              <span className="p-timeline">{`${obj.startTime} - ${obj.endTime}`}</span>
+                              <br />
+                              <span>{obj.summary}</span>
+                            </p>
+                          </div>
+                        ))
+                      }
+                    </div>
+                  ) : <div><span style={{ color: '#696969' }}>No experience added</span></div>
                   }
                 </div>
-              )
-                : (
-                  <div>
-                    <span style={{ color: '#696969' }}>No experience added</span>
-                  </div>
-                )
-              }
-            </div>
-          </div>
-          <div className="skills">
+              </div>
+              <div className="skills">
             <p className="p-top">
               <span>Skills</span>
             </p>
@@ -222,6 +205,11 @@ class PublicProfile extends React.Component {
               {
                 data.userSkill.length === 0 ? 'No Skills Added' : JSON.parse(data.userSkill[0].skill).map((skill, idx) => <span key={idx}>{skill}</span>)
               }
+            </div>
+          </div>
+            </div>
+            <div className="right-body">
+              <Activities />
             </div>
           </div>
         </div>

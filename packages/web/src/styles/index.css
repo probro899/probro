@@ -207,6 +207,10 @@ top attachment etc.
 .task-container .pc-task-flag .pc-deadline-view p { font-size: 12px; padding: 3px; border-radius: 2.5px; background-color: green; color: #fff; }
 .task-container .pc-task-flag .pc-deadline-view p.expire { background-color: red; }
 .task-container .pc-task-name { margin: 0; font-weight: bold; }
+.task-container .task-footer { display: flex; }
+.task-container .task-footer .pc-item { padding-top: 3px; display: flex; align-items: center; margin-right: 10px; }
+.task-container .task-footer .pc-icon { fill: #137cbd; }
+.task-container .task-footer .pc-count { color: #137cbd; margin-left: 3px; font-size: 14px; }
 
 .classes { display: flex; flex-direction: column; padding: 5px; }
 .classes .header { padding: 10px; }
@@ -614,7 +618,7 @@ top attachment etc.
 .public-blog .response .comment-section .responses .i-response .comment-content .com-config small.danger u:hover { color: red; }
 .public-blog .response .comment-section .responses .i-response .comment-content .com-config small.primary u:hover { color: #137cbd; }
 
-.public-profile { margin-top: 60px; min-height: calc(100vh - 60px - 125px); flex: 0.8; display: flex; align-items: center; flex-direction: column; padding: 1px 3px; position: relative; }
+.public-profile { margin-top: 60px; min-height: calc(100vh - 60px - 125px); display: flex; flex-direction: column; padding: 1px 3px; position: relative; }
 .public-profile .cover-pic { overflow: hidden; width: 100%; height: calc((100vw * 0.81) * 0.33); }
 @media screen and (max-width: 855px) { .public-profile .cover-pic { height: calc(100vw * 0.33); } }
 .public-profile .cover-pic img { width: 100%; }
@@ -631,6 +635,12 @@ top attachment etc.
 .public-profile .top-details .desc .name { font-size: 20px; font-weight: bold; }
 .public-profile .bio { text-align: center; width: 100%; padding: 20px 5px; }
 .public-profile .bio p { font-family: 'Oxygen', sans-serif; font-size: 16px; word-wrap: break-word; }
+.public-profile .adv-body { display: flex; }
+.public-profile .adv-body .left-body { width: 50%; }
+.public-profile .adv-body .right-body { width: 50%; }
+@media screen and (max-width: 720px) { .public-profile .adv-body { flex-direction: column; }
+  .public-profile .adv-body .left-body { width: 100%; }
+  .public-profile .adv-body .right-body { width: 100%; } }
 .public-profile .education { padding: 20px 5px; width: 100%; }
 .public-profile .education p.p-top { font-size: 20px; display: flex; justify-content: space-between; padding-right: 5px; }
 .public-profile .education p.p-top svg { fill: #137cbd; }

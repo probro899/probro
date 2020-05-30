@@ -79,7 +79,6 @@ class Column extends Component {
       dragStartEnd,
       setDraggingContent,
       reference,
-      tags,
       api,
     } = this.props;
     const { columnDeletePopOver, columnEditPopOver } = this.state;
@@ -110,7 +109,6 @@ class Column extends Component {
                 <Task
                   task={task}
                   index={index}
-                  tags={tags}
                   onClick={onTaskClick}
                 />
               </TaskWrapper>
@@ -125,7 +123,6 @@ class Column extends Component {
 
 Column.propTypes = {
   column: PropTypes.objectOf(PropTypes.any).isRequired,
-  tags: PropTypes.objectOf(PropTypes.any).isRequired,
   api: PropTypes.objectOf(PropTypes.any).isRequired,
   columnId: PropTypes.number.isRequired,
   onTaskClick: PropTypes.func.isRequired,

@@ -3,15 +3,10 @@
 .public-profile {
   margin-top: $navbarHeight;
   min-height: calc(100vh - #{$navbarHeight} - #{$footerHeight});
-  flex: 0.8;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  padding: 1px 3px;
-  position: relative;
+  display: flex; flex-direction: column;
+  padding: 1px 3px; position: relative;
   .cover-pic {
-    overflow: hidden;
-    width: 100%;
+    overflow: hidden; width: 100%;
     // to prevent overflow of unedited cover
     height: calc((100vw * 0.81) * 0.33);
     @media screen and (max-width: 855px) {
@@ -22,15 +17,11 @@
     }
   }
   .profilePic {
-    position: absolute;
-    left: 10px;
-    border: 1px solid $normalBorder;
-    box-shadow: 0px 0px 5px 1px $normalShadowColor;
-    border-radius: 50%;
+    position: absolute; left: 10px; border: 1px solid $normalBorder;
+    box-shadow: 0px 0px 5px 1px $normalShadowColor; border-radius: 50%;
     width: calc((100vw * 0.81 * 0.33) * 0.55);
     height: calc((100vw * 0.81 * 0.33) * 0.55);
-    overflow: hidden;
-    top: calc((100vw * 0.81) * 0.33 * 0.4);
+    overflow: hidden; top: calc((100vw * 0.81) * 0.33 * 0.4);
     @media screen and (max-width: 855px) {
       top: calc(100vw * 0.33 * 0.4);
       left: 20px;
@@ -39,21 +30,14 @@
     }
   }
   .top-details {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    background: $backgroundColor;
-    padding: 5px;
+    width: 100%; display: flex; justify-content: space-between;
+    background: $backgroundColor; padding: 5px;
     .name {
       font-size: 20px;
       font-weight: bold;
     }
     .connect-btns {
-      flex: 0.3;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
+      flex: 0.3; display: flex; flex-direction: column; justify-content: center; align-items: center;
       .con {
         display: flex;
         .con-option {
@@ -86,6 +70,18 @@
       font-family: 'Oxygen', sans-serif;
       font-size: 16px;
       word-wrap: break-word;
+    }
+  }
+
+  // adv-body style 
+  .adv-body {
+    display: flex;
+    .left-body { width: 50%; }
+    .right-body { width: 50%; }
+    @media screen and (max-width: 720px) {
+      flex-direction: column;
+      .left-body { width: 100%;}
+      .right-body { width: 100%;}
     }
   }
   .education {

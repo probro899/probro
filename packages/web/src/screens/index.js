@@ -34,10 +34,10 @@ class MainScreen extends React.Component {
         <div className="home-screen">
           {popNotification.active && <NotifyBar onClose={() => updateNav({ schema: 'popNotification', data: { message: '', active: false, intent: '' } })} message={popNotification.message} intent={popNotification.intent} />}
           <Switch>
+            <Route exact path="/test" component={SfuTest} />
             <Route exact path="/about" component={About} />
             <Route exact path="/privacy-policy" component={Privacy} />
             <Route exact path="/terms-and-conditions" component={Terms} />
-            <Route exact path="/test/sfu" component={SfuTest} />
             <Route path="/search" component={SearchResult} />
             <Route exact path="/support" component={Support} />
             <Route exact path="/career" component={Career} />
@@ -59,7 +59,6 @@ class MainScreen extends React.Component {
             <Route path="/user/:userId" component={PublicProfile} />
             <Route path="/:id" component={DashBoard} />
             <Route exact path="/" component={HomePage} />
-
           </Switch>
           {user && <Communication />}
         </div>
