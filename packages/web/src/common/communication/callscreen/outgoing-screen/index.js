@@ -47,15 +47,15 @@ class Index extends React.Component {
     const { autoClose } = this.state;
     if (webRtc !== nextProps.webRtc) {
       if (nextProps.webRtc.localCallHistory.chatHistory.type === 'user') {
-        const peerConnection = nextProps.webRtc.peerConnections[webRtc.localCallHistory.chatHistory.user.user.id];
-        this.setState({ callStatus: peerConnection.iceCandidateStatus });
-        if (peerConnection.iceCandidateStatus === 'busy') {
-          this.setState({ callStatus: peerConnection.iceCandidateStatus });
-          if (!autoClose) {
-            const autoTimeOut = setTimeout(this.callReject, 2000);
-            this.setState({ autoClose: autoTimeOut });
-          }
-        }
+        // const peerConnection = nextProps.webRtc.peerConnections[webRtc.localCallHistory.chatHistory.user.user.id];
+        // this.setState({ callStatus: peerConnection.iceCandidateStatus });
+        // if (peerConnection.iceCandidateStatus === 'busy') {
+        //   this.setState({ callStatus: peerConnection.iceCandidateStatus });
+        //   if (!autoClose) {
+        //     const autoTimeOut = setTimeout(this.callReject, 2000);
+        //     this.setState({ autoClose: autoTimeOut });
+        //   }
+        // }
       }
 
       if (nextProps.webRtc.chatHistory.type === 'board') {

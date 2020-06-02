@@ -6,7 +6,7 @@ import Tooltip from 'react-tooltip';
 import { TiMediaRecord } from 'react-icons/ti';
 import { FiMic, FiMicOff, FiEdit2, FiCopy, FiVideo, FiPhone } from 'react-icons/fi';
 import callUpgrader from '../helper-functions/callUpgrader';
-import { mediaRecorder } from '../../../helper-functions';
+import { mediaRecorder } from '../../../helper-functions/webrtc/mesh';
 
 class Controllers extends React.Component {
   constructor(props) {
@@ -51,7 +51,9 @@ class Controllers extends React.Component {
 
   callUpGradeController = async (currentMediaType) => {
     const { webRtc } = this.props;
-    if (webRtc.localCallHistory.mediaType === currentMediaType) {
+    const preMediaType = webRtc.localCallHistory.mediaType;
+    // console.log('MideaStatus', preMediaType, currentMediaType);
+    if (preMediaType === currentMediaType) {
       callUpgrader('audio', this.props);
     } else if (currentMediaType === 'whiteBoard') {
       await this.setState({ showWhiteBoard: true });
@@ -97,21 +99,21 @@ class Controllers extends React.Component {
           <TiMediaRecord size={20} />
         </Button>
         {/* <Link to={`/${account.user.slug}/drawing-board`}> */}
-        <Button
+        {/* <Button
           data-tip="White Board"
           className={webRtc.localCallHistory.mediaType === 'whiteBoard' ? 'pc-control-btn active' : 'pc-control-btn'}
           onClick={() => this.callUpGradeController('whiteBoard')}
         >
           <FiEdit2 size={20} />
-        </Button>
+        </Button> */}
         {/* </Link> */}
-        {/* <Button
+        <Button
           data-tip="Mute"
-          className={webRtc.localCallHistory.mediaType === 'audio' ? 'pc-control-btn active' : 'pc-control-btn'}
-          onClick={() => this.callUpGradeController('audio')}
+          className={webRtc.localCallHistory.mute ? 'pc-control-btn active' : 'pc-control-btn'}
+          onClick={() => this.callUpGradeController(webRtc.localCallHistory.mute ? 'unmute' : 'mute')}
         >
           <FiMic size={20} />
-        </Button> */}
+        </Button>
       </div>
     );
   }

@@ -13,7 +13,7 @@ import SmallScreenMenu from './SmallScreenMenu';
 import { getChatList } from '../../../../common/communication/chatlist/helper-function';
 import { ENDPOINT } from '../../../../config';
 import DashboardMenu from './DashboardMenu';
-import callClosehandler from '../../../../common/communication/helper-functions/webrtc/closeHandler';
+import callClosehandler from '../../../../common/communication/helper-functions/webrtc/mesh/closeHandler';
 
 const pcLogo = require('../../../../assets/logo.png');
 

@@ -11,7 +11,8 @@ import ChatList from './chatlist';
 import ChatHistory from './chathistory';
 import CallScreen from './callscreen';
 import IncomingCallScreen from './IncomingCallScreen';
-import { socketListner, callHandler, answerHandler, closeHandler } from './helper-functions';
+// import { socketListner, callHandler, answerHandler, closeHandler } from './helper-functions/webrtc/mesh';
+import { initJanus, callHandler, closeHandler, answerHandler } from './helper-functions/webrtc/sfu';
 
 class Communication extends React.Component {
   state = {
@@ -21,10 +22,12 @@ class Communication extends React.Component {
   };
 
   async componentDidMount() {
+    const { updateWebRtc } = this.props;
     try {
       const apisRes = await client.scope('Mentee');
       await this.setState({ apis: apisRes });
-      socketListner(this.props, this.state, this.remoteCallEndMinimizer);
+      // socketListner(this.props, this.state, this.remoteCallEndMinimizer);
+      initJanus(this.props);
     } catch (e) {
       console.error('error in fetching apis in communication');
     }

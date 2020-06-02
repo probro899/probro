@@ -20,7 +20,6 @@ class Index extends React.Component {
     this.remoteFeed = null;
   }
 
-
   componentWillMount() {
     Janus.init({
       debug: true,
@@ -31,7 +30,7 @@ class Index extends React.Component {
     });
     const janus = new Janus(
       {
-        server: 'http://localhost:8088/janus',
+        server: 'http://properclass.com:8088/janus',
         iceServers: [{ urls: 'turn:properclass.com:3478?transport=tcp', username: 'properclass', credential: 'proper199201' }],
         success: () => {
           // Done! attach to plugin XYZ
@@ -193,7 +192,7 @@ class Index extends React.Component {
   joinHandler = () => {
     const { username } = this.state;
     console.log('join handler called', this.myroom, username);
-    const register = { request: 'join', room: this.myroom, ptype: 'publisher', display: username };
+    const register = { request: 'join', room: this.myroom, ptype: "publisher", display: username };
     this.myusername = username;
     this.sfutest.send({ message: register });
   }
@@ -231,7 +230,7 @@ newRemoteFeed = (id, display, audio, video) => {
         console.log('Plugin attached! (', remoteFeed.getPlugin(), 'id=', remoteFeed.getId(), ')');
         console.log('  -- This is a subscriber');
         // We wait for the plugin to send us an offer
-        const subscribe = { request: 'join', room: this.myroom, ptype: 'subscriber', feed: id, private_id: this.mypvtid };
+        const subscribe = { request: 'join', room: this.myroom, ptype: "subscriber", feed: id, private_id: this.mypvtid };
         // In case you don't want to receive audio, video or data, even if the
         // publisher is sending them, set the 'offer_audio', 'offer_video' or
         // 'offer_data' properties to false (they're true by default), e.g.:

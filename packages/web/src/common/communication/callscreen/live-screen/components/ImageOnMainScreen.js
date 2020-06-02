@@ -9,7 +9,7 @@ export default (props) => {
   const { webRtc, database, minimize } = props;
   let showImage = false;
   let imgUrl = '';
-  const conId = webRtc.localCallHistory.chatHistory.type === 'user' ? webRtc.mainStreamId : database.Board.byId[webRtc.localCallHistory.chatHistory.connectionId].activeStatus;
+  const conId = webRtc.localCallHistory.chatHistory.type === 'user' ? webRtc.localCallHistory.chatHistory.user.user.id : database.Board.byId[webRtc.localCallHistory.chatHistory.connectionId].activeStatus;
   if (webRtc.localCallHistory.chatHistory.type === 'user') {
     const userDetail = Object.values(database.UserDetail.byId).find(o => o.userId === webRtc.localCallHistory.chatHistory.user.user.id);
     imgUrl = userDetail && userDetail.image ? `${ENDPOINT}/user/${10000000 + parseInt(userDetail.userId, 10)}/profile/${userDetail.image}` : userIcon;

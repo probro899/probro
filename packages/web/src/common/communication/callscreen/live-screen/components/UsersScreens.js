@@ -6,9 +6,7 @@ import store from '../../../../../store';
 
 const UserView = ({ pc, database, mute, userId, status, account }) => {
   const userDetail = Object.values(database.UserDetail.byId).find(u => u.userId === userId);
-
   const user = database.User.byId[userId];
-
   return (
     <div className="pc-each-screen">
       <video
@@ -81,11 +79,10 @@ class UsersScreen extends React.Component {
   }
 
   componentDidUpdate() {
-
     const { webRtc, account } = this.props;
     const userIds = Object.keys(webRtc.connectedUsers);
     const allVideoElements = userIds.map(uid => document.getElementById(`video-${uid}`));
-
+    // console.log('userIds', userIds, webRtc.connectedUsers, allVideoElements);
     allVideoElements.forEach((ve, idx) => {
       if (ve) {
         webRtc.connectedUsers[userIds[idx]].streams.forEach((stream) => {
