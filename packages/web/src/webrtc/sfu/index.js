@@ -29,7 +29,7 @@ export default (
 
   const janus = new Janus(
     {
-      server: 'http://localhost:8088/janus',
+      server: 'https://properclass.com:8089/janus',
       iceServers: [{ urls: 'turn:properclass.com:3478?transport=tcp', username: 'properclass', credential: 'proper199201' }],
       success: () => {
         // Done! attach to plugin XYZ
