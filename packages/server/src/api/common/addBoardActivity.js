@@ -1,4 +1,5 @@
 import sendNotificationHelper from './sendNotificationHelper';
+import { globalAgent } from 'http';
 
 export default function addBoardActivity(context, db, record) {
   try {

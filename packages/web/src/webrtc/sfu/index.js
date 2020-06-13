@@ -1,6 +1,7 @@
 import adapter from 'webrtc-adapter';
 import Janus from './janus';
 import plugInAttachment from './pluginAttachment';
+import store from '../../store';
 
 export default (
   onMessageEventHandler,
@@ -12,8 +13,9 @@ export default (
   onDataHandler,
   onDataChannelAvailable
 ) => {
+  const { webRtc } = store.getState();
   Janus.init({
-    debug: false,
+    debug: true,
     dependencies: Janus.useDefaultDependencies({ adapter }), // or: Janus.useOldDependencies() to get the behaviour of previous Janus versions
     callback: () => {
       Janus.log('Janus API support ok');
@@ -27,16 +29,29 @@ export default (
 
   const janus = new Janus(
     {
-      server: 'https://properclass.com:8089/janus',
+      server: 'http://localhost:8088/janus',
       iceServers: [{ urls: 'turn:properclass.com:3478?transport=tcp', username: 'properclass', credential: 'proper199201' }],
       success: () => {
         // Done! attach to plugin XYZ
         Janus.log('Janus is ready for attachment');
         isSuccess = true;
+        updateWebRtc('janus', { ...webRtc.janus, janus });
+        plugInAttachment(
+          janus,
+          'oneToOneCall',
+          onMessageEventHandler,
+          onErrorHandler,
+          onLocalStreamHandler,
+          onRemoteStreamHandler,
+          onCloseHandler,
+          updateWebRtc,
+          onDataHandler,
+          onDataChannelAvailable
+        );
 
         plugInAttachment(
           janus,
-          'videoCall',
+          'conferenceCall',
           onMessageEventHandler,
           onErrorHandler,
           onLocalStreamHandler,

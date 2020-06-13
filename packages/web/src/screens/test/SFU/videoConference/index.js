@@ -214,8 +214,6 @@ class Index extends React.Component {
       });
   }
 
-
-
 newRemoteFeed = (id, display, audio, video) => {
   // A new feed has been published, create a new plugin handle and attach to it as a subscriber
   let remoteFeed = null;

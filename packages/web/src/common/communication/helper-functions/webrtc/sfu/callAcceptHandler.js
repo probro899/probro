@@ -7,5 +7,5 @@ export default (props, msg) => {
   // updateWebRtc('isConnecting', false);
   updateWebRtc('showIncommingCall', false);
   updateWebRtc('communicationContainer', 'connecting');
-  console.log('Call Accept Handler called', webRtc);
+  // console.log('Call Accept Handler called', webRtc);
 };

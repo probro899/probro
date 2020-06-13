@@ -47,16 +47,18 @@ const UsersView = (props) => {
 
   const allActiveUserIds = Object.keys(webRtc.connectedUsers).filter(uid => parseInt(uid, 10) !== account.user.id).filter(uid => webRtc.connectedUsers[uid].iceCandidateStatus !== 'disconnected');
 
-  const allActiveUserUis = allActiveUserIds.filter(uid => parseInt(uid, 10) !== parseInt(muteId, 10)).map(uid => (
-    <UserView
-      account={account}
-      status={webRtc.connectedUsers[uid].iceCandidateStatus}
-      userId={parseInt(uid, 10)}
-      pc={webRtc.peerConnections[parseInt(uid, 10)]}
-      database={database}
-      mute={muteId === parseInt(uid, 10)}
-    />
-  ));
+  const allActiveUserUis = allActiveUserIds.filter(uid => parseInt(uid, 10) !== parseInt(muteId, 10))
+    .filter(uid => webRtc.connectedUsers[uid].streams.length > 0)
+    .map(uid => (
+      <UserView
+        account={account}
+        status={webRtc.connectedUsers[uid].iceCandidateStatus}
+        userId={parseInt(uid, 10)}
+        pc={webRtc.peerConnections[parseInt(uid, 10)]}
+        database={database}
+        mute={muteId === parseInt(uid, 10)}
+      />
+    ));
 
   const finalUserList = webRtc.localCallHistory.chatHistory.type === 'user'
     ? [<UserView account={account} userId={account.user.id} pc={account} mute key={account.user.id} database={database} />]
@@ -83,20 +85,24 @@ class UsersScreen extends React.Component {
     const userIds = Object.keys(webRtc.connectedUsers);
     const allVideoElements = userIds.map(uid => document.getElementById(`video-${uid}`));
     // console.log('userIds', userIds, webRtc.connectedUsers, allVideoElements);
-    allVideoElements.forEach((ve, idx) => {
-      if (ve) {
-        webRtc.connectedUsers[userIds[idx]].streams.forEach((stream) => {
-          if (stream) {
-            if (stream.streams) {
-              ve.srcObject = stream.streams[0];
-            }
-            if (parseInt(userIds[idx], 10) === account.user.id) {
+    if (allVideoElements) {
+      allVideoElements.forEach((ve, idx) => {
+        if (ve) {
+          webRtc.connectedUsers[userIds[idx]].streams.forEach((stream) => {
+            if (stream) {
+              // if (stream.streams) {
+              //   ve.srcObject = stream;
+              // }
+              // if (parseInt(userIds[idx], 10) === account.user.id) {
               ve.srcObject = stream;
+              // }
             }
-          }
-        });
-      }
-    });
+          });
+        }
+      });
+
+    }
+
   }
 
   render() {

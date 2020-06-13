@@ -9,7 +9,8 @@ import addHandlerApi from './common/create';
 import deleteHandler from './common/delete';
 import updateHandler from './common/update';
 import getHandler from './common/get';
-import { createOffer, createAnswer, addICeCandidate, callClose, callStatusChange, onPcStatusChange, commPingPong } from './common/web-rtc';
+import { createOffer, createAnswer, addICeCandidate, callClose, callStatusChange, onPcStatusChange, commPingPong } from './common/web-rtc/mesh';
+import { initSfuCall, closeSfuCall, sfuPingPong, sfuCallStatusChange } from './common/web-rtc/sfu';
 
 const mentor = createScope('Mentor', () => {
 
@@ -41,6 +42,10 @@ mentor(callClose);
 mentor(callStatusChange);
 mentor(onPcStatusChange);
 mentor(commPingPong);
+mentor(initSfuCall);
+mentor(closeSfuCall);
+mentor(sfuPingPong);
+mentor(sfuCallStatusChange);
 
 mentee(createOffer);
 mentee(createAnswer);
@@ -49,6 +54,10 @@ mentee(callClose);
 mentee(callStatusChange);
 mentee(onPcStatusChange);
 mentee(commPingPong);
+mentee(initSfuCall);
+mentee(closeSfuCall);
+mentee(sfuPingPong);
+mentee(sfuCallStatusChange);
 
 mentor(logout);
 mentor(updateUserDetails);

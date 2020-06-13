@@ -52,16 +52,16 @@ class Navbar extends Component {
 
   async componentDidMount() {
     const apis = await client.scope('Mentee');
-    this.getUnreadNotifs();
+    this.getUnreadNotifs(this.props);
     this.setState({ apis });
   }
 
-  componentWillReceiveProps() {
-    this.getUnreadNotifs();
+  componentWillReceiveProps(nextProps) {
+    this.getUnreadNotifs(nextProps);
   }
 
-  getUnreadNotifs = () => {
-    const { database, account } = this.props;
+  getUnreadNotifs = (nextProps) => {
+    const { database, account } = nextProps;
     if (!account.user) return;
     const chatList = getChatList({ database, account });
     const unreadMessage = chatList.reduce((t, next) => {

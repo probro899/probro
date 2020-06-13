@@ -16,7 +16,7 @@ export default (props) => {
     if (webRtc.connectedUsers[conId] && webRtc.connectedUsers[conId].type === 'audio') {
       showImage = true;
     }
-  } else if (webRtc.connectedUsers[conId] && webRtc.connectedUsers[conId].type === 'audio') {
+  } else if (webRtc.connectedUsers[conId] && database.Board.byId[webRtc.localCallHistory.chatHistory.connectionId].mediaType === 'audio') {
     showImage = true;
   }
   if (!showImage) return <div />;

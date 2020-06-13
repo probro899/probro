@@ -7,10 +7,10 @@ import onRemoteStreamHandler from './onRemoteStreamHandler';
 import onDataHandler from './onDataHandler';
 import onDataChannelAvailable from './onDataChannelAvailable';
 
-export default (props) => {
+export default (props, state) => {
   const { updateWebRtc } = props;
   janusInit(
-    onMessageEventHandler(props),
+    onMessageEventHandler(props, state),
     onErrorHandler,
     onLocalStreamHandler(props),
     onRemoteStreamHandler(props),

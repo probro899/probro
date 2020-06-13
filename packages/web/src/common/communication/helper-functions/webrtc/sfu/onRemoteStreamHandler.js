@@ -17,7 +17,7 @@ export default props => async (stream, uid) => {
   const { updateWebRtc } = props;
   const { webRtc } = store.getState();
   const userId = webRtc.localCallHistory.chatHistory.user.user.id;
-  console.log(`${userId})GOT REMOTE STREAM`, stream);
+  // console.log(`${userId})GOT REMOTE STREAM`, stream);
   await updateWebRtc('connectedUsers',
     {
       ...webRtc.connectedUsers,

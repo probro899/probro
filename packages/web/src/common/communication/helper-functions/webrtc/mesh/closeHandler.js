@@ -14,7 +14,7 @@ export default (props, state, apis) => async (remoteData) => {
       allTracks.forEach(track => track.stop());
     }
   }
-
+ 
   if (webRtc.showCommunication) {
     if (webRtc.mediaRecording) {
       webRtc.mediaRecording.stopRecording();

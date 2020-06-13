@@ -1,7 +1,7 @@
 import Janus from './janus';
-import store from '../../store';
+import registration from './registration';
 
-const plugin = { videoCall: 'janus.plugin.videocall' };
+const plugin = { oneToOneCall: 'janus.plugin.videocall', conferenceCall: 'janus.plugin.videoroom' };
 
 export default function janusAttachment(
   janus,
@@ -13,18 +13,17 @@ export default function janusAttachment(
   onCloseHandler,
   updateWebRtc,
   onDataHandler,
-  onDataChannelAvailable
+  onDataChannelAvailable,
+  isJoin
 ) {
   let oneToOneCall;
   janus.attach(
     {
       plugin: plugin[pluginType],
       success: (pluginHandle) => {
-        // Plugin attached! 'pluginHandle' is our handle
-        console.log('store value in plugin attachment success', store.getState());
-        Janus.log('Puligin handle', pluginHandle);
-        pluginHandle.send({ message: { request: 'register', username: `${store.getState().account.user.id}` } });
-        updateWebRtc('janus', { oneToOneCall: pluginHandle });
+        Janus.log('Puligin attachment Success', pluginType);
+        // Join user in respective class and register for one to one call
+        registration(pluginHandle, pluginType, updateWebRtc, isJoin);
       },
       error: (cause) => {
         // Couldn't attach to the plugin
@@ -44,7 +43,7 @@ export default function janusAttachment(
       onmessage: (msg, jsep) => {
         // We got a message/event (msg) from the plugin
         // If jsep is not null, this involves a WebRTC negotiation
-        Janus.log('One to one call Message', msg, jsep);
+        Janus.log(pluginType, 'Message', msg, jsep);
         onMessageHandler(msg, jsep);
       },
       ondataopen: (data) => {
@@ -69,13 +68,13 @@ export default function janusAttachment(
       // PeerConnection with the plugin closed, clean the UI
       // The plugin handle is still valid so we can create a new one
         Janus.log('onCleanup called');
-        onCloseHandler('cleanup');
+        // onCloseHandler('cleanup');
       },
       detached: () => {
       // Connection with the plugin closed, get rid of its features
       // The plugin handle is not valid anymore
         console.log('clear the stuff after plugin detach');
-        onCloseHandler('detached');
+        // onCloseHandler('detached');
       },
     }
   );

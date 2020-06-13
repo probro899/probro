@@ -43,24 +43,26 @@ class Index extends React.Component {
   state = { autoClose: null, callStatus: 'connecting...' };
 
   async componentWillReceiveProps(nextProps) {
+    // console.log('Out going call', nextProps);
     const { webRtc } = this.props;
     const { autoClose } = this.state;
     if (webRtc !== nextProps.webRtc) {
       if (nextProps.webRtc.localCallHistory.chatHistory.type === 'user') {
-        // const peerConnection = nextProps.webRtc.peerConnections[webRtc.localCallHistory.chatHistory.user.user.id];
-        // this.setState({ callStatus: peerConnection.iceCandidateStatus });
-        // if (peerConnection.iceCandidateStatus === 'busy') {
-        //   this.setState({ callStatus: peerConnection.iceCandidateStatus });
-        //   if (!autoClose) {
-        //     const autoTimeOut = setTimeout(this.callReject, 2000);
-        //     this.setState({ autoClose: autoTimeOut });
-        //   }
-        // }
+        const connectionStatus = nextProps.webRtc.connectedUsers[webRtc.localCallHistory.chatHistory.user.user.id] || {};
+
+        this.setState({ callStatus: connectionStatus.status });
+        if (connectionStatus.status === 'busy' || connectionStatus.status === 'declined') {
+          this.setState({ callStatus: connectionStatus.status });
+          if (!autoClose) {
+            const autoTimeOut = setTimeout(this.callReject, 2000);
+            this.setState({ autoClose: autoTimeOut });
+          }
+        }
       }
 
       if (nextProps.webRtc.chatHistory.type === 'board') {
-        Object.values(nextProps.webRtc.peerConnections).forEach((obj) => {
-          if (obj.iceCandidateStatus === 'ringing') {
+        Object.values(nextProps.webRtc.connectedUsers).forEach((obj) => {
+          if (obj.status === 'ringing') {
             this.setState({ callStatus: 'ringing' });
           }
         });
@@ -70,7 +72,7 @@ class Index extends React.Component {
 
   callReject = async () => {
     const { closeHandler, change } = this.props;
-    await closeHandler();
+    await closeHandler('callReject');
     change('history');
   }
 
