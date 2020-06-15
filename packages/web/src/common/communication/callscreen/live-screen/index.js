@@ -35,7 +35,7 @@ class LiveCallScreen extends React.Component {
       if (database.Board.byId[webRtc.localCallHistory.chatHistory.connectionId].activeStatus === account.user.id) {
         const lastVideoElement = document.getElementById('video-mentor');
         if (lastVideoElement) {
-          lastVideoElement.srcObject = webRtc.streams[account.user.id].stream[0];
+          // lastVideoElement.srcObject = webRtc.connectedUsers.stream[0];
         }
       }
     }
@@ -82,7 +82,7 @@ class LiveCallScreen extends React.Component {
       showChatList,
       unMessageCount,
     } = this.state;
-    // console.log('webRtc value in Live Screen', webRtc);
+    // console.log('Mentor Main', webRtc);
     return (
       <div
         className="call-screen"

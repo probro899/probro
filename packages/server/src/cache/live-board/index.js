@@ -6,4 +6,6 @@ import setPc from './helper-functions/setPc';
 import setUser from './helper-functions/setUser';
 import updatePc from './helper-functions/updatePc';
 
-export default { getBoard, getPc, getUser, setBoard, setPc, setUser, updatePc };
+export default {
+  getBoard, getPc, getUser, setBoard, setPc, setUser, updatePc,
+};

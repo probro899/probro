@@ -29,6 +29,6 @@ export default (msg, account, type, isList, idx) => {
   }
 
   if (msg.fuserId === account.user.id) {
-    return callLogHelper('Outgoing', 'arrow-top-right', '#A6A9A9', msg, isList, idx);
+    return callLogHelper('Outgoing Call', 'arrow-top-right', '#A6A9A9', msg, isList, idx);
   }
 };

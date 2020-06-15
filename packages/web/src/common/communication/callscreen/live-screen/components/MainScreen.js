@@ -10,10 +10,10 @@ class MainScreen extends React.Component {
   }
 
   shouldComponentUpdate(nextProps) {
-    // console.log('MAIN SCREEN PROPS', nextProps.webRtc, this.props.webRtc);
+    // console.log('Mentor SCREEN PROPS', nextProps.webRtc, this.props.webRtc);
     const { database, webRtc } = this.props;
-    const currentmentorId = webRtc.localCallHistory.chatHistory.type === 'user' ? webRtc.mainStreamId : database.Board.byId[webRtc.localCallHistory.chatHistory.connectionId].activeStatus;
-    const mentorId = webRtc.localCallHistory.chatHistory.type === 'user' ? webRtc.mainStreamId : nextProps.database.Board.byId[webRtc.localCallHistory.chatHistory.connectionId].activeStatus;
+    const currentmentorId = webRtc.localCallHistory.chatHistory.type === 'user' ? webRtc.localCallHistory.chatHistory.user.user.id : database.Board.byId[webRtc.localCallHistory.chatHistory.connectionId].activeStatus;
+    const mentorId = webRtc.localCallHistory.chatHistory.type === 'user' ? webRtc.localCallHistory.chatHistory.user.user.id : nextProps.database.Board.byId[webRtc.localCallHistory.chatHistory.connectionId].activeStatus;
 
     const currentStream = JSON.stringify(webRtc.connectedUsers[mentorId]);
     const newStream = JSON.stringify(nextProps.webRtc.connectedUsers[mentorId]);
@@ -27,8 +27,9 @@ class MainScreen extends React.Component {
     const { webRtc, database, account } = this.props;
     const videoElment = document.getElementById('video-mentor');
 
-    const mentorId = webRtc.localCallHistory.chatHistory.type === 'user' ? webRtc.mainStreamId : database.Board.byId[webRtc.localCallHistory.chatHistory.connectionId].activeStatus;
+    const mentorId = webRtc.localCallHistory.chatHistory.type === 'user' ? webRtc.localCallHistory.chatHistory.user.user.id : database.Board.byId[webRtc.localCallHistory.chatHistory.connectionId].activeStatus;
     const mentorStream = webRtc.connectedUsers[mentorId];
+    // console.log('Mentor Streams', mentorStream, videoElment);
     if (videoElment && mentorStream) {
       mentorStream.streams.forEach((stream) => {
         if (stream) {
@@ -38,19 +39,21 @@ class MainScreen extends React.Component {
           if (parseInt(mentorId, 10) === account.user.id) {
             videoElment.srcObject = stream;
           }
+          videoElment.srcObject = stream;
         }
       });
     }
   }
 
   render() {
+    // console.log('Mentor Screen');
     const { database, webRtc, account } = this.props;
     const muted = webRtc.localCallHistory.chatHistory.type === 'board' ? database.Board.byId[webRtc.localCallHistory.chatHistory.connectionId].activeStatus === account.user.id : false;
 
     return (
       <div className="pc-main-screen">
         <video
-          // controls
+          controls
           id="video-mentor"
           playsInline
           controlsList="noremoteplayback"

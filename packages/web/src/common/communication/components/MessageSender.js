@@ -1,6 +1,6 @@
 import React from 'react';
 import { TextArea, Button, Icon } from '@blueprintjs/core';
-import { sendMessage } from '../helper-functions';
+import { sendMessage } from '../helper-functions/webrtc/mesh';
 
 class MessageSender extends React.Component {
   state = {

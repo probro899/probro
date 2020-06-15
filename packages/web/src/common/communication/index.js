@@ -11,7 +11,8 @@ import ChatList from './chatlist';
 import ChatHistory from './chathistory';
 import CallScreen from './callscreen';
 import IncomingCallScreen from './IncomingCallScreen';
-import { socketListner, callHandler, answerHandler, closeHandler } from './helper-functions';
+// import { socketListner, callHandler, answerHandler, closeHandler } from './helper-functions/webrtc/mesh';
+import { initJanus, callHandler, closeHandler, answerHandler, sfuSocketListner } from './helper-functions/webrtc/sfu';
 
 class Communication extends React.Component {
   state = {
@@ -21,10 +22,14 @@ class Communication extends React.Component {
   };
 
   async componentDidMount() {
+    const { updateWebRtc } = this.props;
     try {
       const apisRes = await client.scope('Mentee');
       await this.setState({ apis: apisRes });
-      socketListner(this.props, this.state, this.remoteCallEndMinimizer);
+      updateWebRtc('apis', apisRes);
+      // socketListner(this.props, this.state, this.remoteCallEndMinimizer);
+      initJanus(this.props, this.state);
+      sfuSocketListner(this.props, this.state, this.remoteCallEndMinimizer);
     } catch (e) {
       console.error('error in fetching apis in communication');
     }
@@ -69,7 +74,7 @@ class Communication extends React.Component {
   }
 
   render() {
-    // console.log('Props in communications', this.props);
+    console.log('Props in communications', this.props);
     const { minimize, apis, maximize } = this.state;
     let height = '75%';
     if (maximize) {
