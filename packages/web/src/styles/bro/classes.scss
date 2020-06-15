@@ -52,6 +52,12 @@
     }
   }
   .pc-task-name { margin: 0; font-weight: bold; }
+  .task-footer {
+    display: flex;
+    .pc-item { padding-top: 3px; display: flex; align-items: center; margin-right: 10px;}
+    .pc-icon { fill: $skyBlueMain; }
+    .pc-count { color: $skyBlueMain; margin-left: 3px; font-size: 14px; }
+  }
 }
 
 

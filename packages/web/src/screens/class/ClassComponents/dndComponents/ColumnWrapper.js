@@ -6,7 +6,7 @@ import Column from '../Column';
 
 export default (props) => {
   const ref = useRef(null);
-  const { api, tags, startScroll, boardId, xCoor, dragStartEnd, setDraggingContent, addDatabaseSchema, updateDatabaseSchema, deleteDatabaseSchema, onTaskClick, column, moveTask, index, draggableId, moveColumns } = props;
+  const { api, startScroll, boardId, xCoor, dragStartEnd, setDraggingContent, addDatabaseSchema, updateDatabaseSchema, deleteDatabaseSchema, onTaskClick, column, moveTask, index, draggableId, moveColumns } = props;
   const [, drop] = useDrop({
     accept: [Itemtype.COLUMN, Itemtype.TASK],
     hover: (item, monitor) => {
@@ -78,7 +78,6 @@ export default (props) => {
         setDraggingContent={setDraggingContent}
         api={api}
         moveTask={moveTask}
-        tags={tags}
         boardId={boardId}
         addDatabaseSchema={addDatabaseSchema}
         updateDatabaseSchema={updateDatabaseSchema}

@@ -32,11 +32,15 @@ class ClassManager extends Component {
   }
 
   componentDidMount() {
-    this.componentWillReceiveProps(this.props);
+    this.loadData(this.props);
   }
 
   componentWillReceiveProps(nextProps) {
-    const { tasks, columns, account, classId } = nextProps;
+    this.loadData(nextProps);
+  }
+
+  loadData = (props) => {
+    const { tasks, columns, account, classId } = props;
     if (!account.user) return;
     const wholeColumns = Object.values(columns.byId).filter(o => o.boardId === classId && !o.deleteStatus).map((obj) => {
       const column = { ...obj };
@@ -154,7 +158,7 @@ class ClassManager extends Component {
       classId, columns, api, taskIdInOverlay, taskOverlayIsOpen, xCoor,
     } = this.state;
     const {
-      addDatabaseSchema, tags, account, updateDatabaseSchema,
+      addDatabaseSchema, account, updateDatabaseSchema,
       deleteDatabaseSchema, classMembers, userSlug, setDraggingContent,
     } = this.props;
     if (!account.sessionId) return <Redirect to="/" />;
@@ -183,7 +187,6 @@ class ClassManager extends Component {
                   key={`column${column.id}`}
                   columnId={column.id}
                   api={api}
-                  tags={tags}
                   boardId={classId}
                   addDatabaseSchema={addDatabaseSchema}
                   updateDatabaseSchema={updateDatabaseSchema}
@@ -212,9 +215,6 @@ class ClassManager extends Component {
 
 ClassManager.propTypes = {
   setDraggingContent: PropTypes.func.isRequired,
-  tasks: PropTypes.objectOf(PropTypes.any).isRequired,
-  tags: PropTypes.objectOf(PropTypes.any).isRequired,
-  columns: PropTypes.objectOf(PropTypes.any).isRequired,
   account: PropTypes.objectOf(PropTypes.any).isRequired,
   classMembers: PropTypes.objectOf(PropTypes.any).isRequired,
   addDatabaseSchema: PropTypes.func.isRequired,
