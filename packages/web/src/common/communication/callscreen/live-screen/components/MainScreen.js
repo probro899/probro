@@ -53,7 +53,7 @@ class MainScreen extends React.Component {
     return (
       <div className="pc-main-screen">
         <video
-          controls
+          // controls
           id="video-mentor"
           playsInline
           controlsList="noremoteplayback"
