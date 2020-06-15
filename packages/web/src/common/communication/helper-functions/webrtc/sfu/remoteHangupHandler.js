@@ -7,13 +7,15 @@ export default (props, state, msg) => {
   const { videocall, result } = msg;
   const { updateWebRtc } = props;
   const { reason, username } = result;
-  const userId = webRtc.localCallHistory.chatHistory.user.user.id;
-  if (reason === 'User busy') {
-    console.log('inside user busy state');
-    updateWebRtc('connectedUsers', { ...webRtc.connectedUsers, [userId]: { ...webRtc.connectedUsers[userId], status: 'busy' } });
-  }
-  if (reason === 'Remote WebRTC hangup') {
-    console.log('on remote hangup');
-    onCloseHandler(props)('remoteHangup');
-  }
+  // if (webRtc.isLive) {
+    if (reason === 'User busy') {
+      const userId = webRtc.localCallHistory.chatHistory.user.user.id;
+      console.log('inside user busy state');
+      updateWebRtc('connectedUsers', { ...webRtc.connectedUsers, [userId]: { ...webRtc.connectedUsers[userId], status: 'busy' } });
+    }
+    if (reason === 'Remote WebRTC hangup') {
+      console.log('on remote hangup');
+      onCloseHandler(props)('remoteHangup');
+    }
+  // }
 };

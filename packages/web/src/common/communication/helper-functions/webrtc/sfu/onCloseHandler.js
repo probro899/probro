@@ -6,13 +6,15 @@ export default props => (data) => {
   const { janus } = webRtc;
   // console.log('onClose Close handler called');
   const { updateWebRtc } = props;
-  updateWebRtc('chatHistory', webRtc.localCallHistory.chatHistory);
-  if (webRtc.localCallHistory.stream) {
-    if (webRtc.localCallHistory.stream.active) {
-      // console.log('inside the local steam stop case');
-      const allTracks = webRtc.localCallHistory.stream.getTracks();
-      // console.log('all tracks', allTracks);
-      allTracks.forEach(track => track.stop());
+  if (webRtc.isLive) {
+    updateWebRtc('chatHistory', webRtc.localCallHistory.chatHistory);
+    if (webRtc.localCallHistory.stream) {
+      if (webRtc.localCallHistory.stream.active) {
+        // console.log('inside the local steam stop case');
+        const allTracks = webRtc.localCallHistory.stream.getTracks();
+        // console.log('all tracks', allTracks);
+        allTracks.forEach(track => track.stop());
+      }
     }
   }
 
