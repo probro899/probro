@@ -47,9 +47,9 @@ const findUserChatListDetails = (arr, props) => {
   let user;
   let userDetails;
   let connection;
-  // console.log('msgObj', msgObj);
   if (msgObj.fuserId !== account.user.id) {
     user = Object.values(database.User.byId).find(u => u.id === msgObj.fuserId);
+    // console.log('user', user);
     userDetails = Object.values(database.UserDetail.byId).find(u => u.userId === msgObj.fuserId);
     connection = Object.values(database.UserConnection.byId).find(con => con.userId === user.id || con.mId === user.id);
   } else {
