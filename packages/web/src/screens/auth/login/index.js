@@ -53,7 +53,7 @@ class Login extends Component {
             <Link to="/register"><u>or create an account</u></Link>
           </div>
           {
-            redirect || account.user ? <Redirect push to={`/${slug || account.user.slug}/profile`} /> : <Log loginHandler={this.loginHandler} />
+            redirect || account.user ? <Redirect push to={`/dashboard/${slug || account.user.slug}`} /> : <Log loginHandler={this.loginHandler} />
           }
           <div className="auth-with-others">
             <GoogleLogin loading={loading} googleLogin={this.googleLogin} />
