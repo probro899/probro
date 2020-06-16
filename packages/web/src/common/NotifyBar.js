@@ -28,7 +28,7 @@ class NotifyBar extends React.Component {
               message={message}
               intent={intent}
               onDismiss={this.onDismiss}
-              timeout={100000}
+              timeout={5000}
             />
           )
         }
