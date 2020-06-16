@@ -52,12 +52,18 @@ class Navbar extends Component {
 
   async componentDidMount() {
     const apis = await client.scope('Mentee');
-    this.getUnreadNotifs(this.props);
+    const { account } = this.props;
+    if (account.user) {
+      this.getUnreadNotifs(this.props);
+    }
     this.setState({ apis });
   }
 
   componentWillReceiveProps(nextProps) {
-    this.getUnreadNotifs(nextProps);
+    const { account } = nextProps;
+    if (account.user) {
+      this.getUnreadNotifs(nextProps);
+    }
   }
 
   getUnreadNotifs = (nextProps) => {

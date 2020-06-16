@@ -1,3 +1,4 @@
+import store from '../../../../../store';
 
 const findNotificationSeenStatus = (notifId, props) => {
   const { database } = props;
@@ -11,7 +12,7 @@ const findNotificationSeenStatus = (notifId, props) => {
 };
 
 export default (props) => {
-  const { database, account } = props;
+  const { database, account } = store.getState();
   if (database.Notification.allIds.length > 0) {
     const arrWithSeenStatus = Object.values(database.Notification.byId).map(un => ({ ...un, seenStatus: findNotificationSeenStatus(un.id, props) }));
     const arrWithSeenStatusReverse = arrWithSeenStatus.slice().reverse();
