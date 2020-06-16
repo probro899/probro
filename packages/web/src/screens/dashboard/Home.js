@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Redirect, Route } from 'react-router-dom';
+import { Redirect, Route, Switch } from 'react-router-dom';
 import { Navbar } from '../home/component';
 import SmallScreenSideNav from './SmallScreenSideNav';
 import SideNav from './SideNav';
@@ -37,13 +37,17 @@ class HomePage extends Component {
               <SideNav match={match} />
               {/* fake-side-nav is just for the styling purpose only */}
               <div className="fake-side-nav" />
-              <Route exact path={`${match.path}/`} component={Profile} />
-              <Route exact path={`${match.path}/classes`} component={Class} />
-              <Route exact path={`${match.path}/blog`} component={Blog} />
-              <Route exact path={`${match.path}/settings`} component={Setting} />
-              <Route exact path={`${match.path}/drawing-board`} component={DrawingBoard} />
-              <Route exact path={`${match.path}/connection`} component={Connection} />
-              {/* <Route exact path={`${match.path}/messages`} component={Message} /> */}
+              <Switch>
+                <Route exact path={`${match.path}`} component={Profile} />
+                <Route exact path={`${match.path}/classes`} component={Class} />
+                <Route exact path={`${match.path}/blog`} component={Blog} />
+                <Route exact path={`${match.path}/settings`} component={Setting} />
+                <Route exact path={`${match.path}/drawing-board`} component={DrawingBoard} />
+                <Route exact path={`${match.path}/connection`} component={Connection} />
+                {/* <Route exact path={`${match.path}/messages`} component={Message} /> */}
+
+                <Redirect to="/error" />
+              </Switch>
             </div>
           </div>
         )
