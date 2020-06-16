@@ -19,6 +19,7 @@ export default (chatHistory) => {
 
   updateWebRtc('peerType', type);
   updateWebRtc('showCommunication', id);
+  // console.log('ChatItemClick listner called', unSeenNo, type);
   if (unSeenNo > 0) {
     if (type === 'user') {
       apis.addUserMessageSeenStatus({ userId: account.user.id, umId: lastMessageId, timeStamp: Date.now(), status: true, broadCastId: `UserConnection-${account.user.id}`, broadCastUserList: [{ userId: user.user.id }] });

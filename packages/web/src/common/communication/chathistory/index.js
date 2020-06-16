@@ -9,7 +9,7 @@ import { MessageSender } from '../components';
 import Message from './Message';
 import { normalTimeStampSorting } from '../../utility-functions';
 import { findChatHistory, isOwnFinder, markLastMessageRead, incomingCallLogHandler, outgoingCallLogHandler } from './helper-function';
-import autoCloseHandler from '../helper-functions/webrtc/autoCloseHandler';
+import autoCloseHandler from '../helper-functions/webrtc/mesh/autoCloseHandler';
 
 class ChatHistory extends React.Component {
   constructor(props) {
@@ -46,25 +46,25 @@ class ChatHistory extends React.Component {
     // console.log('tocallSrean func called', mediaType);
     try {
       const { _callHandler, apis, change, updateWebRtc, webRtc, account, database } = this.props;
-      const stream = await mediaSelector(mediaType);
+      // const stream = await mediaSelector(mediaType);
       await updateWebRtc('isCallUpgraded', false);
       await updateWebRtc('isConnecting', true);
-      await updateWebRtc('streams', { [account.user.id]: { stream: [stream] } });
-      await updateWebRtc('connectedUsers', { ...webRtc.connectedUsers, [account.user.id]: { streams: [stream], type: mediaType } });
-      await updateWebRtc('localCallHistory', { chatHistory: webRtc.chatHistory, stream, mediaType, callType: 'Outgoing', callEnd: false });
+      // await updateWebRtc('streams', { [account.user.id]: { stream: [] } });
+      await updateWebRtc('connectedUsers', { ...webRtc.connectedUsers, [account.user.id]: { streams: [], type: mediaType } });
+      await updateWebRtc('localCallHistory', { chatHistory: webRtc.chatHistory, stream: null, mediaType, callType: 'Outgoing', callEnd: false });
       autoCloseHandler(this.props, { apis }, 62000);
-      if (webRtc.chatHistory.type === 'user') {
-        await updateWebRtc('mainStreamId', webRtc.chatHistory.user.user.id);
-        await updateWebRtc('streams', { ...webRtc.streams, [webRtc.chatHistory.user.user.id]: { stream: [] } });
-      }
-      if (webRtc.chatHistory.type === 'board') {
-        if (database.Board.byId[webRtc.chatHistory.connectionId].activeStatus) {
-          updateWebRtc('mainStreamId', database.Board.byId[webRtc.chatHistory.connectionId].activeStatus);
-        } else {
-          updateWebRtc('mainStreamId', account.user.id);
-        }
-      }
-      _callHandler(apis, stream);
+      // if (webRtc.chatHistory.type === 'user') {
+      //   await updateWebRtc('mainStreamId', webRtc.chatHistory.user.user.id);
+      //   await updateWebRtc('streams', { ...webRtc.streams, [webRtc.chatHistory.user.user.id]: { stream: [] } });
+      // }
+      // if (webRtc.chatHistory.type === 'board') {
+      //   if (database.Board.byId[webRtc.chatHistory.connectionId].activeStatus) {
+      //     updateWebRtc('mainStreamId', database.Board.byId[webRtc.chatHistory.connectionId].activeStatus);
+      //   } else {
+      //     updateWebRtc('mainStreamId', account.user.id);
+      //   }
+      // }
+      _callHandler(apis, null, mediaType);
       change('connecting');
     } catch (e) {
       console.error('Error in calling', e);

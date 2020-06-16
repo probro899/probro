@@ -9,14 +9,14 @@ export default (props) => {
   const { webRtc, database, minimize } = props;
   let showImage = false;
   let imgUrl = '';
-  const conId = webRtc.localCallHistory.chatHistory.type === 'user' ? webRtc.mainStreamId : database.Board.byId[webRtc.localCallHistory.chatHistory.connectionId].activeStatus;
+  const conId = webRtc.localCallHistory.chatHistory.type === 'user' ? webRtc.localCallHistory.chatHistory.user.user.id : database.Board.byId[webRtc.localCallHistory.chatHistory.connectionId].activeStatus;
   if (webRtc.localCallHistory.chatHistory.type === 'user') {
     const userDetail = Object.values(database.UserDetail.byId).find(o => o.userId === webRtc.localCallHistory.chatHistory.user.user.id);
     imgUrl = userDetail && userDetail.image ? `${ENDPOINT}/user/${10000000 + parseInt(userDetail.userId, 10)}/profile/${userDetail.image}` : userIcon;
     if (webRtc.connectedUsers[conId] && webRtc.connectedUsers[conId].type === 'audio') {
       showImage = true;
     }
-  } else if (webRtc.connectedUsers[conId] && webRtc.connectedUsers[conId].type === 'audio') {
+  } else if (webRtc.connectedUsers[conId] && database.Board.byId[webRtc.localCallHistory.chatHistory.connectionId].mediaType === 'audio') {
     showImage = true;
   }
   if (!showImage) return <div />;

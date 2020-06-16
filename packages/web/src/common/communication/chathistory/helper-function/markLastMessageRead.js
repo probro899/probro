@@ -2,6 +2,7 @@
 export default (props, state) => {
   const { apis, webRtc, account, addDatabaseSchema } = props;
   const { unSeenNo, lastMessageId } = state;
+  // console.log('Mark last message read', unSeenNo, lastMessageId);
   if (unSeenNo > 0) {
     if (webRtc.chatHistory.type === 'user') {
       apis.addUserMessageSeenStatus({ userId: account.user.id, umId: lastMessageId, timeStamp: Date.now(), status: true, broadCastId: `UserConnection-${account.user.id}`, broadCastUserList: [{ userId: webRtc.chatHistory.user.user.id }] });
@@ -12,4 +13,4 @@ export default (props, state) => {
       addDatabaseSchema('BoardMessageSeenStatus', { id: Date.now(), userId: account.user.id, bmId: lastMessageId, timeStamp: Date.now(), status: true });
     }
   }
-}
+};
