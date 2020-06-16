@@ -15,7 +15,7 @@ export default (
 ) => {
   const { webRtc } = store.getState();
   Janus.init({
-    debug: false,
+    debug: true,
     dependencies: Janus.useDefaultDependencies({ adapter }), // or: Janus.useOldDependencies() to get the behaviour of previous Janus versions
     callback: () => {
       Janus.log('Janus API support ok');
@@ -30,6 +30,7 @@ export default (
   const janus = new Janus(
     {
       server: 'wss://properclass.com:8989/janus',
+      apisecret: 'properclassdotcom@654123',
       iceServers: [{ urls: 'turn:properclass.com:3478?transport=tcp', username: 'properclass', credential: 'proper199201' }],
       success: () => {
         // Done! attach to plugin XYZ
