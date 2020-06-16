@@ -1,7 +1,7 @@
 import store from '../../../../../../../store';
 
 const onNotLiveHandler = async (updateWebRtc, webRtc, database, boardId, userId) => {
-  console.log('Communication is not live', database);
+  // console.log('Communication is not live', database);
   await updateWebRtc('communicationContainer', 'list');
   await updateWebRtc('showCommunication', boardId);
   await updateWebRtc('localCallHistory', {
@@ -17,14 +17,14 @@ const onNotLiveHandler = async (updateWebRtc, webRtc, database, boardId, userId)
 
 const onLiveHandler = async (props, state, data) => {
   try {
-    console.log('communication On live handler');
+    // console.log('communication On live handler');
   } catch (e) {
     console.error('erro in onlive offer handler', e);
   }
 };
 
 export default async (props, state, data) => {
-  console.log('Offer on Live handler called', data);
+  // console.log('Offer on Live handler called', data);
   const { database } = store.getState();
   const { updateWebRtc } = props;
   const { userId, boardId } = data;

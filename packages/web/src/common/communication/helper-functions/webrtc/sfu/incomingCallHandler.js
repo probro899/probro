@@ -1,3 +1,4 @@
+/* eslint-disable import/no-cycle */
 import store from '../../../../../store';
 import autoCloseHandler from './autoCloseHandler';
 
@@ -5,7 +6,7 @@ export default (props, state, msg, jsep) => {
   const { updateWebRtc } = props;
   const { apis } = state;
   const { webRtc, database, account } = store.getState();
-  console.log('incoming call handler called', msg, jsep, props);
+  // console.log('incoming call handler called', msg, jsep, props);
   const { result } = msg;
   const userId = parseInt(result.username, 10);
   let connectionId;
@@ -34,7 +35,7 @@ export default (props, state, msg, jsep) => {
     updateWebRtc('showIncommingCall', true);
     autoCloseHandler(props, state);
   } else {
-    console.log('say i am busy now');
+    // console.log('say i am busy now');
     apis.sfuCallStatusChange({
       callStatusDetails: {
         broadCastType: 'UserConnection',

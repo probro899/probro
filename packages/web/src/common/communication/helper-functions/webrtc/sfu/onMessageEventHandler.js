@@ -1,3 +1,4 @@
+/* eslint-disable import/no-cycle */
 import Janus from '../../../../../webrtc/sfu/janus';
 import inCommingCallHandler from './incomingCallHandler';
 import callAcceptHandler from './callAcceptHandler';

@@ -5,7 +5,7 @@ import store from '../../../../../../../store';
 import autoCloseHandler from '../../autoCloseHandler';
 
 const initCall = async (props, state, data, webRtc) => {
-  console.log('call init', data);
+  // console.log('call init', data);
   await offerInitialization(props, state, data);
   if (webRtc.showCommunication) {
     await offerOnCommunicationOpen(props, state, data);
@@ -16,7 +16,7 @@ const initCall = async (props, state, data, webRtc) => {
 
 const declineCall = async (status, props, state, data, webRtc) => {
   try {
-    console.log('call decline', status, state, props, state, data, webRtc);
+    // console.log('call decline', status, state, props, state, data, webRtc);
   } catch (e) {
     console.error('Call Stautus change error when live', e);
   }
@@ -24,12 +24,12 @@ const declineCall = async (status, props, state, data, webRtc) => {
 
 export default async (props, state, data) => {
   const { webRtc, account } = store.getState();
-  console.log(`SFU INIT CALLED`, data);
+  // console.log(`SFU INIT CALLED`, data);
   const { boardId, userId } = data;
   const { apis } = state;
 
   if (webRtc.showIncommingCall || webRtc.isConnecting) {
-    console.log('inside call is budy mode', boardId);
+    // console.log('inside call is budy mode', boardId);
     declineCall('Call is busy', props, state, data, webRtc);
   } else if (webRtc.isLive) {
     if (webRtc.localCallHistory.chatHistory.connectionId === boardId) {

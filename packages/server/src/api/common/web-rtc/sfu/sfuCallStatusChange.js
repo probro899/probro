@@ -4,16 +4,15 @@ import classCloseHandler from './close-handler/classCloseHandler';
 
 export default async function sfuCallStatusChange(data) {
   const { session } = this;
-  console.log('data in SFU Call status handler', data);
+  // console.log('data in SFU Call status handler', data);
   const { callStatusDetails, userList } = data;
-  const { uid, broadCastId, broadCastType, callType, callDuration, type, connectionId } = callStatusDetails;
+  const { broadCastId, broadCastType, type } = callStatusDetails;
 
   if (broadCastType === 'UserConnection') {
     const channel = session.channel(`${broadCastType}-${broadCastId}`);
     channel.emit('callStatus', callStatusDetails, userList);
 
     if (type === 'declined') {
-      console.log('history ko lagara goes here');
       userCloseHandler(callStatusDetails, userList, session);
     }
   }

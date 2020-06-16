@@ -1,3 +1,4 @@
+/* eslint-disable import/no-cycle */
 import closeHandler from './closeHandler';
 import store from '../../../../../store';
 

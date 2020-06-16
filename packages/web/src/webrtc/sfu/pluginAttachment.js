@@ -73,7 +73,7 @@ export default function janusAttachment(
       detached: () => {
       // Connection with the plugin closed, get rid of its features
       // The plugin handle is not valid anymore
-        console.log('clear the stuff after plugin detach');
+        // console.log('clear the stuff after plugin detach');
         // onCloseHandler('detached');
       },
     }

@@ -5,7 +5,6 @@ import { database, liveBoard } from '../../../../cache';
 import heartbitChecker from './sfuHeartbeater';
 
 export default async function initSfuCall(data) {
-  console.log('initSfu callHandler', data);
   try {
     const { session } = this;
     const { id, activeStatus, isCallUpgraded } = data;

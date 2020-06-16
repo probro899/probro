@@ -74,7 +74,7 @@ class Communication extends React.Component {
   }
 
   render() {
-    console.log('Props in communications', this.props);
+    // console.log('Props in communications', this.props);
     const { minimize, apis, maximize } = this.state;
     let height = '75%';
     if (maximize) {

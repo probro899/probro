@@ -1,4 +1,4 @@
 
 export default (err) => {
-  console.log('onErrorHandler called', err);
+  console.error(err);
 };

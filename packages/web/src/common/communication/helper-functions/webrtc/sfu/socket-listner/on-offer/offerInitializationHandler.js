@@ -1,7 +1,7 @@
 import store from '../../../../../../../store';
 
 export default async (props, state, data) => {
-  console.log(`${data.boardId}) OFFER INIT`, data);
+  // console.log(`${data.boardId}) OFFER INIT`, data);
   try {
     const { updateWebRtc } = props;
     const { boardId, userId } = data;

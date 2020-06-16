@@ -10,8 +10,6 @@ export default (props, state) => async (apism, stream, mediaType) => {
   const { janus, localCallHistory } = webRtc;
   const callType = localCallHistory.chatHistory.type;
 
-  console.log('anser handler called', mediaType, callType);
-  // console.log('janus call handler called', mediaType, 'userid', localCallHistory.chatHistory.type);
   if (callType === 'user') {
     // oneToOneCallHandler(mediaType, preMediaType, state);
     janus.oneToOneCall.createAnswer(

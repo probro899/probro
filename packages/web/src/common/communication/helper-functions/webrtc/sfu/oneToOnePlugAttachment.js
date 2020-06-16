@@ -1,3 +1,4 @@
+/* eslint-disable import/no-cycle */
 import store from '../../../../../store';
 import pluginAttachment from '../../../../../webrtc/sfu/pluginAttachment';
 import onCloseHandler from './onCloseHandler';
@@ -9,7 +10,6 @@ import onDataHandler from './onDataHandler';
 import onDataChannelAvailable from './onDataChannelAvailable';
 
 export default (props) => {
-  console.log('new plugin attach');
   const { updateWebRtc } = props;
   const { janus } = store.getState().webRtc;
   pluginAttachment(

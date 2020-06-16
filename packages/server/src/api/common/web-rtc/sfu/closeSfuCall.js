@@ -9,7 +9,6 @@ export default function closeSfuCall(data) {
     const { id } = data;
     const allLiveSessions = session.getChannel(`Board-${id}`);
     allLiveSessions.forEach(s => updateUserCache({ Board: { ...data } }, s, 'update'));
-    console.log('closeSfu Handler', data);
     // udpate active status true in cache database
     database.update('Board', schema.update('Board', { ...data }));
   } catch (e) {

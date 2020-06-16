@@ -5,14 +5,12 @@ No of state while making call
 3) re-join class room that means leave and join again
 */
 
-import uuid from 'uuid';
 import store from '../../../../../store';
 import createClassHandler from './createClassHandler';
 import classJoinHandler from './classJoinHandler';
 import Janus from '../../../../../webrtc/sfu/janus';
 import janusMediaSelector from './janusMediaSelector';
 import classAttachAndJoin from './classAttachAndJoin';
-import sfuPingPong from './socket-listner/sfuPingPong';
 
 export default async (mediaType, preMediaType, state, props) => {
   try {

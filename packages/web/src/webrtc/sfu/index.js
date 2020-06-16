@@ -15,7 +15,7 @@ export default (
 ) => {
   const { webRtc } = store.getState();
   Janus.init({
-    debug: true,
+    debug: false,
     dependencies: Janus.useDefaultDependencies({ adapter }), // or: Janus.useOldDependencies() to get the behaviour of previous Janus versions
     callback: () => {
       Janus.log('Janus API support ok');

@@ -2,7 +2,7 @@ import store from '../../../../../../store';
 
 export default (props, state, data) => {
   const { webRtc, account } = store.getState();
-  console.log('sfu ping pong called', data);
+  // console.log('sfu ping pong called', data);
   const { apis } = state;
   if (webRtc.isLive) {
     if (webRtc.localCallHistory.chatHistory.type === 'board' && data.boardId === webRtc.localCallHistory.chatHistory.connectionId) {

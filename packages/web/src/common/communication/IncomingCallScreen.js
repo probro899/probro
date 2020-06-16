@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Button } from '@blueprintjs/core';
 import RoundPicture from '../../components/RoundPicture';
-import mediaSelector from './mediaSelector';
 import { SoundComponent } from './components';
 import ringtoneUrl from '../../assets/ringtone.mp3';
 import { ENDPOINT } from '../../config';

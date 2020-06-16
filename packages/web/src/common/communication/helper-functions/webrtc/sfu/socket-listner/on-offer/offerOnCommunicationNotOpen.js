@@ -1,7 +1,7 @@
 import store from '../../../../../../../store';
 
 export default async (props, state, data) => {
-  console.log('offer on Communication Not Open', data);
+  // console.log('offer on Communication Not Open', data);
   try {
     const { updateWebRtc } = props;
 

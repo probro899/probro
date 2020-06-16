@@ -4,7 +4,6 @@ import oneToOnePlugAttachment from './oneToOnePlugAttachment';
 
 export default (props, closeType) => {
   const { webRtc, database, account } = store.getState();
-  console.log('inside user hangup', closeType);
   const { apis, janus } = webRtc;
   janus.oneToOneCall.hangup();
   if (closeType !== 'callReject') {

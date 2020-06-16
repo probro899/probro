@@ -6,7 +6,7 @@ import addRemoteFeedHandler from './addRemoteFeedHandler';
 import unpublishedHandler from './unpublishedHandler';
 
 export default (msg, props) => {
-  console.log('Conference event handler', msg);
+  // console.log('Conference event handler', msg);
   const { updateWebRtc } = props;
   const { videoroom } = msg;
   const event = videoroom;

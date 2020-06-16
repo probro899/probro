@@ -7,7 +7,7 @@ export default (props, state, maximize) => {
 
   // initialize conferece call
   client.on('sfuInit', (data) => {
-    console.log('SFU INIT CALLED');
+    // console.log('SFU INIT CALLED');
     onOfferArrive(props, state, data);
   });
 

@@ -13,13 +13,12 @@ export default (props, unpublishedId) => {
     const idx = values.findIndex(obj => obj.publisherId === unpublishedId);
     const newIds = [...ids.slice(0, idx), ...ids.slice(idx + 1)];
     const newValues = [...values.slice(0, idx), ...values.slice(idx + 1)];
-    console.log('Un published handler called  before', webRtc.connectedUsers);
     const newConnectedUsers = newIds.reduce((t, e, index) => {
       t[e] = newValues[index];
       return t;
     }, {});
     updateWebRtc('connectedUsers', newConnectedUsers);
-    console.log('Un published handler called  after', newConnectedUsers);
+    // console.log('Un published handler called  after', newConnectedUsers);
     if (newValues.length < 2) {
       closeHandler(props)();
       if (apis) {
