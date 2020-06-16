@@ -13,7 +13,7 @@ const NavElement = (props) => {
     url,
   } = props;
   return (
-    <Link to={`${match.url}/${url}`} onClick={toggleMenu} className={active ? 'sideNavElement active' : 'sideNavElement'}>
+    <Link to={url ? `${match.url}/${url}` : match.url} onClick={toggleMenu} className={active ? 'sideNavElement active' : 'sideNavElement'}>
       <span>
       &nbsp;&nbsp;
         {name}
@@ -47,7 +47,7 @@ class SmallScreenSideNav extends React.Component {
   render() {
     const { open } = this.state;
     const { navigate, match } = this.props;
-    const navElements = [{ name: 'Profile', url: 'profile' },
+    const navElements = [{ name: 'Profile', url: null },
       { name: 'Classes', url: 'classes' },
       { name: 'Connections', url: 'connection' },
       { name: 'Drawing Board', url: 'drawing-board' },

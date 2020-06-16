@@ -3,8 +3,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import moment from 'moment';
-import { Tag, Icon } from '@blueprintjs/core';
-import { FaRegCommentAlt } from 'react-icons/fa';
+import { Tag } from '@blueprintjs/core';
+import { FaCommentAlt } from 'react-icons/fa';
+import { TiAttachmentOutline } from 'react-icons/ti';
 
 
 class Task extends Component {
@@ -64,7 +65,7 @@ class Task extends Component {
           {
             comments > 0 && (
               <div className="pc-item">
-                <FaRegCommentAlt size="0.8em" className="pc-icon" />
+                <FaCommentAlt size="0.9em" className="pc-icon" />
                 <span className="pc-count">{comments}</span>
               </div>
             )
@@ -72,7 +73,7 @@ class Task extends Component {
           {
             attachments > 0 && (
               <div className="pc-item">
-                <Icon icon="paperclip" color="#137cbd" iconSize={14} />
+                <TiAttachmentOutline size="1em" className="pc-icon" />
                 <span className="pc-count">{attachments}</span>
               </div>
             )

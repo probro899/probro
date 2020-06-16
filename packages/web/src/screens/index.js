@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import * as actions from '../actions';
@@ -20,6 +20,7 @@ import { About, Privacy, Terms, Support, Career, Report, Business, Services } fr
 import NotifyBar from '../common/NotifyBar';
 import ClassTemplate from './class/template';
 import SfuTest from './test/SFU/index';
+import ErrorPage from '../common/ErrorPage';
 
 class MainScreen extends React.Component {
   constructor(props) {
@@ -35,6 +36,7 @@ class MainScreen extends React.Component {
           {popNotification.active && <NotifyBar onClose={() => updateNav({ schema: 'popNotification', data: { message: '', active: false, intent: '' } })} message={popNotification.message} intent={popNotification.intent} />}
           <Switch>
             <Route exact path="/test" component={SfuTest} />
+            <Route path="/error" component={ErrorPage} />
             <Route exact path="/about" component={About} />
             <Route exact path="/privacy-policy" component={Privacy} />
             <Route exact path="/terms-and-conditions" component={Terms} />
@@ -57,8 +59,10 @@ class MainScreen extends React.Component {
             <Route exact path="/email-verification/:token" component={EmailVerification} />
             <Route path="/blog/:userSlug/:blogSlug" component={PublicBlog} />
             <Route path="/user/:userId" component={PublicProfile} />
-            <Route path="/:id" component={DashBoard} />
+            <Route path="/dashboard/:id" component={DashBoard} />
             <Route exact path="/" component={HomePage} />
+
+            <Redirect to="/error" />
           </Switch>
           {user && <Communication />}
         </div>

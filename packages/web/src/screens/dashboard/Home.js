@@ -37,7 +37,7 @@ class HomePage extends Component {
               <SideNav match={match} />
               {/* fake-side-nav is just for the styling purpose only */}
               <div className="fake-side-nav" />
-              <Route exact path={`${match.path}/profile`} component={Profile} />
+              <Route exact path={`${match.path}/`} component={Profile} />
               <Route exact path={`${match.path}/classes`} component={Class} />
               <Route exact path={`${match.path}/blog`} component={Blog} />
               <Route exact path={`${match.path}/settings`} component={Setting} />

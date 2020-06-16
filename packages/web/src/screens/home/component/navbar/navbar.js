@@ -133,7 +133,7 @@ class Navbar extends Component {
     return (
       <div className={`navbar ${className}`}>
         {this.getMetaTags()}
-        {redirectDashboard && <Redirect exact push to={`/${account.user.slug}/profile`} />}
+        {redirectDashboard && <Redirect exact push to={`/dashboard/${account.user.slug}`} />}
         <div className="navbar-left">
           <Link
             to="/"

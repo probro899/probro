@@ -15,7 +15,7 @@ const NavElement = (props) => {
     url,
   } = props;
   return (
-    <Link to={`${match.url}/${url}`} className={active ? 'sideNavElement active' : 'sideNavElement'}>
+    <Link to={url ? `${match.url}/${url}` : match.url} className={active ? 'sideNavElement active' : 'sideNavElement'}>
       <Icon icon={IconNames[iconName]} iconSize="15" color="rgba(78, 185, 255, 1)" style={{ verticalAlign: 'baseline' }} />
       <span>
       &nbsp;&nbsp;
@@ -49,7 +49,7 @@ class SideNav extends Component {
   }
 
   render() {
-    const navElements = [{ iconName: 'PERSON', name: 'Profile', url: 'profile' },
+    const navElements = [{ iconName: 'PERSON', name: 'Profile', url: '' },
       { iconName: 'PROJECTS', name: 'Classes', url: 'classes' },
       { iconName: 'PEOPLE', name: 'Connections', url: 'connection' },
       { iconName: 'DRAW', name: 'Drawing Board', url: 'drawing-board' },
