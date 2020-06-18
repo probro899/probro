@@ -9,7 +9,7 @@ class App extends Component {
   state ={};
 
   componentDidMount() {
-    // initialize react analytics
+    // initialize google analytics
     ReactGA.initialize('UA-165382110-1');
     ReactGA.pageview('/');
   }
