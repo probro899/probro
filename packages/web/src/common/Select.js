@@ -14,7 +14,7 @@ class Select extends React.Component {
         <HTMLSelect
           onChange={e => onChange(data.id, e.target.value)}
           value={value}
-          options={data.options}
+          options={data.options.sort((a, b) => (a.value > b.value ? 1 : -1))}
           {...data}
         />
       </Label>
