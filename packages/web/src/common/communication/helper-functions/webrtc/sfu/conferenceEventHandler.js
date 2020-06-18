@@ -12,9 +12,9 @@ export default (msg, props) => {
   const event = videoroom;
   const { webRtc, database } = store.getState();
   const { janus, localCallHistory } = webRtc;
-  const id = localCallHistory.chatHistory.connectionId;
+  // const id = localCallHistory.chatHistory.connectionId;
   const { conferenceCall } = janus;
-  const { joinToken } = database.Board.byId[id];
+  // const { joinToken } = database.Board.byId[id];
   if (event === 'joined') {
     conferenceCall.createOffer(
       {
@@ -34,16 +34,20 @@ export default (msg, props) => {
     const { publishers } = msg;
     if (publishers && publishers.length > 0) {
       // console.log('AddRemote feed for publisher', publishers);
-      callAccesptHanlder(props);
-      publishers.forEach(p => addRemoteFeedHandler(p, props));
+      if (localCallHistory.chatHistory) {
+        callAccesptHanlder(props);
+        publishers.forEach(p => addRemoteFeedHandler(p, props));
+      }
     }
   } else if (event === 'event') {
     // console.log('Event handler goes here', msg);
     const { publishers, configured, unpublished } = msg;
     if (publishers && publishers.length > 0) {
-      callAccesptHanlder(props);
-      // console.log('Add Remote feed for publisher', publishers);
-      publishers.forEach(p => addRemoteFeedHandler(p, props));
+      if (localCallHistory.chatHistory) {
+        callAccesptHanlder(props);
+        // console.log('Add Remote feed for publisher', publishers);
+        publishers.forEach(p => addRemoteFeedHandler(p, props));
+      }
     }
 
     if (configured === 'ok') {
