@@ -81,7 +81,6 @@ class PublicProfile extends React.Component {
     } = this.props;
     const { loading, data, apis } = this.state;
     if (loading) return <Spinner />;
-    const loggedUserDetail = Object.values(database.UserDetail.byId).find(obj => account.user && account.user.id === obj.userId);
     const userDetails = data.userDetail;
     const { user, userEducation, userWorkExperience } = data;
     const portals = data.userPortal;
@@ -114,7 +113,7 @@ class PublicProfile extends React.Component {
             </div>
             {account.user && (
               <div className="connect-btns">
-                { account.user.id !== user.id && (loggedUserDetail.type !== 'mentee' || userDetails.type !== 'mentee')
+                { account.user.id !== user.id
                   && (
                     <Connections
                       apis={apis}
