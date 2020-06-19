@@ -24,11 +24,12 @@ const NavElement = (props) => {
 
 NavElement.defaultProps = {
   active: false,
+  url: null,
 };
 
 NavElement.propTypes = {
   name: PropTypes.string.isRequired,
-  url: PropTypes.string.isRequired,
+  url: PropTypes.string,
   match: PropTypes.objectOf(PropTypes.any).isRequired,
   active: PropTypes.bool,
   toggleMenu: PropTypes.func.isRequired,

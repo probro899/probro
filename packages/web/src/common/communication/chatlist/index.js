@@ -30,6 +30,7 @@ class ChatList extends React.Component {
         style={style}
         className="chat-list"
       >
+        {chatList.length === 0 && <div className="no-msg">You do not have any conversations</div>}
         {chatList.map((uc, idx) => <ChatListItem key={idx} clo={{ ...uc, onClick: chatItemClickHandler, onMouseHover: this.onMouseHover, mouseHoverId, props: this.props }} idx={idx} />)}
       </div>
     );

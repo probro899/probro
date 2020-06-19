@@ -80,6 +80,7 @@
           opacity: 0.8;
         }
       }
+      .no-msg { padding: 5px; color: $silver; text-align: center;}
     }
     // design individual chat history from here
     .chat-history {
@@ -93,12 +94,15 @@
         padding: 5px 0px;
         border-bottom: 1px solid $normalBorder;
         .op-name {
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          color: $darkBlue;
+          display: flex; flex-direction: column; justify-content: center;
+          color: $darkBlue; position: relative;
           font-weight: bold;
-          font-size: 16px
+          font-size: 16px;
+          .green-dot {
+            position: absolute; height: 10px; width: 10px;
+            background-color: #71f971; border-radius: 50%;
+            top: 8px; right: -15px;
+          }
         }
         .call-control {
           button {

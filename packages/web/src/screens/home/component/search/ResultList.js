@@ -4,13 +4,13 @@ import PropTypes from 'prop-types';
 import { MdMyLocation } from 'react-icons/md';
 import { ENDPOINT } from '../../../../config/index';
 import { RoundPicture } from '../../../../components';
+import getName from '../../../../common/utility-functions/getName';
 
 const icon = require('../../../../assets/icons/64w/uploadicon64.png');
 
 const User = ({ item }) => {
   const { user } = item;
   const { userDetail } = item;
-  const userName = user.middleName ? `${user.firstName} ${user.middleName} ${user.lastName}` : `${user.firstName} ${user.lastName}`;
   const profilePic = userDetail.image ? `${ENDPOINT}/user/${10000000 + parseInt(user.id, 10)}/profile/${userDetail.image}` : icon;
   return (
     <div className="i-result">
@@ -20,7 +20,7 @@ const User = ({ item }) => {
       <div className="desc-con">
         <p className="name">
           <Link to={`/user/${user.slug}/`}>
-            {userName}
+            {getName(user)}
           </Link>
         </p>
         <div className="location">

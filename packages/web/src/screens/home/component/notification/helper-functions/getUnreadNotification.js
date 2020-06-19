@@ -27,5 +27,5 @@ export default (props) => {
     const notiObj = arrWithSeenStatusReverse[0];
     return { lastNotifId: notiObj.id, unSeenNo };
   }
-  return {};
+  return { unSeenNo: 0 };
 };
