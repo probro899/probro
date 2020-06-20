@@ -115,9 +115,7 @@ class Communication extends React.Component {
             apis={apis}
             {...this.props}
           />
-          )
-            }
-
+          )}
           {!webRtc.showIncommingCall && webRtc.communicationContainer === 'history' && apis && (
           <ChatHistory
             // style={!webRtc.showIncommingCall && webRtc.communicationContainer === 'history' ? { display: 'flex' } : { display: 'none' }}

@@ -27,7 +27,7 @@ const findUserChatListDetails = (arr, props) => {
   const unseenMsg = arrWithSeenStatusReverse.findIndex(obj => obj.seenStatus.find(o => o.userId === account.user.id));
   let unSeenNo;
   if (unseenMsg === -1) {
-    unSeenNo = arrWithSeenStatus.length;
+    unSeenNo = arrWithSeenStatusReverse.filter(obj => obj.fuserId !== account.user.id).length;
   } else {
     let count = 0;
     for (let i = 0; i < unseenMsg; i += 1) {
@@ -69,7 +69,7 @@ const findBoardMessageDetails = (arr, props) => {
   const unseenMsg = arrWithSeenStatusReverse.findIndex(obj => obj.seenStatus.find(o => o.userId === account.user.id));
   let unSeenNo;
   if (unseenMsg === -1) {
-    unSeenNo = arrWithSeenStatus.length;
+    unSeenNo = arrWithSeenStatusReverse.filter(obj => obj.userId !== account.user.id).length;
   } else {
     let count = 0;
     for (let i = 0; i < unseenMsg; i += 1) {

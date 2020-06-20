@@ -15,7 +15,7 @@ class MessageNotification extends React.Component {
   }
 
   render() {
-    const { unreadMessage } = this.props;
+    const { unreadMessage, msgSound } = this.props;
     return (
       <Link to="#" onClick={this.showMessage}>
         <div className="navbar-item">
@@ -23,7 +23,7 @@ class MessageNotification extends React.Component {
           {unreadMessage !== 0 && (
           <div>
             <Badge number={unreadMessage} size={25} />
-            <SoudComponent url={notificationUrl} noLoop />
+            {msgSound && <SoudComponent url={notificationUrl} noLoop />}
           </div>
           )
           }
@@ -36,6 +36,7 @@ class MessageNotification extends React.Component {
 MessageNotification.propTypes = {
   unreadMessage: PropTypes.number.isRequired,
   updateWebRtc: PropTypes.func.isRequired,
+  msgSound: PropTypes.bool.isRequired,
 };
 
 export default MessageNotification;

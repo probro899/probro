@@ -4,8 +4,8 @@ import autoCloseHandler from './autoCloseHandler';
 
 export default (props, state, msg, jsep) => {
   const { updateWebRtc } = props;
-  const { apis } = state;
   const { webRtc, database, account } = store.getState();
+  const { apis } = webRtc;
   // console.log('incoming call handler called', msg, jsep, props);
   const { result } = msg;
   const userId = parseInt(result.username, 10);

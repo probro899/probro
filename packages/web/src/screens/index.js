@@ -61,7 +61,6 @@ class MainScreen extends React.Component {
             <Route path="/user/:userId" component={PublicProfile} />
             <Route path="/dashboard/:id" component={DashBoard} />
             <Route exact path="/" component={HomePage} />
-
             <Redirect to="/error" />
           </Switch>
           {user && <Communication />}
