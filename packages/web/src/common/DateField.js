@@ -24,6 +24,7 @@ class DateField extends React.Component {
           formatDate={date => date.toLocaleDateString()}
           parseDate={str => new Date(str)}
           placeholder="MM/DD/YYYY"
+          maxDate={new Date(2030, 12, 30)}
           onChange={e => onChange(data.id, e)}
           value={value}
           closeOnSelection
