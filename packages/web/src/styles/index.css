@@ -454,9 +454,11 @@ top attachment etc.
 .communicate .content .chat-list .i-chat:hover { box-shadow: 1px 1px 10px 0px rgba(57, 73, 76, 0.35); }
 .communicate .content .chat-list .i-chat .name { color: #1d4354; font-weight: bold; font-size: 16px; }
 .communicate .content .chat-list .i-chat .short-msg { opacity: 0.8; }
+.communicate .content .chat-list .no-msg { padding: 5px; color: #b6b6b6; text-align: center; }
 .communicate .content .chat-history { display: flex; flex-direction: column; justify-content: space-between; height: 100%; }
 .communicate .content .chat-history .top { display: flex; justify-content: space-between; padding: 5px 0px; border-bottom: 1px solid #e0e0e0; }
-.communicate .content .chat-history .top .op-name { display: flex; flex-direction: column; justify-content: center; color: #1d4354; font-weight: bold; font-size: 16px; }
+.communicate .content .chat-history .top .op-name { display: flex; flex-direction: column; justify-content: center; color: #1d4354; position: relative; font-weight: bold; font-size: 16px; }
+.communicate .content .chat-history .top .op-name .green-dot { position: absolute; height: 10px; width: 10px; background-color: #71f971; border-radius: 50%; top: 8px; right: -15px; }
 .communicate .content .chat-history .top .call-control button { margin: 0px 1px; }
 .communicate .content .chat-history .seen-user { height: 20px; width: 20px; border-radius: 50%; overflow: hidden; }
 .communicate .content .chat-history .chats { padding: 5px 5px 0px 5px; overflow-y: scroll; height: 100%; }

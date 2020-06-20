@@ -6,6 +6,7 @@ import { Button } from '@blueprintjs/core';
 import Moment from 'react-moment';
 import mediaSelector from '../mediaSelector';
 import { MessageSender } from '../components';
+import getName from '../../utility-functions/getName';
 import Message from './Message';
 import { normalTimeStampSorting } from '../../utility-functions';
 import { findChatHistory, isOwnFinder, markLastMessageRead, incomingCallLogHandler, outgoingCallLogHandler } from './helper-function';
@@ -121,7 +122,8 @@ class ChatHistory extends React.Component {
             />
           </div>
           <div className="op-name">
-            {webRtc.chatHistory.type === 'user' ? `${user.user.firstName} ${user.user.lastName}` : database.Board.byId[webRtc.chatHistory.connectionId].name}
+            {webRtc.chatHistory.type === 'user' ? getName(user.user) : database.Board.byId[webRtc.chatHistory.connectionId].name}
+            {webRtc.chatHistory.type === 'user' && user.user.activeStatus && <div className="green-dot" />}
           </div>
           <div className="call-control">
             {webRtc.chatHistory.type === 'board' ? !database.Board.byId[webRtc.chatHistory.connectionId].activeStatus && <Button icon="phone" intent="success" onClick={() => this.toCallScreen('audio')} /> :  <Button icon="phone" intent="success" onClick={() => this.toCallScreen('audio')} />}
