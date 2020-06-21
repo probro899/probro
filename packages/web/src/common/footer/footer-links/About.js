@@ -11,13 +11,9 @@ class About extends React.Component {
 
   componentDidMount() {
     const { updateNav } = this.props;
-    updateNav({
-      schema: 'mainNav',
-      data: { name: '' },
-    });
-    this.setState({
-      loading: false,
-    });
+    updateNav({ schema: 'mainNav', data: { name: '' } });
+    this.setState({ loading: false });
+    window.scrollTo(0, 0);
   }
 
   render() {
@@ -26,7 +22,7 @@ class About extends React.Component {
       return <Spinner />;
     }
     return (
-      <div>
+      <>
         <Navbar />
         <div className="pc-about">
           <div className="pc-about-header">
@@ -73,7 +69,7 @@ class About extends React.Component {
           </div>
         </div>
         <Footer />
-      </div>
+      </>
     );
   }
 }

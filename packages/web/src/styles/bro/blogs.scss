@@ -141,6 +141,7 @@
         .blog-title {
           p {
             margin-bottom: 0;
+            a { color: $textColor;}
             &.title {
               text-align: end;
               overflow: hidden;

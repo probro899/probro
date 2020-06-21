@@ -1,8 +1,11 @@
 import React from 'react';
 import { DndProvider } from 'react-dnd';
+import { Redirect } from 'react-router-dom';
 import HTML5Backend from 'react-dnd-html5-backend';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import client from '../../socket';
+import * as actions from '../../actions';
 import ClassManager from './ClassManager';
 import { Navbar } from '../home/component';
 import { ToolBar } from './ClassComponents';
@@ -27,8 +30,11 @@ class Index extends React.Component {
   }
 
   render() {
-    const { match } = this.props;
+    const { match, account } = this.props;
     const { apis, draggingContent, loading } = this.state;
+    if (!account.sessionId) return <Redirect to="/" />;
+    if (!account.user) return <Spinner />;
+    if (account.user.slug !== match.params.userSlug) return <Redirect to="/" />;
     if (loading) return <Spinner />;
     return (
       <div style={{ position: 'relative' }}>
@@ -45,6 +51,11 @@ class Index extends React.Component {
 
 Index.propTypes = {
   match: PropTypes.objectOf(PropTypes.any).isRequired,
+  account: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
-export default Index;
+const mapStateToProps = (state) => {
+  const { account } = state;
+  return { account };
+};
+export default connect(mapStateToProps, { ...actions })(Index);

@@ -7,7 +7,7 @@ const ConnectionElement = (props) => {
   switch (type) {
     case 'connected':
       return (
-        <div className="con-option">
+        <>
           <Button
             text="Connected"
             large
@@ -20,7 +20,7 @@ const ConnectionElement = (props) => {
             fill
             onClick={sendMessage}
           />
-        </div>
+        </>
       );
     case 'pending':
       return (

@@ -12,13 +12,9 @@ class Business extends React.Component {
 
   componentDidMount() {
     const { updateNav } = this.props;
-    updateNav({
-      schema: 'mainNav',
-      data: { name: '' },
-    });
-    this.setState({
-      loading: false,
-    });
+    updateNav({ schema: 'mainNav', data: { name: '' } });
+    this.setState({ loading: false });
+    window.scrollTo(0, 0);
   }
 
   render() {

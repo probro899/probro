@@ -6,6 +6,7 @@ import { Button } from '@blueprintjs/core';
 import * as actions from '../../actions';
 import { DeletePopOver } from '../../common';
 import client from '../../socket';
+import getName from '../../common/utility-functions/getName';
 import { MoreButton } from '../../components';
 import { ENDPOINT } from '../../config';
 
@@ -25,12 +26,15 @@ const EachBlog = ({ onMore, users, obj }) => {
       <div className="detail-container">
         <div className="blog-author">
           <Link to={`/user/${users.byId[obj.userId].slug}`}>
-            {users.byId[obj.userId].middleName
-              ? `${users.byId[obj.userId].firstName} ${users.byId[obj.userId].middleName} ${users.byId[obj.userId].lastName}` : `${users.byId[obj.userId].firstName} ${users.byId[obj.userId].lastName}`}
+            {getName(users.byId[obj.userId])}
           </Link>
         </div>
         <div className="blog-title">
-          <p className="title">{obj.title}</p>
+          <p className="title">
+            <Link target="_blank" to={`/blog/${users.byId[obj.userId].slug}/${obj.slug}`}>
+              {obj.title}
+            </Link>
+          </p>
           <p style={{ textAlign: 'right', width: '100%' }}>
             <span className="pc-date">
               {new Date(obj.timeStamp).toDateString()}

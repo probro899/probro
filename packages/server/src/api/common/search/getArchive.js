@@ -9,7 +9,7 @@ export default async (userId) => {
   // console.log('User id in getArchive api', userId);
   const popularRes = await getPopular();
   if (!userId) {
-    return { basedOnHistory: { blogs: popularRes.blogs, users: popularRes.users }, popularOnPc: { blogs: popularRes.blogs, users: popularRes.users } };
+    return { basedOnHistory: { blogs: popularRes.blogs }, popularOnPc: { blogs: popularRes.blogs, users: popularRes.users } };
   }
 
   const userDetails = await findUserDetails(userId, true, true);
@@ -27,10 +27,10 @@ export default async (userId) => {
       allBlogPromises.push(exec(`SELECT * FROM Blog WHERE title LIKE '%${k}%' AND [saveStatus]=?`, ['publish']));
     });
     const allBlog = await Promise.all(allBlogPromises);
-    const allBlogResult = flat(allBlog).map(b => b.id);
+    const allBlogResult = flat(allBlog).map(b => b);
     // console.log('allBlog', allBlog, allBlogResult);
     const allBologDetailsPrmises = [];
-    lodash.uniq(allBlogResult).forEach(id => allBologDetailsPrmises.push(findBlogDetails(id, userId)));
+    lodash.uniq(allBlogResult).forEach(blog => allBologDetailsPrmises.push(findBlogDetails(blog.id, userId, false, blog.userId)));
     const allBlogDetails = await Promise.all(allBologDetailsPrmises);
     // console.log('all blog details', allBlogDetails);
     // const finalBlogDetals = allBlogResult.map((blog, idx) => ({ blog, ...allBlogDetails[idx] })) || [];
@@ -38,5 +38,5 @@ export default async (userId) => {
   });
   // console.log('Main Response', mainRes);
   const finalBlogsRes = mainRes.blogs.length > 0 ? mainRes.blogs : popularRes.blogs;
-  return { basedOnHistory: { blogs: finalBlogsRes, users: popularRes.users }, popularOnPc: { blogs: popularRes.blogs, users: popularRes.users } };
+  return { basedOnHistory: { blogs: finalBlogsRes }, popularOnPc: { blogs: popularRes.blogs, users: popularRes.users } };
 };

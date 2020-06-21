@@ -18,6 +18,7 @@ class Terms extends React.Component {
     this.setState({
       loading: false,
     });
+    window.scrollTo(0, 0);
   }
 
   render() {

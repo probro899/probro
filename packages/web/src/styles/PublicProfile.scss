@@ -1,17 +1,15 @@
 @import './config.scss';
 
 .public-profile {
-  margin-top: $navbarHeight;
   min-height: calc(100vh - #{$navbarHeight} - #{$footerHeight});
   display: flex; flex-direction: column;
-  padding: 1px 3px; position: relative;
+  padding-top: 10px; 
+  position: relative;
+  margin: $navbarHeight 7%;
   .cover-pic {
     overflow: hidden; width: 100%;
     // to prevent overflow of unedited cover
-    height: calc((100vw * 0.81) * 0.33);
-    @media screen and (max-width: 855px) {
-      height: calc(100vw * 0.33);
-    }
+    height: calc((100vw * 0.86) * 0.33);
     img {
       width: 100%;
     }
@@ -19,39 +17,19 @@
   .profilePic {
     position: absolute; left: 10px; border: 1px solid $normalBorder;
     box-shadow: 0px 0px 5px 1px $normalShadowColor; border-radius: 50%;
-    width: calc((100vw * 0.81 * 0.33) * 0.55);
-    height: calc((100vw * 0.81 * 0.33) * 0.55);
-    overflow: hidden; top: calc((100vw * 0.81) * 0.33 * 0.4);
-    @media screen and (max-width: 855px) {
-      top: calc(100vw * 0.33 * 0.4);
-      left: 20px;
-      width: calc((100vw * 0.33) * 0.55);
-      height: calc((100vw * 0.33) * 0.55);
-    }
+    width: calc((100vw * 0.86 * 0.33) * 0.55);
+    height: calc((100vw * 0.86 * 0.33) * 0.55);
+    overflow: hidden;
+    top: calc((100vw * 0.86) * 0.33 * 0.4);
   }
   .top-details {
-    width: 100%; display: flex; justify-content: space-between;
-    background: $backgroundColor; padding: 5px;
-    .name {
-      font-size: 20px;
-      font-weight: bold;
-    }
+    width: 100%; display: flex; justify-content: space-between; margin-top: 8px;
+    background: $backgroundColor;
+    .name { font-size: 20px; font-weight: bold; }
     .connect-btns {
-      flex: 0.3; display: flex; flex-direction: column; justify-content: center; align-items: center;
-      .con {
-        display: flex;
-        .con-option {
-          display: flex;
-          flex-direction: row;
-          button {
-            padding: 10px;
-          }
-        }
-      }
-      button {
-        margin-left: 10px;
-        font-size: 16px;
-        font-weight: 400;
+      flex: 0.3; display: flex; justify-content: flex-end;
+      .con { display: flex; }
+      button { margin-left: 10px; font-size: 16px;
       }
     }
     .desc {
@@ -65,7 +43,7 @@
   .bio {
     text-align: center;
     width: 100%;
-    padding: 20px 5px;
+    padding: 20px 0px;
     p {
       font-family: 'Oxygen', sans-serif;
       font-size: 16px;
@@ -85,7 +63,7 @@
     }
   }
   .education {
-    padding: 20px 5px;
+    padding: 20px 0px;
     width: 100%;
     p.p-top {
       font-size: 20px;
@@ -122,7 +100,7 @@
     }
   }
   .experience {
-    padding: 20px 5px;
+    padding: 20px 0px;
     width: 100%;
     p.p-top {
       font-size: 20px;
@@ -164,7 +142,7 @@
     }
   }
   .skills {
-    padding: 20px 5px;
+    padding: 20px 0px;
     width: 100%;
     p.p-top {
       font-size: 20px;
@@ -187,7 +165,16 @@
       }
     }
   }
-  @media screen and (max-width: 855px) {
-    padding: 5px 15px;
+
+  @media screen and (max-width: 600px){
+    margin: $navbarHeight 5%;
+    .cover-pic {
+      height: calc((100vw * 0.90) * 0.33);
+    }
+    .profilePic {
+      width: calc((100vw * 0.90 * 0.33) * 0.55);
+      height: calc((100vw * 0.90 * 0.33) * 0.55);
+      top: calc((100vw * 0.90) * 0.33 * 0.4);
+    }
   }
 }

@@ -192,8 +192,8 @@ top attachment etc.
 
 .column-container { height: 100%; padding-bottom: 18px; }
 .column-container .column-inner-container { display: flex; flex-direction: column; width: 300px; max-height: 100%; margin: 10px 10px 10px 0px; background-color: #1d4354; }
-.column-container .column-inner-container .column-title { padding: 8px; display: flex; justify-content: space-between; position: relative; cursor: pointer; color: #fff; }
-.column-container .column-inner-container .column-title .text { font-size: 18px; font-weight: bold; }
+.column-container .column-inner-container .column-title { padding: 8px; display: flex; justify-content: space-between; flex-shrink: 0; position: relative; cursor: pointer; color: #fff; }
+.column-container .column-inner-container .column-title .text { font-size: 18px; font-weight: bold; word-break: break-word; }
 .column-container .column-inner-container .column-title .more-button svg { fill: #fff; }
 .column-container .column-inner-container .task-list { overflow-y: scroll; max-height: 100%; padding: 0px 8px 8px 8px; }
 .column-container .column-inner-container .column-footer { display: flex; align-items: flex-start; color: #fff; padding: 10px; cursor: pointer; }
@@ -206,11 +206,12 @@ top attachment etc.
 .task-container .pc-task-flag .pc-deadline-view { color: #fff; }
 .task-container .pc-task-flag .pc-deadline-view p { font-size: 12px; padding: 3px; border-radius: 2.5px; background-color: green; color: #fff; }
 .task-container .pc-task-flag .pc-deadline-view p.expire { background-color: red; }
-.task-container .pc-task-name { margin: 0; font-weight: bold; }
+.task-container .pc-task-name { margin: 0; font-weight: bold; word-break: break-word; }
 .task-container .task-footer { display: flex; }
 .task-container .task-footer .pc-item { padding-top: 3px; display: flex; align-items: center; margin-right: 10px; }
 .task-container .task-footer .pc-icon { fill: #137cbd; }
 .task-container .task-footer .pc-count { color: #137cbd; margin-left: 3px; font-size: 14px; }
+.task-container .pc-tag { margin-right: 5px; }
 
 .classes { display: flex; flex-direction: column; padding: 5px; }
 .classes .header { padding: 10px; }
@@ -224,7 +225,7 @@ top attachment etc.
 .classes .content-list .content-link.add-new button { box-shadow: 0px 1px 2px 1px rgba(57, 73, 76, 0.35); }
 .classes .content-list .content-link.add-new button:hover { box-shadow: 0px 1px 2px 1.5px rgba(57, 73, 76, 0.35); }
 .classes .content-list .content-link .class-repr { padding: 5px; display: flex; background: #1d4354; align-items: center; width: 50%; }
-.classes .content-list .content-link .class-repr span { word-break: break-all; text-align: center; color: white; font-size: 20px; }
+.classes .content-list .content-link .class-repr span { word-break: break-word; text-align: center; color: white; font-size: 20px; }
 .classes .content-list .content-link .class-detail { padding: 5px; width: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; background: white; }
 .classes .content-list .content-link .class-detail span { text-align: center; }
 .classes .content-list .content-link .class-detail span.name { font-weight: bold; }
@@ -255,6 +256,7 @@ top attachment etc.
 
 .overlay-container { margin-left: 2%; margin-right: 2%; padding: 0; }
 .overlay-container .task-detail-overlay .overlay-title { padding: 7px; display: flex; justify-content: space-between; align-items: center; background: #f9f9f9; color: #222; border: 1px solid #e0e0e0; }
+.overlay-container .task-detail-overlay .overlay-title .title { word-break: break-word; }
 .overlay-container .task-detail-overlay .overlay-title svg { fill: #222; }
 .overlay-container .task-detail-overlay .overlay-title .head { display: flex; flex-direction: row; font-size: 18px; font-weight: bold; width: 100%; }
 .overlay-container .task-detail-overlay .overlay-title .head textarea { width: 100%; resize: none; padding: 0px 3px; overflow-y: scroll; height: 40px; line-height: 35px; font-size: 18px; font-weight: bold; background: transparent; }
@@ -400,6 +402,7 @@ top attachment etc.
 .blogs .blog-list .blog-container .img-container img { width: 100%; object-fit: cover; }
 .blogs .blog-list .blog-container .detail-container { height: 90px; padding: 10px; display: flex; flex-direction: column-reverse; }
 .blogs .blog-list .blog-container .detail-container .blog-title p { margin-bottom: 0; }
+.blogs .blog-list .blog-container .detail-container .blog-title p a { color: #222; }
 .blogs .blog-list .blog-container .detail-container .blog-title p.title { text-align: end; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 18px; font-weight: 800; }
 .blogs .blog-list .blog-container .detail-container .blog-title p .pc-date { font-size: 12px; color: #696969; }
 .blogs .blog-list .blog-container .detail-container .blog-author { display: flex; justify-content: flex-end; }
@@ -411,7 +414,7 @@ top attachment etc.
 .notification-list .pc-noti-wrapper .pc-noti-icon { width: 55px; height: 55px; display: flex; justify-content: center; align-items: center; flex-shrink: 0; }
 .notification-list .pc-noti-wrapper .pc-noti-icon svg { fill: #1d4354; }
 .notification-list .pc-noti-wrapper .pc-noti-body { margin-left: 10px; padding: 5px; display: flex; justify-content: center; flex-direction: column; }
-.notification-list .pc-noti-wrapper .pc-noti-body p { margin: 0; word-wrap: break-word; }
+.notification-list .pc-noti-wrapper .pc-noti-body p { margin: 0; word-break: break-word; }
 .notification-list .pc-noti-wrapper .pc-noti-body .pc-ago-date { font-size: 12px; color: #696969; }
 
 .popover-form { padding: 5px 5px 0px 5px; }
@@ -603,39 +606,38 @@ top attachment etc.
 .public-blog .pc-blog-cover-image { display: flex; justify-content: center; width: 100%; overflow: hidden; margin-bottom: 25px; }
 .public-blog .pc-blog-cover-image img { width: 100%; object-fit: contain; }
 .public-blog .public-blog-content { width: 100%; display: flex; margin-bottom: 50px; font-size: 25px; }
+.public-blog .public-blog-content #blogContent { width: 100%; }
+.public-blog .public-blog-content #blogContent pre { white-space: pre-wrap; }
 .public-blog .public-blog-content #blogContent p { font-size: 25px; }
 .public-blog .public-blog-content #blogContent img { max-width: 100%; }
 .public-blog .response { display: flex; }
-.public-blog .response .comment-section { flex: 1; display: flex; flex-direction: column; }
+.public-blog .response .comment-section { flex: 1; display: flex; flex-direction: column; width: 100%; }
 .public-blog .response .comment-section .comment-area { display: flex; position: relative; }
 .public-blog .response .comment-section .comment-area .profile-icon { width: 40px; height: 40px; position: absolute; border-radius: 50%; overflow: hidden; top: 11px; left: 5px; }
-.public-blog .response .comment-section .comment-area textarea { font-size: 21px; flex: 0.93; height: 62px; line-height: 40px; padding-left: 60px; resize: none; }
-.public-blog .response .comment-section .comment-area button { font-size: 30px; flex: 0.07; }
+.public-blog .response .comment-section .comment-area textarea { font-size: 21px; flex: 0.9; height: 62px; line-height: 40px; padding-left: 60px; resize: none; }
+.public-blog .response .comment-section .comment-area button { font-size: 30px; flex: 0.1; }
 .public-blog .response .comment-section .comment-area button span { display: flex; }
 .public-blog .response .comment-section .responses .i-response { margin: 10px 0; display: flex; }
-.public-blog .response .comment-section .responses .i-response .pc-profile-icon { width: 60px; height: 60px; border-radius: 50%; overflow: hidden; margin: 0 10px; }
+.public-blog .response .comment-section .responses .i-response .pc-profile-icon { width: 60px; height: 60px; border-radius: 50%; flex-shrink: 0; overflow: hidden; margin: 0 10px; }
 .public-blog .response .comment-section .responses .i-response .comment-content { padding: 5px; }
+.public-blog .response .comment-section .responses .i-response .comment-content .com-desc { word-break: break-word; }
 .public-blog .response .comment-section .responses .i-response .comment-content .com-desc .pc-comment-edit { display: flex; }
 .public-blog .response .comment-section .responses .i-response .comment-content .com-config small { cursor: pointer; color: #666; margin-right: 5px; }
 .public-blog .response .comment-section .responses .i-response .comment-content .com-config small.danger u:hover { color: red; }
 .public-blog .response .comment-section .responses .i-response .comment-content .com-config small.primary u:hover { color: #137cbd; }
 
-.public-profile { margin-top: 60px; min-height: calc(100vh - 60px - 125px); display: flex; flex-direction: column; padding: 1px 3px; position: relative; }
-.public-profile .cover-pic { overflow: hidden; width: 100%; height: calc((100vw * 0.81) * 0.33); }
-@media screen and (max-width: 855px) { .public-profile .cover-pic { height: calc(100vw * 0.33); } }
+.public-profile { min-height: calc(100vh - 60px - 125px); display: flex; flex-direction: column; padding-top: 10px; position: relative; margin: 60px 7%; }
+.public-profile .cover-pic { overflow: hidden; width: 100%; height: calc((100vw * 0.86) * 0.33); }
 .public-profile .cover-pic img { width: 100%; }
-.public-profile .profilePic { position: absolute; left: 10px; border: 1px solid #e0e0e0; box-shadow: 0px 0px 5px 1px rgba(57, 73, 76, 0.35); border-radius: 50%; width: calc((100vw * 0.81 * 0.33) * 0.55); height: calc((100vw * 0.81 * 0.33) * 0.55); overflow: hidden; top: calc((100vw * 0.81) * 0.33 * 0.4); }
-@media screen and (max-width: 855px) { .public-profile .profilePic { top: calc(100vw * 0.33 * 0.4); left: 20px; width: calc((100vw * 0.33) * 0.55); height: calc((100vw * 0.33) * 0.55); } }
-.public-profile .top-details { width: 100%; display: flex; justify-content: space-between; background: #fff; padding: 5px; }
+.public-profile .profilePic { position: absolute; left: 10px; border: 1px solid #e0e0e0; box-shadow: 0px 0px 5px 1px rgba(57, 73, 76, 0.35); border-radius: 50%; width: calc((100vw * 0.86 * 0.33) * 0.55); height: calc((100vw * 0.86 * 0.33) * 0.55); overflow: hidden; top: calc((100vw * 0.86) * 0.33 * 0.4); }
+.public-profile .top-details { width: 100%; display: flex; justify-content: space-between; margin-top: 8px; background: #fff; }
 .public-profile .top-details .name { font-size: 20px; font-weight: bold; }
-.public-profile .top-details .connect-btns { flex: 0.3; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+.public-profile .top-details .connect-btns { flex: 0.3; display: flex; justify-content: flex-end; }
 .public-profile .top-details .connect-btns .con { display: flex; }
-.public-profile .top-details .connect-btns .con .con-option { display: flex; flex-direction: row; }
-.public-profile .top-details .connect-btns .con .con-option button { padding: 10px; }
-.public-profile .top-details .connect-btns button { margin-left: 10px; font-size: 16px; font-weight: 400; }
+.public-profile .top-details .connect-btns button { margin-left: 10px; font-size: 16px; }
 .public-profile .top-details .desc { flex: 0.7; }
 .public-profile .top-details .desc .name { font-size: 20px; font-weight: bold; }
-.public-profile .bio { text-align: center; width: 100%; padding: 20px 5px; }
+.public-profile .bio { text-align: center; width: 100%; padding: 20px 0px; }
 .public-profile .bio p { font-family: 'Oxygen', sans-serif; font-size: 16px; word-wrap: break-word; }
 .public-profile .adv-body { display: flex; }
 .public-profile .adv-body .left-body { width: 50%; }
@@ -643,7 +645,7 @@ top attachment etc.
 @media screen and (max-width: 720px) { .public-profile .adv-body { flex-direction: column; }
   .public-profile .adv-body .left-body { width: 100%; }
   .public-profile .adv-body .right-body { width: 100%; } }
-.public-profile .education { padding: 20px 5px; width: 100%; }
+.public-profile .education { padding: 20px 0px; width: 100%; }
 .public-profile .education p.p-top { font-size: 20px; display: flex; justify-content: space-between; padding-right: 5px; }
 .public-profile .education p.p-top svg { fill: #137cbd; }
 .public-profile .education .p-edu-list .p-edu-list-i { display: flex; padding: 2px; }
@@ -652,7 +654,7 @@ top attachment etc.
 .public-profile .education .p-edu-list .p-edu-list-i p span.p-name-i { font-size: 18px; font-weight: bold; }
 .public-profile .education .p-edu-list .p-edu-list-i p span.p-timeline { font-weight: bold; color: #696969; }
 .public-profile .education .p-edu-list .p-edu-list-i p svg { fill: #137cbd; }
-.public-profile .experience { padding: 20px 5px; width: 100%; }
+.public-profile .experience { padding: 20px 0px; width: 100%; }
 .public-profile .experience p.p-top { font-size: 20px; display: flex; justify-content: space-between; padding-right: 5px; }
 .public-profile .experience p.p-top svg { fill: #137cbd; }
 .public-profile .experience .p-exp-list .p-exp-list-i { display: flex; padding: 2px; }
@@ -662,12 +664,14 @@ top attachment etc.
 .public-profile .experience .p-exp-list .p-exp-list-i p span.p-company-i { font-size: 16px; font-weight: bold; color: #696969; }
 .public-profile .experience .p-exp-list .p-exp-list-i p span.p-timeline { font-weight: bold; color: #696969; }
 .public-profile .experience .p-exp-list .p-exp-list-i p svg { fill: #137cbd; }
-.public-profile .skills { padding: 20px 5px; width: 100%; }
+.public-profile .skills { padding: 20px 0px; width: 100%; }
 .public-profile .skills p.p-top { font-size: 20px; display: flex; justify-content: space-between; padding-right: 5px; }
 .public-profile .skills p.p-top svg { fill: #137cbd; }
 .public-profile .skills .skills-container { padding: 5px 5px 5px 0px; display: flex; flex-wrap: wrap; }
 .public-profile .skills .skills-container span { margin: 5px; padding: 5px; color: #fff; background: #137cbd; }
-@media screen and (max-width: 855px) { .public-profile { padding: 5px 15px; } }
+@media screen and (max-width: 600px) { .public-profile { margin: 60px 5%; }
+  .public-profile .cover-pic { height: calc((100vw * 0.90) * 0.33); }
+  .public-profile .profilePic { width: calc((100vw * 0.90 * 0.33) * 0.55); height: calc((100vw * 0.90 * 0.33) * 0.55); top: calc((100vw * 0.90) * 0.33 * 0.4); } }
 
 .search-result { min-height: calc(100vh - 60px - 125px); margin-top: 60px; }
 .search-result .filter-toolbar { min-height: 40px; display: flex; flex-direction: row; justify-content: space-between; background: #fff; padding: 5px; width: 100%; box-shadow: 1px 1px 3px 0px rgba(57, 73, 76, 0.35); }

@@ -6,7 +6,6 @@ import ColumnWrapper from './ClassComponents/dndComponents/ColumnWrapper';
 import { NewColumn, TaskOverlay } from './ClassComponents';
 import * as actions from '../../actions';
 import posSorting from '../../common/utility-functions';
-import { Spinner } from '../../common';
 import checkColumnMove from './helper-functions/checkColumnMove';
 import { withinColumn, outsideColumn } from './helper-functions/checkTaskMove';
 import ClassWrapper from './ClassComponents/dndComponents/ClassWrapper';
@@ -161,9 +160,6 @@ class ClassManager extends Component {
       addDatabaseSchema, account, updateDatabaseSchema,
       deleteDatabaseSchema, classMembers, userSlug, setDraggingContent,
     } = this.props;
-    if (!account.sessionId) return <Redirect to="/" />;
-    if (!account.user) return <Spinner />;
-    if (account.user.slug !== userSlug) return <Redirect to="/" />;
     const member = Object.values(classMembers.byId).find(obj => obj.boardId === classId && !obj.deleteStatus && account.user.id === obj.tuserId);
     if (!member) { return <Redirect to={`/${userSlug}/classes`} />; }
     return (
