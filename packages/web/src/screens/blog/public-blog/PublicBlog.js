@@ -72,7 +72,7 @@ class PublicBlog extends React.Component {
     const imgUrl = user.userDetail && user.userDetail.image ? `${ENDPOINT}/user/${10000000 + parseInt(user.user.id, 10)}/profile/${user.userDetail.image}` : file;
     const { userDetails } = data;
     return (
-      <div>
+      <>
         <Navbar />
         <div className="public-blog">
           <div className="public-blog-title">
@@ -117,7 +117,7 @@ class PublicBlog extends React.Component {
           />
         </div>
         <Footer />
-      </div>
+      </>
     );
   }
 }

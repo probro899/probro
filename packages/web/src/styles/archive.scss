@@ -262,12 +262,14 @@
             width: 60px;
             height: 60px;
             border-radius: 50%;
+            flex-shrink: 0;
             overflow: hidden;
             margin: 0 10px;
           }
           .comment-content {
             padding: 5px;
             .com-desc {
+              word-break: break-word;
               .pc-comment-edit {
                 display: flex;
               }

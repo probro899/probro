@@ -87,7 +87,7 @@ class PublicProfile extends React.Component {
     const imgUrl = data.userDetail.coverImage ? `${ENDPOINT}/user/${10000000 + parseInt(data.user.id, 10)}/profile/${data.userDetail.coverImage}` : defaultCover;
     const editCoverUrl = data.userDetail.coverEdit && `${ENDPOINT}/user/${10000000 + parseInt(data.user.id, 10)}/profile/${data.userDetail.coverEdit}`;
     return (
-      <div>
+      <>
         <Navbar />
         <div className="public-profile">
           <div className="cover-pic">
@@ -213,7 +213,7 @@ class PublicProfile extends React.Component {
           </div>
         </div>
         <Footer />
-      </div>
+      </>
     );
   }
 }
