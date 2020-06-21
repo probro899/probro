@@ -610,7 +610,8 @@ top attachment etc.
 .public-blog .public-blog-content { width: 100%; display: flex; margin-bottom: 50px; font-size: 25px; }
 .public-blog .public-blog-content #blogContent { width: 100%; }
 .public-blog .public-blog-content #blogContent pre { white-space: pre-wrap; }
-.public-blog .public-blog-content #blogContent p { font-size: 25px; }
+.public-blog .public-blog-content #blogContent p { font-size: 25px; word-break: break-word; }
+.public-blog .public-blog-content #blogContent span { word-break: break-word; }
 .public-blog .public-blog-content #blogContent img { max-width: 100%; }
 .public-blog .response { display: flex; }
 .public-blog .response .comment-section { flex: 1; display: flex; flex-direction: column; width: 100%; }

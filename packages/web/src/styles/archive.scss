@@ -218,7 +218,8 @@
     #blogContent {
       width: 100%;
       pre { white-space: pre-wrap; }
-      p { font-size: 25px;}
+      p { font-size: 25px; word-break: break-word; }
+      span { word-break: break-word; }
       img { max-width: 100%; }
     }
   }
