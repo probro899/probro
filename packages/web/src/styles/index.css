@@ -186,8 +186,8 @@ top attachment etc.
 .profile .skills { padding: 20px 5px; width: 100%; }
 .profile .skills p.p-top { font-size: 20px; display: flex; justify-content: space-between; padding-right: 5px; }
 .profile .skills p.p-top svg { fill: #137cbd; }
-.profile .skills .skills-container { padding: 5px 5px 5px 0px; display: flex; flex-wrap: wrap; word-wrap: break-word; }
-.profile .skills .skills-container span { margin: 5px; padding: 5px; color: #fff; background: #137cbd; }
+.profile .skills .skills-container { padding: 5px 5px 5px 0px; display: flex; flex-wrap: wrap; }
+.profile .skills .skills-container span { margin: 5px; word-break: break-word; padding: 5px; color: #fff; background: #137cbd; }
 @media screen and (max-width: 855px) { .profile { padding: 5px 15px; } }
 
 .column-container { height: 100%; padding-bottom: 18px; }
@@ -363,6 +363,8 @@ top attachment etc.
 .settings .container-settings .basic .value .edit-icon:hover svg { fill: #137cbd; }
 .settings .container-settings .basic .value ul { margin: 0; display: flex; padding: 0; }
 .settings .container-settings .basic .value ul li { color: #fff; padding: 5px; background-color: #137cbd; list-style-type: none; margin-right: 2px; }
+.settings .container-settings .basic .value .skills-container { display: flex; flex-wrap: wrap; }
+.settings .container-settings .basic .value .skills-container span { margin: 5px 5px 5px 0px; word-break: break-word; padding: 5px; color: #fff; background: #137cbd; }
 .settings .container-settings .switch-adv-con { display: flex; flex-direction: column; align-items: center; }
 .settings .container-settings .switch-adv-con p { text-align: center; color: #696969; line-height: 18px; }
 .settings .container-settings .switch-adv-con button.switch-button { color: #fff; }

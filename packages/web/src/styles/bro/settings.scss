@@ -29,6 +29,10 @@
             list-style-type: none; margin-right: 2px;
           }
         }
+        .skills-container {
+          display: flex; flex-wrap: wrap;
+          span { margin: 5px 5px 5px 0px; word-break: break-word; padding: 5px; color: $backgroundColor; background: $skyBlueMain; }
+        }
       }
     }
     .switch-adv-con {

@@ -4,6 +4,7 @@ import countryList from 'react-select-country-list';
 import { Icon } from '@blueprintjs/core';
 import * as actions from '../../../actions';
 import { PopoverForm } from '../../../components';
+import getName from '../../../common/utility-functions/getName';
 import { NameSchema, GenderSchema, AddressSchema, CountrySchema } from './structure';
 import CarrierInterestSetting from './CarrierInterestSetting';
 
@@ -179,7 +180,7 @@ class BasicSettings extends React.Component {
             {account.user
               && (
                 <span>
-                  {user.middleName ? `${user.firstName} ${user.middleName} ${user.lastName}` : `${user.firstName} ${user.lastName}`}
+                  {getName(user)}
                 </span>
               )
             }

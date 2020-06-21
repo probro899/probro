@@ -20,10 +20,10 @@ const PopoverContent = (props) => {
           paddingBottom: 10,
         }}
       >
-        <span>Add Skills</span>
+        <span>Carrier Interests</span>
       </div>
       <Taginput data={data} onChange={onChange} value={value} />
-      <Button onClick={callback} fill intent="primary" large text="Add Skills" />
+      <Button onClick={callback} fill intent="success" large text="Save" />
     </div>
   );
 };
@@ -64,9 +64,24 @@ class CarrierInterestSetting extends React.Component {
     return { response: 200, message: 'Changed successfully' };
   }
 
+  getInterests = () => {
+    const { userDetail } = this.props;
+    if (!userDetail.field || JSON.parse(userDetail.field).length === 0) {
+      return <div>---</div>;
+    }
+    return (
+      <div className="skills-container">
+        {
+          JSON.parse(userDetail.field).map((obj, idx) => (
+            <span key={idx}>{obj}</span>
+          ))
+        }
+      </div>
+    );
+  }
+
   render() {
     const { open, value } = this.state;
-    const { userDetail } = this.props;
     const data = { id: 'interest', name: 'Carrier Interests', placeholder: 'Type and press enter' };
     return (
       <div className="basic">
@@ -83,7 +98,7 @@ class CarrierInterestSetting extends React.Component {
           />
         </Dialog>
         <div className="value">
-          {!userDetail.field || JSON.parse(userDetail.field).length === 0 ? <ul>---</ul> : <ul>{JSON.parse(userDetail.field).map((obj, idx) => <li key={idx}>{obj}</li>)}</ul>}
+          {this.getInterests()}
           <Icon
             icon="edit"
             color="rgba(167, 182, 194, 1)"
