@@ -193,7 +193,7 @@ top attachment etc.
 .column-container { height: 100%; padding-bottom: 18px; }
 .column-container .column-inner-container { display: flex; flex-direction: column; width: 300px; max-height: 100%; margin: 10px 10px 10px 0px; background-color: #1d4354; }
 .column-container .column-inner-container .column-title { padding: 8px; display: flex; justify-content: space-between; flex-shrink: 0; position: relative; cursor: pointer; color: #fff; }
-.column-container .column-inner-container .column-title .text { font-size: 18px; font-weight: bold; }
+.column-container .column-inner-container .column-title .text { font-size: 18px; font-weight: bold; word-break: break-word; }
 .column-container .column-inner-container .column-title .more-button svg { fill: #fff; }
 .column-container .column-inner-container .task-list { overflow-y: scroll; max-height: 100%; padding: 0px 8px 8px 8px; }
 .column-container .column-inner-container .column-footer { display: flex; align-items: flex-start; color: #fff; padding: 10px; cursor: pointer; }
@@ -206,7 +206,7 @@ top attachment etc.
 .task-container .pc-task-flag .pc-deadline-view { color: #fff; }
 .task-container .pc-task-flag .pc-deadline-view p { font-size: 12px; padding: 3px; border-radius: 2.5px; background-color: green; color: #fff; }
 .task-container .pc-task-flag .pc-deadline-view p.expire { background-color: red; }
-.task-container .pc-task-name { margin: 0; font-weight: bold; }
+.task-container .pc-task-name { margin: 0; font-weight: bold; word-break: break-word; }
 .task-container .task-footer { display: flex; }
 .task-container .task-footer .pc-item { padding-top: 3px; display: flex; align-items: center; margin-right: 10px; }
 .task-container .task-footer .pc-icon { fill: #137cbd; }
@@ -225,7 +225,7 @@ top attachment etc.
 .classes .content-list .content-link.add-new button { box-shadow: 0px 1px 2px 1px rgba(57, 73, 76, 0.35); }
 .classes .content-list .content-link.add-new button:hover { box-shadow: 0px 1px 2px 1.5px rgba(57, 73, 76, 0.35); }
 .classes .content-list .content-link .class-repr { padding: 5px; display: flex; background: #1d4354; align-items: center; width: 50%; }
-.classes .content-list .content-link .class-repr span { word-break: break-all; text-align: center; color: white; font-size: 20px; }
+.classes .content-list .content-link .class-repr span { word-break: break-word; text-align: center; color: white; font-size: 20px; }
 .classes .content-list .content-link .class-detail { padding: 5px; width: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; background: white; }
 .classes .content-list .content-link .class-detail span { text-align: center; }
 .classes .content-list .content-link .class-detail span.name { font-weight: bold; }
@@ -256,6 +256,7 @@ top attachment etc.
 
 .overlay-container { margin-left: 2%; margin-right: 2%; padding: 0; }
 .overlay-container .task-detail-overlay .overlay-title { padding: 7px; display: flex; justify-content: space-between; align-items: center; background: #f9f9f9; color: #222; border: 1px solid #e0e0e0; }
+.overlay-container .task-detail-overlay .overlay-title .title { word-break: break-word; }
 .overlay-container .task-detail-overlay .overlay-title svg { fill: #222; }
 .overlay-container .task-detail-overlay .overlay-title .head { display: flex; flex-direction: row; font-size: 18px; font-weight: bold; width: 100%; }
 .overlay-container .task-detail-overlay .overlay-title .head textarea { width: 100%; resize: none; padding: 0px 3px; overflow-y: scroll; height: 40px; line-height: 35px; font-size: 18px; font-weight: bold; background: transparent; }
@@ -412,7 +413,7 @@ top attachment etc.
 .notification-list .pc-noti-wrapper .pc-noti-icon { width: 55px; height: 55px; display: flex; justify-content: center; align-items: center; flex-shrink: 0; }
 .notification-list .pc-noti-wrapper .pc-noti-icon svg { fill: #1d4354; }
 .notification-list .pc-noti-wrapper .pc-noti-body { margin-left: 10px; padding: 5px; display: flex; justify-content: center; flex-direction: column; }
-.notification-list .pc-noti-wrapper .pc-noti-body p { margin: 0; word-wrap: break-word; }
+.notification-list .pc-noti-wrapper .pc-noti-body p { margin: 0; word-break: break-word; }
 .notification-list .pc-noti-wrapper .pc-noti-body .pc-ago-date { font-size: 12px; color: #696969; }
 
 .popover-form { padding: 5px 5px 0px 5px; }
@@ -604,14 +605,16 @@ top attachment etc.
 .public-blog .pc-blog-cover-image { display: flex; justify-content: center; width: 100%; overflow: hidden; margin-bottom: 25px; }
 .public-blog .pc-blog-cover-image img { width: 100%; object-fit: contain; }
 .public-blog .public-blog-content { width: 100%; display: flex; margin-bottom: 50px; font-size: 25px; }
+.public-blog .public-blog-content #blogContent { width: 100%; }
+.public-blog .public-blog-content #blogContent pre { white-space: pre-wrap; }
 .public-blog .public-blog-content #blogContent p { font-size: 25px; }
 .public-blog .public-blog-content #blogContent img { max-width: 100%; }
 .public-blog .response { display: flex; }
-.public-blog .response .comment-section { flex: 1; display: flex; flex-direction: column; }
+.public-blog .response .comment-section { flex: 1; display: flex; flex-direction: column; width: 100%; }
 .public-blog .response .comment-section .comment-area { display: flex; position: relative; }
 .public-blog .response .comment-section .comment-area .profile-icon { width: 40px; height: 40px; position: absolute; border-radius: 50%; overflow: hidden; top: 11px; left: 5px; }
-.public-blog .response .comment-section .comment-area textarea { font-size: 21px; flex: 0.93; height: 62px; line-height: 40px; padding-left: 60px; resize: none; }
-.public-blog .response .comment-section .comment-area button { font-size: 30px; flex: 0.07; }
+.public-blog .response .comment-section .comment-area textarea { font-size: 21px; flex: 0.9; height: 62px; line-height: 40px; padding-left: 60px; resize: none; }
+.public-blog .response .comment-section .comment-area button { font-size: 30px; flex: 0.1; }
 .public-blog .response .comment-section .comment-area button span { display: flex; }
 .public-blog .response .comment-section .responses .i-response { margin: 10px 0; display: flex; }
 .public-blog .response .comment-section .responses .i-response .pc-profile-icon { width: 60px; height: 60px; border-radius: 50%; overflow: hidden; margin: 0 10px; }

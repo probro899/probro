@@ -19,7 +19,7 @@
     .pc-noti-body {
       margin-left: 10px; padding: 5px;
       display: flex; justify-content: center; flex-direction: column;
-      p { margin: 0; word-wrap: break-word; }
+      p { margin: 0; word-break: break-word;}
       .pc-ago-date { font-size: 12px; color: $lightTextColor; }
     }
   }
