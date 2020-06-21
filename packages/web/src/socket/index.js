@@ -22,13 +22,13 @@ const reconnect = () => {
 
   retryTimer = setTimeout(() => {
     retryTimer = null;
-    console.log('reconnect try');
+    // console.log('reconnect try');
     client.reconnect();
   }, 1000);
 };
 
 client.on('disconnect', () => {
-  console.log('disconnetct called');
+  // console.log('disconnetct called');
   store.dispatch({
     type: 'DISSCONNECT',
   });

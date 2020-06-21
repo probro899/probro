@@ -5,6 +5,7 @@ import { ENDPOINT } from '../../../config';
 const blogImg = require('../../../assets/blog-img.jpg');
 
 const SingleArchive = ({ obj }) => {
+  console.log('obj', obj);
   const description = obj.blog.content.replace(/<[^>]+>/g, '').replace(/&nbsp;/g, ' ').substring(0, 300);
   const user = obj.userDetails.find(u => u.user.id === obj.blog.userId);
   const coverImage = obj.blog.coverImage ? `${ENDPOINT}/user/${10000000 + parseInt(obj.blog.userId, 10)}/blog/${obj.blog.coverImage}` : blogImg;
