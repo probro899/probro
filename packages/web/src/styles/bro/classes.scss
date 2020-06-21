@@ -13,7 +13,7 @@
     margin: 10px 10px 10px 0px;
     background-color: $darkBlue;
     .column-title {
-      padding: 8px; display: flex; justify-content: space-between;
+      padding: 8px; display: flex; justify-content: space-between; flex-shrink: 0;
       position: relative; cursor: pointer;
       color: $backgroundColor;
       .text { font-size: 18px; font-weight: bold; }
@@ -58,6 +58,7 @@
     .pc-icon { fill: $skyBlueMain; }
     .pc-count { color: $skyBlueMain; margin-left: 3px; font-size: 14px; }
   }
+  .pc-tag { margin-right: 5px; }
 }
 
 
