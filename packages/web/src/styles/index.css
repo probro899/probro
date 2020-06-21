@@ -402,6 +402,7 @@ top attachment etc.
 .blogs .blog-list .blog-container .img-container img { width: 100%; object-fit: cover; }
 .blogs .blog-list .blog-container .detail-container { height: 90px; padding: 10px; display: flex; flex-direction: column-reverse; }
 .blogs .blog-list .blog-container .detail-container .blog-title p { margin-bottom: 0; }
+.blogs .blog-list .blog-container .detail-container .blog-title p a { color: #222; }
 .blogs .blog-list .blog-container .detail-container .blog-title p.title { text-align: end; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 18px; font-weight: 800; }
 .blogs .blog-list .blog-container .detail-container .blog-title p .pc-date { font-size: 12px; color: #696969; }
 .blogs .blog-list .blog-container .detail-container .blog-author { display: flex; justify-content: flex-end; }
