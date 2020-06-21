@@ -9,7 +9,7 @@ export default async (userId) => {
   // console.log('User id in getArchive api', userId);
   const popularRes = await getPopular();
   if (!userId) {
-    return { basedOnHistory: { blogs: popularRes.blogs }, popularOnPc: { blogs: popularRes.blogs, users: popularRes.users } };
+    return { basedOnHistory: { blogs: popularRes.blogs, users: popularRes.users }, popularOnPc: { blogs: popularRes.blogs, users: popularRes.users } };
   }
 
   const userDetails = await findUserDetails(userId, true, true);
@@ -38,5 +38,5 @@ export default async (userId) => {
   });
   // console.log('Main Response', mainRes);
   const finalBlogsRes = mainRes.blogs.length > 0 ? mainRes.blogs : popularRes.blogs;
-  return { basedOnHistory: { blogs: finalBlogsRes }, popularOnPc: { blogs: popularRes.blogs, users: popularRes.users } };
+  return { basedOnHistory: { blogs: finalBlogsRes, users: popularRes.users }, popularOnPc: { blogs: popularRes.blogs, users: popularRes.users } };
 };

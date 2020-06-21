@@ -26,6 +26,7 @@ class Archive extends React.Component {
     });
     try {
       const res = await axios.get(`${ENDPOINT}/web/get-archive?userId=${cookieVal || ''}`);
+      // console.log('res', res);
       this.setState({
         data: res.data,
         loading: false,
