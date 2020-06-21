@@ -14,8 +14,8 @@ import classAttachAndJoin from './classAttachAndJoin';
 
 export default async (mediaType, preMediaType, state, props) => {
   try {
-    const { apis } = state;
     const { webRtc, database, account } = store.getState();
+    const { apis } = webRtc;
     const { janus, localCallHistory, isCallUpgraded } = webRtc;
     const boardId = localCallHistory.chatHistory.connectionId;
     const { joinToken, activeStatus } = database.Board.byId[boardId];
@@ -50,7 +50,7 @@ export default async (mediaType, preMediaType, state, props) => {
     } else if (!conferenceCall) {
       // Re-join state
       Janus.log('Class attach and join');
-      classAttachAndJoin(state, props);
+      classAttachAndJoin({ apis }, props);
       if (!activeStatus) {
         apis.initSfuCall({ id: boardId, activeStatus: account.user.id, mediaType: localCallHistory.mediaType });
       }

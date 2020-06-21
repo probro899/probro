@@ -103,7 +103,7 @@ async function addBoardMember(record) {
       };
 
       // update remote user cache
-      updateUserCache(dataTobeUpdated, remoteUserSession, 'add');
+      await updateUserCache(dataTobeUpdated, remoteUserSession, 'add');
 
       // data tobe update in all all board members
       const dataTobeupdateAllUser = {
@@ -111,7 +111,7 @@ async function addBoardMember(record) {
         User: { ...user, activeStatus: true },
         BoardMember: { id: addMemberRes, ...record, tuserId: user.id, deleteStatus: false },
       };
-      boardChannel.forEach(s => updateUserCache(dataTobeupdateAllUser, s, 'add'));
+      await boardChannel.forEach(s => updateUserCache(dataTobeupdateAllUser, s, 'add'));
 
       const emailObj = {
         email: user.email,
@@ -133,7 +133,8 @@ async function addBoardMember(record) {
         viewStatus: false,
         imageUrl: null,
       };
-      sendNotification(this, emailObj, notiObj, [remoteUserSession]);
+
+      setTimeout(() => sendNotification(this, emailObj, notiObj, [remoteUserSession]), 10000);
     } else {
       // data tobe update all board members
       const boardChannel = session.getChannel(`Board-${record.boardId}`);

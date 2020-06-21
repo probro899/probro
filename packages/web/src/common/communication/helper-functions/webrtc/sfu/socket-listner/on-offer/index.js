@@ -26,7 +26,7 @@ export default async (props, state, data) => {
   const { webRtc, account } = store.getState();
   // console.log(`SFU INIT CALLED`, data);
   const { boardId, userId } = data;
-  const { apis } = state;
+  const { apis } = webRtc;
 
   if (webRtc.showIncommingCall || webRtc.isConnecting) {
     // console.log('inside call is budy mode', boardId);

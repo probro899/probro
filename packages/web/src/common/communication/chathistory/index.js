@@ -11,6 +11,7 @@ import Message from './Message';
 import { normalTimeStampSorting } from '../../utility-functions';
 import { findChatHistory, isOwnFinder, markLastMessageRead, incomingCallLogHandler, outgoingCallLogHandler } from './helper-function';
 import autoCloseHandler from '../helper-functions/webrtc/mesh/autoCloseHandler';
+import store from '../../../store';
 
 class ChatHistory extends React.Component {
   constructor(props) {
@@ -94,6 +95,27 @@ class ChatHistory extends React.Component {
     }
   }
 
+  isShowCallerButton = () => {
+    const { webRtc, database } = store.getState();
+    const { janus } = webRtc;
+    let showAudio = false;
+    let showVideo = false;
+    let showJoin = false;
+
+    if (janus) {
+      const { oneToOneCall, conferenceCall } = janus;
+      if (webRtc.chatHistory.type === 'board') {
+        showAudio = !database.Board.byId[webRtc.chatHistory.connectionId].activeStatus;
+        showVideo = !database.Board.byId[webRtc.chatHistory.connectionId].activeStatus;
+        showJoin = database.Board.byId[webRtc.chatHistory.connectionId].activeStatus;
+      } else {
+        showAudio = janus.oneToOneCall;
+        showVideo = janus.oneToOneCall;
+      }
+    }
+    return { showVideo, showAudio, showJoin };
+  }
+
   render() {
     const {
       style,
@@ -104,6 +126,7 @@ class ChatHistory extends React.Component {
     } = this.props;
     const { user } = webRtc.chatHistory;
     const { messages } = this.state;
+    const { showAudio, showVideo, showJoin } = this.isShowCallerButton();
     return !webRtc.showCommunication ? <div /> : (
       <div
         style={{ ...style, background: '#DDE1E2' }}
@@ -126,9 +149,9 @@ class ChatHistory extends React.Component {
             {webRtc.chatHistory.type === 'user' && user.user.activeStatus && <div className="green-dot" />}
           </div>
           <div className="call-control">
-            {webRtc.chatHistory.type === 'board' ? !database.Board.byId[webRtc.chatHistory.connectionId].activeStatus && <Button icon="phone" intent="success" onClick={() => this.toCallScreen('audio')} /> :  <Button icon="phone" intent="success" onClick={() => this.toCallScreen('audio')} />}
-            {webRtc.chatHistory.type === 'board' ? !database.Board.byId[webRtc.chatHistory.connectionId].activeStatus && <Button icon="mobile-video" intent="success" onClick={() => this.toCallScreen('video')} /> : <Button icon="mobile-video" intent="success" onClick={() => this.toCallScreen('video')} /> }
-            {webRtc.chatHistory.type === 'board' && database.Board.byId[webRtc.chatHistory.connectionId].activeStatus && <Button intent="success" onClick={() => this.toCallScreen('audio')} text="Join" /> }
+            {showAudio && <Button icon="phone" intent="success" onClick={() => this.toCallScreen('audio')} />}
+            {showVideo && <Button icon="mobile-video" intent="success" onClick={() => this.toCallScreen('video')} />}
+            {showJoin && <Button intent="success" onClick={() => this.toCallScreen('audio')} text="Join" /> }
           </div>
         </div>
         )}

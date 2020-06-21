@@ -7,8 +7,9 @@ export default (props, state, time) => {
   // console.log('auto close handler called');
   setTimeout(async () => {
     const { webRtc } = store.getState();
+    const { apis } = webRtc;
     if (!webRtc.isLive && !webRtc.localCallHistory.callEnd) {
-      closeHandler(props, state, state.apis)();
+      closeHandler(props, state, apis)();
       updateWebRtc('showIncommingCall', false);
       updateWebRtc('communicationContainer', 'history');
       // change('history');

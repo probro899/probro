@@ -28,14 +28,14 @@ class Notifications extends React.Component {
 
   render() {
     const { drawerOpen } = this.state;
-    const { apis, account, notiNo } = this.props;
+    const { apis, account, notiNo, notiSound } = this.props;
     return (
       <Link to="#" onClick={this.onDrawerToggle}>
         <div className="navbar-item">
           <Icon icon="notifications" iconSize={Icon.SIZE_LARGE} />
           {notiNo > 0 && (
           <div>
-            <SoundComponent url={notificaitonUrl} noLoop />
+            {notiSound && <SoundComponent url={notificaitonUrl} noLoop />}
             <Badge number={notiNo} size={20} />
           </div>
           )
@@ -60,6 +60,8 @@ Notifications.propTypes = {
   apis: PropTypes.objectOf(PropTypes.any).isRequired,
   account: PropTypes.objectOf(PropTypes.any).isRequired,
   addDatabaseSchema: PropTypes.func.isRequired,
+  notiNo: PropTypes.number.isRequired,
+  notiSound: PropTypes.bool.isRequired,
 };
 
 export default Notifications;

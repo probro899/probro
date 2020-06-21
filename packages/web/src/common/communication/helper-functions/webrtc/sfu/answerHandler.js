@@ -7,6 +7,7 @@ import conferenceCallHandler from './conferenceCallHandler';
 export default (props, state) => async (apism, stream, mediaType) => {
   const { updateWebRtc } = props;
   const { webRtc, account } = store.getState();
+  const { apis } = webRtc;
   const { janus, localCallHistory } = webRtc;
   const callType = localCallHistory.chatHistory.type;
 
@@ -31,7 +32,7 @@ export default (props, state) => async (apism, stream, mediaType) => {
     );
   }
   if (callType === 'board') {
-    conferenceCallHandler(mediaType, null, state, props);
+    conferenceCallHandler(mediaType, null, { apis }, props);
   }
 
   updateWebRtc('showIncommingCall', false);

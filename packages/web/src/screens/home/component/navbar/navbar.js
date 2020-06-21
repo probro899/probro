@@ -48,6 +48,8 @@ class Navbar extends Component {
     unreadMessage: 0,
     unreadNotis: 0,
     lastNotifId: null,
+    msgSound: false,
+    notiSound: false,
   };
 
   async componentDidMount() {
@@ -68,17 +70,20 @@ class Navbar extends Component {
 
   getUnreadNotifs = (nextProps) => {
     const { database, account } = nextProps;
+    const { unreadMessage, unreadNotis } = this.state;
     if (!account.user) return;
     const chatList = getChatList({ database, account });
-    const unreadMessage = chatList.reduce((t, next) => {
+    const unreadMessageT = chatList.reduce((t, next) => {
       t += next.unSeenNo;
       return t;
     }, 0);
     const notiDetails = getUnReadNotification(this.props);
     this.setState({
-      unreadMessage,
+      unreadMessage: unreadMessageT,
       unreadNotis: notiDetails.unSeenNo,
       lastNotifId: notiDetails.lastNotifId,
+      msgSound: unreadMessage < unreadMessageT,
+      notiSound: unreadNotis < notiDetails.unSeenNo,
     });
   }
 
@@ -129,7 +134,7 @@ class Navbar extends Component {
       const profile = Object.values(database.UserDetail.byId).find(o => o.userId === account.user.id);
       profilePic = profile && profile.image ? `${ENDPOINT}/user/${10000000 + parseInt(profile.userId, 10)}/profile/${profile.image}` : null;
     }
-    const { apis,unreadNotis, lastNotifId, redirectDashboard, unreadMessage, loading, smallScreen } = this.state;
+    const { apis,unreadNotis, lastNotifId, redirectDashboard, unreadMessage, loading, smallScreen, msgSound, notiSound } = this.state;
     return (
       <div className={`navbar ${className}`}>
         {this.getMetaTags()}
@@ -183,9 +188,10 @@ class Navbar extends Component {
               unreadMessage={unreadMessage}
               database={database}
               updateWebRtc={updateWebRtc}
+              msgSound={msgSound}
             />
             )}
-          {account.sessionId && <Notifications notiNo={unreadNotis} lastNotifId={lastNotifId} {...this.props} apis={apis} />}
+          {account.sessionId && <Notifications notiSound={notiSound} notiNo={unreadNotis} lastNotifId={lastNotifId} {...this.props} apis={apis} />}
           { account.sessionId
             ? <DashboardMenu navigate={navigate} profilePic={profilePic} content={DropDownMenu(this.onClickHandler, this.logoutAction, loading, account)} />
             : (
