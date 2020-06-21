@@ -28,7 +28,7 @@
     .name { font-size: 20px; font-weight: bold; }
     .connect-btns {
       flex: 0.3; display: flex; justify-content: flex-end;
-      .con { display: flex; }
+      .con { display: flex; align-items: center; }
       button { margin-left: 10px; font-size: 16px;
       }
     }

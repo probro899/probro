@@ -636,7 +636,7 @@ top attachment etc.
 .public-profile .top-details { width: 100%; display: flex; justify-content: space-between; margin-top: 8px; background: #fff; }
 .public-profile .top-details .name { font-size: 20px; font-weight: bold; }
 .public-profile .top-details .connect-btns { flex: 0.3; display: flex; justify-content: flex-end; }
-.public-profile .top-details .connect-btns .con { display: flex; }
+.public-profile .top-details .connect-btns .con { display: flex; align-items: center; }
 .public-profile .top-details .connect-btns button { margin-left: 10px; font-size: 16px; }
 .public-profile .top-details .desc { flex: 0.7; }
 .public-profile .top-details .desc .name { font-size: 20px; font-weight: bold; }
