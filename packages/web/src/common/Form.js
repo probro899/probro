@@ -39,16 +39,20 @@ Element.propTypes = {
 };
 
 class Form extends React.Component {
-  state = {
-    error: null,
-    loading: false,
-    message: null,
-    fields: {},
-    data: [],
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      error: null,
+      loading: false,
+      message: null,
+      fields: {},
+      data: [],
+    };
+  }
 
-  componentWillMount = () => {
+  componentDidMount = () => {
     const { data } = this.props;
+    this._isMounted = true;
     const fields = data.filter((obj) => {
       if (obj.fieldtype === 'input'
       || obj.fieldtype === 'select'
@@ -79,6 +83,10 @@ class Form extends React.Component {
     });
   }
 
+  componentWillUnmount() {
+    this._isMounted = false;
+  }
+
   onChange = (key, value) => {
     const { fields } = this.state;
     this.setState({ fields: { ...fields, [key]: value } });
@@ -92,9 +100,7 @@ class Form extends React.Component {
     data.map((obj) => {
       if (obj.required && fields[obj.id].replace(/\s/g, '').length === 0) {
         err = true;
-        this.setState({
-          error: 'Fill the required field(*)',
-        });
+        this.setState({ error: 'Fill the required field(*)' });
       }
       return obj;
     });
@@ -103,10 +109,12 @@ class Form extends React.Component {
     }
     this.setState({ loading: true });
     const res = await callback(fields);
-    if (res.response === 200) {
-      this.setState({ loading: false, error: null, message: res.message });
-    } else {
-      this.setState({ loading: false, error: res.error });
+    if (this._isMounted) {
+      if (res.response === 200) {
+        this.setState({ loading: false, error: null, message: res.message });
+      } else {
+        this.setState({ loading: false, error: res.error });
+      }
     }
   }
 

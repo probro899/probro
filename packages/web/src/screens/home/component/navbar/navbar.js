@@ -114,11 +114,12 @@ class Navbar extends Component {
 
   getMetaTags = () => {
     const { unreadMessage, unreadNotis } = this.state;
+    const { navigate } = this.props;
     const total = unreadMessage + unreadNotis > 9 ? '9+' : unreadNotis + unreadMessage;
     return (
       <MetaTags>
         {
-          total === 0 ? <title>Proper Class</title> : <title>{`(${total}) Proper Class`}</title>
+          total === 0 ? <title>{navigate.page.title}</title> : <title>{`(${total}) ${navigate.page.title}`}</title>
         }
       </MetaTags>
     );
@@ -134,7 +135,7 @@ class Navbar extends Component {
       const profile = Object.values(database.UserDetail.byId).find(o => o.userId === account.user.id);
       profilePic = profile && profile.image ? `${ENDPOINT}/user/${10000000 + parseInt(profile.userId, 10)}/profile/${profile.image}` : null;
     }
-    const { apis,unreadNotis, lastNotifId, redirectDashboard, unreadMessage, loading, smallScreen, msgSound, notiSound } = this.state;
+    const { apis, unreadNotis, lastNotifId, redirectDashboard, unreadMessage, loading, smallScreen, msgSound, notiSound } = this.state;
     return (
       <div className={`navbar ${className}`}>
         {this.getMetaTags()}

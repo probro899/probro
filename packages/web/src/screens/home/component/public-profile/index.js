@@ -38,39 +38,50 @@ class PublicProfile extends React.Component {
   }
 
   async componentDidMount() {
-    const { match, account } = this.props;
+    const { match, account, updateNav } = this.props;
     let apis = {};
     try {
       if (account.user) {
         apis = await client.scope('Mentee');
       }
       const res = await axios.get(`${ENDPOINT}/web/get-user?userId=${match.params.userId}`);
-      this.setState({
-        data: res.data,
-        apis,
-        loading: false,
-      });
+      if (res) {
+        this.setState({
+          data: res.data,
+          apis,
+          loading: false,
+        });
+        updateNav({ schema: 'page', data: { title: getName(res.data.user) } });
+      }
     } catch (e) {
       console.log('Error', e);
     }
   }
 
   async componentWillReceiveProps(nextProps) {
-    const { match } = this.props;
+    const { match, updateNav } = this.props;
     if (nextProps.match.params.userId !== match.params.userId) {
       this.setState({
         loading: true,
       });
       try {
         const res = await axios.get(`${ENDPOINT}/web/get-user?userId=${nextProps.match.params.userId}`);
-        this.setState({
-          data: res.data,
-          loading: false,
-        });
+        if (res) {  
+          this.setState({
+            data: res.data,
+            loading: false,
+          });
+          updateNav({ schema: 'page', data: { title: getName(res.data.user) } });
+        }
       } catch (e) {
         console.log('Error', e);
       }
     }
+  }
+
+  componentWillUnmount() {
+    const { updateNav } = this.props;
+    updateNav({ schema: 'page', data: { title: 'Proper Class' } });
   }
 
   render() {
@@ -149,7 +160,7 @@ class PublicProfile extends React.Component {
                     <div className="p-edu-list">
                       {
                         userEducation.map(obj => (
-                          <div className="p-edu-list-i">
+                          <div className="p-edu-list-i" key={obj.id}>
                             <img src={school} alt="school icon" />
                             <p>
                               <span className="p-name-i">{obj.degree}</span>
@@ -177,7 +188,7 @@ class PublicProfile extends React.Component {
                     <div className="p-edu-list">
                       {
                         userWorkExperience.map(obj => (
-                          <div className="p-exp-list-i">
+                          <div className="p-exp-list-i" key={obj.id}>
                             <img src={office} alt="school icon" />
                             <p>
                               <span className="p-title-i">{obj.title}</span>

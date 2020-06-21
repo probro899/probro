@@ -5,6 +5,7 @@ const initialState = {
   mainNav: { name: '' },
   popNotification: { message: 'Welcome to Properclass', active: false, intent: 'Success' },
   search: { key: '', country: '', industry: '' },
+  page: { title: 'Proper Class' },
 };
 
 export default (state = initialState, action) => {

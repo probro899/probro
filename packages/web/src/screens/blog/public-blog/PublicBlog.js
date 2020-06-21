@@ -11,6 +11,7 @@ import { ENDPOINT } from '../../../config';
 import { Spinner, SocialShare } from '../../../common';
 import { RoundPicture } from '../../../components';
 import BlogCoverImage from './BlogCoverImage';
+import * as actions from '../../../actions';
 
 const file = require('../../../assets/icons/64w/uploadicon64.png');
 
@@ -23,8 +24,7 @@ class PublicBlog extends React.Component {
   };
 
   async componentDidMount() {
-
-    const { account, match } = this.props;
+    const { account, match, updateNav } = this.props;
     try {
       let apis = {};
       let uid;
@@ -33,12 +33,15 @@ class PublicBlog extends React.Component {
         uid = account.user.id;
       }
       const res = await axios.get(`${ENDPOINT}/web/get-blog?blogId=${match.params.blogSlug}&userId=${match.params.userSlug}&uid=${uid}`);
-      this.setState({
-        data: res.data,
-        apis,
-        blogId: res.data.blog.id,
-        loading: false,
-      });
+      if (res) {
+        this.setState({
+          data: res.data,
+          apis,
+          blogId: res.data.blog.id,
+          loading: false,
+        });
+        updateNav({ schema: 'page', data: { title: res.data.blog.title } });
+      }
     } catch (e) {
       console.log('Error', e);
     }
@@ -49,13 +52,16 @@ class PublicBlog extends React.Component {
     if (account.user !== prevProps.account.user) {
       try {
         const apis = await client.scope('Mentee');
-        this.setState({
-          apis,
-        });
+        this.setState({ apis });
       } catch (e) {
         console.log('Error', e);
       }
     }
+  }
+
+  componentWillUnmount() {
+    const { updateNav } = this.props;
+    updateNav({ schema: 'page', data: { title: 'Proper Class' } });
   }
 
   createMarkup = (val) => {
@@ -128,4 +134,4 @@ PublicBlog.propTypes = {
 };
 
 const mapStateToProps = state => state;
-export default connect(mapStateToProps)(PublicBlog);
+export default connect(mapStateToProps, { ...actions })(PublicBlog);
