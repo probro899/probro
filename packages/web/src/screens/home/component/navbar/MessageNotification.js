@@ -12,6 +12,7 @@ class MessageNotification extends React.Component {
   showMessage = () => {
     const { updateWebRtc } = this.props;
     updateWebRtc('showCommunication', 1);
+    updateWebRtc('minimize', false);
   }
 
   render() {

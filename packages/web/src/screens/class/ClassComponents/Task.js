@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import { Tag } from '@blueprintjs/core';
-import { FaCommentAlt } from 'react-icons/fa';
+import { FaRegCommentAlt } from 'react-icons/fa';
 import { TiAttachmentOutline } from 'react-icons/ti';
 
 
@@ -21,10 +21,20 @@ class Task extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { tags, task } = this.props;
+    const { tags, task, comments, attachments } = this.props;
     if (tags.allIds !== prevProps.tags.allIds) {
       const allTags = Object.values(tags.byId).filter(obj => task.id === obj.boardColumnCardId && !obj.deleteStatus);
       this.setState({ allTags });
+    }
+    if (comments.allIds !== prevProps.comments.allIds) {
+      this.setState({
+        comments: Object.values(comments.byId).filter(obj => task.id === obj.boardColumnCardId && !obj.deleteStatus).length,
+      });
+    }
+    if (attachments.allIds !== prevProps.attachments.allIds) {
+      this.setState({
+        attachments: Object.values(attachments.byId).filter(obj => task.id === obj.boardColumnCardId && !obj.deleteStatus).length,
+      });
     }
   }
 
@@ -65,7 +75,7 @@ class Task extends Component {
           {
             comments > 0 && (
               <div className="pc-item">
-                <FaCommentAlt size="0.9em" className="pc-icon" />
+                <FaRegCommentAlt size="0.9em" className="pc-icon" />
                 <span className="pc-count">{comments}</span>
               </div>
             )

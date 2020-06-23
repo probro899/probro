@@ -50,7 +50,7 @@ class Tools extends React.Component {
         const info = {
           userId: account.user.id,
           timeStamp: Date.now(),
-          name: 'Canvas Print',
+          name: data.name,
           boardColumnCardId: parseInt(data.task, 10),
           url: res.data,
         };

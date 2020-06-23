@@ -4,6 +4,7 @@ const initialState = {
   localCallHistory: {},
   showCommunication: null,
   showIncommingCall: false,
+  minimize: false,
   showOutgoingCall: false,
   isConnecting: false,
   communicationContainer: 'list',

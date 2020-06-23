@@ -15,7 +15,6 @@ import { initJanus, callHandler, closeHandler, answerHandler, sfuSocketListner }
 
 class Communication extends React.Component {
   state = {
-    minimize: false,
     apis: null,
     maximize: false,
   };
@@ -38,18 +37,20 @@ class Communication extends React.Component {
   }
 
   toggleMinMax = () => {
-    const { minimize } = this.state;
-    if (minimize) {
-      this.setState({ minimize: false });
+    const { webRtc, updateWebRtc } = this.props;
+    if (webRtc.minimize) {
+      updateWebRtc('minimize', false);
       return;
     }
-    this.setState({ minimize: true, maximize: false });
+    updateWebRtc('minimize', true);
+    this.setState({ maximize: false });
   }
 
   cutWindow = () => {
     const { updateWebRtc, webRtc } = this.props;
     const { apis } = this.state;
-    this.setState({ maximize: false, minimize: false });
+    updateWebRtc('minimize', false);
+    this.setState({ maximize: false });
 
     if (webRtc.isLive) {
       closeHandler(this.props, this.state, apis)();
@@ -73,18 +74,18 @@ class Communication extends React.Component {
 
   render() {
     // console.log('Props in communications', this.props);
-    const { minimize, apis, maximize } = this.state;
+    const { apis, maximize } = this.state;
     let height = '75%';
     if (maximize) {
       height = '100%';
-    }
-    if (minimize) {
-      height = '40px';
     }
     const {
       webRtc,
       updateWebRtc,
     } = this.props;
+    if (webRtc.minimize) {
+      height = '40px';
+    }
     return (
       (webRtc.showIncommingCall || webRtc.showCommunication) && (
       <div
@@ -92,7 +93,7 @@ class Communication extends React.Component {
         style={
           {
             height,
-            animationName: minimize ? 'slideDown' : 'slideUp',
+            animationName: webRtc.minimize ? 'slideDown' : 'slideUp',
             animationDuration: '0.3s',
           }
         }
@@ -129,7 +130,7 @@ class Communication extends React.Component {
           <CallScreen
             toggleMaximize={this.maximize}
             isMaximum={maximize}
-            minimize={minimize}
+            minimize={webRtc.minimize}
             remoteCallEndMinimizer={this.remoteCallEndMinimizer}
             change={this.switchScreen}
             updateWebRtc={updateWebRtc}

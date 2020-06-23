@@ -55,8 +55,8 @@
   .task-footer {
     display: flex;
     .pc-item { padding-top: 3px; display: flex; align-items: center; margin-right: 10px;}
-    .pc-icon { fill: $skyBlueMain; }
-    .pc-count { color: $skyBlueMain; margin-left: 3px; font-size: 14px; }
+    .pc-icon { fill: $fadedTextColor; }
+    .pc-count { color: $fadedTextColor; margin-left: 3px; font-size: 12px; }
   }
   .pc-tag { margin-right: 5px; }
 }

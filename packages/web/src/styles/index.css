@@ -209,8 +209,8 @@ top attachment etc.
 .task-container .pc-task-name { margin: 0; font-weight: bold; word-break: break-word; }
 .task-container .task-footer { display: flex; }
 .task-container .task-footer .pc-item { padding-top: 3px; display: flex; align-items: center; margin-right: 10px; }
-.task-container .task-footer .pc-icon { fill: #137cbd; }
-.task-container .task-footer .pc-count { color: #137cbd; margin-left: 3px; font-size: 14px; }
+.task-container .task-footer .pc-icon { fill: rgba(34, 34, 34, 0.6); }
+.task-container .task-footer .pc-count { color: rgba(34, 34, 34, 0.6); margin-left: 3px; font-size: 12px; }
 .task-container .pc-tag { margin-right: 5px; }
 
 .classes { display: flex; flex-direction: column; padding: 5px; }
@@ -780,6 +780,8 @@ body { margin: 0; padding: 0; background-color: #fff; font-family: "Gotham-Pro";
 .bp3-button { border-radius: 0; }
 
 .bp3-input { border-radius: 0; }
+
+.bp3-select { border-radius: 0; }
 
 .pc-date-picker .bp3-input-action { top: 6px; right: 5px !important; }
 
