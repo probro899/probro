@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
-import { Button, HTMLSelect, Popover } from '@blueprintjs/core';
+import { Button, Popover } from '@blueprintjs/core';
 import SelectTask from './SelectTask';
 import { ENDPOINT } from '../../../config';
 
@@ -68,12 +68,17 @@ class Tools extends React.Component {
       draw,
       drawActive,
       clear,
-      addText,
+      textToggle,
       anyObjectActive,
       onDelete,
       color,
       colorChange,
       fileUpload,
+      addRect,
+      text,
+      drawStraight,
+      straightLine,
+      rect,
       database,
     } = this.props;
     return (
@@ -89,25 +94,24 @@ class Tools extends React.Component {
             style={{ display: 'none' }}
             onChange={fileUpload}
           />
-          <Button intent="default" onClick={addText} icon="new-text-box" className="i-tool" />
+          <Button intent={straightLine ? 'primary' : 'default'} onClick={drawStraight} icon="flow-linear" className="i-tool" />
+          <Button intent={text ? 'primary' : 'default'} onClick={textToggle} icon="new-text-box" className="i-tool" />
+          <Button intent={rect ? 'primary' : 'default'} onClick={addRect} icon="square" className="i-tool" />
           <Button
             icon="draw"
             onClick={draw}
             className="i-tool"
-            intent={drawActive === true ? 'primary' : 'default'}
+            intent={drawActive ? 'primary' : 'default'}
           />
-          <HTMLSelect
-            className="i-tool"
+          <input
             value={color}
-            options={[
-              { label: 'Black', value: 'black' },
-              { label: 'Red', value: 'red' },
-              { label: 'Blue', value: 'blue' },
-            ]}
+            type="color"
+            style={{ width: 30, border: 'none', height: '100%' }}
             onChange={colorChange}
           />
           <Button
             className="i-tool"
+            style={{ boxShadow: 'none', backgroundColor: '#efefef' }}
             text="clear"
             onClick={clear}
           />
@@ -136,7 +140,7 @@ Tools.propTypes = {
   anyObjectActive: PropTypes.bool.isRequired,
   drawActive: PropTypes.bool.isRequired,
   clear: PropTypes.func.isRequired,
-  addText: PropTypes.func.isRequired,
+  textToggle: PropTypes.func.isRequired,
   colorChange: PropTypes.func.isRequired,
   fileUpload: PropTypes.func.isRequired,
   database: PropTypes.objectOf(PropTypes.any).isRequired,
