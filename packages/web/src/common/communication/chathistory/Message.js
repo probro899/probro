@@ -50,7 +50,7 @@ const Message = ({ own, obj, props, type }) => {
             marginBottom: !obj.showImage && 0,
           }}
         >
-          {obj.message}
+          <p style={{ maxWidth: '100%', wordBreak: 'break-word' }}>{obj.message}</p>
           <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'flex-end' }}>
             <Moment style={{ color: '#757575' }} format="h:mm:a">{obj.timeStamp}</Moment>
           </div>
