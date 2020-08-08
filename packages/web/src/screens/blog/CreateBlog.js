@@ -199,14 +199,7 @@ class Blogs extends Component {
 
   // saving the blog from here
   saveBlog = async () => {
-    const {
-      apis,
-      title,
-      description,
-      blogId,
-      publish,
-      coverImage,
-    } = this.state;
+    const { apis, title, description, blogId, publish, coverImage } = this.state;
     let uploadedUrl = null;
 
     // for loading while saving blog
@@ -219,30 +212,21 @@ class Blogs extends Component {
       formData.append('file', coverImage.actualFile);
       try {
         const res = await axios({
-          config: {
-            headers: {
-              'Content-Type': 'multipart/form-data',
-            },
-          },
+          config: { headers: { 'Content-Type': 'multipart/form-data' } },
           method: 'post',
           url: `${ENDPOINT}/web/upload-file`,
           data: formData,
         });
         if (res.status === 200) {
           uploadedUrl = res.data;
-          this.setState({
-            coverImage: {
-              ...coverImage,
-              actualFile: null,
-              serverImageName: uploadedUrl,
-            },
-          });
+          this.setState({ coverImage: { ...coverImage, actualFile: null, serverImageName: uploadedUrl } });
         }
       } catch (e) {
         console.log('Error', e);
       }
     }
     if (!blogId) {
+      if (title.replace(/\s/g, '').length === 0) { this.setState({ saveLoading: false }); return; }
       const res = await addBlog(apis.addBlog,
         {
           userId: account.user.id,
@@ -287,19 +271,12 @@ class Blogs extends Component {
   }
 
   publish = async (e) => {
-    const {
-      blogId,
-      apis,
-      title,
-      description,
-    } = this.state;
+    const { blogId, apis, title, description } = this.state;
     this.setState({ saveLoading: true });
     const { updateDatabaseSchema } = this.props;
     const saveStatus = e.target.checked ? 'publish' : 'draft';
-    if (blogId !== '') {
-      this.setState({
-        publish: saveStatus,
-      });
+    if (blogId) {
+      this.setState({ publish: saveStatus });
       await updateBlog(apis.updateBlog, [
         {
           title,

@@ -586,7 +586,7 @@ top attachment etc.
 .ar-left-i .ar-i-detail { flex-direction: column; margin-left: 10px; width: calc(100% - 250px); }
 .ar-left-i .ar-i-detail .pc-date { font-size: 12px; color: #696969; }
 .ar-left-i .ar-i-detail .ar-i-title { color: #222; font-size: 22px; }
-.ar-left-i .ar-i-detail .pc-blog-desc { padding: 5px 0px; }
+.ar-left-i .ar-i-detail .pc-blog-desc { padding: 5px 0px; word-break: break-word; }
 .ar-left-i .ar-i-detail .ar-i-counts { display: flex; }
 .ar-left-i .ar-i-detail .ar-i-counts .label { color: #696969; margin: 0px 3px 0px 0px; }
 .ar-left-i .ar-i-detail .ar-i-counts .label .count { margin: 0px 2px; font-weight: bolder; }

@@ -27,9 +27,7 @@ class FilterToolbar extends React.Component {
     return (
       <div className="filter-toolbar">
         <div className="left set">
-          <span className="filter-label">
-            Filters
-          </span>
+          <span className="filter-label">Filters</span>
         </div>
         <div className="center set">
           <Control data={schema} callback={filterSearch} />
