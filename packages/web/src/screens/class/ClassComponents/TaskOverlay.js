@@ -11,6 +11,7 @@ import { ENDPOINT } from '../../../config';
 import CommentBox from './CommentBox';
 import { AttachmentList } from './attachment';
 import Spinner from '../../../common/spinner';
+import Description from './task-detail/Description';
 
 class TaskOverlay extends Component {
   state = {
@@ -101,9 +102,9 @@ class TaskOverlay extends Component {
   };
 
   // description change of the task
-  descChange = (e) => {
+  descChange = (val) => {
     this.setState({
-      desc: e.target.value,
+      desc: val,
     });
   }
 
@@ -283,15 +284,7 @@ class TaskOverlay extends Component {
                       )
                     }
                   </div>
-                  <div className="desc">
-                    {editDesc
-                      ? <TextArea value={desc} onChange={this.descChange} />
-                      : (
-                        <span>
-                          { description && description.title }
-                        </span>
-                      )}
-                  </div>
+                  <Description editDesc={editDesc} value={desc} onChange={this.descChange} description={description} />
                 </div>
                 <AttachmentList
                   attachments={attachments}

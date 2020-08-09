@@ -276,7 +276,8 @@ top attachment etc.
 .overlay-container .task-detail-overlay .overlay-body .left .overlay-description { padding: 5px 5px 5px 0px; }
 .overlay-container .task-detail-overlay .overlay-body .left .overlay-description .desc-head { font-weight: bold; font-size: 16px; }
 .overlay-container .task-detail-overlay .overlay-body .left .overlay-description .desc { padding: 5px 5px 5px 0px; font-size: 15px; }
-.overlay-container .task-detail-overlay .overlay-body .left .overlay-description .desc textarea { width: 100%; }
+.overlay-container .task-detail-overlay .overlay-body .left .overlay-description .desc li { margin-left: 10px; word-break: break-all; }
+.overlay-container .task-detail-overlay .overlay-body .left .overlay-description .desc textarea { width: 100%; word-break: break-all; }
 .overlay-container .task-detail-overlay .overlay-body .left .overlay-description .bp3-icon-tick svg { fill: #fff; }
 .overlay-container .task-detail-overlay .overlay-body .left .overlay-description .bp3-icon-cross svg { fill: #1d4354; }
 .overlay-container .task-detail-overlay .overlay-body .left .attach-container { padding: 5px 5px 5px 0px; }
@@ -291,7 +292,7 @@ top attachment etc.
 .overlay-container .task-detail-overlay .overlay-body .left .attach-container .attach-list ul li .file-detail .date { color: #696969; }
 .overlay-container .task-detail-overlay .overlay-body .left .edit-button { margin-left: 10px; vertical-align: inherit !important; }
 .overlay-container .task-detail-overlay .overlay-body .left .edit-button svg { fill: #137cbd; }
-.overlay-container .task-detail-overlay .overlay-body .left textarea { background: transparent; border: none; border-color: transparent; resize: none; }
+.overlay-container .task-detail-overlay .overlay-body .left textarea { background: transparent; border: none; border-color: transparent; resize: vertical; }
 .overlay-container .task-detail-overlay .overlay-body .left .comment-container { display: flex; justify-content: stretch; }
 .overlay-container .task-detail-overlay .overlay-body .left .comment-container button { margin-left: 0; }
 .overlay-container .task-detail-overlay .overlay-body .left .comments { padding-bottom: 5px; }

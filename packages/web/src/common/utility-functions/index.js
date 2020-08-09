@@ -1,4 +1,6 @@
 import getName from './getName';
+import matchUrl from './matchUrl';
+
 
 // for sorting both position as well as timestamp
 const posSorting = (a, b) => {
@@ -28,4 +30,4 @@ const normalTimeStampSorting = (a, b) => {
   return -1;
 };
 
-export { timeStampSorting, normalTimeStampSorting, getName };
+export { timeStampSorting, matchUrl, normalTimeStampSorting, getName };

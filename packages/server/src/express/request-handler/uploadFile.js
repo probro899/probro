@@ -52,10 +52,10 @@ const checkFileType = (req, file, cb) => {
         checkFileReg = /avi|AVI|wmv|WMV|flv|FLV|mpg|MPG|mp4|MP4|webm|mkv|MKV|WEBM|x-matroska/;
         break;
       case 'audio':
-        checkFileReg = /mp3/;
+        checkFileReg = /mp3|mpa|wav|wma|wpl|cda|aif/;
         break;
       case 'application':
-        checkFileReg = /pdf|txt/;
+        checkFileReg = /pdf|txt|docx|csv|xlsx|ppt|pptx|xml|php|js|html|css|rtf|doc/;
         break;
       default:
         break;

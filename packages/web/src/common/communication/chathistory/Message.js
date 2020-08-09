@@ -7,6 +7,7 @@ import { Spinner, Icon } from '@blueprintjs/core';
 import { ENDPOINT } from '../../../config';
 import sendMessage from '../helper-functions/message/index';
 import { RoundPicture } from '../../../components';
+import { matchUrl } from '../../../common/utility-functions';
 
 const profileIcon = require('../../../assets/icons/64w/uploadicon64.png');
 
@@ -22,6 +23,10 @@ const findSeenUser = (props, seenStatus) => {
 };
 
 const Message = ({ own, obj, props, type }) => {
+
+  const getMessageText = () => {
+    return <p dangerouslySetInnerHTML={{ __html: matchUrl(obj.message) }} style={{ maxWidth: '100%', wordBreak: 'break-word' }} />;
+  };
 
   return (
     <div
@@ -50,7 +55,7 @@ const Message = ({ own, obj, props, type }) => {
             marginBottom: !obj.showImage && 0,
           }}
         >
-          <p style={{ maxWidth: '100%', wordBreak: 'break-word' }}>{obj.message}</p>
+          {getMessageText()}
           <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'flex-end' }}>
             <Moment style={{ color: '#757575' }} format="h:mm:a">{obj.timeStamp}</Moment>
           </div>

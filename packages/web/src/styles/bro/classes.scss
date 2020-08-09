@@ -272,7 +272,8 @@
           padding: 5px 5px 5px 0px;
           .desc-head { font-weight: bold; font-size: 16px; }
           .desc {
-            textarea { width: 100%; }
+            li { margin-left: 10px; word-break: break-all; }
+            textarea { width: 100%; word-break: break-all; }
             padding: 5px 5px 5px 0px; font-size: 15px;
           }
           .bp3-icon-tick { svg { fill: $backgroundColor; } }
@@ -314,7 +315,7 @@
           background: transparent;
           border: none;
           border-color: transparent;
-          resize: none;
+          resize: vertical;
         }
         .comment-container {
           display: flex; justify-content: stretch;
