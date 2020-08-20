@@ -15,7 +15,7 @@
     "@probro/common": "1.0.0",
     "app-node": "^0.2.6",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
-    "bcrypt": "^3.0.6",
+    "bcrypt": "^5.0.0",
     "bluebird": "^3.5.3",
     "body-parser": "^1.18.3",
     "compression": "^1.7.4",
