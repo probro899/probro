@@ -1,0 +1,300 @@
+@import './config.scss';
+.archive {
+  margin-top: $navbarHeight;
+  min-height: calc(100vh - #{$navbarHeight} - #{$footerHeight});
+  padding: 5px;
+  .ar-top {
+    padding: 5px;
+    span {
+      color: $lightTextColor;
+    }
+  }
+  .ar-content {
+    display: flex;
+    flex-wrap: wrap;
+    .ar-left {
+      width: 70%;
+      padding-right: 20px;
+    }
+    .ar-right {
+      width: 30%;
+      p.ar-right-top {
+        font-size: 20px;
+        font-weight: bold;
+      }
+      .popular-on-pc {
+        .popular-blog {
+          display: flex;
+          margin-bottom: 10px;
+          .ar-i-img {
+            min-height: 115px;
+            min-width: 115px;
+            background-size: cover !important;
+          }
+          .ar-i-detail {
+            padding: 0px 5px;
+            .blog-title {
+              font-size: 18px;
+              font-weight: 400;
+              margin-bottom: 5px;
+              color: $darkBlue;
+            }
+            .blog-author {
+              
+            }
+            .pc-date {
+              color: $lightTextColor;
+            }
+          }
+        }
+        .users-head {
+          margin-top: 20px;
+          font-size: 16px;
+          text-transform: uppercase;
+          color: $lightTextColor;
+        }
+        .popular-user {
+          margin: 10px 0px;
+          display: flex;
+          .user-image {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            overflow: hidden;
+            flex-shrink: 0;
+          }
+          .user-detail {
+            margin-left: 5px;
+            padding-top: 5px;
+            .name {
+              font-size: 15px;
+              font-weight: bold;
+            }
+          }
+        }
+      }
+    }
+    @media screen and (min-height: 720px) and (max-width: 800px){
+      .ar-left {
+        width: 60%;
+      }
+      .ar-right {
+        width: 40%;
+      }
+    }
+    @media screen and (max-width: 720px){
+      .ar-left {
+        width: 100%;
+      }
+      .ar-right {
+        margin-top: 20px;
+        width: 100%;
+      }
+    }
+  }
+}
+
+// styling single archive element to make it global
+
+.ar-left-i {
+  margin-top: 15px;
+  padding: 5px;
+  display: flex;
+  border-bottom: 1px solid $normalBorder;
+  .ar-i-img {
+    height: 250px;
+    width: 250px;
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+  .ar-i-detail {
+    flex-direction: column;
+    margin-left: 10px;
+    width: calc(100% - 250px);
+    .pc-date {
+      font-size: 12px;
+      color: $lightTextColor;
+    }
+    .ar-i-title {
+      color: $textColor;
+      font-size: 22px;
+    }
+    .pc-blog-desc {
+      padding: 5px 0px; word-break: break-word;
+    }
+    .ar-i-counts {
+      display: flex;
+      .label {
+        color: $lightTextColor;
+        margin: 0px 3px 0px 0px;
+        .count {
+          margin: 0px 2px;
+          font-weight: bolder;
+        }
+      }
+    }
+  }
+  @media screen and (max-width: 500px){
+    .ar-i-img {
+      height: 200px;
+      width: 200px;
+    }
+    .ar-i-detail {
+      width: calc(100% - 200px);
+    }
+  }
+  @media screen and (max-width: 400px){
+      .ar-i-img {
+        height: 150px;
+        width: 150px;
+      }
+      .ar-i-detail {
+        width: calc(100% - 150px);
+        .pc-blog-desc {
+          display: none;
+        }
+      }
+  }
+}
+
+.public-blog {
+  margin-top: $navbarHeight;
+  min-height: calc(100vh - #{$navbarHeight} - #{$footerHeight});
+  margin-left: 10%;
+  margin-right: 10%;
+  @media screen and (max-width: 700px){
+    margin-left: 7%;
+    margin-right:7%;
+  }
+  @media screen and (max-width: 600px){
+    margin-left: 5%;
+    margin-right: 5%;
+  }
+  .public-blog-title {
+    padding-top: 10px;
+    p {
+      margin-left: 17px;
+      margin-top: 20px;
+      display: flex;
+      font-size: 35px;
+      font-weight: bold;
+    }
+    .author-user {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+      .auth-con {
+        display: flex;
+        .profile-icon {
+          width: 80px;
+          height: 80px;
+          border-radius: 50%;
+          overflow: hidden;
+          margin: 10px;
+        }
+        .author-detail {
+          display: flex;
+          justify-content: center;
+          align-items: flex-start;
+          flex-direction: column;
+        }
+      }
+    }
+  }
+  .pc-blog-cover-image {
+    display: flex; justify-content: center; width: 100%;
+    overflow: hidden;
+    margin-bottom: 25px;
+    img {
+      width: 100%;
+      object-fit: contain;
+    }
+  }
+  .public-blog-content {
+    width: 100%; display: flex; margin-bottom: 50px; font-size: 25px;
+    #blogContent {
+      width: 100%;
+      pre { white-space: pre-wrap; }
+      p { font-size: 25px; word-break: break-word; }
+      span { word-break: break-word; }
+      img { max-width: 100%; }
+    }
+  }
+  .response {
+    display: flex;
+    .comment-section {
+      flex: 1; display: flex; flex-direction: column; width: 100%;
+      .comment-area {
+        display: flex;
+        position: relative;
+        .profile-icon {
+          width: 40px;
+          height: 40px;
+          position: absolute;
+          border-radius: 50%;
+          overflow: hidden;
+          top: 11px;
+          left: 5px;
+        }
+        textarea {
+          font-size: 21px;
+          flex: 0.9;
+          height: 62px;
+          line-height: 40px;
+          padding-left: 60px;
+          resize: none;
+        }
+        button {
+          font-size: 30px;
+          flex: 0.1;
+          span {
+            display: flex;
+          }
+        }
+      }
+      .responses {
+        .i-response {
+          margin: 10px 0;
+          display: flex;
+          .pc-profile-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            flex-shrink: 0;
+            overflow: hidden;
+            margin: 0 10px;
+          }
+          .comment-content {
+            padding: 5px;
+            .com-desc {
+              word-break: break-word;
+              .pc-comment-edit {
+                display: flex;
+              }
+            }
+            .com-config {
+              small {
+                cursor: pointer;
+                color: $navTextColor;
+                margin-right: 5px;
+                &.danger u {
+                  &:hover {
+                    color: red;
+                  }
+                }
+                &.primary u {
+                  &:hover {
+                    color: $skyBlueMain;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

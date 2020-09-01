@@ -1,8 +1,13 @@
 {
   "presets": [
-    "import-export"
+    "@babel/env",
+    "@babel/react"
   ],
   "plugins": [
-    "transform-object-rest-spread"
+    "transform-object-rest-spread",
+    "transform-class-properties",
+    "@babel/plugin-proposal-class-properties",
+    "@babel/transform-regenerator",
+    "@babel/transform-runtime"
   ]
 }
