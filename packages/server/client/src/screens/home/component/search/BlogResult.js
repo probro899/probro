@@ -13,7 +13,7 @@ class BlogResult extends React.Component {
           Popular Blogs
         </p>
         {
-          data.map(obj => <SingleArchive obj={obj} key={obj.blog.id} />)
+          data.map(obj => <SingleArchive obj={obj} key={obj.id} />)
         }
       </div>
     );

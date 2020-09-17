@@ -12,14 +12,17 @@ import { ToolBar } from './ClassComponents';
 import { Spinner } from '../../common';
 import Itemtype from './ClassComponents/dndComponents/types';
 import CustomDragLayer from './ClassComponents/dndComponents/CustomDragLayer';
+import ErrorBoundry from '../../common/ErrorBoundary';
 
 class Index extends React.Component {
   state = { loading: true, apis: {}, draggingContent: null };
 
-  componentDidMount() {
-    client.scope('Mentee').then((result) => {
-      this.setState({ apis: result, loading: false });
-    });
+  async componentDidMount() {
+    const { match } = this.props;
+    const apis = await client.scope('Mentee');
+    const getBoardRes = await apis.getBoard(match.params.classId);
+    this.setState({ apis, loading: false });
+    console.log('get Board res', getBoardRes);
   }
 
   setDraggingContent = (event, item) => {
@@ -32,19 +35,22 @@ class Index extends React.Component {
   render() {
     const { match, account } = this.props;
     const { apis, draggingContent, loading } = this.state;
+    // console.log('apis in class manager', apis);
     if (!account.sessionId) return <Redirect to="/" />;
     if (!account.user) return <Spinner />;
     if (account.user.slug !== match.params.userSlug) return <Redirect to="/" />;
     if (loading) return <Spinner />;
     return (
-      <div style={{ position: 'relative' }}>
-        <Navbar className="pcm-nav" />
-        <ToolBar boardId={Number(match.params.classId, 10)} apis={apis} />
-        <DndProvider backend={HTML5Backend}>
-          <CustomDragLayer draggingContent={draggingContent} />
-          <ClassManager setDraggingContent={this.setDraggingContent} apis={apis} userSlug={match.params.userSlug} classId={Number(match.params.classId, 10)} />
-        </DndProvider>
-      </div>
+      <ErrorBoundry>
+        <div style={{ position: 'relative' }}>
+          <Navbar className="pcm-nav" />
+          <ToolBar boardId={Number(match.params.classId, 10)} apis={apis} />
+          <DndProvider backend={HTML5Backend}>
+            <CustomDragLayer draggingContent={draggingContent} />
+            <ClassManager setDraggingContent={this.setDraggingContent} apis={apis} userSlug={match.params.userSlug} classId={Number(match.params.classId, 10)} />
+          </DndProvider>
+        </div>
+      </ErrorBoundry>
     );
   }
 }
@@ -58,4 +64,5 @@ const mapStateToProps = (state) => {
   const { account } = state;
   return { account };
 };
+
 export default connect(mapStateToProps, { ...actions })(Index);

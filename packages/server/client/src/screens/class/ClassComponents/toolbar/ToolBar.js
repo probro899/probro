@@ -49,6 +49,7 @@ class ToolBar extends React.Component {
       database,
       UserDetail,
     } = this.props;
+    console.log('boardMember in tool bar', this.props);
     const extUser = Object.values(UserDetail.byId).find(obj => obj.userId === account.user.id);
     const board = Object.values(boards.byId).find(obj => obj.id === boardId);
     const { showReport } = this.state;

@@ -8,20 +8,19 @@ import flat from '../../../../flat';
 import add from '../../add';
 import update from '../../../update/update';
 import sendNotification from '../../../sendNotification';
+import findUserDetails from '../../../findUserDetails';
 
 async function addBoardMember(record) {
   const { session } = this;
   const { userId } = record;
-
   // getting all the Required tables from cache database
   const allDbUsers = databaseChache.get('User');
   const allDbBoards = databaseChache.get('Board');
   const allDbBaordMembers = databaseChache.get('BoardMember');
-  const allDbUserDetails = databaseChache.get('UserDetail');
+  // const allDbUserDetails = databaseChache.get('UserDetail');
 
   // finding details of the user that is going to be add in this board
   const user = allDbUsers.find(u => u.id === parseInt(userId, 10));
-
   // deleting some privated info
   delete user.password;
   delete user.verificationToken;
@@ -29,10 +28,8 @@ async function addBoardMember(record) {
 
   // finding info of the user to add the curent user
   const fuser = allDbUsers.find(u => u.id === record.fuserId);
-
   // finding current board all info
   const board = allDbBoards.find(b => b.id === record.boardId);
-
   // getting html body for emailing
   const htmlStringValue = await mailBody();
 
@@ -41,7 +38,6 @@ async function addBoardMember(record) {
   // checking user is valid or not
   if (user) {
     const boardMember = allDbBaordMembers.find(bm => bm.boardId === record.boardId && bm.tuserId === user.id);
-
     // checking user is already in board or not
     if (boardMember) {
       if (!boardMember.deleteStatus) {
@@ -63,54 +59,55 @@ async function addBoardMember(record) {
     if (remoteUserSession) {
       remoteUserSession.subscribe(`Board-${board.id}`);
       const boardDetail = allDbBoards.find(b => b.id === record.boardId);
+      const boardDetailWithUser = { ...boardDetail, user: findUserDetails(boardDetail.userId) };
 
       // gettting all the board details like column, users, card, attachment every details info
-      const boardDetails = await findBoardDetails(record.boardId);
+      // const boardDetails = await findBoardDetails(record.boardId);
 
       // getting all current board members
-      const boardMembers = allDbBaordMembers.filter(bm => bm.boardId === record.boardId);
+      // const boardMembers = allDbBaordMembers.filter(bm => bm.boardId === record.boardId);
 
       // finding details of board members
-      const allBoardUsers = boardMembers.map(bm => allDbUsers.find(u => u.id === bm.userId || u.id === bm.tuserId));
+      // const allBoardUsers = boardMembers.map(bm => allDbUsers.find(u => u.id === bm.userId || u.id === bm.tuserId));
 
       // finding sessions of current active user in board
       const boardChannel = session.getChannel(`Board-${record.boardId}`);
 
       // finding who is acitve or not
-      const finalUserList = allBoardUsers.map((u) => {
-        for (let i = 0; i < boardChannel.length; i += 1) {
-          if (boardChannel[i].values.user.id === u.id) {
-            return { ...u, activeStatus: true };
-          }
-        }
-        return { ...u, activeStatus: false };
-      });
+      // const finalUserList = allBoardUsers.map((u) => {
+      //   for (let i = 0; i < boardChannel.length; i += 1) {
+      //     if (boardChannel[i].values.user.id === u.id) {
+      //       return { ...u, activeStatus: true };
+      //     }
+      //   }
+      //   return { ...u, activeStatus: false };
+      // });
 
       // finding user details
-      const allBoardUserDetails = finalUserList.map(fu => allDbUserDetails.find(ud => ud.userId === fu.id));
+      // const allBoardUserDetails = finalUserList.map(fu => allDbUserDetails.find(ud => ud.userId === fu.id));
 
       // data to be updated in remote user
       const dataTobeUpdated = {
-        User: finalUserList,
-        UserDetail: allBoardUserDetails,
-        Board: boardDetail,
-        BoardColumn: flat(boardDetails.boardColumn),
-        BoardColumnCard: flat(flat(boardDetails.boardColumnCard)),
-        BoardColumnCardAttachment: flat(flat(boardDetails.boardColumnCardAttachment)),
-        BoardColumnCardComment: flat(flat(boardDetails.boardColumnCardComment)),
-        BoardColumnCardDescription: flat(flat(boardDetails.boardColumnCardDescription)),
-        BoardMember: boardMembers,
+        // User: finalUserList,
+        // UserDetail: allBoardUserDetails,
+        Board: boardDetailWithUser,
+        // BoardColumn: flat(boardDetails.boardColumn),
+        // BoardColumnCard: flat(flat(boardDetails.boardColumnCard)),
+        // BoardColumnCardAttachment: flat(flat(boardDetails.boardColumnCardAttachment)),
+        // BoardColumnCardComment: flat(flat(boardDetails.boardColumnCardComment)),
+        // BoardColumnCardDescription: flat(flat(boardDetails.boardColumnCardDescription)),
+        // BoardMember: boardMembers,
       };
 
       // update remote user cache
       await updateUserCache(dataTobeUpdated, remoteUserSession, 'add');
-
       // data tobe update in all all board members
       const dataTobeupdateAllUser = {
         // Notification: notiDetails,
         User: { ...user, activeStatus: true },
-        BoardMember: { id: addMemberRes, ...record, tuserId: user.id, deleteStatus: false },
+        BoardMember: { id: addMemberRes, ...record, tuserId: user.id, deleteStatus: false, user: findUserDetails(userId) },
       };
+
       await boardChannel.forEach(s => updateUserCache(dataTobeupdateAllUser, s, 'add'));
 
       const emailObj = {
@@ -118,7 +115,7 @@ async function addBoardMember(record) {
         html: htmlStringValue.boardNotificationHtml(
           `You are added to the class ${board.name}`,
           `Please follow the link to join the class ${board.name}.`,
-          `https://properclass.com`),
+          'https://properclass.com'),
         subject: `Class inivitation from ${fuser.firstName} `,
       };
 
@@ -141,7 +138,7 @@ async function addBoardMember(record) {
       const dataTobeupdateAllUser = {
         // Notification: notiDetails,
         User: { ...user, activeStatus: false },
-        BoardMember: { id: addMemberRes, ...record, tuserId: user.id, deleteStatus: false },
+        BoardMember: { id: addMemberRes, ...record, tuserId: user.id, deleteStatus: false, user: findUserDetails(userId) },
       };
       boardChannel.forEach(s => updateUserCache(dataTobeupdateAllUser, s, 'add'));
     }
@@ -157,7 +154,7 @@ async function addBoardMember(record) {
       html: htmlStringValue.boardNotificationHtml(
         `${user.firstName} added to the class ${board.name}`,
         `Please follow the link to join the class ${board.name}.`,
-        `https://properclass.com`),
+        'https://properclass.com'),
       subject: `Class inivitation from ${fuser.firstName} `,
     };
 

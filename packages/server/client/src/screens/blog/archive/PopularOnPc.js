@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { MdMyLocation } from 'react-icons/md';
@@ -8,7 +9,7 @@ import { RoundPicture } from '../../../components';
 // const file = require('../../../assets/icons/64w/uploadicon64.png');
 
 const PopularUser = ({ obj }) => {
-  const imgUrl = obj.userDetail.image ? `${ENDPOINT}/user/${10000000 + parseInt(obj.user.id, 10)}/profile/${obj.userDetail.image}` : '/assets/icons/64w/uploadicon64.png';
+  const imgUrl = obj.userDetail.image ? `${ENDPOINT}/assets/user/${10000000 + parseInt(obj.id, 10)}/profile/${obj.userDetail.image}` : '/assets/icons/64w/uploadicon64.png';
   return (
     <div className="popular-user">
       <div className="user-image">
@@ -16,9 +17,9 @@ const PopularUser = ({ obj }) => {
       </div>
       <div className="user-detail">
         <div className="name">
-          <Link to={`/user/${obj.user.slug}/`}>
+          <Link to={`/user/${obj.slug}/`}>
             {
-              ` ${obj.user.firstName} ${obj.user.middleName ? `${obj.user.middleName} ` : ''}${obj.user.lastName}`
+              ` ${obj.firstName} ${obj.middleName ? `${obj.middleName} ` : ''}${obj.lastName}`
             }
           </Link>
         </div>
@@ -36,26 +37,26 @@ const PopularUser = ({ obj }) => {
 };
 
 const PopularBlog = ({ obj }) => {
-  const coverImage = obj.blog.coverImage ? `${ENDPOINT}/user/${10000000 + parseInt(obj.blog.userId, 10)}/blog/${obj.blog.coverImage}` : '/assets/graphics/blog-img.jpg';
-  const user = obj.userDetails.find(u => u.user.id === obj.blog.userId);
+  const { user } = obj;
+  const coverImage = obj.coverImage ? `${ENDPOINT}/assets/user/${10000000 + parseInt(user.id, 10)}/blog/${obj.coverImage}` : '/assets/graphics/blog-img.jpg';
   return (
     <div className="popular-blog">
       <div className="ar-i-img" style={{ background: `url(${coverImage})` }} />
       <div className="ar-i-detail">
-        <Link to={`/blog/${user.user.slug}/${obj.blog.slug}`} className="blog-title">
-          {obj.blog.title}
+        <Link to={`/blog/${user.slug}/${obj.slug}`} className="blog-title">
+          {obj.title}
         </Link>
         <div className="blog-author">
           Author:
           {' '}
-          <Link to={`/user/${user.user.slug}/`}>
+          <Link to={`/user/${user.slug}/`}>
             {
-              ` ${user.user.firstName} ${user.user.middleName ? `${user.user.middleName} ` : ''}${user.user.lastName}`
+              ` ${user.firstName} ${user.middleName ? `${user.middleName} ` : ''}${user.lastName}`
             }
           </Link>
           <div>
             <small className="pc-date">
-              {new Date(obj.blog.timeStamp).toDateString()}
+              {new Date(parseInt(obj.timeStamp, 10)).toDateString()}
             </small>
           </div>
         </div>

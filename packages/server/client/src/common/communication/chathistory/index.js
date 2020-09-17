@@ -20,14 +20,51 @@ class ChatHistory extends React.Component {
     this.scrollToEnd = React.createRef();
   }
 
-  componentDidMount() {
+  async componentDidMount() {
+    const { apis, webRtc, database } = this.props;
+    const { connectionId, type } = webRtc.chatHistory;
+    let isFetchMessage;
+    if (type === 'user') {
+      isFetchMessage = Object.values(database.UserMessage.byId).find(m => m.connectionId === connectionId);
+      if (!isFetchMessage) {
+        apis.getChatHistory({ type, connectionId });
+      }
+    }
+
+    if (type === 'board') {
+      isFetchMessage = Object.values(database.BoardMessage.byId).find(bm => bm.boardId === connectionId);
+      if (!isFetchMessage) {
+        apis.getChatHistory({ type, connectionId });
+      }
+    }
+
     const state = findChatHistory(this.props);
+    // console.log('chat History', state);
     this.setState({ ...state });
     this.scrollToBottom();
   }
 
-  componentWillReceiveProps(props) {
+  async componentWillReceiveProps(props) {
+    const { apis, webRtc, database } = this.props;
+    const { connectionId, type } = webRtc.chatHistory;
+    let isFetchMessage = false;
+
+    if (type === 'user') {
+      isFetchMessage = Object.values(database.UserMessage.byId).find(m => m.connectionId === connectionId);
+      if (!isFetchMessage) {
+        apis.getChatHistory({ type, connectionId });
+      }
+    }
+
+    if (type === 'board') {
+      isFetchMessage = Object.values(database.BoardMessage.byId).find(bm => bm.boardId === connectionId);
+      if (!isFetchMessage) {
+        apis.getChatHistory({ type, connectionId });
+      }
+    }
+
     const state = findChatHistory(props);
+    // console.log('chat History data', state);
     this.setState({ ...state });
   }
 
@@ -124,6 +161,7 @@ class ChatHistory extends React.Component {
       account,
       fromLive,
     } = this.props;
+    console.log('props in chat history', this.props);
     const { user } = webRtc.chatHistory;
     const { messages } = this.state;
     const { showAudio, showVideo, showJoin } = this.isShowCallerButton();

@@ -6,8 +6,6 @@ import FileInput from './FileInput';
 import { ENDPOINT } from '../../../../config';
 import RoundPicture from '../../../../components/RoundPicture';
 
-// const file = require('../../../../assets/icons/512h/uploadicon512.png');
-
 class ProfilePic extends React.Component {
   state = {};
 
@@ -58,7 +56,7 @@ class ProfilePic extends React.Component {
 
   render() {
     const { userDetail, account } = this.props;
-    const imgUrl = userDetail.image ? `${ENDPOINT}/user/${10000000 + parseInt(account.user.id, 10)}/profile/${userDetail.image}` : '/assets/icons/512h/uploadicon512.png';
+    const imgUrl = userDetail.image ? `${ENDPOINT}/assets/user/${10000000 + parseInt(account.user.id, 10)}/profile/${userDetail.image}` : '/assets/icons/512h/uploadicon512.png';
     return (
       <div className="profilePic">
         <RoundPicture imgUrl={imgUrl} />

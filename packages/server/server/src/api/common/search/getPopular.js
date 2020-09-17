@@ -18,8 +18,8 @@ export default async () => {
       createdBlogCount.push(publishBlogs.filter(b => b.userId === id).length);
     });
 
-    const blogs = publishBlogs.map((blog, idx) => ({ ...allBlogDetail[idx], blog })).sort((a, b) => {
-      if ((a.blogLike.length + a.blogComment) > (b.blogLike + b.blogComment)) {
+    const blogs = allBlogDetail.map((blog, idx) => ({ ...allBlogDetail[idx], blog })).sort((a, b) => {
+      if ((a.blogLike.length + a.blogComment.length) > (b.blogLike.length + b.blogComment.length)) {
         return -1;
       }
       return 1;

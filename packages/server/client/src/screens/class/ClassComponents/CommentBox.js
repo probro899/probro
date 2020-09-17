@@ -13,7 +13,7 @@ class CommentBox extends React.Component {
   saveComment = async () => {
     const {
       apis, writeComment, task, account, boardId, addDatabaseSchema,
-      comment,
+      comment, database
     } = this.props;
     if (comment.replace(/\s/g, '').length === 0) {
       return;
@@ -25,12 +25,14 @@ class CommentBox extends React.Component {
       userId: account.user.id,
       broadCastId: `Board-${boardId}`,
     });
+    const userDetail = Object.values(database.UserDetail.byId).find(ud => ud.userId === account.user.id);
     addDatabaseSchema('BoardColumnCardComment', {
       id: res,
       boardColumnCardId: task.id,
       comment,
       timeStamp: Date.now(),
       userId: account.user.id,
+      user: { user: account.user, userDetail },
     });
     writeComment('');
   }
@@ -63,6 +65,7 @@ CommentBox.propTypes = {
   boardId: PropTypes.number.isRequired,
   account: PropTypes.objectOf(PropTypes.any).isRequired,
   comment: PropTypes.string.isRequired,
+  database: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 export default CommentBox;

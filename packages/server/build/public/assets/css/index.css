@@ -771,9 +771,9 @@ top attachment etc.
 .pc-services .pc-services-content { padding: 10px 10vw; }
 @media screen and (max-width: 700px) { .pc-services .pc-services-content { padding: 10px 5vw; } }
 
-@font-face { font-family: 'Gotham-Pro'; src: url("../assets/fonts/gotham/gotham-pro.ttf") format("truetype"); font-weight: normal; font-stretch: extra-condensed; font-style: normal; }
-@font-face { font-family: 'Gotham-Pro'; src: url("../assets/fonts/gotham/gotham-medium.otf") format("truetype"); font-weight: bold; font-stretch: extra-condensed; font-style: normal; }
-@font-face { font-family: 'Gotham-Pro'; src: url("../assets/fonts/gotham/gotham-light.otf") format("truetype"); font-weight: 200; font-stretch: extra-condensed; font-style: normal; }
+@font-face { font-family: 'Gotham-Pro'; src: url("/assets/fonts/gotham/gotham-pro.ttf") format("truetype"); font-weight: normal; font-stretch: extra-condensed; font-style: normal; }
+@font-face { font-family: 'Gotham-Pro'; src: url("/assets/fonts/gotham/gotham-medium.otf") format("truetype"); font-weight: bold; font-stretch: extra-condensed; font-style: normal; }
+@font-face { font-family: 'Gotham-Pro'; src: url("/assets/fonts/gotham/gotham-light.otf") format("truetype"); font-weight: 200; font-stretch: extra-condensed; font-style: normal; }
 body { margin: 0; padding: 0; background-color: #fff; font-family: "Gotham-Pro"; }
 
 .home-screen { margin: 0; padding: 0; }

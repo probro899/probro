@@ -3,8 +3,9 @@
 export default {
   get: (cookie) => {
     let r;
+    let chk;
     if (typeof document !== 'undefined') {
-      const chk = `${cookie.trim()}=`;
+      chk = `${cookie.trim()}=`;
       const cookies = document.cookie.split(';');
       r = cookies.find(c => c.trim().indexOf(chk) === 0);
     }

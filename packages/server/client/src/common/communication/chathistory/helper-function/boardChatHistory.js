@@ -38,11 +38,11 @@ export default (props) => {
         userShowTestFlag = umd.userId;
         arrWithSeenStatus.push({ ...umd, showImage: true, seenStatus: findMessageSeenStatus(umd.id, 'board', props) });
       } else {
-        console.log('Test');
         arrWithSeenStatus.push({ ...umd, showImage: false, seenStatus: findMessageSeenStatus(umd.id, 'board', props) });
       }
     });
     arrWithSeenStatusToShow = findSeenStatusToShow(arrWithSeenStatus, Object.values(database.BoardMember.byId).filter(obj => obj.boardId === webRtc.chatHistory.connectionId));
+
     lastMessageSeenIdAndUnseenNo = findLastMessageAndUnSeenNo(arrWithSeenStatus, 'board', props);
   }
   return { messages: arrWithSeenStatusToShow, ...lastMessageSeenIdAndUnseenNo };

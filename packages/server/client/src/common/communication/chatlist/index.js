@@ -7,13 +7,17 @@ import { chatItemClickHandler, getChatList } from './helper-function';
 class ChatList extends React.Component {
   state = { mouseHoverId: null, chatList: [] };
 
-  componentDidMount() {
-    const chatList = getChatList(this.props);
+  async componentDidMount() {
+    const { apis } = this.props;
+    const chatList = await apis.getChatlist();
+    // console.log('chatList', chatList);
     this.setState({ chatList });
   }
 
-  componentWillReceiveProps(props) {
-    const chatList = getChatList(props);
+  async componentWillReceiveProps(props) {
+    const { apis } = this.props;
+    const chatList = await apis.getChatlist();
+    // console.log('Chatlist', chatList);
     this.setState({ chatList });
   }
 

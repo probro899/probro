@@ -16,7 +16,7 @@ export default posSorting;
 
 // for sorting timestamp reverse
 const timeStampSorting = (a, b) => {
-  if (a.timeStamp < b.timeStamp) {
+  if (parseInt(a.timeStamp, 10) < parseInt(b.timeStamp, 10)) {
     return 1;
   }
   return -1;

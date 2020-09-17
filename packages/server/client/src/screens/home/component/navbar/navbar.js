@@ -56,7 +56,7 @@ class Navbar extends Component {
     const apis = await client.scope('Mentee');
     const { account } = this.props;
     if (account.user) {
-      this.getUnreadNotifs(this.props);
+      // this.getUnreadNotifs(this.props);
     }
     this.setState({ apis });
   }
@@ -64,7 +64,7 @@ class Navbar extends Component {
   componentWillReceiveProps(nextProps) {
     const { account } = nextProps;
     if (account.user) {
-      this.getUnreadNotifs(nextProps);
+      // this.getUnreadNotifs(nextProps);
     }
   }
 
@@ -133,7 +133,7 @@ class Navbar extends Component {
     let profilePic;
     if (account.user) {
       const profile = Object.values(database.UserDetail.byId).find(o => o.userId === account.user.id);
-      profilePic = profile && profile.image ? `${ENDPOINT}/user/${10000000 + parseInt(profile.userId, 10)}/profile/${profile.image}` : null;
+      profilePic = profile && profile.image ? `${ENDPOINT}/assets/user/${10000000 + parseInt(profile.userId, 10)}/profile/${profile.image}` : null;
     }
     const { apis, unreadNotis, lastNotifId, redirectDashboard, unreadMessage, loading, smallScreen, msgSound, notiSound } = this.state;
     return (

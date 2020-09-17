@@ -91,10 +91,11 @@ class TaskDetailRight extends React.Component {
       task,
       tags,
     } = this.props;
+    console.log('description', description);
     try {
       await apis.copyBoardColumnCard({
         card: { ...task, userId: account.user.id, timeStamp: Date.now() },
-        description: { ...description, userId: account.user.id, timeStamp: Date.now() },
+        description: description && { ...description, userId: account.user.id, timeStamp: Date.now() },
         attachments: attachments.map(obj => ({ ...obj, userId: account.user.id, timeStamp: Date.now() })),
         tags: tags.map(obj => ({ ...obj, userId: account.user.id })),
         boardId: arg.class,
@@ -203,6 +204,7 @@ class TaskDetailRight extends React.Component {
                   task={task}
                   apis={apis}
                   addDatabaseSchema={addDatabaseSchema}
+                  database={database}
                 />
               )}
               position="left-top"

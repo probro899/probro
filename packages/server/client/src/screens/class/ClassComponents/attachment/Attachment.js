@@ -36,8 +36,9 @@ class Attachment extends React.Component {
     }
     const {
       account, apis, addDatabaseSchema, boardId,
-      task,
+      task
     } = this.props;
+    // console.log('account value in Attachment', account);
     try {
       const formData = new FormData();
       formData.append('data', JSON.stringify({ token: account.sessionId, fileType: data.attachment.type.split('/')[0], content: 'board' }));
@@ -60,8 +61,10 @@ class Attachment extends React.Component {
           boardColumnCardId: task.id,
           url: res.data,
         };
+        // const user = Object.values(database.User.byId).find(u => u.id === account.user.id);
+        // const userDetail = Object.values(database.user)
         const apiRes = await apis.addBoardColumnCardAttachment({ ...info, broadCastId: `Board-${boardId}` });
-        addDatabaseSchema('BoardColumnCardAttachment', { ...info, id: apiRes });
+        addDatabaseSchema('BoardColumnCardAttachment', { ...info, id: apiRes, user: { user: account.user } });
       }
       return { response: 200, message: 'Uploaded' };
     } catch (e) {
@@ -83,6 +86,7 @@ Attachment.propTypes = {
   apis: PropTypes.objectOf(PropTypes.any).isRequired,
   addDatabaseSchema: PropTypes.func.isRequired,
   account: PropTypes.objectOf(PropTypes.any).isRequired,
+  boardId: PropTypes.number.isRequired,
 };
 
 export default Attachment;

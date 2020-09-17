@@ -17,6 +17,7 @@ class HomePage extends Component {
   state = {};
 
   render() {
+    // console.log('props in HomePage', this.props);
     const { account, match } = this.props;
     if (!account.sessionId) {
       return <Redirect to="/" />;
@@ -26,6 +27,7 @@ class HomePage extends Component {
         <Spinner />
       );
     }
+
     return (
       account.user.slug !== match.params.id ? <Redirect to="/" />
         : (
@@ -45,7 +47,6 @@ class HomePage extends Component {
                 <Route exact path={`${match.path}/drawing-board`} component={DrawingBoard} />
                 <Route exact path={`${match.path}/connection`} component={Connection} />
                 {/* <Route exact path={`${match.path}/messages`} component={Message} /> */}
-
                 <Redirect to="/error" />
               </Switch>
             </div>

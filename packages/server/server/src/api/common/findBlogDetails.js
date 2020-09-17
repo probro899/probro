@@ -1,5 +1,6 @@
 import lodash from 'lodash';
 import cacheDatabase from '../../cache/database/cache';
+import findUserDetails from './findUserDetails';
 
 export default function findBlogDetails(blogId, userId, getBlog, uId) {
   let blog = {};
@@ -8,8 +9,6 @@ export default function findBlogDetails(blogId, userId, getBlog, uId) {
   } else {
     blog = cacheDatabase.get('Blog').find(b => b[getBlog ? 'slug' : 'id'] === blogId);
   }
-
-  // const blogDetail = await find('BlogDetail', { blogId });
   const blogComment = cacheDatabase.get('BlogComment').filter(bc => (bc.blogId === blog.id));
   const blogLike = cacheDatabase.get('BlogLike').filter(bl => (bl.blogId === blog.id));
   let blogerId = null;
@@ -23,17 +22,19 @@ export default function findBlogDetails(blogId, userId, getBlog, uId) {
   }
 
   const allUserIds = lodash.uniq([parseInt(blogerId, 10), ...blogComment.map(bc => bc.userId), ...blogLike.map(bl => bl.userId), uId]);
-  // console.log('allUserIds', allUserIds);
-  // const userListPromises = [];
-  // const userDetailPromises = [];
-  // // console.log('allUserIds', allUserIds);
-  // allUserIds.filter(i => i).forEach((id) => {
-  //   userListPromises.push(findOne('User', { id }));
-  //   userDetailPromises.push(findOne('UserDetail', { userId: id }));
-  // });
   const userList = allUserIds.map(uid => allUser.find(u => u.id === uid));
   const userDetailList = allUserIds.map(uid => allUserDetails.find(ud => ud.userId === uid));
-  // console.log('usreList', userList);
   const userDetails = userList.filter(u => u).map((u, idx) => ({ user: { id: u.id, slug: u.slug, firstName: u.firstName, lastName: u.lastName, middleName: u.middleName }, userDetail: userDetailList[idx] || {} }));
-  return { blogComment, blogLike, userDetails, blog };
+
+  const blogWithUser = { ...blog, user: { ...findUserDetails(blog.userId).user, userDetail: findUserDetails(blog.userId).userDetail } };
+  const blogUsers = userDetails.map(u => ({ ...u.user, userDetail: u.userDetail }));
+  const blogLikeWithUser = blogLike.map(l => {
+    const userRes = findUserDetails(l.userId);
+    return { ...l, user: { ...userRes.user, userDetail: userRes.userDetail } };
+  });
+  const blogCommentWithuser = blogComment.map(c => {
+    const userRes = findUserDetails(c.userId);
+    return { ...c, user: { ...userRes.user, userDetail: userRes.userDetail } };
+  });
+  return { blogComment: blogCommentWithuser, blogLike: blogLikeWithUser, userDetails: blogUsers, blog: blogWithUser };
 }

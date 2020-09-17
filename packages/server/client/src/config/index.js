@@ -3,11 +3,11 @@
 // const PORT = 443;
 // const SOCKET_PROTOCOL = 'wss';
 
-const ENDPOINT = 'http://localhost:4001';
+const ENDPOINT = 'http://localhost:3000';
 const SOCKETURL = 'localhost';
-// const ENDPOINT = 'http://192.168.1.193:4001';
-// const SOCKETURL = '192.168.1.193';
-const PORT = 4001;
+const PORT = 3000;
 const SOCKET_PROTOCOL = 'ws';
 
-export { ENDPOINT, SOCKETURL, PORT, SOCKET_PROTOCOL };
+const GOOGLE_SIGNIN_CLIENT_ID = '326098273643-s03gfvahj2tvlkb3fvr487o5nep2fp0f.apps.googleusercontent.com';
+
+export { ENDPOINT, SOCKETURL, PORT, SOCKET_PROTOCOL, GOOGLE_SIGNIN_CLIENT_ID };

@@ -29,6 +29,7 @@ class Report extends React.Component {
     this.setState({ loading: true });
     const cvs = document.getElementById('report-chart');
     const response = await captureCanvas({ ...this.props, canvas: cvs, boardDetail, tableData });
+    console.log('response pdf', response);
     response.images.map(async (obj) => {
       try {
         await axios.post(`${ENDPOINT}/web/delete-file`, { token: account.sessionId, content: 'report', fileName: obj });
@@ -38,7 +39,7 @@ class Report extends React.Component {
     });
     this.setState({
       loading: false,
-      pdfUrl: `${ENDPOINT}/user/${10000000 + parseInt(account.user.id, 10)}/report/${response.pdf}`,
+      pdfUrl: `${ENDPOINT}/assets/user/${10000000 + parseInt(account.user.id, 10)}/report/${response.pdf}`,
     });
   }
 
@@ -47,8 +48,7 @@ class Report extends React.Component {
     const { boardActivities, error, boardCommunicationActivities, loading, pdfUrl } = this.state;
     const boardName = boards.byId[boardId].name;
     const boardMemberList = Object.values(boardMembers.byId).filter(bm => bm.boardId === boardId && !bm.deleteStatus);
-    const userList = boardMemberList.map(bm => Object.values(users.byId).find(u => u.id === bm.tuserId));
-    const tableData = boardActivities ? userList.map(u => findTableData(u, boardActivities, boardCommunicationActivities)) : [];
+    const tableData = boardActivities ? boardMemberList.map(u => findTableData(u.user.user, boardActivities, boardCommunicationActivities)) : [];
     return (
       <Dialog
         onOpening={this.fetchReport}

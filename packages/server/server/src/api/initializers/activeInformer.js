@@ -14,4 +14,3 @@ export default (id, Board, UserConnection, session, status) => {
       .forEach(obj => obj.channel.dispatch(schema.update('User', { id, activeStatus: status })));
   };
 };
-

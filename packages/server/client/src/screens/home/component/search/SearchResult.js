@@ -1,15 +1,16 @@
+/* eslint-disable no-undef */
 import React from 'react';
-import axios from 'axios';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { DO_SEARCH } from '../../../../queries';
 import * as actions from '../../../../actions';
 import FilterToolbar from './FilterToolbar';
 import Navbar from '../navbar';
 import ResultList from './ResultList';
 import Footer from '../../../../common/footer';
-import { ENDPOINT } from '../../../../config';
 import { Spinner } from '../../../../common';
 import BlogResult from './BlogResult';
+import client from '../../../../clientConfig';
 
 class SearchResult extends React.Component {
   constructor(props) {
@@ -17,7 +18,7 @@ class SearchResult extends React.Component {
     this.state = { loading: true, data: {}, changeStyle: false };
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     window.addEventListener('scroll', this.fireScroll, { passive: true });
     const { navigate, updateNav } = this.props;
     updateNav({ schema: 'mainNav', data: { name: 'search' } });
@@ -26,9 +27,9 @@ class SearchResult extends React.Component {
 
   getSearchResult = async (obj) => {
     try {
-      const res = await axios.get(`${ENDPOINT}/web/do-search?key=${obj.key}&country=${obj.country}&industry=${obj.industry}`);
+      const { data } = await client.query({ query: DO_SEARCH, variables: { keyword: obj.key, country: obj.country, industry: obj.industry } });
       this.setState({
-        data: res.data,
+        data,
         loading: false,
       });
     } catch (e) {
@@ -60,13 +61,14 @@ class SearchResult extends React.Component {
   render() {
     const { navigate } = this.props;
     const { loading, data, changeStyle } = this.state;
+    // console.log('search render caled', data);
     return loading ? <Spinner /> : (
       <div>
         <Navbar className={!changeStyle ? 'pcm-nav' : ''} />
         <div className="search-result">
           <FilterToolbar searchKey={navigate.search.key} filterSearch={this.filterSearch} />
-          <ResultList data={data.users} />
-          <BlogResult data={data.blogs} />
+          <ResultList data={data.doSearch.users} />
+          <BlogResult data={data.doSearch.blogs} />
         </div>
         <Footer />
       </div>

@@ -1,121 +1,286 @@
 import { gql } from '@apollo/client';
 
-export const SIGNUP_USER = gql`
-    mutation($firstName: String!, $lastName: String!, $email: String!, $userName: String!, $password: String!){
-        signupUser(firstName: $firstName, lastName: $lastName, email: $email, userName: $userName, password: $password){ token }
-    }
-`;
-
-export const GET_BRAND_LIST = gql`
-    query {
-        getBrandList {
-            id
-            brandName
-        }
-    }
-`;
-
-export const GET_MODEL_LIST = gql`
+export const GET_POPULAR = gql`
 query {
-    getModelList {
+  getPopular{
+    blogs {
+      id
+      slug
+      coverImage
+      title
+      user {
         id
-        name
-        image
-        stypeId
-        varients {
+        slug
+        firstName
+        lastName
+      }
+      blogLike {
+        id
+        user {
           id
-          modelId
-          sid
-          stypeId
-          sbId
-          userId
-          name
-
-          fuelType
-          bodyType
-          offerImage
-          offerMessage
-          offer
+          firstName
+          lastName
         }
+      }
     }
+    users {
+      id
+      firstName
+      lastName
+      middleName
+      slug
+      userDetail {
+        id
+        image
+      }
+    }
+  }
 }
 `;
 
-export const EDIT_PROFILE = gql`
-    mutation($email: String!, $bio: String!){
-        editProfile(email: $email, bio: $bio){
-            bio
+export const GET_ARCHIVES = gql`
+query {
+  getArchive {
+    basedOnHistory {
+      blogs {
+        id
+        title
+        content
+        timeStamp
+        coverImage
+        slug
+        user {
+          firstName
+          lastName
+          slug
+          middleName
+          id
+          userDetail {
+            id
+            image
+          }
         }
-    }
-`;
-
-export const SET_PROFILE_IMAGE = gql`
-    mutation($email: String!, $profileImage: String!){
-        setProfileIMG(email: $email, profileImage: $profileImage){
-            profileImage
-        }
-    }
-`;
-
-export const SIGNIN_USER = gql`
-    mutation($email: String!, $password: String!){
-        signinUser(email: $email, password: $password){ token }
-    }
-`;
-
-
-export const CHANGE_EMAIL = gql`
-    mutation($currentEmail: String!, $newEmail: String!){
-        changeEmail(currentEmail: $currentEmail, newEmail: $newEmail){
-            email
-        }
-    }
-`;
-
-export const CHANGE_PASSWORD = gql`
-    mutation($email: String!, $password: String!){
-        changePassword(email: $email, password: $password){
-            email
-        }
-    }
-`;
-
-export const RESET_PASSWORD = gql`
-    mutation($email: String!){
-        passwordReset(email: $email){
-            email
-        }
-    }
-`;
-
-export const GET_USER_PROFILE = gql`
-    query {
-        getUserProfile {
-            bio
-            profileImage
-        }
-    }
-`;
-
-export const GET_ALL_USERS = gql`
-    query {
-        getAllUsers {
+        blogLike {
+          id
+          user {
+            id
+            slug
             firstName
-            lastName
-            bio
-            profileImage
-            userName
+          }
         }
+        blogComment {
+          id
+          user {
+            id
+            slug
+            firstName
+          }
+        }
+      }
     }
+    popularOnPc {
+
+       blogs {
+        id
+        title
+        content
+        timeStamp
+        coverImage
+        slug
+        user {
+          id
+          firstName
+          lastName
+          slug
+          middleName
+          userDetail {
+            id
+            image
+          }
+        }
+
+        blogLike {
+          id
+          user {
+            id
+            slug
+            firstName
+          }
+        }
+
+        blogComment {
+          id
+          user {
+            id
+            slug
+            firstName
+          }
+        }
+      }
+
+      users {
+        id
+        slug
+        firstName
+        middleName
+        lastName
+        userDetail {
+          id
+          image
+          country
+        }
+
+      }
+    }
+  }
+}
 `;
 
-export const PROFILE_PAGE = gql`
-    query($userName: String!) {
-        profilePage(userName: $userName) {
-            firstName
-            lastName
-            bio
-            profileImage
+export const DO_SEARCH = gql`
+query ($keyword: String,$country: String, $industry: String) {
+  doSearch(keyword: $keyword, country: $country, industry: $industry) {
+     blogs {
+        id
+        title
+        content
+        timeStamp
+        coverImage
+        slug
+        user {
+          firstName
+          lastName
+          slug
+          middleName
+          id
+          userDetail {
+            id
+            image
+          }
         }
-    }
+        blogLike {
+          id
+          user {
+            id
+            slug
+            firstName
+          }
+        }
+        blogComment {
+          id
+          user {
+            id
+            slug
+            firstName
+          }
+        }
+      }
+   users {
+        id
+        slug
+        firstName
+        middleName
+        lastName
+        userDetail {
+          id
+          image
+          country
+        }
+      }
+  }
+}
 `;
+
+export const GET_BLOG = gql`
+query ($blogSlug: String!, $userSlug: String!) {
+  getBlog(blogSlug: $blogSlug, userSlug: $userSlug) {
+    id
+    slug
+    title
+    content
+    coverImage
+    timeStamp
+  	user {
+      id
+      slug
+      firstName
+      middleName
+      lastName
+      userDetail {
+        id
+        image
+      }
+    }
+
+    blogLike {
+      id
+      userId
+      user {
+        firstName
+        lastName
+        slug
+        id
+      }
+    }
+
+    blogComment {
+      id
+      timeStamp
+      comment
+      userId
+      user {
+        id
+        slug
+        firstName
+        lastName
+        middleName
+        userDetail {
+          id
+          image
+        }
+      }
+    }
+
+  }
+}
+`;
+
+export const GET_USER = gql`
+query ($userSlug: String!) {
+  getUser(userSlug: $userSlug) {
+    id
+    slug
+    firstName
+    middleName
+    lastName
+    userDetail {
+      id
+      coverImage
+      coverImageX
+      coverImagrY
+      image
+      address
+      bio
+    }
+    userEducation {
+      id
+      degree
+      address
+      startTime
+      endTime
+    }
+
+    userWorkExperience {
+      id
+      title
+      summary
+      remarks
+      company
+      startTime
+      endTime
+    }
+    userSkill {
+      id
+      skill
+    }
+  }
+}`;

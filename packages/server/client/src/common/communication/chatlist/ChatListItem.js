@@ -28,7 +28,7 @@ export default ({ clo, idx }) => {
       <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
         <div style={{ display: 'flex', position: 'relative' }}>
           {isUser
-            ? <div className="profile-icon"><RoundPicture imgUrl={clo.user.userDetails && clo.user.userDetails.image ? `${ENDPOINT}/user/${10000000 + parseInt(clo.user.user.id, 10)}/profile/${clo.user.userDetails.image}` : '/assets/icons/64w/uploadicon64.png'} /></div>
+            ? <div className="profile-icon"><RoundPicture imgUrl={clo.user.userDetails && clo.user.userDetails.image ? `${ENDPOINT}/assets/user/${10000000 + parseInt(clo.user.user.id, 10)}/profile/${clo.user.userDetails.image}` : '/assets/icons/64w/uploadicon64.png'} /></div>
             : <div className="class-icon"><Icon icon="application" iconSize={40} /></div>
           }
           {isUser && clo.user.user.activeStatus && <div className="green-dot" />}

@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import * as actions from '../actions';
 import HomePage from './home/landing-page';
 import { Login, Registration } from './auth';
-import DashBoard from './dashboard/Home';
+import DashBoard from './dashboard';
 import ClassManager from './class';
 import Forget from './auth/forgot-password';
 import Reset from './auth/change-password';
@@ -31,9 +31,9 @@ class MainScreen extends React.Component {
   render() {
     const { user, popNotification, updateNav } = this.props;
     return (
-      // <Switch>
-      //   <div className="home-screen">
-      //     {popNotification.active && <NotifyBar onClose={() => updateNav({ schema: 'popNotification', data: { message: '', active: false, intent: '' } })} message={popNotification.message} intent={popNotification.intent} />}
+      <Switch>
+        <div className="home-screen">
+          {popNotification.active && <NotifyBar onClose={() => updateNav({ schema: 'popNotification', data: { message: '', active: false, intent: '' } })} message={popNotification.message} intent={popNotification.intent} />}
           <Switch>
             <Route exact path="/" component={HomePage} />
             <Route exact path="/test" component={SfuTest} />
@@ -63,9 +63,9 @@ class MainScreen extends React.Component {
             <Route path="/dashboard/:id" component={DashBoard} />
             <Redirect to="/error" />
           </Switch>
-          // {user && <Communication />}
-        // </div>
-      // </Switch>
+          {user && <Communication />}
+        </div>
+      </Switch>
     );
   }
 }

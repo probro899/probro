@@ -15,8 +15,8 @@ class PopularCandidate extends React.Component {
 
   checkPortrait = () => {
     const { candidate } = this.props;
-    const { user, userDetail } = candidate;
-    const imgUrl = userDetail.image ? `${ENDPOINT}/user/${10000000 + parseInt(user.id, 10)}/profile/${userDetail.image}` : '/assets/icons/512h/uploadicon512.png';
+    const { id, userDetail } = candidate;
+    const imgUrl = userDetail.image ? `${ENDPOINT}/user/${10000000 + parseInt(id, 10)}/profile/${userDetail.image}` : '/assets/icons/512h/uploadicon512.png';
     const img = new Image();
     img.onload = () => {
       if (img.height > img.width) {
@@ -30,9 +30,9 @@ class PopularCandidate extends React.Component {
 
   render() {
     const { candidate } = this.props;
-    const { user, userDetail } = candidate;
+    const { id, firstName, lastName, slug, userDetail } = candidate;
     const { portrait } = this.state;
-    const imgUrl = userDetail.image ? `${ENDPOINT}/user/${10000000 + parseInt(user.id, 10)}/profile/${userDetail.image}` : '/assets/icons/512h/uploadicon512.png';
+    const imgUrl = userDetail.image ? `${ENDPOINT}/assets/user/${10000000 + parseInt(id, 10)}/profile/${userDetail.image}` : '/assets/icons/512h/uploadicon512.png';
     return (
       <div className="popular">
         <div className="popularImage">
@@ -43,8 +43,8 @@ class PopularCandidate extends React.Component {
           />
         </div>
         <div className="popularDesc">
-          <Link to={`user/${user.slug}`} className="popularName">
-            {getName(user)}
+          <Link to={`user/${slug}`} className="popularName">
+            {`${firstName} ${lastName}`}
           </Link>
           <p className="popularExpertize">
             { candidate.expertize }

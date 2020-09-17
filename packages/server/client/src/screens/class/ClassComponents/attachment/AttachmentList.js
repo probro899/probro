@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React from 'react';
 import moment from 'moment';
 import { Link } from 'react-router-dom';
@@ -5,8 +6,8 @@ import { Icon } from '@blueprintjs/core';
 import { ENDPOINT } from '../../../../config';
 
 const SingleAttachment = ({ obj, user, getName, deleteAttachment }) => {
-  const name = getName(obj.userId);
-  const link = `${ENDPOINT}/user/${10000000 + parseInt(obj.userId, 10)}/board/${obj.url}`;
+  // const name = getName(obj.userId);
+  const link = `${ENDPOINT}/assets/user/${10000000 + parseInt(obj.userId, 10)}/board/${obj.url}`;
   return (
     <li>
       <div className="file-type">
@@ -28,7 +29,7 @@ const SingleAttachment = ({ obj, user, getName, deleteAttachment }) => {
         <div>
           <span className="date">{moment(obj.timeStamp).format('DD-MM-YYYY')}</span>
           {' - '}
-          <Link to={`/user/${user.slug}`}>{name}</Link>
+          <Link to={`/user/${user.slug}`}>{user.firstName}</Link>
         </div>
       </div>
     </li>
@@ -36,12 +37,13 @@ const SingleAttachment = ({ obj, user, getName, deleteAttachment }) => {
 };
 
 export default ({ attachments, Users, getName, deleteAttachment }) => {
+  // console.log('attachment data', attachments);
   return (
     <div className="attach-container">
       {attachments.length !== 0 && <div className="attach-head">Attachments</div>}
       <div className="attach-list">
         <ul>
-          {attachments.map(obj => <SingleAttachment user={Users.byId[obj.userId]} getName={getName} deleteAttachment={deleteAttachment} obj={obj} key={obj.id} />)}
+          {attachments.map(obj => <SingleAttachment user={obj.user.user} getName={getName} deleteAttachment={deleteAttachment} obj={obj} key={obj.id} />)}
         </ul>
       </div>
     </div>

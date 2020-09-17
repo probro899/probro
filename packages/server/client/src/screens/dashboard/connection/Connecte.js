@@ -6,13 +6,11 @@ import { getName } from '../../../common/utility-functions';
 import { RoundPicture } from '../../../components';
 import { ENDPOINT } from '../../../config';
 
-// const icon = require('../../../assets/icons/64w/uploadicon64.png');
-
 class Connecte extends React.Component {
   state = { loading: false };
 
   getImage = (userDetail, user) => {
-    const imgUrl = userDetail && userDetail.image ? `${ENDPOINT}/user/${10000000 + parseInt(userDetail.userId, 10)}/profile/${userDetail.image}` : '/assets/icons/64w/uploadicon64.png';
+    const imgUrl = userDetail && userDetail.image ? `${ENDPOINT}/assets/user/${10000000 + parseInt(userDetail.userId, 10)}/profile/${userDetail.image}` : '/assets/icons/64w/uploadicon64.png';
     return (
       <div className="img-con">
         <RoundPicture imgUrl={imgUrl} />
@@ -22,36 +20,36 @@ class Connecte extends React.Component {
   }
 
   sendMessage = () => {
-    const { updateWebRtc, id, database, account, connection } = this.props;
+    const { updateWebRtc, id, user } = this.props;
     updateWebRtc('showCommunication', id);
     updateWebRtc('peerType', 'user');
     updateWebRtc('communicationContainer', 'history');
-    updateWebRtc('connectionId', connection.id);
-    const user = connection.userId === account.user.id ? database.User.byId[connection.mId] : database.User.byId[connection.userId];
-    updateWebRtc('chatHistory', { type: 'user', user: { user }, connectionId: connection.id });
+    updateWebRtc('connectionId', id);
+    // connection.userId === account.user.id ? database.User.byId[connection.mId] : database.User.byId[connection.userId];
+    updateWebRtc('chatHistory', { type: 'user', user: { user }, connectionId: id });
   };
 
   deleteRequest = async () => {
-    const { id, apis, deleteDatabaseSchema, connection } = this.props;
+    const { id, apis, deleteDatabaseSchema } = this.props;
     this.setState({ loading: true });
     await apis.deleteUserConnection({ id });
-    deleteDatabaseSchema('UserConnection', { id: connection.id });
+    deleteDatabaseSchema('UserConnection', { id });
     this.setState({ loading: false });
   };
 
   acceptRequest = async () => {
-    const { apis, updateDatabaseSchema, connection } = this.props;
+    const { apis, updateDatabaseSchema, id, userId, mId } = this.props;
     this.setState({ loading: true });
-    await apis.updateUserConnection([{ status: 'connected', mId: connection.mId, userId: connection.userId }, { id: connection.id }]);
-    updateDatabaseSchema('UserConnection', { id: connection.id, status: 'connected' });
+    await apis.updateUserConnection([{ status: 'connected', mId, userId }, { id }]);
+    updateDatabaseSchema('UserConnection', { id, status: 'connected' });
     this.setState({ loading: false });
   };
 
   getConfigButtons = () => {
-    const { account, connection } = this.props;
+    const { account, userId, status } = this.props;
     const { loading } = this.state;
-    if (account.user.id === connection.userId) {
-      if (connection.status === 'pending') {
+    if (account.user.id === userId) {
+      if (status === 'pending') {
         return (
           <div className="con-buttons">
             <Button text="Requested" icon="follower" onClick={this.deleteRequest} />
@@ -59,7 +57,7 @@ class Connecte extends React.Component {
         );
       }
     }
-    if (connection.status === 'pending') {
+    if (status === 'pending') {
       return (
         <div className="con-buttons">
           <Button
@@ -90,9 +88,9 @@ class Connecte extends React.Component {
   }
 
   render() {
-    const { id, database } = this.props;
-    const user = database.User.byId[id];
-    const userDetail = Object.values(database.UserDetail.byId).find(obj => id === obj.userId);
+    const { user } = this.props;
+    // const user = database.User.byId[id];
+    const { userDetail } = user;
     return (
       <div className="i-result">
         {
@@ -102,8 +100,8 @@ class Connecte extends React.Component {
           <p className="name">
             {
             }
-            <Link to={`/user/${user.slug}/`}>
-              {getName(user)}
+            <Link to={`/user/${user.user.slug}/`}>
+              {getName(user.user)}
             </Link>
           </p>
           <p className="location">{userDetail && userDetail.address ? userDetail.address : '---'}</p>
@@ -119,14 +117,16 @@ class Connecte extends React.Component {
 }
 
 Connecte.propTypes = {
-  database: PropTypes.objectOf(PropTypes.any).isRequired,
   id: PropTypes.number.isRequired,
   account: PropTypes.objectOf(PropTypes.any).isRequired,
-  connection: PropTypes.objectOf(PropTypes.any).isRequired,
   updateWebRtc: PropTypes.func.isRequired,
   apis: PropTypes.objectOf(PropTypes.any).isRequired,
   deleteDatabaseSchema: PropTypes.func.isRequired,
   updateDatabaseSchema: PropTypes.func.isRequired,
+  user: PropTypes.objectOf(PropTypes.any).isRequired,
+  userId: PropTypes.number.isRequired,
+  mId: PropTypes.number.isRequired,
+  status: PropTypes.string.isRequired,
 };
 
 

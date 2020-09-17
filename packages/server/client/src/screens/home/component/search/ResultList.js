@@ -4,14 +4,18 @@ import PropTypes from 'prop-types';
 import { MdMyLocation } from 'react-icons/md';
 import { ENDPOINT } from '../../../../config/index';
 import { RoundPicture } from '../../../../components';
-import getName from '../../../../common/utility-functions/getName';
-
-// const icon = require('../../../../assets/icons/64w/uploadicon64.png');
 
 const User = ({ item }) => {
-  const { user } = item;
+  // console.log('item', item);
+  const { id, slug, firstName, lastName } = item;
   const { userDetail } = item;
-  const profilePic = userDetail.image ? `${ENDPOINT}/user/${10000000 + parseInt(user.id, 10)}/profile/${userDetail.image}` : '/assets/icons/64w/uploadicon64.png';
+  // console.log('userDetail', userDetail);
+  let profilePic = '/assets/icons/64w/uploadicon64.png';
+  let country = '---';
+  if (userDetail) {
+    profilePic = userDetail.image ? `${ENDPOINT}/assets/user/${10000000 + parseInt(id, 10)}/profile/${userDetail.image}` : '/assets/icons/64w/uploadicon64.png';
+    country = userDetail.country ? userDetail.country : '---';
+  }
   return (
     <div className="i-result">
       <div className="img-con">
@@ -19,13 +23,13 @@ const User = ({ item }) => {
       </div>
       <div className="desc-con">
         <p className="name">
-          <Link to={`/user/${user.slug}/`}>
-            {getName(user)}
+          <Link to={`/user/${slug}/`}>
+            {`${firstName} ${lastName}`}
           </Link>
         </p>
         <div className="location">
           <div><MdMyLocation /></div>
-          <div className="country">{userDetail.country ? userDetail.country : '---'}</div>
+          <div className="country">{country}</div>
         </div>
       </div>
     </div>

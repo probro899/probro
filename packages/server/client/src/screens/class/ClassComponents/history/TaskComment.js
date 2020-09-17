@@ -28,13 +28,17 @@ class TaskComment extends React.Component {
   }
 
   saveComment = async () => {
-    const { editCommentId, comment } = this.state;
-    const { apis, updateDatabaseSchema } = this.props;
-    await apis.updateBoardColumnCardComment([{ comment }, { id: editCommentId }]);
-    updateDatabaseSchema('BoardColumnCardComment', { comment, id: editCommentId });
-    this.setState({
-      editCommentId: null,
-    });
+    try {
+      const { editCommentId, comment } = this.state;
+      const { apis, updateDatabaseSchema, boardId } = this.props;
+      await apis.updateBoardColumnCardComment([{ comment, broadCastId: `Board-${boardId}` }, { id: editCommentId }]);
+      updateDatabaseSchema('BoardColumnCardComment', { comment, id: editCommentId });
+      this.setState({
+        editCommentId: null,
+      });
+    } catch (e) {
+      console.error('Comment update error', e);
+    }
   }
 
   replyComment = (com) => {
@@ -56,22 +60,27 @@ class TaskComment extends React.Component {
   }
 
   deleteComment = async (type) => {
-    const { apis, boardId, deleteDatabaseSchema } = this.props;
-    const { activeComment } = this.state;
-    if (type === 'confirm') {
-      await apis.deleteBoardColumnCardComment({ id: activeComment.id, cardId: activeComment.boardColumnCardId, broadCastId: `Board-${boardId}` });
-      deleteDatabaseSchema('BoardColumnCardComment', { id: activeComment.id });
+    try {
+      const { apis, boardId, deleteDatabaseSchema } = this.props;
+      const { activeComment } = this.state;
+      if (type === 'confirm') {
+        await apis.deleteBoardColumnCardComment({ id: activeComment.id, cardId: activeComment.boardColumnCardId, broadCastId: `Board-${boardId}` });
+        deleteDatabaseSchema('BoardColumnCardComment', { id: activeComment.id });
+      }
+      this.setState({
+        deletePopover: false,
+        activeComment: {},
+      });
+    } catch (e) {
+      console.error('delete Comment error', e);
     }
-    this.setState({
-      deletePopover: false,
-      activeComment: {},
-    });
   }
 
   getCommentUser = (com) => {
-    const { userList, userDetailList } = this.props;
-    const user = Object.values(userList.byId).find(obj => obj.id === com.userId);
-    const userDetail = Object.values(userDetailList.byId).find(obj => obj.userId === com.userId);
+    // const { userList, userDetailList } = this.props;
+    // const user = Object.values(userList.byId).find(obj => obj.id === com.userId);
+    // const userDetail = Object.values(userDetailList.byId).find(obj => obj.userId === com.userId);
+    const { user, userDetail } = com.user;
     return { user, userDetail };
   }
 
@@ -81,7 +90,7 @@ class TaskComment extends React.Component {
     if (com.message) return <TaskActivity color={color} userList={userList} userDetailList={userDetailList} columns={columns} key={`activity${com.id}`} activity={com} />;
     const userInfo = this.getCommentUser(com);
     const name = userInfo.user.middleName ? `${userInfo.user.firstName} ${userInfo.user.middleName} ${userInfo.user.lastName}` : `${userInfo.user.firstName} ${userInfo.user.lastName}`;
-    const imgUrl = userInfo.userDetail && userInfo.userDetail.image ? `${ENDPOINT}/user/${10000000 + parseInt(userInfo.user.id, 10)}/profile/${userInfo.userDetail.image}` : '/assets/icons/64w/uploadicon64.png';
+    const imgUrl = userInfo.userDetail && userInfo.userDetail.image ? `${ENDPOINT}/assets/user/${10000000 + parseInt(userInfo.user.id, 10)}/profile/${userInfo.userDetail.image}` : '/assets/icons/64w/uploadicon64.png';
     return (
       <div className="s-comment" style={{ backgroundColor: color }} key={com.id}>
         <div className="img-con">
@@ -144,6 +153,7 @@ class TaskComment extends React.Component {
   render() {
     const { comments } = this.props;
     const { deletePopover } = this.state;
+    // console.log('coments in task comment component', comments);
     return (
       <div className="comments">
         <DeletePopOver isOpen={deletePopover} name="Comment" action={this.deleteComment} />

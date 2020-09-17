@@ -1,7 +1,7 @@
 import lodash from 'lodash';
 import db from '../../../db';
 import findUserDetails from '../findUserDetails';
-import getPopular from './getPopular';
+import getPopular from '../getPopular';
 import flat from '../../flat';
 import findBlogDetails from '../findBlogDetails';
 
@@ -38,5 +38,6 @@ export default async (userId) => {
   });
   // console.log('Main Response', mainRes);
   const finalBlogsRes = mainRes.blogs.length > 0 ? mainRes.blogs : popularRes.blogs;
+  console.log('FinalBlog res', finalBlogsRes);
   return { basedOnHistory: { blogs: finalBlogsRes }, popularOnPc: { blogs: popularRes.blogs, users: popularRes.users } };
 };

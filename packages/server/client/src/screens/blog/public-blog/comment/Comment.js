@@ -5,8 +5,6 @@ import { Button, TextArea } from '@blueprintjs/core';
 import { RoundPicture } from '../../../../components';
 import { ENDPOINT } from '../../../../config';
 
-// const file = require('../../../../assets/icons/64w/uploadicon64.png');
-
 class Comment extends React.Component {
   constructor(props) {
     super(props);
@@ -35,8 +33,9 @@ class Comment extends React.Component {
 
   render() {
     const { comment, user, account, saveComment, replyComment, deleteComment } = this.props;
+    // console.log('data in comment section', comment, user);
     const { editComment, commentText } = this.state;
-    const imgUrl = user.userDetail && user.userDetail.image ? `${ENDPOINT}/user/${10000000 + parseInt(user.user.id, 10)}/profile/${user.userDetail.image}` : '/assets/icons/64w/uploadicon64.png';
+    const imgUrl = user.userDetail && user.userDetail.image ? `${ENDPOINT}/assets/user/${10000000 + parseInt(user.id, 10)}/profile/${user.userDetail.image}` : '/assets/icons/64w/uploadicon64.png';
     return (
       <div className="i-response">
         <div className="pc-profile-icon">
@@ -45,19 +44,19 @@ class Comment extends React.Component {
         <div className="comment-content">
           <div style={{ fontSize: 16 }}>
             {
-              user.user.middleName ? (
-                <Link to={`/user/${user.user.slug}/`} key={`user-${user.user.id}`}>
-                  {`${user.user.firstName} ${user.user.middleName} ${user.user.lastName} `}
+              user.middleName ? (
+                <Link to={`/user/${user.slug}/`} key={`user-${user.id}`}>
+                  {`${user.firstName} ${user.middleName} ${user.lastName} `}
                 </Link>
               )
                 : (
-                  <Link to={`/user/${user.user.slug}/`} key={`user-${user.user.id}`}>
-                    {`${user.user.firstName} ${user.user.lastName} `}
+                  <Link to={`/user/${user.slug}/`} key={`user-${user.id}`}>
+                    {`${user.firstName} ${user.lastName} `}
                   </Link>
                 )
             }
             <span style={{ opacity: 0.8, fontSize: 10 }}>
-              {new Date(comment.timeStamp).toDateString()}
+              {new Date(parseInt(comment.timeStamp, 10)).toDateString()}
             </span>
           </div>
           <div className="com-desc">

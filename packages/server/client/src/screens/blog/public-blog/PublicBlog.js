@@ -12,6 +12,8 @@ import { Spinner, SocialShare } from '../../../common';
 import { RoundPicture } from '../../../components';
 import BlogCoverImage from './BlogCoverImage';
 import * as actions from '../../../actions';
+import clientQuery from '../../../clientConfig';
+import { GET_BLOG } from '../../../queries';
 
 // const file = require('../../../assets/icons/64w/uploadicon64.png');
 
@@ -32,15 +34,16 @@ class PublicBlog extends React.Component {
         apis = await client.scope('Mentee');
         uid = account.user.id;
       }
-      const res = await axios.get(`${ENDPOINT}/web/get-blog?blogId=${match.params.blogSlug}&userId=${match.params.userSlug}&uid=${uid}`);
+      const res = await clientQuery.query({ query: GET_BLOG, variables: { blogSlug: match.params.blogSlug, userSlug: match.params.userSlug }, fetchPolicy: "network-only" });
+      console.log('data arrived in Public blogs', res.data.getBlog);
       if (res) {
         this.setState({
-          data: res.data,
+          data: res.data.getBlog,
           apis,
-          blogId: res.data.blog.id,
+          blogId: res.data.getBlog.id,
           loading: false,
         });
-        updateNav({ schema: 'page', data: { title: res.data.blog.title } });
+        updateNav({ schema: 'page', data: { title: res.data.getBlog.title } });
       }
     } catch (e) {
       console.log('Error', e);
@@ -74,9 +77,11 @@ class PublicBlog extends React.Component {
       return <Spinner />;
     }
     const { account } = this.props;
-    const user = data.userDetails.find(obj => obj.user.id === data.blog.userId);
-    const imgUrl = user.userDetail && user.userDetail.image ? `${ENDPOINT}/user/${10000000 + parseInt(user.user.id, 10)}/profile/${user.userDetail.image}` : '/assets/icons/64w/uploadicon64.png';
-    const { userDetails } = data;
+    // const user = data.userDetails.find(obj => obj.user.id === data.blog.userId);
+    const { user } = data;
+    // console.log('data in public profile', user);
+    const imgUrl = user.userDetail && user.userDetail.image ? `${ENDPOINT}/assets/user/${10000000 + parseInt(user.id, 10)}/profile/${user.userDetail.image}` : '/assets/icons/64w/uploadicon64.png';
+    const { userDetails } = user;
     return (
       <>
         <Navbar />
@@ -84,7 +89,7 @@ class PublicBlog extends React.Component {
           <div className="public-blog-title">
             <p>
               {
-                data.blog.title
+                data.title
               }
             </p>
             <div className="author-user">
@@ -93,11 +98,11 @@ class PublicBlog extends React.Component {
                   <RoundPicture imgUrl={imgUrl} />
                 </div>
                 <div className="author-detail">
-                  <Link key={user.user.id} to={`/user/${user.user.slug}`}>
-                    {`${user.user.firstName} ${user.user.middleName ? `${user.user.middleName} ` : ''}${user.user.lastName}`}
+                  <Link key={user.id} to={`/user/${user.slug}`}>
+                    {`${user.firstName} ${user.middleName ? `${user.middleName} ` : ''}${user.lastName}`}
                   </Link>
                   <span>
-                    {new Date(data.blog.timeStamp).toDateString()}
+                    {new Date(parseInt(data.timeStamp, 10)).toDateString()}
                   </span>
                 </div>
               </div>
@@ -109,7 +114,7 @@ class PublicBlog extends React.Component {
             <div
               id="blogContent"
               // eslint-disable-next-line react/no-danger
-              dangerouslySetInnerHTML={this.createMarkup(data.blog.content)}
+              dangerouslySetInnerHTML={this.createMarkup(data.content)}
             />
           </div>
           <CommentContainer

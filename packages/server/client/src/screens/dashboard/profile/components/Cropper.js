@@ -13,7 +13,7 @@ class Cropper extends React.Component {
       minScale: 1.0,
       canvas: {},
       zoomValue: 0,
-      imageUrl: `${ENDPOINT}/user/${10000000 + parseInt(account.user.id, 10)}/profile/${userDetail.coverImage}`,
+      imageUrl: `${ENDPOINT}/assets/user/${10000000 + parseInt(account.user.id, 10)}/profile/${userDetail.coverImage}`,
     };
   }
 

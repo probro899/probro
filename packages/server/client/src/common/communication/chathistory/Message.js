@@ -7,23 +7,22 @@ import { Spinner, Icon } from '@blueprintjs/core';
 import { ENDPOINT } from '../../../config';
 import sendMessage from '../helper-functions/message/index';
 import { RoundPicture } from '../../../components';
-import { matchUrl } from '../../../common/utility-functions';
+import { matchUrl } from '../../utility-functions';
 
-// const profileIcon = require('../../../assets/icons/64w/uploadicon64.png');
-
-const findSeenUser = (props, seenStatus) => {
-  const { database, account } = props;
-  const userList = _.uniq(seenStatus.filter(obj => obj.userId !== account.user.id).map(obj => obj.userId));
+const findSeenUser = (props, seenStatus, own) => {
+  const { database, account, webRtc } = props;
+  // console.log('seen status', seenStatus);
+  const userList = seenStatus.filter(obj => obj.userId !== account.user.id);
   const userNameList = [];
-  userList.forEach((id) => {
-    const userDetails = Object.values(database.UserDetail.byId).find(ud => ud.userId === id);
-    userNameList.push(<div className="seen-user"><RoundPicture imgUrl={userDetails && userDetails.image ? `${ENDPOINT}/user/${10000000 + parseInt(userDetails.userId, 10)}/profile/${userDetails.image}` : '/assets/icons/64w/uploadicon64.png'} /></div>);
+  userList.forEach((us) => {
+    const { userDetails, user } = webRtc.chatHistory.user;
+    userNameList.push(<div className="seen-user"><RoundPicture imgUrl={userDetails && userDetails.image ? `${ENDPOINT}/assets/user/${10000000 + parseInt(user.id, 10)}/profile/${userDetails.image}` : '/assets/icons/64w/uploadicon64.png'} /></div>);
   });
   return userNameList;
 };
 
 const Message = ({ own, obj, props, type }) => {
-
+  // console.log('obj', obj);
   const getMessageText = () => {
     return <p dangerouslySetInnerHTML={{ __html: matchUrl(obj.message) }} style={{ maxWidth: '100%', wordBreak: 'break-word' }} />;
   };
@@ -36,7 +35,7 @@ const Message = ({ own, obj, props, type }) => {
     >
       {(obj.showImage && !own.isOwn) && (
       <div className="img-wrap">
-        <RoundPicture imgUrl={(own.user.userDetails && own.user.userDetails.image) ? `${ENDPOINT}/user/${10000000 + parseInt(own.user.id, 10)}/profile/${own.user.userDetails.image}` : '/assets/icons/64w/uploadicon64.png'} />
+        <RoundPicture imgUrl={(own.user.userDetails && own.user.userDetails.image) ? `${ENDPOINT}/assets/user/${10000000 + parseInt(own.user.id, 10)}/profile/${own.user.userDetails.image}` : '/assets/icons/64w/uploadicon64.png'} />
       </div>
       )
       }
@@ -64,7 +63,7 @@ const Message = ({ own, obj, props, type }) => {
           { obj.status === 'loading' && <Spinner size="15" intent="primary" /> }
           {obj.status === 'error' && <Icon icon="repeat" iconSize="15" style={{ cursor: 'pointer' }} onClick={() => sendMessage({ ...props, message: obj.message, resend: obj.id })} />}
           <div style={{ marginTop: 2, display: 'flex', width: '100%' }}>
-            {findSeenUser(props, obj.seenStatus)}
+            {findSeenUser(props, obj.seenStatus, own)}
           </div>
         </div>
       </div>

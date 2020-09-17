@@ -21,8 +21,9 @@ const renderRow = (keys, values) => {
 };
 
 export default (reportData, session) => {
-  const filePath = path.join(__dirname, '..', 'public', 'user', `${10000000 + parseInt(session.values.user.id, 10)}`, 'report');
+  const filePath = path.join(process.cwd(), 'build', 'public', 'assets', 'user', `${10000000 + parseInt(session.values.user.id, 10)}`, 'report');
   const { allImages, boardDetail, tableData } = reportData;
+  // console.log('data in htmlStorngFormatter', reportData, filePath);
   const headers = { userName: 'Name',
     noOfCreateCard: 'No Of Create Cards',
     noOfMoveCard: 'No Of Move Cards',

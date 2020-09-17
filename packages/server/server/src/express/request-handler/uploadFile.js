@@ -10,24 +10,24 @@ const storage = multer.diskStorage({
   destination: async (request, file, cb) => {
     const { token, content } = JSON.parse(request.body.data);
     const user = validateToken(token);
-    if (!fs.existsSync(path.join(__dirname, '..', '..', 'public', 'user', `${10000000 + parseInt(user.id, 10)}`))) {
+    if (!fs.existsSync(path.join(process.cwd(), 'build', 'public', 'assets', 'user', `${10000000 + parseInt(user.id, 10)}`))) {
       // console.log('iniside making userid directory');
-      fs.mkdirSync(path.join(__dirname, '..', '..', 'public', 'user', `${10000000 + parseInt(user.id, 10)}`));
+      fs.mkdirSync(path.join(process.cwd(), 'build', 'public', 'assets', 'user', `${10000000 + parseInt(user.id, 10)}`));
     }
-    if (!fs.existsSync(path.join(__dirname, '..', '..', 'public', 'user', `${10000000 + parseInt(user.id, 10)}`, content))) {
+    if (!fs.existsSync(path.join(process.cwd(), 'build', 'public', 'assets', 'user', `${10000000 + parseInt(user.id, 10)}`, content))) {
       // console.log('iniside making content directory');
-      fs.mkdirSync(path.join(__dirname, '..', '..', 'public', 'user', `${10000000 + parseInt(user.id, 10)}`, content));
+      fs.mkdirSync(path.join(process.cwd(), 'build', 'public', 'assets', 'user', `${10000000 + parseInt(user.id, 10)}`, content));
     }
     // console.log('close to return');
     // calculating per user space exist or not
-    getFolderSize(path.join(__dirname, '..', '..', 'public', 'user', `${10000000 + parseInt(user.id, 10)}`), (err, size) => {
+    getFolderSize(path.join(process.cwd(), 'build', 'public', 'assets', 'user', `${10000000 + parseInt(user.id, 10)}`), (err, size) => {
       if (err) { throw err; }
       // console.log((size / 1000 / 1000).toFixed(2), 'mb');
       if ((size / 1000 / 1000 / 1000).toFixed(2) > 5) {
         return cb({ Error: 'No file slected', message: 'Your total upload file limit exit.' });
       }
     });
-    return cb(null, path.join(__dirname, '..', '..', 'public', 'user', `${10000000 + parseInt(user.id, 10)}`, content));
+    return cb(null, path.join(process.cwd(), 'build', 'public', 'assets', 'user', `${10000000 + parseInt(user.id, 10)}`, content));
   },
   filename: (request, file, cb) => {
     const { fileType } = JSON.parse(request.body.data);

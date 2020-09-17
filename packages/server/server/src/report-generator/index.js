@@ -1,17 +1,19 @@
-import fs from 'fs';
 import path from 'path';
 import pdf from 'html-pdf';
 import htmlStringFormater from './htmlStringFormater';
 
 export default async (reportData, session) => {
-  // console.log('main pdf generator called', reportData, session.values.user, __dirname);
-
+  const phantomPath = path.join(process.cwd(), '..', '..', 'node_modules', 'phantomjs-prebuilt', 'bin', 'phantomjs');
+  const scriptPath = path.join(process.cwd(), '..', '..', 'node_modules', 'html-pdf', 'lib', 'scripts', 'pdf_a4_portrait.js');
   try {
     const options = {
       format: 'Letter',
+      phantomPath: `${phantomPath}`,
+      script: `${scriptPath}`,
     };
+
     const reportName = `${reportData.boardDetail.name}-${Date.now()}.pdf`;
-    const filePath = path.join(__dirname, '..', 'public', 'user', `${10000000 + parseInt(session.values.user.id, 10)}`, 'report', reportName);
+    const filePath = path.join(process.cwd(), 'build', 'public', 'assets', 'user', `${10000000 + parseInt(session.values.user.id, 10)}`, 'report', reportName);
     let finalPdfRes = null;
 
     const result = await new Promise((resolve, reject) => {
@@ -22,12 +24,10 @@ export default async (reportData, session) => {
           return;
         }
         if (res) {
-          console.log('response of pdf', res);
           resolve(reportName);
         }
       });
     });
-    console.log('final pdf res', result);
     return reportName;
   } catch (e) {
     console.log('Error in generating pdf', e);

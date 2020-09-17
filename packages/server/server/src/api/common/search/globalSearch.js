@@ -2,7 +2,7 @@ import lodash from 'lodash';
 import db from '../../../db';
 import findUserDetail from '../findUserDetails';
 import findBlogDetails from '../findBlogDetails';
-import getPopular from './getPopular';
+import getPopular from '../getPopular';
 
 const flat = (arr) => {
   const flatArray = arr.reduce((t, a) => {
@@ -130,7 +130,7 @@ export default async (keyword, country, industry) => {
       allBlogResult = popular.blogs;
     }
     // console.log('final User Result', finalUserList);
-    return { blogs: allBlogResult, users: finalUserList };
+    return { blogs: allBlogResult, users: allUserResult };
   });
   // console.log('search response', res);
   return res;

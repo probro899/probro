@@ -1,14 +1,13 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable no-case-declarations */
 import React from 'react';
 import { ENDPOINT } from '../../../../config';
 import RoundPicture from '../../../../components/RoundPicture';
 
-// const profileIcon = require('../../../../assets/icons/64w/uploadicon64.png');
-
-export default ({ activity, userList, userDetailList, color, columns }) => {
-  const user = userList.byId[activity.userId];
-  const userDetail = Object.values(userDetailList.byId).find(obj => obj.userId === user.id);
-  const imgUrl = userDetail && userDetail.image ? `${ENDPOINT}/user/${10000000 + parseInt(user.id, 10)}/profile/${userDetail.image}` : '/assets/icons/64w/uploadicon64.png';
+export default ({ activity, color, columns }) => {
+  // console.log('activity', activity);
+  const { user, userDetail } = activity.user;
+  const imgUrl = userDetail && userDetail.image ? `${ENDPOINT}/assets/user/${10000000 + parseInt(user.id, 10)}/profile/${userDetail.image}` : '/assets/icons/64w/uploadicon64.png';
   const name = user.middleName ? `${user.firstName} ${user.middleName} ${user.lastName}` : `${user.firstName} ${user.lastName}`;
   switch (activity.message) {
     case 'createCard':

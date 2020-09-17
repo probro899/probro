@@ -15,14 +15,13 @@ class DrawChart extends React.Component {
   drawChart = (timelineValue) => {
     const boardActivityBoardChartCtx = document.getElementById('board-activity-bar-chart');
     const boardActivityLineChartCtx = document.getElementById('board-activity-line-chart');
-    
     const { boardActivities, userList, users } = this.props;
     const individualUserBoadActivities = [];
     userList.forEach((u) => {
       const userBoardActivities = boardActivities.filter(ba => ba.userId === u.tuserId);
       individualUserBoadActivities.push(userBoardActivities);
     });
-    const userNameList = userList.map(u => Object.values(users.byId).find(us => us.id === u.tuserId));
+    const userNameList = userList.map(u => u.user.user);
     const chartData = individualUserBoadActivities.map(ba => ba.length);
     const myBarChart = boardActivityBoardChart(userNameList, chartData, boardActivityBoardChartCtx);
     const myLineChart = boardActivityLineChart(userNameList, individualUserBoadActivities, boardActivityLineChartCtx, boardActivities, timelineValue);

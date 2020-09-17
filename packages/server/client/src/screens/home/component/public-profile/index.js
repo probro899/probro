@@ -15,6 +15,8 @@ import RoundPicture from '../../../../components/RoundPicture';
 import UserPortal from './UserPortal';
 import getName from '../../../../common/utility-functions/getName';
 import Activities from './activities';
+import { GET_USER } from '../../../../queries';
+import clientQuery from '../../../../clientConfig';
 
 // const file = require('../../../../assets/icons/512h/uploadicon512.png');
 // const school = require('../../../../assets/icons/64w/school64.png');
@@ -44,14 +46,14 @@ class PublicProfile extends React.Component {
       if (account.user) {
         apis = await client.scope('Mentee');
       }
-      const res = await axios.get(`${ENDPOINT}/web/get-user?userId=${match.params.userId}`);
-      if (res) {
+      const { data, loading, error } = await clientQuery.query({ query: GET_USER, variables: { userSlug: match.params.userId } });
+      if (data) {
         this.setState({
-          data: res.data,
+          data: data.getUser,
           apis,
           loading: false,
         });
-        updateNav({ schema: 'page', data: { title: getName(res.data.user) } });
+        updateNav({ schema: 'page', data: { title: getName(data.getUser) } });
       }
     } catch (e) {
       console.log('Error', e);
@@ -65,13 +67,13 @@ class PublicProfile extends React.Component {
         loading: true,
       });
       try {
-        const res = await axios.get(`${ENDPOINT}/web/get-user?userId=${nextProps.match.params.userId}`);
-        if (res) {
+        const { data, loading, error } = await clientQuery.query({ query: GET_USER, variables: { userSlug: match.params.userId } });
+        if (data) {
           this.setState({
-            data: res.data,
+            data: data.getUser,
             loading: false,
           });
-          updateNav({ schema: 'page', data: { title: getName(res.data.user) } });
+          updateNav({ schema: 'page', data: { title: getName(data.getUser) } });
         }
       } catch (e) {
         console.log('Error', e);
@@ -92,11 +94,12 @@ class PublicProfile extends React.Component {
     } = this.props;
     const { loading, data, apis } = this.state;
     if (loading) return <Spinner />;
+    // console.log('data', data);
     const userDetails = data.userDetail;
     const { user, userEducation, userWorkExperience } = data;
-    const portals = data.userPortal;
-    const imgUrl = data.userDetail.coverImage ? `${ENDPOINT}/user/${10000000 + parseInt(data.user.id, 10)}/profile/${data.userDetail.coverImage}` : '/assets/graphics/default-cover.jpg';
-    const editCoverUrl = data.userDetail.coverEdit && `${ENDPOINT}/user/${10000000 + parseInt(data.user.id, 10)}/profile/${data.userDetail.coverEdit}`;
+    const portals = data.userPortal || [];
+    const imgUrl = data.userDetail.coverImage ? `${ENDPOINT}/assets/user/${10000000 + parseInt(data.id, 10)}/profile/${data.userDetail.coverImage}` : '/assets/graphics/default-cover.jpg';
+    const editCoverUrl = data.userDetail.coverEdit && `${ENDPOINT}/assets/user/${10000000 + parseInt(data.id, 10)}/profile/${data.userDetail.coverEdit}`;
     return (
       <>
         <Navbar />
@@ -110,11 +113,11 @@ class PublicProfile extends React.Component {
             }
           </div>
           <div className="profilePic">
-            <RoundPicture imgUrl={userDetails.image ? `${ENDPOINT}/user/${10000000 + parseInt(user.id, 10)}/profile/${userDetails.image}` : '/assets/icons/512h/uploadicon512.png'} />
+            <RoundPicture imgUrl={userDetails.image ? `${ENDPOINT}/assets/user/${10000000 + parseInt(data.id, 10)}/profile/${userDetails.image}` : '/assets/icons/512h/uploadicon512.png'} />
           </div>
           <div className="top-details">
             <div className="desc">
-              <span className="name">{getName(user)}</span>
+              <span className="name">{getName({ firstName: data.firstName, middleName: data.middleName, lastName: data.lastName })}</span>
               <br />
               <Icon icon="locate" />
               <span className="country">
@@ -124,7 +127,7 @@ class PublicProfile extends React.Component {
             </div>
             {account.user && (
               <div className="connect-btns">
-                { account.user.id !== user.id
+                { account.user.id !== data.id
                   && (
                     <Connections
                       apis={apis}
@@ -132,7 +135,7 @@ class PublicProfile extends React.Component {
                       addDatabaseSchema={addDatabaseSchema}
                       updateDatabaseSchema={updateDatabaseSchema}
                       database={database}
-                      details={user}
+                      details={data}
                       moreDetails={userDetails}
                       account={account}
                     />

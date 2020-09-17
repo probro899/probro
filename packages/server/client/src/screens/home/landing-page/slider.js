@@ -10,15 +10,8 @@ class Slider extends Component {
   };
 
   componentDidMount() {
-    const { data } = this.props;
+    const data = ['1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg', '6.jpg'];
     this.setState({ data: data.map(obj => `${ENDPOINT}/assets/images/slider/${obj}`) });
-  }
-
-  componentWillReceiveProps(nextProps) {
-    const { data } = this.props;
-    if (data !== nextProps.data) {
-      this.setState({ data: nextProps.data.map(obj => `${ENDPOINT}/assets/images/slider/${obj}`) });
-    }
   }
 
   searchChange = (id, value) => {

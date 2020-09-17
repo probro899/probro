@@ -26,7 +26,7 @@ class AddUser extends React.Component {
     const userId = account.user.id;
     addUserToBoard.map((obj) => {
       if (obj.id === 'user') {
-        obj.options = [{ label: '---', value: '' }, ...connections.map(o => ({ label: getName(users[userId === o.mId ? o.userId : o.mId]), value: userId === o.mId ? o.userId : o.mId }))];
+        obj.options = [{ label: '---', value: '' }, ...connections.map(o => ({ label: getName(o.user.user), value: userId === o.mId ? o.userId : o.mId }))];
       }
       return obj;
     });
@@ -35,7 +35,7 @@ class AddUser extends React.Component {
   addUserToBoardHandler = async (data) => {
     const { apis, boardId, account } = this.props;
     const obj = {
-      userId: data.user,
+      userId: parseInt(data.user, 10),
       joinStatus: true,
       userType: 'normal',
       fuserId: account.user.id,
@@ -44,12 +44,12 @@ class AddUser extends React.Component {
     };
     try {
       const res = await apis.addBoardMember(obj);
-      // console.log(res);
       if (res.status === 200) {
         return { response: 200, message: 'Congratulations! You have added a new user' };
       }
       return { response: 201, error: res.message };
     } catch (e) {
+      console.error(e);
       return { response: 400, error: 'Network Error' };
     }
   };

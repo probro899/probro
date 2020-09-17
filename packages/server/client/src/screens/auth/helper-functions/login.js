@@ -5,6 +5,7 @@ import connect from '../../../socket/connect';
 export default async (args) => {
   try {
     const res = await axios.post(`${ENDPOINT}/auth/login`, args);
+    console.log('login res', res);
     const { data } = res;
     if (res.status === 200 && data.token) {
       connect(data);

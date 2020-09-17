@@ -15,7 +15,7 @@ class Popular extends Component {
         <div className="popularCover">
           {
             data.map(candidate => (
-              <PopularCandidate key={candidate.user.id} candidate={candidate} />
+              <PopularCandidate key={candidate.id} candidate={candidate} />
             ))
           }
         </div>

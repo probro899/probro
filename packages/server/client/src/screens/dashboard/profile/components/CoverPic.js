@@ -92,8 +92,8 @@ class CoverPic extends React.Component {
   render() {
     const { userDetail, account, updateDatabaseSchema, apis } = this.props;
     const { drag } = this.state;
-    const imgUrl = userDetail.coverImage ? `${ENDPOINT}/user/${10000000 + parseInt(account.user.id, 10)}/profile/${userDetail.coverImage}` : '/assets/default-cover.jpg';
-    const editCoverUrl = userDetail.coverEdit && `${ENDPOINT}/user/${10000000 + parseInt(account.user.id, 10)}/profile/${userDetail.coverEdit}`;
+    const imgUrl = userDetail.coverImage ? `${ENDPOINT}/assets/user/${10000000 + parseInt(account.user.id, 10)}/profile/${userDetail.coverImage}` : '/assets/graphics/default-cover.jpg';
+    const editCoverUrl = userDetail.coverEdit && `${ENDPOINT}/assets/user/${10000000 + parseInt(account.user.id, 10)}/profile/${userDetail.coverEdit}`;
     if (!drag) {
       return (
         <div className="cover-pic">

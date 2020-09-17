@@ -4,7 +4,7 @@ import { ENDPOINT } from '../../../config';
 
 
 const BlogCoverImage = ({ blog }) => {
-  const coverImage = blog.blog.coverImage ? `${ENDPOINT}/user/${10000000 + parseInt(blog.blog.userId, 10)}/blog/${blog.blog.coverImage}` : null;
+  const coverImage = blog.coverImage ? `${ENDPOINT}/assets/user/${10000000 + parseInt(blog.user.id, 10)}/blog/${blog.coverImage}` : null;
   return (
     <div className="pc-blog-cover-image">
       {coverImage && <img alt="blog cover" src={coverImage} />}

@@ -3,12 +3,9 @@ import PropTypes from 'prop-types';
 import { MdSend } from 'react-icons/md';
 import { TextArea, Button } from '@blueprintjs/core';
 import Comment from './Comment';
-import { timeStampSorting } from '../../../../common/utility-functions';
 import { DeletePopOver } from '../../../../common';
 import { RoundPicture } from '../../../../components';
 import { ENDPOINT } from '../../../../config';
-
-// const file = require('../../../../assets/icons/64w/uploadicon64.png');
 
 class CommentContainer extends React.Component {
   state = {
@@ -22,6 +19,7 @@ class CommentContainer extends React.Component {
 
   componentDidMount() {
     const { likes, account, comments } = this.props;
+    console.log('comments', comments);
     this.setState({
       allComments: comments,
       allLikes: likes,
@@ -69,7 +67,7 @@ class CommentContainer extends React.Component {
       };
       const res = await apis.addBlogComment(data);
       this.setState({
-        allComments: [...allComments, { ...data, id: res }],
+        allComments: [{ ...data, id: res, user: { ...account.user, userDetail: account.user.userDetails } }, ...allComments],
         comment: '',
       });
     } catch (e) {
@@ -86,9 +84,9 @@ class CommentContainer extends React.Component {
         broadCastId: `Blog-${blogId}`,
       };
       await apis.updateBlogComment([data, { id: comment.id }]);
-      const filteredComments = allComments.filter(obj => obj.id !== comment.id);
+      const filteredComments = allComments.map(obj => (obj.id === comment.id ? { ...obj, comment: commentText } : obj));
       this.setState({
-        allComments: [...filteredComments, { ...comment, comment: commentText }],
+        allComments: filteredComments,
         comment: '',
       });
     } catch (e) {
@@ -169,7 +167,8 @@ class CommentContainer extends React.Component {
       deletePopover,
     } = this.state;
     const { users, imgUrl, account } = this.props;
-    const image = (account.user && account.user.userDetails.image) ? `${ENDPOINT}/user/${10000000 + parseInt(account.user.id, 10)}/profile/${account.user.userDetails.image}` : '/assets/icons/64w/uploadicon64.png';
+    console.log('all comments', allComments);
+    const image = (account.user && account.user.userDetails.image) ? `${ENDPOINT}/assets/user/${10000000 + parseInt(account.user.id, 10)}/profile/${account.user.userDetails.image}` : '/assets/icons/64w/uploadicon64.png';
     return (
       <div className="response">
         <div className="left" />
@@ -215,9 +214,8 @@ class CommentContainer extends React.Component {
             <div className="res-label">
               <h3>Responses</h3>
             </div>
-            {allComments.sort(timeStampSorting).map((obj) => {
-              const user = users.find(u => u.user.id === obj.userId);
-              return <Comment deleteComment={this.toggleDelete} replyComment={this.replyComment} saveComment={this.saveEditedComment} user={user} account={account} comment={obj} key={obj.id} />;
+            {allComments.map((obj) => {
+              return <Comment deleteComment={this.toggleDelete} replyComment={this.replyComment} saveComment={this.saveEditedComment} user={obj.user} account={account} comment={obj} key={obj.id} />;
             })}
             <DeletePopOver isOpen={deletePopover} name="Comment" action={this.deleteComment} />
           </div>

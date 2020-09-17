@@ -1,3 +1,5 @@
+/* eslint-disable react/no-did-update-set-state */
+/* eslint-disable react/prop-types */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
@@ -6,7 +8,6 @@ import moment from 'moment';
 import { Tag } from '@blueprintjs/core';
 import { FaRegCommentAlt } from 'react-icons/fa';
 import { TiAttachmentOutline } from 'react-icons/ti';
-
 
 class Task extends Component {
   constructor(props) {

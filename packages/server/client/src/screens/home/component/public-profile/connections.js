@@ -88,6 +88,7 @@ class Connections extends React.Component {
 
   checkConnection = (props) => {
     const { database, details, account } = props;
+    // console.log('detail and account in connection', details, account);
     const userId = account.user.id;
     const guestId = details.id;
     let type = '';

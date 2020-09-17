@@ -10,9 +10,9 @@ export default async (body, fileName) => {
   const { token, content, type } = body;
   if (content === 'profile' && type === 'profilePic') {
     const user = await validateToken(token);
-    const inputFile = path.join(__dirname, '..', '..', 'public', 'user', `${10000000 + parseInt(user.id, 10)}`, content, fileName);
+    const inputFile = path.join(process.cwd(), 'build', 'public', 'assets', 'user', `${10000000 + parseInt(user.id, 10)}`, content, fileName);
     const thumbnailName = `thumbnail-${Date.now()}.jpeg`;
-    const outputFile = path.join(__dirname, '..', '..', 'public', 'user', `${10000000 + parseInt(user.id, 10)}`, content, thumbnailName);
+    const outputFile = path.join(process.cwd(), 'build', 'public', 'assets', 'user', `${10000000 + parseInt(user.id, 10)}`, content, thumbnailName);
     sharp(inputFile)
       .resize(400, 400).jpeg({ quality: 50 })
       .toFile(outputFile)

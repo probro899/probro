@@ -45,6 +45,7 @@ class Login extends Component {
   render() {
     const { account } = this.props;
     const { redirect, slug, loading } = this.state;
+    console.log('props in login page', this.props);
     return (
       <div className="o-log-or-reg">
         <div className="log-or-reg">
@@ -56,7 +57,7 @@ class Login extends Component {
             redirect || account.user ? <Redirect push to={`/dashboard/${slug || account.user.slug}`} /> : <Log loginHandler={this.loginHandler} />
           }
           <div className="auth-with-others">
-            <GoogleLogin loading={loading} googleLogin={this.googleLogin} />
+            {typeof document !== 'undefined' ? <GoogleLogin loading={loading} googleLogin={this.googleLogin} /> : null}
           </div>
           <div className="auth-footer">
             <p>

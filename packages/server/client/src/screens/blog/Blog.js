@@ -10,10 +10,9 @@ import getName from '../../common/utility-functions/getName';
 import { MoreButton } from '../../components';
 import { ENDPOINT } from '../../config';
 
-// const blogImg = require('../../assets/blog-img.jpg');
-
 const EachBlog = ({ onMore, users, obj }) => {
-  const coverImage = obj.coverImage ? `${ENDPOINT}/user/${10000000 + parseInt(obj.userId, 10)}/blog/${obj.coverImage}` : '/assets/garphics/blog-img.jpg';
+  // console.log('obj in each blog', obj);
+  const coverImage = obj.coverImage ? `${ENDPOINT}/assets/user/${10000000 + parseInt(obj.userId, 10)}/blog/${obj.coverImage}` : '/assets/graphics/blog-img.jpg';
   return (
     <div className="blog-container">
       <div className="img-container">
@@ -44,6 +43,12 @@ const EachBlog = ({ onMore, users, obj }) => {
       </div>
     </div>
   );
+};
+
+EachBlog.propTypes = {
+  onMore: PropTypes.func.isRequired,
+  users: PropTypes.arrayOf(PropTypes.any).isRequired,
+  obj: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 class Blogs extends Component {
@@ -149,7 +154,9 @@ Blogs.propTypes = {
   database: PropTypes.objectOf(PropTypes.any).isRequired,
   account: PropTypes.objectOf(PropTypes.any).isRequired,
   updateNav: PropTypes.func.isRequired,
+  deleteDatabaseSchema: PropTypes.func.isRequired,
 };
+
 
 const mapStateToProps = state => state;
 export default connect(mapStateToProps, { ...actions })(Blogs);

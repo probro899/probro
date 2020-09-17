@@ -31,7 +31,7 @@ class DrawChart extends React.Component {
       const userBoardActivities = boardCommunicationActivities.filter(ba => ba.userId === u.tuserId);
       individualUserCommunicationActivities.push(userBoardActivities);
     });
-    const userNameList = userList.map(u => Object.values(users.byId).find(us => us.id === u.tuserId));
+    const userNameList = userList.map(u => u.user.user);
     // console.log('Board Message Activities', individualUserCommunicationActivities);
     const chartData = individualUserCommunicationActivities.map(ba => hoursCalculator(ba));
     const myBarChart = barChart(userNameList, chartData, boardActivityBoardChartCtx);

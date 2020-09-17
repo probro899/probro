@@ -34,7 +34,7 @@ class TaskOverlay extends Component {
       taskId,
       database,
     } = nextProps;
-    
+
     const task = Object.values(database.BoardColumnCard.byId).find(o => o.id === taskId);
     if (!task) {
       this.setState({ loading: true });
@@ -192,6 +192,7 @@ class TaskOverlay extends Component {
       isOpen,
       database,
     } = this.props;
+    // console.log('state value in task overlay', this.state);
     return (
       <Dialog
         isOpen={isOpen}
@@ -300,6 +301,7 @@ class TaskOverlay extends Component {
                   task={task}
                   writeComment={this.writeComment}
                   comment={comment}
+                  database={database}
                 />
                 <TaskComment
                   comments={[...comments, ...activities]}

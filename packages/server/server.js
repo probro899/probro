@@ -6,12 +6,10 @@ import { graphqlHTTP } from 'express-graphql';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import { StaticRouter } from 'react-router-dom';
-import { InMemoryCache } from 'apollo-cache-inmemory';
 import React from 'react';
 import ReactDOM from 'react-dom/server';
-import { ApolloProvider, getDataFromTree } from 'react-apollo';
-import { ApolloClient } from 'apollo-client';
-import { createHttpLink } from 'apollo-link-http';
+import { getDataFromTree } from 'react-apollo';
+import { ApolloProvider } from '@apollo/client';
 import cors from 'cors';
 import run from 'app-node';
 import { Helmet } from 'react-helmet';
@@ -29,9 +27,10 @@ import initCachDB from './server/src/cache/database/initCacheDB';
 import { start } from './server/src/socket';
 import validateToken from './server/src/auth/validateToken';
 import { initUser } from './server/src/api';
+import client from './client/src/clientConfig';
 
 const app = express();
-const PORT = process.env.PORT || 4001;
+const PORT = process.env.PORT || 3000;
 
 app.use(
   cors({
@@ -40,71 +39,58 @@ app.use(
   })
 );
 
-// app.use(bodyParser.urlencoded({ limit: '50mb', extended: true, parameterLimit: 50000 }));
-
+app.use(bodyParser.urlencoded({ limit: '50mb', extended: true, parameterLimit: 50000 }));
 app.use(bodyParser.json({ limit: '50mb', extended: true }));
-app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 app.use('/', express.static('build/public'));
 try {
   run(async () => {
+
+    // Initializing Sqlite Database
     await dbinit();
+
+    // Initializing cache database
     initCachDB();
 
-
-    const server = http.createServer(app);
-    const url = '/shocked/:origin/:token';
-    // starting socket
-    const socket = start({ server, url }, async (session) => {
-      const { origin, token } = session.params;
-      console.log('origin and token', origin);
-      if (origin === 'web') {
-        try {
-          // validate user either login or not
-          const user = validateToken(token);
-
-          // set the user in session
-          session.set('user', user);
-          await initUser.call({ session }, user.id);
-          // send data to client loginSuccess
-          session.dispatch({ type: 'LOGIN', payload: user });
-
-          // return socket to evrything is ok
-          return true;
-        } catch (err) {
-          console.log('error', err);
-          session.dispatch({ type: 'LOGOUT' });
-          session.emit('logout');
-          // return socket user not validated
-          return false;
-        }
-      }
-    });
-
-
+    // Gaphql handler intialization
     app.use('/graphql', graphqlHTTP({
       schema,
       rootValue: resolvers,
       graphiql: true,
     }));
 
+    // Socket initialization with authentication
+    const server = http.createServer(app);
+    app.get('/shocked/web/:token', () => {
+      console.log('socket request arrived');
+      const url = '/shocked/:origin/:token';
+      const socket = start({ server, url }, async (session) => {
+        const { origin, token } = session.params;
+        if (origin === 'web') {
+          try {
+            // validate user either login or not
+            const user = validateToken(token);
+            // set the user in session
+            session.set('user', user);
+            await initUser.call({ session }, user.id);
+            // send data to client loginSuccess
+            // session.dispatch({ type: 'LOGIN', payload: user });
+            // return socket to evrything is ok
+            return true;
+          } catch (err) {
+            session.dispatch({ type: 'LOGOUT' });
+            session.emit('logout');
+            // return socket user not validated
+            return false;
+          }
+        }
+      });
+    });
+
+    // Handling all the get Request from apolo client
     app.get(['*/:param', '*'], (req, res) => {
       const urlParam = req.params.param ? req.params.param : null;
-      const client = new ApolloClient({
-        ssrMode: true,
-        // Remember that this is the interface the SSR server will use to connect to the
-        // API server, so we need to ensure it isn't firewalled, etc
-        link: createHttpLink({
-          uri: `${webConfig.siteURL}/graphql`,
-          credentials: 'same-origin',
-          headers: {
-            cookie: req.header('Cookie'),
-          },
-        }),
-        cache: new InMemoryCache(),
-      });
-
       const context = {
         urlParam,
       };
@@ -128,20 +114,16 @@ try {
         // console.log('final seo tag', SEO);
         const initialState = client.extract();
         // console.log('FETCH URL', req.params);
-        const html = <HTML content={content} state={initialState} helmet={helmet} seo={SEO}/>;
+        const html = <HTML content={content} state={initialState} helmet={helmet} seo={SEO} />;
         res.status(200);
         res.send(`<!doctype html>\n${ReactDOM.renderToStaticMarkup(html)}`);
         res.end();
       });
     });
 
-
-
     authExpress(app);
-    app.listen(PORT, () => console.log(`App running on port ${PORT}`));
+    server.listen(PORT, () => console.log(`App running on port ${PORT}`));
   });
-
 } catch (e) {
   console.error(e);
 }
-

@@ -11,9 +11,8 @@ function beat() {
 }
 
 export default function start(options, validateSession, pulseRate = 30000) {
-
   const { url, channelProvider, ...other } = options;
-  console.log('socked npm called', url);
+  // console.log('socked npm called', url);
 
   // Use the channel provider
   Channel.setProvider(channelProvider || createDefaultProvider());
@@ -75,7 +74,7 @@ export default function start(options, validateSession, pulseRate = 30000) {
   function keepAlive() {
     wss.clients.forEach((ws) => {
       if (!ws.isAlive) {
-        console.log('conneciton failed');
+        // console.log('conneciton failed');
         return ws.terminate();
       }
 

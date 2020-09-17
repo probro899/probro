@@ -146,7 +146,7 @@ class Class extends Component {
         <div className="content-list">
           {
             Object.values(database.Board.byId).filter(o => o.type === 'private').map((obj, index) => {
-              const user = database.User.byId[obj.userId];
+              const { user } = obj;
               const len = obj.name.length > 30;
               const name = len ? obj.name.substring(0, 29) : obj.name;
               return (
@@ -162,7 +162,7 @@ class Class extends Component {
                     </div>
                     <div className="class-detail">
                       <span className="name">
-                        {getName(user)}
+                        {getName(user.user)}
                       </span>
                       <span className="date">{new Date(obj.timeStamp).toDateString()}</span>
                     </div>

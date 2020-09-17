@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
 import { Switch, Route } from 'react-router-dom';
-import { Provider } from 'react-redux';
 import ReactGA from 'react-ga';
-import store from './store';
 import Home from './screens';
-
 
 class App extends Component {
   state ={};

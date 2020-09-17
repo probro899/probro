@@ -40,11 +40,13 @@ class Connection extends React.Component {
       updateDatabaseSchema,
       deleteDatabaseSchema,
     } = this.props;
+    // console.log('UserConnection Data', database.UserConnection);
+    const connectionIds = Object.values(database.UserConnection.byId);
     const { apis } = this.state;
     if (!account.user) {
       return (<div className="bro-right" style={{ position: 'relative' }}><Spinner /></div>);
     }
-    const connectionIds = this.getConnections();
+    // const connectionIds = this.getConnections();
     return (
       <div className="connection bro-right">
         <div className="header">
@@ -62,17 +64,16 @@ class Connection extends React.Component {
             )
           }
           {
-            connectionIds.map(id => (
+            connectionIds.map(con => (
               <Connecte
                 updateWebRtc={updateWebRtc}
                 deleteDatabaseSchema={deleteDatabaseSchema}
                 updateDatabaseSchema={updateDatabaseSchema}
                 apis={apis}
-                key={id.userId}
-                id={id.userId}
-                connection={id.connection}
+                key={con.id}
                 account={account}
                 database={database}
+                {...con}
               />
             ))
           }

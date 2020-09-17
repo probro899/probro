@@ -20,9 +20,11 @@ class Communication extends React.Component {
   };
 
   async componentDidMount() {
+    console.log('Communication Mount');
     const { updateWebRtc } = this.props;
     try {
       const apisRes = await client.scope('Mentee');
+      console.log('api in Communication', apisRes);
       await this.setState({ apis: apisRes });
       updateWebRtc('apis', apisRes);
       initJanus(this.props, this.state);
@@ -109,7 +111,7 @@ class Communication extends React.Component {
         <div
           className="content"
         >
-          {!webRtc.showIncommingCall && webRtc.showCommunication && webRtc.communicationContainer === 'list' && (
+          {!webRtc.showIncommingCall && webRtc.showCommunication && webRtc.communicationContainer === 'list' && apis && (
           <ChatList
               // style={!webRtc.showIncommingCall && webRtc.communicationContainer === 'list' ? { display: 'block' } : { display: 'none' }}
             change={this.switchScreen}

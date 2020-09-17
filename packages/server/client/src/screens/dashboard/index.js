@@ -1,3 +1,17 @@
+import React from 'react';
 import Home from './Home';
+import ErrorBoundary from './ErrorBoundary';
 
-export { Home };
+class DashBoard extends React.Component {
+  state = {};
+
+  render() {
+    return (
+      <ErrorBoundary>
+        <Home {...this.props} />
+      </ErrorBoundary>
+    );
+  }
+}
+
+export default DashBoard;
