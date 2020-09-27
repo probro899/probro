@@ -35,6 +35,17 @@ class IncomingCallScreen extends React.Component {
   render() {
     const { style, webRtc, database } = this.props;
     const isUser = webRtc.localCallHistory.chatHistory.type === 'user';
+    let displayName;
+    let displayImageUrl;
+    if (isUser) {
+      const { user, userDetail } = database.UserConnection.byId[webRtc.showCommunication].user;
+      const userDetails = userDetail || {};
+      displayName = `${user.firstName} ${user.lastName}`;
+      displayImageUrl = userDetails.image ? `${ENDPOINT}/assets/user/${10000000 + parseInt(user.id, 10)}/profile/${userDetails.image}` : '/assets/icons/128w/uploadicon128.png';
+    } else {
+      displayName = database.Board.byId[webRtc.showCommunication].name;
+      displayImageUrl = '/assets/icons/128w/uploadicon128.png';
+    }
     return (
       <div
         style={style}
@@ -52,14 +63,11 @@ class IncomingCallScreen extends React.Component {
               style={{ width: '100%', display: 'flex', alignSelf: 'center', justifyContent: 'center', margin: 5 }}
             >
               <span style={{ fontSize: 20, fontWeight: 'bold', color: 'white' }}>
-                {webRtc.localCallHistory.chatHistory.type === 'user' ? `${database.User.byId[webRtc.showCommunication].firstName} ${database.User.byId[webRtc.showCommunication].lastName}` : database.Board.byId[webRtc.showCommunication].name}
+                {displayName}
               </span>
             </div>
             <div className="img-container">
-              {(isUser ? database.UserDetail.byId[webRtc.localCallHistory.chatHistory.broadCastId] && database.UserDetail.byId[webRtc.localCallHistory.chatHistory.broadCastId].image : [database.Board.byId[webRtc.localCallHistory.chatHistory.broadCastId]].image)
-                ? <RoundPicture imgUrl={`${ENDPOINT}/user/${10000000 + parseInt(webRtc.localCallHistory.chatHistory.broadCastId, 10)}/profile/${Object.values(database.UserDetail.byId).find(u => u.userId === webRtc.localCallHistory.chatHistory.broadCastId).image}`} />
-                : <RoundPicture imgUrl="/assets/icons/128w/uploadicon128.png" />
-              }
+              <RoundPicture imgUrl={displayImageUrl} />
             </div>
             <div style={{ width: '100%', display: 'flex', justifyContent: 'center', margin: 5 }}>
               <span style={{ fontSize: 15, fontWeight: 'bold', color: '#757575' }}>

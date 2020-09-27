@@ -1,3 +1,4 @@
+/* eslint-disable prefer-destructuring */
 /* eslint-disable jsx-a11y/media-has-caption */
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -5,15 +6,25 @@ import { ENDPOINT } from '../../../../config';
 import store from '../../../../store';
 
 const UserView = ({ pc, database, mute, userId, status, account }) => {
-  const userDetail = Object.values(database.UserDetail.byId).find(u => u.userId === userId);
-  const user = database.User.byId[userId];
+  let user;
+  let userDetail;
+
+  if (userId === account.user.id) {
+    user = account.user;
+    userDetail = account.user.userDetails;
+  } else {
+    const boardMember = Object.values(database.BoardMember.byId).find(bm => bm.user.user.id === userId);
+    user = boardMember.user.user;
+    userDetail = boardMember.user.userDetail;
+  }
+
   return (
     <div className="pc-each-screen">
       <video
         muted={mute}
         id={`video-${user.id}`}
         playsInline
-        poster={userDetail ? `${ENDPOINT}/user/${10000000 + parseInt(userId, 10)}/profile/${userDetail.image}` : null}
+        poster={userDetail ? `${ENDPOINT}/assets/user/${10000000 + parseInt(userId, 10)}/profile/${userDetail.image}` : null}
         // controls
         autoPlay
       />
@@ -100,9 +111,7 @@ class UsersScreen extends React.Component {
           });
         }
       });
-
     }
-
   }
 
   render() {

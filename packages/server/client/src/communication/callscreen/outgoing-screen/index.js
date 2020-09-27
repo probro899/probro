@@ -80,6 +80,12 @@ class Index extends React.Component {
     const { callStatus } = this.state;
     const { webRtc, database } = this.props;
     const isUser = webRtc.localCallHistory.chatHistory.type === 'user';
+    let displayName;
+    if (isUser) {
+      displayName = `${database.UserConnection.byId[webRtc.localCallHistory.chatHistory.connectionId].user.user.firstName} ${database.UserConnection.byId[webRtc.localCallHistory.chatHistory.connectionId].user.user.lastName}`;
+    } else {
+      displayName = database.Board.byId[webRtc.showCommunication].name;
+    }
     return (
       <div className="outgoing-call-screen">
         <SoundComponent url="/assets/media/outgoing.mp3" />
@@ -90,7 +96,7 @@ class Index extends React.Component {
             className="person-name-status"
           >
             <span className="name">
-              {webRtc.chatHistory.type === 'user' ? `${database.User.byId[webRtc.localCallHistory.chatHistory.user.user.id].firstName} ${database.User.byId[webRtc.localCallHistory.chatHistory.user.user.id].lastName}` : database.Board.byId[webRtc.showCommunication].name}
+              {displayName}
             </span>
             <span className="status" style={{ textTransform: 'capitalize', color: callStatus === 'Declined' ? 'red' : 'white' }}>
               {callStatus}

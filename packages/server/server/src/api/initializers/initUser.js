@@ -55,7 +55,7 @@ export default async function initUser(id) {
 
     // updating userCollection activeStatus
     const userConnectionActiveStatus = userPresentorHelper(session.getChannel('Main'), connectionList);
-    const finalUSerConnectionActiveList = userConnectionActiveStatus.map(uc => ({ id: uc.id, activeStatus: uc.activeStatus, userId: uc.user.user.id }));
+    const finalUSerConnectionActiveList = userConnectionActiveStatus.map(uc => ({ ...uc, activeStatus: uc.activeStatus }));
     finalUSerConnectionActiveList.forEach(ucs => session.dispatch(schema.update('UserConnection', ucs)));
 
     // inform all the user to i am active now

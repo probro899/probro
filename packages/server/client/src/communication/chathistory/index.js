@@ -79,6 +79,7 @@ class ChatHistory extends React.Component {
       fromLive,
     } = this.props;
     const { user, connectionId, type } = webRtc.chatHistory;
+    // console.log('chatHistory', webRtc.chatHistory, user);
     const { messages } = this.state;
     let userActiveStatus = false;
     if (type === 'user') {

@@ -74,7 +74,7 @@ class LiveCallScreen extends React.Component {
   }
 
   render() {
-    // console.log('Live Screen called', this.state);
+    // console.log('Live Screen called', this.props);
     const { style, webRtc, isMaximum, database, toggleMaximize, minimize } = this.props;
     const { user, type } = webRtc.localCallHistory.chatHistory;
     const {

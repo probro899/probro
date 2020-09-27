@@ -10,7 +10,7 @@ export default (uid, boards, boardMemberList, userConnectionList, session, statu
 
     // change online status for all friends
     const chanelToDispatch = userConnectionList.map((uc) => {
-      return { channel: session.channel(`UserConnection-${uc.userId}`), id: uc.id, userId: uc.userId };
+      return { channel: session.channel(`UserConnection-${uc.user.user.id}`), id: uc.id, userId: uc.user.user.id };
     });
 
     // informing all user friend list channel

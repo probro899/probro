@@ -40,7 +40,7 @@ class Connection extends React.Component {
       updateDatabaseSchema,
       deleteDatabaseSchema,
     } = this.props;
-    console.log('UserConnection Data', this.props);
+    // console.log('UserConnection Data', this.props);
     const connectionIds = Object.values(database.UserConnection.byId);
     const { apis } = this.state;
     if (!account.user) {

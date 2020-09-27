@@ -16,6 +16,7 @@ const stopAndRecordStream = async (props, userId, stream) => {
 export default props => async (stream, uid) => {
   const { updateWebRtc } = props;
   const { webRtc } = store.getState();
+  // console.log('onRemoteStream handler', webRtc);
   const userId = webRtc.localCallHistory.chatHistory.user.user.id;
   // console.log(`${userId})GOT REMOTE STREAM`, stream);
   await updateWebRtc('connectedUsers',

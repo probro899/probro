@@ -9,10 +9,13 @@ module.exports = {
   // server application
   entry: [
     './client/src/client.js',
-    // './client/src/styles/index.css',
+    './client/src/styles/index.scss',
+    '../../node_modules/react-responsive-carousel/lib/styles/carousel.css',
+    '../../node_modules/@blueprintjs/core/lib/css/blueprint.css',
+    '../../node_modules/@blueprintjs/datetime/lib/css/blueprint-datetime.css',
   ],
+
   // Tell webpack where to put the output file
-  // that is generated
   output: {
     filename: 'client_bundle.js',
     path: path.resolve(__dirname, 'build/public'),

@@ -20,14 +20,14 @@ export default (props, state, msg, jsep) => {
   const type = 'user';
   if (!webRtc.isLive) {
     updateWebRtc('janus', { ...webRtc.janus, jsep });
-    updateWebRtc('chatHistory', { connectionId, type, user: { user: database.User.byId[broadCastId] }, broadCastId });
-    updateWebRtc('showCommunication', parseInt(result.username, 10));
+    updateWebRtc('chatHistory', { connectionId, type, user: database.UserConnection.byId[connectionId].user, broadCastId });
+    updateWebRtc('showCommunication', parseInt(connectionId, 10));
     updateWebRtc('localCallHistory', {
       ...webRtc.localCallHistory,
       chatHistory: {
         connectionId,
         type: 'user',
-        user: { user: database.User.byId[parseInt(result.username, 10)] },
+        user: database.UserConnection.byId[parseInt(connectionId, 10)].user,
         broadCastId,
       },
       callType: webRtc.localCallHistory.callType || 'Incoming',
