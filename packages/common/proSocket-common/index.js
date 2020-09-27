@@ -13,7 +13,7 @@ exports.PKT_ACTION = PKT_ACTION;
 exports.PKT_SCOPE_REQUEST = PKT_SCOPE_REQUEST;
 exports.PKT_SCOPE_RESPONSE = PKT_SCOPE_RESPONSE;
 exports.PKT_CALL = PKT_CALL;
-exports.createParser = createParser;
+exports. createParser = createParser;
 
 function _toArray(arr) { return Array.isArray(arr) ? arr : Array.from(arr); }
 
