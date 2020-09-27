@@ -18,11 +18,19 @@ class Index extends React.Component {
   state = { loading: true, apis: {}, draggingContent: null };
 
   async componentDidMount() {
-    const { match } = this.props;
-    const apis = await client.scope('Mentee');
-    const getBoardRes = await apis.getBoard(match.params.classId);
-    this.setState({ apis, loading: false });
-    console.log('get Board res', getBoardRes);
+    const { match, updateWebRtc, webRtc } = this.props;
+    try {
+      const hasToInitialFetch = webRtc.fetchedApisRes.find(r => r.api === 'getBoard' && r.status === 200 && parseInt(r.boardId, 10) === parseInt(match.params.classId, 10));
+      if (!hasToInitialFetch) {
+        const apis = await client.scope('Mentee');
+        const getBoardRes = await apis.getBoard(match.params.classId);
+        updateWebRtc('fetchedApisRes', [...webRtc.fetchedApisRes, getBoardRes]);
+        this.setState({ apis, loading: false });
+      }
+      this.setState({ loading: false });
+    } catch (e) {
+      console.error('get Class error', e);
+    }
   }
 
   setDraggingContent = (event, item) => {
@@ -35,7 +43,7 @@ class Index extends React.Component {
   render() {
     const { match, account } = this.props;
     const { apis, draggingContent, loading } = this.state;
-    // console.log('apis in class manager', apis);
+    // console.log('apis in class manager', this.props);
     if (!account.sessionId) return <Redirect to="/" />;
     if (!account.user) return <Spinner />;
     if (account.user.slug !== match.params.userSlug) return <Redirect to="/" />;
@@ -58,11 +66,13 @@ class Index extends React.Component {
 Index.propTypes = {
   match: PropTypes.objectOf(PropTypes.any).isRequired,
   account: PropTypes.objectOf(PropTypes.any).isRequired,
+  webRtc: PropTypes.objectOf(PropTypes.any).isRequired,
+  updateWebRtc: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => {
-  const { account } = state;
-  return { account };
+  const { account, webRtc } = state;
+  return { account, webRtc };
 };
 
 export default connect(mapStateToProps, { ...actions })(Index);

@@ -3,7 +3,7 @@ import React from 'react';
 import { InputGroup, Button, Intent } from '@blueprintjs/core';
 import adapter from 'webrtc-adapter';
 import Janus from '../janus';
-import mediaSelector from '../../../../common/communication/mediaSelector';
+import mediaSelector from '../../../../communication/mediaSelector';
 
 class Index extends React.Component {
   constructor(props) {

@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import axios from 'axios';
 import Navbar from '../../home/component/navbar';
 import CommentContainer from './comment';
 import Footer from '../../../common/footer';
@@ -34,8 +33,7 @@ class PublicBlog extends React.Component {
         apis = await client.scope('Mentee');
         uid = account.user.id;
       }
-      const res = await clientQuery.query({ query: GET_BLOG, variables: { blogSlug: match.params.blogSlug, userSlug: match.params.userSlug }, fetchPolicy: "network-only" });
-      console.log('data arrived in Public blogs', res.data.getBlog);
+      const res = await clientQuery.query({ query: GET_BLOG, variables: { blogSlug: match.params.blogSlug, userSlug: match.params.userSlug }, fetchPolicy: 'network-only' });
       if (res) {
         this.setState({
           data: res.data.getBlog,
@@ -50,7 +48,7 @@ class PublicBlog extends React.Component {
     }
   }
 
-  async componentDidUpdate(prevProps) {
+  async componentWillReceiveProps(prevProps) {
     const { account } = this.props;
     if (account.user !== prevProps.account.user) {
       try {

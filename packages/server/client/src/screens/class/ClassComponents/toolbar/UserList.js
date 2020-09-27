@@ -43,7 +43,7 @@ const AllUsers = ({ extUser, boardMembers, boardId, apis, account }) => {
                 <Link to={`/user/${o.user.user.slug}`}>
                   {getName(o.user.user)}
                 </Link>
-                {o.user.user.activeStatus && <span className="active" />}
+                {o.activeStatus && <span className="active" />}
                 {extUser && extUser.type === 'mentor' && (
                   <div className="remover">
                     <MdDeleteForever onClick={() => deleteBoardMember(o, apis)} />
@@ -84,7 +84,7 @@ class UserList extends React.Component {
           <div className="i-user">
             {o.user.user.firstName[0]}
             {o.user.user.lastName[0]}
-            {o.user.user.activeStatus && <span className="green-dot" />}
+            {o.activeStatus && <span className="green-dot" />}
           </div>
         </Popover>
       );

@@ -40,13 +40,12 @@ class Connection extends React.Component {
       updateDatabaseSchema,
       deleteDatabaseSchema,
     } = this.props;
-    // console.log('UserConnection Data', database.UserConnection);
+    console.log('UserConnection Data', this.props);
     const connectionIds = Object.values(database.UserConnection.byId);
     const { apis } = this.state;
     if (!account.user) {
       return (<div className="bro-right" style={{ position: 'relative' }}><Spinner /></div>);
     }
-    // const connectionIds = this.getConnections();
     return (
       <div className="connection bro-right">
         <div className="header">

@@ -4,6 +4,7 @@
  */
 
 function presentorTestor(id, userList) {
+  // console.log('persentor testor', id, userList);
   let p = false;
   userList.forEach((e) => {
     if (id === e.userId) {
@@ -21,13 +22,10 @@ export default function createDefaultProvider() {
     // TODO: Make sure the session is not added more than once
     subscribe: (channelId, session) => {
       const list = channels[channelId];
-      // console.log('subcripbe preslist channel', list);
       if (!list) {
         channels[channelId] = [session];
-        // console.log('channel data after subscription', channels.Board);
       } else if (!list.find(s => s.values.user.id === session.values.user.id)) {
         list.push(session);
-        // console.log('chanel record after another user login', channels.Board[0].scopes);
       } else {
         // console.log('user session is already in channel');
       }
@@ -56,10 +54,8 @@ export default function createDefaultProvider() {
     },
 
     publish: (channelId, message, userList, userId) => {
-      const list = channels[channelId];
-      // console.log('publish called', channelId, message, userId);
+      const list = channels[channelId] || [];
       if (userList) {
-        // console.log('default Channel data', list[0].values.user.user, userList);
         const shortedUserList = list.filter(session => presentorTestor(session.values.user.id, userList));
         shortedUserList.forEach(session => session.send(message));
       } else if (!userList && list) {

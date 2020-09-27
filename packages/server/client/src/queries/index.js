@@ -62,6 +62,7 @@ query {
         }
         blogLike {
           id
+          likeType
           user {
             id
             slug
@@ -214,6 +215,7 @@ query ($blogSlug: String!, $userSlug: String!) {
     blogLike {
       id
       userId
+      likeType
       user {
         firstName
         lastName

@@ -6,17 +6,14 @@ import doSearch from '../../api/common/search/globalSearch';
 export default {
   getUser: async (contex, args) => {
     const { variables } = args.body;
-    return {
-      ...getUser(variables),
-    };
+    const res = getUser(variables);
+    return res;
   },
 
   getBlog: async (contex, args) => {
     const { variables } = args.body;
     const res = getBlog(variables);
-    return {
-      ...res,
-    };
+    return res;
   },
 
   getPopular: async () => {

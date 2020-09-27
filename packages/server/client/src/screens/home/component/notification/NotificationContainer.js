@@ -20,9 +20,9 @@ class NotificationContainer extends React.Component {
     let imageIcon;
     switch (notification.type) {
       case 'user':
-        url = `user/${database.User.byId[notification.typeId].slug}`;
-        const userDetail = Object.values(database.UserDetail.byId).find(u => notification.typeId === u.userId);
-        const imgUrl = userDetail && userDetail.image ? `${ENDPOINT}/user/${10000000 + parseInt(notification.typeId, 10)}/profile/${userDetail.image}` : '/assets/icons/64w/uploadicon64.png';
+        url = `user/${notification.user.user.slug}`;
+        const { userDetail } = notification.user || {};
+        const imgUrl = userDetail && userDetail.image ? `${ENDPOINT}/assets/user/${10000000 + parseInt(notification.typeId, 10)}/profile/${userDetail.image}` : '/assets/icons/64w/uploadicon64.png';
         imageIcon = (
           <div className="pc-noti-img">
             <RoundPicture imgUrl={imgUrl} />
@@ -30,10 +30,20 @@ class NotificationContainer extends React.Component {
         );
         break;
       case 'board':
-        url = `class-work/${database.User.byId[account.user.id].slug}/${notification.boardId}`;
+        url = `class-work/${account.user.slug}/${notification.boardId}`;
         imageIcon = (
           <div className="pc-noti-icon">
             <Icon icon="application" iconSize={40} />
+          </div>
+        );
+        break;
+      case 'blog':
+        url = `blog/${account.user.slug}/${notification.blog.slug}`;
+        const userDetails = notification.user.userDetail || {};
+        const imgUrls = userDetails && userDetails.image ? `${ENDPOINT}/assets/user/${10000000 + parseInt(notification.typeId, 10)}/profile/${userDetails.image}` : '/assets/icons/64w/uploadicon64.png';
+        imageIcon = (
+          <div className="pc-noti-img">
+            <RoundPicture imgUrl={imgUrls} />
           </div>
         );
         break;
@@ -54,6 +64,7 @@ class NotificationContainer extends React.Component {
   render() {
     const { database, account } = this.props;
     const notifications = account.user ? Object.values(database.Notification.byId).sort(timeStampSorting) : [];
+    // console.log('notifications', notifications);
     return (
       <div className="notification-list">
         {notifications.length === 0 && <div className="pc-no-notis"><p>You do not have any notifications at the moment.</p></div>}

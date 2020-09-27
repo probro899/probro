@@ -24,6 +24,7 @@ const initialState = {
   recordedBlobs: [],
   lastStreamId: null,
   chatHistoryType: null,
+  fetchedApisRes: [],
 };
 
 export default (state = initialState, action) => {

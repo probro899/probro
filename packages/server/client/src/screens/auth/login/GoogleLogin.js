@@ -8,7 +8,7 @@ class GoogleLoginComponent extends React.Component {
   state = { showGoogleBtn: false };
 
   componentDidMount() {
-    console.log('login did mount called');
+    // console.log('login did mount called');
     GoogleLib = require('react-google-login');
     this.setState({ showGoogleBtn: true });
   }

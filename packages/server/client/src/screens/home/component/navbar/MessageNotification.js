@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { Icon } from '@blueprintjs/core';
 import { Badge } from '../../../../components';
-import SoudComponent from '../../../../common/communication/components/SoundComponent';
+import SoudComponent from '../../../../communication/components/SoundComponent';
 // import notificationUrl from '../../../../assets/notification.mp3';
 
 class MessageNotification extends React.Component {

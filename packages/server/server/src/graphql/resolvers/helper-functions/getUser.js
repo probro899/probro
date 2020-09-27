@@ -4,7 +4,7 @@ export default function getUser(variables) {
   const findUserDetailsRes = findUserDetails(variables.userSlug, true, variables.userSlug);
   return {
     ...findUserDetailsRes.user,
-    userDetail: findUserDetailsRes.userDetail,
+    userDetail: findUserDetailsRes.userDetail || {},
     userCarrierInterest: findUserDetailsRes.userCarrierInterest,
     userSkill: findUserDetailsRes.userSkill,
     userEducation: findUserDetailsRes.userEducation,

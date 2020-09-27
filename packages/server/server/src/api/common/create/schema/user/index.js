@@ -38,6 +38,7 @@ async function addCarrierInterest(record) {
 }
 
 async function addNotificationReadStatus(record) {
+  console.log('add notification read status called', record);
   const res = await add.call(this, 'NotificationReadStatus', record);
   return res;
 }

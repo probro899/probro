@@ -8,11 +8,11 @@ export default function dispatchBoardChatHistory(session, schema, id, connection
   const allDbBoardMessageSeenStatus = cacheDatabase.get('BoardMessageSeenStatus');
   const allDbBoardMember = cacheDatabase.get('BoardMember');
   const boardMember = allDbBoardMember.filter(bm => bm.boardId === connectionId);
+  const boardMemberWithUser = boardMember.map(bm => ({ ...bm, user: findUserDetails(bm.tuserId) }));
   const boardMessages = allDbBoardMessage.filter(bm => bm.boardId === connectionId);
   const boardMessageSeenStatus = flat(boardMessages.map(bm => allDbBoardMessageSeenStatus.filter(bms => bms.bmId === bm.id)));
-  const boardMessageWithUser = boardMessages.map(bm => ({ ...bm, user: findUserDetails(bm.userId) }));
-  const boardMessageSeenStatusWithUser = boardMessageSeenStatus.map(bms => ({ ...bms, user: findUserDetails(bms.userId) }));
-  session.dispatch(schema.add('BoardMessage', boardMessageWithUser));
-  session.dispatch(schema.add('BoardMessageSeenStatus', boardMessageSeenStatusWithUser));
-  session.dispatch(schema.add('BoardMember', boardMember));
+  session.dispatch(schema.add('BoardMember', boardMemberWithUser));
+  session.dispatch(schema.add('BoardMessageSeenStatus', boardMessageSeenStatus));
+  session.dispatch(schema.add('BoardMessage', boardMessages));
+
 }

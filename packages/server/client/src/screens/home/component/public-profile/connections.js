@@ -56,7 +56,7 @@ class Connections extends React.Component {
         this.setState({ loading: true });
         try {
           const res = await apis.connectUser(info);
-          addDatabaseSchema('UserConnection', { id: res, ...info });
+          addDatabaseSchema('UserConnection', { id: res, ...info, user: { user: details, userDetail: details.userDetail } });
           this.setState({
             type: 'pending',
             loading: false,

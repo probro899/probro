@@ -45,7 +45,7 @@ class Login extends Component {
   render() {
     const { account } = this.props;
     const { redirect, slug, loading } = this.state;
-    console.log('props in login page', this.props);
+    // console.log('props in login page', this.props);
     return (
       <div className="o-log-or-reg">
         <div className="log-or-reg">

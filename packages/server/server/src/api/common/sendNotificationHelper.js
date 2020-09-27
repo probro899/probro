@@ -15,7 +15,7 @@ const messageBody = (message, record) => {
   switch (message) {
     case 'createColumn':
       return {
-        body: `${user.firstName} created "${boardColumn ? boardColumn.name : null }" in class ${board.name}`,
+        body: `${user.firstName} created "${boardColumn ? boardColumn.name : null}" in class ${board.name}`,
         title: 'Create Coulumn',
       };
     case 'createCard':
@@ -127,7 +127,6 @@ const findEmailBody = async (record) => {
 };
 
 export default async (context, record) => {
-  console.log('send notifcation helper params', record.message);
   try {
     const { session } = context;
     const sessions = session.getChannel(`Board-${record.boardId}`).filter(s => s.values.user.id !== session.values.user.id);

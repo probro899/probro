@@ -11,6 +11,10 @@ import Report from '../../report';
 class ToolBar extends React.Component {
   state = { showReport: null };
 
+  componentWillReceiveProps(nextprops) {
+    console.log('component will recieve props', nextprops);
+  }
+
   toggleAddUser = () => {
     const { addUser } = this.state;
     this.setState({
@@ -49,7 +53,7 @@ class ToolBar extends React.Component {
       database,
       UserDetail,
     } = this.props;
-    console.log('boardMember in tool bar', this.props);
+    // console.log('boardMember in tool bar', this.props);
     const extUser = Object.values(UserDetail.byId).find(obj => obj.userId === account.user.id);
     const board = Object.values(boards.byId).find(obj => obj.id === boardId);
     const { showReport } = this.state;

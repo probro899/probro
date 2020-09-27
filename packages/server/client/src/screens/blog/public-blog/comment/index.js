@@ -10,7 +10,7 @@ import { ENDPOINT } from '../../../../config';
 class CommentContainer extends React.Component {
   state = {
     comment: '',
-    liked: null,
+    liked: {},
     allComments: [],
     allLikes: [],
     deletePopover: false,
@@ -19,7 +19,6 @@ class CommentContainer extends React.Component {
 
   componentDidMount() {
     const { likes, account, comments } = this.props;
-    console.log('comments', comments);
     this.setState({
       allComments: comments,
       allLikes: likes,
@@ -28,7 +27,7 @@ class CommentContainer extends React.Component {
       likes.filter((obj) => {
         if (obj.userId === account.user.id) {
           this.setState({
-            liked: obj.id,
+            liked: obj,
           });
         }
       });
@@ -37,14 +36,16 @@ class CommentContainer extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     const { account, likes } = this.props;
-    if (account.user !== nextProps.account.user) {
-      likes.filter((obj) => {
-        if (obj.userId === nextProps.account.user.id) {
-          this.setState({
-            liked: obj.id,
-          });
-        }
-      });
+    if (nextProps.account.user) {
+      if (account.user !== nextProps.account.user) {
+        likes.filter((obj) => {
+          if (obj.userId === nextProps.account.user.id) {
+            this.setState({
+              liked: obj,
+            });
+          }
+        });
+      }
     }
   }
 
@@ -135,14 +136,25 @@ class CommentContainer extends React.Component {
       blogId,
     } = this.props;
     if (liked) {
-      await apis.deleteBlogLike({
-        id: liked,
-        broadCastId: `Blog-${blogId}`,
-      });
-      this.setState({
-        allLikes: allLikes.filter(obj => obj.id !== liked),
-        liked: null,
-      });
+      if (liked.likeType === 'like') {
+        await apis.updateBlogLike([{
+          likeType: 'unlike',
+          broadCastId: `Blog-${blogId}`,
+        }, { id: liked.id }]);
+        this.setState({
+          allLikes: allLikes.map(obj => (obj.id === liked.id ? { ...liked, likeType: 'unlike' } : obj)),
+          liked: { ...liked, likeType: 'unlike' },
+        });
+      } else {
+        await apis.updateBlogLike([{
+          likeType: 'like',
+          broadCastId: `Blog-${blogId}`,
+        }, { id: liked.id }]);
+        this.setState({
+          allLikes: allLikes.map(obj => (obj.id === liked.id ? { ...liked, likeType: 'like' } : obj)),
+          liked: { ...liked, likeType: 'like' },
+        });
+      }
     } else {
       const data = {
         blogId,
@@ -167,7 +179,14 @@ class CommentContainer extends React.Component {
       deletePopover,
     } = this.state;
     const { users, imgUrl, account } = this.props;
-    console.log('all comments', allComments);
+    // console.log('all likes', allLikes);
+    const totalLikes = allLikes.filter(l => l.likeType === 'like').length;
+    let isLike = false;
+    if (liked) {
+      if (liked.likeType === 'like') {
+        isLike = true;
+      }
+    }
     const image = (account.user && account.user.userDetails.image) ? `${ENDPOINT}/assets/user/${10000000 + parseInt(account.user.id, 10)}/profile/${account.user.userDetails.image}` : '/assets/icons/64w/uploadicon64.png';
     return (
       <div className="response">
@@ -176,14 +195,14 @@ class CommentContainer extends React.Component {
           <div>
             {account.user && (
               <Button
-                intent={liked ? 'primary' : 'none'}
-                text={liked ? 'Liked' : 'Like'}
+                intent={isLike ? 'primary' : 'none'}
+                text={isLike ? 'Liked' : 'Like'}
                 icon="thumbs-up"
                 onClick={this.likeBlog}
               />
             )}
             <span>
-              {` ${allLikes.length} Likes`}
+              {` ${totalLikes} Likes`}
             </span>
           </div>
           { account.user && (

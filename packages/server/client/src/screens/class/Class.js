@@ -132,6 +132,7 @@ class Class extends Component {
   render() {
     const { account, database } = this.props;
     const { createBool, deleteClass, updateClass } = this.state;
+    // console.log('props In class', this.props);
     return (
       <div className="classes bro-right">
         <DeletePopOver

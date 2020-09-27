@@ -3,7 +3,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Icon } from '@blueprintjs/core';
-import axios from 'axios';
 import * as actions from '../../../../actions';
 import Navbar from '../navbar';
 import Footer from '../../../../common/footer';
@@ -17,12 +16,6 @@ import getName from '../../../../common/utility-functions/getName';
 import Activities from './activities';
 import { GET_USER } from '../../../../queries';
 import clientQuery from '../../../../clientConfig';
-
-// const file = require('../../../../assets/icons/512h/uploadicon512.png');
-// const school = require('../../../../assets/icons/64w/school64.png');
-// const office = require('../../../../assets/icons/64w/office64.png');
-
-// const defaultCover = require('../../../../assets/default-cover.jpg');
 
 class PublicProfile extends React.Component {
   constructor(props) {
@@ -94,12 +87,11 @@ class PublicProfile extends React.Component {
     } = this.props;
     const { loading, data, apis } = this.state;
     if (loading) return <Spinner />;
-    // console.log('data', data);
-    const userDetails = data.userDetail;
+    const userDetails = data.userDetail || {};
     const { user, userEducation, userWorkExperience } = data;
     const portals = data.userPortal || [];
-    const imgUrl = data.userDetail.coverImage ? `${ENDPOINT}/assets/user/${10000000 + parseInt(data.id, 10)}/profile/${data.userDetail.coverImage}` : '/assets/graphics/default-cover.jpg';
-    const editCoverUrl = data.userDetail.coverEdit && `${ENDPOINT}/assets/user/${10000000 + parseInt(data.id, 10)}/profile/${data.userDetail.coverEdit}`;
+    const imgUrl = userDetails.coverImage ? `${ENDPOINT}/assets/user/${10000000 + parseInt(data.id, 10)}/profile/${userDetails.coverImage}` : '/assets/graphics/default-cover.jpg';
+    const editCoverUrl = userDetails.coverEdit && `${ENDPOINT}/assets/user/${10000000 + parseInt(data.id, 10)}/profile/${userDetails.coverEdit}`;
     return (
       <>
         <Navbar />
@@ -211,15 +203,15 @@ class PublicProfile extends React.Component {
                 </div>
               </div>
               <div className="skills">
-            <p className="p-top">
-              <span>Skills</span>
-            </p>
-            <div className="skills-container">
-              {
-                data.userSkill.length === 0 ? 'No Skills Added' : JSON.parse(data.userSkill[0].skill).map((skill, idx) => <span key={idx}>{skill}</span>)
-              }
-            </div>
-          </div>
+                <p className="p-top">
+                  <span>Skills</span>
+                </p>
+                <div className="skills-container">
+                  {
+                    data.userSkill.length === 0 ? 'No Skills Added' : JSON.parse(data.userSkill[0].skill).map((skill, idx) => <span key={idx}>{skill}</span>)
+                  }
+                </div>
+              </div>
             </div>
             <div className="right-body">
               <Activities />

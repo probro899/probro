@@ -10,12 +10,9 @@ import Notifications from '../notification';
 import MessageNotification from './MessageNotification';
 import getUnReadNotification from '../notification/helper-functions/getUnreadNotification';
 import SmallScreenMenu from './SmallScreenMenu';
-import { getChatList } from '../../../../common/communication/chatlist/helper-function';
 import { ENDPOINT } from '../../../../config';
 import DashboardMenu from './DashboardMenu';
-import callClosehandler from '../../../../common/communication/helper-functions/webrtc/mesh/closeHandler';
-
-// const pcLogo = require('../../../../assets/logo.png');
+import callClosehandler from '../../../../communication/helper-functions/webrtc/mesh/closeHandler';
 
 const DropDownMenu = (onclick, logoutAction, loading, account) => {
   return (
@@ -56,7 +53,7 @@ class Navbar extends Component {
     const apis = await client.scope('Mentee');
     const { account } = this.props;
     if (account.user) {
-      // this.getUnreadNotifs(this.props);
+      this.getUnreadNotifs(this.props);
     }
     this.setState({ apis });
   }
@@ -64,15 +61,15 @@ class Navbar extends Component {
   componentWillReceiveProps(nextProps) {
     const { account } = nextProps;
     if (account.user) {
-      // this.getUnreadNotifs(nextProps);
+      this.getUnreadNotifs(nextProps);
     }
   }
 
   getUnreadNotifs = (nextProps) => {
-    const { database, account } = nextProps;
+    const { account, webRtc } = nextProps;
     const { unreadMessage, unreadNotis } = this.state;
     if (!account.user) return;
-    const chatList = getChatList({ database, account });
+    const chatList = webRtc.chatList || [];
     const unreadMessageT = chatList.reduce((t, next) => {
       t += next.unSeenNo;
       return t;

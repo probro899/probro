@@ -9,12 +9,12 @@ import { ENDPOINT } from '../../../config';
 class Connecte extends React.Component {
   state = { loading: false };
 
-  getImage = (userDetail, user) => {
+  getImage = (userDetail, user, activeStatus) => {
     const imgUrl = userDetail && userDetail.image ? `${ENDPOINT}/assets/user/${10000000 + parseInt(userDetail.userId, 10)}/profile/${userDetail.image}` : '/assets/icons/64w/uploadicon64.png';
     return (
       <div className="img-con">
         <RoundPicture imgUrl={imgUrl} />
-        {user.activeStatus && <span className="green-dot" />}
+        {activeStatus && <span className="green-dot" />}
       </div>
     );
   }
@@ -26,7 +26,7 @@ class Connecte extends React.Component {
     updateWebRtc('communicationContainer', 'history');
     updateWebRtc('connectionId', id);
     // connection.userId === account.user.id ? database.User.byId[connection.mId] : database.User.byId[connection.userId];
-    updateWebRtc('chatHistory', { type: 'user', user: { user }, connectionId: id });
+    updateWebRtc('chatHistory', { type: 'user', user: { user: user.user, userDetails: user.userDetail }, connectionId: id });
   };
 
   deleteRequest = async () => {
@@ -88,13 +88,13 @@ class Connecte extends React.Component {
   }
 
   render() {
-    const { user } = this.props;
+    const { user, activeStatus } = this.props;
     // const user = database.User.byId[id];
     const { userDetail } = user;
     return (
       <div className="i-result">
         {
-          this.getImage(userDetail, user)
+          this.getImage(userDetail, user, activeStatus)
         }
         <div className="desc-con">
           <p className="name">

@@ -1,33 +1,26 @@
 /* eslint-disable import/no-cycle */
 import mailBody from '../../../../../mailer/html/mailBody';
-import mailer from '../../../../../mailer';
 import findUserDetails from '../../../findUserDetails';
 import updateUserCache from '../../../updateUserCache';
 import add from '../../add';
 import cacheDatabase from '../../../../../cache/database/cache';
+import sendNotification from '../../../sendNotification';
 
 async function connectUser(record) {
   const { session } = this;
-  // console.log('record in conectUser', record);
-
   const connectRes = await add.call(this, 'UserConnection', record);
-  // console.log('User Connection Res', connectRes);
   const allDbUser = cacheDatabase.get('User');
 
   const { mId, userId } = record;
   const fUserDetails = allDbUser.find(u => u.id === userId);
   const tUserDetails = allDbUser.find(u => u.id === mId);
-
-  // console.log('from user', fUserDetails, 'to user', tUserDetails);
   const htmlStringValue = await mailBody();
 
-  mailer({
-    from: 'ProperClass<probro899@gmail.com>',
-    to: `<${tUserDetails.email}>`,
-    subject: `Friend request from ${fUserDetails.firstName} `,
-    text: 'No reply',
+  const emailObj = {
+    email: tUserDetails.email,
     html: htmlStringValue.friendRequestHtmlString(fUserDetails, tUserDetails),
-  });
+    subject: `Friend request from ${fUserDetails.firstName} `,
+  };
 
   const notiData = {
     userId: tUserDetails.id,
@@ -40,35 +33,23 @@ async function connectUser(record) {
     imageUrl: null,
   };
 
-  const notiId = await add.call(this, 'Notification', notiData);
-  const notiDetails = { id: notiId, ...notiData };
   const mainchannel = session.getChannel('Main');
   const remoteUserSession = mainchannel.find(s => s.values.user.id === tUserDetails.id);
-  // console.log('remote User session', remoteUserSession);
   if (remoteUserSession) {
-    const fuserDetailsRes = await findUserDetails(fUserDetails.id, true);
+    const fuserDetailsRes = await findUserDetails(fUserDetails.id);
     const dataToBeUpdate = {
-      User: fuserDetailsRes.user,
-      UserDetail: fuserDetailsRes.userDetail,
-      UserSkill: fuserDetailsRes.userSkill,
-      UserEducation: fuserDetailsRes.userEducation,
-      UserWorkExperience: fuserDetailsRes.userWorkExperience,
-      UserPortal: fuserDetailsRes.userPortal,
-      Notification: notiDetails,
-      UserConnection: { ...record, id: connectRes },
+      // Notification: notiDetails,
+      UserConnection: { ...record, id: connectRes, user: fuserDetailsRes },
     };
     updateUserCache(dataToBeUpdate, remoteUserSession, 'add');
+    sendNotification(this, emailObj, notiData, [remoteUserSession]);
   }
-  const tuserDetailsRes = await findUserDetails(tUserDetails.id, true);
+
+  const tuserDetailsRes = await findUserDetails(tUserDetails.id);
   const dataToBeUpdate = {
-    User: tuserDetailsRes.user,
-    UserDetail: tuserDetailsRes.userDetail,
-    UserSkill: tuserDetailsRes.userSkill,
-    UserEducation: tuserDetailsRes.userEducation,
-    UserWorkExperience: tuserDetailsRes.userWorkExperience,
-    UserPortal: tuserDetailsRes.userPortal,
+    UserConnection: { ...record, id: connectRes, user: tuserDetailsRes },
   };
-  updateUserCache(dataToBeUpdate, session, 'add');
+  updateUserCache(dataToBeUpdate, session, 'update');
   session.subscribe(`UserConnection-${fUserDetails.id}`);
   session.subscribe(`UserConnection-${tUserDetails.id}`);
   return connectRes;

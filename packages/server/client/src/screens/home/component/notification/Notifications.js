@@ -1,10 +1,11 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { Drawer, Icon } from '@blueprintjs/core';
 import NotificationContainer from './NotificationContainer';
 import { Badge } from '../../../../components';
-import SoundComponent from '../../../../common/communication/components/SoundComponent';
+import SoundComponent from '../../../../communication/components/SoundComponent';
 // import notificaitonUrl from '../../../../assets/notification.mp3';
 
 class Notifications extends React.Component {
@@ -29,6 +30,7 @@ class Notifications extends React.Component {
   render() {
     const { drawerOpen } = this.state;
     const { apis, account, notiNo, notiSound } = this.props;
+    // console.log('Props in Notification', this.props);
     return (
       <Link to="#" onClick={this.onDrawerToggle}>
         <div className="navbar-item">

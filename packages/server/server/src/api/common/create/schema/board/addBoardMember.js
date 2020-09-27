@@ -1,10 +1,8 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable import/no-cycle */
 import mailBody from '../../../../../mailer/html/mailBody';
-import findBoardDetails from '../../../findBoradDetail';
 import databaseChache from '../../../../../cache/database/cache';
 import updateUserCache from '../../../updateUserCache';
-import flat from '../../../../flat';
 import add from '../../add';
 import update from '../../../update/update';
 import sendNotification from '../../../sendNotification';
@@ -13,6 +11,7 @@ import findUserDetails from '../../../findUserDetails';
 async function addBoardMember(record) {
   const { session } = this;
   const { userId } = record;
+
   // getting all the Required tables from cache database
   const allDbUsers = databaseChache.get('User');
   const allDbBoards = databaseChache.get('Board');
@@ -21,6 +20,7 @@ async function addBoardMember(record) {
 
   // finding details of the user that is going to be add in this board
   const user = allDbUsers.find(u => u.id === parseInt(userId, 10));
+
   // deleting some privated info
   delete user.password;
   delete user.verificationToken;
@@ -28,8 +28,10 @@ async function addBoardMember(record) {
 
   // finding info of the user to add the curent user
   const fuser = allDbUsers.find(u => u.id === record.fuserId);
+
   // finding current board all info
   const board = allDbBoards.find(b => b.id === record.boardId);
+
   // getting html body for emailing
   const htmlStringValue = await mailBody();
 
@@ -53,50 +55,17 @@ async function addBoardMember(record) {
 
     // getting all the session for finding tuser is currently active or not
     // Note: it is replace by UserConnection because only connected friend is allowed to add board
-
     const mainchannel = session.getChannel('Main');
     const remoteUserSession = mainchannel.find(s => s.values.user.id === user.id);
     if (remoteUserSession) {
       remoteUserSession.subscribe(`Board-${board.id}`);
       const boardDetail = allDbBoards.find(b => b.id === record.boardId);
       const boardDetailWithUser = { ...boardDetail, user: findUserDetails(boardDetail.userId) };
-
-      // gettting all the board details like column, users, card, attachment every details info
-      // const boardDetails = await findBoardDetails(record.boardId);
-
-      // getting all current board members
-      // const boardMembers = allDbBaordMembers.filter(bm => bm.boardId === record.boardId);
-
-      // finding details of board members
-      // const allBoardUsers = boardMembers.map(bm => allDbUsers.find(u => u.id === bm.userId || u.id === bm.tuserId));
-
-      // finding sessions of current active user in board
       const boardChannel = session.getChannel(`Board-${record.boardId}`);
-
-      // finding who is acitve or not
-      // const finalUserList = allBoardUsers.map((u) => {
-      //   for (let i = 0; i < boardChannel.length; i += 1) {
-      //     if (boardChannel[i].values.user.id === u.id) {
-      //       return { ...u, activeStatus: true };
-      //     }
-      //   }
-      //   return { ...u, activeStatus: false };
-      // });
-
-      // finding user details
-      // const allBoardUserDetails = finalUserList.map(fu => allDbUserDetails.find(ud => ud.userId === fu.id));
 
       // data to be updated in remote user
       const dataTobeUpdated = {
-        // User: finalUserList,
-        // UserDetail: allBoardUserDetails,
         Board: boardDetailWithUser,
-        // BoardColumn: flat(boardDetails.boardColumn),
-        // BoardColumnCard: flat(flat(boardDetails.boardColumnCard)),
-        // BoardColumnCardAttachment: flat(flat(boardDetails.boardColumnCardAttachment)),
-        // BoardColumnCardComment: flat(flat(boardDetails.boardColumnCardComment)),
-        // BoardColumnCardDescription: flat(flat(boardDetails.boardColumnCardDescription)),
-        // BoardMember: boardMembers,
       };
 
       // update remote user cache
