@@ -30,7 +30,7 @@ import { initUser } from './server/src/api';
 import client from './client/src/clientConfig';
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 4001;
 
 app.use(
   cors({
@@ -46,7 +46,6 @@ app.use(cookieParser());
 app.use('/', express.static('build/public'));
 try {
   run(async () => {
-
     // Initializing Sqlite Database
     await dbinit();
 
@@ -63,7 +62,6 @@ try {
     // Socket initialization with authentication
     const server = http.createServer(app);
     app.get('/shocked/web/:token', () => {
-      console.log('socket request arrived');
       const url = '/shocked/:origin/:token';
       const socket = start({ server, url }, async (session) => {
         const { origin, token } = session.params;

@@ -1,40 +1,28 @@
 import store from '../../../../store';
-import Janus from '../../../../webrtc/sfu/janus';
-import janusMediaSelector from './janusMediaSelector';
-import oneToOneCallHandler from './oneToOneCallHandler';
-import conferenceCallHandler from './conferenceCallHandler';
+import oneToCallAnswerHandler from './video-call-provider/answerCall';
+import conferenceCallHandler from './conference-call-provider/initCall';
+import exceptionHandler from './video-call-provider/exceptionHandler';
 
-export default (props, state) => async (apism, stream, mediaType) => {
-  const { updateWebRtc } = props;
-  const { webRtc, account } = store.getState();
-  const { apis } = webRtc;
-  const { janus, localCallHistory } = webRtc;
-  const callType = localCallHistory.chatHistory.type;
-
-  if (callType === 'user') {
-    // oneToOneCallHandler(mediaType, preMediaType, state);
-    janus.oneToOneCall.createAnswer(
-      {
-        jsep: janus.jsep,
-        media: janusMediaSelector(mediaType),
-        iceRestart: true,
-        success: (jsep) => {
-          Janus.log('Got SDP!');
-          Janus.debug(jsep);
-          const body = { request: 'accept' };
-          janus.oneToOneCall.send({ message: body, jsep });
-          janus.oneToOneCall.data({ text: JSON.stringify({ callType: mediaType, uid: account.user.id }) });
-        },
-        error: (error) => {
-          Janus.error('WebRTC error:', error);
-        },
+export default props => async (mediaType) => {
+  try {
+    const { updateWebRtc } = props;
+    const { webRtc } = store.getState();
+    const { localCallHistory } = webRtc;
+    if (localCallHistory) {
+      const callType = localCallHistory.chatHistory.type;
+      if (callType === 'user') {
+        oneToCallAnswerHandler(mediaType, props);
       }
-    );
-  }
-  if (callType === 'board') {
-    conferenceCallHandler(mediaType, null, { apis }, props);
-  }
 
-  updateWebRtc('showIncommingCall', false);
-  updateWebRtc('communicationContainer', 'connecting');
+      if (callType === 'board') {
+        conferenceCallHandler(mediaType, props);
+      }
+      await updateWebRtc('showIncommingCall', false);
+      await updateWebRtc('communicationContainer', 'connecting');
+    } else {
+      throw 'localCall history not found';
+    }
+  } catch (e) {
+    exceptionHandler({ error: e, errorCode: 140 });
+  }
 };

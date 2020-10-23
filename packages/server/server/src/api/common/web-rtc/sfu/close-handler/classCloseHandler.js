@@ -5,7 +5,7 @@ import schema from '@probro/common/source/src/schema';
 import db from '../../../../../db';
 
 export default async (callCloseDetail, session) => {
- const resId = await db.execute(async ({ insert }) => {
+  const resId = await db.execute(async ({ insert }) => {
     const insertRes = await insert('BoardMessage', {
       userId: callCloseDetail.uid,
       boardId: callCloseDetail.broadCastId,

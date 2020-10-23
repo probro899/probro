@@ -1,3 +1,5 @@
+/* eslint-disable no-undef */
+/* eslint-disable prefer-destructuring */
 /* eslint-disable react/jsx-indent */
 /* eslint-disable jsx-a11y/media-has-caption */
 import React from 'react';
@@ -10,11 +12,9 @@ class MainScreen extends React.Component {
   }
 
   shouldComponentUpdate(nextProps) {
-    // console.log('Mentor SCREEN PROPS', nextProps.webRtc, this.props.webRtc);
     const { database, webRtc } = this.props;
     const currentmentorId = webRtc.localCallHistory.chatHistory.type === 'user' ? webRtc.localCallHistory.chatHistory.user.user.id : database.Board.byId[webRtc.localCallHistory.chatHistory.connectionId].activeStatus;
     const mentorId = webRtc.localCallHistory.chatHistory.type === 'user' ? webRtc.localCallHistory.chatHistory.user.user.id : nextProps.database.Board.byId[webRtc.localCallHistory.chatHistory.connectionId].activeStatus;
-
     const currentStream = JSON.stringify(webRtc.connectedUsers[mentorId]);
     const newStream = JSON.stringify(nextProps.webRtc.connectedUsers[mentorId]);
     if ((currentStream !== newStream) || (currentmentorId !== mentorId)) {
@@ -26,7 +26,6 @@ class MainScreen extends React.Component {
   componentDidUpdate() {
     const { webRtc, database, account } = this.props;
     const videoElment = document.getElementById('video-mentor');
-
     const mentorId = webRtc.localCallHistory.chatHistory.type === 'user' ? webRtc.localCallHistory.chatHistory.user.user.id : database.Board.byId[webRtc.localCallHistory.chatHistory.connectionId].activeStatus;
     const mentorStream = webRtc.connectedUsers[mentorId];
     // console.log('Mentor Streams', mentorStream, videoElment);
@@ -46,7 +45,7 @@ class MainScreen extends React.Component {
   }
 
   render() {
-    // console.log('Mentor Screen');
+    // console.log('Mentor Screen', this.props.webRtc.connectedUsers);
     const { database, webRtc, account } = this.props;
     const muted = webRtc.localCallHistory.chatHistory.type === 'board' ? database.Board.byId[webRtc.localCallHistory.chatHistory.connectionId].activeStatus === account.user.id : false;
 

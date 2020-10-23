@@ -12,7 +12,7 @@ class ToolBar extends React.Component {
   state = { showReport: null };
 
   componentWillReceiveProps(nextprops) {
-    console.log('component will recieve props', nextprops);
+    // console.log('component will recieve props', nextprops);
   }
 
   toggleAddUser = () => {

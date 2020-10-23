@@ -57,13 +57,14 @@ class ChatHistory extends React.Component {
   toCallScreen = async (mediaType) => {
     // console.log('tocallSrean func called', mediaType);
     try {
-      const { _callHandler, apis, change, updateWebRtc, webRtc, account } = this.props;
+      const { _callHandler, change, updateWebRtc, webRtc, account } = this.props;
+      const { apis } = webRtc;
       await updateWebRtc('isCallUpgraded', false);
       await updateWebRtc('isConnecting', true);
       await updateWebRtc('connectedUsers', { ...webRtc.connectedUsers, [account.user.id]: { streams: [], type: mediaType } });
       await updateWebRtc('localCallHistory', { chatHistory: webRtc.chatHistory, stream: null, mediaType, callType: 'Outgoing', callEnd: false });
       autoCloseHandler(this.props, { apis }, 62000);
-      _callHandler(apis, null, mediaType);
+      _callHandler(mediaType);
       change('connecting');
     } catch (e) {
       console.error('Error in calling', e);
@@ -86,7 +87,7 @@ class ChatHistory extends React.Component {
       userActiveStatus = database.UserConnection.byId[connectionId].activeStatus;
     }
     const { showAudio, showVideo, showJoin } = isJanusActive(this.props);
-    return !webRtc.showCommunication ? <div /> : (
+    return (
       <div
         style={{ ...style, background: '#DDE1E2' }}
         className="chat-history"

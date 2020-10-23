@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 /* eslint-disable import/no-cycle */
 import React from 'react';
 import { Button } from '@blueprintjs/core';
@@ -74,19 +75,17 @@ class LiveCallScreen extends React.Component {
   }
 
   render() {
-    // console.log('Live Screen called', this.props);
-    const { style, webRtc, isMaximum, database, toggleMaximize, minimize } = this.props;
+    const { webRtc, isMaximum, database, toggleMaximize, minimize } = this.props;
     const { user, type } = webRtc.localCallHistory.chatHistory;
     const {
       showChatBox,
       showChatList,
       unMessageCount,
     } = this.state;
-    // console.log('Mentor Main', webRtc);
+    // console.log('Mentor Main', this.props);
     return (
       <div
         className="call-screen"
-        style={style}
       >
         {showChatList && <ScChatList onClose={this.handleClickChatList} onClickItem={this.handleClickChatBox} {...this.props} />}
         {showChatBox && <ScChatHistory onClose={this.handleClickChatBox} {...this.props} />}
@@ -125,7 +124,6 @@ export default LiveCallScreen;
 
 LiveCallScreen.propTypes = {
   minimize: PropTypes.bool.isRequired,
-  style: PropTypes.objectOf(PropTypes.any).isRequired,
   webRtc: PropTypes.objectOf(PropTypes.any).isRequired,
   change: PropTypes.func.isRequired,
   closeHandler: PropTypes.func.isRequired,
@@ -135,4 +133,5 @@ LiveCallScreen.propTypes = {
   _callHandler: PropTypes.func.isRequired,
   toggleMaximize: PropTypes.func.isRequired,
   apis: PropTypes.objectOf(PropTypes.any).isRequired,
+  isMaximum: PropTypes.bool.isRequired,
 };

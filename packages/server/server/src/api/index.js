@@ -11,6 +11,7 @@ import updateHandler from './common/update';
 import getHandler from './common/get';
 import { createOffer, createAnswer, addICeCandidate, callClose, callStatusChange, onPcStatusChange, commPingPong } from './common/web-rtc/mesh';
 import { initSfuCall, closeSfuCall, sfuPingPong, sfuCallStatusChange } from './common/web-rtc/sfu';
+import errorReportHandlers from './common/error';
 
 const mentor = createScope('Mentor', () => {
 
@@ -34,6 +35,10 @@ updateHandler.forEach(func => mentor(func));
 // all get api scoping
 getHandler.forEach(func => mentee(func));
 getHandler.forEach(func => mentor(func));
+
+// all error report apis scoping
+errorReportHandlers.forEach(func => mentee(func));
+errorReportHandlers.forEach(func => mentor(func));
 
 mentor(createOffer);
 mentor(createAnswer);

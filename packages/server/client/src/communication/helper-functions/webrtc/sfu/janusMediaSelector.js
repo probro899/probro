@@ -1,5 +1,5 @@
 
-export default (meidaType, preMediaType) =>  {
+export default (meidaType) => {
   // console.log('media selector called', meidaType, preMediaType);
   switch (meidaType) {
     case 'audio':

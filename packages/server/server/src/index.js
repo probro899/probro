@@ -13,6 +13,7 @@ import { initUser } from './api';
 import initCachDB from './cache/database/initCacheDB';
 
 // const port = process.env.PORT || 443;
+
 const port = process.env.PORT || 4001;
 const app = express(compression());
 // app.use((req, res, next) => {
@@ -40,10 +41,13 @@ app.use(bodyParser.json({ limit: '10mb', extended: true }));
 // const server = https.createServer(credentials, app);
 const server = http.createServer(app);
 run(async (nodeApp) => {
+
   // define web socket url
   const url = '/shocked/:origin/:token';
+
   // initialise database
   await dbinit();
+
   // initialise cache database
   initCachDB();
 
@@ -52,19 +56,20 @@ run(async (nodeApp) => {
     const { origin, token } = session.params;
     if (origin === 'web') {
       try {
+
         // validate user either login or not
         const user = validateToken(token);
 
         // set the user in session
         session.set('user', user);
         await initUser.call({ session }, user.id);
+
         // send data to client loginSuccess
         session.dispatch({ type: 'LOGIN', payload: user });
- 
+
         // return socket to evrything is ok
         return true;
       } catch (err) {
-        console.log('error', err);
         session.dispatch({ type: 'LOGOUT' });
         session.emit('logout');
         // return socket user not validated

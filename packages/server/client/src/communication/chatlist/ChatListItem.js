@@ -15,9 +15,14 @@ import { RoundPicture } from '../../components';
 export default ({ clo, idx }) => {
   const isUser = clo.type === 'user';
   let userActive = {};
+  let isBoardLive;
   if (isUser) {
     userActive = clo.props.database.UserConnection.byId[clo.connectionId];
   }
+  if (!isUser) {
+    isBoardLive = clo.props.database.Board.byId[clo.boardDetails.id].activeStatus;
+  }
+
   return (
     <div
       key={idx}
@@ -38,7 +43,7 @@ export default ({ clo, idx }) => {
           <div style={{ display: 'flex', flexDirection: 'column', marginLeft: 10 }}>
             <div style={{ fontWeight: 'bold' }}>
               <span style={{ padding: 3 }}>{isUser ? clo.user.user.firstName : clo.boardDetails.name}</span>
-              {!isUser && clo.boardDetails.activeStatus && <span style={{ background: 'green', padding: 3, fontSize: 10, marginLeft: 5, fontWeight: 'lighter', borderRadius: 5, color: 'white' }}>Live</span>}
+              {!isUser && isBoardLive && <span style={{ background: 'green', padding: 3, fontSize: 10, marginLeft: 5, fontWeight: 'lighter', borderRadius: 5, color: 'white' }}>Live</span>}
             </div>
             <span
               className="last-text"

@@ -157,6 +157,5 @@ Blogs.propTypes = {
   deleteDatabaseSchema: PropTypes.func.isRequired,
 };
 
-
 const mapStateToProps = state => state;
 export default connect(mapStateToProps, { ...actions })(Blogs);

@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Redirect, Link } from 'react-router-dom';
-import { Button, Position } from '@blueprintjs/core';
+import { Redirect } from 'react-router-dom';
+import { Button } from '@blueprintjs/core';
 import Tooltip from 'react-tooltip';
 import { TiMediaRecord } from 'react-icons/ti';
-import { FiMic, FiMicOff, FiEdit2, FiCopy, FiVideo, FiPhone } from 'react-icons/fi';
+import { FiMic, FiCopy, FiVideo, FiPhone } from 'react-icons/fi';
 import callUpgrader from '../helper-functions/callUpgrader';
 import { mediaRecorder } from '../../../helper-functions/webrtc/mesh';
 

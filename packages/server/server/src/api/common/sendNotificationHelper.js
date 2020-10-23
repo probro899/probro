@@ -76,7 +76,7 @@ const messageBody = (message, record) => {
     case 'deleteCard':
       return {
         body: `${user.firstName} deleted card "${card.name}" in class ${board.name}`,
-        title: 'Delete Card'
+        title: 'Delete Card',
       };
     case 'deleteAttachment':
       return {

@@ -1,5 +1,6 @@
 export default async (props) => {
-  const { apis, webRtc, updateWebRtc } = props;
+  const { webRtc, updateWebRtc } = props;
+  const { apis } = webRtc;
   const { fetchedApisRes } = webRtc;
   const { connectionId, type } = webRtc.chatHistory;
   let isFetchMessage;

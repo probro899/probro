@@ -12,6 +12,8 @@ import getUser from './request-handler/getUser';
 import getBlog from './request-handler/getBlog';
 import getIndex from './request-handler/getIndex';
 import getArchive from './request-handler/getArchive';
+import getErrorReport from './request-handler/getErrorReport';
+import deleteError from './request-handler/deleteError';
 
 export default function (app) {
   app.use((req, res, next) => {
@@ -32,11 +34,10 @@ export default function (app) {
   app.get('/web/get-blog', getBlog);
   app.post('/web/get-index', getIndex);
   app.get('/web/get-archive', getArchive);
+  app.post('/web/admin/error-report', getErrorReport);
+  app.post('/web/admin/error-delete', deleteError);
   app.use(express.static(path.resolve(__dirname, '..', 'public')));
   app.get('/reset/:token', (req, res) => {
     res.sendFile(path.resolve(__dirname, '..', 'public', 'index.html'));
   });
-  // app.get('*', (req, res) => {
-  //   res.sendFile(path.resolve(__dirname, '..', 'public', 'index.html'));
-  // });
 }

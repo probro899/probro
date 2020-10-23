@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 /* eslint-disable no-case-declarations */
 export default async (mediaType) => {
   // console.log('main canvas called', mediaType);

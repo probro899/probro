@@ -2,10 +2,10 @@
 export default async function sendBoardMessage(props) {
   const {
     account,
-    apis,
     webRtc,
     message,
   } = props;
+  const { apis } = webRtc;
   try {
     const sendingRes = await apis.addBoardMessage({
       boardId: webRtc.chatHistory.connectionId,

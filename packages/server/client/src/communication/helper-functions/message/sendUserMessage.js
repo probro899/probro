@@ -2,11 +2,11 @@
 export default async function sendUserMessage(props) {
   const {
     account,
-    apis,
     webRtc,
     message,
   } = props;
-//  console.log('webRtc value in send User Message', webRtc);
+  const { apis } = webRtc;
+  //  console.log('webRtc value in send User Message', webRtc);
   try {
     const sendingUserMessageRes = await apis.addUserMessage({
       tuserId: webRtc.chatHistory.user.user.id,

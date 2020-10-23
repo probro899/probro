@@ -1,14 +1,5 @@
-// import Styliner from 'styliner';
-// import fs from 'fs';
 
 export default async () => {
-  // const styliner = new Styliner(__dirname + '/');
-
-  // const originalSource = fs.readFileSync(__dirname + '/index.html', 'utf8');
-
-  // const string = await styliner.processHTML(originalSource);
-  // console.log('resulting string', string);
-
   const registrationHtmlString = (token) => {
     return ` <html>
     <head>

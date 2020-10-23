@@ -1,4 +1,5 @@
 import store from '../../../../../../store';
+import exceptionHandler from '../../conference-call-provider/exceptionHandler';
 
 export default async (props, state, data) => {
   // console.log(`${data.boardId}) OFFER INIT`, data);
@@ -9,6 +10,6 @@ export default async (props, state, data) => {
     await updateWebRtc('connectedUsers', { ...webRtc.connectedUsers, [userId]: { streams: [] } });
     await updateWebRtc('localCallHistory', { ...webRtc.localCallHistory, callType: webRtc.localCallHistory.callType || 'Incoming' });
   } catch (e) {
-    console.error('Offer initialization Error', e);
+    exceptionHandler({ error: e, errorCode: 126 });
   }
 };

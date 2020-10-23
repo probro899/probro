@@ -1,23 +1,25 @@
+/* eslint-disable import/no-cycle */
 import janusInit from '../../../../webrtc/sfu';
-import onCloseHandler from './onCloseHandler';
-import onMessageEventHandler from './onMessageEventHandler';
-import onErrorHandler from './onErrorHandler';
-import onLocalStreamHandler from './onLocalStreamHandler';
-import onRemoteStreamHandler from './onRemoteStreamHandler';
-import onDataHandler from './onDataHandler';
-import onDataChannelAvailable from './onDataChannelAvailable';
+import store from '../../../../store';
+import conferencePluginAttachment from './conference-call-provider/attachPlugin';
+import exceptionHandler from './conference-call-provider/exceptionHandler';
+import { attachPlugin as oneToOnePluginAttachment } from './video-call-provider';
 
-export default (props, state) => {
-  const { updateWebRtc } = props;
-  janusInit(
-    onMessageEventHandler(props, state),
-    onErrorHandler,
-    onLocalStreamHandler(props),
-    onRemoteStreamHandler(props),
-    onCloseHandler(props),
-    updateWebRtc,
-    onDataHandler(props),
-    onDataChannelAvailable(props)
-  );
-  // console.log('janus init res', janusInitRes);
+export default async (props) => {
+  try {
+    const { updateWebRtc } = props;
+    const { webRtc } = store.getState(props);
+    const janusInitRes = await janusInit(props);
+    const { janus, error } = janusInitRes;
+    await updateWebRtc('janus', { ...webRtc.janus, janus });
+    if (janus) {
+      await oneToOnePluginAttachment(props);
+      await conferencePluginAttachment(props);
+    }
+    if (error) {
+      throw janusInitRes;
+    }
+  } catch (e) {
+    exceptionHandler(e, props);
+  }
 };

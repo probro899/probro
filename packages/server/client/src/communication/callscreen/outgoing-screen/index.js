@@ -1,24 +1,42 @@
+/* eslint-disable prefer-destructuring */
 import React from 'react';
 import PropTypes from 'prop-types';
+import _ from 'lodash';
 import { FaPhoneSlash } from 'react-icons/fa';
 import { MdHourglassEmpty } from 'react-icons/md';
 import { Button, Icon } from '@blueprintjs/core';
 import RoundPicture from '../../../components/RoundPicture';
 import { ENDPOINT } from '../../../config';
 import SoundComponent from '../../components/SoundComponent';
-// import outgoingRingtoneUrl from '../../../../assets/outgoing.mp3';
-
-// const callingPerson = require('../../../../assets/icons/128w/uploadicon128.png');
+import DeviceNotFoundError from '../error-screen/DeviceNotFoundError';
 
 const IconOrImage = ({ isUser, database, webRtc }) => {
-  const userDetail = isUser ? Object.values(database.UserDetail.byId).find(o => o.userId === webRtc.localCallHistory.chatHistory.user.user.id) : null;
+  let user;
+  let userDetail;
+  let userId;
+  if (isUser) {
+    if (webRtc.localCallHistory.chatHistory) {
+      if (webRtc.localCallHistory.chatHistory.user) {
+        userId = webRtc.localCallHistory.chatHistory.user.user.id;
+        if (userId) {
+          const connection = Object.values(database.UserConnection.byId).find(c => c.user.user.id === userId);
+          if (connection) {
+            user = connection.user.user;
+            userDetail = connection.user.userDetail || {};
+          }
+        }
+      }
+    }
+  }
+
   if (isUser && userDetail && userDetail.image) {
     return (
       <div className="img-container">
-        <RoundPicture imgUrl={`${ENDPOINT}/user/${10000000 + parseInt(userDetail.userId, 10)}/profile/${userDetail.image}`} />
+        <RoundPicture imgUrl={`${ENDPOINT}/assets/user/${10000000 + parseInt(userDetail.userId, 10)}/profile/${userDetail.image}`} />
       </div>
     );
   }
+
   if (!isUser) {
     return (
       <div className="icon-container">
@@ -26,6 +44,7 @@ const IconOrImage = ({ isUser, database, webRtc }) => {
       </div>
     );
   }
+
   return (
     <div className="img-container">
       <RoundPicture imgUrl="/assets/icons/128w/uploadicon128.png" />
@@ -40,32 +59,41 @@ IconOrImage.propTypes = {
 };
 
 class Index extends React.Component {
-  state = { autoClose: null, callStatus: 'connecting...' };
+  state = { autoClose: null, callStatus: 'connecting' };
 
   async componentWillReceiveProps(nextProps) {
     // console.log('Out going call', nextProps);
     const { webRtc } = this.props;
     const { autoClose } = this.state;
-    if (webRtc !== nextProps.webRtc) {
-      if (nextProps.webRtc.localCallHistory.chatHistory.type === 'user') {
-        const connectionStatus = nextProps.webRtc.connectedUsers[webRtc.localCallHistory.chatHistory.user.user.id] || {};
-
-        this.setState({ callStatus: connectionStatus.status });
-        if (connectionStatus.status === 'busy' || connectionStatus.status === 'declined') {
-          this.setState({ callStatus: connectionStatus.status });
-          if (!autoClose) {
-            const autoTimeOut = setTimeout(this.callReject, 2000);
-            this.setState({ autoClose: autoTimeOut });
+    const localCallHistory = nextProps.webRtc.localCallHistory;
+    if (localCallHistory) {
+      const chatHistory = localCallHistory.chatHistory;
+      if (chatHistory && !_.isEqual(webRtc, nextProps.webRtc)) {
+        // console.log('user in status change', user);
+        if (chatHistory.type === 'user') {
+          const { user } = chatHistory.user;
+          const connectionStatus = nextProps.webRtc.connectedUsers[user.id] || {};
+          // console.log('connectionStatus', connectionStatus);
+          if (connectionStatus) {
+            this.setState({ callStatus: connectionStatus.status });
+            if (connectionStatus.status === 'busy' || connectionStatus.status === 'declined') {
+              this.setState({ callStatus: connectionStatus.status });
+              if (!autoClose) {
+                const autoTimeOut = setTimeout(this.callReject, 2000);
+                this.setState({ autoClose: autoTimeOut });
+              }
+            }
           }
         }
-      }
 
-      if (nextProps.webRtc.chatHistory.type === 'board') {
-        Object.values(nextProps.webRtc.connectedUsers).forEach((obj) => {
-          if (obj.status === 'ringing') {
-            this.setState({ callStatus: 'ringing' });
-          }
-        });
+        if (chatHistory.type === 'board') {
+          const connectedUsers = nextProps.webRtc.connectedUsers || {};
+          Object.values(connectedUsers).forEach((obj) => {
+            if (obj.status === 'ringing') {
+              this.setState({ callStatus: 'ringing' });
+            }
+          });
+        }
       }
     }
   }
@@ -77,6 +105,7 @@ class Index extends React.Component {
   }
 
   render() {
+    // console.log('out going call', this.props.webRtc);
     const { callStatus } = this.state;
     const { webRtc, database } = this.props;
     const isUser = webRtc.localCallHistory.chatHistory.type === 'user';
@@ -86,6 +115,7 @@ class Index extends React.Component {
     } else {
       displayName = database.Board.byId[webRtc.showCommunication].name;
     }
+
     return (
       <div className="outgoing-call-screen">
         <SoundComponent url="/assets/media/outgoing.mp3" />
@@ -105,6 +135,7 @@ class Index extends React.Component {
             </span>
           </div>
           <IconOrImage isUser={isUser} webRtc={webRtc} database={database} />
+          <DeviceNotFoundError {...this.props} />
           <div className="controllers">
             {
               (callStatus === 'declined' || callStatus === 'disconnected' || callStatus === 'busy') ? (

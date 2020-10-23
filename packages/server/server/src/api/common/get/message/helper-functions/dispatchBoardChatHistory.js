@@ -1,5 +1,6 @@
 import findUserDetails from '../../../findUserDetails';
 import cacheDatabase from '../../../../../cache/database/cache';
+import userPresentorHelper from '../../../../initializers/isUserActiveStatus';
 import flat from '../../../../flat';
 
 export default function dispatchBoardChatHistory(session, schema, id, connectionId) {
@@ -9,10 +10,11 @@ export default function dispatchBoardChatHistory(session, schema, id, connection
   const allDbBoardMember = cacheDatabase.get('BoardMember');
   const boardMember = allDbBoardMember.filter(bm => bm.boardId === connectionId);
   const boardMemberWithUser = boardMember.map(bm => ({ ...bm, user: findUserDetails(bm.tuserId) }));
+  const allBoardMemberWithActiveStatus = userPresentorHelper(session.getChannel('Main'), boardMemberWithUser);
+  const boardMemberActiveStatusToUpdate = allBoardMemberWithActiveStatus.map(bma => ({ ...bma, activeStatus: bma.activeStatus, userId: bma.user.user.id }));
   const boardMessages = allDbBoardMessage.filter(bm => bm.boardId === connectionId);
   const boardMessageSeenStatus = flat(boardMessages.map(bm => allDbBoardMessageSeenStatus.filter(bms => bms.bmId === bm.id)));
-  session.dispatch(schema.add('BoardMember', boardMemberWithUser));
+  session.dispatch(schema.add('BoardMember', boardMemberActiveStatusToUpdate));
   session.dispatch(schema.add('BoardMessageSeenStatus', boardMessageSeenStatus));
   session.dispatch(schema.add('BoardMessage', boardMessages));
-
 }

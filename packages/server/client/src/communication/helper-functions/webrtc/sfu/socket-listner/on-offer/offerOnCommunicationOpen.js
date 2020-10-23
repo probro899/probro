@@ -1,4 +1,5 @@
 import store from '../../../../../../store';
+import exceptionHandler from '../../conference-call-provider/exceptionHandler';
 
 const onNotLiveHandler = async (updateWebRtc, webRtc, database, boardId, userId) => {
   // console.log('Communication is not live', database);
@@ -25,14 +26,17 @@ const onLiveHandler = async (props, state, data) => {
 
 export default async (props, state, data) => {
   // console.log('Offer on Live handler called', data);
-  const { database } = store.getState();
-  const { updateWebRtc } = props;
-  const { userId, boardId } = data;
-  const { webRtc } = store.getState();
-
-  if (!webRtc.isLive) {
-    await onNotLiveHandler(updateWebRtc, webRtc, database, boardId, userId);
-  } else {
-    await onLiveHandler(props, state, data);
+  try {
+    const { database } = store.getState();
+    const { updateWebRtc } = props;
+    const { userId, boardId } = data;
+    const { webRtc } = store.getState();
+    if (!webRtc.isLive) {
+      await onNotLiveHandler(updateWebRtc, webRtc, database, boardId, userId);
+    } else {
+      await onLiveHandler(props, state, data);
+    }
+  } catch (e) {
+    exceptionHandler({ error: e, errorCode: 128 });
   }
 };

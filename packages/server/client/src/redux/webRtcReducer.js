@@ -25,12 +25,12 @@ const initialState = {
   lastStreamId: null,
   chatHistoryType: null,
   fetchedApisRes: [],
+  reportedError: [],
 };
 
 export default (state = initialState, action) => {
   switch (action.type) {
     case UPDATE_WEBRTC:
-      // console.log('update webRtc called', action);
       return {
         ...state,
         [action.schema]: action.payload,

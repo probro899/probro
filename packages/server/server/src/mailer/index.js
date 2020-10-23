@@ -2,9 +2,9 @@ import nodemailer from 'nodemailer';
 import { mailerPassword, mailerUserName } from '../config';
 
 const transporter = nodemailer.createTransport({
-  host: 'smtp.gmail.com',
-  port: 587,
-  secure: false,
+  host: 'smtp.domain.com',
+  port: 465,
+  secure: true,
   auth: {
     user: mailerUserName,
     pass: mailerPassword,

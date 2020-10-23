@@ -36,8 +36,17 @@ class Class extends Component {
     data.timeStamp = Date.now();
     try {
       const res = await api.addBoard(data);
-      addDatabaseSchema('Board', { ...data, type: 'private', id: res.boardId });
-      addDatabaseSchema('BoardMember', { id: res.boardMemberId, boardId: res.boardId, tuserId: account.user.id, fuserId: account.user.id, joinStatus: 1, timeStamp: Date.now(), userType: 'creator' });
+      addDatabaseSchema('Board', { ...data, type: 'private', id: res.boardId, user: { user: account.user, userDetail: account.user.userDetails }});
+      addDatabaseSchema('BoardMember', {
+        id: res.boardMemberId,
+        boardId: res.boardId,
+        tuserId: account.user.id,
+        fuserId: account.user.id,
+        joinStatus: 1,
+        timeStamp: Date.now(),
+        userType: 'creator',
+        user: { user: account.user, userDetail: account.user.userDetails },
+      });
     } catch (e) {
       return { response: 404 };
     }

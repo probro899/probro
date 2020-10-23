@@ -3,6 +3,7 @@ import offerOnCommunicationOpen from './offerOnCommunicationOpen';
 import offerOnCommunicationNotOpen from './offerOnCommunicationNotOpen';
 import store from '../../../../../../store';
 import autoCloseHandler from '../../autoCloseHandler';
+import exceptionHandler from '../../conference-call-provider/exceptionHandler';
 
 const initCall = async (props, state, data, webRtc) => {
   // console.log('call init', data);
@@ -14,41 +15,37 @@ const initCall = async (props, state, data, webRtc) => {
   }
 };
 
-const declineCall = async (status, props, state, data, webRtc) => {
-  try {
-    // console.log('call decline', status, state, props, state, data, webRtc);
-  } catch (e) {
-    console.error('Call Stautus change error when live', e);
-  }
+const declineCall = async () => {
 };
 
 export default async (props, state, data) => {
-  const { webRtc, account } = store.getState();
-  // console.log(`SFU INIT CALLED`, data);
-  const { boardId, userId } = data;
-  const { apis } = webRtc;
-
-  if (webRtc.showIncommingCall || webRtc.isConnecting) {
-    // console.log('inside call is budy mode', boardId);
-    declineCall('Call is busy', props, state, data, webRtc);
-  } else if (webRtc.isLive) {
-    if (webRtc.localCallHistory.chatHistory.connectionId === boardId) {
-      await initCall(props, state, data, webRtc);
-    } else {
+  try {
+    const { webRtc, account } = store.getState();
+    const { boardId, userId } = data;
+    const { apis } = webRtc;
+    if (webRtc.showIncommingCall || webRtc.isConnecting) {
       declineCall('Call is busy', props, state, data, webRtc);
+    } else if (webRtc.isLive) {
+      if (webRtc.localCallHistory.chatHistory.connectionId === boardId) {
+        await initCall(props, state, data, webRtc);
+      } else {
+        declineCall('Call is busy', props, state, data, webRtc);
+      }
+    } else {
+      await initCall(props, state, data, webRtc);
+      autoCloseHandler(props, state);
+      apis.sfuCallStatusChange({
+        callStatusDetails: {
+          broadCastType: 'Board',
+          broadCastId: boardId,
+          uid: account.user.id,
+          connectionId: boardId,
+          type: 'ringing',
+        },
+        userList: [{ userId }],
+      });
     }
-  } else {
-    await initCall(props, state, data, webRtc);
-    autoCloseHandler(props, state);
-    apis.sfuCallStatusChange({
-      callStatusDetails: {
-        broadCastType: 'Board',
-        broadCastId: boardId,
-        uid: account.user.id,
-        connectionId: boardId,
-        type: 'ringing',
-      },
-      userList: [{ userId }],
-    });
+  } catch (e) {
+    exceptionHandler({ error: e, errorCode: 125 });
   }
 };

@@ -19,7 +19,7 @@ const getInstance = async () => {
   }
 
   const db = await dbPromise;
-  await db.migrate({ migrationsPath: path.resolve(process.cwd(), 'server', 'src', 'db', 'migrations') });
+  await db.migrate({ migrationsPath: path.resolve(process.cwd(), 'build', 'migrations') });
   dbInstance = {
     insert: insert.bind(null, db),
     find: find.bind(null, db),

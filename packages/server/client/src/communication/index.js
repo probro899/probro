@@ -8,13 +8,11 @@ import PropTypes from 'prop-types';
 import { Icon } from '@blueprintjs/core';
 import * as actions from '../actions';
 import client from '../socket';
-import ChatList from './chatlist';
-import ChatHistory from './chathistory';
-import CallScreen from './callscreen';
-import IncomingCallScreen from './IncomingCallScreen';
-import { initJanus, callHandler, closeHandler, answerHandler, sfuSocketListner } from './helper-functions/webrtc/sfu';
+import { initJanus, closeHandler, sfuSocketListner, deviceTest } from './helper-functions/webrtc/sfu';
 import ErrorBoundary from '../common/ErrorBoundary';
-import { updateChatList, updateUserActiveStatus } from './chatlist/helper-function';
+import { updateChatList, updateUserActiveStatus, updateBoardActiveStatus } from './chatlist/helper-function';
+import exceptionReporter from './helper-functions/webrtc/sfu/exceptionReporter';
+import ScreenProvider from './screen-provider';
 
 class Communication extends React.Component {
   state = {
@@ -27,20 +25,24 @@ class Communication extends React.Component {
     try {
       const apisRes = await client.scope('Mentee');
       await this.setState({ apis: apisRes });
-      updateWebRtc('apis', apisRes);
+      await updateWebRtc('apis', apisRes);
+      // Getting chat logs
       const chatList = await apisRes.getChatlist();
-      // console.log('chatList in communcation', chatList);
-      updateWebRtc('chatList', chatList);
-      initJanus(this.props, this.state);
+      await updateWebRtc('chatList', chatList);
+      // initializing janus for communication
+      await initJanus(this.props, this.state);
+      // updating device info microphone and webcam
+      await deviceTest(updateWebRtc);
       sfuSocketListner(this.props, this.state, this.remoteCallEndMinimizer);
     } catch (e) {
-      console.error('error in fetching apis in communication');
+      exceptionReporter({ error: e, errorCode: 148 });
     }
   }
 
   componentWillReceiveProps(newProps) {
     updateChatList(newProps, this.props);
     updateUserActiveStatus(newProps, this.props);
+    updateBoardActiveStatus(newProps, this.props);
   }
 
   remoteCallEndMinimizer = () => {
@@ -85,20 +87,19 @@ class Communication extends React.Component {
 
   render() {
     // console.log('Props in communications', this.props);
-    const { apis, maximize } = this.state;
+    const { maximize, apis } = this.state;
     let height = '75%';
     if (maximize) {
       height = '100%';
     }
     const {
       webRtc,
-      updateWebRtc,
     } = this.props;
     if (webRtc.minimize) {
       height = '40px';
     }
     return (
-      (webRtc.showIncommingCall || webRtc.showCommunication) && (
+      (webRtc.showIncommingCall || webRtc.showCommunication) && apis && (
       <ErrorBoundary>
         <div
           className={maximize ? 'communicate pc-com-maximum' : 'communicate'}
@@ -121,51 +122,13 @@ class Communication extends React.Component {
           <div
             className="content"
           >
-            {!webRtc.showIncommingCall && webRtc.showCommunication && webRtc.communicationContainer === 'list' && apis && (
-            <ChatList
-                // style={!webRtc.showIncommingCall && webRtc.communicationContainer === 'list' ? { display: 'block' } : { display: 'none' }}
-              change={this.switchScreen}
-              apis={apis}
-              {...this.props}
-            />
-            )}
-            {!webRtc.showIncommingCall && webRtc.communicationContainer === 'history' && apis && (
-            <ChatHistory
-              // style={!webRtc.showIncommingCall && webRtc.communicationContainer === 'history' ? { display: 'flex' } : { display: 'none' }}
-              change={this.switchScreen}
-              _callHandler={callHandler(this.props, this.state)}
-              apis={apis}
-              {...this.props}
-            />
-            )}
-            {!webRtc.showIncommingCall && webRtc.communicationContainer === 'connecting' && webRtc.localCallHistory.chatHistory && (
-            <CallScreen
-              toggleMaximize={this.maximize}
-              isMaximum={maximize}
-              minimize={webRtc.minimize}
+            <ScreenProvider
+              maximize={maximize}
+              maximizeHandler={this.maximize}
+              switchScreenHandler={this.switchScreen}
               remoteCallEndMinimizer={this.remoteCallEndMinimizer}
-              change={this.switchScreen}
-              updateWebRtc={updateWebRtc}
-              closeHandler={closeHandler(this.props, this.state, apis)}
-              _callHandler={callHandler(this.props, this.state)}
-              apis={apis}
               {...this.props}
             />
-            )
-            }
-            {webRtc.showIncommingCall && webRtc.localCallHistory.chatHistory && (
-            <IncomingCallScreen
-              // style={webRtc.showIncommingCall ? { display: 'flex' } : { display: 'none' }}
-              change={this.switchScreen}
-              webRtc={webRtc}
-              answerHandler={answerHandler(this.props, this.state, apis)}
-              apis={apis}
-              updateWebRtc={updateWebRtc}
-              closeHandler={closeHandler(this.props, this.state, apis)}
-              {...this.props}
-            />
-            )
-            }
           </div>
         </div>
       </ErrorBoundary>

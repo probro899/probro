@@ -1,45 +1,41 @@
 /* eslint-disable import/no-cycle */
 /* eslint-disable no-lonely-if */
 import store from '../../../../store';
-import oneToOneCallCloseHandler from './oneToOneCallCloseHandler';
-import conferenceCloseHandler from './confereceCloseHandler';
+import oneToOneCallCloseHandler from './video-call-provider/closeHandler';
+import conferenceCloseHandler from './conference-call-provider/closeHandler';
+import resetCommunication from './resetCommunication';
+import execeptionHandler from './conference-call-provider/exceptionHandler';
 
 export default props => async (closeType) => {
-  const { webRtc } = store.getState();
-  // console.log('Call Close handler called', webRtc, closeType);
-  const { updateWebRtc } = props;
+  try {
+    const { webRtc } = store.getState();
+    const { updateWebRtc } = props;
 
-  // store current chathistory to local chathistory
-  updateWebRtc('chatHistory', webRtc.localCallHistory.chatHistory);
+    // store current chathistory to local chathistory
+    await updateWebRtc('chatHistory', webRtc.localCallHistory.chatHistory);
 
-  // detach and close local using media
-  if (webRtc.localCallHistory.stream) {
-    if (webRtc.localCallHistory.stream.active) {
-      const allTracks = webRtc.localCallHistory.stream.getTracks();
-      allTracks.forEach(track => track.stop());
+    // detach and close local using media
+    if (webRtc.localCallHistory.stream) {
+      if (webRtc.localCallHistory.stream.active) {
+        const allTracks = webRtc.localCallHistory.stream.getTracks();
+        allTracks.forEach(track => track.stop());
+      }
     }
-  }
 
-  if (webRtc.localCallHistory.chatHistory.type === 'user') {
-    oneToOneCallCloseHandler(props, closeType);
-  } else {
-    conferenceCloseHandler(props);
-  }
+    // handle one to one closing
+    if (webRtc.localCallHistory.chatHistory.type === 'user') {
+      await oneToOneCallCloseHandler(props, closeType);
+    }
 
-  // restoring stuff
-  updateWebRtc('communicationContainer', 'history');
-  updateWebRtc('outGoingCallType', null);
-  updateWebRtc('showOutgoingCall', false);
-  updateWebRtc('peerConnections', {});
-  updateWebRtc('pendingOffers', {});
-  updateWebRtc('remoteStream', {});
-  updateWebRtc('currentOffer', null);
-  updateWebRtc('iceCandidates', {});
-  updateWebRtc('liveIncomingCall', false);
-  updateWebRtc('isLive', false);
-  updateWebRtc('localCallHistory', { callEnd: true });
-  updateWebRtc('mainStreamId', null);
-  updateWebRtc('streams', {});
-  updateWebRtc('connectedUsers', {});
-  updateWebRtc('isConnecting', false);
+    // handle conference closing
+    if (webRtc.localCallHistory.chatHistory.type === 'board') {
+      await conferenceCloseHandler(props);
+    }
+
+    // Reset Store
+    await resetCommunication(updateWebRtc);
+
+  } catch (e) {
+    execeptionHandler({ error: e, errorCode: 123 });
+  }
 };

@@ -1,6 +1,7 @@
 const path = require('path');
 const webConfig = require('./webConfig');
 const webpackNodeExternals = require('webpack-node-externals');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
 
@@ -47,4 +48,9 @@ module.exports = {
     sharp: 'commonjs sharp',
     sqlite3: 'commonjs sqlite3',
   }],
+  plugins: [
+    new CopyWebpackPlugin([
+      { from: './server/src/db/migrations', to: './migrations' },
+    ]),
+  ],
 };

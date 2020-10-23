@@ -29,7 +29,7 @@ export default async (record) => {
       if (insertRes) {
         cache.users.set(token, record.email, RESET_TOKEN_AGE);
         mailer({
-          from: 'ProperClass<probro899@gmail.com>',
+          from: 'ProperClass<noreply@properclass.com>',
           to: `<${record.email}>`,
           subject: 'User email confirmation',
           text: 'No reply',

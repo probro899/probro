@@ -4,7 +4,6 @@ import ReactGA from 'react-ga';
 import store from './store';
 import Home from './screens';
 
-
 class App extends Component {
   state ={};
 
@@ -22,5 +21,4 @@ class App extends Component {
     );
   }
 }
-
 export default App;

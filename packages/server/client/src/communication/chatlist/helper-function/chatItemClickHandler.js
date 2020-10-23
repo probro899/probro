@@ -1,9 +1,11 @@
-export default (chatHistory) => {
-  const { change, updateWebRtc, database, apis, account, addDatabaseSchema, fromLive, showChatHistory  } = chatHistory.props;
+export default async (chatHistory) => {
+  const { change, updateWebRtc, database, account, addDatabaseSchema, fromLive, showChatHistory, webRtc } = chatHistory.props;
   // console.log('props in onClick chalt list', chatHistory);
+  const { apis } = webRtc;
   const { type, user, lastMessageId, boardDetails, unSeenNo } = chatHistory;
   const id = user ? user.user.id : chatHistory.boardDetails.id;
-  updateWebRtc('chatHistory', chatHistory);
+  await updateWebRtc('chatHistory', chatHistory);
+
   if (!fromLive) {
     change('history');
   }
@@ -25,6 +27,7 @@ export default (chatHistory) => {
       apis.addUserMessageSeenStatus({ userId: account.user.id, umId: lastMessageId, timeStamp: Date.now(), status: true, broadCastId: `UserConnection-${account.user.id}`, broadCastUserList: [{ userId: user.user.id }] });
       addDatabaseSchema('UserMessageSeenStatus', { id: Date.now(), userId: account.user.id, umId: lastMessageId, timeStamp: Date.now(), status: true });
     }
+
     if (type === 'board') {
       apis.addBoardMessageSeenStatus({ userId: account.user.id, bmId: lastMessageId, timeStamp: Date.now(), status: true, broadCastId: `Board-${boardDetails.id}` });
       addDatabaseSchema('BoardMessageSeenStatus', { id: Date.now(), userId: account.user.id, bmId: lastMessageId, timeStamp: Date.now(), status: true });

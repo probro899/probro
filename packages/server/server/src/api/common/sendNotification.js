@@ -35,7 +35,7 @@ export default async (context, emailObj, notiObj, sessions) => {
     sessions.forEach((s) => {
       updateUserCache(dataTobeupdateAllUser, s, 'add');
       mailer({
-        from: 'ProperClass<probro899@gmail.com>',
+        from: 'ProperClass<noreply@properclass.com>',
         to: `<${s.values.user.email}>`,
         subject,
         text: 'No reply',

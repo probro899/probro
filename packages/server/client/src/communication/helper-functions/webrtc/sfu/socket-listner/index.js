@@ -4,7 +4,6 @@ import onOfferArrive from './on-offer';
 import onSfuCallStatusChangeHandler from './onSfuCallStatusChangeHandler';
 
 export default (props, state, maximize) => {
-
   // initialize conferece call
   client.on('sfuInit', (data) => {
     // console.log('SFU INIT CALLED');

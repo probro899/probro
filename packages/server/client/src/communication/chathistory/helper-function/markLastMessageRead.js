@@ -1,6 +1,7 @@
 
 export default (props, state) => {
-  const { apis, webRtc, account, addDatabaseSchema } = props;
+  const { webRtc, account, addDatabaseSchema } = props;
+  const { apis } = webRtc;
   const { unSeenNo, lastMessageId } = state;
   // console.log('Mark last message read', unSeenNo, lastMessageId);
   if (unSeenNo > 0) {

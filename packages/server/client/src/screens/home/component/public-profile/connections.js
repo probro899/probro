@@ -24,8 +24,8 @@ class Connections extends React.Component {
     updateWebRtc('connectionId', connectionId.id);
     updateWebRtc('peerType', 'user');
     updateWebRtc('communicationContainer', 'history');
-    const user = connectionId.userId === account.user.id ? database.User.byId[connectionId.mId] : database.User.byId[connectionId.userId];
-    updateWebRtc('chatHistory', { type: 'user', user: { user }, connectionId: connectionId.id });
+    const { user } = database.UserConnection.byId[connectionId.id];
+    updateWebRtc('chatHistory', { type: 'user', user: { user: user.user, userDetails: user.userDetail }, connectionId: connectionId.id });
   }
 
   connectMentor = async (type) => {
