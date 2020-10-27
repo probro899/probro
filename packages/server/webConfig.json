@@ -1,4 +1,4 @@
 {
-  "siteURL": "https://properclass.com",
-  "environment": "production"
+  "siteURL": "http://localhost:3000",
+  "environment": "development"
 }
