@@ -30,7 +30,7 @@ import { initUser } from './server/src/api';
 import client from './client/src/clientConfig';
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 4001;
 
 app.use(
   cors({
