@@ -24,6 +24,6 @@ export default (props, state, msg) => {
       }
     }
   } catch (e) {
-    exceptionHandler({ error: e, errorCode: 139 });
+    exceptionHandler({ error: JSON.stringify(e), errorCode: 139 });
   }
 };

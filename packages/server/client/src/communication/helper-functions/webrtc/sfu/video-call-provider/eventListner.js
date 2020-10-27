@@ -72,6 +72,6 @@ export default (props, state) => (msg, jsep) => {
       throw 'Janus not found in store';
     }
   } catch (e) {
-    exceptionHandler({ error: e, errorCode: 138 });
+    exceptionHandler({ error: JSON.stringify(e), errorCode: 138 });
   }
 };

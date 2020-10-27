@@ -52,6 +52,6 @@ export default (publisher, props) => {
       }
     );
   } catch (e) {
-    exceptionHandler({ error: e, errorCode: 117 });
+    exceptionHandler({ error: JSON.stringify(e), errorCode: 117 });
   }
 };

@@ -35,6 +35,6 @@ export default (boardId, mediaType) => {
       throw 'Conference plugin not found';
     }
   } catch (e) {
-    exceptionHanlder({ error: e, errorCode: 143 });
+    exceptionHanlder({ error: JSON.stringify(e), errorCode: 143 });
   }
 };

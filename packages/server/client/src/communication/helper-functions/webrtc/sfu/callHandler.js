@@ -30,6 +30,6 @@ export default props => async (mediaType) => {
       throw 'janus is connection faild';
     }
   } catch (e) {
-    exceptionHandler({ error: e, errorCode: 121 });
+    exceptionHandler({ error: JSON.stringify(e), errorCode: 121 });
   }
 };

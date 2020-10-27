@@ -23,6 +23,6 @@ export default props => async (mediaType) => {
       throw 'localCall history not found';
     }
   } catch (e) {
-    exceptionHandler({ error: e, errorCode: 140 });
+    exceptionHandler({ error: JSON.stringify(e), errorCode: 140 });
   }
 };

@@ -10,6 +10,6 @@ export default (pluginHandler, joinToken, room) => {
     const register = { request: 'join', room, ptype: 'publisher', display: `${userId}`, pin: joinToken };
     pluginHandler.send({ message: register });
   } catch (e) {
-    exceptionHandler({ error: e, errorCode: 112 });
+    exceptionHandler({ error: JSON.stringify(e), errorCode: 112 });
   }
 };

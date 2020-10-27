@@ -31,6 +31,6 @@ export default async (props) => {
     await updateWebRtc('janus', { ...updatedWebRtc.janus, oneToOneCall });
   }
   if (error) {
-    exceptionHandler({ error, errorCode: 141 });
+    exceptionHandler({ error: JSON.stringify(error), errorCode: 141 });
   }
 };

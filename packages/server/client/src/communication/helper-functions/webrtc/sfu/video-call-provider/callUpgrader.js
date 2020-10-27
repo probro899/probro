@@ -27,6 +27,6 @@ export default async (mediaType, props) => {
       }
     }
   } catch (e) {
-    exceptionHandler({ error: e, errorCode: 133 });
+    exceptionHandler({ error: JSON.stringify(e), errorCode: 133 });
   }
 };

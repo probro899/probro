@@ -51,6 +51,6 @@ export default async (props, closeType) => {
       throw 'Video plugin not found';
     }
   } catch (e) {
-    exceptionHandler({ error: e, errorCode: 140 });
+    exceptionHandler({ error: JSON.stringify(e), errorCode: 140 });
   }
 };

@@ -22,6 +22,6 @@ export default (stream, publisherId, updateWebRtc) => {
       updateWebRtc('localCallHistory', { ...webRtc.localCallHistory, startTime: webRtc.localCallHistory.startTime || Date.now() });
     }
   } catch (e) {
-    exceptionHandler({ error: e, errorCode: 120 });
+    exceptionHandler({ error: JSON.stringify(e), errorCode: 120 });
   }
 };

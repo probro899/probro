@@ -36,6 +36,6 @@ export default props => async (closeType) => {
     await resetCommunication(updateWebRtc);
 
   } catch (e) {
-    execeptionHandler({ error: e, errorCode: 123 });
+    execeptionHandler({ error: JSON.stringify(e), errorCode: 123 });
   }
 };

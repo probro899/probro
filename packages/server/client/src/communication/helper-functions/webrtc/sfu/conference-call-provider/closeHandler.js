@@ -74,6 +74,6 @@ export default async (props) => {
       }
     }
   } catch (e) {
-    exceptionHandler({ error: e, errorCode: 122 });
+    exceptionHandler({ error: JSON.stringify(e), errorCode: 122 });
   }
 };

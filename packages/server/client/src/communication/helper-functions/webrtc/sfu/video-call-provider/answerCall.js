@@ -35,6 +35,6 @@ export default async (mediaType, props) => {
       throw 'Janus Obj is not found in web store';
     }
   } catch (e) {
-    exceptionHandler({ error: e, errorCode: 134 });
+    exceptionHandler({ error: JSON.stringify(e), errorCode: 134 });
   }
 };

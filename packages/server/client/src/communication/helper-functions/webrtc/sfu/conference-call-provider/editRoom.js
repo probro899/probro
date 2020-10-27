@@ -25,6 +25,6 @@ export default async (id, conferenceCall) => {
     });
     return editResult;
   } catch (e) {
-    exceptionHandler({ error: e, errorCode: 113 });
+    exceptionHandler({ error: JSON.stringify(e), errorCode: 113 });
   }
 };

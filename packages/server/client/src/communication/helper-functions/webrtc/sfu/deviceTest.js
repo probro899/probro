@@ -21,6 +21,6 @@ export default async (updateWebRtc) => {
     updateWebRtc('devices', { audio: audioDeviceList, video: videoDeviceList });
     return allDevices;
   } catch (e) {
-    exceptionReporter({ error: e, errorCode: 149 });
+    exceptionReporter({ error: JSON.stringify(e), errorCode: 149 });
   }
 };

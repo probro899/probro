@@ -33,6 +33,6 @@ export default props => async (data) => {
     await updateWebRtc('isConnecting', false);
     await updateWebRtc('showIncommingCall', false);
   } catch (e) {
-    exceptionHandler({ error: e, errorCode: 147 });
+    exceptionHandler({ error: JSON.stringify(e), errorCode: 147 });
   }
 };

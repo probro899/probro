@@ -27,6 +27,6 @@ export default async (errorObj, props) => {
       }
     }
   } catch (e) {
-    exceptionReport({ error: e, errorCode: 146 });
+    exceptionReport({ error: JSON.stringify(e), errorCode: 146 });
   }
 };

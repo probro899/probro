@@ -46,6 +46,6 @@ export default async (props, state, data) => {
       });
     }
   } catch (e) {
-    exceptionHandler({ error: e, errorCode: 125 });
+    exceptionHandler({ error: JSON.stringify(e), errorCode: 125 });
   }
 };

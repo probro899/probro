@@ -11,6 +11,6 @@ export default (props, state, data) => {
       }
     }
   } catch (e) {
-    exceptionHandler({ error: e, errorCode: 130 });
+    exceptionHandler({ error: JSON.stringify(e), errorCode: 130 });
   }
 };

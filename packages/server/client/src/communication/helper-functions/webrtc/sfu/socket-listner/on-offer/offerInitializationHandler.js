@@ -10,6 +10,6 @@ export default async (props, state, data) => {
     await updateWebRtc('connectedUsers', { ...webRtc.connectedUsers, [userId]: { streams: [] } });
     await updateWebRtc('localCallHistory', { ...webRtc.localCallHistory, callType: webRtc.localCallHistory.callType || 'Incoming' });
   } catch (e) {
-    exceptionHandler({ error: e, errorCode: 126 });
+    exceptionHandler({ error: JSON.stringify(e), errorCode: 126 });
   }
 };

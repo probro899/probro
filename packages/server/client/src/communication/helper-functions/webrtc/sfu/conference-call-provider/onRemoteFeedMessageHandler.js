@@ -12,7 +12,7 @@ export default (msg, jsep, remoteFeed, roomId) => {
           remoteFeed.send({ message: body, jsep: answerJsep });
         },
         error: (error) => {
-          exceptionHandler({ error, errorCode: 119 });
+          exceptionHandler({ error: JSON.stringify(error), errorCode: 119 });
         },
       }
     );

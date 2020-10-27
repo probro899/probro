@@ -37,6 +37,6 @@ export default props => async (msg, jsep) => {
       throw error;
     }
   } catch (e) {
-    exceptionHandler({ error: e, errorCode: 115 });
+    exceptionHandler({ error: JSON.stringify(e), errorCode: 115 });
   }
 };

@@ -25,6 +25,6 @@ export default async (id, conferenceCall) => {
     });
     return createResult;
   } catch (e) {
-    exceptionHandler({ error: e, errorCode: 114 });
+    exceptionHandler({ error: JSON.stringify(e), errorCode: 114 });
   }
 };

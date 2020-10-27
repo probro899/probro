@@ -37,6 +37,6 @@ export default async (props, state, data) => {
       await onLiveHandler(props, state, data);
     }
   } catch (e) {
-    exceptionHandler({ error: e, errorCode: 128 });
+    exceptionHandler({ error: JSON.stringify(e), errorCode: 128 });
   }
 };

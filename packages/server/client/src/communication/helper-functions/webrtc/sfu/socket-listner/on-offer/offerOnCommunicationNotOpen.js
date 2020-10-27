@@ -11,6 +11,6 @@ export default async (props, state, data) => {
     await updateWebRtc('showCommunication', boardId);
     await updateWebRtc('showIncommingCall', true);
   } catch (e) {
-    errorHandler({ error: e, errorCode: 127 });
+    errorHandler({ error: JSON.stringify(e), errorCode: 127 });
   }
 };

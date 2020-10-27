@@ -25,6 +25,6 @@ export default async (conferenceCall) => {
     });
     return res;
   } catch (e) {
-    exceptionHandler({ error: e, errorCode: 116 });
+    exceptionHandler({ error: JSON.stringify(e), errorCode: 116 });
   }
 };

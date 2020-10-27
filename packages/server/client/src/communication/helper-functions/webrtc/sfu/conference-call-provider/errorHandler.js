@@ -2,5 +2,5 @@
 import exceptionHandler from './exceptionHandler';
 
 export default (err) => {
-  exceptionHandler({ error: err, errorCode: 144 });
+  exceptionHandler({ error: JSON.stringify(err), errorCode: 144 });
 };

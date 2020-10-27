@@ -54,6 +54,6 @@ export default async (props, state, msg, jsep) => {
       throw 'connectionId or user not found';
     }
   } catch (e) {
-    exceptionHandler({ error: e, errorCode: 135 });
+    exceptionHandler({ error: JSON.stringify(e), errorCode: 135 });
   }
 };

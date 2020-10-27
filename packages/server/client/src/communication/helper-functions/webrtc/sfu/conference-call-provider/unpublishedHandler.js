@@ -37,6 +37,6 @@ export default async (props, unpublishedId) => {
       throw 'localCallHistory not found';
     }
   } catch (e) {
-    exceptionHandler({ error: e, errorCode: 124 });
+    exceptionHandler({ error: JSON.stringify(e), errorCode: 124 });
   }
 };

@@ -30,6 +30,6 @@ export default async (mediaType, props) => {
       throw 'Janus Obj not found in webRtc';
     }
   } catch (e) {
-    exceptionHandler({ error: e, errorCode: 132 });
+    exceptionHandler({ error: JSON.stringify(e), errorCode: 132 });
   }
 };
