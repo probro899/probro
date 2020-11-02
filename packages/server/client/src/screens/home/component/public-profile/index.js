@@ -16,7 +16,7 @@ import getName from '../../../../common/utility-functions/getName';
 import Activities from './activities';
 import { GET_USER } from '../../../../queries';
 import clientQuery from '../../../../clientConfig';
-
+ 
 class PublicProfile extends React.Component {
   constructor(props) {
     super(props);
@@ -39,7 +39,7 @@ class PublicProfile extends React.Component {
       if (account.user) {
         apis = await client.scope('Mentee');
       }
-      const { data, loading, error } = await clientQuery.query({ query: GET_USER, variables: { userSlug: match.params.userId } });
+      const { data, loading, error } = await clientQuery.query({ query: GET_USER, variables: { userSlug: match.params.userId }, fetchPolicy: 'network-only' });
       if (data) {
         this.setState({
           data: data.getUser,
@@ -60,7 +60,7 @@ class PublicProfile extends React.Component {
         loading: true,
       });
       try {
-        const { data, loading, error } = await clientQuery.query({ query: GET_USER, variables: { userSlug: match.params.userId } });
+        const { data, loading, error } = await clientQuery.query({ query: GET_USER, variables: { userSlug: match.params.userId }, fetchPolicy: 'network-only' });
         if (data) {
           this.setState({
             data: data.getUser,

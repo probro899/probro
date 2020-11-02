@@ -8,9 +8,10 @@ import { Spinner } from '../../../common';
 import SingleArchive from './SingleArchive';
 import PopularOnPc from './PopularOnPc';
 import { GET_ARCHIVES } from '../../../queries';
+import clientConfig from '../../../clientConfig';
 
 function Archive() {
-  const { data, loading } = useQuery(GET_ARCHIVES);
+  const { data, loading } = clientConfig.query({ query: GET_ARCHIVES, fetchPolicy: 'network-only' });
   if (loading) return <Spinner />;
   return (
     <div>

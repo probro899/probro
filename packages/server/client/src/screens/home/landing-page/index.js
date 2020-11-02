@@ -10,10 +10,11 @@ import Post from './posts';
 import Footer from '../../../common/footer';
 import { Spinner } from '../../../common';
 import { GET_POPULAR } from '../../../queries';
+import clientConffig from '../../../clientConfig';
 
 function HomePage() {
   store.dispatch(updateNav({ schema: 'mainNav', data: { name: 'properClass' } }));
-  const { data, loading } = useQuery(GET_POPULAR);
+  const { data, loading } = clientConffig.query({ query: GET_POPULAR, fetchPolicy: 'network-only' });
   if (loading) return <Spinner />;
   return (
     <div>
