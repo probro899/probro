@@ -32,25 +32,17 @@ import client from './client/src/clientConfig';
 const app = express();
 const PORT = process.env.PORT || 4001;
 
+// app.use(
+//   cors({
+//     origin: `${webConfig.siteURL}`,
+//     credentials: true,
+//   })
+// );
+
+
 app.use(
-  cors({
-    origin: `${webConfig.siteURL}`,
-    credentials: true,
-  })
+  cors()
 );
-
-// app.use((req, res, next) => {
-//   res.header('Access-Control-Allow-Origin', '*');
-//   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-
-//   // Request methods you wish to allow
-//   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-
-//   // Set to true if you need the website to include cookies in the requests sent
-//   // to the API (e.g. in case you use sessions)
-//   res.setHeader('Access-Control-Allow-Credentials', true);
-//   next();
-// });
 
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: true, parameterLimit: 50000 }));
 app.use(bodyParser.json({ limit: '50mb', extended: true }));
