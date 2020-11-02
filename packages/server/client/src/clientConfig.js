@@ -4,11 +4,11 @@ import webConfig from '../../webConfig.json';
 const defaultOptions = {
   watchQuery: {
     fetchPolicy: 'network-only',
-    errorPolicy: 'ignore',
+    errorPolicy: 'ignore'
   },
   query: {
-   fetchPolicy: 'network-only',
-    errorPolicy: 'all',
+    fetchPolicy: 'network-only',
+    errorPolicy: 'all'
   },
 };
 
@@ -20,6 +20,6 @@ const client = new ApolloClient({
     credentials: 'same-origin',
   }),
   cache: new InMemoryCache(),
-  defaultOptions,
+  defaultOptions
 });
 export default client;
