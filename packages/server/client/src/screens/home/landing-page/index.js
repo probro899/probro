@@ -21,7 +21,7 @@ function HomePage() {
       <Slider />
       <Banner />
       <Post />
-      <Popular data={data.getPopular.users} />
+     {data && <Popular data={data.getPopular.users} />}
       <Footer />
     </div>
   );
