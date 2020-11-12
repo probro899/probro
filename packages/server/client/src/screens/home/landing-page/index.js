@@ -30,7 +30,7 @@ class HomePage extends React.Component {
         <Slider />
         <Banner />
         <Post />
-      {data && <Popular data={data.getPopular.users} />}
+        <Popular data={data.getPopular.users} />
         <Footer />
       </div>
     );

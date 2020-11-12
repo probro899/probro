@@ -1,6 +1,6 @@
 import Janus from './janus';
 
-const plugin = { oneToOneCall: 'janus.plugin.videocall', conferenceCall: 'janus.plugin.videoroom' };
+const plugin = { oneToOneCall: 'janus.plugin.videocall', conferenceCall: 'janus.plugin.videoroom', streaming: 'janus.plugin.streaming' };
 
 export default function janusAttachment(
   janus,

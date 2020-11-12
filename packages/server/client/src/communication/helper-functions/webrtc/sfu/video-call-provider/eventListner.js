@@ -35,6 +35,7 @@ export default (props, state) => (msg, jsep) => {
                 oneToOneCall.handleRemoteJsep({ jsep });
               }
             } else if (event === 'update') {
+              // console.log('update current session', jsep.type, localCallHistory.mediaType);
               if (jsep) {
                 if (jsep.type === 'answer') {
                   oneToOneCall.handleRemoteJsep({ jsep });
@@ -42,7 +43,7 @@ export default (props, state) => (msg, jsep) => {
                   oneToOneCall.createAnswer(
                     {
                       jsep,
-                      media: localCallHistory.mediaType === 'screenshare' ? null : janusMediaSelector(localCallHistory.mediaType),
+                      media: janusMediaSelector(localCallHistory.mediaType),
                       success: (currentJsep) => {
                         const body = { request: 'set' };
                         oneToOneCall.send({ message: body, jsep: currentJsep });

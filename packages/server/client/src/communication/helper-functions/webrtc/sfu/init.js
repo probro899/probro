@@ -4,6 +4,7 @@ import store from '../../../../store';
 import conferencePluginAttachment from './conference-call-provider/attachPlugin';
 import exceptionHandler from './conference-call-provider/exceptionHandler';
 import { attachPlugin as oneToOnePluginAttachment } from './video-call-provider';
+import { attachPlugin as streamPluginAttachment } from './streaming';
 
 export default async (props) => {
   try {
@@ -15,6 +16,7 @@ export default async (props) => {
     if (janus) {
       await oneToOnePluginAttachment(props);
       await conferencePluginAttachment(props);
+      await streamPluginAttachment(props);
     }
     if (error) {
       throw janusInitRes;

@@ -14,7 +14,6 @@ import cors from 'cors';
 import run from 'app-node';
 import { Helmet } from 'react-helmet';
 import { Provider } from 'react-redux';
-import webConfig from './webConfig.json';
 import { init as dbinit } from './server/src/db';
 import AppComponent from './client/src/App';
 import HTML from './client/src/renderer';
@@ -31,14 +30,6 @@ import client from './client/src/clientConfig';
 
 const app = express();
 const PORT = process.env.PORT || 4001;
-
-// app.use(
-//   cors({
-//     origin: `${webConfig.siteURL}`,
-//     credentials: true,
-//   })
-// );
-
 
 app.use(
   cors()

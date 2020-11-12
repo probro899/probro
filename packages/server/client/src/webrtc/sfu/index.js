@@ -16,7 +16,7 @@ export default async () => {
       {
         server: 'wss://properclass.com:8989/janus',
         apisecret: 'properclassdotcom@654123',
-        iceServers: [{ urls: 'turn:properclass.com:3478?transport=tcp', username: 'properclass', credential: 'proper199201' }],
+        // iceServers: [{ urls: 'turn:properclass.com:3478?transport=tcp', username: 'properclass', credential: 'proper199201' }],
         success: () => {
           resolve({ janus });
         },
