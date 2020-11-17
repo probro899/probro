@@ -15,6 +15,7 @@ export default props => async (mediaType) => {
         if (localCallHistory.chatHistory) {
           callType = localCallHistory.chatHistory.type;
           if (callType === 'user') {
+            console.log('callhandler called', mediaType);
             initOneToOneCall(mediaType, props);
           }
           if (callType === 'board') {

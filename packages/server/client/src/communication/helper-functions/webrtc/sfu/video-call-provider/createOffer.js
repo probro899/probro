@@ -4,6 +4,7 @@ import janusMediaSelector from '../janusMediaSelector';
 import exceptionHandler from './exceptionHandler';
 
 export default async (mediaType, props) => {
+  console.log('createOffer', mediaType);
   try {
     const { webRtc } = store.getState();
     const janusObj = webRtc.janus;

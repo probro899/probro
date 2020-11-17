@@ -10,7 +10,7 @@ import exceptionHandler from './exceptionHandler';
 export default (props, state) => (msg, jsep) => {
   try {
     const { webRtc } = store.getState();
-    // console.log('on message event called', msg);
+    // console.log('on message event called', msg, jsep);
     const { localCallHistory } = webRtc;
     const { updateWebRtc } = props;
     const { janus } = webRtc;
@@ -35,7 +35,7 @@ export default (props, state) => (msg, jsep) => {
                 oneToOneCall.handleRemoteJsep({ jsep });
               }
             } else if (event === 'update') {
-              // console.log('update current session', jsep.type, localCallHistory.mediaType);
+              console.log('update current session', 'type =>', jsep.type, 'mediaType =>', localCallHistory.mediaType);
               if (jsep) {
                 if (jsep.type === 'answer') {
                   oneToOneCall.handleRemoteJsep({ jsep });

@@ -20,8 +20,8 @@ export default props => async (stream, uid) => {
   const userId = webRtc.localCallHistory.chatHistory.user.user.id;
   const hasUser = webRtc.connectedUsers[userId];
   if (hasUser) {
-    const hasSameStream = hasUser.streams.find(s => _.isEqual(s, stream));
-    if (!hasSameStream) {
+    // const hasSameStream = hasUser.streams.find(s => _.isEqual(s, stream));
+    // if (!hasSameStream) {
       await updateWebRtc('connectedUsers',
         {
           ...webRtc.connectedUsers,
@@ -30,7 +30,7 @@ export default props => async (stream, uid) => {
             streams: webRtc.connectedUsers[userId] ? [...webRtc.connectedUsers[userId].streams, stream] : [stream],
           },
         });
-    }
+    // }
   } else {
     await updateWebRtc('connectedUsers',
       {
