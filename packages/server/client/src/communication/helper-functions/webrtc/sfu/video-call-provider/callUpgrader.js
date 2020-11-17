@@ -4,7 +4,7 @@ import createOffer from './createOffer';
 import exceptionHandler from './exceptionHandler';
 
 export default async (mediaType, props) => {
-  console.log('callUpgrade called', mediaType);
+  // console.log('callUpgrade called', mediaType);
   try {
     const { webRtc, account } = store.getState();
     const { janus } = webRtc;
@@ -18,7 +18,6 @@ export default async (mediaType, props) => {
     } else {
       const { jsep, error, oneToOneCall } = await createOffer(mediaType);
       if (jsep) {
-        console.log('setting offer', mediaType);
         oneToOneCall.data({ text: JSON.stringify({ callType: mediaType, uid: account.user.id }) });
         oneToOneCall.send({ message: { request: 'set' }, jsep });
       }
