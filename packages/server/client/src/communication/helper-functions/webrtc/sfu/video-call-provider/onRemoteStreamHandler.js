@@ -22,14 +22,14 @@ export default props => async (stream, uid) => {
   if (hasUser) {
     // const hasSameStream = hasUser.streams.find(s => _.isEqual(s, stream));
     // if (!hasSameStream) {
-      await updateWebRtc('connectedUsers',
-        {
-          ...webRtc.connectedUsers,
-          [userId]: {
-            ...webRtc.connectedUsers[userId],
-            streams: webRtc.connectedUsers[userId] ? [...webRtc.connectedUsers[userId].streams, stream] : [stream],
-          },
-        });
+    await updateWebRtc('connectedUsers',
+      {
+        ...webRtc.connectedUsers,
+        [userId]: {
+          ...webRtc.connectedUsers[userId],
+          streams: webRtc.connectedUsers[userId] ? [...webRtc.connectedUsers[userId].streams, stream] : [stream],
+        },
+      });
     // }
   } else {
     await updateWebRtc('connectedUsers',

@@ -18,6 +18,7 @@ const HTML = ({ content, state, helmet, seo }) => {
     <link rel="shortcut icon" href="${webConfig.siteURL}/assets/graphics/favicon.ico">
     <link href="${webConfig.siteURL}/assets/css/index.css" rel="stylesheet" type="text/css" />
     <link href="${webConfig.siteURL}/assets/css/blueprint.min.css" rel="stylesheet" type="text/css" />
+    <link href="${webConfig.siteURL}/assets/css/blueprint-datetime.min.css" rel="stylesheet" type="text/css" />
     <link href="${webConfig.siteURL}/assets/css/carousel.min.css" rel="stylesheet" type="text/css" />
     `}}
       />

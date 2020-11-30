@@ -34,6 +34,9 @@ class IncomingCallScreen extends React.Component {
   render() {
     const { style, webRtc, database } = this.props;
     const isUser = webRtc.localCallHistory.chatHistory.type === 'user';
+    const audioDevices = webRtc.devices.audio;
+    const videoDevices = webRtc.devices.video;
+    const isDeviceNotFound = audioDevices.length || videoDevices.length;
     let displayName;
     let displayImageUrl;
     if (isUser) {
@@ -65,18 +68,23 @@ class IncomingCallScreen extends React.Component {
                 {displayName}
               </span>
             </div>
-            <div className="img-container">
-              <RoundPicture imgUrl={displayImageUrl} />
+            {(!webRtc.deviceNotAllowed && isDeviceNotFound) ? (
+              <div className="img-container">
+                <RoundPicture imgUrl={displayImageUrl} />
+              </div>
+            ) : null
+            }
+            <div style={{ display: 'flex', width: '100%', justifyContent: 'center' }}>
+              <DeviceNotFoundError {...this.props} />
             </div>
-            <DeviceNotFoundError {...this.props} />
             <div style={{ width: '100%', display: 'flex', justifyContent: 'center', margin: 5 }}>
               <span style={{ fontSize: 15, fontWeight: 'bold', color: '#757575' }}>
                 {webRtc.currentOffer ? `Incoming ${webRtc.currentOffer.callType} call...` : null}
               </span>
             </div>
             <div className="controllers">
-              <Button icon="phone" onClick={() => this.callAccept('audio')} large intent="success" />
-              <Button icon="mobile-video" onClick={() => this.callAccept('video')} large intent="success" />
+              {(!webRtc.deviceNotAllowed && isDeviceNotFound) ? <Button icon="phone" onClick={() => this.callAccept('audio')} large intent="success" /> : null}
+              {(!webRtc.deviceNotAllowed && isDeviceNotFound) ? <Button icon="mobile-video" onClick={() => this.callAccept('video')} large intent="success" /> : null}
               <Button icon="cross" onClick={this.callReject} large intent="danger" />
             </div>
           </div>

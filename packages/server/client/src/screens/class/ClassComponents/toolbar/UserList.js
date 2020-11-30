@@ -12,7 +12,7 @@ const UserDetail = (props) => {
     <div style={{ padding: '10px 5px 5px 5px' }}>
       <div style={{ padding: '2px' }}>
         <Link to={`/user/${detail.user.slug}`}>
-          {detail.user.middleName ? `${detail.user.firstName} ${detail.user.middleName} ${detail.user.lastName}` : `${detail.user.firstName} ${detail.user.user.lastName}`}
+          {detail.user.middleName ? `${detail.user.firstName} ${detail.user.middleName} ${detail.user.lastName}` : `${detail.user.firstName} ${detail.user.lastName}`}
         </Link>
       </div>
     </div>

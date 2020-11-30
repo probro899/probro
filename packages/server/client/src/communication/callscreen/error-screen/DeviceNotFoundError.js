@@ -1,9 +1,26 @@
+/* eslint-disable react/jsx-indent */
 import React from 'react';
-import { FiMic, FiVideo } from 'react-icons/fi';
+import { FiVideoOff, FiMicOff } from 'react-icons/fi';
+import { Card } from '@blueprintjs/core';
 import PropTypes from 'prop-types';
 
 const DeviceNotFoundError = (props) => {
   const { webRtc } = props;
+  const { deviceNotAllowed } = webRtc;
+
+  if (deviceNotAllowed) {
+    return (
+      <Card style={{ maxWidth: '80%' }}>
+        <h3>Camera and microphone are blocked</h3>
+        <span>
+            Properclass requires access to your camera and microphone. Click the camera blocked icon
+            <FiVideoOff color="red" size={20} style={{ padding: 2, marginBottom: -5 }} />
+            in your browser`s address bar.
+        </span>
+      </Card>
+    );
+  }
+
   if (webRtc.devices) {
     const audioDevices = webRtc.devices.audio;
     const videoDevices = webRtc.devices.video;
@@ -11,29 +28,38 @@ const DeviceNotFoundError = (props) => {
     if (audioDevices && videoDevices) {
       if (audioDevices.length === 0 && videoDevices.length === 0) {
         return (
-          <div>
-            <FiMic color="red" size={20} />
-            <span style={{ color: 'red', margin: 5, fontSize: 15 }}>Microphone not found</span>
-            <br />
-            <FiVideo color="red" size={20} />
-            <span style={{ color: 'red', margin: 5, fontSize: 15 }}>Webcam not found</span>
-          </div>
+          <Card style={{ maxWidth: '80%' }}>
+          <h3>Camera and microphone are not found or blocked</h3>
+          <span>
+              Properclass requires access to your camera and microphone. Click the camera blocked icon
+              <FiVideoOff color="red" size={20} style={{ padding: 2, marginBottom: -5 }} />
+              in your browser`s address bar.
+          </span>
+          </Card>
         );
       }
       if (audioDevices.length === 0) {
         return (
-          <div>
-            <FiMic color="red" size={20} />
-            <span style={{ color: 'red', margin: 5, fontSize: 15 }}>Microphone not found</span>
-          </div>
+          <Card style={{ maxWidth: '80%' }}>
+          <h3>Microphone is not found or blocked</h3>
+          <span>
+              Properclass requires access to your camera and microphone. Click the camera blocked icon
+              <FiMicOff color="red" size={20} style={{ padding: 2, marginBottom: -5 }} />
+              in your browser`s address bar.
+          </span>
+          </Card>
         );
       }
       if (videoDevices.length === 0) {
         return (
-          <div>
-            <FiVideo color="red" size={20} />
-            <span style={{ color: 'red', margin: 5, fontSize: 15 }}>Webcam not found</span>
-          </div>
+          <Card style={{ maxWidth: '80%' }}>
+          <h3>Camera is not found or blocked</h3>
+          <span>
+              Properclass requires access to your camera and microphone. Click the camera blocked icon
+              <FiVideoOff color="red" size={20} style={{ padding: 2, marginBottom: -5 }} />
+              in your browser`s address bar.
+          </span>
+          </Card>
         );
       }
     }

@@ -105,7 +105,7 @@ class Index extends React.Component {
   }
 
   render() {
-    // console.log('out going call', this.props.webRtc);
+    console.log('out going call', this.props.webRtc);
     const { callStatus } = this.state;
     const { webRtc, database } = this.props;
     const isUser = webRtc.localCallHistory.chatHistory.type === 'user';
@@ -134,7 +134,7 @@ class Index extends React.Component {
               ...
             </span>
           </div>
-          <IconOrImage isUser={isUser} webRtc={webRtc} database={database} />
+          {!webRtc.deviceNotAllowed && <IconOrImage isUser={isUser} webRtc={webRtc} database={database} />}
           <DeviceNotFoundError {...this.props} />
           <div className="controllers">
             {
