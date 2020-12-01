@@ -21,6 +21,16 @@ const initJanusHandler = async (errorObj, props) => {
   }, 5000);
 };
 
+const screenShareBlockErrorHandler = (errorObj) => {
+  // console.log('screenShare block error handler', errorObj);
+  const { error } = errorObj;
+  const isNotAllowMediaError = error.includes('NotAllowedError');
+  const { dispatch } = store;
+  if (isNotAllowMediaError) {
+    dispatch({ type: 'updateWebRtc', schema: 'screenShareNotAllowed', payload: true });
+  }
+};
+
 export default async (errorObj, props) => {
   // console.log('conference exception handler', errorObj);
   try {
@@ -32,6 +42,9 @@ export default async (errorObj, props) => {
           break;
         case 200:
           initJanusHandler(errorObj, props);
+          break;
+        case 143:
+          screenShareBlockErrorHandler(errorObj);
           break;
         default:
           exceptionReport(errorObj);

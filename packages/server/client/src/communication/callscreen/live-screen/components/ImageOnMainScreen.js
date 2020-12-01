@@ -4,12 +4,13 @@ import PropTypes from 'prop-types';
 import { Icon } from '@blueprintjs/core';
 import { RoundPicture } from '../../../../components';
 import { ENDPOINT } from '../../../../config';
+import ScreenshareNotAllowedError from '../../error-screen/ScreenshareNotAllowedError';
 
 // const userIcon = require('../../../../../assets/icons/512h/uploadicon512.png');
 
 const ImageOnMainScreen = (props) => {
   const { webRtc, database, minimize } = props;
-  // console.log('webRtc value in ImageOnMainScreen', webRtc);
+  console.log('webRtc value in ImageOnMainScreen', webRtc);
   let showImage = false;
   let imgUrl = '';
   let conId;
@@ -44,6 +45,13 @@ const ImageOnMainScreen = (props) => {
     showImage = true;
   }
   // console.log('showImage', showImage, webRtc.connectedUsers);
+  if (webRtc.screenShareNotAllowed) {
+    return (
+      <div className="img-main-screen" style={{ display: minimize ? 'none' : 'flex' }}>
+        <ScreenshareNotAllowedError {...props} />
+      </div>
+    );
+  }
   if (!showImage) return <div />;
   return (
     <div className="img-main-screen" style={{ display: minimize ? 'none' : 'flex' }}>

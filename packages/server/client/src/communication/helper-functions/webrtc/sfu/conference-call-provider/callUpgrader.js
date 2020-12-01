@@ -25,7 +25,11 @@ export default (boardId, mediaType) => {
               conferenceCall.send({ message: { request: 'configure' }, jsep });
             },
             error: (error) => {
-              throw error;
+              if (error.name) {
+                exceptionHanlder({ error: error.name, errorCode: 143 });
+              } else {
+                throw error;
+              }
             },
           }
         );

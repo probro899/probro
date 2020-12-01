@@ -15,18 +15,25 @@ const attachPlugInHandler = async (props) => {
 
 const blockingError = (errorObj) => {
   const { error } = errorObj;
-  // console.log('blocking message', JSON.parse(error));
   const isNotAllowMediaError = error.includes('NotAllowedError');
-  console.log('error name', isNotAllowMediaError);
   const { dispatch } = store;
   if (isNotAllowMediaError) {
-    console.log('update store for notification about blocking');
     dispatch({ type: 'updateWebRtc', schema: 'deviceNotAllowed', payload: true });
   }
 };
 
+const screenShareBlockErrorHandler = (errorObj) => {
+  // console.log('screenShare block error handler', errorObj);
+  const { error } = errorObj;
+  const isNotAllowMediaError = error.includes('NotAllowedError');
+  const { dispatch } = store;
+  if (isNotAllowMediaError) {
+    dispatch({ type: 'updateWebRtc', schema: 'screenShareNotAllowed', payload: true });
+  }
+};
+
 export default async (errorObj, props) => {
-  console.log('video call error', errorObj);
+  // console.log('video call error', errorObj);
   try {
     const { errorCode } = errorObj;
     if (errorCode) {
@@ -39,6 +46,9 @@ export default async (errorObj, props) => {
           break;
         case 134:
           blockingError(errorObj);
+          break;
+        case 133:
+          screenShareBlockErrorHandler(errorObj);
           break;
         default:
           exceptionReport(errorObj);

@@ -61,7 +61,6 @@ class MainScreen extends React.Component {
           className="pc-main-video"
           // poster={user && `${ENDPOINT}/user/${10000000 + parseInt(userId, 10)}/profile/${Object.values(database.UserDetail.byId).find(u => u.userId === userId).image}`}
         />
-
       </div>
     );
   }

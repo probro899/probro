@@ -11,15 +11,19 @@ export default async (mediaType, props) => {
     if (janusObj) {
       const { oneToOneCall } = janusObj;
       if (oneToOneCall) {
-        const createOfferRes = await new Promise((resolve) => {
+        const createOfferRes = await new Promise((resolve, reject) => {
           oneToOneCall.createOffer(
             {
               media: janusMediaSelector(mediaType),
               success: (jsep) => {
                 resolve({ jsep, oneToOneCall });
               },
-              error: (error) => {
-                resolve({ error });
+              error: (e) => {
+                if (e.name) {
+                  resolve({ error: e.name });
+                } else {
+                  resolve({ error: e });
+                }
               },
             }
           );

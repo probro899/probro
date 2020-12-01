@@ -34,9 +34,12 @@ class IncomingCallScreen extends React.Component {
   render() {
     const { style, webRtc, database } = this.props;
     const isUser = webRtc.localCallHistory.chatHistory.type === 'user';
-    const audioDevices = webRtc.devices.audio;
-    const videoDevices = webRtc.devices.video;
-    const isDeviceNotFound = audioDevices.length || videoDevices.length;
+    let isDeviceNotFound;
+    if (webRtc.devices) {
+      const audioDevices = webRtc.devices.audio || [];
+      const videoDevices = webRtc.devices.video || [];
+      isDeviceNotFound = audioDevices.length || videoDevices.length;
+    }
     let displayName;
     let displayImageUrl;
     if (isUser) {
