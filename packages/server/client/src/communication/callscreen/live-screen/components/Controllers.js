@@ -29,15 +29,16 @@ class Controllers extends React.Component {
   }
 
   recordingHandler = async () => {
+    console.log('media recorder called 1');
     const { startRecording } = this.state;
     const { updateWebRtc, webRtc } = this.props;
     if (!startRecording) {
       const mediaRecording = await mediaRecorder(1, this.props);
-      updateWebRtc('mediaRecording', mediaRecording);
+      await updateWebRtc('mediaRecording', mediaRecording);
       this.setState({ startRecording: true });
     } else {
-      webRtc.mediaRecording.stopRecording();
-      updateWebRtc('mediaRecording', null);
+      await webRtc.mediaRecording.stopRecording();
+      await updateWebRtc('mediaRecording', null);
       this.setState({ startRecording: false });
     }
   }
@@ -68,6 +69,7 @@ class Controllers extends React.Component {
   }
 
   render() {
+    console.log('props in controller', this.props);
     const { webRtc, account } = this.props;
     const { showWhiteBoard, startRecording } = this.state;
     return (

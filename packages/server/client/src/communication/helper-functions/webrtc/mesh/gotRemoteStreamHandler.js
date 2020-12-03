@@ -26,7 +26,6 @@ export default props => async (stream, userId) => {
       },
     });
 
-
   await updateWebRtc('streams', {
     ...webRtc.streams,
     [userId]: {
@@ -39,7 +38,7 @@ export default props => async (stream, userId) => {
   await updateWebRtc('localCallHistory', { ...webRtc.localCallHistory, startTime: webRtc.localCallHistory.startTime || Date.now() });
   await updateWebRtc('lastStreamId', userId);
   // await updateWebRtc('isLive', true);
-  await stopAndRecordStream(props, userId, stream);
+  // await stopAndRecordStream(props, userId, stream);
 
   // console.log('remote stream handler', userId, store.getState().webRtc);
 };

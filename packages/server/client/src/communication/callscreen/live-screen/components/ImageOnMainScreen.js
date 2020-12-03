@@ -10,7 +10,7 @@ import ScreenshareNotAllowedError from '../../error-screen/ScreenshareNotAllowed
 
 const ImageOnMainScreen = (props) => {
   const { webRtc, database, minimize } = props;
-  console.log('webRtc value in ImageOnMainScreen', webRtc);
+  // console.log('webRtc value in ImageOnMainScreen', webRtc);
   let showImage = false;
   let imgUrl = '';
   let conId;

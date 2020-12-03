@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 /* eslint-disable react/jsx-closing-tag-location */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
@@ -5,8 +6,6 @@ import React from 'react';
 import store from '../../../../store';
 
 export default async function (uid, props) {
-  // console.log('stream recoder called', uid, store.getState().webRtc);
-  // const stream = store.getState().webRtc.streams[uid];
   const videoElem = document.getElementById('video-mentor');
   const stream = videoElem.captureStream ? videoElem.captureStream() : videoElem.mozCaptureStream();
 
@@ -56,40 +55,38 @@ export default async function (uid, props) {
     // console.log('Recoder resumed', event);
   };
 
-  const downLoadButtonClickHandler = (sid) => {
+  const downLoadButtonClickHandler = async (sid) => {
     const { updateWebRtc } = props;
-    // console.log('downloadButton Click handler', sid);
-    updateWebRtc('recordedBlobs', store.getState().webRtc.recordedBlobs.filter(a => Object.keys(a)[0] !== sid));
+    await updateWebRtc('recordedBlobs', store.getState().webRtc.recordedBlobs.filter(a => parseInt(Object.keys(a)[0], 10) !== sid));
   };
 
-  const downloadRecordedMedia = () => {
+  const downloadRecordedMedia = async () => {
     const { updateWebRtc } = props;
-    const { webRtc, database } = store.getState();
+    const sid = Date.now();
+    const { webRtc } = store.getState();
     const blob = new Blob(recordedBlob, { type: 'video/webm' });
     const url = window.URL.createObjectURL(blob);
     const formatedDate = `${new Date().getDate()}-${new Date().getMonth() + 1}-${new Date().getFullYear()}`;
-    updateWebRtc('recordedBlobs', [
+    await updateWebRtc('recordedBlobs', [
       ...store.getState().webRtc.recordedBlobs,
       {
-        [stream.id]: <a
-          id={stream.id}
+        [sid]: <a
+          id={sid}
           href={url}
           className="recorded-item"
-          // style={{ margin: 5 }}
-          download={`${webRtc.localCallHistory.chatHistory.type === 'user' ? database.User.byId[webRtc.showCommunication].firstName : database.Board.byId[webRtc.showCommunication].name}-${formatedDate}.webm`}
-          // onClick={() => downLoadButtonClickHandler(stream.id)}
+          download={`${webRtc.localCallHistory.chatHistory.type === 'user' ? `${webRtc.localCallHistory.chatHistory.user.user.firstName}` : `${webRtc.localCallHistory.chatHistory.boardDetails.name}`}-${formatedDate}.webm`}
         >
-          <div onClick={() => downLoadButtonClickHandler(stream.id)}>
-            {`${webRtc.localCallHistory.chatHistory.type === 'user' ? database.User.byId[webRtc.showCommunication].firstName : database.Board.byId[webRtc.showCommunication].name}-${formatedDate}`}
+          <div onClick={() => downLoadButtonClickHandler(sid)}>
+            {`${webRtc.localCallHistory.chatHistory.type === 'user' ? `${webRtc.localCallHistory.chatHistory.user.user.firstName}` : `${webRtc.localCallHistory.chatHistory.boardDetails.name}`}-${formatedDate}`}
           </div>
         </a>,
       },
     ]);
   };
 
-  const stopRecording = () => {
+  const stopRecording = async () => {
+    await downloadRecordedMedia();
     mediaRecorder.stop();
-    downloadRecordedMedia();
   };
 
   return { stopRecording, mediaRecorder, stream };
