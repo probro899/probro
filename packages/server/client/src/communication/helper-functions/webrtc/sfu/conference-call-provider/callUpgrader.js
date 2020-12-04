@@ -3,7 +3,7 @@ import janusMediaSelector from '../janusMediaSelector';
 import store from '../../../../../store';
 import exceptionHanlder from './exceptionHandler';
 
-export default (boardId, mediaType) => {
+export default (boardId, mediaType, doNotUpgrade) => {
   try {
     const { webRtc, account } = store.getState();
     const { localCallHistory, apis, janus, isCallUpgraded } = webRtc;
@@ -21,7 +21,9 @@ export default (boardId, mediaType) => {
           {
             media: janusMediaSelector(mediaType),
             success: (jsep) => {
-              conferenceCall.data({ text: JSON.stringify({ callType: localCallHistory.mediaType, uid: account.user.id }) });
+              if (!doNotUpgrade) {
+                conferenceCall.data({ text: JSON.stringify({ callType: localCallHistory.mediaType, uid: account.user.id, type: 'callUpgrade' }) });
+              }
               conferenceCall.send({ message: { request: 'configure' }, jsep });
             },
             error: (error) => {
@@ -33,7 +35,9 @@ export default (boardId, mediaType) => {
             },
           }
         );
-        apis.initSfuCall({ activeStatus: account.user.id, id: boardId, isCallUpgraded, mediaType: localCallHistory.mediaType });
+        if (!doNotUpgrade) {
+          apis.initSfuCall({ activeStatus: account.user.id, id: boardId, isCallUpgraded, mediaType: localCallHistory.mediaType });
+        }
       }
     } else {
       throw 'Conference plugin not found';

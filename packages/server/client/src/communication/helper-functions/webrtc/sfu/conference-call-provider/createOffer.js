@@ -13,7 +13,7 @@ export default async (conferenceCall) => {
           // Add data:true here if you want to publish datachannels as well
           media: janusMediaSelector(localCallHistory.mediaType), // Publishers are sendonly
           success: (jsep) => {
-            const publish = { request: 'configure', audio: true, video: true };
+            const publish = { request: 'configure', audio: true, video: true, data: true };
             conferenceCall.send({ message: publish, jsep });
             resolve({ success: true, jsep });
           },

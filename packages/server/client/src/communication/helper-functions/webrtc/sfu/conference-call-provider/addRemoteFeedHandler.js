@@ -5,6 +5,7 @@ import Janus from '../../../../../webrtc/sfu/janus';
 import onRemoteFeedMessageHandler from './onRemoteFeedMessageHandler';
 import onPublisherStream from './onPublisherStream';
 import exceptionHandler from './exceptionHandler';
+import onDataHandler from './onDataHandler';
 
 export default (publisher, props) => {
   try {
@@ -21,7 +22,7 @@ export default (publisher, props) => {
         // opaqueId: opaqueId,
         success: (pluginHandle) => {
           remoteFeed = pluginHandle;
-          const subscribe = { request: 'join', room: roomId, ptype: 'subscriber', feed: id, pin: joinToken };
+          const subscribe = { request: 'join', room: roomId, ptype: 'subscriber', feed: id, pin: joinToken, data: true };
           if (Janus.webRTCAdapter.browserDetails.browser === 'safari' && (video === 'vp9' || (video === 'vp8' && !Janus.safariVp8))) {
             if (video) {
               video = video.toUpperCase();
@@ -49,6 +50,7 @@ export default (publisher, props) => {
         oncleanup: () => {
           Janus.log(' ::: Got a cleanup notification (remote feed ', id, ') :::');
         },
+        ondata: onDataHandler(props),
       }
     );
   } catch (e) {

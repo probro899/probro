@@ -29,7 +29,7 @@ class Controllers extends React.Component {
   }
 
   recordingHandler = async () => {
-    console.log('media recorder called 1');
+    // console.log('media recorder called 1');
     const { startRecording } = this.state;
     const { updateWebRtc, webRtc } = this.props;
     if (!startRecording) {
@@ -69,7 +69,7 @@ class Controllers extends React.Component {
   }
 
   render() {
-    console.log('props in controller', this.props);
+    // console.log('props in controller', this.props);
     const { webRtc, account } = this.props;
     const { showWhiteBoard, startRecording } = this.state;
     return (

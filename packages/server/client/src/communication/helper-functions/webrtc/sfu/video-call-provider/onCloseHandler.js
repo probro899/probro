@@ -34,6 +34,7 @@ export default props => async (data) => {
     await updateWebRtc('showIncommingCall', false);
     await updateWebRtc('screenShareNotAllowed', false);
     await updateWebRtc('deviceNotAllowed', false);
+    await updateWebRtc('recordedBlobs', []);
   } catch (e) {
     exceptionHandler({ error: JSON.stringify(e), errorCode: 147 });
   }

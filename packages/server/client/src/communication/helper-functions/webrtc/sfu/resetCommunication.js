@@ -17,6 +17,7 @@ export default async (updateWebRtc) => {
     updateWebRtc('connectedUsers', {}),
     updateWebRtc('isConnecting', false),
     updateWebRtc('isLive', false),
+    updateWebRtc('recordedBlobs', []),
   ];
 
   const res = await Promise.all(todoRes);

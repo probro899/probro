@@ -85,8 +85,12 @@ export default async function (uid, props) {
   };
 
   const stopRecording = async () => {
-    await downloadRecordedMedia();
-    mediaRecorder.stop();
+    try {
+      await downloadRecordedMedia();
+      mediaRecorder.stop();
+    } catch (e) {
+      console.log('MediaRecorder stop error', e.name);
+    }
   };
 
   return { stopRecording, mediaRecorder, stream };

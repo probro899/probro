@@ -23,7 +23,7 @@ const ImageOnMainScreen = (props) => {
       conId = webRtc.localCallHistory.chatHistory.user.user.id;
     }
     if (type === 'board') {
-      conId = database.Board.byId[webRtc.localCallHistory.chatHistory.connectionId].activeStatus
+      conId = database.Board.byId[webRtc.localCallHistory.chatHistory.connectionId].activeStatus;
     }
   }
 
