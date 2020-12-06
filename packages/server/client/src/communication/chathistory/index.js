@@ -1,7 +1,9 @@
+/* eslint-disable react/no-find-dom-node */
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React from 'react';
+import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import { Button } from '@blueprintjs/core';
@@ -12,19 +14,21 @@ import autoCloseHandler from '../helper-functions/webrtc/mesh/autoCloseHandler';
 import fetchedChatHistory from './helper-function/fetchChatHistory';
 import isJanusActive from './helper-function/isJanusActive';
 import messageTypeProvider from './helper-function/messageTypeProvider';
+import { Spinner } from '../../common';
 
 class ChatHistory extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { messages: [], lastMessageId: null, unSeenNo: null };
+    this.state = { messages: [], lastMessageId: null, unSeenNo: null, showLoader: false };
     this.scrollToEnd = React.createRef();
+    this.messageContainer = React.createRef();
   }
 
   async componentDidMount() {
     await fetchedChatHistory(this.props);
     const state = findChatHistory(this.props);
     this.setState({ ...state });
-    this.scrollToBottom();
+    // this.scrollToBottom();
   }
 
   async componentWillReceiveProps(newProps) {
@@ -41,12 +45,20 @@ class ChatHistory extends React.Component {
     }
   }
 
-  componentDidUpdate() {
-    this.scrollToBottom();
+  componentWillUnmount() {
+    ReactDOM.findDOMNode(this.messageContainer.current).removeEventListener('scroll', this.trackScrolling);
   }
 
-  scrollToBottom = () => {
-    this.scrollToEnd.current.scrollIntoView({ behavior: 'auto' });
+  // tracking scroll for pagination
+  trackScrolling = (e) => {
+    const { showLoader } = this.state;
+    if (e.target.scrollTop === 0) {
+      fetchedChatHistory(this.props);
+      this.setState({ showLoader: true });
+    }
+    if (showLoader) {
+      this.setState({ showLoader: false });
+    }
   }
 
   goBack = () => {
@@ -81,7 +93,7 @@ class ChatHistory extends React.Component {
     } = this.props;
     const { user, connectionId, type } = webRtc.chatHistory;
     // console.log('chatHistory', webRtc.chatHistory, user);
-    const { messages } = this.state;
+    const { messages, showLoader } = this.state;
     let userActiveStatus = false;
     if (type === 'user') {
       userActiveStatus = database.UserConnection.byId[connectionId].activeStatus;
@@ -115,7 +127,12 @@ class ChatHistory extends React.Component {
           </div>
         </div>
         )}
-        <div className="chats" id="pcChats">
+        <div ref={this.messageContainer} className="chats" id="pcChats" onScroll={this.trackScrolling}>
+          {showLoader && (
+            <div style={{ position: 'relative', height: 45 }}>
+              <Spinner style={{ top: 0 }} />
+            </div>
+          )}
           {
             messages.sort(normalTimeStampSorting).map((msg, idx, arr) => messageTypeProvider(this.props, msg, account, idx === 0 ? false : arr[idx - 1].type))
           }

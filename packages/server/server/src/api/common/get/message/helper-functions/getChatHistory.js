@@ -6,14 +6,14 @@ export default function getChatHistory(condition) {
   const { session } = this;
   // console.log('get chatHistory caled', condition);
   const { id } = session.values.user;
-  const { type, connectionId } = condition;
+  const { type, connectionId, noOfMessage } = condition;
+  let res;
   if (type === 'user') {
-    dispatchUserChatHistory(session, schema, id, connectionId);
+    res = dispatchUserChatHistory(session, schema, id, connectionId, noOfMessage);
   }
 
   if (type === 'board') {
-    dispatchBoardHistory(session, schema, id, connectionId);
+    res = dispatchBoardHistory(session, schema, id, connectionId, noOfMessage);
   }
-
-  return { ...condition, status: 200 };
+  return { ...condition, status: 200, noOfMessage: noOfMessage + 20, ...res };
 }
