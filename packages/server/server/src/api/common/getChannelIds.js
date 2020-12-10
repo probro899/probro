@@ -3,13 +3,16 @@ import databaseCache from '../../cache/database/cache';
 import findUserDetails from './findUserDetails';
 import flat from '../flat';
 
-export default (userId) => {
-  const allBlogs = databaseCache.get('Blog').filter(b => b.userId === userId).map(b => ({ ...b, user: findUserDetails(b.userId) }));
+export default (userId, schema) => {
   const allDbBoardMembers = databaseCache.get('BoardMember');
   const allBoardMember = allDbBoardMembers.filter(bm => bm.tuserId === userId && !bm.deleteStatus);
   const allBoardTable = databaseCache.get('Board');
-  const allBoardColumnTable = databaseCache.get('BoardColumn');
   const allBoardWithUser = allBoardMember.map(bm => allBoardTable.find(b => b.id === bm.boardId)).map(b => ({ ...b, user: findUserDetails(b.userId) }));
+  if (schema === 'Board') {
+    return { allBoard: allBoardWithUser };
+  }
+  const allBlogs = databaseCache.get('Blog').filter(b => b.userId === userId).map(b => ({ ...b, user: findUserDetails(b.userId) }));
+  const allBoardColumnTable = databaseCache.get('BoardColumn');
   const allBoardColumns = flat(allBoardWithUser.map(b => allBoardColumnTable.filter(c => c.boardId === b.id)));
   const allUserConnections = databaseCache.get('UserConnection');
   const connectionListMid = allUserConnections.filter(uc => uc.mId === userId);

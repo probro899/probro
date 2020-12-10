@@ -5,7 +5,7 @@ import userPresentorHelper from './isUserActiveStatus';
 import activeInformer from './activeInformer';
 import findUserDetails from '../common/findUserDetails';
 import getChannelIds from '../common/getChannelIds';
-import { getNotification } from '../common/get/notification/index';
+import { getNotifications } from '../common/get/notification/index';
 import flat from '../flat';
 
 export default async function initUser(id) {
@@ -65,9 +65,7 @@ export default async function initUser(id) {
     session.addCloseListener(activeInformer(id, allBoard, boardMemberActiveStatusToUpdate, finalUSerConnectionActiveList, session, false));
 
     // Dispatching notification
-    const { Notification, notificationReadstatus } = getNotification(id, allBoard);
-    session.dispatch(schema.init('NotificationReadStatus', notificationReadstatus));
-    session.dispatch(schema.init('Notification', Notification));
+    getNotifications.call(this, { id, noOfNotification: 0 });
     // console.timeEnd('UserDataFetch');
   } catch (err) {
     console.error('Error in getting data from cache', err);

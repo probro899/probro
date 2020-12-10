@@ -1,5 +1,8 @@
+/* eslint-disable react/no-find-dom-node */
+/* eslint-disable no-undef */
 /* eslint-disable no-case-declarations */
 import React from 'react';
+import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
@@ -8,14 +11,33 @@ import { Icon } from '@blueprintjs/core';
 import { RoundPicture } from '../../../../components';
 import { ENDPOINT } from '../../../../config';
 import { timeStampSorting } from '../../../../common/utility-functions';
-
+import { Spinner } from '../../../../common';
+import getNotification from './helper-functions/getNotificationtion';
+import * as actions from '../../../../actions';
 // const file = require('../../../../assets/icons/64w/uploadicon64.png');
 
 class NotificationContainer extends React.Component {
-  state = {};
+  state = { showLoader: false };
+
+  scrollToEnd = React.createRef();
+
+  scrollContainer = React.createRef();
+
+  componentWillUnmount() {
+    ReactDOM.findDOMNode(this.scrollContainer.current).removeEventListener('scroll', this.trackScrolling);
+  }
+
+  trackScrolling = (e) => {
+    const scrollTracker = document.getElementById('scrollTracker');
+    // console.log(scrollTracker.offsetTop, window.scrollY, window.innerHeight, e.target.scrollTop);
+    if (window.innerHeight + e.target.scrollTop > scrollTracker.offsetTop) {
+      this.setState({ showLoader: true });
+      getNotification(this.props);
+    }
+  }
 
   getNotification = (notification) => {
-    const { database, account } = this.props;
+    const { account } = this.props;
     let url;
     let imageIcon;
     switch (notification.type) {
@@ -63,12 +85,19 @@ class NotificationContainer extends React.Component {
 
   render() {
     const { database, account } = this.props;
+    const { showLoader } = this.state;
     const notifications = account.user ? Object.values(database.Notification.byId).sort(timeStampSorting) : [];
-    // console.log('notifications', notifications);
+    // console.log('notifications', notifications, this.props);
     return (
-      <div className="notification-list">
+      <div ref={this.scrollContainer} className="notification-list" onScroll={this.trackScrolling}>
         {notifications.length === 0 && <div className="pc-no-notis"><p>You do not have any notifications at the moment.</p></div>}
         {notifications.map(obj => this.getNotification(obj))}
+        {showLoader && (
+          <div style={{ position: 'relative', height: 45 }}>
+            <Spinner style={{ top: 0 }} />
+          </div>
+        )}
+        <div id="scrollTracker" ref={this.scrollToEnd} />
       </div>
     );
   }
@@ -80,4 +109,4 @@ NotificationContainer.propTypes = {
 };
 
 const mapStateToProps = state => state;
-export default connect(mapStateToProps)(NotificationContainer);
+export default connect(mapStateToProps, { ...actions })(NotificationContainer);

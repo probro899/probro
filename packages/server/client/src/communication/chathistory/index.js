@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable react/no-find-dom-node */
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
@@ -29,6 +30,7 @@ class ChatHistory extends React.Component {
     const state = findChatHistory(this.props);
     this.setState({ ...state });
     // this.scrollToBottom();
+    this.scrollToEnd.current.scrollIntoView({ behavior: 'auto' });
   }
 
   async componentWillReceiveProps(newProps) {
