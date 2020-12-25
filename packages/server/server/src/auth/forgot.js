@@ -2,10 +2,11 @@ import uuid from 'uuid/v4';
 import db from '../db';
 import cache from '../cache';
 import mailer from '../mailer';
+import { ENDPOINT } from '../../../client/src/config';
 
 const RESET_TOKEN_AGE = 1 * 60 * 60 * 1000; // 1 hour
 
-const domain = process.env.RESTRO_DOMAIN || 'https://properclass.com';
+const domain = process.env.RESTRO_DOMAIN || ENDPOINT;
 
 export default async function forgot(username) {
 

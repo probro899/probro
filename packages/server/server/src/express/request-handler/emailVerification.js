@@ -1,9 +1,10 @@
 import emailVerification from '../../auth/emailVerification';
 
 export default async (req, res) => {
-  // console.log('email verification handler', req.query);
+  // console.log('email verification handler', req.body);
   try {
-    const emaiVerificationEmail = await emailVerification(req.query.token);
+    const { token } = req.body;
+    const emaiVerificationEmail = await emailVerification(token);
     if (emaiVerificationEmail) {
       res.statusCode = 200;
       res.send(emaiVerificationEmail);

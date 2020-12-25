@@ -1,7 +1,6 @@
 const { buildSchema } = require('graphql');
 
 module.exports = buildSchema(`
-
 type User {
   id: Int!
   email: String!
@@ -15,6 +14,7 @@ type User {
   userSkill: [UserSkill]!
   userEducation: [UserEducation]!
   userWorkExperience: [UserWorkExperience]!
+  blogs: [Blog]
 }
 
 type UserDetail {
@@ -40,6 +40,7 @@ type UserDetail {
   coverEdit: String
   country: String
   thumbnail: String
+  headLine: String
 }
 
 type UserCarrierInterest {
@@ -72,6 +73,7 @@ type UserEducation {
   startTime: String!
   endTime: String!
   remarks: String
+  currentStuding: String
 }
 
 type UserWorkExperience {
@@ -83,6 +85,7 @@ type UserWorkExperience {
   endTime: String!
   summary: String
   remarks: String
+  currentWorking: String
 }
 
 type Blog {
@@ -121,6 +124,7 @@ type BlogComment{
 type Popular {
   blogs: [Blog]!
   users: [User]!
+  popularUsers: [User]!
 }
 
 type Archive {
@@ -133,6 +137,6 @@ type Query {
  getBlog(blogSlug: String!, userSlug: String!): Blog!
  getPopular: Popular!
  getArchive: Archive!
- doSearch(keyword: String, country: String, industry: String): Popular!
+ doSearch(keyword: String, country: String, industry: String, skill: String): Popular!
 }
 `);

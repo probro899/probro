@@ -21,7 +21,7 @@ const findBoardMessageDetails = (arr, boards, BoardMessageSeenStatus, id) => {
   }
   const lastMessage = arrWithSeenStatus.find(obj => obj.userId !== id);
   const lastMessageId = lastMessage ? lastMessage.id : arrWithSeenStatus[0].id;
-  const lastMessageForSeenStatus = arrWithSeenStatus.find((obj) => {
+  let lastMessageForSeenStatus = arrWithSeenStatus.find((obj) => {
     if (!obj.type) {
       return true;
     }
@@ -29,6 +29,9 @@ const findBoardMessageDetails = (arr, boards, BoardMessageSeenStatus, id) => {
       return true;
     }
   });
+  if (!lastMessageForSeenStatus) {
+    lastMessageForSeenStatus = {};
+  }
   // i have changed here connectionId
   return { connectionId: boardId, type: 'board', boardDetails, unSeenNo, timeStamp: arrWithSeenStatus[0].timeStamp, lastMessage: lastMessageForSeenStatus, lastMessageId };
 };

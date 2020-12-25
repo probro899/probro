@@ -5,6 +5,7 @@ import RoundPicture from '../../../components/RoundPicture';
 import { SoundComponent } from '../../components';
 import { ENDPOINT } from '../../../config';
 import DeviceNotFoundError from '../error-screen/DeviceNotFoundError';
+import Notification from '../../../common/notification';
 
 class IncomingCallScreen extends React.Component {
   state = {};
@@ -57,6 +58,7 @@ class IncomingCallScreen extends React.Component {
         className="incoming-call-screen"
       >
         {webRtc.showIncommingCall && <SoundComponent incoming url="/assets/media/ringtone.mp3" />}
+        {webRtc.showIncommingCall && <Notification title={`&2706 Incoming Call From ${displayName}`} />}
         <div
           className="person-icon-container"
           style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}

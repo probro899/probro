@@ -28,6 +28,7 @@ class SearchResult extends React.Component {
   getSearchResult = async (obj) => {
     try {
       const { data } = await client.query({ query: DO_SEARCH, variables: { keyword: obj.key, country: obj.country, industry: obj.industry } });
+      console.log('data and obj', obj, data);
       this.setState({
         data,
         loading: false,
@@ -52,6 +53,7 @@ class SearchResult extends React.Component {
   }
 
   filterSearch = (data) => {
+    console.log('data', data);
     const { updateNav } = this.props;
     updateNav({ schema: 'search', data });
     this.getSearchResult(data);

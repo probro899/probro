@@ -9,6 +9,10 @@ import store from './store';
 import AppComponent from './App';
 import client from './clientConfig';
 
+if (typeof window === 'undefined') {
+  global.window = {};
+}
+
 ReactDOM.hydrate(
   <ApolloProvider client={client}>
     <Provider store={store}>

@@ -16,7 +16,7 @@ import getName from '../../../../common/utility-functions/getName';
 import Activities from './activities';
 import { GET_USER } from '../../../../queries';
 import clientQuery from '../../../../clientConfig';
- 
+
 class PublicProfile extends React.Component {
   constructor(props) {
     super(props);
@@ -80,6 +80,7 @@ class PublicProfile extends React.Component {
   }
 
   render() {
+    console.log('state value in public profile', this.state);
     const {
       account,
       database, updateWebRtc, addDatabaseSchema,

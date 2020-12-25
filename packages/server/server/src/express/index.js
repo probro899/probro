@@ -7,11 +7,7 @@ import userRegistration from './request-handler/userRegistration';
 import emailVerification from './request-handler/emailVerification';
 import uploadFile from './request-handler/uploadFile';
 import deleteFile from './request-handler/deleteFile';
-import doSearch from './request-handler/doSearch';
-import getUser from './request-handler/getUser';
-import getBlog from './request-handler/getBlog';
 import getIndex from './request-handler/getIndex';
-import getArchive from './request-handler/getArchive';
 import getErrorReport from './request-handler/getErrorReport';
 import deleteError from './request-handler/deleteError';
 
@@ -30,21 +26,14 @@ export default function (app) {
   // });
 
   app.post('/auth/login', login);
-  app.get('/auth/reset', resetPassword);
-  app.get('/auth/forgot', forgotPassword);
-  app.get('/auth/email-verification', emailVerification);
+  app.post('/auth/reset', resetPassword);
+  app.post('/auth/forgot', forgotPassword);
+  app.post('/auth/email-verification', emailVerification);
   app.post('/auth/user-registration', userRegistration);
   app.post('/web/upload-file', uploadFile);
   app.post('/web/delete-file', deleteFile);
-  app.get('/web/do-search', doSearch);
-  app.get('/web/get-user', getUser);
-  app.get('/web/get-blog', getBlog);
   app.post('/web/get-index', getIndex);
-  app.get('/web/get-archive', getArchive);
   app.post('/web/admin/error-report', getErrorReport);
   app.post('/web/admin/error-delete', deleteError);
   app.use(express.static(path.resolve(__dirname, '..', 'public')));
-  app.get('/reset/:token', (req, res) => {
-    res.sendFile(path.resolve(__dirname, '..', 'public', 'index.html'));
-  });
 }

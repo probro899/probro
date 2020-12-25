@@ -48,9 +48,9 @@ export default ({ clo, idx }) => {
             <span
               className="last-text"
             >
-              {clo.lastMessage.type
+              {clo.lastMessage && (clo.lastMessage.type
                 ? (clo.lastMessage.type === 'Incoming' ? incomingCallLogHandler(clo.lastMessage, store.getState().account, clo.type, true) : outgoingCallLogHandler(clo.lastMessage, store.getState().account, clo.type, true))
-                : clo.lastMessage.message}
+                : clo.lastMessage.message)}
             </span>
           </div>
         </div>

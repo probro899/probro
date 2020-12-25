@@ -29,11 +29,16 @@ import { initUser } from './server/src/api';
 import client from './client/src/clientConfig';
 
 const app = express();
-const PORT = process.env.PORT || 4001;
+const PORT = process.env.PORT || 3000;
 
+if (typeof window === 'undefined') {
+  global.window = {};
+}
 app.use(
   cors()
 );
+
+
 
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: true, parameterLimit: 50000 }));
 app.use(bodyParser.json({ limit: '50mb', extended: true }));

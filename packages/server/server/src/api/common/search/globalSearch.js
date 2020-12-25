@@ -3,6 +3,7 @@ import db from '../../../db';
 import findUserDetail from '../findUserDetails';
 import findBlogDetails from '../findBlogDetails';
 import getPopular from '../getPopular';
+import getEmptySearch from './getEmptySearch';
 
 const flat = (arr) => {
   const flatArray = arr.reduce((t, a) => {
@@ -18,8 +19,8 @@ const flat = (arr) => {
 
 // Todo make baninary tree for searching it is expensive for now it is ok
 
-export default async (keyword, country, industry) => {
-  // console.log('search keyword in search api', keyword, country, industry);
+export default async (keyword, country, industry, skill) => {
+  // console.log('search keyword in search api', keyword, country, industry, skill);
   const keywordArrtemp = keyword.split(' ');
   // console.log('all keyword', keywordArrtemp);
   const keywordArr = keywordArrtemp.filter(key => key.length > 0);
@@ -42,8 +43,11 @@ export default async (keyword, country, industry) => {
     const userDetailCountryPromises = [];
 
     if (industry) {
-      userCarrierInterestPromises.push(exec(`SELECT * FROM UserSkill WHERE skill LIKE '%${industry}%'`, []));
       userCarrierInterestPromises.push(exec(`SELECT * FROM UserCarrierInterest WHERE interest LIKE '%${industry}%'`, []));
+    }
+
+    if (skill) {
+      userCarrierInterestPromises.push(exec(`SELECT * FROM UserSkill WHERE skill LIKE '%${skill}%'`, []));
     }
 
     if (country) {
@@ -115,12 +119,19 @@ export default async (keyword, country, industry) => {
     const finalUserList = await Promise.all(finalUserListPromises);
     let allUserResult = [];
     let allBlogResult = [];
+    let popularUsers = [];
 
     if (finalUserList.length > 0) {
       allUserResult = finalUserList;
-    } else {
       const popular = await getPopular();
-      allUserResult = popular.users;
+      popularUsers = popular.users;
+    } else {
+      // console.log('blank user search section called');
+      const popular = await getPopular();
+      const emptySearchUsers = (keyword || skill || industry || country) ? [] : await getEmptySearch();
+      popularUsers = popular.users;
+      allUserResult = emptySearchUsers;
+      // allUserResult = popular.users;
     }
 
     if (finalBlogDetals.length > 0) {
@@ -129,8 +140,8 @@ export default async (keyword, country, industry) => {
       const popular = await getPopular();
       allBlogResult = popular.blogs;
     }
-    // console.log('final User Result', finalUserList);
-    return { blogs: allBlogResult, users: allUserResult };
+    // console.log('final User Result', allUserResult);
+    return { blogs: allBlogResult, users: allUserResult, popularUsers };
   });
   // console.log('search response', res);
   return res;

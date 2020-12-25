@@ -3,7 +3,7 @@ import { ENDPOINT } from '../../../config';
 
 export default async (args) => {
   try {
-    const res = await axios.get(`${ENDPOINT}/auth/forgot?email=${args.email}`);
+    const res = await axios.post(`${ENDPOINT}/auth/forgot`, { email: args.email });
     if (res.status === 200) {
       return { response: 200 };
     }

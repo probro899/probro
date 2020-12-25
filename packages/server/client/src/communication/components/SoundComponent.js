@@ -1,5 +1,6 @@
 /* eslint-disable jsx-a11y/media-has-caption */
 import React from 'react';
+import ReactHowler from 'react-howler';
 
 // const ringtone = require('./ringtone.mp3');
 
@@ -40,14 +41,11 @@ class SoundComponent extends React.Component {
   render() {
     const { url, noLoop } = this.props;
     return (
-      <audio
-        ref={this.soundRef}
-        onPlay={this.onPlay}
-        autoPlay
+      <ReactHowler
+        src={url}
+        playing={true}
         loop={!noLoop}
-      >
-        <source type="audio/mpeg" src={url} />
-      </audio>
+      />
     );
   }
 }

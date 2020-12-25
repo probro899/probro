@@ -2,12 +2,16 @@ import { getUser, getBlog } from './helper-functions';
 import getPopular from '../../api/common/getPopular';
 import getArchive from '../../api/common/search/getArchive';
 import doSearch from '../../api/common/search/globalSearch';
+import getUserBlogs from '../../api/common/getUserBlogs';
 
 export default {
   getUser: async (contex, args) => {
     const { variables } = args.body;
     const res = getUser(variables);
-    return res;
+    const userBlogsRes = getUserBlogs(res.id);
+    const finalBlogs = userBlogsRes.map(b => ({ ...b.blog, blogLike: b.blogLike, blogComment: b.blogComment }));
+    console.log('res in getUSer', res);
+    return { ...res, blogs: finalBlogs };
   },
 
   getBlog: async (contex, args) => {
@@ -37,12 +41,16 @@ export default {
   },
 
   doSearch: async (context, args) => {
+    // console.log('argument', args.body);
     const { variables } = args.body;
-    const { keyword, country, industry } = variables;
-    const searchRes = await doSearch(keyword, country, industry);
-    const { blogs, users } = searchRes;
+    const { keyword, country, industry, skill } = variables;
+    const searchRes = await doSearch(keyword, country, industry, skill);
+    // console.log('do search result', searchRes);
+    const { blogs, users, popularUsers } = searchRes;
     const finalBlogs = blogs.map(b => ({ ...b.blog, blogLike: b.blogLike, blogComment: b.blogComment }));
     const finalUsers = users.map(u => ({ ...u.user, userDetail: u.userDetail }));
-    return { blogs: finalBlogs, users: finalUsers };
+    const finalPopularUsers = popularUsers.map(u => ({ ...u.user, userDetail: u.userDetail }));
+    // console.log('final popular users', finalPopularUsers);
+    return { blogs: finalBlogs, users: finalUsers, popularUsers: finalPopularUsers };
   },
 };

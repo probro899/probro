@@ -105,7 +105,7 @@ class Index extends React.Component {
   }
 
   render() {
-    console.log('out going call', this.props.webRtc);
+    // console.log('out going call', this.props.webRtc);
     const { callStatus } = this.state;
     const { webRtc, database } = this.props;
     const isUser = webRtc.localCallHistory.chatHistory.type === 'user';

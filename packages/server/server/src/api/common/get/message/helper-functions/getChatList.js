@@ -35,4 +35,4 @@ export default function getChatlist() {
   // console.log('moreDetails', moreDetails);
   const chatList = moreDetails.sort(timeStampSorting);
   return chatList;
-};
+}

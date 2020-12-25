@@ -28,6 +28,7 @@ class Communication extends React.Component {
       await updateWebRtc('apis', apisRes);
       // Getting chat logs
       const chatList = await apisRes.getChatlist();
+      console.log('chat list', chatList);
       await updateWebRtc('chatList', chatList);
       // initializing janus for communication
       await initJanus(this.props, this.state);
