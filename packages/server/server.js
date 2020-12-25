@@ -29,7 +29,7 @@ import { initUser } from './server/src/api';
 import client from './client/src/clientConfig';
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 4001;
 
 if (typeof window === 'undefined') {
   global.window = {};
@@ -37,7 +37,6 @@ if (typeof window === 'undefined') {
 app.use(
   cors()
 );
-
 
 
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: true, parameterLimit: 50000 }));
