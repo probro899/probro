@@ -2,7 +2,7 @@
 import React from 'react';
 import Notification from 'react-web-notification';
 import PropTypes from 'prop-types';
-import { Howl } from 'howler';
+// import { Howl } from 'howler';
 
 class NotificationComponent extends React.Component {
   constructor(props) {
@@ -41,15 +41,15 @@ class NotificationComponent extends React.Component {
   }
 
   handleNotificationOnShow = () => {
-    this.playSound();
+    // this.playSound();
   }
 
-  playSound = () => {
-    const sound = new Howl({
-      src: ['/assets/media/ringtone.mp3', '/assets/media/ringtone.ogg', '/assets/media/ringtone.wav'],
-    });
-    sound.play();
-  }
+  // playSound = () => {
+  //   const sound = new Howl({
+  //     src: ['/assets/media/ringtone.mp3', '/assets/media/ringtone.ogg', '/assets/media/ringtone.wav'],
+  //   });
+  //   sound.play();
+  // }
 
   onNotificationClick = () => {
     window.focus();

@@ -27,6 +27,7 @@ import { start } from './server/src/socket';
 import validateToken from './server/src/auth/validateToken';
 import { initUser } from './server/src/api';
 import client from './client/src/clientConfig';
+import { PORT as CPORT } from './client/src/config';
 
 const app = express();
 const PORT = process.env.PORT || 4001;

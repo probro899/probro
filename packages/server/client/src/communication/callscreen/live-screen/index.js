@@ -13,6 +13,7 @@ import MainScreen from './components/MainScreen';
 import UsersScreen from './components/UsersScreens';
 import { getChatList } from '../../chatlist/helper-function';
 import ImageOnMainScreen from './components/ImageOnMainScreen';
+import CallTimer from './components/CallTimer';
 
 class LiveCallScreen extends React.Component {
   constructor(props) {
@@ -92,10 +93,13 @@ class LiveCallScreen extends React.Component {
         <div className="top">
           <Button minimal className="arrow-btn" intent="default" icon="menu" onClick={this.handleClickChatList} />
           <div className="op-name">
-            {type === 'user' ? `${user.user.firstName} ${user.user.lastName}` : database.Board.byId[webRtc.localCallHistory.chatHistory.connectionId].name}
+            <div style={{ display: 'flex' }}>
+              {type === 'user' ? `${user.user.firstName} ${user.user.lastName}` : database.Board.byId[webRtc.localCallHistory.chatHistory.connectionId].name}
+              <CallTimer {...this.props} />
+            </div>
           </div>
           <Button className="arrow-btn" minimal onClick={() => this.handleClickChatBox(webRtc.showCommunication, true)}>
-            <div style={{ position: 'relative'}}>
+            <div style={{ position: 'relative' }}>
               <MdMessage size={18} />
               {unMessageCount ? (unMessageCount.unSeenNo !== 0 && <Badge number={unMessageCount.unSeenNo} size={10} top={-5} />) : null}
             </div>
