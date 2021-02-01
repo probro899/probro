@@ -1,49 +1,177 @@
 @import '../config.scss';
 .popularContainer {
+  // margin-top: 40px;
+  // margin-bottom: 40px;
+  margin: 40px auto 40px;
+  @media screen and (max-width: 576px) {
+    margin-bottom: 20px;
+    margin-top: 20px;
+  }
+  padding: 0 20px;
   .popularHeader {
     display: flex;
+    flex-direction: column;
     justify-content: space-around;
-    padding: 3%;
+    // padding: 3%;
     p {
       text-align: center;
       color: $darkBlue;
       font-size: 40px;
       font-weight: 600;
     }
-  }
-  .popularCover {
-    display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
-    padding: 10px;
-    .popular {
-      display: flex;
-      padding: 10px;
-      .popularImage {
-        height: 150px;
-        width: 150px;
-        overflow: hidden;
-        border: 1px solid $normalBorder;
-        border-radius: 50%;
-        flex-shrink: 0; // prevents from shrinking the width
+    .page-sub-heading {
+      color: $subHeadColor;
+      font-size: 16px;
+      font-weight: 600;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    .page-heading {
+      color: $headingColor;
+      font-size: 32px;
+      font-weight: 600;
+      text-transform: uppercase;
+      text-align: center;
+      margin-bottom: 20px;
+      @media screen and (max-width: 767px) {
+        font-size: 26px;
       }
-      .popularDesc {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        padding: 10px;
-        .popularName {
-          font-size: 20px;
-          color: $darkBlue;
-          &:hover {
-            text-decoration: none;
+    }
+  }
+
+  .popularCover {
+    position: relative;
+    display: flex;
+    margin-left: -15px;
+    margin-right: -15px;
+    flex-flow: row wrap;
+    justify-content: center;
+    @media screen and (max-width: 576px) {
+      margin-right: 0;
+      margin-left: 0;
+    }
+    .card-wrapper {
+      padding-right: 15px;
+      padding-left: 15px;
+      max-width: 25%;
+      flex: 0 0 25%;
+      overflow: hidden;
+      margin-bottom: 30px;
+      // background: #fff;
+      // border-radius: 10px;
+      // border: 1px solid #eee;
+      // @include genericBoxPattern;
+      @media screen and (max-width: 767px) {
+        max-width: 50%;
+        flex: 0 0 50%;
+      }
+      @media screen and (max-width: 576px) {
+        max-width: 100%;
+        flex: 0 0 100%;
+      }
+
+      .card {
+        .card-image {
+          // height: 250px;
+          width: 100%;
+          // background-size: cover;
+          // background-position: center;
+          // object-fit: cover;
+          // height: 200px;
+          position: relative;
+          // padding-bottom: 55%;
+          margin: 0 auto;
+          z-index: 1;
+          max-width: 130px;
+
+          img {
+            // display: block;
+            // position: absolute;
+            // top: 0;
+            // left: 0;
+            width: 130px;
+            height: 130px;
+            object-fit: cover;
+            border-radius: 50%;
           }
         }
-        .popularExpertize {
-          color: $lightTextColor;
-          font-weight: 550;
+        .card-desc {
+          padding: 10px;
+          text-align: center;
+          width: 100%;
+          .title {
+            font-size: 18px;
+            display: flex;
+            justify-content: center;
+            a {
+              color: $headingColor;
+              font-weight: 600;
+            }
+            .pc-verified-badge {
+              margin-left: 5px;
+            }
+          }
+          .sub-title {
+            font-size: 14px;
+            font-style: italic;
+            color: #4e4e4e;
+          }
+          .courses {
+            margin-top: 10px;
+            color: #707070;
+            cursor: pointer;
+            margin-bottom: 5px;
+          }
+          .ratings {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            margin-top: 10px;
+            svg {
+              fill: #fdcc0d;
+            }
+          }
         }
+        // @media screen and (min-width: 578px) and (max-width: 1070px) {
+        //   margin-bottom: 30px;
+        // }
+        // @media screen and (max-width: 576px) {
+        //   width: 100%;
+        //   margin-bottom: 30px;
+        // }
       }
+
+      // @media screen and (max-width: 414px) {
+      //   // grid-template-columns: auto auto;
+      //   // grid-column-gap: 10px;
+      //   .card {
+      //     margin: 0 auto;
+      //     width: auto;
+      //     .card-image {
+      //       width: 100%;
+      //       height: 170px;
+      //     }
+      //     .card-desc {
+      //       .title {
+      //         font-size: 20px;
+      //       }
+      //       .sub-title {
+      //         font-size: 14px;
+      //       }
+      //       .courses {
+      //         font-size: 13px;
+      //       }
+      //     }
+      //   }
+      // }
+
+      // @media screen and (max-width: 375px) {
+      // grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      //  .card {
+      //    width: 260px;
+      //  }
+      // }
     }
   }
 }

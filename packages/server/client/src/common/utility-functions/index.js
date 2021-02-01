@@ -30,4 +30,11 @@ const normalTimeStampSorting = (a, b) => {
   return -1;
 };
 
-export { timeStampSorting, matchUrl, normalTimeStampSorting, getName };
+const activitySorting = (a, b) => {
+  if (parseInt(a.lastActivity, 10) < parseInt(b.lastActivity, 10)) {
+    return 1;
+  }
+  return -1;
+}
+
+export { timeStampSorting, matchUrl, normalTimeStampSorting, getName, activitySorting };

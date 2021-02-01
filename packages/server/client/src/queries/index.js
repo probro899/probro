@@ -39,8 +39,8 @@ query {
 `;
 
 export const GET_ARCHIVES = gql`
-query {
-  getArchive {
+query($sessionId: String) {
+  getArchive(sessionId: $sessionId) {
     basedOnHistory {
       blogs {
         id
@@ -138,8 +138,8 @@ query {
 `;
 
 export const DO_SEARCH = gql`
-query ($keyword: String,$country: String, $industry: String, $skill: String) {
-  doSearch(keyword: $keyword, country: $country, industry: $industry, skill: $skill) {
+query ($keyword: String,$country: String, $industry: String, $skill: String, $sessionId: String) {
+  doSearch(keyword: $keyword, country: $country, industry: $industry, skill: $skill, sessionId: $sessionId) {
      blogs {
         id
         title

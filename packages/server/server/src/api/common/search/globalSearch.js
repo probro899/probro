@@ -4,6 +4,7 @@ import findUserDetail from '../findUserDetails';
 import findBlogDetails from '../findBlogDetails';
 import getPopular from '../getPopular';
 import getEmptySearch from './getEmptySearch';
+import validateToken from '../../../auth/validateToken';
 
 const flat = (arr) => {
   const flatArray = arr.reduce((t, a) => {
@@ -19,8 +20,8 @@ const flat = (arr) => {
 
 // Todo make baninary tree for searching it is expensive for now it is ok
 
-export default async (keyword, country, industry, skill) => {
-  // console.log('search keyword in search api', keyword, country, industry, skill);
+export default async (keyword, country, industry, skill, sessionId) => {
+  // console.log('search keyword in search api', keyword, country, industry, skill, sessionId);
   const keywordArrtemp = keyword.split(' ');
   // console.log('all keyword', keywordArrtemp);
   const keywordArr = keywordArrtemp.filter(key => key.length > 0);
@@ -140,7 +141,12 @@ export default async (keyword, country, industry, skill) => {
       const popular = await getPopular();
       allBlogResult = popular.blogs;
     }
-    // console.log('final User Result', allUserResult);
+    if (sessionId) {
+      const user = validateToken(sessionId);
+      allUserResult = allUserResult.filter(u => u.user.id !== user.id);
+      popularUsers = popularUsers.filter(u => u.user.id !== user.id);
+      allBlogResult = allBlogResult.filter(b => b.blog.userId !== user.id);
+    }
     return { blogs: allBlogResult, users: allUserResult, popularUsers };
   });
   // console.log('search response', res);

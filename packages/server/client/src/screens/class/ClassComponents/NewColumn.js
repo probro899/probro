@@ -6,6 +6,7 @@ import posSorting from '../../../common/utility-functions';
 import * as actions from '../../../actions';
 import { PopoverForm } from '../../../components';
 import ColumnFormStructure from './structure';
+import { AiOutlineAppstoreAdd } from "react-icons/ai";
 
 class NewColumn extends Component {
   state = { popOpen: false };
@@ -60,7 +61,7 @@ class NewColumn extends Component {
           structure={ColumnFormStructure}
         />
         <div role="button" tabIndex={0} onKeyDown={this.handlePopOverForm} className="title" onClick={this.handlePopOverForm}>
-          <MdLibraryAdd />
+          <AiOutlineAppstoreAdd />
           <span>New Column</span>
         </div>
       </div>

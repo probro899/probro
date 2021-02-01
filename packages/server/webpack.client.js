@@ -1,5 +1,6 @@
 const path = require('path');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const JsxstylePlugin = require('jsxstyle-webpack-plugin');
 const webConfig = require('./webConfig');
 
 module.exports = {
@@ -9,10 +10,10 @@ module.exports = {
   // server application
   entry: [
     './client/src/client.js',
-    './client/src/styles/index.scss',
-    '../../node_modules/react-responsive-carousel/lib/styles/carousel.css',
-    '../../node_modules/@blueprintjs/core/lib/css/blueprint.css',
-    '../../node_modules/@blueprintjs/datetime/lib/css/blueprint-datetime.css',
+    // './client/src/styles/index.scss',
+    // '../../node_modules/react-responsive-carousel/lib/styles/carousel.css',
+    // '../../node_modules/@blueprintjs/core/lib/css/blueprint.css',
+    // '../../node_modules/@blueprintjs/datetime/lib/css/blueprint-datetime.css',
   ],
 
   // Tell webpack where to put the output file
@@ -27,9 +28,13 @@ module.exports = {
       {
         test: /\.js$/,
         exclude: /(node_modules|bower_components)/,
-        use: {
+        use: [{
           loader: 'babel-loader',
         },
+        {
+          loader: JsxstylePlugin.loader,
+        },
+        ],
       },
       {
         test: /\.scss|.css$/,
@@ -62,5 +67,6 @@ module.exports = {
       { from: './client/src/assets/icons', to: 'assets/icons' },
       { from: './client/src/assets/media', to: 'assets/media' },
     ]),
+    new JsxstylePlugin(),
   ],
 };

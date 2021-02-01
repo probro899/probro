@@ -20,6 +20,7 @@ export default async (mediaType, props) => {
       if (jsep) {
         oneToOneCall.data({ text: JSON.stringify({ callType: mediaType, uid: account.user.id }) });
         oneToOneCall.send({ message: { request: 'set' }, jsep });
+        oneToOneCall.send({ message: { request: 'set', bitrate: 256000 }});
       }
 
       if (error) {

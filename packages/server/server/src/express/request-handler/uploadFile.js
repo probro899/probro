@@ -36,40 +36,42 @@ const storage = multer.diskStorage({
 });
 
 const checkFileType = (req, file, cb) => {
-  const { token, fileType } = JSON.parse(req.body.data);
-  // console.log(data);
-  // check file type
-
-  const user = validateToken(token);
-
-  if (user) {
-    let checkFileReg = null;
-    switch (fileType) {
-      case 'image':
-        checkFileReg = /jpeg|jpg|gif|png|bmp/;
-        break;
-      case 'video':
-        checkFileReg = /avi|AVI|wmv|WMV|flv|FLV|mpg|MPG|mp4|MP4|webm|mkv|MKV|WEBM|x-matroska/;
-        break;
-      case 'audio':
-        checkFileReg = /mp3|mpa|wav|wma|wpl|cda|aif/;
-        break;
-      case 'application':
-        checkFileReg = /pdf|txt|docx|csv|xlsx|ppt|pptx|xml|php|js|html|css|rtf|doc/;
-        break;
-      default:
-        break;
+  try {
+    const { token, fileType } = JSON.parse(req.body.data);
+    // console.log(data);
+    // check file type
+    const user = validateToken(token);
+    if (user) {
+      let checkFileReg = null;
+      switch (fileType) {
+        case 'image':
+          checkFileReg = /jpeg|jpg|gif|png|bmp/;
+          break;
+        case 'video':
+          checkFileReg = /avi|AVI|wmv|WMV|flv|FLV|mpg|MPG|mp4|MP4|webm|mkv|MKV|WEBM|x-matroska/;
+          break;
+        case 'audio':
+          checkFileReg = /mp3|mpa|wav|wma|wpl|cda|aif/;
+          break;
+        case 'application':
+          checkFileReg = /pdf|txt|docx|csv|xlsx|ppt|pptx|xml|html|css|doc/;
+          break;
+        default:
+          break;
+      }
+      // check ext
+      const extname = checkFileReg.test(path.extname(file.originalname).toLocaleLowerCase());
+      // check mime type
+      const mimetype = checkFileReg.test(file.mimetype);
+      if (mimetype && extname) {
+        return cb(null, true);
+      }
+      return cb({ Error: 'No file slected', message: 'Invalid file format' });
     }
-    // check ext
-    const extname = checkFileReg.test(path.extname(file.originalname).toLocaleLowerCase());
-    // check mime type
-    const mimetype = checkFileReg.test(file.mimetype);
-    if (mimetype && extname) {
-      return cb(null, true);
-    }
-    return cb({ Error: 'No file slected', message: 'Invalid file format' });
+    return cb({ Error: 'User verification Faild', message: 'User verification faild' });
+  } catch (e) {
+    console.error('check file type error', e);
   }
-  return cb({ Error: 'User verification Faild', message: 'User verification faild' });
 };
 
 const upload = multer({

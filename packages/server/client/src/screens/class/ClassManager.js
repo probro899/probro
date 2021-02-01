@@ -14,9 +14,8 @@ import Itemtype from './ClassComponents/dndComponents/types';
 class ClassManager extends Component {
   constructor(props) {
     super(props);
-    const { classId, apis } = this.props;
+    const { classId } = this.props;
     this.state = {
-      api: apis,
       classId,
       // drag and drop properties
       draggingInitialItem: {},
@@ -27,6 +26,10 @@ class ClassManager extends Component {
       taskOverlayIsOpen: false,
       // the task id contained in the overlay
       taskIdInOverlay: null,
+
+      // click and drag class horizontally
+      mouseDown: false,
+      initialLoc: 0,
     };
   }
 
@@ -52,6 +55,7 @@ class ClassManager extends Component {
 
   // dnd start implementation
   dragStartEnd = async (event, item, nodePoint, clientPoint) => {
+    // console.log("what is the problem");
     if (event === 'start') {
       this.setState({
         draggingInitialItem: item,
@@ -62,14 +66,16 @@ class ClassManager extends Component {
 
     this.stopScroll();
     // drag end
-    const { draggingInitialItem, api, columns, classId } = this.state;
+    const { draggingInitialItem, columns, classId } = this.state;
+    const { apis } = this.props;
     if (item.type === Itemtype.COLUMN) {
+      // console.log('columns', { position: columns.find(o => o.id === item.id).position, timeStamp: Date.now(), broadCastId: `Board-${classId}` }, { id: item.id });
       if (item.index !== draggingInitialItem.index) {
         try {
-          await api.updateBoardColumn([
+          await apis.updateBoardColumn([
             { position: columns.find(o => o.id === item.id).position, timeStamp: Date.now(), broadCastId: `Board-${classId}` }, { id: item.id }]);
-        } catch {
-          console.log('error in movement');
+        } catch (error) {
+          console.log('Column movement Error', error);
         }
       }
       this.setState({ draggingInitialItem: {}, xCoor: {} });
@@ -83,9 +89,9 @@ class ClassManager extends Component {
       }
       const col = columns.find(o => o.id === item.dropableId);
       try {
-        await api.updateBoardColumnCard([{ todo: item.dropableId === draggingInitialItem.dropableId ? 'withinColumn' : 'outsideColumn', fColId: draggingInitialItem.dropableId, tColId: item.dropableId, position: col.tasks.find(o => o.id === item.id).position, timeStamp: Date.now(), boardColumnId: item.dropableId, broadCastId: `Board-${classId}` }, { id: item.id }]);
+        await apis.updateBoardColumnCard([{ todo: item.dropableId === draggingInitialItem.dropableId ? 'withinColumn' : 'outsideColumn', fColId: draggingInitialItem.dropableId, tColId: item.dropableId, position: col.tasks.find(o => o.id === item.id).position, timeStamp: Date.now(), boardColumnId: item.dropableId, broadCastId: `Board-${classId}` }, { id: item.id }]);
       } catch {
-        console.log('task movement server-error');
+        console.log('Task movement Error');
       }
     }
     this.setState({ draggingInitialItem: {}, xCoor: {} });
@@ -152,12 +158,37 @@ class ClassManager extends Component {
     }
   }
 
+  onColumnClick = (type, e) => {
+    if (type === 'down' && e.target.getAttribute('class') === 'column-container') {
+      e.preventDefault();
+      this.setState({
+        mouseDown: true,
+        initialLoc: e.clientX,
+      });
+    }
+    if (type === 'up') {
+      e.preventDefault();
+      this.setState({
+        mouseDown: false,
+        initialLoc: 0,
+      })
+    }
+  }
+
+  onMouseOverColumn = (e) => {
+    const { mouseDown, initialLoc } = this.state;
+    if (mouseDown) {
+      document.getElementById('allColumnWrapper').scrollLeft -= e.clientX - initialLoc;
+      this.setState({ initialLoc: e.clientX });
+    }
+  }
+
   render() {
     const {
-      classId, columns, api, taskIdInOverlay, taskOverlayIsOpen, xCoor,
+      classId, columns, taskIdInOverlay, taskOverlayIsOpen, xCoor,
     } = this.state;
     const {
-      addDatabaseSchema, account, updateDatabaseSchema,
+      apis, addDatabaseSchema, account, updateDatabaseSchema,
       deleteDatabaseSchema, classMembers, userSlug, setDraggingContent,
     } = this.props;
     const member = Object.values(classMembers.byId).find(obj => obj.boardId === classId && !obj.deleteStatus && account.user.id === obj.tuserId);
@@ -171,6 +202,8 @@ class ClassManager extends Component {
             columns.filter(o => !o.deleteStatus && o.boardId === classId).map((column, index) => {
               return (
                 <ColumnWrapper
+                  onColumnClick={this.onColumnClick}
+                  onMouseOverColumn={this.onMouseOverColumn}
                   startScroll={this.startScroll}
                   xCoor={xCoor}
                   dragStartEnd={this.dragStartEnd}
@@ -182,7 +215,7 @@ class ClassManager extends Component {
                   column={column}
                   key={`column${column.id}`}
                   columnId={column.id}
-                  api={api}
+                  api={apis}
                   boardId={classId}
                   addDatabaseSchema={addDatabaseSchema}
                   updateDatabaseSchema={updateDatabaseSchema}
@@ -192,10 +225,10 @@ class ClassManager extends Component {
               );
             })
           }
-          <NewColumn api={api} classId={classId} />
+          <NewColumn api={apis} classId={classId} />
         </ClassWrapper>
         <TaskOverlay
-          apis={api}
+          apis={apis}
           isOpen={taskOverlayIsOpen}
           taskId={taskIdInOverlay}
           onClose={this.toggleTaskOverlay}

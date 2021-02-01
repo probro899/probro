@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import _ from 'lodash';
 import client from '../../../socket';
 import * as actions from '../../../actions';
 import Tools from './Tools';
+import { minimizeCanvas, maximizeCanvas } from './helper-functions';
 
 const fabric = require('fabric');
 // const pcLogo = require('../../../assets/logo.png');
@@ -21,6 +23,14 @@ class DrawingBoard extends Component {
       mouseDown: false,
       text: false,
       straightLine: false,
+      maximize: false,
+      canvasHistory: [],
+      canvasDeleteHistory: [],
+      redoing: false,
+      screenSize: {
+        height: 500,
+        width: 500,
+      }
     };
     this.previousPoint = { x: 0, y: 0 };
   }
@@ -39,25 +49,34 @@ class DrawingBoard extends Component {
     canvas.on('mouse:up', (e) => {
       this.onMouseUp(e);
     });
+
+    canvas.on('object:added', (e) => {
+      this.canvasObjectAltered(e);
+    });
+
+    canvas.on('object:modified', (e) => {
+      this.canvasObjectAltered(e);
+    });
+
     this.setState({
       apis,
       canvas,
     });
+
     updateNav({
       schema: 'sideNav',
       data: { name: 'Drawing Board' },
     });
-    this.addInitialAnimation();
+
+    // listen for escape when fullscreen
+    document.getElementById('drawingWrapper').addEventListener('fullscreenchange', this.changeFullScreen);
+    window.addEventListener('resize', this.screenResize);
+    this.screenResize();
   }
 
-  componentWillUpdate(nextProps) {
-    const { canvas } = this.state;
-    if (nextProps.webRtc.localCallHistory && nextProps.webRtc.localCallHistory.mediaType === 'whiteBoard') {
-      const logo = canvas.getObjects().find(obj => obj.cacheKey === 'logo' && obj);
-      canvas.remove(logo);
-      this.addInitialAnimation();
-      canvas.requestRenderAll();
-    }
+  componentWillUnmount() {
+    document.getElementById('drawingWrapper').removeEventListener('fullscreenchange', this.changeFullScreen);
+    window.removeEventListener('resize', this.screenResize);
   }
 
   toggleStraightLine = () => {
@@ -130,6 +149,9 @@ class DrawingBoard extends Component {
             obj.lockMovementY = true;
           }
         });
+      }
+      if (rect || straightLine) {
+        // if create rectangle and straight line button is selected
         const square = new fabric.fabric.Rect({
           width: 0,
           height: 0,
@@ -150,9 +172,9 @@ class DrawingBoard extends Component {
 
   onMouseMove = (e) => {
     const { canvas, straightLine, draw, rect, mouseDown } = this.state;
-    if (draw && mouseDown) {
-      this.drawPath(canvas.lowerCanvasEl.getContext('2d'), e);
-    }
+    // if (draw && mouseDown) {
+    //   this.drawPath(canvas.lowerCanvasEl.getContext('2d'), e);
+    // }
     if (straightLine && mouseDown) {
       this.drawLine(canvas.lowerCanvasEl.getContext('2d'), e);
     }
@@ -162,7 +184,7 @@ class DrawingBoard extends Component {
   }
 
   onMouseUp = (e) => {
-    const { rect, text, canvas, straightLine } = this.state;
+    const { rect, text, canvas, straightLine, anyObjectActive } = this.state;
     if (rect || straightLine || text) {
       // release the prevention of moving of objects while rectangle
       canvas._objects.map((obj) => {
@@ -173,7 +195,9 @@ class DrawingBoard extends Component {
       });
       const obj = canvas.getActiveObject();
       obj.setCoords();
-      canvas.discardActiveObject();
+      if (!rect && !text) {
+        canvas.discardActiveObject();
+      }
       canvas.renderAll();
     }
     if (straightLine) {
@@ -181,20 +205,23 @@ class DrawingBoard extends Component {
     }
     this.setState({
       mouseDown: false,
+      text: false,
+      rect: false,
+      anyObjectActive: rect || text || anyObjectActive,
     });
   }
 
-  drawPath = (ctx, e) => {
-    const { color } = this.state;
-    ctx.beginPath();
-    ctx.moveTo(this.previousPoint.x - 1, this.previousPoint.y - 1);
-    ctx.lineTo(e.pointer.x - 1, e.pointer.y - 1);
-    ctx.strokeStyle = color;
-    ctx.lineWidth = 1;
-    ctx.stroke();
-    ctx.closePath();
-    this.previousPoint = e.pointer;
-  }
+  // drawPath = (ctx, e) => {
+  //   const { color } = this.state;
+  //   ctx.beginPath();
+  //   ctx.moveTo(this.previousPoint.x - 1, this.previousPoint.y - 1);
+  //   ctx.lineTo(e.pointer.x - 1, e.pointer.y - 1);
+  //   ctx.strokeStyle = color;
+  //   ctx.lineWidth = 1;
+  //   ctx.stroke();
+  //   ctx.closePath();
+  //   this.previousPoint = e.pointer;
+  // }
 
   drawRectangle = (e) => {
     const { canvas } = this.state;
@@ -213,11 +240,17 @@ class DrawingBoard extends Component {
   }
 
   addInitialAnimation = () => {
-    const { canvas } = this.state;
-    fabric.fabric.Image.fromURL('/assets/graphics/logo.png', (myImg) => {
-      const img1 = myImg.set({ cacheKey: 'logo', left: 875, top: 0, scaleX: 0.2, scaleY: 0.2, selectable: false, opacity: 0.6 });
+    const { canvas, screenSize } = this.state;
+    fabric.fabric.Image.fromURL('/assets/graphics/realLogo.png', (myImg) => {
+      const img1 = myImg.set({ cacheKey: 'logo', left: screenSize.width - 130, top: screenSize.height - 50, scaleX: 0.2, scaleY: 0.2, selectable: false, opacity: 0.8 });
       canvas.add(img1);
     });
+  }
+
+  removeInitialAnimation = () => {
+    const { canvas } = this.state;
+    canvas.remove(canvas._objects.find(o => o.cacheKey === 'logo'));
+    canvas.renderAll();
   }
 
   colorChange = (e) => {
@@ -251,10 +284,11 @@ class DrawingBoard extends Component {
 
   deleteObject = () => {
     const { canvas } = this.state;
+    this.state.canvasDeleteHistory.push(canvas.getActiveObject());
+    this.state.canvasHistory = [];
     canvas.remove(canvas.getActiveObject());
-    canvas.requestRenderAll();
+    canvas.renderAll();
     this.setState({
-      canvas,
       anyObjectActive: false,
     });
   }
@@ -269,9 +303,11 @@ class DrawingBoard extends Component {
       fill: color,
     });
     canvas.add(textbox).setActiveObject(textbox);
-    this.setState({
-      anyObjectActive: true,
-    });
+    canvas.renderAll();
+    // this.setState({
+    //   anyObjectActive: true,
+    //   text: false,
+    // });
   }
 
   fileUpload = (e) => {
@@ -333,44 +369,110 @@ class DrawingBoard extends Component {
     ctx.closePath();
   }
 
+  toggleMaximization = () => {
+    const { maximize } = this.state;
+    if (!maximize) {
+      maximizeCanvas(document.getElementById("drawingWrapper"));
+    } else {
+      minimizeCanvas();
+    }
+    this.setState({ maximize: !maximize });
+  }
+
+  changeFullScreen = (e) => {
+    if (!document.fullscreenElement) {
+      this.setState({ maximize: false });
+    }
+  }
+
+  canvasObjectAltered = (e) => {
+    if (!this.state.redoing) {
+      this.state.canvasHistory = [];
+      this.state.canvasDeleteHistory = [];
+    }
+    this.state.redoing = false;
+  }
+
+  canvasUndo = () => {
+    const { canvas, canvasDeleteHistory } = this.state;
+    if (canvasDeleteHistory.length > 0) {
+      canvas.add(canvasDeleteHistory.pop());
+      canvas.renderAll();
+      return;
+    }
+    if (canvas._objects.length > 1) {
+      canvas.discardActiveObject();
+      this.state.canvasHistory.push(canvas._objects.pop())
+      canvas.renderAll();
+    }
+  }
+
+  canvasRedo = () => {
+    const { canvasHistory, canvas } = this.state;
+    if (canvasHistory.length > 0) {
+      this.state.redoing = true;
+      canvas.add(canvasHistory.pop());
+      canvas.renderAll();
+    }
+  }
+
+  screenResize = _.debounce(() => {
+    const { canvas } = this.state;
+    const elem = document.getElementById("canvasWrapper");
+    const height = elem.offsetHeight;
+    const width = elem.offsetWidth;
+    this.setState({ screenSize: { height, width }});
+    canvas.setHeight(height);
+    canvas.setWidth(width);
+
+    this.removeInitialAnimation();
+    this.addInitialAnimation();
+  }, 80);
+
   render() {
     const {
       draw, anyObjectActive, straightLine, color, canvas, text,
-      apis, rect,
+      apis, rect, maximize,
+      screenSize,
     } = this.state;
     const { database, account, addDatabaseSchema } = this.props;
     return (
       <div className="drawing-board bro-right">
-        <div className="draw-title">
-          <span>White Board</span>
-        </div>
-        <Tools
-          draw={this.toggleFreeDraw}
-          drawActive={draw}
-          text={text}
-          apis={apis}
-          straightLine={straightLine}
-          drawStraight={this.toggleStraightLine}
-          colorChange={this.colorChange}
-          clear={this.clearCanvas}
-          anyObjectActive={anyObjectActive}
-          onDelete={this.deleteObject}
-          textToggle={this.toggleText}
-          color={color}
-          addRect={this.toggleRect}
-          rect={rect}
-          account={account}
-          database={database}
-          fileUpload={this.fileUpload}
-          canvas={canvas}
-          addDatabaseSchema={addDatabaseSchema}
-        />
-        <div className="draw-canvas">
-          <canvas
-            id="mainCanvas"
-            height={700}
-            width={1000}
-          />
+        <div className="drawing-wrapper" id="drawingWrapper">
+          <div className="pc-drawing-wrapper">
+            <div id="canvasWrapper" className="draw-canvas pc-draw-col">
+              <canvas
+                id="mainCanvas"
+                height={screenSize.height}
+                width={screenSize.width}
+              />
+            </div>
+            <Tools
+              canvasRedo={this.canvasRedo}
+              canvasUndo={this.canvasUndo}
+              draw={this.toggleFreeDraw}
+              drawActive={draw}
+              text={text}
+              apis={apis}
+              straightLine={straightLine}
+              drawStraight={this.toggleStraightLine}
+              colorChange={this.colorChange}
+              clear={this.clearCanvas}
+              anyObjectActive={anyObjectActive}
+              onDelete={this.deleteObject}
+              textToggle={this.toggleText}
+              color={color}
+              addRect={this.toggleRect}
+              rect={rect}
+              account={account}
+              toggleMaximization={this.toggleMaximization}
+              database={database}
+              fileUpload={this.fileUpload}
+              canvas={canvas}
+              maximize={maximize}
+              addDatabaseSchema={addDatabaseSchema}
+            />
+          </div>
         </div>
       </div>
     );

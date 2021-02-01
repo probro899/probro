@@ -47,4 +47,5 @@ export default props => async (stream, uid) => {
   await updateWebRtc('lastStreamId', userId);
   await updateWebRtc('isLive', true);
   // console.log('remote stream handler', userId, store.getState().webRtc);
+  // setInterval(() => console.log('current bit rate', webRtc.janus.oneToOneCall.getBitrate()), 10000);
 };

@@ -8,10 +8,15 @@ class CallTimer extends React.Component {
     this.state = { timerCount: 0, isTimerStart: false };
   }
 
-  componentWillReceiveProps(props) {
-    const { webRtc } = props;
+  async componentWillReceiveProps(props) {
+    const { webRtc, database } = props;
     const { isTimerStart } = this.state;
     if (webRtc.localCallHistory.startTime && !isTimerStart) {
+      if (webRtc.localCallHistory.chatHistory.type === 'board') {
+        const { startTime } = database.Board.byId[webRtc.localCallHistory.chatHistory.connectionId];
+        const offset = Math.floor((Date.now() - startTime) / 1000);
+        await this.setState({ timerCount: offset || 0 });
+      }
       const timer = setInterval(() => this.setState({ timerCount: this.state.timerCount + 1 }), 1000);
       this.setState({ isTimerStart: true, timer });
     }
@@ -25,8 +30,8 @@ class CallTimer extends React.Component {
   render() {
     // console.log('props in timer', this.props);
     const { timerCount } = this.state;
-    const mins = Math.floor(timerCount / 60);
     const secs = timerCount % 60;
+    const mins = Math.floor(timerCount / 60) % 60;
     const hrs = Math.floor(mins / 60);
     const showZeroSec = secs < 10;
     const showZeroMins = mins < 10;

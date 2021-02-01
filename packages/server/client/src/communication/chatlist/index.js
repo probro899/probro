@@ -30,6 +30,7 @@ class ChatList extends React.Component {
   render() {
     const { style } = this.props;
     const { mouseHoverId, chatList } = this.state;
+    // console.log('chatlist', chatList);
     return (
       <div
         style={style}

@@ -1,4 +1,4 @@
-import CreateBlog from './CreateBlog';
+import CreateBlog from './BlogCreate';
 import Blog from './Blog';
 import PublicBlog from './public-blog';
 

@@ -11,5 +11,9 @@ export default (props) => {
       isOver: monitor.isOver(),
     }),
   });
-  return <div className="columns" id="allColumnWrapper" ref={drop}>{children}</div>;
+  return (
+    <div className="columns" id="allColumnWrapper" ref={drop}>
+      {children}
+    </div>
+  );
 };

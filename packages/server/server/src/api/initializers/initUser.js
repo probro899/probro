@@ -31,7 +31,7 @@ export default async function initUser(id) {
     session.dispatch(schema.init('UserCarrierInterest', u.userCarrierInterest));
 
     // subscribing in related channel and send the data that is collected
-    channelData = getChannelIds(id);
+    channelData = await getChannelIds(id);
     const { allBoard, allBlogs, connectionList, allBoardColumns, allBoardMembers } = channelData;
 
     // subscribe to all Related board
@@ -55,7 +55,7 @@ export default async function initUser(id) {
 
     // updating userCollection activeStatus
     const userConnectionActiveStatus = userPresentorHelper(session.getChannel('Main'), connectionList);
-    const finalUSerConnectionActiveList = userConnectionActiveStatus.map(uc => ({ ...uc, activeStatus: uc.activeStatus }));
+    const finalUSerConnectionActiveList = userConnectionActiveStatus.map(uc => ({ ...uc, activeStatus: uc.activeStatus, callId: uc.user.user.callId }));
     finalUSerConnectionActiveList.forEach(ucs => session.dispatch(schema.update('UserConnection', ucs)));
 
     // inform all the user to i am active now

@@ -4,7 +4,6 @@ const addBlog = async (api, data) => {
   }
   try {
     const res = await api(data);
-    // eslint-disable-next-line consistent-return
     return res;
   } catch (e) {
     console.log(e);

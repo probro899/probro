@@ -6,6 +6,8 @@ import store from '../../../../../store';
 import janusMediaSelector from '../janusMediaSelector';
 import remoteHangupHandler from './remoteHangupHandler';
 import exceptionHandler from './exceptionHandler';
+import reRegistration from './userRegistration';
+import registrationInformer from './registrationInformer';
 
 export default (props, state) => (msg, jsep) => {
   try {
@@ -23,13 +25,19 @@ export default (props, state) => (msg, jsep) => {
             const { event } = result;
             if (event === 'registered') {
               // add flag that allow the registration again if faild;
-              // const myusername = result.username;
+              const myusername = result.username;
+              registrationInformer(props, myusername);
             } else if (event === 'calling') {
               const userId = localCallHistory.chatHistory.user.user.id;
               updateWebRtc('connectedUsers', { ...webRtc.connectedUsers, [userId]: { ...webRtc.connectedUsers[userId], streams: [], status: 'ringing' } });
             } else if (event === 'incomingcall') {
               inCommingCallHandler(props, state, msg, jsep);
             } else if (event === 'accepted') {
+
+              // setting bit rate after 2 sec call accepted
+              setTimeout(() => oneToOneCall.send({ message: { request: 'set', bitrate: 256000 }}), 2000);
+
+              //arrange ui by calling call accept func
               callAcceptHandler(props, msg);
               if (jsep) {
                 oneToOneCall.handleRemoteJsep({ jsep });
@@ -64,6 +72,9 @@ export default (props, state) => (msg, jsep) => {
             oneToOneCall.handleRemoteJsep(jsep);
           }
         } else if (error && error_code) {
+          if (error_code === 476) {
+            reRegistration(props, state, msg);
+          }
           throw `${error} errorCode: ${error_code}`;
         }
       } else {

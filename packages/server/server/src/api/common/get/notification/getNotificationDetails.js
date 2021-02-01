@@ -6,7 +6,7 @@ import findUserDetails from '../../findUserDetails';
 import getChannelIds from '../../getChannelIds';
 import { timeStampSorting } from '../../../../../../client/src/common/utility-functions';
 
-export default function getNotifications(params) {
+export default async function getNotifications(params) {
   const { id, noOfNotification } = params;
   const { session } = this;
   // console.log('get notification called', id, noOfNotification);
@@ -15,7 +15,7 @@ export default function getNotifications(params) {
   const allDbBlogs = cacheDataBase.get('Blog');
 
   // gettig all board notificatins
-  const allChandelIds = getChannelIds(id, 'Board');
+  const allChandelIds = await getChannelIds(id, 'Board');
   // console.log('allChannelIds', allChandelIds);
   const allBoards = allChandelIds.allBoard;
 

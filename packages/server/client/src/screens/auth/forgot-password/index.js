@@ -1,21 +1,30 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import Forgot from './forget';
+import { Navbar } from '../../home/component'
+import Footer from '../../../common/footer'
 
 class Forget extends Component {
-  state = {}
 
   render() {
     return (
-      <div className="o-log-or-reg">
-        <div className="log-or-reg">
-          <div className="reg-box-header">
-            <p>Recover your password</p>
-            <Link to="/login"><u>or login to your account</u></Link>
+      <>
+        <Navbar />
+        <div className="o-log-or-reg">
+          <div className="log-or-reg">
+            <div className="reg-box-header">
+              <h1>Recover your password</h1>
+
+            </div>
+            <Forgot />
+            <p className="login-in-link">
+              Already have an account?
+              <Link to="/login">Log in</Link>
+            </p>
           </div>
-          <Forgot />
         </div>
-      </div>
+        <Footer />
+      </>
     );
   }
 }

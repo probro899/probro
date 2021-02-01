@@ -3,7 +3,7 @@ const filterSchema = [
     id: 'country',
     fieldtype: 'select',
     options: [
-      { label: '---', value: '' },
+      { label: '---', value: 'countries' },
     ],
     val: '',
   },
@@ -16,7 +16,7 @@ const filterSchema = [
     id: 'industry',
     fieldtype: 'select',
     options: [
-      { label: '---', value: '' },
+      { label: '---', value: 'industries' },
       { label: 'Engineering', value: 'engineering' },
       { label: 'Accounting', value: 'accounting' },
       { label: 'Medical', value: 'medical' },

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Carousel } from 'react-responsive-carousel';
+import { LazyLoadComponent } from 'react-lazy-load-image-component';
 import SearchElement from '../component/search/SearchElement';
 import { ENDPOINT } from '../../../config';
 
@@ -22,6 +23,7 @@ class Slider extends Component {
     const { data } = this.state;
     return !data ? <div /> : (
       <div className="slider-container">
+        <div className="overlay"></div>
         <Carousel
           interval={5000}
           showIndicators={false}
@@ -35,7 +37,9 @@ class Slider extends Component {
           {
             data.map((obj, index) => {
               return (
-                <div key={index} style={{ backgroundImage: `url(${obj})` }} className="slider-img-con" />
+                <LazyLoadComponent>
+                  <div key={index} style={{ backgroundImage: `url(${obj})` }} className="slider-img-con" />
+                </LazyLoadComponent>
               );
             })
           }

@@ -46,11 +46,11 @@ class SmallScreenMenu extends React.Component {
         usePortal
         isOpen={open}
         onClose={smallScreenToggle}
-        size="60%"
+        size="80%"
         position="left"
         autoFocus={false}
         lazy
-        title={<img alt="Proper Class Logo" style={{ objectFit: 'contain', width: '100%' }} src={pcLogo} />}
+        title={<img alt="Proper Class Logo" style={{ objectFit: 'cover', width: 200 }} src={pcLogo} />}
       >
         <DropMenu account={account} activeNav={navigate.mainNav.name} apis={apis} />
       </Drawer>

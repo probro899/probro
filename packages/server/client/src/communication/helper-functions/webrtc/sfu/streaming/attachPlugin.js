@@ -23,7 +23,7 @@ export default async (props) => {
     onDataHandler(props),
     onDataChannelAvailable(props)
   );
-  console.log('attach plugin res streaming', attachPluginRes);
+  // console.log('attach plugin res streaming', attachPluginRes);
   const { streaming, error } = attachPluginRes;
   const userId = account.user.id;
   if (streaming) {

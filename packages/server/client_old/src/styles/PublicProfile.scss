@@ -1,0 +1,180 @@
+@import './config.scss';
+
+.public-profile {
+  min-height: calc(100vh - #{$navbarHeight} - #{$footerHeight});
+  display: flex; flex-direction: column;
+  padding-top: 10px; 
+  position: relative;
+  margin: $navbarHeight 7%;
+  .cover-pic {
+    overflow: hidden; width: 100%;
+    // to prevent overflow of unedited cover
+    height: calc((100vw * 0.86) * 0.33);
+    img {
+      width: 100%;
+    }
+  }
+  .profilePic {
+    position: absolute; left: 10px; border: 1px solid $normalBorder;
+    box-shadow: 0px 0px 5px 1px $normalShadowColor; border-radius: 50%;
+    width: calc((100vw * 0.86 * 0.33) * 0.55);
+    height: calc((100vw * 0.86 * 0.33) * 0.55);
+    overflow: hidden;
+    top: calc((100vw * 0.86) * 0.33 * 0.4);
+  }
+  .top-details {
+    width: 100%; display: flex; justify-content: space-between; margin-top: 8px;
+    background: $backgroundColor;
+    .name { font-size: 20px; font-weight: bold; }
+    .connect-btns {
+      flex: 0.3; display: flex; justify-content: flex-end;
+      .con { display: flex; align-items: center; }
+      button { margin-left: 10px; font-size: 16px;
+      }
+    }
+    .desc {
+      flex: 0.7;
+      .name {
+        font-size: 20px;
+        font-weight: bold;
+      }
+    }
+  }
+  .bio {
+    text-align: center;
+    width: 100%;
+    padding: 20px 0px;
+    p {
+      font-family: 'Oxygen', sans-serif;
+      font-size: 16px;
+      word-wrap: break-word;
+    }
+  }
+
+  // adv-body style 
+  .adv-body {
+    display: flex;
+    .left-body { width: 50%; }
+    .right-body { width: 50%; }
+    @media screen and (max-width: 720px) {
+      flex-direction: column;
+      .left-body { width: 100%;}
+      .right-body { width: 100%;}
+    }
+  }
+  .education {
+    padding: 20px 0px;
+    width: 100%;
+    p.p-top {
+      font-size: 20px;
+      display: flex;
+      justify-content: space-between;
+      padding-right: 5px;
+      svg {
+        fill: $skyBlueMain;
+      }
+    }
+    .p-edu-list {
+      .p-edu-list-i {
+        display: flex;
+        padding: 2px;
+        img {
+          height: 45px;
+          padding: 2px;
+        }
+        p {
+          padding: 0px 0px 0px 10px;
+          span.p-name-i {
+            font-size: 18px;
+            font-weight: bold;
+          }
+          span.p-timeline {
+            font-weight: bold;
+            color: $lightTextColor;
+          }
+          svg {
+            fill: $skyBlueMain;
+          }
+        }
+      }
+    }
+  }
+  .experience {
+    padding: 20px 0px;
+    width: 100%;
+    p.p-top {
+      font-size: 20px;
+      display: flex;
+      justify-content: space-between;
+      padding-right: 5px;
+      svg {
+        fill: $skyBlueMain;
+      }
+    }
+    .p-exp-list {
+      .p-exp-list-i {
+        display: flex;
+        padding: 2px;
+        img {
+          height: 45px;
+          padding: 2px;
+        }
+        p {
+          padding: 0px 0px 0px 10px;
+          span.p-title-i {
+            font-size: 18px;
+            font-weight: bold;
+          }
+          span.p-company-i {
+            font-size: 16px;
+            font-weight: bold;
+            color: $lightTextColor;
+          }
+          span.p-timeline {
+            font-weight: bold;
+            color: $lightTextColor;
+          }
+          svg {
+            fill: $skyBlueMain;
+          }
+        }
+      }
+    }
+  }
+  .skills {
+    padding: 20px 0px;
+    width: 100%;
+    p.p-top {
+      font-size: 20px;
+      display: flex;
+      justify-content: space-between;
+      padding-right: 5px;
+      svg {
+        fill: $skyBlueMain;
+      }
+    }
+    .skills-container {
+      padding: 5px 5px 5px 0px;
+      display: flex;
+      flex-wrap: wrap;
+      span {
+        margin: 5px;
+        padding: 5px;
+        color: $backgroundColor;
+        background: $skyBlueMain;
+      }
+    }
+  }
+
+  @media screen and (max-width: 600px){
+    margin: $navbarHeight 5%;
+    .cover-pic {
+      height: calc((100vw * 0.90) * 0.33);
+    }
+    .profilePic {
+      width: calc((100vw * 0.90 * 0.33) * 0.55);
+      height: calc((100vw * 0.90 * 0.33) * 0.55);
+      top: calc((100vw * 0.90) * 0.33 * 0.4);
+    }
+  }
+}

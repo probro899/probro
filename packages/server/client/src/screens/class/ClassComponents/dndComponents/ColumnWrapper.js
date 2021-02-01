@@ -6,7 +6,7 @@ import Column from '../Column';
 
 export default (props) => {
   const ref = useRef(null);
-  const { api, startScroll, boardId, xCoor, dragStartEnd, setDraggingContent, addDatabaseSchema, updateDatabaseSchema, deleteDatabaseSchema, onTaskClick, column, moveTask, index, draggableId, moveColumns } = props;
+  const { onMouseOverColumn, onColumnClick, api, startScroll, boardId, xCoor, dragStartEnd, setDraggingContent, addDatabaseSchema, updateDatabaseSchema, deleteDatabaseSchema, onTaskClick, column, moveTask, index, draggableId, moveColumns } = props;
   const [, drop] = useDrop({
     accept: [Itemtype.COLUMN, Itemtype.TASK],
     hover: (item, monitor) => {
@@ -50,6 +50,7 @@ export default (props) => {
       isDragging: monitor.isDragging(),
     }),
     begin: (monitor) => {
+      // console.log("dragging", monitor);
       const itm = { type: Itemtype.COLUMN, id: column.id, draggableId, index };
       setDraggingContent('start', itm);
       dragStartEnd('start', itm, monitor.getInitialSourceClientOffset(), monitor.getInitialClientOffset());
@@ -67,7 +68,7 @@ export default (props) => {
   drop(ref);
 
   return (
-    <div className="column-container" id={`id_column_${column.id}`} style={{ opacity: isDragging ? 0.1 : 1 }}>
+    <div onMouseMove={onMouseOverColumn} onMouseDown={(e) => onColumnClick('down', e)} onMouseUp={(e) => onColumnClick('up', e)} className="column-container" id={`id_column_${column.id}`} style={{ opacity: isDragging ? 0.1 : 1 }}>
       <Column
         reference={ref}
         handle={drag}

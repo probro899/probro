@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { Icon } from '@blueprintjs/core';
+import { BiMessage } from "react-icons/bi";
 import { Badge } from '../../../../components';
 import SoudComponent from '../../../../communication/components/SoundComponent';
 // import notificationUrl from '../../../../assets/notification.mp3';
@@ -20,7 +21,7 @@ class MessageNotification extends React.Component {
     return (
         <Link to="#" onClick={this.showMessage}>
           <div className="navbar-item">
-            <Icon icon="chat" iconSize={Icon.SIZE_LARGE} />
+          <BiMessage className = "message-icon" />
             {unreadMessage !== 0 && (
             <div>
               <Badge number={unreadMessage} size={25} />

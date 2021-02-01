@@ -1,21 +1,18 @@
 import React from 'react';
-import { ScaleLoader } from 'react-spinners';
+
 
 const css = {
-  left: '50%',
-  top: '50%',
+  left: 'calc(50% - 50px)',
+  top: 'calc(50% - 50px)',
   position: 'absolute',
-  // 'border-color': '#36D7B7',
+  height: 100,
 };
 
-export default () => {
+export default ({ style }) => {
   return (
-    <ScaleLoader
-      css={css}
-      sizeUnit="10px"
-      size={1}
-      color="#36D7B7"
-      loading
+    <img
+      style={{ ...css, ...style }}
+      src='/assets/graphics/spinner.gif'
     />
-  );
-};
+  )
+}

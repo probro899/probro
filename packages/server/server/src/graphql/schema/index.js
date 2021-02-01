@@ -136,7 +136,7 @@ type Query {
  getUser(userSlug: String!): User!
  getBlog(blogSlug: String!, userSlug: String!): Blog!
  getPopular: Popular!
- getArchive: Archive!
- doSearch(keyword: String, country: String, industry: String, skill: String): Popular!
+ getArchive(sessionId: String): Archive!
+ doSearch(keyword: String, country: String, industry: String, skill: String, sessionId: String): Popular!
 }
 `);

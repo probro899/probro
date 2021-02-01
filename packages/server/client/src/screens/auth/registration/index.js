@@ -6,6 +6,9 @@ import { register } from '../helper-functions';
 import { passwordStrength, emailValidator } from '../utility-functions';
 import * as actions from '../../../actions';
 import Register from './registration';
+import { Navbar } from '../../home/component';
+import Footer from '../../../common/footer';
+
 
 class Registration extends Component {
   state = { redirect: false };
@@ -34,16 +37,23 @@ class Registration extends Component {
   render() {
     const { redirect } = this.state;
     return (
-      <div className="o-log-or-reg">
-        {redirect && <Redirect to="/login" />}
-        <div className="log-or-reg">
-          <div className="reg-box-header">
-            <p> Create a Proper Class Account </p>
-            <Link to="/login"><u>or login to your account</u></Link>
+     <>
+        <Navbar />
+        <div className="o-log-or-reg">
+          {redirect && <Redirect to="/login" />}
+          <div className="log-or-reg">
+            <div className="reg-box-header">
+              <h1> Create Account </h1>
+            </div>
+            <Register handleRegistration={this.handleRegistration} />
+            <p className="login-in-link">
+              Already have an account?
+              <Link to="/login">Log in</Link>
+            </p>
           </div>
-          <Register handleRegistration={this.handleRegistration} />
         </div>
-      </div>
+        <Footer />
+      </>
     );
   }
 }

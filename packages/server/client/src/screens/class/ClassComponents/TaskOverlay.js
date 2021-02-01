@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import moment from 'moment';
-import { Dialog, Button, TextArea, Tag, Icon } from '@blueprintjs/core';
+import { Dialog, Tag, Icon } from '@blueprintjs/core';
 import PropTypes from 'prop-types';
 import { timeStampSorting } from '../../../common/utility-functions';
 import TaskComment from './history/TaskComment';
@@ -12,6 +12,10 @@ import CommentBox from './CommentBox';
 import { AttachmentList } from './attachment';
 import Spinner from '../../../common/spinner';
 import Description from './task-detail/Description';
+import Popup from '../../../common/Form/Popup';
+import { FormTextArea } from '../../../common/Form/FormTextArea';
+import { Button } from '../../../common/utility-functions/Button/Button';
+import { AiOutlineEdit, AiOutlineClose, AiOutlineCheck } from "react-icons/ai";
 
 class TaskOverlay extends Component {
   state = {
@@ -68,6 +72,7 @@ class TaskOverlay extends Component {
       editHead: false,
       loading: true,
       editDesc: false,
+      comment: '',
     });
   };
 
@@ -85,14 +90,18 @@ class TaskOverlay extends Component {
   }
 
   saveTitle = async () => {
-    const { apis, boardId, updateDatabaseSchema } = this.props;
-    const { task, title } = this.state;
-    await apis.updateBoardColumnCard([{
-      name: title,
-      broadCastId: `Board-${boardId}`,
-    }, { id: task.id }]);
-    updateDatabaseSchema('BoardColumnCard', { id: task.id, name: title });
-    this.toggleElemTitle();
+    try {
+      const { apis, boardId, updateDatabaseSchema } = this.props;
+      const { task, title } = this.state;
+      await apis.updateBoardColumnCard([{
+        name: title,
+        broadCastId: `Board-${boardId}`,
+      }, { id: task.id }]);
+      updateDatabaseSchema('BoardColumnCard', { id: task.id, name: title });
+      this.toggleElemTitle();
+    } catch (e) {
+      console.error(e)
+    }
   }
 
   // toggle between the element of description
@@ -109,23 +118,27 @@ class TaskOverlay extends Component {
   }
 
   saveDesc = async () => {
-    const { apis, account, boardId, addDatabaseSchema } = this.props;
-    const { task, desc } = this.state;
-    const res = await apis.addBoardColumnCardDescription({
-      boardColumnCardId: task.id,
-      title: desc,
-      timeStamp: Date.now(),
-      userId: account.user.id,
-      broadCastId: `Board-${boardId}`,
-    });
-    addDatabaseSchema('BoardColumnCardDescription', {
-      boardColumnCardId: task.id,
-      title: desc,
-      timeStamp: Date.now(),
-      userId: account.user.id,
-      id: res,
-    });
-    this.toggleElemDesc();
+    try {
+      const { apis, account, boardId, addDatabaseSchema } = this.props;
+      const { task, desc } = this.state;
+      const res = await apis.addBoardColumnCardDescription({
+        boardColumnCardId: task.id,
+        title: desc,
+        timeStamp: Date.now(),
+        userId: account.user.id,
+        broadCastId: `Board-${boardId}`,
+      });
+      addDatabaseSchema('BoardColumnCardDescription', {
+        boardColumnCardId: task.id,
+        title: desc,
+        timeStamp: Date.now(),
+        userId: account.user.id,
+        id: res,
+      });
+      this.toggleElemDesc();
+    } catch (e) {
+      console.error(e);
+    }
   }
 
   getName = (id) => {
@@ -159,13 +172,17 @@ class TaskOverlay extends Component {
   }
 
   getCardActivity = async () => {
-    const { apis } = this.props;
-    const { task } = this.state;
-    const res = await apis.getCardActivity({ cardId: task.id });
-    this.setState({
-      loading: false,
-      activities: res.cardActivities.filter(o => o.message === 'createCard' || o.message === 'outsideColumn'),
-    });
+    try {
+      const { apis } = this.props;
+      const { task } = this.state;
+      const res = await apis.getCardActivity({ cardId: task.id });
+      this.setState({
+        loading: false,
+        activities: res.cardActivities.filter(o => o.message === 'createCard' || o.message === 'outsideColumn'),
+      });
+    } catch (e) {
+      console.error(e)
+    }
   }
 
   render() {
@@ -194,18 +211,19 @@ class TaskOverlay extends Component {
     } = this.props;
     // console.log('state value in task overlay', this.state);
     return (
-      <Dialog
+      <Popup
         isOpen={isOpen}
         onClose={this.onClose}
         onOpening={this.getCardActivity}
-        className="overlay-container"
-        style={{ width: '800px' }}
+        width="800px"
+      // className="overlay-container"
+      // style={{ width: '800px' }}
       >
         {!loading ? (
           <div className="task-detail-overlay">
             <div className="overlay-title">
               <div className="head">
-                {editHead ? <TextArea value={title} onChange={e => this.titleChange(e)} />
+                {editHead ? <FormTextArea value={title} onChange={e => this.titleChange(e)} />
                   : (
                     <span className="title">
                       {task.name}
@@ -216,31 +234,37 @@ class TaskOverlay extends Component {
                   ? (
                     <div className="buttons-group">
                       <Button
-                        icon="tick"
-                        intent="success"
+                        icon={<AiOutlineCheck size={20} />}
+                        type="button"
+                        buttonStyle="btn--success--outline"
+                        buttonSize="btn--small"
                         onClick={this.saveTitle}
                       />
                       <Button
-                        icon="cross"
+                        icon={<AiOutlineClose size={20} />}
+                        type="button"
+                        buttonStyle="btn--danger--outline"
+                        buttonSize="btn--small"
                         onClick={this.toggleElemTitle}
                       />
                     </div>
                   )
                   : (
                     <div className="buttons-group">
-                      <Icon
+                      {/* <Icon
                         className="edit-title"
                         icon="edit"
                         onClick={this.toggleElemTitle}
-                      />
+                      /> */}
+                      <AiOutlineEdit size={20} onClick={this.toggleElemTitle} />
                     </div>
                   )
                 }
               </div>
-              <Button icon="cross" className="task-close" minimal onClick={this.onClose} />
+              {/* <Button icon="cross" className="task-close" minimal onClick={this.onClose} /> */}
             </div>
             <div className="overlay-body">
-              <div className="left">
+              <div className="left-part">
                 <div className="pc-tags-and-deadline">
                   <div className="pc-tag-view">
                     {tags.map(obj => <Tag className="tag" key={obj.id} large intent={obj.tag} />)}
@@ -262,26 +286,25 @@ class TaskOverlay extends Component {
                       ? (
                         <span className="buttons-group">
                           <Button
-                            icon="tick"
+                            icon={<AiOutlineCheck size={20} />}
+                            type="button"
+                            buttonStyle="btn--success--outline"
+                            buttonSize="btn--small"
                             onClick={this.saveDesc}
-                            intent="success"
-                            small
-                            className="edit-button"
                           />
                           <Button
-                            icon="cross"
+                            icon={<AiOutlineClose size={20} />}
+                            type="button"
+                            buttonStyle="btn--danger--outline"
+                            buttonSize="btn--small"
                             onClick={this.toggleElemDesc}
-                            small
-                            className="edit-button"
                           />
                         </span>
                       )
                       : (
-                        <Icon
-                          icon="edit"
-                          onClick={this.toggleElemDesc}
-                          className="edit-button"
-                        />
+                        <div className="buttons-group">
+                          <AiOutlineEdit size={20} onClick={this.toggleElemDesc} />
+                        </div>
                       )
                     }
                   </div>
@@ -332,8 +355,8 @@ class TaskOverlay extends Component {
               />
             </div>
           </div>
-        ) : <Spinner />}
-      </Dialog>
+        ) : <div style={{ height: 150, position: 'relative' }}><Spinner /></div>}
+      </Popup>
     );
   }
 }

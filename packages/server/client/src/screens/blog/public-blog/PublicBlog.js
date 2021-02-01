@@ -8,6 +8,7 @@ import Footer from '../../../common/footer';
 import client from '../../../socket';
 import { ENDPOINT } from '../../../config';
 import { Spinner, SocialShare } from '../../../common';
+import { getName } from '../../../common/utility-functions';
 import { RoundPicture } from '../../../components';
 import BlogCoverImage from './BlogCoverImage';
 import * as actions from '../../../actions';
@@ -17,7 +18,7 @@ import { GET_BLOG } from '../../../queries';
 // const file = require('../../../assets/icons/64w/uploadicon64.png');
 
 class PublicBlog extends React.Component {
-  state={
+  state = {
     blogId: null,
     apis: {},
     data: {},
@@ -71,12 +72,14 @@ class PublicBlog extends React.Component {
 
   render() {
     const { blogId, apis, data, loading } = this.state;
+    console.log("apis in public blog", apis);
     if (loading) {
       return <Spinner />;
     }
     const { account } = this.props;
     // const user = data.userDetails.find(obj => obj.user.id === data.blog.userId);
     const { user } = data;
+
     // console.log('data in public profile', user);
     const imgUrl = user.userDetail && user.userDetail.image ? `${ENDPOINT}/assets/user/${10000000 + parseInt(user.id, 10)}/profile/${user.userDetail.image}` : '/assets/icons/64w/uploadicon64.png';
     const { userDetails } = user;
@@ -84,21 +87,21 @@ class PublicBlog extends React.Component {
       <>
         <Navbar />
         <div className="public-blog">
+          <BlogCoverImage blog={data} />
           <div className="public-blog-title">
-            <p>
+            <h1>
               {
                 data.title
               }
-            </p>
+            </h1>
+            {/* <p></p> */}
             <div className="author-user">
               <div className="auth-con">
                 <div className="profile-icon">
                   <RoundPicture imgUrl={imgUrl} />
                 </div>
                 <div className="author-detail">
-                  <Link key={user.id} to={`/user/${user.slug}`}>
-                    {`${user.firstName} ${user.middleName ? `${user.middleName} ` : ''}${user.lastName}`}
-                  </Link>
+                  <Link key={user.id} to={`/user/${user.slug}`}>{getName(user)}</Link>
                   <span>
                     {new Date(parseInt(data.timeStamp, 10)).toDateString()}
                   </span>
@@ -107,13 +110,14 @@ class PublicBlog extends React.Component {
               <SocialShare url={window.location.href} />
             </div>
           </div>
-          <BlogCoverImage blog={data} />
           <div className="public-blog-content">
             <div
               id="blogContent"
               // eslint-disable-next-line react/no-danger
+
               dangerouslySetInnerHTML={this.createMarkup(data.content)}
             />
+
           </div>
           <CommentContainer
             imgUrl={imgUrl}

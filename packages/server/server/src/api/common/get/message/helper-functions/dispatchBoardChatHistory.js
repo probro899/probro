@@ -12,7 +12,7 @@ export default function dispatchBoardChatHistory(session, schema, id, connection
   const boardMemberWithUser = boardMember.map(bm => ({ ...bm, user: findUserDetails(bm.tuserId) }));
   const allBoardMemberWithActiveStatus = userPresentorHelper(session.getChannel('Main'), boardMemberWithUser);
   const boardMemberActiveStatusToUpdate = allBoardMemberWithActiveStatus.map(bma => ({ ...bma, activeStatus: bma.activeStatus, userId: bma.user.user.id }));
-  const boardMessages = allDbBoardMessage.filter(bm => bm.boardId === connectionId);
+  const boardMessages = allDbBoardMessage.filter(bm => bm.boardId === connectionId).filter(obj => ((obj.type !== 'Incoming') && (obj.type !== 'Outgoing')));
   const boardMessageSeenStatus = flat(boardMessages.map(bm => allDbBoardMessageSeenStatus.filter(bms => bms.bmId === bm.id)));
   let slice1 = boardMessages.length - (parseInt(noOfMessage, 10) + 20);
   if ((slice1 < 20 && slice1 > 0) || slice1 < 0) {

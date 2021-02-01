@@ -14,7 +14,7 @@ import initCachDB from './cache/database/initCacheDB';
 
 // const port = process.env.PORT || 443;
 
-const port = process.env.PORT || 4001;
+const port = process.env.PORT || 3000;
 const app = express(compression());
 // app.use((req, res, next) => {
 //   if (!req.secure && req.hostname === 'properclass.com' && req.get('X-Forwarded-Proto') === 'http') {

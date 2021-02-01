@@ -4,10 +4,10 @@
     "@babel/react"
   ],
   "plugins": [
-    "transform-object-rest-spread",
     "transform-class-properties",
     "@babel/plugin-proposal-class-properties",
     "@babel/transform-regenerator",
-    "@babel/transform-runtime"
+    "@babel/transform-runtime",
+    "@babel/plugin-proposal-object-rest-spread"
   ]
 }

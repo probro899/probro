@@ -1,19 +1,36 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
-import { Button, Popover } from '@blueprintjs/core';
+import { Popover } from '@blueprintjs/core';
+import { BsCardImage, BsSquare, BsPencil } from "react-icons/bs";
+import { HiOutlineArrowNarrowRight } from "react-icons/hi";
+import { BiText, BiUndo, BiRedo } from "react-icons/bi";
+import { AiFillDelete, AiOutlineSave, AiFillTool } from "react-icons/ai";
+import { FiMaximize2, FiMinimize2 } from "react-icons/fi";
+import { GrClearOption } from "react-icons/gr";
 import SelectTask from './SelectTask';
 import { ENDPOINT } from '../../../config';
+import { Tooltip } from '../../../common/Form/Tooltip';
+import { Button } from '../../../common/utility-functions/Button/Button';
+
 
 class Tools extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      showTools: false,
+    };
     this.fileInputRef = React.createRef();
   }
 
   uploadImage = () => {
     this.fileInputRef.current.click();
+  }
+
+  toggleTools = () => {
+    this.setState({
+      showTools: !this.state.showTools,
+    })
   }
 
   saveImage = async (data) => {
@@ -78,56 +95,342 @@ class Tools extends React.Component {
       text,
       drawStraight,
       straightLine,
+      toggleMaximization,
+      maximize,
       rect,
       database,
+      canvasUndo,
+      canvasRedo,
+      apis,
     } = this.props;
     return (
-      <div className="draw-tools">
-        <div className="tool-label">
+      <div className="draw-tools pc-draw-col">
+        {/* <div className="tool-label">
           <span>Tools</span>
+        </div> */}
+        <div className="tool-container pc-desktop">
+          <div className="pc-create-tool pc-tool-group">
+            <div className="pc-draw-btn-wrapper pc-draw-btn">
+              <Tooltip content="Draw" position="left">
+                <Button
+                  icon={<BsPencil />}
+                  onClick={draw}
+                  type="button"
+                  className="i-tool"
+                  buttonSize="btn--small"
+                  buttonStyle={drawActive ? 'btn--primary--solid' : 'btn-drawing-icon'}
+                />
+              </Tooltip>
+              <Tooltip content="Pick a color" position="left">
+                <input
+                  value={color}
+                  type="color"
+                  onChange={colorChange}
+                />
+              </Tooltip>
+            </div>
+            <div className="pc-draw-btn-wrapper">
+              <Tooltip content="Image" position="left">
+                <Button
+                  onClick={this.uploadImage}
+                  icon={<BsCardImage />}
+                  className="i-tool"
+                  type="button"
+                  buttonStyle="btn-drawing-icon"
+                  buttonSize="btn--small"
+                />
+              </Tooltip>
+              <input
+                ref={this.fileInputRef}
+                type="file"
+                style={{ display: 'none' }}
+                onChange={fileUpload}
+              />
+            </div>
+            <div className="pc-draw-btn-wrapper">
+              <Tooltip content="Draw Line" position="left">
+                <Button
+                  onClick={drawStraight}
+                  className="i-tool"
+                  type="button"
+                  buttonStyle={straightLine ? 'btn--primary--solid' : 'btn-drawing-icon'}
+                  buttonSize="btn--small"
+                  icon={<HiOutlineArrowNarrowRight />}
+                  className="i-tool"
+                />
+              </Tooltip>
+            </div>
+            <div className="pc-draw-btn-wrapper">
+              <Tooltip content="Add Text" position="left">
+                <Button
+                  type="button"
+                  buttonStyle={text ? 'btn--primary--solid' : 'btn-drawing-icon'}
+                  onClick={textToggle} icon={<BiText />}
+                  buttonSize="btn--small"
+                  className="i-tool" />
+              </Tooltip>
+            </div>
+            <div className="pc-draw-btn-wrapper">
+              <Tooltip content="Rectangle" position="left">
+                <Button
+                  type="button"
+                  buttonStyle={rect ? 'btn--primary--solid' : 'btn-drawing-icon'}
+                  onClick={addRect}
+                  buttonSize="btn--small"
+                  icon={<BsSquare />}
+                  className="i-tool" />
+              </Tooltip>
+            </div>
+
+          </div>
+          <div className="pc-remove-tools pc-tool-group">
+            <div className="pc-draw-btn-wrapper">
+              <Tooltip content="Undo" position="left">
+                <Button
+                  icon={<BiUndo />}
+                  onClick={canvasUndo}
+                  className="i-tool"
+                  type="button"
+                  buttonStyle="btn-drawing-icon"
+                  buttonSize="btn--small"
+                />
+              </Tooltip>
+            </div>
+            <div className="pc-draw-btn-wrapper">
+              <Tooltip content="Redo" position="left">
+                <Button
+                  icon={<BiRedo />}
+                  onClick={canvasRedo}
+                  className="i-tool"
+                  type="button"
+                  buttonStyle="btn-drawing-icon"
+                  buttonSize="btn--small"
+                />
+              </Tooltip>
+            </div>
+            <div className="pc-draw-btn-wrapper">
+              <Tooltip content="Clear Canvas" position="left">
+                <Button
+                  className="i-tool"
+                  // title="clear"
+                  icon={<GrClearOption />}
+                  onClick={clear}
+                  buttonStyle="btn-drawing-icon"
+                  type="button"
+                  buttonSize="btn--small"
+                />
+              </Tooltip>
+            </div>
+            <div className="pc-draw-btn-wrapper">
+              <span style={{ display: 'inline-block' }}>
+                <Button
+                  disabled={!anyObjectActive}
+                  onClick={onDelete}
+                  buttonStyle="btn-drawing-icon-danger"
+                  type="button"
+                  buttonSize="btn--small"
+                  icon={<AiFillDelete />}
+                  className="i-tool"
+                />
+              </span>
+            </div>
+          </div>
+          <div className="pc-misc-tools pc-tool-group">
+            <div className="pc-draw-btn-wrapper">
+              <Tooltip content={maximize ? 'Minimize' : 'Maximize'} position="left">
+                <Button
+                  icon={maximize ? <FiMinimize2 /> : <FiMaximize2 />}
+                  onClick={toggleMaximization}
+                  className="i-tool"
+                  buttonStyle="btn-drawing-icon"
+                  type="button"
+                  buttonSize="btn--small"
+                />
+              </Tooltip>
+            </div>
+            <div className="save-wrapper pc-draw-btn-wrapper">
+              <Popover content={<SelectTask getCardsApi={apis.getCard} callback={this.saveImage} database={database} />}>
+                <Tooltip content="Save" position="left">
+                  <Button
+                    // title="save"
+                    icon={<AiOutlineSave />}
+                    buttonStyle="btn-drawing-icon"
+                    type="button"
+                    buttonSize="btn--small"
+                  />
+                </Tooltip>
+              </Popover>
+            </div>
+          </div>
         </div>
-        <div className="tool-container">
-          <Button intent="default" onClick={this.uploadImage} icon="media" className="i-tool" />
-          <input
-            ref={this.fileInputRef}
-            type="file"
-            style={{ display: 'none' }}
-            onChange={fileUpload}
-          />
-          <Button intent={straightLine ? 'primary' : 'default'} onClick={drawStraight} icon="flow-linear" className="i-tool" />
-          <Button intent={text ? 'primary' : 'default'} onClick={textToggle} icon="new-text-box" className="i-tool" />
-          <Button intent={rect ? 'primary' : 'default'} onClick={addRect} icon="square" className="i-tool" />
+
+        <div className="pc-tool-toggle">
           <Button
-            icon="draw"
-            onClick={draw}
+            onClick={this.toggleTools}
+            icon={<AiFillTool />}
             className="i-tool"
-            intent={drawActive ? 'primary' : 'default'}
-          />
-          <input
-            value={color}
-            type="color"
-            style={{ width: 30, border: 'none', height: '100%' }}
-            onChange={colorChange}
-          />
-          <Button
-            className="i-tool"
-            style={{ boxShadow: 'none', backgroundColor: '#efefef' }}
-            text="clear"
-            onClick={clear}
-          />
-          <Button
-            disabled={!anyObjectActive}
-            onClick={onDelete}
-            intent="danger"
-            icon="trash"
-            className="i-tool"
+            type="button"
+            buttonStyle={`${this.state.showTools ? '' : "btn-drawing-icon"}`}  //"btn-drawing-icon"
+            buttonSize="btn--small"
           />
         </div>
-        <div className="save-wrapper">
-          <Popover content={<SelectTask callback={this.saveImage} database={database} />}>
-            <Button text="save" large intent="success" />
-          </Popover>
-        </div>
+        {
+          this.state.showTools && <div className="tool-container pc-mobile">
+            <div className="pc-create-tool pc-tool-group">
+              <div className="pc-draw-btn-wrapper pc-draw-btn">
+                <Tooltip content="Free Draw" position="top">
+                  <Button
+                    icon={<BsPencil />}
+                    onClick={draw}
+                    type="button"
+                    className="i-tool"
+                    buttonSize="btn--small"
+                    buttonStyle={drawActive ? 'btn--primary--solid' : 'btn-drawing-icon'}
+                  />
+                </Tooltip>
+                {/* <Tooltip content="Pick a color" position="left"> */}
+                <input
+                  value={color}
+                  type="color"
+                  onChange={colorChange}
+                />
+                {/* </Tooltip> */}
+              </div>
+              <div className="pc-draw-btn-wrapper">
+                <Tooltip content="image" position="top">
+                  <Button
+                    onClick={this.uploadImage}
+                    icon={<BsCardImage />}
+                    className="i-tool"
+                    type="button"
+                    buttonStyle="btn-drawing-icon"
+                    buttonSize="btn--small"
+                  />
+                </Tooltip>
+                <input
+                  ref={this.fileInputRef}
+                  type="file"
+                  style={{ display: 'none' }}
+                  onChange={fileUpload}
+                />
+              </div>
+              <div className="pc-draw-btn-wrapper">
+                <Tooltip content="Draw Line" position="top">
+                  <Button
+                    onClick={drawStraight}
+                    className="i-tool"
+                    type="button"
+                    buttonStyle={straightLine ? 'btn--primary--solid' : 'btn-drawing-icon'}
+                    buttonSize="btn--small"
+                    icon={<HiOutlineArrowNarrowRight />}
+                    className="i-tool" />
+                </Tooltip>
+              </div>
+              <div className="pc-draw-btn-wrapper">
+                <Tooltip content="Add Text" position="top">
+                  <Button
+                    type="button"
+                    buttonStyle={text ? 'btn--primary--solid' : 'btn-drawing-icon'}
+                    onClick={textToggle} icon={<BiText />}
+                    buttonSize="btn--small"
+                    className="i-tool" />
+                </Tooltip>
+              </div>
+              <div className="pc-draw-btn-wrapper">
+                <Tooltip content="Square" position="top">
+                  <Button
+                    type="button"
+                    buttonStyle={rect ? 'btn--primary--solid' : 'btn-drawing-icon'}
+                    onClick={addRect}
+                    buttonSize="btn--small"
+                    icon={<BsSquare />}
+                    className="i-tool" />
+                </Tooltip>
+              </div>
+
+            </div>
+            <div className="pc-remove-tools pc-tool-group">
+              <div className="pc-draw-btn-wrapper">
+                <Tooltip content="undo" position="top">
+                  <Button
+                    icon={<BiUndo />}
+                    onClick={canvasUndo}
+                    className="i-tool"
+                    type="button"
+                    buttonStyle="btn-drawing-icon"
+                    buttonSize="btn--small"
+                  />
+                </Tooltip>
+              </div>
+              <div className="pc-draw-btn-wrapper">
+                <Tooltip content="redo" position="top">
+                  <Button
+                    icon={<BiRedo />}
+                    onClick={canvasRedo}
+                    className="i-tool"
+                    type="button"
+                    buttonStyle="btn-drawing-icon"
+                    buttonSize="btn--small"
+                  />
+                </Tooltip>
+              </div>
+              <div className="pc-draw-btn-wrapper">
+                <Tooltip content="clear" position="top">
+                  <Button
+                    className="i-tool"
+                    // title="clear"
+                    icon={<GrClearOption />}
+                    onClick={clear}
+                    buttonStyle="btn-drawing-icon"
+                    type="button"
+                    buttonSize="btn--small"
+                  />
+                </Tooltip>
+              </div>
+              <div className="pc-draw-btn-wrapper">
+                <span style={{ display: 'inline-block' }}>
+                  <Button
+                    disabled={!anyObjectActive}
+                    onClick={onDelete}
+                    buttonStyle="btn-drawing-icon-danger"
+                    type="button"
+                    buttonSize="btn--small"
+                    icon={<AiFillDelete />}
+                    className="i-tool"
+                  />
+                </span>
+              </div>
+            </div>
+            <div className="pc-misc-tools pc-tool-group">
+              <div className="pc-draw-btn-wrapper">
+                <Tooltip content={maximize ? 'minimize' : 'maximize'} position="top">
+                  <Button
+                    icon={maximize ? <FiMinimize2 /> : <FiMaximize2 />}
+                    onClick={toggleMaximization}
+                    className="i-tool"
+                    buttonStyle="btn-drawing-icon"
+                    type="button"
+                    buttonSize="btn--small"
+                  />
+                </Tooltip>
+              </div>
+              <div className="save-wrapper pc-draw-btn-wrapper">
+                <Popover content={<SelectTask getCardsApi={apis.getCard} callback={this.saveImage} database={database} />}>
+                  <Tooltip content="save" position="top">
+                    <Button
+                      // title="save"
+                      icon={<AiOutlineSave />}
+                      buttonStyle="btn-drawing-icon"
+                      type="button"
+                      buttonSize="btn--small"
+                    />
+                  </Tooltip>
+                </Popover>
+              </div>
+            </div>
+          </div>
+        }
+
       </div>
     );
   }

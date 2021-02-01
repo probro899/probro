@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Dialog, Button } from '@blueprintjs/core';
+// import { Dialog } from '@blueprintjs/core';
+import Popup from '../common/Form/Popup';
+import { Button } from '../common/utility-functions/Button/Button';
 
 class DeletePopOver extends React.Component {
   state = {};
@@ -8,7 +10,7 @@ class DeletePopOver extends React.Component {
   render() {
     const { action, isOpen, name } = this.props;
     return (
-      <Dialog
+      <Popup
         isOpen={isOpen}
         onClose={() => action('cancle')}
       >
@@ -20,18 +22,28 @@ class DeletePopOver extends React.Component {
             ?
           </div>
           <div className="popover-button">
-            <Button
+            {/* <Button
               text="Delete"
               intent="danger"
               onClick={() => action('confirm')}
+            /> */}
+            <Button
+              onClick={() => action('confirm')}
+              type="button"
+              buttonStyle="btn--danger--solid"
+              buttonSize="btn--small"
+              title="Delete"
             />
             <Button
-              text="Cancle"
               onClick={() => action('cancle')}
+              type="button"
+              buttonStyle="btn--primary--outline"
+              buttonSize="btn--small"
+              title="Cancel"
             />
           </div>
         </div>
-      </Dialog>
+      </Popup>
     );
   }
 }

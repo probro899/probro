@@ -4,11 +4,12 @@ import add from '../../add';
 import sendBlogNotificationHelper from './sendBlogNotificationHelper';
 
 async function addBlog(record) {
+  console.log('record in add blog', record);
   const { title } = record;
   const tempSlug = urlSlug(title);
   const slug = `${tempSlug}-${Date.now()}`;
   const res = await add.call(this, 'Blog', { ...record, slug });
-  return res;
+  return { id: res, slug };
 }
 
 async function addBlogComment(record) {

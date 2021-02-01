@@ -1,0 +1,119 @@
+@import '../config.scss';
+
+.formLabel {
+  position: relative;
+  display: block;
+  width: 100%;
+  .label-text {
+    margin-bottom: 5px;
+    font-size: 14px;
+  }
+  .pc-input-group {
+    display: block;
+    width: 100%;
+    padding: 7px 10px;
+    border-radius: 5px;
+    border: 1px solid #bbb;
+    margin-bottom: 10px;
+    color: $subHeadColor;
+    &:hover,
+    &:focus {
+      outline: none;
+      border: 1px solid #bbb;
+    }
+  }
+
+  .pc-text-area {
+    width: 100%;
+    border: 1px solid #bbb;
+    border-radius: 5px;
+    padding: 7px 10px;
+    margin-bottom: 15px;
+    min-height: 50px;
+    color: $subHeadColor;
+    &:hover,
+    &:focus {
+      outline: none;
+      border: 1px solid #bbb;
+    }
+  }
+  textarea {
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 7px 10px;
+    box-shadow: 0 0.4rem 0.8rem -0.1rem rgba(0, 32, 128, 0.1), 0 0 0 1px #f0f2f7;
+    min-height: 40px;
+    outline: none;
+    color: $subHeadColor;
+  }
+  .pc-select-field {
+    padding: 7px 10px;
+    color: #333;
+    border: 1px solid #bbb;
+    width: 100%;
+    border-radius: 5px;
+    margin-bottom: 10px;
+
+    &:hover,
+    &:focus {
+      outline: none;
+      border: 1px solid #bbb;
+    }
+    option {
+      font-size: 16px;
+    }
+  }
+
+  // .error-message {
+  //   font-size: 12px;
+  //   position: absolute;
+  //   left: 12px;
+  //   width: 150px;
+  //   top: 56px;
+  //   color: red;
+  // }
+  .left-icon {
+    position: absolute;
+    top: 27px;
+    left: 6px;
+  }
+  .right-icon {
+    position: absolute;
+    right: 0;
+    margin-top: -35px;
+  }
+  // textarea {
+  //   width: 100%;
+  //   border: 1px solid #ccc;
+  //   border-radius: 5px;
+  //   padding: 7px 10px;
+  //   box-shadow: 0 0.4rem 0.8rem -0.1rem rgba(0, 32, 128, 0.1), 0 0 0 1px #f0f2f7;
+  //   // margin-bottom: 15px;
+  //   min-height: 40px;
+  //   outline: none;
+  // }
+}
+
+::placeholder {
+  color: #999;
+  font-size: 12px;
+}
+
+.date-field {
+  .label-text {
+    margin-bottom: 5px;
+    font-size: 14px;
+    display: block;
+  }
+  .rdt {
+    input {
+      width: 100%;
+      padding: 7px 10px;
+      border: 1px solid #eee;
+      border-radius: 5px;
+      margin-bottom: 5px;
+      color: $subHeadColor;
+    }
+  }
+}

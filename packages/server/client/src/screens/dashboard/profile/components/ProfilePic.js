@@ -5,9 +5,11 @@ import PropTypes from 'prop-types';
 import FileInput from './FileInput';
 import { ENDPOINT } from '../../../../config';
 import RoundPicture from '../../../../components/RoundPicture';
+import { Spinner } from '../../../../common';
+
 
 class ProfilePic extends React.Component {
-  state = {};
+  state = { loading: false };
 
   uploadImage = async (data) => {
     const {
@@ -17,6 +19,7 @@ class ProfilePic extends React.Component {
       updateDatabaseSchema,
       addDatabaseSchema,
     } = this.props;
+    this.setState({ loading: true });
     const formData = new FormData();
     formData.append('data', JSON.stringify({ token: account.sessionId, fileType: 'image', content: 'profile', type: 'profilePic' }));
     formData.append('file', data);
@@ -34,7 +37,7 @@ class ProfilePic extends React.Component {
       if (res.status === 200) {
         const response = await apis.updateUserDetails({
           userId: account.user.id,
-          // image: res.data,
+          image: res.data,
         });
         if (userDetail.id) {
           updateDatabaseSchema('UserDetail', {
@@ -48,6 +51,7 @@ class ProfilePic extends React.Component {
             image: res.data,
           });
         }
+        this.setState({ loading: false });
       }
     } catch (e) {
       console.log(e);
@@ -56,10 +60,12 @@ class ProfilePic extends React.Component {
 
   render() {
     const { userDetail, account } = this.props;
+    const { loading } = this.state;
     const imgUrl = userDetail.image ? `${ENDPOINT}/assets/user/${10000000 + parseInt(account.user.id, 10)}/profile/${userDetail.image}` : '/assets/icons/512h/uploadicon512.png';
     return (
       <div className="profilePic">
         <RoundPicture imgUrl={imgUrl} />
+        {loading && <Spinner style={{ top: 0, left: 0, height: '100%', zIndex: 3 }} />}
         <FileInput onChange={this.uploadImage} />
       </div>
     );

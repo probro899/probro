@@ -5,7 +5,6 @@ export default (uid, all, slug) => {
   // console.time('UserFetchTime');
   const allDbUser = databaseCache.get('User');
   const allDbUserDetail = databaseCache.get('UserDetail');
-
   const user = allDbUser.find(u => u[slug ? 'slug' : 'id'] === uid);
   const userDetail = allDbUserDetail.find(ud => ud.userId === user.id) || {};
   let userSkill = [];
@@ -27,5 +26,21 @@ export default (uid, all, slug) => {
     userCarrierInterest = allDbCarrierInterest.filter(up => up.userId === user.id);
   }
   // console.timeEnd('UserFetchTime');
-  return { user: { id: user.id, email: user.email, slug: user.slug, firstName: user.firstName, middleName: user.middleName, lastName: user.lastName }, userDetail, userSkill, userEducation, userWorkExperience, userPortal, userCarrierInterest };
+  return {
+    user: {
+      id: user.id,
+      email: user.email,
+      slug: user.slug,
+      firstName: user.firstName,
+      middleName: user.middleName,
+      lastName: user.lastName,
+      callId: user.callId,
+    },
+    userDetail: userDetail || {},
+    userSkill,
+    userEducation,
+    userWorkExperience,
+    userPortal,
+    userCarrierInterest,
+  };
 };

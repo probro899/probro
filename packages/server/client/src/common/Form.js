@@ -8,6 +8,7 @@ import Select from './Select';
 import DateField from './DateField';
 import Textarea from './Textarea';
 import Fileinput from './FormFileInput';
+import Checkbox from './Checkbox';
 
 const Element = (props) => {
   const { data } = props;
@@ -17,6 +18,8 @@ const Element = (props) => {
   switch (data.fieldtype) {
     case 'input':
       return (<Input {...props} />);
+    case 'checkbox':
+      return (<Checkbox {...props} />);
     case 'button':
       return (<Button {...props} />);
     case 'tagInput':
@@ -55,11 +58,11 @@ class Form extends React.Component {
     this._isMounted = true;
     const fields = data.filter((obj) => {
       if (obj.fieldtype === 'input'
-      || obj.fieldtype === 'select'
-      || obj.fieldtype === 'tagInput'
-      || obj.fieldtype === 'image'
-      || obj.fieldtype === 'textarea'
-      || obj.fieldtype === 'date') {
+        || obj.fieldtype === 'select'
+        || obj.fieldtype === 'tagInput'
+        || obj.fieldtype === 'image'
+        || obj.fieldtype === 'textarea'
+        || obj.fieldtype === 'date') {
         return obj;
       }
     }).map((obj) => {
@@ -72,6 +75,9 @@ class Form extends React.Component {
       if (obj.fieldtype === 'image') {
         return { [obj.id]: obj.val ? obj.val : {} };
       }
+      if (obj.fieldtype === 'checkbox') {
+        return { [obj.id]: obj.val ? obj.val : false };
+      }
       return { [obj.id]: obj.val ? obj.val : '' };
     }).reduce((obj, e) => {
       obj[Object.keys(e)[0]] = Object.values(e)[0];
@@ -81,6 +87,17 @@ class Form extends React.Component {
       fields,
       data,
     });
+  }
+
+  getSnapshotBeforeUpdate(prevProps, prevState) {
+    // check old vs new props
+    const { fields } = this.state;
+    if (prevProps !== this.props) {
+      this.setState({
+        data: this.props.data,
+        fields: fields,
+      });
+    }
   }
 
   componentWillUnmount() {
@@ -120,6 +137,7 @@ class Form extends React.Component {
 
   render() {
     const { data, fields } = this.state;
+    // console.log("data props", data);
     return (
       <form
         onSubmit={this.onSubmit}

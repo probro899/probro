@@ -30,9 +30,9 @@ class Support extends React.Component {
     return (
       <div>
         <Navbar />
-        <div className="pc-support">
+        <div className="pc-support pc-container">
           <div className="pc-support-content">
-            <h2>Support</h2>
+            <h1>Support</h1>
             <p>
               Please make sure you need it before you write us.
               <br />

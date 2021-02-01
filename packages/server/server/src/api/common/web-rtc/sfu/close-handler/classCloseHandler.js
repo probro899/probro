@@ -1,4 +1,3 @@
-import updateUserCache from '../../../updateUserCache';
 import updateDatabaseCache from '../../../../../cache/database/update';
 // eslint-disable-next-line import/order
 import schema from '@probro/common/source/src/schema';
@@ -28,6 +27,5 @@ export default async (callCloseDetail, session) => {
       message: callCloseDetail.callType,
     },
   };
-  updateUserCache(dataTobeUpdate, session, 'add');
   updateDatabaseCache('BoardMessage', schema.add('BoardMessage', dataTobeUpdate.BoardMessage));
 };

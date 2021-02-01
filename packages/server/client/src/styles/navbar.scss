@@ -3,15 +3,25 @@ there is navigation fixing
 top attachment etc.
 */
 @import './config.scss';
+// .dashboard-menu-items {
+//   color: red !important;
+// }
 
 .navbar {
   top: 0;
-  display: flex;
+  // font-family: 'Montserrat', sans-serif;
+  // display: flex;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  align-items: center;
   position: fixed;
-  margin: auto;
+  // background-color: #fdfdfd !important;
+  // margin: auto;
+  // padding: 10px 20px;
+  padding: 0 32px;
   width: 100%;
   height: $navbarHeight;
-  justify-content: space-between;
+  // justify-content: space-between;
   flex-wrap: nowrap;
   background-color: $backgroundColor;
   box-shadow: 0px 1px 2px $normalShadowColor;
@@ -24,40 +34,83 @@ top attachment etc.
     display: flex;
     flex-direction: row;
   }
-  .navbar-more-container {
-    padding: 0px 10px;
+  .navbar-center {
     display: flex;
+    flex-direction: row;
     align-items: center;
-    .more-icon {
-      display: none;
+    justify-self: center;
+
+    a {
+      margin: 0px 20px;
     }
   }
+
   .navbar-right {
     display: flex;
     flex-direction: row;
+    justify-self: flex-end;
+    align-items: center;
+
+    .right-most-elements {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      a:nth-child(3) {
+        height: 60px;
+      }
+      .navbar-item {
+        margin: 0px 20px;
+        &.no-right-margin {
+          margin-right: 0px;
+        }
+      }
+    }
+
+    .more-icon {
+      display: none;
+    }
+
+    .navbar-item .login-btn {
+      background-color: $primaryColor;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 5px;
+    }
   }
   .navbar-item {
-    font-size: 14px;
-    font-weight: bold;
-    padding: 10px;
-    color: $darkBlue;
+    font-size: 16px;
+    font-weight: 800;
+    // margin: 0px 20px;
+    color: $headingColor;
     position: relative;
-    text-transform: uppercase;
+    text-transform: capitalize;
+    .bell-icon {
+      font-size: 25px;
+    }
+    .message-icon {
+      font-size: 25px;
+    }
     .profile-icon {
-      width: 50px;
-      height: 50px;
+      width: 60px;
+      height: 60px;
       border-radius: 50%;
       overflow: hidden;
-      border: 2px solid $backgroundColor;
+      border: 3px solid $primaryColor;
+      background-position: center;
+      background-size: cover;
+      object-fit: cover;
+      // border: 2px solid white;
     }
     &.pc-dashboard-icon {
       display: flex;
       flex-direction: row-reverse;
-      background-color: $darkBlue;
-      padding: 5px;
+      // padding: 5px;
       margin-left: 5px;
-      border-top-left-radius: 30px;
-      border-bottom-left-radius: 30px;
+      // border-top-left-radius: 30px;
+      // border-bottom-left-radius: 30px;
+      border-radius: 50%;
+      // background-color: #3a3a3a;
+      // padding: 10px;
       .pc-dot {
         position: absolute;
         right: 5px;
@@ -65,7 +118,7 @@ top attachment etc.
         width: 7px;
         border-radius: 3.5px;
         // border: 2px solid $backgroundColor;
-        background-color: $backgroundColor;
+        // background-color: white;
         z-index: 10;
       }
       .pc-dashboard {
@@ -73,38 +126,74 @@ top attachment etc.
         align-items: center;
         margin-left: 5px;
         font-size: 12px;
-        color: $backgroundColor;
+        color: white;
       }
     }
   }
-  a:link {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    text-decoration: none;
-  }
+  // a:link {
+  //   display: flex;
+  //   flex-direction: column;
+  //   justify-content: center;
+  //   text-decoration: none;
+  // }
   a:hover {
+    text-decoration: none !important;
+
     .navbar-item {
-      color: $skyBlueMain;
+      color: $primaryColor;
       .pc-dot {
-        background-color: red;
+        background: green;
       }
     }
   }
   a.active {
+    font-weight: bold !important;
+    color: $primaryColor !important;
     .navbar-item {
-      color: $skyBlueMain;
+      font-weight: bold !important;
+      color: $primaryColor !important;
     }
   }
-  @media screen and (min-width: 575px) and (max-width: 700px){
-    .navbar-item {
-      font-size: 13px;
+
+  // .navbar-item:nth-of-type(3) {
+  //   background-color: $primaryColor;
+  //   color: white;
+
+  // }
+
+  @media screen and (max-width: 767px) {
+    .navbar-center {
+      display: none;
     }
-  }
-  @media screen and (min-width: 200px) and (max-width: 575px) {
+    .navbar-item {
+      .login-btn {
+        padding: 10px 15px;
+      }
+    }
     .navbar-left {
       display: none;
     }
+    .navbar-right {
+      // opacity: 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      .more-icon {
+        display: block;
+        svg {
+          width: 30px !important;
+          height: 40px !important;
+          margin-left: 10px;
+        }
+      }
+    }
+    padding: 10px;
+
+    grid-template-columns: repeat(1, 1fr);
+  }
+
+  @media screen and (max-width: 575px) {
     .navbar-more-container {
       .more-icon {
         display: block;
@@ -124,28 +213,30 @@ top attachment etc.
   flex-direction: column;
   padding: 10px;
   .pc-drop-menu-link {
-    padding: 10px;
+    padding: 20px 10px;
     text-transform: uppercase;
-    color: $darkBlue;
-    font-weight: bold;
+    color: black;
+    font-weight: 500;
     border-bottom: 1px solid $normalBorder;
     &.active {
-      color: $skyBlueMain;
+      color: $primaryColor;
     }
   }
 }
+
 .pc-dropdown-drawer {
   .bp3-drawer-header {
     h4 {
       margin-right: 25px;
+      margin-top: 20px;
     }
     button {
       position: absolute;
       top: 0;
       right: 0;
       svg {
-        color: $darkBlue;
-      } 
+        color: black;
+      }
     }
   }
 }

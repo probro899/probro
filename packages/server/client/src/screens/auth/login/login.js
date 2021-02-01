@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Form } from '../../../common';
 import loginForm from './structure';
 
+
 class Log extends Component {
   state = {}
 

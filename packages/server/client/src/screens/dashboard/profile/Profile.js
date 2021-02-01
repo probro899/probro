@@ -6,6 +6,7 @@ import { getName } from '../../../common/utility-functions';
 import client from '../../../socket';
 import * as actions from '../../../actions';
 import { Education, Experience, Skills, Bio, CoverPic, ProfilePic } from './components';
+import { VerifiedBadge } from '../../../common/VerifiedBadge';
 
 class Profile extends Component {
   state = {
@@ -42,71 +43,78 @@ class Profile extends Component {
       return <div />;
     }
     const user = database.User.byId[account.user.id];
-    let userDetail = {};
-    Object.values(database.UserDetail.byId).map((obj) => {
-      if (user && user.id === obj.userId) {
-        userDetail = obj;
-      }
-    });
+    const userDetail = Object.values(database.UserDetail.byId).find(obj => {
+      if (user.id === obj.userId) return obj;
+    }) || {};
     return (
       <div className="profile bro-right">
-        <CoverPic
-          account={account}
-          userDetail={userDetail}
-          apis={apis}
-          updateDatabaseSchema={updateDatabaseSchema}
-          addDatabaseSchema={addDatabaseSchema}
-        />
-        <ProfilePic
-          account={account}
-          apis={apis}
-          userDetail={userDetail}
-          updateDatabaseSchema={updateDatabaseSchema}
-          addDatabaseSchema={addDatabaseSchema}
-        />
-        <div className="top-details">
-          <span className="name">
-            {getName(user)}
-          </span>
-          <br />
-          <Icon icon="locate" />
-          <span className="country">
-            {' '}
-            {userDetail.address ? userDetail.address : '---'}
-          </span>
+        <div className="pc-profile-wrapper">
+          <CoverPic
+            account={account}
+            userDetail={userDetail}
+            apis={apis}
+            updateDatabaseSchema={updateDatabaseSchema}
+            addDatabaseSchema={addDatabaseSchema}
+          />
+          <div className="profile-main-wrapper">
+            <div className="top-section-wrapper">
+              <div className="p-image-wrap">
+                <ProfilePic
+                  account={account}
+                  apis={apis}
+                  userDetail={userDetail}
+                  updateDatabaseSchema={updateDatabaseSchema}
+                  addDatabaseSchema={addDatabaseSchema}
+                />
+                <div className="empty-div"></div>
+              </div>
+              <div className="top-details">
+                <h2 className="name">
+                  {getName(user)} < VerifiedBadge />
+                </h2>
+                <p className="mentor-position">{userDetail.headLine}</p>
+                <Icon icon="locate" />
+                <span className="country">
+                  {' '}
+                  {userDetail.address}
+                </span>
+              </div>
+            </div>
+            <Bio
+              account={account}
+              apis={apis}
+              database={database}
+              updateDatabaseSchema={updateDatabaseSchema}
+              addDatabaseSchema={addDatabaseSchema}
+              deleteDatabaseSchema={deleteDatabaseSchema}
+            />
+            <Experience
+              apis={apis}
+              database={database}
+              account={account}
+              updateDatabaseSchema={updateDatabaseSchema}
+              addDatabaseSchema={addDatabaseSchema}
+              deleteDatabaseSchema={deleteDatabaseSchema}
+            />
+            <Education
+              apis={apis}
+              database={database}
+              account={account}
+              updateDatabaseSchema={updateDatabaseSchema}
+              addDatabaseSchema={addDatabaseSchema}
+              deleteDatabaseSchema={deleteDatabaseSchema}
+            />
+
+            <Skills
+              account={account}
+              apis={apis}
+              skills={database.UserSkill}
+              updateDatabaseSchema={updateDatabaseSchema}
+              addDatabaseSchema={addDatabaseSchema}
+            />
+          </div>
         </div>
-        <Bio
-          account={account}
-          apis={apis}
-          database={database}
-          updateDatabaseSchema={updateDatabaseSchema}
-          addDatabaseSchema={addDatabaseSchema}
-          deleteDatabaseSchema={deleteDatabaseSchema}
-        />
-        <Education
-          apis={apis}
-          database={database}
-          account={account}
-          updateDatabaseSchema={updateDatabaseSchema}
-          addDatabaseSchema={addDatabaseSchema}
-          deleteDatabaseSchema={deleteDatabaseSchema}
-        />
-        <Experience
-          apis={apis}
-          database={database}
-          account={account}
-          updateDatabaseSchema={updateDatabaseSchema}
-          addDatabaseSchema={addDatabaseSchema}
-          deleteDatabaseSchema={deleteDatabaseSchema}
-        />
-        <Skills
-          account={account}
-          apis={apis}
-          skills={database.UserSkill}
-          updateDatabaseSchema={updateDatabaseSchema}
-          addDatabaseSchema={addDatabaseSchema}
-        />
-      </div>
+      </div >
     );
   }
 }

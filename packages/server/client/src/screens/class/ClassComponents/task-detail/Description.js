@@ -1,7 +1,7 @@
 import React from 'react';
-import { TextArea } from '@blueprintjs/core';
+// import { TextArea } from '@blueprintjs/core';
 import { matchUrl } from '../../../../common/utility-functions';
-
+import { FormTextArea } from '../../../../common/Form/FormTextArea';
 
 const Description = ({ editDesc, value, description, onChange }) => {
 
@@ -52,7 +52,7 @@ const Description = ({ editDesc, value, description, onChange }) => {
   return (
     <div className="desc">
       {editDesc
-        ? <TextArea spellCheck value={value} onChange={changed} />
+        ? <FormTextArea spellCheck value={value} onChange={changed} />
         : getDescription()
       }
     </div>

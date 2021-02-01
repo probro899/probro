@@ -16,7 +16,7 @@ class VerifyEmail extends React.Component {
   async componentDidMount() {
     const { match, updateNav } = this.props;
     try {
-      const res = await axios.post(`${ENDPOINT}/auth/email-verification`, { token: match.params.token });
+      const res = await axios.post(`${ENDPOINT}/auth/email-verification`, {token: match.params.token});
       if (res.status === 200) {
         updateNav({ schema: 'popNotification', data: { active: true, message: 'Email is verified. Please login.', intent: 'success' } });
         this.setState({ emailVerified: true, loading: false });

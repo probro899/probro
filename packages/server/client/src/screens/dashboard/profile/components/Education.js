@@ -15,7 +15,7 @@ const SchoolInfo = ({ data, editPopover }) => {
         <br />
         <span>{data.address}</span>
         <br />
-        <span className="p-timeline">{`${data.startTime} - ${data.endTime}`}</span>
+        <span className="p-timeline">{`${moment(data.startTime, 'DD/MM/YYYY').format("MMM DD, YYYY")} - ${moment(data.endTime, 'DD/MM/YYYY').format("MMM DD, YYYY")}`}</span>
       </p>
       <p><Icon style={{ cursor: 'pointer' }} icon="edit" onClick={() => editPopover(data)} /></p>
     </div>
@@ -38,10 +38,10 @@ class Education extends React.Component {
           i['val'] = obj.address;
           return i;
         case 'startTime':
-          i['val'] = new Date(moment(obj.startTime, 'DD/MM/YYYY').valueOf());
+          i['val'] = moment(obj.startTime, 'DD/MM/YYYY').format("MMM DD, YYYY");
           return i;
         case 'endTime':
-          i['val'] = new Date(moment(obj.endTime, 'DD/MM/YYYY').valueOf());
+          i['val'] = moment(obj.endTime, 'DD/MM/YYYY').format("MMM DD, YYYY");
           return i;
         default:
           return i;
@@ -91,12 +91,7 @@ class Education extends React.Component {
   render() {
     const { educationEditPopover, editObj } = this.state;
     const { database, account } = this.props;
-    const schools = [];
-    Object.values(database.UserEducation.byId).map((obj) => {
-      if (account.user.id === obj.userId) {
-        schools.push(obj);
-      }
-    });
+    const schools = Object.values(database.UserEducation.byId).filter(obj => obj && account.user.id === obj.userId);
     return (
       <div className="education">
         <PopoverForm
@@ -107,17 +102,17 @@ class Education extends React.Component {
           callback={this.addEducation}
           onClose={() => this.togglePopover()}
         />
-        <p className="p-top">
-          <span>Education</span>
+        <h2 className="p-top">
+          Education
           <Icon
             icon="plus"
             onClick={() => this.editPopover({
-              startTime: '02/02/2018',
-              endTime: '02/02/2018',
+              startTime: new Date(),
+              endTime: new Date(),
             })}
             style={{ cursor: 'pointer' }}
           />
-        </p>
+        </h2>
         {schools.length !== 0 ? (
           <div className="p-edu-list">
             {

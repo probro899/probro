@@ -1,26 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { InputGroup, Icon, Label, Tooltip, Position } from '@blueprintjs/core';
+import { FormTextInput } from './Form/FormTextInput';
+import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
+import { Tooltip } from '../common/Form/Tooltip';
+
 
 const customIcon = (icon, handleLockClick, hidden) => {
-  if (icon.side === 'left') {
-    const leftIcon = (
-      <Icon onClick={handleLockClick} icon={icon.name} iconSize={Icon.SIZE_LARGE} />
-    );
-    return ({
-      leftIcon,
-      rightIcon: null,
-    });
-  }
   if (icon.side === 'right') {
     const rightIcon = (
-      <Tooltip content={hidden === true ? <span style={{ color: '#1d4354' }}>Show</span> : <span style={{ color: '#1d4354' }}>Hide</span>} position={Position.RIGHT}>
-        <Icon
-          style={{ marginTop: 3, marginRight: 5, color: '#757575' }}
-          icon={icon.name}
-          onClick={handleLockClick}
-          iconSize="20"
-        />
+      <Tooltip content={hidden === true ? <span >Show</span> : <span>Hide</span>} position="top">
+        {
+          hidden === true ? <AiFillEye
+            style={{ marginRight: 5, color: '#757575', fontSize: '20px', cursor: 'pointer' }}
+            onClick={handleLockClick}
+          /> : <AiFillEyeInvisible
+              style={{ marginRight: 5, color: '#757575', fontSize: '20px', cursor: 'pointer' }}
+              onClick={handleLockClick}
+            />
+        }
+
       </Tooltip>
     );
     return (
@@ -35,7 +33,7 @@ class CustomInput extends React.Component {
     hidden: false,
   }
 
-  componentWillMount = () => {
+  componentDidMount() {
     const { data } = this.props;
     this.setState({ hidden: data.hidden });
   }
@@ -53,20 +51,18 @@ class CustomInput extends React.Component {
       icons = customIcon(data.icon, this.handleLockClick, hidden);
     }
     return (
-      <Label>
-        <span className="label-text">
-          {data.name}
-        </span>
-        {data.required && <span style={{ color: 'red' }}> *</span>}
-        <InputGroup
-          onChange={e => onChange(data.id, e.target.value)}
-          value={value}
-          type={hidden ? 'password' : 'text'}
-          leftIcon={icons.leftIcon}
-          rightElement={icons.rightIcon}
-          {...data}
-        />
-      </Label>
+      <FormTextInput
+        name={data.name}
+        type={hidden ? 'password' : 'text'}
+        placeholder={data.placeholder}
+        onChange={e => onChange(data.id, e.target.value)}
+        className="pc-input-group"
+        value={value}
+        label={data.name}
+        isRequired={data.required}
+        rightElement={data.hidden && icons.rightIcon}
+        {...data}
+      />
     );
   }
 }

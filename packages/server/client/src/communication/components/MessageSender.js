@@ -1,6 +1,10 @@
 import React from 'react';
-import { TextArea, Button, Icon } from '@blueprintjs/core';
+import PropTypes from 'prop-types';
+import { Icon } from '@blueprintjs/core';
 import { sendMessage } from '../helper-functions/webrtc/mesh';
+import { FiSend } from "react-icons/fi";
+import { FormTextArea } from '../../common/Form/FormTextArea';
+import { Button } from '../../common/utility-functions/Button/Button';
 
 class MessageSender extends React.Component {
   state = {
@@ -31,20 +35,37 @@ class MessageSender extends React.Component {
 
   render() {
     const { message } = this.state;
+    const { webRtc, database } = this.props;
+    const connetion = database.UserConnection.byId[webRtc.chatHistory.connectionId] || {};
+    const isDeleted = connetion.status === 'deleted' || connetion.status === 'pending';
+
     return (
-      <div className="chat-box" style={{ marginTop: 10 }}>
-        <TextArea
+      <div className="chat-box" style={{ marginTop: 10, marginBottom: 0 }}>
+        <FormTextArea
           rows={2}
-          placeholder="Message..."
+          disabled={isDeleted}
+          placeholder="Enter your message here..."
           onChange={this.onMessageType}
           value={message}
           onKeyPress={this.handleKeyPress}
         />
-        <Button
+        {/* <Button
+          disabled={isDeleted}
           style={{ background: '#154155', color: 'white', width: '10%' }}
           rightIcon={<Icon icon="direction-right" color="white" iconSize={25} />}
           onClick={this.sendMessage}
-        />
+        /> */}
+        <div className="pc-send-btn">
+          <Button
+            icon={<FiSend />}
+            disabled={isDeleted}
+            onClick={this.sendMessage}
+            type="button"
+            buttonStyle="btn--circle-icons"
+            buttonSize="btn--small"
+          />
+        </div>
+
       </div>
     );
   }
@@ -56,3 +77,7 @@ MessageSender.defaultProps = {
 
 
 export default MessageSender;
+MessageSender.propTypes = {
+  webRtc: PropTypes.objectOf(PropTypes.any).isRequired,
+  database: PropTypes.objectOf(PropTypes.any).isRequired,
+};

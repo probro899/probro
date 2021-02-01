@@ -30,9 +30,9 @@ class Report extends React.Component {
     return (
       <div>
         <Navbar />
-        <div className="pc-report">
+        <div className="pc-report pc-container">
           <div className="pc-report-content">
-            <h2>Report</h2>
+            <h1>Report</h1>
             <p>
               If you find any sort of malfunction, bug or if you find anything abusive.
               <br />

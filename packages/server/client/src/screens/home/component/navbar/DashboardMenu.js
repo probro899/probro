@@ -13,9 +13,9 @@ export default ({ content, profilePic, navigate }) => {
         minimal
         position={Position.BOTTOM}
       >
-        <div className="navbar-item pc-dashboard-icon">
+        <div className="navbar-item pc-dashboard-icon no-right-margin">
           <div className="pc-dot" />
-          <div className="pc-dashboard">dashboard</div>
+          {/* <div className="pc-dashboard">dashboard</div> */}
           <div className="profile-icon">
             <RoundPicture imgUrl={profilePic || '/assets/icons/64w/uploadicon64.png'} />
           </div>

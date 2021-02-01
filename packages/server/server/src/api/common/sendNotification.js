@@ -8,7 +8,7 @@ import databaseCache from '../../cache/database/cache';
 export default async (context, emailObj, notiObj, sessions) => {
   // console.log('send notificaiton called');
   try {
-    const { html, subject } = emailObj;
+    const { html, subject, email } = emailObj;
     const notiId = await add.call(context, 'Notification', notiObj);
     let dataTobeupdateAllUser;
     if (notiObj.type === 'user') {
@@ -32,16 +32,26 @@ export default async (context, emailObj, notiObj, sessions) => {
     }
 
     // notify all users
-    sessions.forEach((s) => {
-      updateUserCache(dataTobeupdateAllUser, s, 'add');
+    if (sessions) {
+      sessions.forEach((s) => {
+        updateUserCache(dataTobeupdateAllUser, s, 'add');
+        mailer({
+          from: 'ProperClass<noreply@properclass.com>',
+          to: `<${s.values.user.email}>`,
+          subject,
+          text: 'No reply',
+          html,
+        });
+      });
+    } else {
       mailer({
         from: 'ProperClass<noreply@properclass.com>',
-        to: `<${s.values.user.email}>`,
+        to: `<${email}>`,
         subject,
         text: 'No reply',
         html,
       });
-    });
+    }
   } catch (e) {
     console.error('Error in notification', e);
   }

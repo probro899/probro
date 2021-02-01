@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { HTMLSelect, Label } from '@blueprintjs/core';
+import { FormSelectField } from './Form/FormSelectField';
 
 class Select extends React.Component {
   state = {};
@@ -8,19 +8,19 @@ class Select extends React.Component {
   render() {
     const { data, onChange, value } = this.props;
     return (
-      <Label>
-        <span className="label-text">{data.name}</span>
-        {data.required && <span style={{ color: 'red' }}> *</span>}
-        <HTMLSelect
-          onChange={e => onChange(data.id, e.target.value)}
-          value={value}
-          options={data.options.sort((a, b) => (a.value > b.value ? 1 : -1))}
-          {...data}
-        />
-      </Label>
+      <FormSelectField
+        onChange={e => onChange(data.id, e.target.value)}
+        type={data.fieldtype}
+        name={data.name}
+        value={value}
+        isRequired={data.required}
+        options={data.options.sort((a, b) => (a.value > b.value ? 1 : -1))}
+        {...data}
+      />
     );
   }
 }
+
 Select.defaultProps = {
   value: '',
 };

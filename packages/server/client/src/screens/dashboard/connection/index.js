@@ -39,43 +39,47 @@ class Connection extends React.Component {
       updateWebRtc,
       updateDatabaseSchema,
       deleteDatabaseSchema,
+      webRtc
     } = this.props;
-    // console.log('UserConnection Data', this.props);
-    const connectionIds = Object.values(database.UserConnection.byId);
+    const connectionIds = Object.values(database.UserConnection.byId).filter(c => c.status !== 'deleted');
     const { apis } = this.state;
     if (!account.user) {
       return (<div className="bro-right" style={{ position: 'relative' }}><Spinner /></div>);
     }
     return (
       <div className="connection bro-right">
-        <div className="header">
-          <div>
-            <span className="title">Connections </span>
-            <small>Mange your connections</small>
+        <div className="connection-wrapper">
+          <div className="header">
+            <div className="top-head-title">
+              <span className="title">Connections </span>
+              <small>Mange your connections</small>
+            </div>
+            <div>Total Connections: {connectionIds.length}</div>
           </div>
-        </div>
-        <div className="con-list">
-          {
-            connectionIds.length === 0 && (
-              <div className="pc-no-cons">
-                <p>You do not have any connections at the moment.</p>
-              </div>
-            )
-          }
-          {
-            connectionIds.map(con => (
-              <Connecte
-                updateWebRtc={updateWebRtc}
-                deleteDatabaseSchema={deleteDatabaseSchema}
-                updateDatabaseSchema={updateDatabaseSchema}
-                apis={apis}
-                key={con.id}
-                account={account}
-                database={database}
-                {...con}
-              />
-            ))
-          }
+          <div className="con-list">
+            {
+              connectionIds.length === 0 && (
+                <div className="pc-no-cons">
+                  <p>You do not have any connections at the moment.</p>
+                </div>
+              )
+            }
+            {
+              connectionIds.map(con => (
+                <Connecte
+                  updateWebRtc={updateWebRtc}
+                  deleteDatabaseSchema={deleteDatabaseSchema}
+                  updateDatabaseSchema={updateDatabaseSchema}
+                  apis={apis}
+                  key={con.id}
+                  account={account}
+                  database={database}
+                  {...con}
+                  webRtc={webRtc}
+                />
+              ))
+            }
+          </div>
         </div>
       </div>
     );

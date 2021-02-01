@@ -29,9 +29,9 @@ class Terms extends React.Component {
     return (
       <div>
         <Navbar />
-        <div className="pc-terms">
+        <div className="pc-terms pc-container">
           <div className="pc-terms-content">
-            <h2>Terms and Conditions</h2>
+            <h1>Terms and Conditions</h1>
             <p>
               Terms and Conditions Coming Soon....
             </p>

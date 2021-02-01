@@ -1,10 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button, Popover, Tag } from '@blueprintjs/core';
+import { Popover, Tag } from '@blueprintjs/core';
 import Form from '../../../common/Form';
 import DeletePopOver from '../../../common/DeletePopOver';
 import { Attachment } from './attachment';
 import SelectColumn from './SelectColumn';
+import { Button } from '../../../common/utility-functions/Button/Button';
+import { AiOutlineTags, AiOutlineFieldTime, AiOutlinePaperClip, AiFillCopy, AiTwotoneDelete } from "react-icons/ai";
 
 const TagPopover = ({ tags, addTag }) => {
   const tagNames = ['primary', 'warning', 'success', 'danger'];
@@ -172,7 +174,7 @@ class TaskDetailRight extends React.Component {
       database,
     } = this.props;
     return (
-      <div className="right">
+      <div className="right-part">
         <div className="rt-in">
           <div className="tool-header">Tools</div>
           <div className="rt-tools">
@@ -181,9 +183,11 @@ class TaskDetailRight extends React.Component {
               position="left-top"
             >
               <Button
-                alignText="left"
-                icon="tag"
-                text="Tag"
+                type="button"
+                buttonStyle="btn--primary--outline"
+                buttonSize="btn--medium"
+                title="Tag"
+                icon={<AiOutlineTags />}
               />
             </Popover>
             <Popover
@@ -191,9 +195,11 @@ class TaskDetailRight extends React.Component {
               position="left-top"
             >
               <Button
-                alignText="left"
-                icon="outdated"
-                text="Deadline"
+                icon={<AiOutlineFieldTime />}
+                title="Deadline"
+                type="button"
+                buttonStyle="btn--primary--outline"
+                buttonSize="btn--medium"
               />
             </Popover>
             <Popover
@@ -210,9 +216,11 @@ class TaskDetailRight extends React.Component {
               position="left-top"
             >
               <Button
-                alignText="left"
-                icon="paperclip"
-                text="Attachment"
+                icon={<AiOutlinePaperClip />}
+                title="Attachment"
+                type="button"
+                buttonStyle="btn--primary--outline"
+                buttonSize="btn--medium"
               />
             </Popover>
           </div>
@@ -220,16 +228,20 @@ class TaskDetailRight extends React.Component {
           <div className="rt-actions">
             <Popover content={<SelectColumn callback={this.copyCard} database={database} />}>
               <Button
-                alignText="left"
-                icon="move"
-                text="Copy"
+                icon={<AiFillCopy />}
+                title="Copy"
+                type="button"
+                buttonStyle="btn--primary--outline"
+                buttonSize="btn--medium"
               />
             </Popover>
             <Button
-              alignText="left"
-              icon="trash"
-              text="delete"
+              icon={<AiTwotoneDelete />}
+              title="Delete"
               onClick={this.toggleDeleteCard}
+              type="button"
+              buttonStyle="btn--danger--outline"
+              buttonSize="btn--medium"
             />
             <DeletePopOver isOpen={deleteCardPopover} action={this.deleteCard} name={task.name} />
           </div>

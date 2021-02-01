@@ -1,11 +1,15 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
-import { Redirect, Link } from 'react-router-dom';
-import * as actions from '../../../../actions';
+import { Redirect } from 'react-router-dom';
+// import Typical from '../../../../components/textAnimation/react-typical';
+
+
+const steps = [
+  'mentors.', 1500,
+  'mentees.', 1000,
+];
 
 class SearchElement extends React.Component {
-  state={
+  state = {
     search: '',
     gotKey: false,
   };
@@ -18,9 +22,6 @@ class SearchElement extends React.Component {
 
   submitSearch = (e) => {
     e.preventDefault();
-    const { updateNav } = this.props;
-    const { search } = this.state;
-    updateNav({ schema: 'search', data: { key: search } });
     this.setState({
       gotKey: true,
     });
@@ -28,49 +29,36 @@ class SearchElement extends React.Component {
 
   render() {
     const { search, gotKey } = this.state;
-    const { account } = this.props;
+
     return (
       <div className="search-box-container">
-        {gotKey && <Redirect push to="/search" />}
-        <div className="search-form">
-          <form>
-            <input
-              value={search}
-              onChange={this.searchChange}
-              placeholder="Keyword ..."
-            />
-            <button type="submit" onClick={this.submitSearch}>
-              Search
-            </button>
-          </form>
-        </div>
+        {gotKey && <Redirect push to={`/search?searchKey=${search}`} />}
+
         <div className="pc-jumbo">
-          <span className="pc-jumbo-text">
-            Start Connecting
-          </span>
-          {
-            account.user ? (
-              <button type="button" onClick={this.submitSearch}>
-                Find Mentor
-              </button>
-            ) : (
-              <Link to="/login">
-                <button type="button">
-                  Login
-                </button>
-              </Link>
-            )
-          }
+          <h1 className="pc-jumbo-text">
+            Join our growing community and connect to
+             {/* <Typical wrapper="span" steps={steps} loop={Infinity} className="typicalWrapper" /> */}
+          </h1>
+          <p className="pc-jumbo-text-second">
+            Do you want to acquire professional skills? Get started with proper class and learn from courses, blogs and project mentorship all from single platform.
+          </p>
+          <div className="search-form">
+            <form>
+              <input
+                value={search}
+                onChange={this.searchChange}
+                placeholder="Eg, python developer"
+              />
+              <button type="submit" onClick={this.submitSearch}>
+                Search
+            </button>
+            </form>
+          </div>
         </div>
       </div>
     );
   }
 }
 
-SearchElement.propTypes = {
-  account: PropTypes.objectOf(PropTypes.any).isRequired,
-  updateNav: PropTypes.func.isRequired,
-};
 
-const mapStateToProps = state => state;
-export default connect(mapStateToProps, { ...actions })(SearchElement);
+export default SearchElement;

@@ -2,6 +2,7 @@
 import React from 'react';
 import Notification from 'react-web-notification';
 import PropTypes from 'prop-types';
+
 // import { Howl } from 'howler';
 
 class NotificationComponent extends React.Component {
@@ -57,6 +58,7 @@ class NotificationComponent extends React.Component {
 
   render() {
     const { ignore, title, options } = this.state;
+    // console.log('prosp in notification', this.props);
     return (
       <div>
         <Notification
@@ -69,6 +71,7 @@ class NotificationComponent extends React.Component {
           title={title}
           options={options}
           onClick={this.onNotificationClick}
+          swRegistration={this.props.swRegistration}
         />
       </div>
     );

@@ -1,11 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button } from '@blueprintjs/core';
+// import { Button } from '@blueprintjs/core';
 import RoundPicture from '../../../components/RoundPicture';
 import { SoundComponent } from '../../components';
 import { ENDPOINT } from '../../../config';
 import DeviceNotFoundError from '../error-screen/DeviceNotFoundError';
 import Notification from '../../../common/notification';
+import { Button } from '../../../common/utility-functions/Button/Button';
+import { FaPhoneAlt, FaVideo } from "react-icons/fa";
+import { AiOutlineClose } from "react-icons/ai";
 
 class IncomingCallScreen extends React.Component {
   state = {};
@@ -35,6 +38,8 @@ class IncomingCallScreen extends React.Component {
   render() {
     const { style, webRtc, database } = this.props;
     const isUser = webRtc.localCallHistory.chatHistory.type === 'user';
+    // console.log('props in incomming call', this.props);
+    const { swRegistration } = webRtc;
     let isDeviceNotFound;
     if (webRtc.devices) {
       const audioDevices = webRtc.devices.audio || [];
@@ -58,7 +63,7 @@ class IncomingCallScreen extends React.Component {
         className="incoming-call-screen"
       >
         {webRtc.showIncommingCall && <SoundComponent incoming url="/assets/media/ringtone.mp3" />}
-        {webRtc.showIncommingCall && <Notification title={`&2706 Incoming Call From ${displayName}`} />}
+        {(webRtc.showIncommingCall && swRegistration) && <Notification swRegistration={swRegistration} title={`Incoming Call From ${displayName}`} />}
         <div
           className="person-icon-container"
           style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}
@@ -67,7 +72,7 @@ class IncomingCallScreen extends React.Component {
             style={{ display: 'flex', justifyContent: 'center', alignSelf: 'center', flexDirection: 'column' }}
           >
             <div
-              style={{ width: '100%', display: 'flex', alignSelf: 'center', justifyContent: 'center', margin: 5 }}
+              style={{ width: '100%', display: 'flex', alignSelf: 'center', justifyContent: 'center', margin: 5, marginBottom: 25 }}
             >
               <span style={{ fontSize: 20, fontWeight: 'bold', color: 'white' }}>
                 {displayName}
@@ -88,9 +93,42 @@ class IncomingCallScreen extends React.Component {
               </span>
             </div>
             <div className="controllers">
-              {(!webRtc.deviceNotAllowed && isDeviceNotFound) ? <Button icon="phone" onClick={() => this.callAccept('audio')} large intent="success" /> : null}
-              {(!webRtc.deviceNotAllowed && isDeviceNotFound) ? <Button icon="mobile-video" onClick={() => this.callAccept('video')} large intent="success" /> : null}
-              <Button icon="cross" onClick={this.callReject} large intent="danger" />
+              {(!webRtc.deviceNotAllowed && isDeviceNotFound) ?
+                // <Button
+                //   icon="phone"
+                //   onClick={() => this.callAccept('audio')}
+                //   large intent="success"
+                // />
+                < Button
+                  onClick={() => this.callAccept('audio')}
+                  icon={<FaPhoneAlt />}
+                  type="button"
+                  buttonStyle="btn--circle-icons"
+                  buttonSize="btn--small"
+                />
+                : null}
+              {(!webRtc.deviceNotAllowed && isDeviceNotFound) ?
+                // <Button
+                //   icon="mobile-video"
+                //   onClick={() => this.callAccept('video')}
+                //   large intent="success"
+                // />
+                <Button
+                  icon={<FaVideo />}
+                  onClick={() => this.callAccept('video')}
+                  type="button"
+                  buttonStyle="btn--circle-icons"
+                  buttonSize="btn--small"
+                />
+                : null}
+              <Button
+                icon={<AiOutlineClose />}
+                onClick={this.callReject}
+                type="button"
+                buttonStyle="btn--circle-icons"
+                buttonSize="btn--small"
+                className="pc-close-call-btn"
+              />
             </div>
           </div>
         </div>

@@ -47,7 +47,7 @@ class Control extends React.Component {
     data: [],
   };
 
-  componentWillMount = () => {
+  componentDidMount() {
     const { data } = this.props;
     const fields = data.filter((obj) => {
       if (obj.fieldtype === 'input'
@@ -113,9 +113,13 @@ class Control extends React.Component {
     const { data, fields } = this.state;
     return (
       <form
+        className="form-control"
         onSubmit={this.onSubmit}
       >
-        <ControlGroup fill>
+        <ControlGroup
+          className="pc-control-group"
+          fill
+        >
           {
             data.map((obj, idx) => (
               <Element

@@ -74,6 +74,11 @@ const experienceSchema = [
     name: 'Start Date',
   },
   {
+    id: 'current',
+    fieldtype: 'checkbox',
+    name: 'Currently working here',
+  },
+  {
     id: 'endTime',
     fieldtype: 'date',
     name: 'End Date',
@@ -96,40 +101,5 @@ const experienceSchema = [
   },
 ];
 
-const portalSchema = [
-  {
-    id: 'title',
-    fieldtype: 'input',
-    name: 'Title',
-    placeholder: 'Your product name',
-    required: true,
-  },
-  {
-    id: 'attachment',
-    fieldtype: 'image',
-    name: 'Attachment',
-  },
-  {
-    id: 'description',
-    fieldtype: 'textarea',
-    name: 'Description',
-    placeholder: 'Tell about your product',
-  },
-  {
-    id: 'link',
-    fieldtype: 'input',
-    name: 'Link',
-    placeholder: 'https://www.google.com',
-  },
-  {
-    id: 'submit',
-    fieldtype: 'button',
-    text: 'Submit',
-    type: 'submit',
-    fill: 'fill',
-    intent: 'primary',
-    large: 'large',
-  },
-];
 
-export { bioSchema, educationSchema, experienceSchema, portalSchema };
+export { bioSchema, educationSchema, experienceSchema };
