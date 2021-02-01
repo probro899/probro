@@ -34,14 +34,16 @@ class CoverImage extends React.Component {
           onClick={this.onClick}
           role="button"
         >
-          <FiUpload size={30} color="#1d4354" />
-          <span style={{ marginLeft: 10, display: 'inline-grid', fontSize: 18, color: '#1d4354', alignItems: 'center' }}>Add Cover Image</span>
-          <input
-            ref={this.fileInputRef}
-            type="file"
-            style={{ display: 'none' }}
-            onChange={this.onChange}
-          />
+          <div className="pc-img-upload">
+            <FiUpload size={20} color="#fff" />
+            <span style={{ marginLeft: 10, display: 'inline-grid', fontSize: 16, color: '#fff', alignItems: 'center' }}>Add Cover Image</span>
+            <input
+              ref={this.fileInputRef}
+              type="file"
+              style={{ display: 'none' }}
+              onChange={this.onChange}
+            />
+          </div>
         </div>
       </div>
     );

@@ -4,11 +4,13 @@ import PropTypes from 'prop-types';
 import _ from 'lodash';
 import { FaPhoneSlash } from 'react-icons/fa';
 import { MdHourglassEmpty } from 'react-icons/md';
-import { Button, Icon } from '@blueprintjs/core';
+import { Icon } from '@blueprintjs/core';
 import RoundPicture from '../../../components/RoundPicture';
 import { ENDPOINT } from '../../../config';
 import SoundComponent from '../../components/SoundComponent';
 import DeviceNotFoundError from '../error-screen/DeviceNotFoundError';
+import { Button } from '../../../common/utility-functions/Button/Button';
+
 
 const IconOrImage = ({ isUser, database, webRtc }) => {
   let user;
@@ -134,19 +136,32 @@ class Index extends React.Component {
               ...
             </span>
           </div>
-          <IconOrImage isUser={isUser} webRtc={webRtc} database={database} />
+          {!webRtc.deviceNotAllowed && <IconOrImage isUser={isUser} webRtc={webRtc} database={database} />}
           <DeviceNotFoundError {...this.props} />
           <div className="controllers">
             {
               (callStatus === 'declined' || callStatus === 'disconnected' || callStatus === 'busy') ? (
-                <Button large intent="danger">
-                  <MdHourglassEmpty size={20} />
-                </Button>
+                // <Button large intent="danger">
+                //   <MdHourglassEmpty size={20} />
+                // </Button>
+                <Button
+                  icon={<MdHourglassEmpty size={20} />}
+                  type="button"
+                  buttonStyle="btn--circle-icons"
+                  buttonSize="btn--small"
+                />
               )
                 : (
-                  <Button onClick={this.callReject} large intent="danger">
-                    <FaPhoneSlash size={20} />
-                  </Button>
+                  // <Button onClick={this.callReject} large intent="danger">
+                  //   <FaPhoneSlash size={20} />
+                  // </Button>
+                  <Button
+                    onClick={this.callReject}
+                    icon={<FaPhoneSlash size={20} />}
+                    type="button"
+                    buttonStyle="btn--circle-icons"
+                    buttonSize="btn--small"
+                  />
                 )
             }
           </div>

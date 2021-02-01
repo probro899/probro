@@ -15,19 +15,19 @@ import CustomDragLayer from './ClassComponents/dndComponents/CustomDragLayer';
 import ErrorBoundry from '../../common/ErrorBoundary';
 
 class Index extends React.Component {
-  state = { loading: true, apis: {}, draggingContent: null };
+  state = { loading: true, apis: null, draggingContent: null };
 
   async componentDidMount() {
     const { match, updateWebRtc, webRtc } = this.props;
+    console.log('props in component did mount', this.props);
     try {
       const hasToInitialFetch = webRtc.fetchedApisRes.find(r => r.api === 'getBoard' && r.status === 200 && parseInt(r.boardId, 10) === parseInt(match.params.classId, 10));
+      const apis = await client.scope('Mentee');
       if (!hasToInitialFetch) {
-        const apis = await client.scope('Mentee');
         const getBoardRes = await apis.getBoard(match.params.classId);
         updateWebRtc('fetchedApisRes', [...webRtc.fetchedApisRes, getBoardRes]);
-        this.setState({ apis, loading: false });
       }
-      this.setState({ loading: false });
+      this.setState({ apis, loading: false });
     } catch (e) {
       console.error('get Class error', e);
     }
@@ -43,21 +43,21 @@ class Index extends React.Component {
   render() {
     const { match, account } = this.props;
     const { apis, draggingContent, loading } = this.state;
-    // console.log('apis in class manager', this.props);
+    // console.log('apis in class manager', apis);
     if (!account.sessionId) return <Redirect to="/" />;
     if (!account.user) return <Spinner />;
     if (account.user.slug !== match.params.userSlug) return <Redirect to="/" />;
-    if (loading) return <Spinner />;
+    if (loading || !apis) return <Spinner />;
     return (
       <ErrorBoundry>
-        <div style={{ position: 'relative' }}>
-          <Navbar className="pcm-nav" />
-          <ToolBar boardId={Number(match.params.classId, 10)} apis={apis} />
-          <DndProvider backend={HTML5Backend}>
+        <DndProvider backend={HTML5Backend}>
+          <div style={{ position: 'relative' }}>
+            <Navbar className="pcm-nav" />
+            <ToolBar boardId={Number(match.params.classId, 10)} apis={apis} />
             <CustomDragLayer draggingContent={draggingContent} />
             <ClassManager setDraggingContent={this.setDraggingContent} apis={apis} userSlug={match.params.userSlug} classId={Number(match.params.classId, 10)} />
-          </DndProvider>
-        </div>
+          </div>
+        </DndProvider>
       </ErrorBoundry>
     );
   }

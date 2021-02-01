@@ -2,7 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { Button, Collapse } from '@blueprintjs/core';
+import { Collapse } from '@blueprintjs/core';
+import { Button } from '../../common/utility-functions/Button/Button';
+import { BsChevronDown, BsChevronUp } from "react-icons/bs";
 
 const NavElement = (props) => {
   const {
@@ -15,7 +17,7 @@ const NavElement = (props) => {
   return (
     <Link to={url ? `${match.url}/${url}` : match.url} onClick={toggleMenu} className={active ? 'sideNavElement active' : 'sideNavElement'}>
       <span>
-      &nbsp;&nbsp;
+        &nbsp;&nbsp;
         {name}
       </span>
     </Link>
@@ -49,16 +51,16 @@ class SmallScreenSideNav extends React.Component {
     const { open } = this.state;
     const { navigate, match } = this.props;
     const navElements = [{ name: 'Profile', url: null },
-      { name: 'Classes', url: 'classes' },
-      { name: 'Connections', url: 'connection' },
-      { name: 'Drawing Board', url: 'drawing-board' },
-      { name: 'Blog', url: 'blog' },
-      { name: 'Settings', url: 'settings' },
+    { name: 'Classes', url: 'classes' },
+    { name: 'Connections', url: 'connection' },
+    { name: 'Drawing Board', url: 'drawing-board' },
+    { name: 'Blog', url: 'blog' },
+    { name: 'Settings', url: 'settings/basic' },
     ];
     return (
       <div className="pc-small-screen-sidenav">
         <div>
-          <Button
+          {/* <Button
             onClick={this.toggleMenu}
             className="nav-button"
             text={navigate.sideNav.name}
@@ -66,6 +68,15 @@ class SmallScreenSideNav extends React.Component {
             large
             rightIcon={open ? 'chevron-up' : 'chevron-down'}
             alignText="left"
+          /> */}
+          <Button
+            onClick={this.toggleMenu}
+            type="button"
+            buttonStyle="btn--primary--solid"
+            buttonSize="btn--medium"
+            title={navigate.sideNav.name}
+            icon={open ? <BsChevronUp /> : <BsChevronDown />}
+            iconPosition="right"
           />
         </div>
         <Collapse isOpen={open} keepChildrenMounted>

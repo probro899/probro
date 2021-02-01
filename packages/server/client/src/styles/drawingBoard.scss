@@ -5,65 +5,189 @@
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  .draw-title {
-    text-align: center;
-    text-transform: uppercase;
-    font-weight: bold;
-    font-size: 18px;
-    color: $darkBlue;
-    padding: 3px;
-  }
-  .draw-tools {
-    display: flex;
-    padding: 5px 5px;
-    .tool-label {
-      clip-path: polygon(0 0, 0 100%, 65% 100%, 100% 50%, 65% 0);
+  width: 100%;
+  .drawing-wrapper {
+    padding: 0px 10px;
+    background: #f6f7fd;
+    // border-radius: 10px;
+    // border: 1px solid #eee;
+    .draw-title {
+      text-align: center;
+      text-transform: uppercase;
+      font-weight: bold;
       font-size: 18px;
-      background: $darkBlue;
-      color: $backgroundColor;
-      padding: 3px 15px 3px 2px;
-      display: flex;
-      align-items: center;
-      flex-direction: row;
-    }
-    .tool-container {
+      color: $darkBlue;
       padding: 3px;
-      margin-left: 5px;
-      border: 1px solid $borderColor;
+      h2 {
+        margin-bottom: 10px;
+      }
+    }
+    .pc-drawing-wrapper {
       display: flex;
-      justify-content: center;
-      width: 100%;
-      .i-tool { margin: 0px 5px; }
+      margin-left: -15px;
+      margin-right: -15px;
+      position: relative;
+      .pc-draw-col {
+        padding-left: 15px;
+        padding-right: 15px;
+      }
+      .draw-tools {
+        // display: flex;
+        // flex-direction: column;
+        // align-items: center;
+        // padding: 5px 5px;
+        .tool-label {
+          // clip-path: polygon(0 0, 0 100%, 65% 100%, 100% 50%, 65% 0);
+          font-size: 18px;
+          background: #286090;
+          color: $backgroundColor;
+          text-align: center;
+          width: 100%;
+          padding: 3px;
+          margin-bottom: 10px;
+          // padding: 3px 15px 3px 2px;
+          // display: flex;
+          // align-items: center;
+          // flex-direction: row;
+        }
+        .pc-mobile,
+        .pc-tool-toggle {
+          display: none;
+        }
+        @media screen and (max-width: 855px) {
+          .pc-desktop {
+            display: none;
+          }
+          .pc-tool-toggle,
+          .pc-mobile {
+            display: block;
+          }
+        }
+        .tool-container {
+          // padding: 10px 0;
+          // margin-left: 5px;
+          // border: 1px solid $borderColor;
+          // @include genericBoxPattern;
+          // display: flex;
+          // justify-content: center;
+          // flex-direction: column;
+          // width: 100%;
+          // max-width: 70px;
+          // align-items: center;
+          // margin-bottom: 10px;
+          // position: relative;
+          .pc-tool-group {
+            @include genericBoxPattern;
+            text-align: center;
+            padding: 10px 5px;
+          }
+          .pc-create-tool,
+          .pc-remove-tools {
+            margin-bottom: 10px;
+          }
+          .pc-draw-btn {
+            input {
+              border: none;
+              height: 30px;
+              margin-top: 5px;
+              cursor: pointer;
+              &:focus {
+                outline: none;
+              }
+            }
+          }
+          .pc-draw-btn-wrapper {
+            margin-bottom: 10px;
+            .tooltip {
+              display: block;
+            }
+            // .i-tool {
+            //   margin: 5px;
+            // }
+            &:last-child {
+              margin-bottom: 0;
+            }
+          }
+        }
+        // .save-wrapper {
+        //   margin-left: 5px;
+        // }
+      }
+      .draw-canvas {
+        width: 100%;
+        height: calc(100vh - 100px - 25px);
+        .canvas-container {
+          width: 100% !important;
+          #mainCanvas {
+            width: 100% !important;
+            object-fit: contain !important;
+            height: 100% !important;
+            @include genericBoxPattern;
+          }
+          .upper-canvas {
+            object-fit: contain !important;
+            height: 100% !important;
+            width: 100% !important;
+            @include genericBoxPattern;
+            background: none;
+          }
+        }
+      }
     }
-    .save-wrapper {
-      margin-left: 5px;
+    @media screen and (max-width: 855px) {
+      .draw-tools.pc-draw-col {
+        position: absolute;
+        right: 0;
+        max-width: 90px;
+        width: 100%;
+        .pc-tool-toggle {
+          margin-bottom: 10px;
+          button {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 5px auto 0;
+            background: rgba(255, 82, 82, 1);
+            box-shadow: 0 0 0 0 rgba(255, 82, 82, 1);
+            color: #fff;
+            transform: scale(1);
+            animation: pulse 2s infinite;
+          }
+        }
+      }
+    }
+    @media screen and (max-width: 470px) {
+      .draw-tools {
+        .tool-label {
+          display: none;
+        }
+      }
     }
   }
-  .draw-canvas {
-    display: flex;
-    flex: 1;
-    justify-content: center;
-    width: 100%;
-    .canvas-container {
-      #mainCanvas {
-        width: 100% !important;
-        object-fit: contain !important;
-        height: auto !important;
-        background: white;
-        border: 2px solid $darkBlue;
-      }
-      .upper-canvas {
-        object-fit: contain !important;
-        height: auto !important;
-        width: 100% !important;
-      }
-    }
+}
+
+.bp3-button.bp3-large.bp3-intent-success {
+  box-shadow: unset !important;
+  background-color: #175fc7 !important;
+  border-radius: 5px !important;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(255, 82, 82, 0.7);
   }
-  @media screen and (max-width: 470px) {
-    .draw-tools {
-      .tool-label {
-        display: none;
-      }
-    }
+
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 10px rgba(255, 82, 82, 0);
+  }
+
+  100% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(255, 82, 82, 0);
   }
 }

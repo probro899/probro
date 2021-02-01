@@ -135,18 +135,18 @@ class Skills extends React.Component {
             callback={this.submitSkills}
           />
         </Dialog>
-        <p className="p-top">
-          <span>Skills</span>
+        <h2 className="p-top">
+          Skills
           <Icon icon="plus" style={{ cursor: 'pointer' }} onClick={this.togglePopover} />
-        </p>
+        </h2>
         {skill ? (
           <div className="skills-container">
             {
-            skill.map((i, index) => {
-              return (
-                <span key={index}>{i}</span>
-              );
-            })
+              skill.map((i, index) => {
+                return (
+                  <span key={index}>{i}</span>
+                );
+              })
             }
           </div>
         )

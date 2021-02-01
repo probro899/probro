@@ -7,19 +7,25 @@
   bottom: 0;
   right: 2px;
   background: $backgroundColor;
-  z-index: 3;
-  box-shadow: 0 0 0 1px rgba(16, 22, 26, 0.1), 0 4px 8px rgba(16, 22, 26, 0.2), 0 18px 46px 6px rgba(16, 22, 26, 0.2);
-
+  z-index: 15;
+  box-shadow: 0 0 0 1px rgba(16, 22, 26, 0.1), 0 4px 8px rgba(16, 22, 26, 0.2),
+    0 18px 46px 6px rgba(16, 22, 26, 0.2);
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  overflow: hidden;
   // common all over the box
   .arrow-btn {
-    svg {fill: $darkBlue}
+    svg {
+      fill: $darkBlue;
+    }
   }
   .header {
     height: 40px;
     font-size: 16px;
     display: flex;
-    background-color: $darkBlue;
+    background-color: #286090;
     cursor: pointer;
+
     color: $backgroundColor;
     .win-title {
       flex: 0.9;
@@ -30,41 +36,88 @@
     }
     .control-icons {
       flex: 0.1;
-      display: flex; justify-content: flex-end; align-items: center;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
       padding-right: 5px;
     }
   }
   .content {
     height: -webkit-calc(100% - 40px);
-    height:    -moz-calc(100% - 40px);
-    height:         calc(100% - 40px);
+    height: -moz-calc(100% - 40px);
+    height: calc(100% - 40px);
     // design chat list from here
     .chat-list {
-      padding-bottom: 5px; height: 100%; overflow-y: scroll;
+      padding-bottom: 5px;
+      height: 100%;
+      overflow-y: scroll;
+
+      .pc-chat-indi-wrap {
+        .pc-chat-indi {
+          align-items: center;
+          .pc-chat-user {
+            .profile-icon {
+            }
+            .green-dot {
+            }
+            .pc-chat-user-detail {
+              justify-content: center;
+              .pc-chat-username {
+                margin-bottom: 2px;
+                span {
+                  color: $headingColor;
+                }
+              }
+            }
+          }
+          .pc-chat-time {
+          }
+        }
+      }
+
       .last-text {
-        font-size: 14px; max-width: 200px; color: $lightTextColor;
-        overflow: hidden; white-space: nowrap; text-overflow: ellipsis;
+        font-size: 14px;
+        max-width: 200px;
+        color: $subHeadColor;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
       }
       .green-dot {
-        position: absolute; height: 10px; width: 10px;
-        background-color: #71f971; border-radius: 50%;
-        top: 35px; left: 39px;
+        position: absolute;
+        height: 10px;
+        width: 10px;
+        background-color: #71f971;
+        border-radius: 50%;
+        top: 35px;
+        left: 39px;
       }
       .profile-icon {
-        position: relative; height: 50px; width: 50px;
-        display: flex; justify-content: center; align-items: center;
+        position: relative;
+        height: 50px;
+        width: 50px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
         border-radius: 50%;
         overflow: hidden;
-        img {object-fit: contain;}
+        img {
+          object-fit: contain;
+        }
       }
       .class-icon {
-        height: 50px; width: 50px; 
-        display: flex; justify-content: center;
-        svg { color: $darkBlue; }
+        height: 50px;
+        width: 50px;
+        display: flex;
+        justify-content: center;
+        svg {
+          color: $darkBlue;
+        }
       }
       .i-chat {
         border-bottom: 1px solid $normalBorder;
-        margin: 3px 0px; padding: 5px;
+        margin: 3px 0px;
+        padding: 5px;
         &.unseen {
           background: $fadedBackground;
         }
@@ -80,7 +133,11 @@
           opacity: 0.8;
         }
       }
-      .no-msg { padding: 5px; color: $silver; text-align: center;}
+      .no-msg {
+        padding: 5px;
+        color: $silver;
+        text-align: center;
+      }
     }
     // design individual chat history from here
     .chat-history {
@@ -91,65 +148,185 @@
       .top {
         display: flex;
         justify-content: space-between;
-        padding: 5px 0px;
+        padding: 8px 10px;
         border-bottom: 1px solid $normalBorder;
+        .pc-back-btn {
+          // margin-left: 15px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          svg {
+            cursor: pointer;
+          }
+        }
         .op-name {
-          display: flex; flex-direction: column; justify-content: center;
-          color: $darkBlue; position: relative;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          color: $darkBlue;
+          position: relative;
           font-weight: bold;
           font-size: 16px;
           .green-dot {
-            position: absolute; height: 10px; width: 10px;
-            background-color: #71f971; border-radius: 50%;
-            top: 8px; right: -15px;
+            position: absolute;
+            height: 10px;
+            width: 10px;
+            background-color: #71f971;
+            border-radius: 50%;
+            top: 8px;
+            right: -15px;
           }
         }
         .call-control {
+          display: flex;
           button {
-            margin: 0px 1px;
+            background-color: #06cd91;
+
+            &:nth-child(2) {
+              margin-left: 5px;
+              background-color: #1789fb;
+            }
+            span {
+              svg {
+                margin-right: 0;
+              }
+            }
           }
+          // svg {
+          //   fill: #2e3d49;
+          //   cursor: pointer;
+          //   &:nth-child(2) {
+          //     margin-left: 10px;
+          //   }
+          // }
+          // button {
+          //   margin: 0px 1px;
+          // }
         }
       }
       .seen-user {
-        height: 20px; width: 20px; border-radius: 50%; overflow: hidden;
+        height: 20px;
+        width: 20px;
+        border-radius: 50%;
+        overflow: hidden;
       }
       .chats {
-        padding: 5px 5px 0px 5px; overflow-y: scroll; height: 100%;
+        padding: 10px 10px 0;
+        overflow-y: scroll;
+        height: 100%;
+        background-color: $backgroundColor;
+        .pc-date-indicator {
+          time {
+            position: relative;
+            &::after {
+              content: '';
+              width: 150px;
+              height: 1px;
+              background-color: #ddd;
+              display: block;
+              position: absolute;
+              left: 70px;
+              top: 14px;
+            }
+            &::before {
+              content: '';
+              width: 150px;
+              height: 1px;
+              background-color: #ddd;
+              display: block;
+              position: absolute;
+              right: 70px;
+              top: 14px;
+            }
+          }
+        }
         .i-chat {
-          margin: 0; display: flex;
-          time { margin: 0px 10px; font-size: 9px; color: $lightTextColor; font-weight: bold; }
+          margin: 0;
+          display: flex;
+          time {
+            // margin: 0px 10px;
+            font-size: 9px;
+            color: $lightTextColor;
+            font-weight: bold;
+          }
           .img-wrap {
-            height: 45px; width: 45px; border-radius: 50%; overflow: hidden;
+            height: 45px;
+            width: 45px;
+            border-radius: 50%;
+            overflow: hidden;
           }
           &.left {
-            display: flex; margin-right: 12%; flex-direction: row;
+            display: flex;
+            margin-right: 12%;
+            flex-direction: row;
             .text-contain {
               max-width: calc(100% - 45px);
-              &.spaced { margin-left: 3px;}
+              margin-bottom: 5px;
+              &.spaced {
+                margin-left: 3px;
+              }
             }
             .text {
-              margin: 0px 10px; padding: 2px;
-              border-top-right-radius: 7px;
-              border-bottom-right-radius: 7px;
-              border-bottom-left-radius: 7px;
+              margin: 0px 10px;
+              padding: 2px;
+              border-top-right-radius: 10px;
+              border-bottom-right-radius: 10px;
+              border-bottom-left-radius: 10px;
+              box-shadow: 0 0.4rem 0.8rem -0.1rem rgba(0, 32, 128, 0.1),
+                0 0 0 1px #f0f2f7;
             }
           }
           &.right {
-            margin-left: 12%; flex-direction: row-reverse;
-            .text-contain { display: flex; flex-direction: column; align-items: flex-end; }
+            margin-left: 12%;
+            flex-direction: row-reverse;
+            .text-contain {
+              display: flex;
+              flex-direction: column;
+              align-items: flex-end;
+              margin-bottom: 5px;
+              // .text {
+              //   // .pc-message {
+              //   //   color: #fff;
+              //   // }
+              // }
+            }
             .text {
-              margin: 0px 10px; padding: 2px;
-              border-top-left-radius: 7px;
-              border-bottom-right-radius: 7px;
-              border-bottom-left-radius: 7px;
+              margin: 0px 10px;
+              padding: 2px;
+              border-top-left-radius: 10px;
+              border-bottom-right-radius: 10px;
+              border-bottom-left-radius: 10px;
             }
           }
         }
       }
       .chat-box {
-        display: flex;
-        textarea { flex: 0.8; resize: none; }
-        button { flex: 0.2; }
+        position: relative;
+        .formLabel {
+          textarea {
+            background-color: #eef3f8;
+            padding-right: 36px;
+            border-top: 1px solid #e0e0e0;
+            border-right: transparent;
+            border-left: transparent;
+            border-bottom: transparent;
+          }
+        }
+        .pc-send-btn {
+          position: absolute;
+          top: calc(50% - 20px);
+          right: 5px;
+          button {
+          }
+        }
+        // display: flex;
+        // textarea {
+        //   flex: 0.8;
+        //   resize: none;
+        // }
+        // button {
+        //   flex: 0.2;
+        // }
       }
     }
     // design the
@@ -171,10 +348,15 @@
           padding: 5px;
           height: 35px;
           border-bottom: 1px solid $normalBorder;
-          .icon-con {display: flex; align-items: center; cursor: pointer;}
+          .icon-con {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+          }
           .sc-cl-title {
             color: $darkBlue;
-            display: flex; align-items: center;
+            display: flex;
+            align-items: center;
             font-weight: bold;
           }
         }
@@ -209,10 +391,15 @@
           padding: 5px;
           height: 35px;
           border-bottom: 1px solid $normalBorder;
-          .icon-con {display: flex; align-items: center; cursor: pointer;}
+          .icon-con {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+          }
           .sc-ch-title {
             color: $darkBlue;
-            display: flex; align-items: center;
+            display: flex;
+            align-items: center;
             font-weight: bold;
           }
         }
@@ -228,16 +415,26 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 5px 0px;
-        border-bottom: 1px solid $normalBorder;
+        // padding: 5px 0px;
+        // border-bottom: 1px solid $normalBorder;
+        .pc-menu-live {
+          margin-left: 15px;
+        }
+        svg {
+          cursor: pointer;
+          fill: $headingColor;
+        }
         height: 35px;
         .op-name {
           display: flex;
           flex-direction: column;
           justify-content: center;
-          color: $darkBlue;
+          color: $headingColor;
           font-weight: bold;
-          font-size: 16px
+          font-size: 16px;
+        }
+        .pc-live-chat-history {
+          margin-right: 15px;
         }
       }
       .video-container {
@@ -246,7 +443,7 @@
           width: 100%;
           height: 100%;
           .pc-main-video {
-            background-color: black;
+            background-color: #2a2a4a;
             object-fit: contain;
             height: 100%;
             width: 100%;
@@ -264,22 +461,33 @@
             flex-shrink: 0;
             width: 100px;
             height: 100px;
-            background-color: $backgroundColor;
+            // background-color: $backgroundColor;
             justify-content: center;
             align-items: center;
             flex-direction: column;
             border-radius: 50%;
             margin: 10px;
             overflow: hidden;
+            position: relative;
+            &::before {
+              content: '';
+              position: absolute;
+              left: 0;
+              right: 0;
+              top: 0;
+              bottom: 0;
+              background: rgba(0, 0, 0, 0.5);
+            }
             video {
-              height: 100px;
-              width: 100px;
+              height: 100%;
+              width: 100%;
+              object-fit: fill;
             }
             .pc-info {
               position: absolute;
               .pc-short-name {
-                color: $skyBlueMain;
-                font-size: 25px;
+                color: #fff;
+                font-size: 18px;
                 font-weight: bold;
                 display: flex;
                 justify-content: center;
@@ -325,12 +533,17 @@
           padding: 5px;
           z-index: 3;
           .pc-control-btn {
-            background: $darkBlue;
+            // background: $darkBlue;
             color: $backgroundColor;
             height: 40px;
             width: 40px;
             font-size: 30px;
             border-radius: 40px;
+            span {
+              svg {
+                margin-right: 0;
+              }
+            }
           }
         }
         &:hover {
@@ -346,29 +559,45 @@
         position: absolute;
         width: 100%;
         bottom: 25px;
-        .pc-control-btn {
-          height: 40px;
-          width: 40px;
-          font-size: 27px;
-          border-radius: 40px;
-          color: $backgroundColor;
-          background: $darkBlue;
-          display: flex;
-          &.bg-red {
-            background: red;
+        .tooltip {
+          &:nth-child(1) {
+            .pc-control-btn {
+              background-color: #c9302c;
+            }
           }
-          &.active {
-            background: $backgroundColor;
-            color: $darkBlue;
+          &:nth-child(2) {
+            .pc-control-btn {
+              background-color: #1789fb;
+            }
           }
-          &.record {
-            border-width: 2px;
-            border-style: solid;
-            animation: rotate 2s ease infinite;
+          .pc-control-btn {
+            height: 40px;
+            width: 40px;
+            font-size: 27px;
+            border-radius: 40px;
+            // color: $backgroundColor;
+            // background: $darkBlue;
+            display: flex;
+
+            &.bg-red {
+              background: red;
+            }
+            &.active {
+              background: #fff;
+              color: $headingColor;
+            }
+            &.record {
+              border-width: 2px;
+              border-style: solid;
+              animation: rotate 2s ease infinite;
+            }
           }
         }
         button {
           margin-left: 5px;
+          svg {
+            margin-right: 0;
+          }
         }
       }
       .pc-record-container {
@@ -381,9 +610,10 @@
         padding: 10px 5px;
         .recorded-item {
           color: $backgroundColor;
-          padding: 5px;
-          background: $skyBlueMain;
+          padding: 5px 8px;
+          background: #286090;
           border-radius: 15px;
+          font-size: 14px;
           margin: 5px 0px;
           &:hover {
             cursor: pointer;
@@ -393,13 +623,12 @@
       }
     }
     .incoming-call-screen {
-      margin: 1px;
       height: 100%;
       flex-direction: column;
       overflow: hidden;
       align-items: center;
       justify-content: center;
-      background: #574e54;
+      background: #2a2a4a;
       .person-icon-container {
         flex-direction: column;
         .img-container {
@@ -408,26 +637,43 @@
           border-radius: 50%;
           overflow: hidden;
           align-self: center;
-          border-width: 3px;
-          border-style: solid;
-          border-color: $backgroundColor;
-          animation: rotate 2s ease infinite;
+          // border-width: 3px;
+          // border-style: solid;
+          // border-color: $backgroundColor;
+          border: solid 10px rgba(41, 98, 255, 0.3);
+          animation: play 2s ease infinite;
         }
         .controllers {
           padding: 10px 0px;
           display: flex;
           justify-content: space-around;
+          button.pc-close-call-btn {
+            background-color: #c9302c !important;
+          }
+          button {
+            &:nth-child(1) {
+              background-color: #06cd91;
+            }
+            &:nth-child(2) {
+              background-color: #1789fb;
+            }
+            &:nth-child(3) {
+              background-color: #c9302c;
+            }
+            svg {
+              margin-right: 0;
+            }
+          }
         }
       }
     }
     .outgoing-call-screen {
-      margin: 1px;
       height: 100%;
       flex-direction: column;
       overflow: hidden;
       align-items: center;
       justify-content: center;
-      background: #574e54;
+      background: #2a2a4a;
       .person-icon-container {
         display: flex;
         flex-direction: column;
@@ -452,12 +698,12 @@
         }
         .icon-container {
           margin-top: 5%;
-          border-color: $backgroundColor;
+          border-color: transparent;
           border-width: 3px;
           border-style: solid;
           padding: 0px 6px;
           border-radius: 10px;
-          animation: rotate 2s ease infinite;
+          animation: play 2s ease infinite;
         }
         .img-container {
           margin-top: 5%;
@@ -466,31 +712,40 @@
           border-radius: 50%;
           overflow: hidden;
           align-self: center;
-          border-width: 3px;
-          border-style: solid;
-          border-color: $backgroundColor;
-          animation: rotate 2s ease infinite;
+          // border-width: 3px;
+          // border-style: solid;
+          // border-color: $backgroundColor;
+          border: solid 10px rgba(41, 98, 255, 0.3);
+          animation: play 2s ease infinite;
         }
         .controllers {
           margin-top: 5%;
           padding: 10px 0px;
           display: flex;
           justify-content: space-around;
+          button {
+            background-color: #c9302c;
+            svg {
+              margin-right: 0;
+            }
+          }
         }
       }
     }
   }
 
   @media screen and (max-width: 410px) {
-    .content .chat-list .last-text { max-width: 150px; }
+    .content .chat-list .last-text {
+      max-width: 150px;
+    }
   }
-  @media screen and (min-width: 500px) and (max-width: 800px){
+  @media screen and (min-width: 500px) and (max-width: 800px) {
     width: 60%;
   }
-  @media screen and (min-width: 800px) and (max-width: 1000px){
+  @media screen and (min-width: 800px) and (max-width: 1000px) {
     width: 50%;
   }
-  @media screen and (max-width: 500px){
+  @media screen and (max-width: 500px) {
     width: 90%;
     .content {
       .call-screen {
@@ -515,7 +770,7 @@
         }
       }
     }
-    @media screen and (max-width: 500px){
+    @media screen and (max-width: 500px) {
       .content {
         .call-screen {
           .sc-chat-list {
@@ -529,26 +784,73 @@
     }
   }
   @keyframes rotate {
-    0%   {border-color: #ff0000;}
-    10%  {border-color: #ff0080;}
-    20%  {border-color: #ff00ff;}
-    30% {border-color: #8000ff;}
-    40% {border-color: #0080ff;}
-    50% {border-color: #0000ff;}
-    60% {border-color: #00ffbf;}
-    70% {border-color: #00ff00;}
-    80% {border-color: #bfff00;}
-    90% {border-color: #ffff00;}
-    100% {border-color: #ff8000;}
+    0% {
+      border-color: #ff0000;
+    }
+    10% {
+      border-color: #ff0080;
+    }
+    20% {
+      border-color: #ff00ff;
+    }
+    30% {
+      border-color: #8000ff;
+    }
+    40% {
+      border-color: #0080ff;
+    }
+    50% {
+      border-color: #0000ff;
+    }
+    60% {
+      border-color: #00ffbf;
+    }
+    70% {
+      border-color: #00ff00;
+    }
+    80% {
+      border-color: #bfff00;
+    }
+    90% {
+      border-color: #ffff00;
+    }
+    100% {
+      border-color: #ff8000;
+    }
+  }
+
+  @keyframes play {
+    0% {
+      transform: scale(1);
+    }
+    15% {
+      box-shadow: 0 0 0 5px rgba(41, 98, 255, 0.3);
+    }
+    25% {
+      box-shadow: 0 0 0 10px rgba(41, 98, 255, 0.3),
+        0 0 0 20px rgba(41, 98, 255, 0.15);
+    }
+    25% {
+      box-shadow: 0 0 0 15px rgba(41, 98, 255, 0.3),
+        0 0 0 30px rgba(41, 98, 255, 0.15);
+    }
   }
 
   @keyframes slideDown {
-    from { height: 75%; }
-    to { height: 40px; }
+    from {
+      height: 75%;
+    }
+    to {
+      height: 40px;
+    }
   }
 
   @keyframes slideUp {
-    from { height: 40px; }
-    to { height: 75%; }
+    from {
+      height: 40px;
+    }
+    to {
+      height: 75%;
+    }
   }
 }

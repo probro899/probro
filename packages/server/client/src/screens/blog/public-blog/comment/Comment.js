@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { Button, TextArea } from '@blueprintjs/core';
+import { TextArea } from '@blueprintjs/core';
 import { RoundPicture } from '../../../../components';
 import { ENDPOINT } from '../../../../config';
+import { Button } from '../../../../common/utility-functions/Button/Button'
 
 class Comment extends React.Component {
   constructor(props) {
@@ -32,8 +33,7 @@ class Comment extends React.Component {
   }
 
   render() {
-    const { comment, user, account, saveComment, replyComment, deleteComment } = this.props;
-    // console.log('data in comment section', comment, user);
+    const { comment, user, account, saveComment, deleteComment } = this.props;
     const { editComment, commentText } = this.state;
     const imgUrl = user.userDetail && user.userDetail.image ? `${ENDPOINT}/assets/user/${10000000 + parseInt(user.id, 10)}/profile/${user.userDetail.image}` : '/assets/icons/64w/uploadicon64.png';
     return (
@@ -42,7 +42,7 @@ class Comment extends React.Component {
           <RoundPicture imgUrl={imgUrl} />
         </div>
         <div className="comment-content">
-          <div style={{ fontSize: 16 }}>
+          <div className='name-date-wrapper' style={{ fontSize: 16, display: 'flex', alignItems: 'center' }}>
             {
               user.middleName ? (
                 <Link to={`/user/${user.slug}/`} key={`user-${user.id}`}>
@@ -55,7 +55,7 @@ class Comment extends React.Component {
                   </Link>
                 )
             }
-            <span style={{ opacity: 0.8, fontSize: 10 }}>
+            <span className='com-date' style={{ opacity: 0.8, fontSize: 12, marginLeft: 5 }}>
               {new Date(parseInt(comment.timeStamp, 10)).toDateString()}
             </span>
           </div>
@@ -64,39 +64,62 @@ class Comment extends React.Component {
               !editComment ? <p>{comment.comment}</p> : (
                 <div className="pc-comment-edit">
                   <TextArea
-                    fill
-                    small
-                    style={{ fontSize: 16, padding: '2px' }}
                     placeholder="Put your comments."
                     value={commentText}
                     onChange={this.commentChange}
                   />
-                  <Button icon="tick" style={{ margin: '0px 5px' }} onClick={() => { this.setState({ editComment: false }); saveComment(commentText, comment); }} intent="success" />
-                  <Button icon="cross" onClick={() => this.setState({ editComment: false })} />
+                  <div className="btns">
+                    {/* <button
+                      className='cancel-btn'
+                      onClick={() => this.setState({ editComment: false })}
+                    >
+                      cancle
+                    </button> */}
+                    <div className="cancel-btn">
+                      <Button onClick={() => this.setState({ editComment: false })}
+                        type="button"
+                        buttonStyle="btn--danger--outline"
+                        buttonSize="btn--medium"
+                        loading={false}
+                        disabled={false}
+                        title="Cancel" />
+                    </div>
+                    {/* <button
+                      className='comment-btn'
+                      onClick={() => { this.setState({ editComment: false }); saveComment(commentText, comment); }}
+                    >
+                      post
+                    </button> */}
+                    <div className="post-cmt-btn">
+                      <Button onClick={() => { this.setState({ editComment: false }); saveComment(commentText, comment); }}
+                        type="button"
+                        buttonStyle="btn--primary--solid"
+                        buttonSize="btn--medium"
+                        loading={false}
+                        disabled={false}
+                        title="Post" />
+                    </div>
+                  </div>
                 </div>
               )
             }
           </div>
           {account.user && !editComment
             && (
-            <div className="com-config">
-              {
-                account.user.id === comment.userId ? (
-                  <div>
-                    <small className="primary" role="menu" tabIndex="0" onKeyDown={() => false} onClick={() => this.editComment(comment)}>
-                      <u>Edit</u>
-                    </small>
-                    <small className="danger" role="menu" tabIndex="0" onKeyDown={() => false} onClick={() => deleteComment(comment)}>
-                      <u>Delete</u>
-                    </small>
-                  </div>
-                ) : (
-                  <small className="primary" role="menu" tabIndex="0" onKeyDown={() => false} onClick={() => replyComment(comment)}>
-                    <u>Reply</u>
-                  </small>
-                )
-              }
-            </div>
+              <div className="com-config">
+                {
+                  account.user.id === comment.userId && (
+                    <div>
+                      <small className="primary" role="menu" tabIndex="0" onKeyDown={() => false} onClick={() => this.editComment(comment)}>
+                        <u>Edit</u>
+                      </small>
+                      <small className="danger" role="menu" tabIndex="0" onKeyDown={() => false} onClick={() => deleteComment(comment)}>
+                        <u>Delete</u>
+                      </small>
+                    </div>
+                  )
+                }
+              </div>
             )}
         </div>
       </div>
@@ -107,7 +130,6 @@ class Comment extends React.Component {
 Comment.propTypes = {
   saveComment: PropTypes.func.isRequired,
   deleteComment: PropTypes.func.isRequired,
-  replyComment: PropTypes.func.isRequired,
   account: PropTypes.objectOf(PropTypes.any).isRequired,
   comment: PropTypes.objectOf(PropTypes.any).isRequired,
   user: PropTypes.objectOf(PropTypes.any).isRequired,

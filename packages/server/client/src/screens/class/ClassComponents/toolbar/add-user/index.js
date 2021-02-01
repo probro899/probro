@@ -5,6 +5,7 @@ import { FaUserPlus } from 'react-icons/fa';
 import addUserToBoard from './structure';
 import { getName } from '../../../../../common/utility-functions';
 import { Form } from '../../../../../common';
+import { Button } from '../../../../../common/utility-functions/Button/Button';
 
 const PopoverContent = ({ callback }) => {
   return (
@@ -57,9 +58,15 @@ class AddUser extends React.Component {
   render() {
     return (
       <Popover content={<PopoverContent callback={this.addUserToBoardHandler} />}>
-        <div className="add-user-btn">
+        <Button
+          type="button"
+          buttonStyle="btn-circle"
+          buttonSize="btn--small"
+          icon={<FaUserPlus size={15} />}
+        />
+        {/* <div className="add-user-btn pc-class-btn">
           <FaUserPlus size={20} />
-        </div>
+        </div> */}
       </Popover>
     );
   }

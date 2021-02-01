@@ -37,16 +37,14 @@ class HomePage extends Component {
             <div className="broWrapper">
               <SmallScreenSideNav match={match} />
               <SideNav match={match} />
-              {/* fake-side-nav is just for the styling purpose only */}
-              <div className="fake-side-nav" />
               <Switch>
                 <Route exact path={`${match.path}`} component={Profile} />
                 <Route exact path={`${match.path}/classes`} component={Class} />
                 <Route exact path={`${match.path}/blog`} component={Blog} />
-                <Route exact path={`${match.path}/settings`} component={Setting} />
+                <Route exact path={`${match.path}/settings/basic`} component={Setting} />
+                <Route exact path={`${match.path}/settings/advanced`} component={Setting} />
                 <Route exact path={`${match.path}/drawing-board`} component={DrawingBoard} />
                 <Route exact path={`${match.path}/connection`} component={Connection} />
-                {/* <Route exact path={`${match.path}/messages`} component={Message} /> */}
                 <Redirect to="/error" />
               </Switch>
             </div>

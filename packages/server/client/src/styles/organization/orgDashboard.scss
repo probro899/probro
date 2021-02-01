@@ -1,0 +1,36 @@
+@import '../config.scss';
+
+.pc-organization-dashboard {
+  .pc-org-dashboard-wrapper {
+    @include genericBoxPattern;
+
+    .pc-org-header {
+      text-align: center;
+      padding: 20px 0;
+      .pc-org-profile-img {
+        height: 100px;
+        width: 100px;
+        border: 3px solid white;
+        border-radius: 50%;
+        overflow: hidden;
+        margin: auto;
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+      }
+      .pc-org-name {
+        margin-bottom: 10px;
+      }
+      .pc-org-location {
+        opacity: 0.8;
+        margin-bottom: 3px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        justify-content: center;
+      }
+    }
+  }
+}

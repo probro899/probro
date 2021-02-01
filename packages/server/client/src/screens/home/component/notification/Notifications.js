@@ -3,6 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { Drawer, Icon } from '@blueprintjs/core';
+import { BiBell } from "react-icons/bi";
 import NotificationContainer from './NotificationContainer';
 import { Badge } from '../../../../components';
 import SoundComponent from '../../../../communication/components/SoundComponent';
@@ -30,11 +31,10 @@ class Notifications extends React.Component {
   render() {
     const { drawerOpen } = this.state;
     const { apis, account, notiNo, notiSound } = this.props;
-    // console.log('Props in Notification', this.props);
     return (
       <Link to="#" onClick={this.onDrawerToggle}>
         <div className="navbar-item">
-          <Icon icon="notifications" iconSize={Icon.SIZE_LARGE} />
+        <BiBell className="bell-icon"/>
           {notiNo > 0 && (
           <div>
             {notiSound && <SoundComponent url="/assets/media/notification.mp3" noLoop />}

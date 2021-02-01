@@ -3,15 +3,14 @@ import webConfig from '../../webConfig.json';
 
 const defaultOptions = {
   watchQuery: {
-    fetchPolicy: 'no-cache',
-    errorPolicy: 'ignore',
+    fetchPolicy: 'network-only',
+    errorPolicy: 'ignore'
   },
   query: {
-    fetchPolicy: 'no-cache',
-    errorPolicy: 'all',
+    fetchPolicy: 'network-only',
+    errorPolicy: 'all'
   },
 };
-
 
 const client = new ApolloClient({
   ssrMode: true,

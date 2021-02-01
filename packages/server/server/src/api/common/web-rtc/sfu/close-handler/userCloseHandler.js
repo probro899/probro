@@ -17,6 +17,7 @@ export default async (callCloseDetail, userList, session) => {
     });
     return res;
   });
+
   // console.log('User clase handler called', callCloseDetail, userList, 'insert res', insertRes);
   const dataTobeUpdate = {
     UserMessage: {

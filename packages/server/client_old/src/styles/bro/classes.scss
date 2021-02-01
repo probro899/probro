@@ -1,0 +1,514 @@
+@import '../config.scss';
+
+// this is done outside of the scope because of the column dragging concept
+.column-container {
+  height: 100%;
+  // this 18px value has been calculated according to margins 18 px * 2
+  padding-bottom: 18px;
+  .column-inner-container {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    max-height: 100%;
+    margin: 10px 10px 10px 0px;
+    background-color: $darkBlue;
+    .column-title {
+      padding: 8px; display: flex; justify-content: space-between; flex-shrink: 0;
+      position: relative; cursor: pointer;
+      color: $backgroundColor;
+      .text { font-size: 18px; font-weight: bold; word-break: break-word; }
+      .more-button svg { fill: $backgroundColor; }
+    }
+    .task-list {
+      overflow-y: scroll;
+      max-height: 100%; // to set task list a scrollview
+      padding: 0px 8px 8px 8px;
+    }
+    .column-footer {
+      display: flex; align-items: flex-start;
+      svg { color: $backgroundColor; margin-right: 4px; }
+      color: $backgroundColor; padding: 10px; cursor: pointer;
+      &:hover {opacity: 0.7; font-weight: bold;}
+    }
+  }
+}
+
+// this is outside because of the task dragging concept
+.task-container {
+  width: 284px;
+  margin-bottom: 8px; cursor: pointer; padding: 5px; background-color: $backgroundColor; transition: 0.3s;
+  &:hover {
+    box-shadow: 1px 1px 1px 1px $backgroundColor;
+  }
+  .pc-task-flag {
+    display: flex; justify-content: space-between;
+    .pc-deadline-view {
+      color: $backgroundColor;
+      p {
+        font-size: 12px;
+        padding: 3px; border-radius: 2.5px; background-color: green; color: $backgroundColor; 
+        &.expire { background-color: red; }
+      }
+    }
+  }
+  .pc-task-name { margin: 0; font-weight: bold; word-break: break-word; }
+  .task-footer {
+    display: flex;
+    .pc-item { padding-top: 3px; display: flex; align-items: center; margin-right: 10px;}
+    .pc-icon { fill: $fadedTextColor; }
+    .pc-count { color: $fadedTextColor; margin-left: 3px; font-size: 12px; }
+  }
+  .pc-tag { margin-right: 5px; }
+}
+
+
+// styling the class component here
+.classes {
+  display: flex; flex-direction: column; padding: 5px;
+  .header {
+    padding: 10px;
+    .title { font-size: 18px; color: $darkBlue; }
+    small { color: $lightTextColor; }
+  }
+  .content-list {
+    display: flex;
+    flex-wrap: wrap;
+    .no-template { margin-left: 12px; color: $lightTextColor; }
+    .more-button { top: 10px; right: 10px; position: absolute; }
+    .content-link {
+      margin: 10px;
+      height: 150px;
+      width: 250px;
+      display: flex;
+      cursor: pointer;
+      text-decoration: none;
+      box-shadow: 0px 1px 2px 1px $normalShadowColor;
+      // border-radius: 5px;
+      // styling the adding new class 
+      &.add-new {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0px 1px 2px 1px $normalShadowColor;
+        button {
+          box-shadow: 0px 1px 2px 1px $normalShadowColor;
+          &:hover {
+            box-shadow: 0px 1px 2px 1.5px $normalShadowColor;
+          }
+        }
+      }
+      .class-repr {
+        padding: 5px;
+        display: flex;
+        background: $darkBlue;
+        align-items: center;
+        width: 50%;
+        span {
+          word-break: break-word;
+          text-align: center;
+          color: white;
+          font-size: 20px;
+        }
+      }
+      .class-detail {
+        padding: 5px;
+        width: 50%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background: white;
+        span {
+          text-align: center;
+          &.name {
+            font-weight: bold;
+          }
+          &.date {
+            color: black;
+            opacity: 0.7;
+          }
+        }
+      }
+    }
+  }
+  .pc-class-template-container {
+    margin-top: 30px;
+    .template-icon {
+      position: absolute;
+      bottom: 10px;
+      right: 15px;
+      svg {
+        stroke: #0f9960;
+      }
+    }
+  }
+}
+
+//styling the classManager component. 
+.tool-bar {
+  top: $navbarHeight; height: $toolbarHeight; position: absolute; width: 100%; padding: 5px 0px;
+  background: $fadedBackground;
+  .toolbar-container {
+    height: 100%; padding: 2px; display: flex; justify-content: space-between;
+    .left-tools {
+      display: flex; flex-direction: row;
+      // style for each items in the toolbar
+      .each-item {
+        padding: 0px 5px; display: flex; align-items: center;
+      }
+      // styling the name of the class in the toolbar
+      .class-name { color: $textColor; font-weight: 600; font-size: 16px; }
+      .user-list {
+        // styling the short user popover content
+        .i-user {
+          position: relative; padding: 4px;
+          height: 30px; width: 30px; margin-right: 2px; border-radius: 50%; text-transform: uppercase; cursor: pointer;
+          background: $skyBlueMain; color: $backgroundColor;
+          display: flex; justify-content: center; align-items: center;
+          &:hover { background: $darkBlue; }
+          .green-dot {
+            position: absolute; height: 10px; width: 10px; background-color: $pcGreen;
+            border-radius: 50%; top: 20px; left: 20px;
+          }
+        }
+      }
+    }
+    .right-tools {
+      display: flex;
+      .add-user-btn {
+        margin: 0px 3px; padding: 3px 3px 0px 3px; color: $textColor;
+        border: 1px solid $textColor; cursor: pointer;
+        svg { fill: $textColor; }
+      }
+      button {
+        margin: 0px 3px;
+        padding: 1px;
+        color: $textColor;
+        border: 1px solid $textColor;
+        svg { fill: $textColor; }
+      }
+    }
+  }
+}
+.class-wrapper {
+  height: 100vh;
+  .columns {
+    height: 100%; padding-top: $navbarHeight + $toolbarHeight; padding-left: 10px;
+    display: flex; flex-direction: row; align-items: flex-start;
+    overflow-y: scroll; -ms-overflow-style: none; scrollbar-color: none; 
+    ::-webkit-scrollbar {
+      display: none;
+    }
+    .add-new-column {
+      .title {
+        display: flex; align-items: flex-start;
+        svg { color: $darkBlue; height: 18px; width: 18px; margin-right: 5px; }
+        padding: 8px; margin: 10px 10px 10px 0px; background-color: $fadedBackground; width: 200px;
+        box-shadow: 0px 1px 2px 1px $normalShadowColor;
+        cursor: pointer; font-size: 16px;
+      }
+    }
+  }
+}
+// contains the details of the task.
+.overlay-container {
+  margin-left: 2%;
+  margin-right: 2%;
+  padding: 0;
+  .task-detail-overlay {
+    .overlay-title {
+      padding: 7px; display: flex; justify-content: space-between; align-items: center;
+      background: $fadedBackground; color: $textColor; border: 1px solid $normalBorder;
+      .title { word-break: break-word; }
+      svg { fill: $textColor; }
+      .head {
+        display: flex; flex-direction: row; font-size: 18px; font-weight: bold; width: 100%;
+        textarea {
+          width: 100%;
+          resize: none;
+          padding: 0px 3px;
+          overflow-y: scroll;
+          height: 40px;
+          line-height: 35px;
+          font-size: 18px;
+          font-weight: bold;
+          background: transparent;
+        }
+        .buttons-group {
+          display: flex;
+          justify-content: center;
+          // align-items: center;
+          button {
+            margin-left: 5px;
+          }
+          .edit-title {
+            margin-left: 5px;
+            svg {
+              fill: $skyBlueMain;
+            }
+          }
+        }
+        .bp3-icon-tick { svg { fill: $backgroundColor; } }
+      }
+      .task-close { align-self: flex-start; }
+    }
+    .overlay-body {
+      display: flex; background: $backgroundColor; padding: 5px 5px 5px 8px;
+      .left {
+        flex: 0.7;
+        .pc-tags-and-deadline {
+          display: flex; justify-content: space-between;
+          .tag { margin-right: 5px; }
+          .pc-deadline-view {
+            display: flex; padding: 3px; font-size: 12px;
+            p {
+              padding: 5px; border-radius: 3px; background-color: green; color: $backgroundColor; 
+              &.expire { background-color: $pcRed; }
+            }
+          }
+        }
+        .overlay-description {
+          padding: 5px 5px 5px 0px;
+          .desc-head { font-weight: bold; font-size: 16px; }
+          .desc {
+            li { margin-left: 10px; word-break: break-all; }
+            textarea { width: 100%; word-break: break-all; }
+            padding: 5px 5px 5px 0px; font-size: 15px;
+          }
+          .bp3-icon-tick { svg { fill: $backgroundColor; } }
+          .bp3-icon-cross { svg { fill: $darkBlue; } }
+        }
+        .attach-container {
+          padding: 5px 5px 5px 0px;
+          .attach-head { font-weight: bold; font-size: 16px; }
+          .attach-list {
+            ul { padding-inline-start: 10px; }
+            ul li {
+              margin-bottom: 3px; display: flex; list-style-type: none;
+              .file-type {
+                width: 60px; height: 60px;
+                display: flex; justify-content: center;
+                font-size: 18px; align-items: center; color: $textColor; background: $fadedBackground;
+                text-transform: uppercase; box-shadow: 0px 1px 2px 0px $shadowColor; position: relative;
+                .pc-attach-delete {
+                  border-radius: 50%; top: 0; right: 0; position: absolute;
+                  svg { fill: $navTextColor; }
+                }
+              }
+              .file-detail {
+                margin-left: 10px; display: flex; flex-direction: column; justify-content: center;
+                .attach-title { font-size: 16px; }
+                .date { color: $lightTextColor; }
+              }
+            }
+          }
+        }
+        .edit-button {
+          margin-left: 10px;
+          vertical-align: inherit !important;
+          svg {
+            fill: $skyBlueMain;
+          }
+        }
+        textarea {
+          background: transparent;
+          border: none;
+          border-color: transparent;
+          resize: vertical;
+        }
+        .comment-container {
+          display: flex; justify-content: stretch;
+          button { margin-left: 0; }
+        }
+        .comments {
+          padding-bottom: 5px;
+          h3 { margin: 15px 0px 7px 0px; }
+          .s-comment {
+            display: flex; justify-content: stretch; padding: 10px 0px 10px 10px;
+            .com-con {
+              margin-left: 10px;
+              padding-top: 2px;
+              display: flex;
+              flex-direction: column;
+              .com-desc {
+                .pc-comment-edit {
+                  display: flex;
+                }
+              }
+              .com-config {
+                small {
+                  cursor: pointer; color: $navTextColor; margin-right: 5px; font-size: 10px;
+                  &.danger u {
+                    &:hover { color: red; }
+                  }
+                  &.primary u {
+                    &:hover { color: $skyBlueMain; }
+                  }
+                }
+              }
+            }
+          }
+          .pc-task-activity {
+            padding: 10px 0px 0px 10px; display: flex;
+            .activity-detail {
+              margin-left: 10px; padding-top: 2px; display: flex; flex-direction: column;
+            }
+            .activity-user { font-size: 15px; font-weight: bold; }
+            .activity-col { font-weight: bold; }
+          }
+          .img-con {
+            width: 50px; height: 50px; border-radius: 50%; overflow: hidden; flex-shrink: 0;
+          }
+        }
+      }
+      .right {
+        display: flex;
+        flex: 0.3;
+        justify-content: flex-end;
+        .rt-in {
+          padding: 5px;
+          display: flex; flex-direction: column;
+          .tool-header { color: $navTextColor; margin: 7px 0px 2px 0px; }
+          .rt-tools {
+            display: flex; flex-direction: column;
+            .bp3-popover-target {
+              width: 100%;
+              button { width: 100%; }
+            }
+          }
+          .rt-actions {
+            display: flex;
+            flex-direction: column;
+            .bp3-popover-target {
+              width: 100%;
+              button {
+                width: 100%;
+              }
+            }
+          }
+          button {
+            margin-bottom: 2px;
+          }
+        }
+      }
+    }
+  }
+}
+
+// report popover styling here
+.pc-report-overlay {
+  padding: 0;
+  width: 70vw;
+  height: auto;
+  @media screen and (max-width: 500px){
+    width: 90vw;
+  }
+  .bp3-dialog-header {
+    padding: 10px 5px 10px 20px;
+    border-bottom: 1px solid $normalBorder;
+    span {
+      color: $skyBlueMain;
+    }
+    h4 {
+      color: $darkBlue;
+      line-height: 15px;
+      height:30px;
+      padding: 10px 0px 0px 10px;
+    }
+  }
+  .pc-report-content {
+    background-color: $backgroundColor;
+    padding: 10px;
+    .pc-report-charts {
+      width: 100%;
+      .pc-canvases {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        .pc-graph-timeline {
+          width: 100%;
+          display: flex;
+          padding-left: 10px;
+          h3 {
+            color: $darkBlue;
+            margin-right: 7%;
+          }
+          .pc-report-radio-group {
+            display: flex;
+            align-items: center;
+            label {
+              margin-bottom: 0px;
+            }
+          }
+        }
+        .pc-canvas-con {
+          margin-bottom: 10%;
+          width: 80%;
+          canvas {
+            width: 100%;
+          }
+        }
+      }
+    }
+    .pc-report-table-con {
+      padding: 10px;
+      .table-title {
+        h3 {
+          color: $darkBlue;
+        }
+      }
+      table {
+        border: 1px solid $normalBorder;
+        width: 100%;
+        overflow-x: scroll;
+        th {
+          background-color: $darkBlue;
+          color: $backgroundColor;
+          padding: 5px;
+          font-size: 14px;
+        }
+      }
+    }
+    .pc-pdf-gen-btn-con {
+      margin-top: 10px;
+      width: 100%;
+      display: flex;
+      justify-content: flex-end;
+      .pdf-link {
+        background-color: $skyBlueMain;
+        margin-right: 10px;
+        border-radius: 15px;
+        display: flex;
+        align-items: center;
+        padding: 5px;
+        a {
+          color: $backgroundColor;
+        }
+      }
+    }
+  }
+}
+
+// all user list overlay 
+.all-users {
+  padding: 10px 0px 5px 0px; display: flex; align-items: center; flex-direction: column;
+  .header { font-weight: bold; padding: 2px;}
+  .user-con {
+    padding: 2px;
+    .user {
+      padding: 5px; position: relative; display: flex;
+      &:hover { .remover { svg { color: $pcRed; } } }
+      a { margin: 0px 10px; width: 80%; }
+      .active {
+        position: absolute; height: 10px; width: 10px; background-color: $pcGreen; border-radius: 50%;
+        top: 8px; left: 0;
+      }
+      .remover {
+        width: 20%; cursor: pointer;
+        svg { color: $pcLightBlue; height: 20px; width: 20px; }
+      }
+    }
+  }
+}

@@ -1,0 +1,554 @@
+@import './config.scss';
+
+// styling the communication window here
+.communicate {
+  position: fixed;
+  width: 35%;
+  bottom: 0;
+  right: 2px;
+  background: $backgroundColor;
+  z-index: 3;
+  box-shadow: 0 0 0 1px rgba(16, 22, 26, 0.1), 0 4px 8px rgba(16, 22, 26, 0.2), 0 18px 46px 6px rgba(16, 22, 26, 0.2);
+
+  // common all over the box
+  .arrow-btn {
+    svg {fill: $darkBlue}
+  }
+  .header {
+    height: 40px;
+    font-size: 16px;
+    display: flex;
+    background-color: $darkBlue;
+    cursor: pointer;
+    color: $backgroundColor;
+    .win-title {
+      flex: 0.9;
+      margin-left: 10px;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+    }
+    .control-icons {
+      flex: 0.1;
+      display: flex; justify-content: flex-end; align-items: center;
+      padding-right: 5px;
+    }
+  }
+  .content {
+    height: -webkit-calc(100% - 40px);
+    height:    -moz-calc(100% - 40px);
+    height:         calc(100% - 40px);
+    // design chat list from here
+    .chat-list {
+      padding-bottom: 5px; height: 100%; overflow-y: scroll;
+      .last-text {
+        font-size: 14px; max-width: 200px; color: $lightTextColor;
+        overflow: hidden; white-space: nowrap; text-overflow: ellipsis;
+      }
+      .green-dot {
+        position: absolute; height: 10px; width: 10px;
+        background-color: #71f971; border-radius: 50%;
+        top: 35px; left: 39px;
+      }
+      .profile-icon {
+        position: relative; height: 50px; width: 50px;
+        display: flex; justify-content: center; align-items: center;
+        border-radius: 50%;
+        overflow: hidden;
+        img {object-fit: contain;}
+      }
+      .class-icon {
+        height: 50px; width: 50px; 
+        display: flex; justify-content: center;
+        svg { color: $darkBlue; }
+      }
+      .i-chat {
+        border-bottom: 1px solid $normalBorder;
+        margin: 3px 0px; padding: 5px;
+        &.unseen {
+          background: $fadedBackground;
+        }
+        &:hover {
+          box-shadow: 1px 1px 10px 0px $normalShadowColor;
+        }
+        .name {
+          color: $darkBlue;
+          font-weight: bold;
+          font-size: 16px;
+        }
+        .short-msg {
+          opacity: 0.8;
+        }
+      }
+      .no-msg { padding: 5px; color: $silver; text-align: center;}
+    }
+    // design individual chat history from here
+    .chat-history {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 100%;
+      .top {
+        display: flex;
+        justify-content: space-between;
+        padding: 5px 0px;
+        border-bottom: 1px solid $normalBorder;
+        .op-name {
+          display: flex; flex-direction: column; justify-content: center;
+          color: $darkBlue; position: relative;
+          font-weight: bold;
+          font-size: 16px;
+          .green-dot {
+            position: absolute; height: 10px; width: 10px;
+            background-color: #71f971; border-radius: 50%;
+            top: 8px; right: -15px;
+          }
+        }
+        .call-control {
+          button {
+            margin: 0px 1px;
+          }
+        }
+      }
+      .seen-user {
+        height: 20px; width: 20px; border-radius: 50%; overflow: hidden;
+      }
+      .chats {
+        padding: 5px 5px 0px 5px; overflow-y: scroll; height: 100%;
+        .i-chat {
+          margin: 0; display: flex;
+          time { margin: 0px 10px; font-size: 9px; color: $lightTextColor; font-weight: bold; }
+          .img-wrap {
+            height: 45px; width: 45px; border-radius: 50%; overflow: hidden;
+          }
+          &.left {
+            display: flex; margin-right: 12%; flex-direction: row;
+            .text-contain {
+              max-width: calc(100% - 45px);
+              &.spaced { margin-left: 3px;}
+            }
+            .text {
+              margin: 0px 10px; padding: 2px;
+              border-top-right-radius: 7px;
+              border-bottom-right-radius: 7px;
+              border-bottom-left-radius: 7px;
+            }
+          }
+          &.right {
+            margin-left: 12%; flex-direction: row-reverse;
+            .text-contain { display: flex; flex-direction: column; align-items: flex-end; }
+            .text {
+              margin: 0px 10px; padding: 2px;
+              border-top-left-radius: 7px;
+              border-bottom-right-radius: 7px;
+              border-bottom-left-radius: 7px;
+            }
+          }
+        }
+      }
+      .chat-box {
+        display: flex;
+        textarea { flex: 0.8; resize: none; }
+        button { flex: 0.2; }
+      }
+    }
+    // design the
+    .call-screen {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      // chat-screen inside call screen
+      .sc-chat-list {
+        height: calc(100% - 40px);
+        position: absolute;
+        background-color: $backgroundColor;
+        z-index: 3;
+        box-shadow: 0px 0px 3px 0px $normalShadowColor;
+        width: 80%;
+        .sc-cl-header {
+          display: flex;
+          justify-content: space-between;
+          padding: 5px;
+          height: 35px;
+          border-bottom: 1px solid $normalBorder;
+          .icon-con {display: flex; align-items: center; cursor: pointer;}
+          .sc-cl-title {
+            color: $darkBlue;
+            display: flex; align-items: center;
+            font-weight: bold;
+          }
+        }
+        .sc-cl-content {
+          overflow-x: hidden;
+          height: calc(100% - 40px);
+          .sc-cl-i-chat {
+            padding: 20px 0px;
+            border-bottom: 1px solid $normalBorder;
+            background-color: $fadedBackground;
+            cursor: pointer;
+            &:hover {
+              background-color: $boardColor;
+            }
+          }
+        }
+        .sc-cl-footer {
+          height: 10px;
+        }
+      }
+      .sc-chat-history {
+        height: calc(100% - 40px);
+        position: absolute;
+        align-self: flex-end;
+        background-color: $backgroundColor;
+        z-index: 4;
+        box-shadow: 0px 0px 3px 0px $normalShadowColor;
+        width: 80%;
+        .sc-ch-header {
+          display: flex;
+          justify-content: space-between;
+          padding: 5px;
+          height: 35px;
+          border-bottom: 1px solid $normalBorder;
+          .icon-con {display: flex; align-items: center; cursor: pointer;}
+          .sc-ch-title {
+            color: $darkBlue;
+            display: flex; align-items: center;
+            font-weight: bold;
+          }
+        }
+        .sc-ch-content {
+          overflow-x: hidden;
+          height: calc(100% - 35px);
+        }
+        .sc-ch-footer {
+          height: 10px;
+        }
+      }
+      .top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 5px 0px;
+        border-bottom: 1px solid $normalBorder;
+        height: 35px;
+        .op-name {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          color: $darkBlue;
+          font-weight: bold;
+          font-size: 16px
+        }
+      }
+      .video-container {
+        height: calc(100% - 35px);
+        .pc-main-screen {
+          width: 100%;
+          height: 100%;
+          .pc-main-video {
+            background-color: black;
+            object-fit: contain;
+            height: 100%;
+            width: 100%;
+          }
+        }
+        .pc-user-screens {
+          display: flex;
+          position: absolute;
+          z-index: 2;
+          width: 100%;
+          overflow-x: auto;
+          overflow-y: hidden;
+          .pc-each-screen {
+            display: flex;
+            flex-shrink: 0;
+            width: 100px;
+            height: 100px;
+            background-color: $backgroundColor;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            border-radius: 50%;
+            margin: 10px;
+            overflow: hidden;
+            video {
+              height: 100px;
+              width: 100px;
+            }
+            .pc-info {
+              position: absolute;
+              .pc-short-name {
+                color: $skyBlueMain;
+                font-size: 25px;
+                font-weight: bold;
+                display: flex;
+                justify-content: center;
+                text-transform: uppercase;
+              }
+              .pc-ice {
+                display: flex;
+                justify-content: center;
+                color: $skyBlueMain;
+                font-size: 8px;
+                text-transform: capitalize;
+              }
+            }
+          }
+        }
+        .img-main-screen {
+          height: 88%;
+          width: 100%;
+          position: absolute;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          .user {
+            height: 140px;
+            width: 140px;
+            border-radius: 50%;
+            overflow: hidden;
+            border-width: 1px;
+            border-style: solid;
+            border-color: $backgroundColor;
+          }
+          .board {
+            border: 1px solid $backgroundColor;
+            padding: 0px 6px;
+            border-radius: 10px;
+          }
+        }
+        .pc-maxmin-btn {
+          position: absolute;
+          right: 0;
+          display: none;
+          padding: 5px;
+          z-index: 3;
+          .pc-control-btn {
+            background: $darkBlue;
+            color: $backgroundColor;
+            height: 40px;
+            width: 40px;
+            font-size: 30px;
+            border-radius: 40px;
+          }
+        }
+        &:hover {
+          .pc-maxmin-btn {
+            display: block;
+          }
+        }
+      }
+      .controllers {
+        padding: 5px;
+        display: flex;
+        justify-content: center;
+        position: absolute;
+        width: 100%;
+        bottom: 25px;
+        .pc-control-btn {
+          height: 40px;
+          width: 40px;
+          font-size: 27px;
+          border-radius: 40px;
+          color: $backgroundColor;
+          background: $darkBlue;
+          display: flex;
+          &.bg-red {
+            background: red;
+          }
+          &.active {
+            background: $backgroundColor;
+            color: $darkBlue;
+          }
+          &.record {
+            border-width: 2px;
+            border-style: solid;
+            animation: rotate 2s ease infinite;
+          }
+        }
+        button {
+          margin-left: 5px;
+        }
+      }
+      .pc-record-container {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 105px;
+        right: 0;
+        z-index: 5;
+        padding: 10px 5px;
+        .recorded-item {
+          color: $backgroundColor;
+          padding: 5px;
+          background: $skyBlueMain;
+          border-radius: 15px;
+          margin: 5px 0px;
+          &:hover {
+            cursor: pointer;
+            text-decoration: underline;
+          }
+        }
+      }
+    }
+    .incoming-call-screen {
+      margin: 1px;
+      height: 100%;
+      flex-direction: column;
+      overflow: hidden;
+      align-items: center;
+      justify-content: center;
+      background: #574e54;
+      .person-icon-container {
+        flex-direction: column;
+        .img-container {
+          height: 140px;
+          width: 140px;
+          border-radius: 50%;
+          overflow: hidden;
+          align-self: center;
+          border-width: 3px;
+          border-style: solid;
+          border-color: $backgroundColor;
+          animation: rotate 2s ease infinite;
+        }
+        .controllers {
+          padding: 10px 0px;
+          display: flex;
+          justify-content: space-around;
+        }
+      }
+    }
+    .outgoing-call-screen {
+      margin: 1px;
+      height: 100%;
+      flex-direction: column;
+      overflow: hidden;
+      align-items: center;
+      justify-content: center;
+      background: #574e54;
+      .person-icon-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+        .person-name-status {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          width: 100%;
+          margin: 5px;
+          .name {
+            color: $backgroundColor;
+            font-size: 22px;
+            font-weight: bold;
+          }
+          .status {
+            font-size: 12px;
+            color: $fadedBackground;
+          }
+        }
+        .icon-container {
+          margin-top: 5%;
+          border-color: $backgroundColor;
+          border-width: 3px;
+          border-style: solid;
+          padding: 0px 6px;
+          border-radius: 10px;
+          animation: rotate 2s ease infinite;
+        }
+        .img-container {
+          margin-top: 5%;
+          height: 140px;
+          width: 140px;
+          border-radius: 50%;
+          overflow: hidden;
+          align-self: center;
+          border-width: 3px;
+          border-style: solid;
+          border-color: $backgroundColor;
+          animation: rotate 2s ease infinite;
+        }
+        .controllers {
+          margin-top: 5%;
+          padding: 10px 0px;
+          display: flex;
+          justify-content: space-around;
+        }
+      }
+    }
+  }
+
+  @media screen and (max-width: 410px) {
+    .content .chat-list .last-text { max-width: 150px; }
+  }
+  @media screen and (min-width: 500px) and (max-width: 800px){
+    width: 60%;
+  }
+  @media screen and (min-width: 800px) and (max-width: 1000px){
+    width: 50%;
+  }
+  @media screen and (max-width: 500px){
+    width: 90%;
+    .content {
+      .call-screen {
+        .video-container {
+          .pc-maxmin-btn {
+            display: block;
+          }
+        }
+      }
+    }
+  }
+
+  &.pc-com-maximum {
+    width: 100%;
+    .content {
+      .call-screen {
+        .sc-chat-list {
+          width: 50%;
+        }
+        .sc-chat-history {
+          width: 50%;
+        }
+      }
+    }
+    @media screen and (max-width: 500px){
+      .content {
+        .call-screen {
+          .sc-chat-list {
+            width: 80%;
+          }
+          .sc-chat-history {
+            width: 80%;
+          }
+        }
+      }
+    }
+  }
+  @keyframes rotate {
+    0%   {border-color: #ff0000;}
+    10%  {border-color: #ff0080;}
+    20%  {border-color: #ff00ff;}
+    30% {border-color: #8000ff;}
+    40% {border-color: #0080ff;}
+    50% {border-color: #0000ff;}
+    60% {border-color: #00ffbf;}
+    70% {border-color: #00ff00;}
+    80% {border-color: #bfff00;}
+    90% {border-color: #ffff00;}
+    100% {border-color: #ff8000;}
+  }
+
+  @keyframes slideDown {
+    from { height: 75%; }
+    to { height: 40px; }
+  }
+
+  @keyframes slideUp {
+    from { height: 40px; }
+    to { height: 75%; }
+  }
+}

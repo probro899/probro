@@ -1,0 +1,109 @@
+@import './config.scss';
+
+.pc-pricing-plan {
+  margin-top: 100px;
+  padding-top: 40px;
+  min-height: calc(100vh - #{$navbarHeight} - #{$footerHeight});
+  .pc-price-header-wrapper {
+    text-align: center;
+    margin-bottom: 20px;
+    .pc-price-header {
+      @media screen and (max-width: 767px) {
+        display: none;
+      }
+    }
+
+    .pc-price-subheader {
+      color: $subHeadColor;
+      font-size: 16px;
+      font-weight: 600;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    @media screen and (min-width: 768px) {
+      margin-bottom: 50px;
+    }
+  }
+  .pc-cardlist-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-left: -15px;
+    margin-right: -15px;
+    margin-bottom: 20px;
+    @media screen and (min-width: 768px) {
+      margin-bottom: 50px;
+    }
+    .pc-price-card-wrapper {
+      padding-left: 15px;
+      padding-right: 15px;
+      margin-bottom: 30px;
+      .pc-price-containers {
+        @include genericBoxPattern;
+        border: 1px solid #bbb;
+        &:hover {
+          border-color: rgba(0, 86, 184, 0.5);
+        }
+        .pc-price-name-and-desc {
+          text-align: center;
+          h4 {
+            padding-top: 32px;
+            font-size: 32px;
+            font-weight: 600;
+            text-transform: capitalize;
+          }
+          p {
+            min-height: 68px;
+            min-width: 286px;
+            padding: 8px 32px 0;
+          }
+        }
+        .pc-plan-feature-list {
+          margin: 16px 0;
+          padding: 16px;
+          background-color: #fafbfc;
+          ul {
+            li {
+              display: flex;
+              margin: 4px;
+              img {
+                margin-right: 4px;
+                margin-top: 2px;
+                width: 15px;
+                height: 15px;
+              }
+              p {
+                font-size: 14px;
+              }
+            }
+          }
+        }
+        .pc-price-and-submit {
+          display: flex;
+          flex-direction: column;
+          margin-bottom: 8px;
+          .pc-plan-price {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            .pc-price {
+              font-size: 40px;
+              font-weight: 600;
+            }
+            .pc-plan-month-user {
+              margin-left: 8px;
+              font-weight: 600;
+            }
+          }
+          .pc-cta-btn {
+            margin: 8px;
+          }
+        }
+      }
+
+      @media screen and (min-width: 544px) {
+        max-width: 320px;
+      }
+    }
+  }
+}

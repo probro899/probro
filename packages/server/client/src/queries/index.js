@@ -39,8 +39,8 @@ query {
 `;
 
 export const GET_ARCHIVES = gql`
-query {
-  getArchive {
+query($sessionId: String) {
+  getArchive(sessionId: $sessionId) {
     basedOnHistory {
       blogs {
         id
@@ -138,8 +138,8 @@ query {
 `;
 
 export const DO_SEARCH = gql`
-query ($keyword: String,$country: String, $industry: String) {
-  doSearch(keyword: $keyword, country: $country, industry: $industry) {
+query ($keyword: String,$country: String, $industry: String, $skill: String, $sessionId: String) {
+  doSearch(keyword: $keyword, country: $country, industry: $industry, skill: $skill, sessionId: $sessionId) {
      blogs {
         id
         title
@@ -186,6 +186,19 @@ query ($keyword: String,$country: String, $industry: String) {
           image
           country
         }
+      }
+      popularUsers {
+        id
+        slug
+        firstName
+        middleName
+        lastName
+        userDetail {
+          id
+          image
+          country
+        }
+
       }
   }
 }
@@ -283,6 +296,13 @@ query ($userSlug: String!) {
     userSkill {
       id
       skill
+    }
+    blogs {
+      id
+      slug
+      title
+      coverImage
+      timeStamp
     }
   }
 }`;

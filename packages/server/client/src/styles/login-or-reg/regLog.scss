@@ -2,39 +2,77 @@
 
 // this is for the registration and login page only
 .o-log-or-reg {
-    display: flex;
-    justify-content: space-around;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 1140px;
+  margin: $navbarHeight auto 40px;
+  min-height: calc(100vh - 90px - 125px);
+  padding-top: 20px;
   .log-or-reg {
-    max-width: 40%;
-    @media screen and (max-width: 800px){
+    max-width: 450px;
+    width: 100%;
+    margin: 0 auto;
+    // background: #fff;
+    padding: 20px;
+    // border-radius: 10px;
+    @include genericBoxPattern;
+    // border: 1px solid #eee;
+    position: relative;
+    .btn-group {
+      margin-top: 40px !important;
+    }
+
+    @media screen and (max-width: 800px) {
       max-width: 90%;
     }
     .reg-box-header {
-      padding: 40px 10px 20px 10px;
-      p {
-        font-size: 34px;
+      // padding: 40px 10px 20px 10px;
+      h1 {
+        font-size: 24px;
         font-weight: 700;
+        margin-bottom: 10px;
       }
     }
     .auth-footer {
       padding: 0 0 0 10px;
+      .forgot-password {
+        position: absolute;
+        bottom: 42%;
+        right: 20px;
+      }
+      .register-link {
+        text-align: right;
+        a {
+          margin-left: 5px;
+        }
+      }
     }
     div div label {
-      padding: 10px 10px 10px 10px;
+      margin-bottom: 10px;
       .label-text {
         font-size: 18px;
         font-weight: 300;
       }
     }
-    div div .btn-group {
-      padding: 0 10px 0 10px;
+    .login-in-link {
+      text-align: right;
+      a {
+        margin-left: 5px;
+      }
     }
+    // div div .btn-group {
+    //   padding: 0 10px 0 10px;
+    // }
   }
   .auth-with-others {
-    padding: 0px 10px;
+    margin-bottom: 15px;
     button.google-default {
       width: 100%;
     }
   }
 }
 
+.bp3-input {
+  border-radius: 5px !important;
+}

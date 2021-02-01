@@ -14,7 +14,7 @@ import cors from 'cors';
 import run from 'app-node';
 import { Helmet } from 'react-helmet';
 import { Provider } from 'react-redux';
-import webConfig from './webConfig.json';
+import compression from 'compression';
 import { init as dbinit } from './server/src/db';
 import AppComponent from './client/src/App';
 import HTML from './client/src/renderer';
@@ -28,20 +28,23 @@ import { start } from './server/src/socket';
 import validateToken from './server/src/auth/validateToken';
 import { initUser } from './server/src/api';
 import client from './client/src/clientConfig';
+import { PORT as CPORT } from './client/src/config';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+if (typeof window === 'undefined') {
+  global.window = {};
+}
+
 app.use(
-  cors({
-    origin: `${webConfig.siteURL}`,
-    credentials: true,
-  })
+  cors()
 );
 
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: true, parameterLimit: 50000 }));
 app.use(bodyParser.json({ limit: '50mb', extended: true }));
 app.use(cookieParser());
+app.use(compression());
 
 app.use('/', express.static('build/public'));
 try {

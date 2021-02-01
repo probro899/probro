@@ -1,0 +1,177 @@
+@import '../config.scss';
+
+//generic button
+$primary: #0056b8; //#4f6df5  //#0056B8
+$warning: #ec971f;
+$danger: #c9302c;
+$success: #449d44;
+$white: #fdfdfd;
+$dark: #181717;
+
+.btn {
+  border-radius: 20px;
+  display: inline-block;
+  cursor: pointer;
+  position: relative;
+  transition: transform 0.3s ease;
+  font-size: 16px;
+  font-weight: 500;
+  font-family: 'Montserrat', sans-serif;
+  width: 100%;
+  height: 100%;
+  border: none;
+  span {
+    font-size: 16px;
+  }
+  .loader-wrapper {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    // .css-8f3tnb {
+    //   color: #fff;
+    // }
+  }
+  span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    svg {
+      margin-right: 5px;
+    }
+  }
+  // &:hover {
+  //   transform: translateY(-3px);
+  // }
+  &:disabled {
+    opacity: 0.3;
+    color: #666666;
+  }
+}
+
+.right {
+  span {
+    flex-direction: row-reverse;
+    svg {
+      margin-left: 5px;
+    }
+  }
+}
+.btn-drawing-icon {
+  background-color: transparent;
+  border: none;
+}
+.btn-drawing-icon-danger {
+  background-color: #c9302c;
+  border: none;
+  color: #fff;
+}
+.btn-drawing-icon-danger:disabled {
+  color: #fff;
+  cursor: not-allowed;
+}
+
+.btn--primary--solid {
+  background-color: $primary;
+  color: $white;
+  border: none;
+}
+
+.btn--warning--solid {
+  background-color: $warning;
+  color: $dark;
+  border: none;
+}
+.btn--success--solid {
+  background-color: $success;
+  color: $white;
+  border: none;
+}
+
+.btn--danger--solid {
+  background-color: $danger;
+  color: $white;
+  border: none;
+}
+.btn-circle {
+  background-color: transparent;
+  color: #286090;
+  border: 1px solid #286090;
+  &:hover {
+    background-color: $primary;
+    color: $white;
+  }
+  svg {
+    margin-right: 0 !important;
+  }
+}
+.btn--circle-icons {
+  border-radius: 50%;
+  height: 40px;
+  width: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: $white;
+  border: none;
+  background-color: $primary;
+}
+
+.btn--primary--outline {
+  background-color: transparent;
+  color: $primary;
+  // border: 1px solid $primary;
+  box-shadow: inset 0 0 0 1px $primary;
+  &:hover {
+    box-shadow: inset 0 0 0 1.3px $primary;
+  }
+}
+
+.btn--warning--outline {
+  background-color: transparent;
+  color: $warning;
+  box-shadow: inset 0 0 0 1px $warning;
+  &:hover {
+    box-shadow: inset 0 0 0 1.3px $warning;
+  }
+}
+.btn--success--outline {
+  background-color: transparent;
+  color: $success;
+  box-shadow: inset 0 0 0 1px $success;
+  &:hover {
+    box-shadow: inset 0 0 0 1.3px $success;
+  }
+}
+
+.btn--danger--outline {
+  background-color: transparent;
+  color: $danger;
+  box-shadow: inset 0 0 0 1px $danger;
+  &:hover {
+    box-shadow: inset 0 0 0 1.3px $danger;
+  }
+}
+
+.btn--small {
+  padding: 6px 12px;
+  font-size: 16px;
+}
+
+.btn--medium {
+  padding: 10px 20px;
+  font-size: 18px;
+  @media screen and (max-width: 767px) {
+    padding: 10px 15px;
+    font-size: 16px;
+  }
+}
+
+.btn--large {
+  padding: 15px 30px;
+  font-size: 20px;
+  @media screen and (max-width: 767px) {
+    padding: 10px 15px;
+    font-size: 16px;
+  }
+}

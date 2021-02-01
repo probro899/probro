@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import schema from '@probro/common/src/schema';
 import db from '../../../db';
 // eslint-disable-next-line import/no-cycle

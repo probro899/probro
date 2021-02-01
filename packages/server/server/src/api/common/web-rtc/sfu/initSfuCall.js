@@ -5,6 +5,7 @@ import { database, liveBoard } from '../../../../cache';
 import heartbitChecker from './sfuHeartbeater';
 
 export default async function initSfuCall(data) {
+  // console.log('Sfu init call handler called', data);
   try {
     const { session } = this;
     const { id, activeStatus, isCallUpgraded } = data;
@@ -19,7 +20,7 @@ export default async function initSfuCall(data) {
 
     if (!isCallUpgraded) {
       if (!liveBoard.getBoard(id)) {
-        liveBoard.setBoard(id, { users: { [activeStatus]: true }, heartbitChecker: setInterval(() => heartbitChecker(session, id), 60000) });
+        liveBoard.setBoard(id, { isFirstPing: true, status: 'ringing', users: { [activeStatus]: true }, heartbitChecker: setInterval(() => heartbitChecker(session, id), 5000) });
       }
       channel.emit('sfuInit', { boardId: id, userId: activeStatus });
     }

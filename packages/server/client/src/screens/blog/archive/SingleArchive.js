@@ -2,6 +2,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { ENDPOINT } from '../../../config';
+import { getName } from '../../../common/utility-functions';
+import {BiLike} from 'react-icons/bi';
+import {BiMessageRounded} from 'react-icons/bi';
 
 const SingleArchive = ({ obj }) => {
   const { user } = obj;
@@ -16,32 +19,33 @@ const SingleArchive = ({ obj }) => {
         />
       </div>
       <div className="ar-i-detail">
-        <Link to={`/blog/${user.slug}/${obj.slug}`} className="ar-i-title">
-          {obj.title}
-        </Link>
+        
         <p>
-          <span>Author: </span>
-          <Link to={`/user/${user.slug}/`}>
-            {
-              ` ${user.firstName} ${user.middleName ? `${user.middleName} ` : ''}${user.lastName}`
-            }
+          <span className="author"> </span>
+          <Link className="author-name" to={`/user/${user.slug}/`}>
+            {getName(user)}
           </Link>
           <br />
           <small className="pc-date">
             {new Date(parseInt(obj.timeStamp, 10)).toDateString()}
           </small>
         </p>
+
+        <Link to={`/blog/${user.slug}/${obj.slug}`} className="ar-i-title">
+          {obj.title}
+        </Link>  
+
         <p className="pc-blog-desc">
           {`${description} ...`}
         </p>
         <div className="ar-i-counts">
           <p className="label">
             <span className="count">{obj.blogComment.length}</span>
-            Comments
+            <BiMessageRounded/>
           </p>
           <p className="label">
             <span className="count">{obj.blogLike.length}</span>
-            Likes
+            <BiLike/>
           </p>
         </div>
       </div>

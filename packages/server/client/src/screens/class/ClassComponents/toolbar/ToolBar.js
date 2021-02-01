@@ -1,19 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Divider, Button, Tooltip } from '@blueprintjs/core';
+import { Divider } from '@blueprintjs/core';
 import { GoGraph } from 'react-icons/go';
 import * as actions from '../../../../actions';
 import UserList from './UserList';
 import AddUser from './add-user';
 import Report from '../../report';
+import { Button } from '../../../../common/utility-functions/Button/Button';
+import { Tooltip } from '../../../../common/Form/Tooltip';
+import { AiFillMessage } from "react-icons/ai";
 
 class ToolBar extends React.Component {
   state = { showReport: null };
-
-  componentWillReceiveProps(nextprops) {
-    // console.log('component will recieve props', nextprops);
-  }
 
   toggleAddUser = () => {
     const { addUser } = this.state;
@@ -57,7 +56,7 @@ class ToolBar extends React.Component {
     const extUser = Object.values(UserDetail.byId).find(obj => obj.userId === account.user.id);
     const board = Object.values(boards.byId).find(obj => obj.id === boardId);
     const { showReport } = this.state;
-    const classCreator = Object.values(boardMembers.byId).find(o => o.boardId === boardId && o.fuserId === o.tuserId);
+    // const classCreator = Object.values(boardMembers.byId).find(o => o.boardId === boardId && o.fuserId === o.tuserId);
     return (
       <div className="tool-bar">
         <Report isOpen={showReport} onClose={this.reportCloseHandler} boardId={boardId} {...this.props} boards={boards} apis={apis} users={users} />
@@ -68,44 +67,54 @@ class ToolBar extends React.Component {
             </div>
             <Divider />
             <UserList extUser={extUser} userList={users} boardId={boardId} boardMembers={boardMembers} apis={apis} account={account} />
+            <Divider />
           </div>
           <div className="right-tools">
             <Tooltip
-              content={<span style={{ color: '#1d4354' }}>Chat</span>}
+              content={<span>Add user to this class</span>}
             >
-              <Button
+              <AddUser
+                apis={apis}
+                users={database.User.byId}
+                connections={Object.values(database.UserConnection.byId)}
+                account={account}
+                boardId={boardId}
+              />
+            </Tooltip>
+            <Tooltip
+              content={<span>Chat</span>}
+            >
+              {/* <Button
                 minimal
                 icon="chat"
                 onClick={this.onChat}
+              /> */}
+              <Button
+                onClick={this.onChat}
+                icon={<AiFillMessage size={15} />}
+                type="button"
+                buttonStyle="btn-circle"
+                buttonSize="btn--small"
               />
             </Tooltip>
-            {extUser && (extUser.type === 'mentor' || extUser.userId === classCreator.fuserId) && (
-              <Tooltip
-                content={<span style={{ color: '#1d4354' }}>Add user to this class</span>}
+
+            <Tooltip
+              content={<span>Generate Report</span>}
+            >
+              {/* <Button
+                minimal
+                onClick={this.generateReportHandler}
               >
-                <AddUser
-                  apis={apis}
-                  users={database.User.byId}
-                  connections={Object.values(database.UserConnection.byId)}
-                  account={account}
-                  boardId={boardId}
-                />
-              </Tooltip>
-            )}
-            {
-              extUser && extUser.type === 'mentor' && (
-                <Tooltip
-                  content={<span style={{ color: '#1d4354' }}>Generate Report</span>}
-                >
-                  <Button
-                    minimal
-                    onClick={this.generateReportHandler}
-                  >
-                    <GoGraph size={20} />
-                  </Button>
-                </Tooltip>
-              )
-            }
+                <GoGraph size={20} />
+              </Button> */}
+              <Button
+                onClick={this.generateReportHandler}
+                icon={<GoGraph size={15} />}
+                type="button"
+                buttonStyle="btn-circle"
+                buttonSize="btn--small"
+              />
+            </Tooltip>
           </div>
         </div>
       </div>

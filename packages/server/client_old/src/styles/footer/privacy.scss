@@ -1,0 +1,17 @@
+@import '../config.scss';
+
+.pc-privacy {
+  margin-top: $navbarHeight;
+  min-height: calc(100vh - #{$navbarHeight} - #{$footerHeight});
+  .pc-privacy-content {
+    padding: 10px 10vw;
+    ul li {
+      margin-bottom: 5px;
+    }
+  }
+  @media screen and (max-width: 700px){
+    .pc-privacy-content {
+      padding: 10px 5vw;
+    }
+  }
+}

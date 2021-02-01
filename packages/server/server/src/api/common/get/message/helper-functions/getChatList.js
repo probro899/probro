@@ -26,6 +26,7 @@ export default function getChatlist() {
       boardMessageByBoardId = { ...boardMessageByBoardId, [bmg.boardId]: [bmg] };
     }
   });
+
   const moreUserDetails = Object.values(messageByConnectionId).map(arr => ({ ...findUserChatListDetails(arr, connectionList, userMessageSeenStatus, id) }));
   // console.log('moreUserDetails', moreUserDetails);
   const moreBoardDetails = Object.values(boardMessageByBoardId).map(arr => ({ ...findBoardMessageDetails(arr, allBoards, BoardMessageSeenStatus, id) }));
@@ -34,4 +35,4 @@ export default function getChatlist() {
   // console.log('moreDetails', moreDetails);
   const chatList = moreDetails.sort(timeStampSorting);
   return chatList;
-};
+}

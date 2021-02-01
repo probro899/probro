@@ -1,14 +1,41 @@
 @import '../config.scss';
 
-.pc-career {
+.pc-career-section {
   margin-top: $navbarHeight;
   min-height: calc(100vh - #{$navbarHeight} - #{$footerHeight});
-  .pc-career-content {
-    padding: 10px 10vw;
-  }
-  @media screen and (max-width: 700px){
-    .pc-career-content {
-      padding: 10px 5vw;
+  .pc-career-wrapper {
+    .pc-hero-section {
+      padding-top: 40px;
+      padding-bottom: 30px;
+      text-align: center;
+      .pc-hero-title {
+        margin-bottom: 15px;
+        h1 {
+          font-size: 56px;
+          line-height: 59px;
+        }
+      }
+      .pc-hero-subtitle {
+        margin-bottom: 15px;
+        p {
+          font-size: 26px;
+          line-height: 34px;
+          color: $subHeadColor;
+        }
+      }
+      .pc-current-opening-button {
+        max-width: 250px;
+        margin: 0 auto;
+      }
+    }
+    .pc-career {
+      .pc-career-content {
+        text-align: center;
+        p {
+          font-size: 20px;
+          color: $subHeadColor;
+        }
+      }
     }
   }
 }

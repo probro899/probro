@@ -20,6 +20,7 @@ const Posts = (props) => {
     </Card>
   );
 };
+
 Posts.propTypes = {
   post: PropTypes.objectOf(PropTypes.any).isRequired,
 };

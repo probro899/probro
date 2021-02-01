@@ -53,7 +53,7 @@ const CountrySchema = [
   {
     id: 'country',
     fieldtype: 'select',
-    options: [{ label: '---', value: '' }],
+    options: [{ label: '---', value: null }],
     name: 'Country',
     placeholder: '',
     required: true,
@@ -93,4 +93,23 @@ const GenderSchema = [
   },
 ];
 
-export { NameSchema, GenderSchema, AddressSchema, CountrySchema };
+const HeadlineSchema = [
+  {
+    id: 'headline',
+    fieldtype: 'input',
+    name: 'Headline',
+    placeholder: 'Eg. Software Developer',
+    required: true,
+  },
+  {
+    id: 'submit',
+    fieldtype: 'button',
+    text: 'Submit',
+    type: 'submit',
+    fill: 'fill',
+    intent: 'primary',
+    large: 'large',
+  },
+];
+
+export { NameSchema, GenderSchema, AddressSchema, CountrySchema, HeadlineSchema };

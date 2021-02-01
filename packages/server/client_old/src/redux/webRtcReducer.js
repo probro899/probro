@@ -1,0 +1,41 @@
+import { UPDATE_WEBRTC } from '../actions/types';
+
+const initialState = {
+  localCallHistory: {},
+  showCommunication: null,
+  showIncommingCall: false,
+  minimize: false,
+  showOutgoingCall: false,
+  isConnecting: false,
+  communicationContainer: 'list',
+  peerType: '',
+  connectionId: null,
+  outGoingCallType: null,
+  messages: [],
+  peerConnections: {},
+  pendingOffers: {},
+  streams: {},
+  connectedUsers: {},
+  currentOffer: null,
+  iceCandidates: {},
+  liveIncomingCall: false,
+  isLive: false,
+  mediaRecording: null,
+  recordedBlobs: [],
+  lastStreamId: null,
+  chatHistoryType: null,
+  fetchedApisRes: [],
+  reportedError: [],
+};
+
+export default (state = initialState, action) => {
+  switch (action.type) {
+    case UPDATE_WEBRTC:
+      return {
+        ...state,
+        [action.schema]: action.payload,
+      };
+    default:
+      return state;
+  }
+};

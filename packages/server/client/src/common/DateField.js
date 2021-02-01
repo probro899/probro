@@ -1,40 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Label, Icon } from '@blueprintjs/core';
-import { DateInput } from '@blueprintjs/datetime';
+import DateTime from 'react-datetime';
 
-const calendarIcon = () => (
-  <Icon
-    icon="calendar"
-    intent="primary"
-  />
-);
-
-class DateField extends React.Component {
-  state = {};
-
-  render() {
-    const { data, onChange, value } = this.props;
-    return (
-      <Label>
-        <span className="label-text">{data.name}</span>
-        {data.required && <span style={{ color: 'red' }}> *</span>}
-        <DateInput
-          className="pc-date-picker"
-          formatDate={date => date.toLocaleDateString()}
-          parseDate={str => new Date(str)}
-          placeholder="MM/DD/YYYY"
-          maxDate={new Date(2030, 12, 30)}
-          onChange={e => onChange(data.id, e)}
-          value={value}
-          closeOnSelection
-          popoverProps={{ usePortal: false }}
-          rightElement={calendarIcon()}
-          {...data}
-        />
-      </Label>
-    );
-  }
+const DateField = (props) => {
+  const { data, onChange, value } = props;
+  return (
+    <div style={{ display: data.hidden ? 'none' : 'block' }} className="date-field">
+      <span className="label-text">{data.name}</span>
+      {data.required && <span style={{ color: 'red' }}> *</span>}
+      <DateTime
+        dateFormat="MMM DD, YYYY"
+        value={value}
+        onChange={(e) => onChange(data.id, e.toDate())}
+        timeFormat={false}
+      />
+    </div>
+  );
 }
 DateField.defaultProps = {
   value: new Date(),

@@ -1,8 +1,10 @@
 import forgot from '../../auth/forgot';
 
 export default async function (req, res) {
+
   try {
-    const { email } = req.query;
+    const { email } = req.body;
+    // console.log('email in forgot password', email);
     const forgotRes = await forgot(email);
     if (forgotRes) {
       res.statusCode = 200;

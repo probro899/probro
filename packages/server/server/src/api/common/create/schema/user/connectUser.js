@@ -43,6 +43,8 @@ async function connectUser(record) {
     };
     updateUserCache(dataToBeUpdate, remoteUserSession, 'add');
     sendNotification(this, emailObj, notiData, [remoteUserSession]);
+  } else {
+    sendNotification(this, emailObj, notiData);
   }
 
   const tuserDetailsRes = await findUserDetails(tUserDetails.id);

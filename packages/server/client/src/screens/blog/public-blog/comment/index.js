@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { MdSend } from 'react-icons/md';
-import { TextArea, Button } from '@blueprintjs/core';
+import { TextArea } from '@blueprintjs/core';
+import { BiComment, BiLike } from 'react-icons/bi';
 import Comment from './Comment';
 import { DeletePopOver } from '../../../../common';
 import { RoundPicture } from '../../../../components';
 import { ENDPOINT } from '../../../../config';
+import { Button } from '../../../../common/utility-functions/Button/Button'
 
 class CommentContainer extends React.Component {
   state = {
@@ -95,12 +96,6 @@ class CommentContainer extends React.Component {
     }
   }
 
-  replyComment = (comment) => {
-    const { users } = this.props;
-    const user = users.find(obj => obj.user.id === comment.userId);
-    this.setState({ comment: `@${user.user.firstName}` });
-  }
-
   toggleDelete = (comment) => {
     const { deletePopover } = this.state;
     this.setState({
@@ -179,62 +174,93 @@ class CommentContainer extends React.Component {
       deletePopover,
     } = this.state;
     const { users, imgUrl, account } = this.props;
-    // console.log('all likes', allLikes);
+    // console.log('all likes', allLikes, allComments);
     const totalLikes = allLikes.filter(l => l.likeType === 'like').length;
-    let isLike = false;
+    let isLiked = false;
     if (liked) {
       if (liked.likeType === 'like') {
-        isLike = true;
+        isLiked = true;
       }
     }
+    console.log("liked object", liked);
     const image = (account.user && account.user.userDetails.image) ? `${ENDPOINT}/assets/user/${10000000 + parseInt(account.user.id, 10)}/profile/${account.user.userDetails.image}` : '/assets/icons/64w/uploadicon64.png';
     return (
       <div className="response">
         <div className="left" />
         <div className="comment-section">
-          <div>
-            {account.user && (
-              <Button
-                intent={isLike ? 'primary' : 'none'}
-                text={isLike ? 'Liked' : 'Like'}
-                icon="thumbs-up"
-                onClick={this.likeBlog}
-              />
-            )}
-            <span>
-              {` ${totalLikes} Likes`}
-            </span>
-          </div>
-          { account.user && (
-            <div className="top-label">
-              <h1>Comment here</h1>
+          <div className="top-label">
+            {account.user && <h1>Leave a response</h1>}
+
+            <div className="reaction-section">
+              {account.user ? (
+                <button
+                  style={{ cursor: 'pointer' }}
+                  className='thumbs-up-btn'
+                  onClick={this.likeBlog}
+                >
+                  <BiLike color={isLiked ? "#175fc7" : "black"} />
+                </button>
+              ) : <button className='thumbs-up-btn'><BiLike color="black" /></button>}
+              <span>
+                {` ${totalLikes} Likes`}
+              </span>
+
+              <div style={{ display: 'flex', alignItems: 'center' }}>
+                <BiComment className="comment-icon" />
+                <span>
+                  {allComments.length} comments
+                </span>
+              </div>
             </div>
-          )}
+
+          </div>
           {account.user && (
             <div className="comment-area">
               <div className="profile-icon">
                 <RoundPicture imgUrl={image} />
               </div>
               <TextArea
+                style={{
+                  width: '100%'
+                }}
+                className="com-input"
                 placeholder="Write your thoughts on this..."
                 onChange={this.setComment}
                 value={comment}
-              />
-              <Button
-                intent="primary"
-                fill
-                onClick={this.submitComment}
               >
-                <MdSend size={30} />
-              </Button>
+              </TextArea>
+            </div>
+
+          )}
+          {account.user && (
+            <div className="cmt-btn-wrapper">
+              <div className='post-btn'>
+                {/* <button
+              className='comment-btn'
+              onClick={this.submitComment}
+            >
+              Post
+            </button> */}
+                <Button
+                  onClick={this.submitComment}
+                  type="button"
+                  buttonStyle="btn--primary--solid"
+                  buttonSize="btn--medium"
+                  loading={false}
+                  disabled={false}
+                  title="Post"
+                // iconPosition="left"
+                // icon={<FaBeer />}
+                />
+              </div>
             </div>
           )}
           <div className="responses">
             <div className="res-label">
-              <h3>Responses</h3>
+              <h3><span style={{ color: 'black', marginRight: '1px' }}></span>Responses</h3>
             </div>
             {allComments.map((obj) => {
-              return <Comment deleteComment={this.toggleDelete} replyComment={this.replyComment} saveComment={this.saveEditedComment} user={obj.user} account={account} comment={obj} key={obj.id} />;
+              return <Comment deleteComment={this.toggleDelete} saveComment={this.saveEditedComment} user={obj.user} account={account} comment={obj} key={obj.id} />;
             })}
             <DeletePopOver isOpen={deletePopover} name="Comment" action={this.deleteComment} />
           </div>

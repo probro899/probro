@@ -1,10 +1,11 @@
 /* eslint-disable no-console */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Switch } from '@blueprintjs/core';
-
+import { SwitchButton } from '../../../common/Form/SwitchButton';
+import Organization from './organization';
+import OrganizationDashboard from '../organizationDashboard/index';
 class AdvancedSettings extends React.Component {
-  state={
+  state = {
     mentor: false,
   };
 
@@ -37,37 +38,22 @@ class AdvancedSettings extends React.Component {
   }
 
   render() {
+    const { apis } = this.props;
     const { mentor } = this.state;
     return (
       <div className="container-settings">
         <div className="switch-adv-con">
-          {
-            mentor ? (
-              <p>
-                You are a Mentor
-                <br />
-                Help people learn with your knowledge base.
-                <br />
-                Be a part to educate the world.
-              </p>
-            ) : (
-              <p>
-                Change your profile to Mentor
-                <br />
-                and help people learn with your knowledge base.
-                <br />
-                Be a part to educate the world.
-              </p>
-            )
-          }
-          <Switch
-            onChange={this.switchUser}
-            className="switch-button"
-            checked={mentor}
-            large
-            innerLabel="Mentor"
-          />
+          <h3>Account Type:</h3>
+          <div className="pc-switch-wrapper">
+            <p>Mentor Account</p>
+            <SwitchButton
+              onChange={this.switchUser}
+              checked={mentor}
+            />
+          </div>
         </div>
+        <Organization apis={apis} />
+        <OrganizationDashboard />
       </div>
     );
   }

@@ -2,15 +2,17 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { Button } from '@blueprintjs/core';
+// import { Button } from '@blueprintjs/core';
 import * as actions from '../../actions';
 import { DeletePopOver } from '../../common';
 import boardStructure from './ClassComponents/structure';
 import client from '../../socket';
 import { PopoverForm, MoreButton } from '../../components';
-import ClassTemplate from './template/ClassTemplate';
-import getName from '../../common/utility-functions/getName';
-
+// import ClassTemplate from './template/ClassTemplate';
+import { timeStampSorting, activitySorting, getName } from '../../common/utility-functions';
+import { Button } from '../../common/utility-functions/Button/Button';
+import { AiOutlinePlus, AiOutlineArrowRight } from "react-icons/ai";
+// import { Popover } from '../../common/Form/Popover';
 class Class extends Component {
   state = {
     // create holds bool for the add new class popover
@@ -30,23 +32,17 @@ class Class extends Component {
   // create new class from here
   createNewClass = async (arg) => {
     const data = arg;
-    const { account, addDatabaseSchema } = this.props;
+    const { account, addDatabaseSchema, database } = this.props;
     const { api } = this.state;
     data.userId = account.user.id;
     data.timeStamp = Date.now();
     try {
       const res = await api.addBoard(data);
-      addDatabaseSchema('Board', { ...data, type: 'private', id: res.boardId, user: { user: account.user, userDetail: account.user.userDetails }});
-      addDatabaseSchema('BoardMember', {
-        id: res.boardMemberId,
-        boardId: res.boardId,
-        tuserId: account.user.id,
-        fuserId: account.user.id,
-        joinStatus: 1,
-        timeStamp: Date.now(),
-        userType: 'creator',
-        user: { user: account.user, userDetail: account.user.userDetails },
-      });
+      let user = Object.values(database.User.byId).find(obj => obj.id === account.user.id);
+      data.user = { user };
+      data.lastActivity = Date.now();
+      addDatabaseSchema('Board', { ...data, type: 'private', id: res.boardId });
+      addDatabaseSchema('BoardMember', { id: res.boardMemberId, boardId: res.boardId, tuserId: account.user.id, fuserId: account.user.id, joinStatus: 1, timeStamp: Date.now(), userType: 'creator' });
     } catch (e) {
       return { response: 404 };
     }
@@ -138,10 +134,16 @@ class Class extends Component {
     });
   }
 
+  getRecentClassrooms = () => {
+    const { database } = this.props;
+    const privateBoards = Object.values(database.Board.byId).filter(o => o.type === 'private').sort(activitySorting);
+    console.log("private classes", privateBoards);
+    return privateBoards.slice(0, 3);
+  }
+
   render() {
     const { account, database } = this.props;
     const { createBool, deleteClass, updateClass } = this.state;
-    // console.log('props In class', this.props);
     return (
       <div className="classes bro-right">
         <DeletePopOver
@@ -149,64 +151,129 @@ class Class extends Component {
           action={this.deleteClass}
           name={deleteClass.name}
         />
-        <div className="header">
-          <span className="title">Classrooms </span>
-          <small>Your classrooms</small>
-        </div>
-        <div className="content-list">
-          {
-            Object.values(database.Board.byId).filter(o => o.type === 'private').map((obj, index) => {
-              const { user } = obj;
-              const len = obj.name.length > 30;
-              const name = len ? obj.name.substring(0, 29) : obj.name;
-              return (
-                // eslint-disable-next-line react/no-array-index-key
-                <div style={{ position: 'relative' }} key={index}>
-                  {/* more button popover */}
-                  <MoreButton onMore={this.onMore} id={obj.id} />
-                  <Link to={`/class-work/${account.user.slug}/${obj.id}`} className="content-link">
-                    <div className="class-repr">
-                      <span>
-                        {name}
-                      </span>
-                    </div>
-                    <div className="class-detail">
-                      <span className="name">
-                        {getName(user.user)}
-                      </span>
-                      <span className="date">{new Date(obj.timeStamp).toDateString()}</span>
-                    </div>
-                  </Link>
-                </div>
-              );
-            })
-          }
-          {/* this is add new board button down from here */}
-          <div
-            className="content-link add-new"
-          >
-            <Button
-              intent="primary"
-              icon="plus"
-              onClick={this.newClass}
-              text="Add New"
-            />
+        <div className="class-m-wrapper">
+          <div className="header">
+            <div className="title-header">
+              <span className="title">Classrooms </span>
+              <small>Your classrooms</small>
+            </div>
+            <div className="add-new-class">
+              <Button
+                onClick={this.newClass}
+                type="button"
+                buttonStyle="btn--primary--solid"
+                buttonSize="btn--small"
+                loading={false}
+                disabled={false}
+                title="Add new"
+                icon={<AiOutlinePlus />}
+              />
+            </div>
           </div>
+          <div className="content-list">
+            <div className="pc-classroom pc-recent-class">
+              <h2 className="pc-activity">Recent Classrooms</h2>
+              <ol>
+                {this.getRecentClassrooms().map(obj => {
+                  return (
+                    <li className="pc-class-card">
+                      <Link to={`/classroom/${account.user.slug}/${obj.id}`} className="content-link">
+                        <div className="pc-card-content pc-latest-activity">
+                          <div className="pc-latest-left">
+                            <div className="pc-card-header">
+                              <span>
+                                <img src="/assets/graphics/classroom.svg" alt="classroom logo" />
+                                <h3 className="pc-class-subhead">ClassRoom</h3>
+                              </span>
+                              <h4 className="pc-class-title">{obj.name}</h4>
+                            </div>
+                            <div className="pc-card-summary">
+                              <span className="pc-author">{getName(obj.user.user)}</span>
+                              <span className="pc-date">{new Date(obj.timeStamp).toDateString()}</span>
+                            </div>
+                          </div>
+                          <div className="pc-latest-right">
+                            <div className="pc-card-action">
+                              <Button
+                                // onClick={() => { }}
+                                type="button"
+                                buttonStyle="btn--primary--solid"
+                                buttonSize="btn--medium"
+                                title="Continue"
+                                iconPosition="right"
+                                icon={<AiOutlineArrowRight />}
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      </Link>
+                    </li>
+                  );
+                })}
+              </ol>
+            </div>
+            <div className="pc-classroom">
+              <h2 className="pc-activity">All Classrooms</h2>
+              <ol>
+                {
+                 Object.values(database.Board.byId).filter(o => o.type === 'private').sort(timeStampSorting).map((obj, index) => {
+                    return (
+                      // eslint-disable-next-line react/no-array-index-key
+                      <>
+                        <li className="pc-class-card" key={index}>
+                          <MoreButton onMore={this.onMore} id={obj.id} />
+                          <Link to={`/classroom/${account.user.slug}/${obj.id}`} className="content-link">
+                            <div className="pc-card-content">
+                              <div className="pc-latest-left">
+                                <div className="pc-card-header">
+                                  <span>
+                                    <img src="/assets/graphics/classroom.svg" alt="classroom logo" />
+                                    <h3 className="pc-class-subhead">ClassRoom</h3>
+                                  </span>
+                                  <h4 className="pc-class-title">{obj.name}</h4>
+                                </div>
+                                <div className="pc-card-summary">
+                                  <span className="pc-author">{getName(obj.user.user)}</span>
+                                  <span className="pc-date">{new Date(obj.timeStamp).toDateString()}</span>
+                                </div>
+                              </div>
+                              <div className="pc-latest-right">
+                                <div className="pc-card-action">
+                                  <span></span>
+                                  <Button
+                                    // onClick={() => { }}
+                                    type="button"
+                                    buttonStyle="btn--primary--outline"
+                                    buttonSize="btn--medium"
+                                    title="Classroom"
+                                    iconPosition="right"
+                                    icon={<AiOutlineArrowRight />}
+                                  />
+                                </div>
+                              </div>
+                            </div>
+                          </Link>
+                        </li>
+                      </>
+                    );
+                  })
+                }
+              </ol>
+            </div>
+          </div>
+          <PopoverForm
+            isOpen={createBool}
+            onClose={this.newClass}
+            callback={this.createNewClass}
+            structure={boardStructure}
+          />
+          <PopoverForm
+            isOpen={updateClass.updateClassBool}
+            onClose={this.cancleUpdate}
+            callback={this.updateClass}
+            structure={boardStructure}
+          />
         </div>
-        {/* create new class popover */}
-        <ClassTemplate data={{ classes: Object.values(database.Board.byId).filter(obj => obj.type === 'template'), users: database.User.byId }} />
-        <PopoverForm
-          isOpen={createBool}
-          onClose={this.newClass}
-          callback={this.createNewClass}
-          structure={boardStructure}
-        />
-        <PopoverForm
-          isOpen={updateClass.updateClassBool}
-          onClose={this.cancleUpdate}
-          callback={this.updateClass}
-          structure={boardStructure}
-        />
       </div>
     );
   }

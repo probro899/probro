@@ -8,6 +8,7 @@ import onRemoteStreamHandler from './onRemoteStreamHandler';
 import onDataChannelAvailable from './onDataChannelAvailable';
 import onDataHandler from './onDataHandler';
 import exceptionHandler from './exceptionHandler';
+import userRegistration from './userRegistration';
 
 export default async (props) => {
   const { updateWebRtc } = props;
@@ -27,8 +28,9 @@ export default async (props) => {
   const userId = account.user.id;
   if (oneToOneCall) {
     const updatedWebRtc = store.getState().webRtc;
-    oneToOneCall.send({ message: { request: 'register', username: `${userId}` } });
+    // oneToOneCall.send({ message: { request: 'register', username: `${userId}` } });
     await updateWebRtc('janus', { ...updatedWebRtc.janus, oneToOneCall });
+    userRegistration(props);
   }
   if (error) {
     exceptionHandler({ error: JSON.stringify(error), errorCode: 141 });

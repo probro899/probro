@@ -4,9 +4,7 @@ import PropTypes from 'prop-types';
 import { Icon, Popover, MenuItem, Menu } from '@blueprintjs/core';
 import { ENDPOINT } from '../../../../config';
 import Cropper from './Cropper';
-// import '../../../../../../../node_modules/croppie/croppie.css';
-
-// const defaultCover = require('../../../../assets/default-cover.jpg');
+import { Spinner } from '../../../../common';
 
 const SmallMenu = (onClick, userDetail) => (
   <Menu>
@@ -26,7 +24,7 @@ const SmallMenu = (onClick, userDetail) => (
 class CoverPic extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { drag: false };
+    this.state = { drag: false, loading: false };
     this.fileInputRef = React.createRef();
   }
 
@@ -49,6 +47,7 @@ class CoverPic extends React.Component {
       updateDatabaseSchema,
       addDatabaseSchema,
     } = this.props;
+    this.setState({ loading: true });
     const formData = new FormData();
     formData.append('data', JSON.stringify({ token: account.sessionId, fileType: 'image', content: 'profile' }));
     formData.append('file', e.target.files[0]);
@@ -83,6 +82,7 @@ class CoverPic extends React.Component {
             coverEdit: null,
           });
         }
+        this.setState({ loading: false });
       }
     } catch (err) {
       console.log(err);
@@ -91,7 +91,7 @@ class CoverPic extends React.Component {
 
   render() {
     const { userDetail, account, updateDatabaseSchema, apis } = this.props;
-    const { drag } = this.state;
+    const { drag, loading } = this.state;
     const imgUrl = userDetail.coverImage ? `${ENDPOINT}/assets/user/${10000000 + parseInt(account.user.id, 10)}/profile/${userDetail.coverImage}` : '/assets/graphics/default-cover.jpg';
     const editCoverUrl = userDetail.coverEdit && `${ENDPOINT}/assets/user/${10000000 + parseInt(account.user.id, 10)}/profile/${userDetail.coverEdit}`;
     if (!drag) {
@@ -104,10 +104,11 @@ class CoverPic extends React.Component {
               )
           }
           <div className="edit-cover">
+            {loading && <Spinner style={{ left: 0, top: 0, height: '100%', zIndex: 3 }} />}
             <Popover
               content={SmallMenu(this.clickEditCover, userDetail)}
             >
-              <div>
+              <div style={{ position: 'relative' }}>
                 <span>Edit </span>
                 <Icon icon="edit" color="white" className="edit-icon" />
                 <input

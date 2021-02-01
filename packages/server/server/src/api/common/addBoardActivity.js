@@ -1,3 +1,4 @@
+/* eslint-disable import/no-cycle */
 import sendNotificationHelper from './sendNotificationHelper';
 import { globalAgent } from 'http';
 

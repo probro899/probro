@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link, Redirect } from 'react-router-dom';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 import PropTypes from 'prop-types';
-import { Menu, MenuItem, Intent, Icon } from '@blueprintjs/core';
+import { Menu, MenuItem, Icon } from '@blueprintjs/core';
 import MetaTags from 'react-meta-tags';
 import client from '../../../../socket';
 import * as actions from '../../../../actions';
@@ -13,23 +14,41 @@ import SmallScreenMenu from './SmallScreenMenu';
 import { ENDPOINT } from '../../../../config';
 import DashboardMenu from './DashboardMenu';
 import callClosehandler from '../../../../communication/helper-functions/webrtc/mesh/closeHandler';
+import { Button } from '../../../../common/utility-functions/Button/Button';
 
 const DropDownMenu = (onclick, logoutAction, loading, account) => {
   return (
-    <Menu>
+    <Menu
+      style={{
+        width: '100px'
+      }}
+    >
       <MenuItem
+        style={{
+
+          fontSize: '12px',
+          marginBottom: '5px',
+          backgroundColor: '#175fc7'
+        }}
+        // className="dashboard-menu-items"
         icon="dashboard"
         active
-        intent={Intent.PRIMARY}
-        text="Goto Dashboard"
+        // intent={Intent.PRIMARY}
+        text="Go To Dashboard"
         onClick={onclick}
         disabled={!account.user}
+
       />
       <MenuItem
+        style={{
+
+          fontSize: '12px',
+
+        }}
         disabled={loading || !account.user}
         icon="log-out"
-        intent={Intent.DANGER}
-        text="Logout"
+        // intent={Intent.DANGER}
+        text="Log Out"
         onClick={logoutAction}
       />
     </Menu>
@@ -123,6 +142,7 @@ class Navbar extends Component {
   }
 
   render() {
+    // console.log('navbar called', this.props)
     const {
       account, database, navigate, className,
       updateWebRtc,
@@ -133,8 +153,10 @@ class Navbar extends Component {
       profilePic = profile && profile.image ? `${ENDPOINT}/assets/user/${10000000 + parseInt(profile.userId, 10)}/profile/${profile.image}` : null;
     }
     const { apis, unreadNotis, lastNotifId, redirectDashboard, unreadMessage, loading, smallScreen, msgSound, notiSound } = this.state;
+    // console.log('navigation', navigate.mainNav);
     return (
       <div className={`navbar ${className}`}>
+        {/* <div>hlw test</div> */}
         {this.getMetaTags()}
         {redirectDashboard && <Redirect exact push to={`/dashboard/${account.user.slug}`} />}
         <div className="navbar-left">
@@ -143,9 +165,11 @@ class Navbar extends Component {
             className={navigate.mainNav.name === 'properClass' ? 'active' : null}
           >
             <div className="navbar-item" style={{ padding: '0px 5px' }}>
-              <img width={200} alt="Proper Class Logo" src="/assets/graphics/logo.png" />
+              <LazyLoadImage width={200} alt="Proper Class Logo" src="/assets/graphics/realLogo.png" />
             </div>
           </Link>
+        </div>
+        <div className="navbar-center">
           <Link
             to="/archive"
             className={navigate.mainNav.name === 'archive' ? 'active' : null}
@@ -166,45 +190,68 @@ class Navbar extends Component {
               </span>
             </div>
           </Link>
+          <Link
+            to="/pricing"
+            className={navigate.mainNav.name === 'pricing' ? 'active' : null}
+          >
+            <div className="navbar-item">
+              <span>
+                Pricing
+              </span>
+            </div>
+          </Link>
         </div>
-        <div className="navbar-more-container">
-          <Icon icon="menu" className="more-icon" onClick={this.toggleSmallScreen} />
-          <SmallScreenMenu
-            smallScreenToggle={this.toggleSmallScreen}
-            open={smallScreen}
-            account={account}
-            apis={apis}
-            pcLogo='/assets/graphics/logo.png'
-          />
-        </div>
+
         <div className="navbar-right">
-          {/* Notifications in navigation */}
-          {account.sessionId
-            && (
-            <MessageNotification
+
+          <Icon icon="menu" height='40' width='40' className="more-icon" onClick={this.toggleSmallScreen} />
+
+          <div className="right-most-elements">
+            <SmallScreenMenu
+              smallScreenToggle={this.toggleSmallScreen}
+              open={smallScreen}
               account={account}
-              unreadMessage={unreadMessage}
-              database={database}
-              updateWebRtc={updateWebRtc}
-              msgSound={msgSound}
+              apis={apis}
+              pcLogo='/assets/graphics/realLogo.png'
             />
-            )}
-          {account.sessionId && <Notifications notiSound={notiSound} notiNo={unreadNotis} lastNotifId={lastNotifId} {...this.props} apis={apis} />}
-          { account.sessionId
-            ? <DashboardMenu navigate={navigate} profilePic={profilePic} content={DropDownMenu(this.onClickHandler, this.logoutAction, loading, account)} />
-            : (
-              <Link
-                to="/login"
-                className={navigate.mainNav.name === 'login' ? 'active' : null}
-              >
-                <div className="navbar-item">
-                  <span>Login</span>
-                </div>
-              </Link>
-            )
-          }
+
+            {/* Notifications in navigation */}
+            {account.sessionId
+              && (
+                <MessageNotification
+                  account={account}
+                  unreadMessage={unreadMessage}
+                  database={database}
+                  updateWebRtc={updateWebRtc}
+                  msgSound={msgSound}
+                />
+              )}
+            {account.sessionId && <Notifications notiSound={notiSound} notiNo={unreadNotis} lastNotifId={lastNotifId} {...this.props} apis={apis} />}
+            {account.sessionId
+              ? <DashboardMenu navigate={navigate} profilePic={profilePic} content={DropDownMenu(this.onClickHandler, this.logoutAction, loading, account)} />
+              : (
+                <Link
+                  to="/login"
+                  className={navigate.mainNav.name === 'login' ? 'active' : null}
+                >
+                  {/* <div className="navbar-item no-right-margin">
+                    <span className="login-btn">Login</span>
+                  </div> */}
+                  <Button
+                    onClick={() => { }}
+                    type="button"
+                    buttonStyle="btn--primary--solid"
+                    buttonSize="btn--medium"
+                    title="Login"
+                  // iconPosition="left"
+                  // icon={<FaBeer />}
+                  />
+                </Link>
+              )
+            }
+          </div>
         </div>
-      </div>
+      </div >
     );
   }
 }

@@ -10,7 +10,8 @@ export default async (props, state, msg, jsep) => {
     const { webRtc, database, account } = store.getState();
     const { apis, showIncommingCall } = webRtc;
     const { result } = msg;
-    const userId = parseInt(result.username, 10);
+    const userId = parseInt(result.username.split('_')[0], 10);
+
     let connectionId;
     const isFind = Object.values(database.UserConnection.byId).find(c => c.mId === account.user.id && c.userId === userId);
     if (isFind) {

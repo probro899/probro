@@ -7,32 +7,57 @@
   position: relative;
   width: 100%;
   overflow: hidden;
+  .pc-profile-wrapper {
+    max-width: 1024px;
+    width: 100%;
+    margin: 0 auto;
+  }
   .cover-pic {
-    position: relative;
+    // position: relative;
+    // overflow: hidden;
+    // width: 100%;
+    // to prevent overflow of unedited cover
+    // height: calc((100vw * 0.81) * 0.33);
     overflow: hidden;
     width: 100%;
-    // to prevent overflow of unedited cover
-    height: calc((100vw * 0.81) * 0.33);
-    @media screen and (max-width: 855px) {
-      height: calc(100vw * 0.33);
-    }
+    position: relative;
+    padding-bottom: 30%;
+    z-index: 1;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+    // @media screen and (max-width: 855px) {
+    //   height: calc(100vw * 0.33);
+    // }
     img {
+      display: block;
+      position: absolute;
+      top: 0;
+      left: 0;
       width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
     .edit-cover {
-      padding: 5px;
+      padding: 5px 10px;
       position: absolute;
       z-index: 1;
-      bottom: 0;
-      right: 0;
-      color: $backgroundColor;
+      bottom: 20px;
+      right: 10px;
+      color: black;
+      background-color: white;
+      border-radius: 5px;
+      svg {
+        fill: $darkBlue;
+      }
       .edit-icon {
         vertical-align: text-top;
+        color: black;
       }
+
       &:hover {
         text-decoration: underline;
         cursor: pointer;
-        color: $darkBlue;
+        color: black;
         svg {
           fill: $darkBlue;
         }
@@ -82,166 +107,255 @@
       bottom: 10px;
     }
   }
-  .profilePic {
-    position: absolute;
-    left: 10px;
-    border: 1px solid $normalBorder;
-    box-shadow: 0px 0px 5px 1px $normalShadowColor;
-    border-radius: 50%;
-    width: calc((100vw * 0.81 * 0.33) * 0.55);
-    height: calc((100vw * 0.81 * 0.33) * 0.55);
-    overflow: hidden;
-    top: calc((100vw * 0.81) * 0.33 * 0.4);
-    .image-upload-icon {
-      position: absolute;
-      bottom: 30%;
-      right: 4%;
-      svg {
-        border-radius: 50%;
-        background-color: $primary;
-      }
-    }
-    @media screen and (max-width: 855px) {
-      top: calc(100vw * 0.33 * 0.4);
-      left: 20px;
-      width: calc((100vw * 0.33) * 0.55);
-      height: calc((100vw * 0.33) * 0.55);
-    }
-  }
-  .top-details {
-    width: 100%;
-    background: white;
-    padding: 5px;
-    .name {
-      font-size: 20px;
-      font-weight: bold;
-    }
-  }
-  .bio {
-    width: 100%;
-    padding: 20px 5px;
-    .bio-content {
-      font-size: 20px;
-    }
-    .bio-info {
-      margin-left: 2px;
-      display: flex;
-      justify-content: space-between;
-      p {
-        &.edit {
-          padding-right: 5px;
-          svg {
-            fill: $skyBlueMain;
-          }
-        }
-      }
-    }
-  }
-  .education {
-    padding: 20px 5px;
-    width: 100%;
-    p.p-top {
-      font-size: 20px;
-      display: flex;
-      justify-content: space-between;
-      padding-right: 5px;
-      svg {
-        fill: $skyBlueMain;
-      }
-    }
-    .p-edu-list {
-      .p-edu-list-i {
+  .profile-main-wrapper {
+    .top-section-wrapper {
+      background-color: #fff;
+      margin-bottom: 20px;
+      border-bottom-right-radius: 10px;
+      border-bottom-left-radius: 10px;
+      box-shadow: 0 0 8px 0 rgba(17, 22, 26, 0.16),
+        0 4px 8px 0 rgba(17, 22, 26, 0.08), 0 8px 16px 0 rgba(17, 22, 26, 0.08);
+      .p-image-wrap {
+        height: 50px;
+        // background-color: #fff;
         display: flex;
-        padding: 2px;
-        img {
-          height: 45px;
-          padding: 2px;
+        justify-content: center;
+        // position: relative;
+        .profilePic {
+          border: 3px solid white;
+          position: relative;
+          margin-top: -80px;
+          z-index: 2;
+          // left: 15px;
+          // top: -75px;
+          // border: 1px solid $normalBorder;
+          box-shadow: 0px 0px 5px 1px $normalShadowColor;
+          border-radius: 50%;
+          height: 130px;
+          width: 130px;
+          // width: calc((100vw * 0.81 * 0.33) * 0.55);
+          // height: calc((100vw * 0.81 * 0.33) * 0.55);
+          overflow: hidden;
+          // top: calc((100vw * 0.81) * 0.33 * 0.4);
+          .image-upload-icon {
+            position: absolute;
+            bottom: 30%;
+            right: 1%;
+            svg {
+              border-radius: 50%;
+              background-color: $primary;
+            }
+          }
+          // @media screen and (max-width: 855px) {
+          //   top: calc(100vw * 0.33 * 0.4);
+          //   left: 20px;
+          //   width: calc((100vw * 0.33) * 0.55);
+          //   height: calc((100vw * 0.33) * 0.55);
+          // }
+          // @media screen and (max-width: 1199px) {
+          // }
         }
-        p {
-          padding: 0px 0px 0px 10px;
-          span.p-name-i {
-            font-size: 18px;
-            font-weight: bold;
-          }
-          span.p-timeline {
-            font-weight: bold;
-            color: $lightTextColor;
-          }
-          svg {
-            fill: $skyBlueMain;
+        @media screen and (max-width: 1199px) {
+          height: 35px;
+          .profilePic {
+            margin-top: -40px;
+            width: 80px;
+            height: 80px;
           }
         }
       }
-    }
-  }
-  .experience {
-    padding: 20px 5px;
-    width: 100%;
-    p.p-top {
-      font-size: 20px;
-      display: flex;
-      justify-content: space-between;
-      padding-right: 5px;
-      svg {
-        fill: $skyBlueMain;
+
+      .top-details {
+        width: 100%;
+        // background: white;
+        padding: 10px;
+        // margin-bottom: 20px;
+        text-align: center;
+
+        .name {
+          font-size: 30px;
+          font-weight: bold;
+          margin-bottom: 5px;
+        }
       }
     }
-    .p-exp-list {
-      .p-exp-list-i {
+    .bio {
+      width: 100%;
+      padding: 20px;
+      // background-color: #fff;
+      // border-radius: 10px;
+      // border: 1px solid #eee;
+      @include genericBoxPattern;
+      margin-bottom: 20px;
+      .bio-content {
+        font-size: 20px;
+        margin-bottom: 10px;
+      }
+      .bio-info {
+        margin-left: 2px;
         display: flex;
-        padding: 2px;
-        img {
-          height: 45px;
-          padding: 2px;
-        }
+        justify-content: space-between;
         p {
-          padding: 0px 0px 0px 10px;
-          span.p-title-i {
-            font-size: 18px;
-            font-weight: bold;
-          }
-          span.p-company-i {
-            font-size: 16px;
-            font-weight: bold;
-            color: $lightTextColor;
-          }
-          span.p-timeline {
-            font-weight: bold;
-            color: $lightTextColor;
-          }
-          svg {
-            fill: $skyBlueMain;
+          &.edit {
+            padding-right: 5px;
+            svg {
+              fill: $skyBlueMain;
+            }
           }
         }
       }
     }
-  }
-  .skills {
-    padding: 20px 5px;
-    width: 100%;
-    p.p-top {
-      font-size: 20px;
-      display: flex;
-      justify-content: space-between;
-      padding-right: 5px;
-      svg {
-        fill: $skyBlueMain;
+    .education {
+      padding: 20px;
+      width: 100%;
+      // background-color: #fff;
+      // border-radius: 10px;
+      // border: 1px solid #eee;
+      @include genericBoxPattern;
+      margin-bottom: 20px;
+      p.p-top {
+        font-size: 20px;
+        display: flex;
+        justify-content: space-between;
+        padding-right: 5px;
+        margin-bottom: 10px;
+        svg {
+          fill: $skyBlueMain;
+        }
+      }
+      .p-edu-list {
+        .p-edu-list-i {
+          display: flex;
+          align-items: center;
+          flex-wrap: wrap;
+          padding: 2px;
+          border-bottom: 1px solid #eee;
+          padding-top: 10px;
+          padding-bottom: 10px;
+          img {
+            height: 45px;
+            padding: 2px;
+          }
+          p {
+            padding: 0px 0px 0px 10px;
+            span.p-name-i {
+              font-size: 18px;
+              font-weight: bold;
+            }
+            span.p-timeline {
+              font-weight: bold;
+              color: $lightTextColor;
+              font-size: 14px;
+            }
+            span {
+              color: $lightTextColor;
+            }
+            svg {
+              fill: $skyBlueMain;
+            }
+          }
+        }
       }
     }
-    .skills-container {
-      padding: 5px 5px 5px 0px;
-      display: flex;
-      flex-wrap: wrap;
-      span {
-        margin: 5px;
-        word-break: break-word;
-        padding: 5px;
-        color: $backgroundColor;
-        background: $skyBlueMain;
+    .experience {
+      padding: 20px;
+      width: 100%;
+      // background-color: #fff;
+      // border-radius: 10px;
+      // border: 1px solid #eee;
+      @include genericBoxPattern;
+      margin-bottom: 20px;
+
+      .p-exp-list {
+        .p-exp-list-i {
+          display: flex;
+          align-items: center;
+          flex-wrap: wrap;
+          padding: 2px;
+          border-bottom: 1px solid #eee;
+          padding-top: 10px;
+          padding-bottom: 10px;
+          img {
+            height: 45px;
+            padding: 2px;
+          }
+          p {
+            padding: 0px 0px 0px 10px;
+            span.p-title-i {
+              font-weight: bold;
+              line-height: 1.4;
+            }
+            span.p-company-i {
+              font-size: 16px;
+              font-weight: bold;
+              color: $lightTextColor;
+            }
+            span.p-timeline {
+              font-weight: bold;
+              color: #696969;
+              font-size: 14px;
+            }
+            svg {
+              fill: $skyBlueMain;
+            }
+          }
+        }
+      }
+    }
+    .skills {
+      padding: 20px;
+      width: 100%;
+      margin-bottom: 20px;
+      // background-color: #fff;
+      // border-radius: 10px;
+      // border: 1px solid #eee;
+      @include genericBoxPattern;
+      p.p-top {
+        font-size: 20px;
+        display: flex;
+        justify-content: space-between;
+        padding-right: 5px;
+        svg {
+          fill: $skyBlueMain;
+        }
+      }
+      .skills-container {
+        padding: 5px 5px 5px 0px;
+        display: flex;
+        flex-wrap: wrap;
+        span {
+          margin: 5px;
+          padding: 10px;
+          color: $backgroundColor;
+          background: $primaryColor;
+          border-radius: 20px;
+        }
       }
     }
   }
   @media screen and (max-width: 855px) {
     padding: 5px 15px;
+  }
+}
+
+h2.p-top {
+  font-size: 20px;
+  display: flex;
+  justify-content: space-between;
+  padding-right: 5px;
+  svg {
+    fill: $skyBlueMain;
+    &:hover {
+      height: 20px;
+      width: 20px;
+      background-color: #000;
+      opacity: 0.3;
+      border-radius: 50%;
+      padding: 5px;
+      display: flex;
+      align-items: center;
+      fill: #fff;
+      justify-content: center;
+    }
   }
 }

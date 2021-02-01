@@ -1,12 +1,15 @@
 import React from 'react';
 import axios from 'axios';
 import PropTypes from 'prop-types';
-import { Dialog, Button, Spinner } from '@blueprintjs/core';
+import { Spinner } from '@blueprintjs/core';
 import captureCanvas from './captureCanvas';
 import DrawChart from './drawChart';
 import Table from '../../../common/Table';
 import findTableData from './helper-functions/findTableData';
 import { ENDPOINT } from '../../../config';
+import Popup from '../../../common/Form/Popup';
+import { AiOutlineBarChart } from "react-icons/ai";
+import { Button } from '../../../common/utility-functions/Button/Button';
 
 class Report extends React.Component {
   constructor(props) {
@@ -50,13 +53,14 @@ class Report extends React.Component {
     const boardMemberList = Object.values(boardMembers.byId).filter(bm => bm.boardId === boardId && !bm.deleteStatus);
     const tableData = boardActivities ? boardMemberList.map(u => findTableData(u.user.user, boardActivities, boardCommunicationActivities)) : [];
     return (
-      <Dialog
+      <Popup
         onOpening={this.fetchReport}
         isOpen={isOpen}
         title={boardName}
-        icon="chart"
+        icon={<AiOutlineBarChart size={25} />}
         onClose={onClose}
         className="pc-report-overlay"
+        width="70vw"
       >
         {
           boardActivities && !error ? (
@@ -84,17 +88,25 @@ class Report extends React.Component {
                     <a href={pdfUrl} rel="noopener noreferrer" target="_blank">Download Pdf</a>
                   </div>
                 )}
-                <Button
+                {/* <Button
                   loading={loading}
                   text="Generate PDF"
                   intent="success"
+                  onClick={() => this.generatePdfHandler(boards.byId[boardId], tableData)}
+                /> */}
+                <Button
+                  type="button"
+                  buttonStyle="btn--success--solid"
+                  buttonSize="btn--medium"
+                  title="Generate PDF"
+                  loading={loading}
                   onClick={() => this.generatePdfHandler(boards.byId[boardId], tableData)}
                 />
               </div>
             </div>
           ) : <Spinner intent="success" />
         }
-      </Dialog>
+      </Popup>
     );
   }
 }

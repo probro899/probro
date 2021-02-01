@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import client from '../../../socket';
@@ -9,7 +10,6 @@ import AdvancedSettings from './AdvancedSetting';
 
 class Setting extends Component {
   state = {
-    activeTab: 'basic',
     apis: {},
   }
 
@@ -23,37 +23,32 @@ class Setting extends Component {
     });
   }
 
-  handleClick = (name) => {
-    this.setState({ activeTab: name });
-  };
-
   render() {
-    const { activeTab, apis } = this.state;
-    const { database, account } = this.props;
+    const { apis } = this.state;
+    const { database, account, match } = this.props;
+    const menu = match.path.split("/");
+    const activeTab = menu[menu.length - 1]
     return (
       <div className="settings bro-right">
-        <div className="setting-types">
-          <div
-            onClick={() => this.handleClick('basic')}
-            tabIndex={0}
-            onKeyDown={() => this.handleClick('basic')}
-            role="menuitem"
-            className={activeTab === 'basic' ? 'active i-setting' : 'i-setting'}
-          >
-            General
+        <div className="setting-wrapper">
+          <div className="setting-types">
+            <Link
+              to={`/dashboard/${match.params.id}/settings/basic`}
+              className={activeTab === 'basic' ? 'active i-setting' : 'i-setting'}
+            >
+              General
+            </Link>
+            <Link
+              to={`/dashboard/${match.params.id}/settings/advanced`}
+              className={activeTab === 'advanced' ? 'active i-setting' : 'i-setting'}
+            >
+              Advanced
+            </Link>
           </div>
-          <div
-            onClick={() => this.handleClick('advanced')}
-            tabIndex={0}
-            onKeyDown={() => this.handleClick('advanced')}
-            role="menuitem"
-            className={activeTab === 'advanced' ? 'active i-setting' : 'i-setting'}
-          >
-            Advanced
-          </div>
+          {activeTab === 'basic' && <BasicSettings apis={apis} account={account} database={database} />}
+          {activeTab === 'advanced' && <AdvancedSettings apis={apis} database={database} account={account} />}
         </div>
-        {activeTab === 'basic' && <BasicSettings apis={apis} account={account} database={database} />}
-        {activeTab === 'advanced' && <AdvancedSettings apis={apis} database={database} account={account} />}
+
       </div>
     );
   }

@@ -1,0 +1,199 @@
+@import '../config.scss';
+
+.pc-organization-public-profile {
+  display: flex;
+  flex-wrap: wrap;
+  position: relative;
+  margin-top: $navbarHeight;
+  padding-top: 10px;
+  min-height: calc(100vh - 90px - 125px);
+  .pc-org-right-section {
+    max-width: 70%;
+    flex: 0 0 70%;
+    padding-right: 30px;
+    @media screen and (max-width: 1199px) {
+      max-width: 100%;
+      flex: 0 0 100%;
+      padding-right: 0;
+    }
+    .cover-pic {
+      overflow: hidden;
+      width: 100%;
+      position: relative;
+      padding-bottom: 30%;
+      z-index: 1;
+      border-top-right-radius: 10px;
+      border-top-left-radius: 10px;
+      img {
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+    .pc-info-wrapper {
+      background-color: #fff;
+      margin-bottom: 20px;
+      border-bottom-right-radius: 10px;
+      border-bottom-left-radius: 10px;
+      box-shadow: 0 0 8px 0 rgba(17, 22, 26, 0.16),
+        0 4px 8px 0 rgba(17, 22, 26, 0.08), 0 8px 16px 0 rgba(17, 22, 26, 0.08);
+      .pc-profile-body {
+        width: 100%;
+        padding: 0 24px;
+        // background-color: none;
+        color: white;
+        text-align: center;
+        height: 60px;
+        position: relative;
+        display: flex;
+        align-items: center;
+        .pc-profilePic {
+          box-shadow: 0px 0px 5px 1px rgba(57, 73, 76, 0.35);
+          border-radius: 50%;
+          height: 130px;
+          width: 130px;
+          overflow: hidden;
+          margin-top: -105px;
+          z-index: 1;
+          border: 2px solid white;
+          @media screen and (max-width: 1199px) {
+            height: 80px;
+            width: 80px;
+          }
+          img.landscape {
+            height: 100%;
+            width: auto;
+          }
+        }
+        .pc-connect-btns {
+          margin-left: auto;
+          max-width: 240px;
+          width: 100%;
+          .pc-con {
+            display: flex;
+            justify-content: center;
+            button {
+              margin: 0px 10px;
+            }
+          }
+        }
+        @media screen and (max-width: 480px) {
+          padding-right: 0;
+        }
+      }
+      .pc-top-details {
+        padding: 10px 20px;
+        .pc-desc {
+          .pc-name {
+            font-size: 27px;
+            font-weight: bold;
+            margin-bottom: 5px;
+            display: block;
+            color: $headingColor;
+          }
+          .pc-location {
+            display: flex;
+            align-items: center;
+            margin-bottom: 5px;
+            svg {
+              margin-right: 5px;
+            }
+          }
+          .pc-bio {
+          }
+        }
+      }
+    }
+    .pc-headline {
+      @include genericBoxPattern;
+      margin-bottom: 20px;
+      .pc-headline-title {
+        padding: 20px 20px 0;
+        margin-bottom: 10px;
+      }
+      .pc-headline-detail {
+        padding: 0 20px 20px;
+      }
+    }
+    .pc-joined-members {
+      @include genericBoxPattern;
+      margin-bottom: 20px;
+      .pc-joined-header {
+        .pc-joined-title {
+          padding: 20px 20px 0;
+          margin-bottom: 10px;
+        }
+      }
+      .pc-hightlight-people {
+        padding: 0 20px;
+        .pc-hightlight-people-container {
+          .pc-hightlight-wrap {
+            padding-bottom: 20px;
+            .pc-joined-people-number {
+              color: $subHeadColor;
+              margin-bottom: 5px;
+            }
+            .pc-joined-list {
+              display: flex;
+              align-items: center;
+              list-style-type: none;
+              line-height: 0;
+              li {
+                margin-right: 4px;
+                img {
+                  width: 40px;
+                  height: 40px;
+                  border-radius: 50%;
+                }
+                .pc-more-members {
+                  width: 40px;
+                  height: 40px;
+                  border-radius: 50%;
+                  border: 1px solid $subHeadColor;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  .pc-more-number {
+                    color: $subHeadColor;
+                  }
+                }
+              }
+            }
+            .pc-hightlight-name {
+              margin-top: 10px;
+              font-size: 14px;
+            }
+          }
+        }
+      }
+    }
+    .pc-support-container {
+      @include genericBoxPattern;
+      margin-bottom: 20px;
+      .pc-suppoer-header {
+        padding: 20px 20px 0;
+        margin-bottom: 10px;
+      }
+      .pc-support-content {
+        padding: 0 20px 20px;
+        max-width: 300px;
+        margin: auto;
+        button:nth-child(1) {
+          margin-bottom: 10px;
+        }
+      }
+    }
+  }
+  .pc-org-left-section {
+    max-width: 30%;
+    flex: 0 0 30%;
+    @media screen and (max-width: 1199px) {
+      max-width: 100%;
+      flex: 0 0 100%;
+    }
+  }
+}

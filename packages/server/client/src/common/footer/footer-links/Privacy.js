@@ -30,9 +30,9 @@ class Privacy extends React.Component {
     return (
       <div>
         <Navbar />
-        <div className="pc-privacy">
+        <div className="pc-privacy pc-container">
           <div className="pc-privacy-content">
-            <h2>Privacy Policy</h2>
+            <h1>Privacy Policy</h1>
             <p>
               We use your personal information only for providing services and improving the Site.
               By using the site, you agree to the collection and use of information in accordance

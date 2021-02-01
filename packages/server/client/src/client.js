@@ -9,7 +9,7 @@ import store from './store';
 import AppComponent from './App';
 import client from './clientConfig';
 
-ReactDOM.hydrate(
+ReactDOM.render(
   <ApolloProvider client={client}>
     <Provider store={store}>
       <BrowserRouter>

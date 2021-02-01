@@ -1,5 +1,6 @@
 export default async (chatHistory) => {
-  const { change, updateWebRtc, database, account, addDatabaseSchema, fromLive, showChatHistory, webRtc } = chatHistory.props;
+  try {
+    const { change, updateWebRtc, database, account, addDatabaseSchema, fromLive, showChatHistory, webRtc } = chatHistory.props;
   // console.log('props in onClick chalt list', chatHistory);
   const { apis } = webRtc;
   const { type, user, lastMessageId, boardDetails, unSeenNo } = chatHistory;
@@ -15,7 +16,7 @@ export default async (chatHistory) => {
   }
 
   if (chatHistory.type === 'user') {
-    const connection = Object.values(database.UserConnection.byId).find(con => con.userId === id || con.mId === id);
+    const connection = Object.values(database.UserConnection.byId).find(con => con.userId === id || con.mId === id) || {};
     updateWebRtc('connectionId', connection.id);
   }
 
@@ -33,4 +34,7 @@ export default async (chatHistory) => {
       addDatabaseSchema('BoardMessageSeenStatus', { id: Date.now(), userId: account.user.id, bmId: lastMessageId, timeStamp: Date.now(), status: true });
     }
   }
+   } catch (e) {
+     console.log('error in chat list click item', e)
+   }
 };

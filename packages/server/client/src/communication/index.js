@@ -13,6 +13,8 @@ import ErrorBoundary from '../common/ErrorBoundary';
 import { updateChatList, updateUserActiveStatus, updateBoardActiveStatus } from './chatlist/helper-function';
 import exceptionReporter from './helper-functions/webrtc/sfu/exceptionReporter';
 import ScreenProvider from './screen-provider';
+import { AiOutlineClose } from "react-icons/ai";
+import swRegistration from '../common/service-worker/index'
 
 class Communication extends React.Component {
   state = {
@@ -34,6 +36,8 @@ class Communication extends React.Component {
       // updating device info microphone and webcam
       await deviceTest(updateWebRtc);
       sfuSocketListner(this.props, this.state, this.remoteCallEndMinimizer);
+      // const swRegistration = await navigator.serviceWorker.register('sw.js');
+      // this.setState({ swRegistration: swRegistration })
     } catch (e) {
       exceptionReporter({ error: e, errorCode: 148 });
     }
@@ -100,38 +104,41 @@ class Communication extends React.Component {
     }
     return (
       (webRtc.showIncommingCall || webRtc.showCommunication) && apis && (
-      <ErrorBoundary>
-        <div
-          className={maximize ? 'communicate pc-com-maximum' : 'communicate'}
-          style={
-            {
-              height,
-              animationName: webRtc.minimize ? 'slideDown' : 'slideUp',
-              animationDuration: '0.3s',
-            }
-          }
-        >
-          <div className="header">
-            <div className="win-title" onClick={this.toggleMinMax}>
-              Messaging
-            </div>
-            <div className="control-icons">
-              <Icon iconSize={20} icon="small-cross" style={{ cursor: 'pointer' }} onClick={this.cutWindow} />
-            </div>
-          </div>
+        <ErrorBoundary>
           <div
-            className="content"
+            className={maximize ? 'communicate pc-com-maximum' : 'communicate'}
+            style={
+              {
+                height,
+                animationName: webRtc.minimize ? 'slideDown' : 'slideUp',
+                animationDuration: '0.3s',
+              }
+            }
           >
-            <ScreenProvider
-              maximize={maximize}
-              maximizeHandler={this.maximize}
-              switchScreenHandler={this.switchScreen}
-              remoteCallEndMinimizer={this.remoteCallEndMinimizer}
-              {...this.props}
-            />
+            <div className="header">
+              <div className="win-title" onClick={this.toggleMinMax}>
+                Messages
+            </div>
+              <div className="control-icons">
+                {/* <Icon iconSize={20} icon="small-cross" style={{ cursor: 'pointer' }} onClick={this.cutWindow} /> */}
+                <AiOutlineClose size={20} style={{ cursor: 'pointer' }} onClick={this.cutWindow} />
+              </div>
+            </div>
+            <div
+              style={{ overflow: 'hidden' }}
+              className="content"
+            >
+              <ScreenProvider
+                maximize={maximize}
+                maximizeHandler={this.maximize}
+                switchScreenHandler={this.switchScreen}
+                remoteCallEndMinimizer={this.remoteCallEndMinimizer}
+                swRegistration={this.state.swRegistration}
+                {...this.props}
+              />
+            </div>
           </div>
-        </div>
-      </ErrorBoundary>
+        </ErrorBoundary>
       )
     );
   }

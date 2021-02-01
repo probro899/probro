@@ -1,6 +1,6 @@
+/* eslint-disable import/no-cycle */
 import schema from '@probro/common/src/schema';
 import db from '../../db';
-// eslint-disable-next-line import/no-cycle
 import { database } from '../../cache';
 
 export default async function updateUserDetails(record) {

@@ -18,14 +18,15 @@ class Connections extends React.Component {
   }
 
   sendMessage = () => {
-    const { updateWebRtc, details, database, account } = this.props;
-    const connectionId = Object.values(database.UserConnection.byId).find(con => con.mId === details.id || con.userId === details.id);
-    updateWebRtc('showCommunication', details.id);
-    updateWebRtc('connectionId', connectionId.id);
+    const { updateWebRtc, database, data, webRtc } = this.props;
+    if (!webRtc.localCallHistory.callType) {
+    const connectionId = Object.values(database.UserConnection.byId).find(con => con.mId === data.id || con.userId === data.id);
+    updateWebRtc('showCommunication', connectionId.id);
     updateWebRtc('peerType', 'user');
     updateWebRtc('communicationContainer', 'history');
-    const { user } = database.UserConnection.byId[connectionId.id];
-    updateWebRtc('chatHistory', { type: 'user', user: { user: user.user, userDetails: user.userDetail }, connectionId: connectionId.id });
+    updateWebRtc('connectionId', connectionId.id);
+    updateWebRtc('chatHistory', { type: 'user', user: { user: data, userDetails: data.userDetail }, connectionId: connectionId.id });
+    }
   }
 
   connectMentor = async (type) => {
@@ -82,6 +83,23 @@ class Connections extends React.Component {
           console.log('Error =>', e);
         }
         break;
+      case 'deleted':
+        this.setState({ loading: true });
+        try {
+          await apis.updateUserConnection([{
+            status: 'pending',
+            mId: guestId,
+            userId,
+          }, { id: existingCon.id }]);
+          updateDatabaseSchema('UserConnection', { id: existingCon.id, status: 'pending' });
+          this.setState({
+            type: 'pending',
+            loading: false,
+          });
+        } catch (e) {
+          console.log('Error =>', e);
+        }
+        break;
       default:
     }
   }
@@ -101,6 +119,10 @@ class Connections extends React.Component {
           type = 'connected';
           return;
         }
+        if (obj.status === 'deleted') {
+          type = 'deleted';
+          return;
+        }
         if (userId === obj.userId) {
           type = 'pending';
         } else {
@@ -115,6 +137,7 @@ class Connections extends React.Component {
 
   render() {
     const { type, loading } = this.state;
+    const { isSearch } = this.props;
     return (
       <div className="con">
         <ConnectionElement
@@ -122,6 +145,7 @@ class Connections extends React.Component {
           sendMessage={this.sendMessage}
           connectMentor={this.connectMentor}
           type={type}
+          isSearch={isSearch}
         />
       </div>
     );

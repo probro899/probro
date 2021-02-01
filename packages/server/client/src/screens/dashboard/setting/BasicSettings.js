@@ -5,226 +5,171 @@ import { Icon } from '@blueprintjs/core';
 import * as actions from '../../../actions';
 import { PopoverForm } from '../../../components';
 import getName from '../../../common/utility-functions/getName';
-import { NameSchema, GenderSchema, AddressSchema, CountrySchema } from './structure';
+import { NameSchema, GenderSchema, AddressSchema, CountrySchema, HeadlineSchema } from './structure';
 import CarrierInterestSetting from './CarrierInterestSetting';
 
 class BasicSettings extends React.Component {
   state={
-    namePopover: false,
-    genderPopover: false,
-    addressPopover: false,
-    countryPopover: false,
+    popover: {
+      schema: null,
+      open: false,
+      structure: null,
+      table: null,
+    }
   };
 
-  editCountry = async (data) => {
-    const { apis, account } = this.props;
-    try {
-      await apis.updateUserDetails(
-        { ...data, userId: account.user.id }
-      );
-      return { response: 200, message: 'Changed successfully' };
-    } catch (e) {
-      return { response: 400, error: 'Internal server error' };
+  togglePopover = (schema, structure, table) => {
+    const { popover } = this.state;
+    if (popover.open) {
+      this.setState({ popover: { open: false, structure: null, schema: null, table: null }})
+      return;
     }
+    this.setState({
+      popover: {
+        open: true,
+        structure: structure,
+        schema: schema,
+        table: table,
+      }
+    })
   }
 
-  editName = async (data) => {
-    const { apis, account } = this.props;
-    await apis.updateUser([
-      { ...data },
-      { id: account.user.id },
-    ]);
-    return { response: 200, message: 'Changed successfully' };
-  }
-
-  editAddress = async (data) => {
-    const { apis, account } = this.props;
-    try {
-      await apis.updateUserDetails(
-        { ...data, userId: account.user.id }
-      );
-      return { response: 200, message: 'Changed successfully' };
-    } catch (e) {
-      return { response: 400, error: 'Internal server error' };
-    }
-  }
-
-  editGender = async (data) => {
-    const { apis, account } = this.props;
-    try {
-      await apis.updateUserDetails(
-        { ...data, userId: account.user.id }
-      );
-      return { response: 200, message: 'Changed successfully' };
-    } catch (e) {
-      return { response: 400, error: 'Internal server error' };
-    }
-  }
-
-  togglePopover = (type) => {
-    const { namePopover, genderPopover, addressPopover, countryPopover } = this.state;
-    const { account, database } = this.props;
-    const user = Object.values(database.User.byId).find(u => u.id === account.user.id);
-    switch (type) {
-      case 'name':
-        NameSchema.map((obj) => {
-          if (obj.id === 'firstName') {
-            obj.val = user.firstName;
-          }
-          if (obj.id === 'lastName') {
-            obj.val = user.lastName;
-          }
-          if (obj.id === 'middleName') {
-            obj.val = user.middleName;
-          }
+  getPopoverStructure = () => {
+    const { popover } = this.state;
+    const { database, account } = this.props;
+    const user = Object.values(database.User.byId).find((obj) => {
+      return obj.id === account.user.id;
+    });
+    const userDetail = Object.values(database.UserDetail.byId).find((obj) => {
+      return obj.userId === account.user.id;
+    }) || {};
+    switch (popover.schema) {
+      case 'headline':
+        return popover.structure.map((obj) => {
+          if (obj.id === 'headline') obj.val = userDetail.headLine;
+          return obj;
         });
-        this.setState({
-          namePopover: !namePopover,
-        });
-        break;
       case 'gender':
-        GenderSchema.map((obj) => {
-          if (obj.id === 'gender') {
-            let gen = '';
-            Object.values(database.UserDetail.byId).map((o) => {
-              if (o.userId === account.user.id) {
-                gen = o.gender;
-              }
-            });
-            obj.val = gen;
-          }
+        return popover.structure.map(obj => {
+          if (obj.id === 'gender') obj.val = userDetail.gender;
+          return obj;
         });
-        this.setState({
-          genderPopover: !genderPopover,
+      case 'name':
+        return popover.structure.map(obj => {
+          if (obj.id === 'firstName') obj.val = user.firstName;
+          if (obj.id === 'lastName') obj.val = user.lastName;
+          if (obj.id === 'middleName') obj.val = user.middleName;
+          return obj;
         });
-        break;
       case 'country':
-        CountrySchema.map((obj) => {
+        return popover.structure.map((obj) => {
           if (obj.id === 'country') {
             const countries = countryList().getData().map(obj => ({ label: obj.label, value: obj.label }));
-            const con = Object.values(database.UserDetail.byId).find(o => o.userId === account.user.id);
-            if (con) { obj.val = con.country; }
-            obj.options = [...obj.options, ...countries];
-            return obj;
+            obj.val = userDetail.country;
+            obj.options = [...countries];
           }
+          return obj;
         });
-        this.setState({
-          countryPopover: !countryPopover,
-        });
-        break;
       case 'address':
-        AddressSchema.map((obj) => {
-          if (obj.id === 'address') {
-            let ad = '';
-            Object.values(database.UserDetail.byId).map((o) => {
-              if (o.userId === account.user.id) {
-                ad = o.address;
-              }
-            });
-            obj.val = ad;
-          }
+        return popover.structure.map(obj => {
+          if (obj.id === 'address') obj.val = userDetail.address;
+          return obj;
         });
-        this.setState({
-          addressPopover: !addressPopover,
-        });
-        break;
       default:
+        return {};
+    }
+  }
+
+  submitChange = async (data) => {
+    const { popover } = this.state;
+    const { apis, account } = this.props;
+    try {
+      if (popover.table === 'User') {
+        await apis[`update${popover.table}`]([
+          { ...data },
+          { id: account.user.id },
+        ]); 
+      } else {
+        await apis[`update${popover.table}`](
+          { ...data, userId: account.user.id }
+        );
+      }
+      return { response: 200, message: 'Changed successfully' };
+    } catch (e) {
+      return { response: 400, error: 'Internal server error' };
     }
   }
 
   render() {
     const { account, database, updateDatabaseSchema, apis } = this.props;
-    const { namePopover, addressPopover, genderPopover, countryPopover } = this.state;
-    let gen = '---';
-    let address = '---';
-    let country = '---';
-    let userDetail = {};
-    Object.values(database.UserDetail.byId).map((obj) => {
-      if (obj.userId === account.user.id) {
-        gen = obj.gender ? obj.gender : '---';
-        address = obj.address ? obj.address : '---';
-        userDetail = obj;
-        country = obj.country ? obj.country : '---';
-      }
-    });
+    const { popover } = this.state;
     const user = Object.values(database.User.byId).find(u => u.id === account.user.id);
+    let userDetail = Object.values(database.UserDetail.byId).find(obj => user.id === obj.userId) || {};
     return (
       <div className="container-settings">
         <PopoverForm
-          isOpen={namePopover}
-          structure={NameSchema}
-          callback={this.editName}
-          onClose={() => this.togglePopover('name')}
-        />
-        <PopoverForm
-          isOpen={addressPopover}
-          structure={AddressSchema}
-          callback={this.editAddress}
-          onClose={() => this.togglePopover('address')}
-        />
-        <PopoverForm
-          isOpen={genderPopover}
-          structure={GenderSchema}
-          callback={this.editGender}
-          onClose={() => this.togglePopover('gender')}
-        />
-        <PopoverForm
-          isOpen={countryPopover}
-          structure={CountrySchema}
-          callback={this.editCountry}
-          onClose={() => this.togglePopover('country')}
+          isOpen={popover.open}
+          structure={this.getPopoverStructure()}
+          callback={this.submitChange}
+          onClose={() => this.togglePopover(popover.schema)}
         />
         <div className="basic">
           <div className="label">Full Name</div>
           <div className="value">
-            {account.user
-              && (
-                <span>
-                  {getName(user)}
-                </span>
-              )
-            }
+            {account.user && <span>{getName(user)}</span>}
             <Icon
               icon="edit"
               color="rgba(167, 182, 194, 1)"
               className="edit-icon"
-              onClick={() => this.togglePopover('name')}
+              onClick={() => this.togglePopover('name', NameSchema, 'User')}
             />
           </div>
         </div>
         <div className="basic">
           <div className="label">Gender</div>
           <div className="value">
-            <span style={{ textTransform: 'capitalize' }}>{gen}</span>
+            <span style={{ textTransform: 'capitalize' }}>{userDetail.gender}</span>
             <Icon
               icon="edit"
               color="rgba(167, 182, 194, 1)"
               className="edit-icon"
-              onClick={() => this.togglePopover('gender')}
+              onClick={() => this.togglePopover('gender', GenderSchema, 'UserDetails')}
+            />
+          </div>
+        </div>
+        <div className="basic">
+          <div className="label">Headline</div>
+          <div className="value">
+            <span>{userDetail.headLine}</span>
+            <Icon
+              icon="edit"
+              color="rgba(167, 182, 194, 1)"
+              className="edit-icon"
+              onClick={() => this.togglePopover('headline', HeadlineSchema, 'UserDetails')}
             />
           </div>
         </div>
         <div className="basic">
           <div className="label">Country</div>
           <div className="value">
-            <span style={{ textTransform: 'capitalize' }}>{country}</span>
+            <span style={{ textTransform: 'capitalize' }}>{userDetail.country}</span>
             <Icon
               icon="edit"
               color="rgba(167, 182, 194, 1)"
               className="edit-icon"
-              onClick={() => this.togglePopover('country')}
+              onClick={() => this.togglePopover('country', CountrySchema, 'UserDetails')}
             />
           </div>
         </div>
         <div className="basic">
           <div className="label">Address</div>
           <div className="value">
-            <span>{address}</span>
+            <span>{userDetail.address}</span>
             <Icon
               icon="edit"
               color="rgba(167, 182, 194, 1)"
               className="edit-icon"
-              onClick={() => this.togglePopover('address')}
+              onClick={() => this.togglePopover('address', AddressSchema, 'UserDetails')}
             />
           </div>
         </div>

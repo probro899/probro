@@ -1,14 +1,10 @@
+const header = { id: 'Id', name: 'Name', address: 'Address', phoneNo: 'Phone' };
 
+const data = [{ id: 1, phoneNo: 19190, address: 'alsjfdalkj', name: 'bhagya' }, { id: 2, address: 'khutauna', phoneNo: 12984, name: 'ranjit' }];
 
-var tmpamount=100000;
-var tmptenor=12;
-var tmpirr=parseFloat(10/100);
-var p_hlemi;
-var tmpgp;
-var tmpk;
-tmpk		= 1/(1+tmpirr*1/12);
-tmpgp		= (Math.pow(tmpk,tmptenor)-1)/(tmpk-1)*tmpk;
-p_hlemi = tmpamount/tmpgp/1;
-p_hlemi= Math.round(p_hlemi);
+const values = Object.values(header);
+const keys = Object.keys(header);
 
-console.log(p_hlemi);
+const newArray = data.map((row) => {
+  keys.map(k => row[k]);
+});

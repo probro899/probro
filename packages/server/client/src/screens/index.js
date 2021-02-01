@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
+import { Route, Switch, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import * as actions from '../actions';
@@ -21,6 +21,8 @@ import NotifyBar from '../common/NotifyBar';
 import ClassTemplate from './class/template';
 import SfuTest from './test/SFU/index';
 import ErrorPage from '../common/ErrorPage';
+import Pricing from '../screens/pricing';
+import { OrganizationPublicView } from './organization';
 
 class MainScreen extends React.Component {
   constructor(props) {
@@ -32,7 +34,7 @@ class MainScreen extends React.Component {
     const { user, popNotification, updateNav } = this.props;
     return (
       <Switch>
-        <div className="home-screen">
+        <div className="home-screen" style={{ fontFamily: 'Montserrat' }}>
           {popNotification.active && <NotifyBar onClose={() => updateNav({ schema: 'popNotification', data: { message: '', active: false, intent: '' } })} message={popNotification.message} intent={popNotification.intent} />}
           <Switch>
             <Route exact path="/" component={HomePage} />
@@ -52,7 +54,7 @@ class MainScreen extends React.Component {
             <Route exact path="/login" component={Login} />
             <Route path="/register" component={Registration} />
             <Route path="/forgot-password" component={Forget} />
-            <Route path="/class-work/:userSlug/:classId" component={ClassManager} />
+            <Route path="/classroom/:userSlug/:classId" component={ClassManager} />
             <Route path="/class-template/:userSlug/:classId" component={ClassTemplate} />
             <Route path="/edit-blog/:id/:blogId" component={CreateBlog} />
             <Route path="/create-blog/:id" component={CreateBlog} />
@@ -61,6 +63,8 @@ class MainScreen extends React.Component {
             <Route path="/blog/:userSlug/:blogSlug" component={PublicBlog} />
             <Route path="/user/:userId" component={PublicProfile} />
             <Route path="/dashboard/:id" component={DashBoard} />
+            <Route path="/pricing" component={Pricing} />
+            <Route path="/organization" component={OrganizationPublicView} />
             <Redirect to="/error" />
           </Switch>
           {user && <Communication />}

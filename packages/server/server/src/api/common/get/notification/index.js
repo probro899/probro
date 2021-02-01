@@ -1,5 +1,5 @@
-import getNotification from './getNotificationDetails';
+import getNotifications from './getNotificationDetails';
 
 export {
-  getNotification,
+  getNotifications,
 };

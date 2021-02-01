@@ -1,12 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
-import { Button } from '@blueprintjs/core';
-import Tooltip from 'react-tooltip';
+// import { Button } from '@blueprintjs/core';
+// import Tooltip from 'react-tooltip';
 import { TiMediaRecord } from 'react-icons/ti';
-import { FiMic, FiCopy, FiVideo, FiPhone } from 'react-icons/fi';
+import { FiMic, FiCopy, FiVideo, FiPhone, FiMicOff } from 'react-icons/fi';
 import callUpgrader from '../helper-functions/callUpgrader';
 import { mediaRecorder } from '../../../helper-functions/webrtc/mesh';
+import { Button } from '../../../../common/utility-functions/Button/Button';
+import { Tooltip } from '../../../../common/Form/Tooltip';
 
 class Controllers extends React.Component {
   constructor(props) {
@@ -29,15 +31,16 @@ class Controllers extends React.Component {
   }
 
   recordingHandler = async () => {
+    // console.log('media recorder called 1');
     const { startRecording } = this.state;
     const { updateWebRtc, webRtc } = this.props;
     if (!startRecording) {
       const mediaRecording = await mediaRecorder(1, this.props);
-      updateWebRtc('mediaRecording', mediaRecording);
+      await updateWebRtc('mediaRecording', mediaRecording);
       this.setState({ startRecording: true });
     } else {
-      webRtc.mediaRecording.stopRecording();
-      updateWebRtc('mediaRecording', null);
+      await webRtc.mediaRecording.stopRecording();
+      await updateWebRtc('mediaRecording', null);
       this.setState({ startRecording: false });
     }
   }
@@ -68,36 +71,83 @@ class Controllers extends React.Component {
   }
 
   render() {
+    // console.log('props in controller', this.props);
     const { webRtc, account } = this.props;
     const { showWhiteBoard, startRecording } = this.state;
     return (
       <div className="controllers">
-        <Tooltip />
+        {/* <Tooltip /> */}
         {showWhiteBoard && <Redirect to={`/${account.user.slug}/drawing-board`} />}
-        <Button data-tip="Call End" className="pc-control-btn bg-red" onClick={this.callReject}>
+        {/* <Button data-tip="Call End" className="pc-control-btn bg-red" onClick={this.callReject}>
           <FiPhone size={20} />
-        </Button>
-        <Button
+        </Button> */}
+        <Tooltip content="Call End" position="top">
+          < Button
+            className="pc-control-btn"
+            onClick={this.callReject}
+            icon={<FiPhone size={20} />}
+            type="button"
+            buttonStyle="btn--circle-icons"
+            buttonSize="btn--small"
+          />
+        </Tooltip>
+
+
+        {/* <Button
           data-tip="Video"
           className={webRtc.localCallHistory.mediaType === 'video' ? 'pc-control-btn active' : 'pc-control-btn'}
           onClick={() => this.callUpGradeController('video')}
         >
           <FiVideo size={20} />
-        </Button>
-        <Button
+        </Button> */}
+        <Tooltip content="Video" position="top">
+          < Button
+            className={webRtc.localCallHistory.mediaType === 'video' ? 'pc-control-btn active' : 'pc-control-btn'}
+            onClick={() => this.callUpGradeController('video')}
+            icon={<FiVideo size={20} />}
+            type="button"
+            buttonStyle="btn--circle-icons"
+            buttonSize="btn--small"
+          />
+        </Tooltip>
+
+        {/* <Button
           data-tip="ScreenShare"
           className={webRtc.localCallHistory.mediaType === 'screenshare' ? 'pc-control-btn active' : 'pc-control-btn'}
           onClick={() => this.callUpGradeController('screenshare')}
         >
           <FiCopy size={20} />
-        </Button>
+        </Button> */}
+        <Tooltip content="Screenshare" position="top">
+          < Button
+            className={webRtc.localCallHistory.mediaType === 'screenshare' ? 'pc-control-btn active' : 'pc-control-btn'}
+            onClick={() => this.callUpGradeController('screenshare')}
+            icon={<FiCopy size={20} />}
+            type="button"
+            buttonStyle="btn--circle-icons"
+            buttonSize="btn--small"
+          />
+        </Tooltip>
+
+        {/* 
         <Button
           data-tip="Recording"
           onClick={() => this.recordingHandler()}
           className={startRecording ? 'pc-control-btn active record' : 'pc-control-btn'}
         >
           <TiMediaRecord size={20} />
-        </Button>
+        </Button> */}
+        <Tooltip content="Recording" position="top">
+          < Button
+            className={startRecording ? 'pc-control-btn active record' : 'pc-control-btn'}
+            onClick={() => this.recordingHandler()}
+            icon={<TiMediaRecord size={20} />}
+            type="button"
+            buttonStyle="btn--circle-icons"
+            buttonSize="btn--small"
+          />
+        </Tooltip>
+
         {/* <Link to={`/${account.user.slug}/drawing-board`}> */}
         {/* <Button
           data-tip="White Board"
@@ -107,13 +157,24 @@ class Controllers extends React.Component {
           <FiEdit2 size={20} />
         </Button> */}
         {/* </Link> */}
-        <Button
+        {/* <Button
           data-tip="Mute"
           className={webRtc.localCallHistory.mute ? 'pc-control-btn active' : 'pc-control-btn'}
           onClick={() => this.callUpGradeController(webRtc.localCallHistory.mute ? 'unmute' : 'mute')}
         >
           <FiMic size={20} />
-        </Button>
+        </Button> */}
+        <Tooltip content={webRtc.localCallHistory.mute ? "Unmute" : "Mute"} position="top">
+          < Button
+            className={webRtc.localCallHistory.mute ? 'pc-control-btn active' : 'pc-control-btn'}
+            onClick={() => this.callUpGradeController(webRtc.localCallHistory.mute ? 'unmute' : 'mute')}
+            icon={webRtc.localCallHistory.mute ? <FiMicOff size={20} /> : <FiMic size={20} />}
+            type="button"
+            buttonStyle="btn--circle-icons"
+            buttonSize="btn--small"
+          />
+        </Tooltip>
+
       </div>
     );
   }

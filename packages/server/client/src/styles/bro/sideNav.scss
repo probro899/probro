@@ -2,14 +2,20 @@
 .broWrapper {
   display: flex;
   margin-top: $navbarHeight;
+  // margin-bottom: 30px;
   .fake-side-nav {
-    flex: 0.19;
-    margin-top: 4px;
-    margin-left: 4px;
+    // flex: 0.19;
+    // margin-top: 4px;
+    // margin-left: 4px;
     padding: 50px 10px;
   }
   .bro-right {
-    flex: 0.81;
+    // flex: 0.81;
+    margin-left: 250px;
+    padding: 15px 30px 0;
+    @media screen and (max-width: 767px) {
+      padding: 10px;
+    }
   }
   @media screen and (max-width: 855px) {
     display: block;
@@ -17,7 +23,8 @@
       display: none;
     }
     .bro-right {
-      flex: 1;
+      margin-left: 0;
+      padding: 5px 15px;
     }
   }
 }
@@ -25,37 +32,51 @@
   display: flex;
   margin-top: 4px;
   margin-left: 4px;
-  padding: 50px 5px;
-  width: 20%;
-  height: calc(100% - 70px); // substract navbarheight(60px) and 4 px top margin + shadow as well
+  padding: 20px 10px;
+  width: 250px;
+  height: 100vh;
+  box-shadow: 0 6px 12px -1px rgba(0, 32, 128, 0.1), 0 0 0 1px #f0f2f7;
+  // background-color: #fff;
+  // border-radius: 10px;
+  // border: 1px solid #eee;
+  // width: 100%;
+  // height: calc(
+  //   100% - 70px
+  // ); // substract navbarheight(60px) and 4 px top margin + shadow as well
   z-index: 3;
   align-items: center;
   flex-direction: column;
   position: fixed;
-  border: 1px solid $normalBorder;
-  background-color: $fadedBackground;
+  // border: 1px solid $normalBorder;
+  // background-color: $fadedBackground;
   .sideNavElement {
-    margin-bottom: 5px;
+    margin-bottom: 8px;
     padding: 10px 10px 10px 10px;
     align-self: stretch;
+    display: flex;
+    align-items: center;
     // box-shadow: 0px 1px 2px 1px $normalShadowColor;
-    border: 1px solid $normalBorder;
-    background-color: $fadedBackground;
+    // border: 1px solid #eee;
+    // background-color: #fff;
+    border-radius: 10px;
     span {
       font-size: 16px;
       font-weight: bold;
-      color: $navTextColor;
+      color: $headingColor;
       svg {
-        fill: $navTextColor;
+        fill: $headingColor;
       }
     }
     &:hover {
-      background-color: $backgroundColor;
+      background-color: #fff;
+      box-shadow: 0 6px 12px -1px rgba(0, 32, 128, 0.1), 0 0 0 1px #f0f2f7;
       border-left: 3px solid $skyBlueMain;
       text-decoration: none; // to remove the underline from link
     }
   }
   .active {
+    background-color: #fff;
+    box-shadow: 0 6px 12px -1px rgba(0, 32, 128, 0.1), 0 0 0 1px #f0f2f7;
     span {
       color: $skyBlueMain;
       svg {
@@ -71,6 +92,14 @@
 .pc-small-screen-sidenav {
   flex: 1;
   display: none;
+  button.right {
+    background-color: #fff;
+    box-shadow: 0 6px 12px -1px rgba(0, 32, 128, 0.1), 0 0 0 1px #f0f2f7;
+    color: $headingColor;
+    span {
+      justify-content: space-between;
+    }
+  }
   .nav-button {
     background-color: $backgroundColor;
     color: $navTextColor;
@@ -83,11 +112,13 @@
       margin-bottom: 5px;
       padding: 10px 10px 10px 10px;
       align-self: stretch;
-      border: 1px solid $normalBorder;
-      background-color: $fadedBackground;
+      // border: 1px solid $normalBorder;
+      box-shadow: 0 6px 12px -1px rgba(0, 32, 128, 0.1), 0 0 0 1px #f0f2f7;
+      background-color: #fff;
+      border-radius: 5px;
       span {
         font-size: 16px;
-        color: $navTextColor;
+        color: $headingColor;
       }
       &:hover {
         background-color: $backgroundColor;
@@ -106,6 +137,6 @@
   }
   @media screen and (max-width: 855px) {
     display: block;
-    margin: 70px 20px 0px 15px;
+    margin: 110px 10px 0;
   }
 }

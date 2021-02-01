@@ -6,7 +6,7 @@ import createOffer from './createOffer';
 
 export default async (mediaType, props) => {
   try {
-    const { webRtc, account } = store.getState();
+    const { webRtc, account, database } = store.getState();
     const { localCallHistory } = webRtc;
     let userId;
     if (localCallHistory) {
@@ -25,7 +25,8 @@ export default async (mediaType, props) => {
     } else {
       const { jsep, error, oneToOneCall } = await createOffer(mediaType, props);
       if (jsep) {
-        const body = { request: 'call', username: `${userId}` };
+        const { callId } = Object.values(database.UserConnection.byId).find(c => c.user.user.id === userId)
+        const body = { request: 'call', username: `${callId}` };
         oneToOneCall.data({ text: JSON.stringify({ callType: mediaType, uid: account.user.id }) });
         oneToOneCall.send({ message: body, jsep });
       }

@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 /* eslint-disable import/no-cycle */
 import React from 'react';
-import { Button } from '@blueprintjs/core';
+// import { Button } from '@blueprintjs/core';
 import PropTypes from 'prop-types';
 import { MdMessage } from 'react-icons/md';
 import { TiArrowMaximise, TiArrowMinimise } from 'react-icons/ti';
@@ -13,6 +13,10 @@ import MainScreen from './components/MainScreen';
 import UsersScreen from './components/UsersScreens';
 import { getChatList } from '../../chatlist/helper-function';
 import ImageOnMainScreen from './components/ImageOnMainScreen';
+import CallTimer from './components/CallTimer';
+import { AiOutlineMenu } from "react-icons/ai";
+import { Button } from '../../../common/utility-functions/Button/Button';
+
 
 class LiveCallScreen extends React.Component {
   constructor(props) {
@@ -90,22 +94,44 @@ class LiveCallScreen extends React.Component {
         {showChatList && <ScChatList onClose={this.handleClickChatList} onClickItem={this.handleClickChatBox} {...this.props} />}
         {showChatBox && <ScChatHistory onClose={this.handleClickChatBox} {...this.props} />}
         <div className="top">
-          <Button minimal className="arrow-btn" intent="default" icon="menu" onClick={this.handleClickChatList} />
-          <div className="op-name">
-            {type === 'user' ? `${user.user.firstName} ${user.user.lastName}` : database.Board.byId[webRtc.localCallHistory.chatHistory.connectionId].name}
+          {/* <Button minimal className="arrow-btn" intent="default" icon="menu" onClick={this.handleClickChatList} /> */}
+          <div className="pc-menu-live">
+            <AiOutlineMenu size={20} onClick={this.handleClickChatList} />
           </div>
-          <Button className="arrow-btn" minimal onClick={() => this.handleClickChatBox(webRtc.showCommunication, true)}>
-            <div style={{ position: 'relative'}}>
+          <div className="op-name">
+            <div style={{ display: 'flex' }}>
+              {type === 'user' ? `${user.user.firstName} ${user.user.lastName}` : database.Board.byId[webRtc.localCallHistory.chatHistory.connectionId].name}
+              <CallTimer {...this.props} />
+            </div>
+          </div>
+          {/* <Button className="arrow-btn" minimal onClick={() => this.handleClickChatBox(webRtc.showCommunication, true)}>
+            <div style={{ position: 'relative' }}>
               <MdMessage size={18} />
               {unMessageCount ? (unMessageCount.unSeenNo !== 0 && <Badge number={unMessageCount.unSeenNo} size={10} top={-5} />) : null}
             </div>
-          </Button>
+          </Button> */}
+
+          <div className="pc-live-chat-history">
+            <MdMessage size={20} onClick={() => this.handleClickChatBox(webRtc.showCommunication, true)} />
+            <div style={{ position: 'relative' }}>
+              {unMessageCount ? (unMessageCount.unSeenNo !== 0 && <Badge number={unMessageCount.unSeenNo} size={10} top={-16} />) : null}
+            </div>
+          </div>
+
         </div>
         <div className="video-container">
           <div className="pc-maxmin-btn">
-            <Button onClick={toggleMaximize} className="pc-control-btn">
+            {/* <Button onClick={toggleMaximize} className="pc-control-btn">
               {isMaximum ? <TiArrowMinimise size={25} /> : <TiArrowMaximise size={25} />}
-            </Button>
+            </Button> */}
+            < Button
+              className="pc-control-btn"
+              onClick={toggleMaximize}
+              icon={isMaximum ? <TiArrowMinimise size={25} /> : <TiArrowMaximise size={25} />}
+              type="button"
+              buttonStyle="btn--circle-icons"
+              buttonSize="btn--small"
+            />
           </div>
           <ImageOnMainScreen {...this.props} />
           <UsersScreen {...this.props} />

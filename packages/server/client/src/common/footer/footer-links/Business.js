@@ -25,12 +25,11 @@ class Business extends React.Component {
     return (
       <div>
         <Navbar />
-        <div className="pc-business">
+        <div className="pc-business pc-container">
           <div className="pc-business-content">
-            <h2>Business Enquiry</h2>
+            <h1>Business Enquiry</h1>
             <p>
-              Our main business is Proper Class online Mentorship platform. However we provide other
-              tech related solutions.
+            Our main business is the Proper Class online Mentorship platform. However, we provide other software solutions.
               <br />
               If you are willing to partner with us or want to know more about our business. Please write
               us at

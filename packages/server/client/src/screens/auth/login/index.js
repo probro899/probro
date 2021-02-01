@@ -6,9 +6,15 @@ import * as actions from '../../../actions';
 import Log from './login';
 import GoogleLogin from './GoogleLogin';
 import { login } from '../helper-functions';
+import { Navbar } from '../../home/component'
+import Footer from '../../../common/footer'
 
 class Login extends Component {
-  state = { redirect: false, slug: '', loading: false };
+  state = { redirect: false, slug: '', loading: false, showContent: false };
+
+  componentDidMount() {
+  this.setState({ showContent: true });
+  }
 
   loginHandler = async (data) => {
     const { updateNav } = this.props;
@@ -44,29 +50,35 @@ class Login extends Component {
 
   render() {
     const { account } = this.props;
-    const { redirect, slug, loading } = this.state;
+    const { redirect, slug, loading, showContent } = this.state;
     // console.log('props in login page', this.props);
     return (
-      <div className="o-log-or-reg">
-        <div className="log-or-reg">
-          <div className="reg-box-header">
-            <p>Login to Proper Class</p>
-            <Link to="/register"><u>or create an account</u></Link>
-          </div>
-          {
-            redirect || account.user ? <Redirect push to={`/dashboard/${slug || account.user.slug}`} /> : <Log loginHandler={this.loginHandler} />
-          }
-          <div className="auth-with-others">
-            {typeof document !== 'undefined' ? <GoogleLogin loading={loading} googleLogin={this.googleLogin} /> : null}
-          </div>
-          <div className="auth-footer">
-            <p>
-              <br />
-              <Link to="/forgot-password"><u>Forgot your password?</u></Link>
-            </p>
+      <>
+        <Navbar />
+        <div className="o-log-or-reg">
+          <div className="log-or-reg">
+            <div className="reg-box-header">
+              <h1>Welcome Back</h1>
+            </div>
+            {
+              redirect || account.user ? <Redirect push to={`/dashboard/${slug || account.user.slug}`} /> : <Log loginHandler={this.loginHandler} />
+            }
+            <div className="auth-with-others">
+              {typeof document !== 'undefined' ? <GoogleLogin loading={loading} googleLogin={this.googleLogin} /> : null}
+            </div>
+            <div className="auth-footer">
+              <p className="forgot-password">
+                <Link to="/forgot-password">Forgot password?</Link>
+              </p>
+              <p className="register-link"> Don't have an account?
+                <Link to="/register">Register</Link>
+              </p>
+
+            </div>
           </div>
         </div>
-      </div>
+        <Footer />
+      </>
     );
   }
 }

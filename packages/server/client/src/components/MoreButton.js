@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Button, Menu, MenuItem, Popover } from '@blueprintjs/core';
-
+import { FiMoreHorizontal } from 'react-icons/fi';
 // more button popover here id holds the id of the board
 const SmallMenu = (onclick, id) => {
   return (
@@ -34,10 +34,11 @@ class MoreButton extends React.Component {
         position="right"
         className="more-button"
       >
-        <Button
+        {/* <Button
           icon="more"
           minimal
-        />
+        /> */}
+        <FiMoreHorizontal size={25} color="#1d4354" />
       </Popover>
     );
   }

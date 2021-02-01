@@ -1,0 +1,35 @@
+[
+    {
+      "id": 1,
+      "title": "Connect With The Mentors",
+      "image": "/assets/graphics/img-1.svg",
+      "direction": "row",
+      "list":[
+          "Sign up to create your profile and own a dashboard.",
+          "Find mentors using the search feature as your interest.",
+          "Send Connection request to the mentors."
+      ]
+    },
+    {
+        "id": 2,
+        "title": "Manage Your Profile Efficiently",
+        "image": "/assets/graphics/img-2.svg",
+        "direction": "row-reverse",
+        "list":[
+            "Update your profile, fill out your education and experience",
+            "Create classrooms and organize the projects with tasks",
+            "Create content, write blogs and use drawing board as well."
+        ]
+      },
+      {
+        "id": 3,
+        "title": "Mentorship Programme",
+        "image": "/assets/graphics/img-3.svg",
+        "direction": "row",
+        "list":[
+            "Strengthen mentor-mentee relationship",
+            "Track your progress, communicate, generate report",
+            "Read, learn and contribute"
+        ]
+      }
+  ]

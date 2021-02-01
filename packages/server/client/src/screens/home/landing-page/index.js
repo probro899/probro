@@ -1,29 +1,28 @@
 import React from 'react';
-import { useQuery } from '@apollo/client';
 import store from '../../../store';
 import updateNav from '../../../actions/navigate';
 import { Navbar } from '../component';
-import Slider from './slider';
 import Banner from './banner';
 import Popular from './popular';
-import Post from './posts';
 import Footer from '../../../common/footer';
-import { Spinner } from '../../../common';
-import { GET_POPULAR } from '../../../queries';
+import MainBanner from './MainBanner';
+import OurStats from './OurStats';
 
 function HomePage() {
   store.dispatch(updateNav({ schema: 'mainNav', data: { name: 'properClass' } }));
-  const { data, loading } = useQuery(GET_POPULAR);
-  if (loading) return <Spinner />;
+  if (typeof document === 'object') {
+    navigator.serviceWorker.register('sw.js').then(swRegistration => store.dispatch({ type: 'updateWebRtc', schema: 'swRegistration', payload: swRegistration }));
+  }
+
   return (
-    <div>
+    <>
       <Navbar />
-      <Slider />
+      <MainBanner />
+      <OurStats />
       <Banner />
-      <Post />
-      <Popular data={data.getPopular.users} />
+      <Popular />
       <Footer />
-    </div>
+    </>
   );
 }
 export default HomePage;

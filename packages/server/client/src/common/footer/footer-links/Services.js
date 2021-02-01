@@ -30,13 +30,11 @@ class Services extends React.Component {
     return (
       <div>
         <Navbar />
-        <div className="pc-services">
+        <div className="pc-services pc-container">
           <div className="pc-services-content">
-            <h2>Our Software Services</h2>
+            <h1>Our Software Services</h1>
             <p>
-              Our main business is Proper Class online Mentorship platform. However we provide other
-              tech related solutions. We have expertize on mobile app development, digital marketing, web
-              application development, machine learning and AI.
+            Our main business is the Proper Class online Mentorship platform. However, we provide other software solutions. We have expertise in mobile app development, digital marketing, web application development, machine learning, and AI.
               <br />
               If you are looking for software solutions for your business, please write us at
               {' '}

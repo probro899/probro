@@ -1,6 +1,7 @@
 const path = require('path');
 const webConfig = require('./webConfig');
 const webpackNodeExternals = require('webpack-node-externals');
+const JsxstylePlugin = require('jsxstyle-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
@@ -21,7 +22,7 @@ module.exports = {
 
   output: {
     filename: 'bundle.js',
-    path: path.resolve(__dirname, 'build'),
+    path: path.resolve(__dirname, '..', '..', '..', 'probro_ui', 'packages', 'server', 'build'),
     publicPath: '/build',
   },
 
@@ -30,9 +31,13 @@ module.exports = {
       {
         test: /\.js$/,
         exclude: /(node_modules|bower_components)/,
-        use: {
+        use: [{
           loader: 'babel-loader',
         },
+        {
+          loader: JsxstylePlugin.loader,
+        },
+        ],
       },
       {
         test: /\.node$/,
@@ -52,5 +57,6 @@ module.exports = {
     new CopyWebpackPlugin([
       { from: './server/src/db/migrations', to: './migrations' },
     ]),
+    new JsxstylePlugin(),
   ],
 };

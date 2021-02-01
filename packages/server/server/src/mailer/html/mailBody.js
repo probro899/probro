@@ -1,3 +1,4 @@
+import { ENDPOINT } from '../../../../client/src/config';
 
 export default async () => {
   const registrationHtmlString = (token) => {
@@ -13,8 +14,8 @@ export default async () => {
         <div class="main-body" style="background: white; width: 500; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; height: auto;">
           <h2>Congratulation you are registered successfully.</h2>
           <p style="color: black;">Please login by using following link to verify your email.</p>
-        <a style="background: white; text-align: center; width: 100;" href="https://www.properclass.com/email-verification/${token}" target="_blank">
-          https://www.properclass.com/email-verification/:${token}
+        <a style="background: white; text-align: center; width: 100;" href="${ENDPOINT}/email-verification/${token}" target="_blank">
+          ${ENDPOINT}/email-verification/:${token}
         </a>
         <p style="color: black;">If you have any type of login issue then please send email to probro899@gmail.com <br> Thank You! </p>
       </div>
@@ -61,8 +62,8 @@ export default async () => {
         <div class="main-body" style="background: white; width: 500; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; height: auto;">
           <h2>You have a friend request from ${fUser.firstName}.</h2>
           <p style="color: black;">Please follow the link for more details</p>
-        <a style="background: white; text-align: center; width: 100;" href="https://www.properclass.com/" target="_blank">
-          https://www.properclass.com/
+        <a style="background: white; text-align: center; width: 100;" href="${ENDPOINT}/" target="_blank">
+          ${ENDPOINT}/
         </a>
         <p style="color: black;">If you have any type of issue then please send email to probro899@gmail.com <br> Thank You! </p>
       </div>
@@ -85,8 +86,8 @@ export default async () => {
         <div class="main-body" style="background: white; width: 500; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; height: auto;">
           <h2>${tUser.firstName} accept your friend request</h2>
           <p style="color: black;">Please follow the link for more details</p>
-        <a style="background: white; text-align: center; width: 100;" href="https://www.properclass.com/" target="_blank">
-          https://www.properclass.com/
+        <a style="background: white; text-align: center; width: 100;" href="${ENDPOINT}/" target="_blank">
+          ${ENDPOINT}/
         </a>
         <p style="color: black;">If you have any type of issue then please send email to probro899@gmail.com <br> Thank You! </p>
       </div>

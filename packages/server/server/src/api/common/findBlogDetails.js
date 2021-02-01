@@ -26,15 +26,15 @@ export default function findBlogDetails(blogId, userId, getBlog, uId) {
   const userDetailList = allUserIds.map(uid => allUserDetails.find(ud => ud.userId === uid));
   const userDetails = userList.filter(u => u).map((u, idx) => ({ user: { id: u.id, slug: u.slug, firstName: u.firstName, lastName: u.lastName, middleName: u.middleName }, userDetail: userDetailList[idx] || {} }));
 
-  const blogWithUser = { ...blog, user: { ...findUserDetails(blog.userId).user, userDetail: findUserDetails(blog.userId).userDetail } };
-  const blogUsers = userDetails.map(u => ({ ...u.user, userDetail: u.userDetail }));
+  const blogWithUser = { ...blog, user: { ...findUserDetails(blog.userId).user, userDetail: findUserDetails(blog.userId).userDetail || {} } };
+  const blogUsers = userDetails.map(u => ({ ...u.user, userDetail: u.userDetail || {} }));
   const blogLikeWithUser = blogLike.map(l => {
     const userRes = findUserDetails(l.userId);
-    return { ...l, user: { ...userRes.user, userDetail: userRes.userDetail } };
+    return { ...l, user: { ...userRes.user, userDetail: userRes.userDetail || {} } };
   });
   const blogCommentWithuser = blogComment.map(c => {
     const userRes = findUserDetails(c.userId);
-    return { ...c, user: { ...userRes.user, userDetail: userRes.userDetail } };
+    return { ...c, user: { ...userRes.user, userDetail: userRes.userDetail || {} } };
   });
   return { blogComment: blogCommentWithuser, blogLike: blogLikeWithUser, userDetails: blogUsers, blog: blogWithUser };
 }

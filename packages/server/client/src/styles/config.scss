@@ -1,3 +1,4 @@
+$primaryColor: rgb(23, 95, 199);
 $skyBlueMain: #137cbd;
 $navTextColor: #666;
 $textColor: #222;
@@ -9,24 +10,38 @@ $pcLightRed: rgba(255, 0, 0, 0.336);
 $darkBlue: rgba(29, 67, 84, 1);
 $pcLightBlue: rgba(29, 67, 84, 0.7);
 $borderOnDarkBlue: #2b5468;
-$backgroundColor: #fff;
+$backgroundColor: #f6f7fd; //#fafbfc -new1 #F3F7F7 - new2  //f3f2ef -old  //#f6f7fd //very new
 $fadedBackground: #f9f9f9;
 $normalBorder: #e0e0e0;
 $pcGreen: rgb(113, 249, 113);
-$normalShadowColor: rgba(57,73,76,.35);
+$normalShadowColor: rgba(57, 73, 76, 0.35);
 $lightTextColor: #696969;
 $footerHeight: 125px;
 // new design properties here
-$primary: #2572D1;
-$dropPrimary: #58AFFC;
+$primary: #2572d1;
+$dropPrimary: #58affc;
 $primaryHover: rgba(78, 185, 240, 1);
 $dropPrimaryHover: rgba(30, 110, 220, 1);
 $shadowColor: #383535;
-// navbar height 
-$navbarHeight: 60px;
+// navbar height
+$navbarHeight: 90px;
 $boardColor: #88e0e9;
 $toolbarHeight: 40px;
 $blue: rgba(19, 124, 189, 1);
 $silver: rgb(182, 182, 182);
 $albaster: #f8f8f8;
 $borderColor: #d6d9d9;
+
+//new
+$headingColor: #2e3d49; //#2e3d49 //#657482
+$subHeadColor: #58646d;
+
+//mixins
+@mixin genericBoxPattern {
+  background: #fff;
+  border-radius: 10px;
+  // border: 1px solid #eee;
+  // box-shadow: 0 0 8px 0 rgba(17, 22, 26, 0.16),
+  //   0 4px 8px 0 rgba(17, 22, 26, 0.08), 0 8px 16px 0 rgba(17, 22, 26, 0.08);
+  box-shadow: 0 6px 12px -1px rgba(0, 32, 128, 0.1), 0 0 0 1px #f0f2f7;
+}

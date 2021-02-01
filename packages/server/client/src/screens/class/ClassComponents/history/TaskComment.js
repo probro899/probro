@@ -1,15 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button, TextArea } from '@blueprintjs/core';
+// import { Button, TextArea } from '@blueprintjs/core';
 import { timeStampSorting } from '../../../../common/utility-functions';
 import DeletePopOver from '../../../../common/DeletePopOver';
 import CommentDesc from './CommentDesc';
 import TaskActivity from './TaskActivity';
 import { ENDPOINT } from '../../../../config';
 import RoundPicture from '../../../../components/RoundPicture';
-
+import { FormTextArea } from '../../../../common/Form/FormTextArea';
+import { Button } from '../../../../common/utility-functions/Button/Button';
 // const profileIcon = require('../../../../assets/icons/64w/uploadicon64.png');
-
+import { AiOutlineClose, AiOutlineCheck } from "react-icons/ai";
 
 class TaskComment extends React.Component {
   state = { deletePopover: false, editCommentId: null, comment: '', activeComment: {} };
@@ -110,40 +111,58 @@ class TaskComment extends React.Component {
             {
               editCommentId !== com.id ? <CommentDesc comment={com.comment} /> : (
                 <div className="pc-comment-edit">
-                  <TextArea
-                    fill
-                    small
-                    style={{ fontSize: 16, padding: '2px' }}
-                    placeholder="Put your comments."
-                    value={comment}
-                    onChange={e => this.commentChange(e)}
-                  />
-                  <Button icon="tick" style={{ margin: '0px 5px' }} onClick={this.saveComment} intent="success" />
-                  <Button icon="cross" onClick={() => this.setState({ editCommentId: null })} />
+                  <div className="pc-comment-box">
+                    <FormTextArea
+                      fill
+                      small
+                      style={{ fontSize: 16, padding: '2px' }}
+                      placeholder="Put your comments."
+                      value={comment}
+                      onChange={e => this.commentChange(e)}
+                    />
+                  </div>
+                  <span className="buttons-group">
+                    <Button
+                      icon={<AiOutlineCheck size={20} />}
+                      type="button"
+                      buttonStyle="btn--success--outline"
+                      buttonSize="btn--small"
+                      onClick={this.saveComment}
+                    />
+                    <Button
+                      icon={<AiOutlineClose size={20} />}
+                      type="button"
+                      buttonStyle="btn--danger--outline"
+                      buttonSize="btn--small"
+                      onClick={() => this.setState({ editCommentId: null })}
+                    />
+                  </span>
+                  {/* <Button icon="tick" style={{ margin: '0px 5px' }} onClick={this.saveComment} intent="success" />
+                  <Button icon="cross" onClick={() => this.setState({ editCommentId: null })} /> */}
                 </div>
               )
             }
           </div>
           {editCommentId !== com.id
             && (
-            <div className="com-config">
-              {
-                account.user.id === com.userId ? (
-                  <div>
-                    <small className="primary" role="menu" tabIndex="0" onKeyDown={() => false} onClick={() => this.editComment(com)}>
-                      <u>Edit</u>
-                    </small>
-                    <small className="danger" role="menu" tabIndex="0" onKeyDown={() => false} onClick={() => this.togglePopover(com)}>
-                      <u>Delete</u>
-                    </small>
-                  </div>
-                ) : (
-                  <small className="primary" role="menu" tabIndex="0" onKeyDown={() => false} onClick={() => this.replyComment(com)}>
-                    <u>Reply</u>
-                  </small>
-                )
-              }
-            </div>
+              <div className="com-config">
+                {
+                  account.user.id === com.userId ? (
+                    <div>
+                      <small className="primary" role="menu" tabIndex="0" onKeyDown={() => false} onClick={() => this.editComment(com)}>
+                        <u>Edit</u>
+                      </small>
+                      <small className="danger" role="menu" tabIndex="0" onKeyDown={() => false} onClick={() => this.togglePopover(com)}>
+                        <u>Delete</u>
+                      </small>
+                    </div>
+                  ) : (
+                      <small className="primary" role="menu" tabIndex="0" onKeyDown={() => false} onClick={() => this.replyComment(com)}>
+                        <u>Reply</u>
+                      </small>
+                    )
+                }
+              </div>
             )}
         </div>
       </div>
@@ -158,7 +177,7 @@ class TaskComment extends React.Component {
       <div className="comments">
         <DeletePopOver isOpen={deletePopover} name="Comment" action={this.deleteComment} />
         <h3>History</h3>
-        {comments.sort(timeStampSorting).map((obj, index) => this.getHistory(obj, index % 2 === 0 ? '#f9f9f9' : '#fff'))}
+        {comments.sort(timeStampSorting).map((obj, index) => this.getHistory(obj, index % 2 === 0 ? '#eee' : '#fff'))}
       </div>
     );
   }

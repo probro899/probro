@@ -1,5 +1,6 @@
 /* eslint-disable no-case-declarations */
 import React from 'react';
+import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
@@ -8,14 +9,36 @@ import { Icon } from '@blueprintjs/core';
 import { RoundPicture } from '../../../../components';
 import { ENDPOINT } from '../../../../config';
 import { timeStampSorting } from '../../../../common/utility-functions';
-
-// const file = require('../../../../assets/icons/64w/uploadicon64.png');
+import { Spinner } from '../../../../common';
+import getNotification from './helper-functions/getNotificationtion';
+import * as actions from '../../../../actions';
 
 class NotificationContainer extends React.Component {
-  state = {};
+  state = { showLoader: false, allFetched: false };
+  scrollToEnd = React.createRef();
+  scrollContainer = React.createRef();
+
+  componentWillUnmount() {
+    ReactDOM.findDOMNode(this.scrollContainer.current).removeEventListener('scroll', this.trackScrolling);
+  }
+
+  trackScrolling = async (e) => {
+    const { allFetched } = this.state;
+    if (allFetched) return;
+    const scrollTracker = document.getElementById("scrollTracker");
+    if (window.innerHeight + e.target.scrollTop > scrollTracker.offsetTop) {
+      this.setState({ showLoader: true });
+      const res = await getNotification(this.props);
+      if (res.allFetched) {
+        this.setState({ allFetched: true, showLoader: false });
+      } else {
+        this.setState({ showLoader: false })
+      }
+    }
+  }
 
   getNotification = (notification) => {
-    const { database, account } = this.props;
+    const { account } = this.props;
     let url;
     let imageIcon;
     switch (notification.type) {
@@ -30,10 +53,11 @@ class NotificationContainer extends React.Component {
         );
         break;
       case 'board':
-        url = `class-work/${account.user.slug}/${notification.boardId}`;
+        url = `classroom/${account.user.slug}/${notification.boardId}`;
         imageIcon = (
           <div className="pc-noti-icon">
-            <Icon icon="application" iconSize={40} />
+            {/* <Icon icon="application" iconSize={40} /> */}
+            <img src="/assets/graphics/classroom.svg" alt="classroom logo" />
           </div>
         );
         break;
@@ -55,7 +79,7 @@ class NotificationContainer extends React.Component {
         {imageIcon}
         <div className="pc-noti-body">
           <p className="pc-noti-desc">{notification.body}</p>
-          <p className="pc-ago-date">{moment(notification.timeStamp).fromNow()}</p>
+          <span className="pc-ago-date">{moment(notification.timeStamp).fromNow()}</span>
         </div>
       </Link>
     );
@@ -63,12 +87,18 @@ class NotificationContainer extends React.Component {
 
   render() {
     const { database, account } = this.props;
+    const { showLoader } = this.state;
     const notifications = account.user ? Object.values(database.Notification.byId).sort(timeStampSorting) : [];
-    // console.log('notifications', notifications);
     return (
-      <div className="notification-list">
+      <div ref={this.scrollContainer} className="notification-list" onScroll={this.trackScrolling}>
         {notifications.length === 0 && <div className="pc-no-notis"><p>You do not have any notifications at the moment.</p></div>}
         {notifications.map(obj => this.getNotification(obj))}
+        {showLoader && (
+          <div style={{ position: 'relative', height: 45 }}>
+            <Spinner style={{ top: 0 }} />
+          </div>
+        )}
+        <div id="scrollTracker" ref={this.scrollToEnd} />
       </div>
     );
   }
@@ -80,4 +110,4 @@ NotificationContainer.propTypes = {
 };
 
 const mapStateToProps = state => state;
-export default connect(mapStateToProps)(NotificationContainer);
+export default connect(mapStateToProps, { ...actions })(NotificationContainer);

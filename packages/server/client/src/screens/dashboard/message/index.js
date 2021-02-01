@@ -6,7 +6,7 @@ import * as actions from '../../../actions';
 class Message extends React.Component {
   state = {};
 
-  async componentWillMount() {
+  async componentDidMount() {
     const { updateNav } = this.props;
     updateNav({
       schema: 'sideNav',

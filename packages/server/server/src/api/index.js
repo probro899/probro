@@ -10,7 +10,7 @@ import deleteHandler from './common/delete';
 import updateHandler from './common/update';
 import getHandler from './common/get';
 import { createOffer, createAnswer, addICeCandidate, callClose, callStatusChange, onPcStatusChange, commPingPong } from './common/web-rtc/mesh';
-import { initSfuCall, closeSfuCall, sfuPingPong, sfuCallStatusChange } from './common/web-rtc/sfu';
+import { initSfuCall, closeSfuCall, sfuPingPong, sfuCallStatusChange, videoCallUserRegistration } from './common/web-rtc/sfu';
 import errorReportHandlers from './common/error';
 
 const mentor = createScope('Mentor', () => {
@@ -20,6 +20,7 @@ const mentor = createScope('Mentor', () => {
 const mentee = createScope('Mentee', () => {
 
 });
+
 // all create api scoping
 addHandlerApi.forEach(func => mentor(func));
 addHandlerApi.forEach(func => mentee(func));
@@ -51,6 +52,7 @@ mentor(initSfuCall);
 mentor(closeSfuCall);
 mentor(sfuPingPong);
 mentor(sfuCallStatusChange);
+mentor(videoCallUserRegistration);
 
 mentee(createOffer);
 mentee(createAnswer);
@@ -63,6 +65,7 @@ mentee(initSfuCall);
 mentee(closeSfuCall);
 mentee(sfuPingPong);
 mentee(sfuCallStatusChange);
+mentee(videoCallUserRegistration);
 
 mentor(logout);
 mentor(updateUserDetails);
