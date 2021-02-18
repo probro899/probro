@@ -22,7 +22,7 @@ module.exports = {
 
   output: {
     filename: 'bundle.js',
-    path: path.resolve(__dirname, '..', '..', '..', 'probro_ui', 'packages', 'server', 'build'),
+    path: path.resolve(__dirname, '..', '..', '..', 'client', 'packages', 'server', 'build'),
     publicPath: '/build',
   },
 

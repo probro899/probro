@@ -4,6 +4,7 @@ import closeSfuCall from './closeSfuCall';
 import sfuPingPong from './sfuPingPong';
 import sfuCallStatusChange from './sfuCallStatusChange';
 import videoCallUserRegistration from './videoCallUserRegistration';
+import isUserInLiveCall from './isUserInLiveCall';
 
 export {
   initSfuCall,
@@ -11,4 +12,5 @@ export {
   sfuPingPong,
   sfuCallStatusChange,
   videoCallUserRegistration,
+  isUserInLiveCall,
 };
