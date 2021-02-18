@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { MdMyLocation } from 'react-icons/md';
+import { BiCurrentLocation } from "react-icons/bi";
 import { BsPersonCheck, BsPersonPlus } from "react-icons/bs";
 import { ENDPOINT } from '../../../config';
 import { RoundPicture } from '../../../components';
@@ -8,7 +8,7 @@ import { getName } from '../../../common/utility-functions';
 import { Button } from '../../../common/utility-functions/Button/Button'
 
 const PopularUser = ({ obj, connected }) => {
-  const imgUrl = obj.userDetail.image ? `${ENDPOINT}/assets/user/${10000000 + parseInt(obj.id, 10)}/profile/${obj.userDetail.image}` : '/assets/icons/64w/uploadicon64.png';
+  const imgUrl = obj.userDetail.image ? `${ENDPOINT}/assets/user/${10000000 + parseInt(obj.id, 10)}/profile/${obj.userDetail.image}` : '/assets//graphics/user.svg';
   return (
     <div className="popular-user">
       <div className="user-image">
@@ -21,7 +21,7 @@ const PopularUser = ({ obj, connected }) => {
           </Link>
         </div>
         <div style={{ opacity: 0.8, marginBottom: 3, display: 'flex', alignItems: 'center' }}>
-          <MdMyLocation />
+          <BiCurrentLocation />
           {' '}
           <span style={{ fontSize: 12, marginLeft: 2 }}>
             {' '}

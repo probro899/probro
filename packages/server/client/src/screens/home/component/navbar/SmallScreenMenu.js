@@ -1,9 +1,9 @@
 /* eslint-disable react/jsx-no-bind */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { Drawer } from '@blueprintjs/core';
+import Drawer from '../../../../common/drawer';
+import { Link } from 'react-router-dom';
 import * as actions from '../../../../actions';
 
 const logOutHandler = (apis) => {
@@ -14,17 +14,17 @@ const logOutHandler = (apis) => {
   }
 };
 
-const DropMenu = ({ account, activeNav, apis }) => {
+const DropMenu = ({ account, activeNav, smallScreenToggle, apis }) => {
   return (
     <div className="pc-drop-menu">
-      <Link to="/" className={activeNav === 'properClass' ? 'pc-drop-menu-link active' : 'pc-drop-menu-link'}>Home</Link>
-      <Link to="/archive" className={activeNav === 'archive' ? 'pc-drop-menu-link active' : 'pc-drop-menu-link'}>Archive</Link>
-      <Link to="/search" className={activeNav === 'search' ? 'pc-drop-menu-link active' : 'pc-drop-menu-link'}>Find Mentor</Link>
+      <Link onClick={smallScreenToggle} to="/" className={activeNav === 'properClass' ? 'pc-drop-menu-link active' : 'pc-drop-menu-link'}>Home</Link>
+      <Link onClick={smallScreenToggle} to="/archive" className={activeNav === 'archive' ? 'pc-drop-menu-link active' : 'pc-drop-menu-link'}>Archive</Link>
+      <Link onClick={smallScreenToggle} to="/search" className={activeNav === 'search' ? 'pc-drop-menu-link active' : 'pc-drop-menu-link'}>Find Mentor</Link>
       {!account.sessionId ? (
-        <Link to="/login" className="pc-drop-menu-link">Login</Link>
+        <Link onClick={smallScreenToggle} to="/login" className="pc-drop-menu-link">Login</Link>
       ) : (
-        <Link to="#" onClick={logOutHandler.bind(this, apis)} className="pc-drop-menu-link">Logout</Link>
-      )}
+          <Link to="#" onClick={(e) => { logOutHandler(apis); smallScreenToggle() } } className="pc-drop-menu-link">Logout</Link>
+        )}
     </div>
   );
 };
@@ -38,21 +38,27 @@ DropMenu.propTypes = {
 class SmallScreenMenu extends React.Component {
   state = {};
 
+  onClick = () => {
+    const { smallScreenToggle } = this.props;
+    smallScreenToggle();
+  }
+
   render() {
     const { open, smallScreenToggle, account, pcLogo, navigate, apis } = this.props;
     return (
       <Drawer
-        className="pc-dropdown-drawer"
-        usePortal
         isOpen={open}
         onClose={smallScreenToggle}
-        size="80%"
         position="left"
-        autoFocus={false}
-        lazy
-        title={<img alt="Proper Class Logo" style={{ objectFit: 'cover', width: 200 }} src={pcLogo} />}
+        backdropOpacity={0.5}
+        hasBackdrop
+        title={
+          <Link to="/" onClick={this.onClick}>
+            <img alt="Proper Class Logo" style={{ objectFit: 'cover', width: 200 }} src={pcLogo} />
+          </Link>
+        }
       >
-        <DropMenu account={account} activeNav={navigate.mainNav.name} apis={apis} />
+        <DropMenu smallScreenToggle={smallScreenToggle} account={account} activeNav={navigate.mainNav.name} apis={apis} />
       </Drawer>
     );
   }

@@ -43,7 +43,7 @@
   // height: calc(
   //   100% - 70px
   // ); // substract navbarheight(60px) and 4 px top margin + shadow as well
-  z-index: 3;
+  z-index: 2;
   align-items: center;
   flex-direction: column;
   position: fixed;
@@ -137,6 +137,7 @@
   }
   @media screen and (max-width: 855px) {
     display: block;
-    margin: 110px 10px 0;
+    margin: 95px 10px 0;
+    position: relative;
   }
 }

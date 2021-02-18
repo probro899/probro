@@ -4,6 +4,7 @@
   position: absolute;
   top: 0;
   right: 10px;
+  z-index: 10;
   .pc-popover-wrapper {
     position: relative;
     .pc-content-container {
@@ -13,8 +14,6 @@
       .pc-popover {
         padding: 10px 20px;
         border-radius: 5px;
-        // min-width: 200px;
-        // border: 1px solid #000;
         background-color: #fff;
         box-shadow: 0 0 8px 0 rgba(17, 22, 26, 0.16),
           0 4px 8px 0 rgba(17, 22, 26, 0.08),

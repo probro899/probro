@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Icon } from '@blueprintjs/core';
+import { BiCurrentLocation } from "react-icons/bi";
 import { getName } from '../../../common/utility-functions';
 import client from '../../../socket';
 import * as actions from '../../../actions';
@@ -73,11 +73,13 @@ class Profile extends Component {
                   {getName(user)} < VerifiedBadge />
                 </h2>
                 <p className="mentor-position">{userDetail.headLine}</p>
-                <Icon icon="locate" />
+                <div className="pc-locate">
+                <BiCurrentLocation size={20} />
                 <span className="country">
                   {' '}
                   {userDetail.address}
                 </span>
+                </div>
               </div>
             </div>
             <Bio

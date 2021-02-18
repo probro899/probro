@@ -1,7 +1,6 @@
 import React from 'react';
 import axios from 'axios';
 import PropTypes from 'prop-types';
-import { Spinner } from '@blueprintjs/core';
 import captureCanvas from './captureCanvas';
 import DrawChart from './drawChart';
 import Table from '../../../common/Table';
@@ -10,6 +9,7 @@ import { ENDPOINT } from '../../../config';
 import Popup from '../../../common/Form/Popup';
 import { AiOutlineBarChart } from "react-icons/ai";
 import { Button } from '../../../common/utility-functions/Button/Button';
+import Spinner from '../../../common/spinner';
 
 class Report extends React.Component {
   constructor(props) {
@@ -60,7 +60,7 @@ class Report extends React.Component {
         icon={<AiOutlineBarChart size={25} />}
         onClose={onClose}
         className="pc-report-overlay"
-        width="70vw"
+        width="800px"
       >
         {
           boardActivities && !error ? (
@@ -88,12 +88,6 @@ class Report extends React.Component {
                     <a href={pdfUrl} rel="noopener noreferrer" target="_blank">Download Pdf</a>
                   </div>
                 )}
-                {/* <Button
-                  loading={loading}
-                  text="Generate PDF"
-                  intent="success"
-                  onClick={() => this.generatePdfHandler(boards.byId[boardId], tableData)}
-                /> */}
                 <Button
                   type="button"
                   buttonStyle="btn--success--solid"
@@ -104,7 +98,7 @@ class Report extends React.Component {
                 />
               </div>
             </div>
-          ) : <Spinner intent="success" />
+          ) : <Spinner />
         }
       </Popup>
     );

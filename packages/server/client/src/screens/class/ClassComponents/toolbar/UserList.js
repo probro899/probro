@@ -73,12 +73,9 @@ class UserList extends React.Component {
     const { boardId, boardMembers } = this.props;
     const thisBoardMembers = Object.values(boardMembers.byId).filter(o => o.boardId === boardId).slice(0, 4).filter(o => !o.deleteStatus);
     return thisBoardMembers.map((o, index) => {
-      // console.log('O value', o);
       return (
         <Popover
-          position="bottom"
           content={<UserDetail detail={o.user} />}
-          // eslint-disable-next-line react/no-array-index-key
           key={index}
         >
           <div className="i-user">
@@ -97,7 +94,8 @@ class UserList extends React.Component {
       <div className="each-item user-list">
         {this.getSmallList()}
         <Popover
-          position="right-top"
+          position="bottom"
+          minimal
           content={
             (
               <AllUsers

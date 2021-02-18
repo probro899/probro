@@ -40,10 +40,10 @@
       margin-bottom: 30px;
       .pc-price-containers {
         @include genericBoxPattern;
-        border: 1px solid #bbb;
-        &:hover {
-          border-color: rgba(0, 86, 184, 0.5);
-        }
+        // border: 1px solid #bbb;
+        // &:hover {
+        //   border-color: rgba(0, 86, 184, 0.5);
+        // }
         .pc-price-name-and-desc {
           text-align: center;
           h4 {

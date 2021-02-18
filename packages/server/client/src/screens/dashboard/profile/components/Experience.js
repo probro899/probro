@@ -1,5 +1,6 @@
 import React from 'react';
-import { Icon } from '@blueprintjs/core';
+import { MdEdit } from "react-icons/md";
+import { GrFormAdd } from "react-icons/gr";
 import moment from 'moment';
 import { PopoverForm } from '../../../../components';
 import { experienceSchema } from '../structure';
@@ -7,7 +8,7 @@ import { experienceSchema } from '../structure';
 const ExperienceInfo = ({ data, editPopover }) => {
   return (
     <div className="p-exp-list-i">
-      <img src="/assets/icons/64w/office64.png" alt="school icon" />
+      <img src="/assets/graphics/office.svg" alt="school icon" />
       <p>
         <span className="p-title-i">{data.title}</span>
         <br />
@@ -17,7 +18,7 @@ const ExperienceInfo = ({ data, editPopover }) => {
         <br />
         <span>{data.summary}</span>
       </p>
-      <p><Icon style={{ cursor: 'pointer' }} icon="edit" onClick={() => editPopover(data)} /></p>
+      <p><MdEdit style={{ cursor: 'pointer' }} size={20} onClick={() => editPopover(data)} /></p>
     </div>
   );
 };
@@ -70,6 +71,7 @@ class Experience extends React.Component {
       endTime: current ? null : data.endTime.toLocaleString('en-IN').split(',')[0],
       userId: account.user.id,
     };
+    console.log("experience edit", info);
     if (editObj) {
       await apis.updateUserWorkExperience([{ ...info }, { id: editObj.id }]);
       updateDatabaseSchema('UserWorkExperience', { ...info, id: editObj.id });
@@ -126,8 +128,8 @@ class Experience extends React.Component {
         />
         <h2 className="p-top">
           Experience
-          <Icon
-            icon="plus"
+          <GrFormAdd
+            size={20}
             onClick={() => {
               this.editPopover({
                 startTime: new Date(),

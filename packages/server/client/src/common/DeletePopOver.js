@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-// import { Dialog } from '@blueprintjs/core';
 import Popup from '../common/Form/Popup';
 import { Button } from '../common/utility-functions/Button/Button';
 

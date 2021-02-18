@@ -46,7 +46,7 @@ class Setting extends Component {
             </Link>
           </div>
           {activeTab === 'basic' && <BasicSettings apis={apis} account={account} database={database} />}
-          {activeTab === 'advanced' && <AdvancedSettings apis={apis} database={database} account={account} />}
+          {activeTab === 'advanced' && <AdvancedSettings match={match} apis={apis} database={database} account={account} />}
         </div>
 
       </div>

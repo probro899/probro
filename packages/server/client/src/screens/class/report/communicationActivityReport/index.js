@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { RadioGroup, Radio } from '@blueprintjs/core';
+import { RadioGroup, Radio } from '../../../../common/RadioButton';
 import barChart from './barChart';
 import lineChart from './lineChart';
 
@@ -65,7 +65,6 @@ class DrawChart extends React.Component {
           <h3>Select a timeline: </h3>
           <RadioGroup
             className="pc-report-radio-group"
-            inline
             onChange={this.timelineChange}
             selectedValue={timelineValue}
           >

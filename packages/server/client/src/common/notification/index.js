@@ -14,8 +14,8 @@ class NotificationComponent extends React.Component {
       title,
       options: {
         tag: 'now',
-        icon: '/assets/graphics/logo.png',
-        image: '/assets/graphics/logo.png',
+        icon: '/assets/graphics/logo.svg',
+        image: '/assets/graphics/logo.svg',
         lang: 'en',
         dir: 'ltr',
         sound: '/assets/media/ringtone.mp3',

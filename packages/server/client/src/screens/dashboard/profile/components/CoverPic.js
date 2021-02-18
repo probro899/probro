@@ -1,10 +1,13 @@
 import React from 'react';
-import axios from 'axios';
 import PropTypes from 'prop-types';
-import { Icon, Popover, MenuItem, Menu } from '@blueprintjs/core';
+import {Popover} from '@blueprintjs/core';
+import { MdEdit } from "react-icons/md";
+import {Menu, MenuItem} from '../../../../common/Menu';
 import { ENDPOINT } from '../../../../config';
 import Cropper from './Cropper';
 import { Spinner } from '../../../../common';
+import { uploadFile } from '../../../../common/utility-functions';
+
 
 const SmallMenu = (onClick, userDetail) => (
   <Menu>
@@ -12,7 +15,7 @@ const SmallMenu = (onClick, userDetail) => (
       text="Upload New"
       onClick={() => onClick('upload')}
     />
-    <Menu.Divider />
+
     <MenuItem
       disabled={!userDetail.coverImage}
       text="Reposition"
@@ -48,20 +51,8 @@ class CoverPic extends React.Component {
       addDatabaseSchema,
     } = this.props;
     this.setState({ loading: true });
-    const formData = new FormData();
-    formData.append('data', JSON.stringify({ token: account.sessionId, fileType: 'image', content: 'profile' }));
-    formData.append('file', e.target.files[0]);
     try {
-      const res = await axios({
-        config: {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        },
-        method: 'post',
-        url: `${ENDPOINT}/web/upload-file`,
-        data: formData,
-      });
+      const res = await uploadFile("profile", e.target.files[0], account.sessionId);
       if (res.status === 200) {
         const response = await apis.updateUserDetails({
           userId: account.user.id,
@@ -110,7 +101,7 @@ class CoverPic extends React.Component {
             >
               <div style={{ position: 'relative' }}>
                 <span>Edit </span>
-                <Icon icon="edit" color="white" className="edit-icon" />
+                <MdEdit size={15} className="edit-icon"/>
                 <input
                   ref={this.fileInputRef}
                   type="file"

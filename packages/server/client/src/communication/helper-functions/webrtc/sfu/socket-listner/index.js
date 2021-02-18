@@ -4,10 +4,11 @@ import onOfferArrive from './on-offer';
 import onSfuCallStatusChangeHandler from './onSfuCallStatusChangeHandler';
 
 export default (props, state, maximize) => {
-
   // initialize conferece call
   client.on('sfuInit', (data) => {
-    // console.log('SFU INIT CALLED');
+    const { updateWebRtc } = props;
+    const liveCallPingTimer = setInterval(sfuPingPong, 5000);
+    updateWebRtc('liveCallPingTimer', liveCallPingTimer);
     onOfferArrive(props, state, data);
   });
 
@@ -21,8 +22,9 @@ export default (props, state, maximize) => {
 
   // Handle sfu ping request
   client.on('ping', (data) => {
+    // console.log('ping called', data);
     if (data) {
-      sfuPingPong(props, state, data);
+      sfuPingPong(data);
     }
   });
 };

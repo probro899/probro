@@ -1,6 +1,5 @@
 /* eslint-disable jsx-a11y/media-has-caption */
 import React from 'react';
-import { InputGroup, Button } from '@blueprintjs/core';
 import adapter from 'webrtc-adapter';
 import Janus from '../janus';
 
@@ -349,37 +348,32 @@ newRemoteFeed = (id, display, audio, video) => {
     console.log('Remote Streams', this.state);
     return (
       <div>
-        <InputGroup onChange={this.inputHandler} placeholder="enter your display name" />
-        <Button intent="success" style={{ margin: 10 }} text="Join" onClick={this.joinHandler} />
+        <input onChange={this.inputHandler} placeholder="enter your display name" />
+        <button style={{ margin: 10, backgroundColor: 'green' }} text="Join" onClick={this.joinHandler} />
         {myid && mypvtid && (
         <div>
-          <Button
-            intent="success"
-            style={{ margin: 10 }}
+          <button
+            style={{ margin: 10, backgroundColor: 'green' }}
             text="Audio"
             onClick={() => this.publishOwnFeed({ audioRecv: false, videoRecv: false, audioSend: true, videoSend: false })}
           />
-          <Button
-            intent="success"
-            style={{ margin: 10 }}
+          <button
+            style={{ margin: 10, backgroundColor: 'green' }}
             text="Video"
             onClick={() => this.publishOwnFeed({ audioRecv: false, videoRecv: false, audioSend: true, videoSend: true })}
           />
-          <Button
-            intent="success"
-            style={{ margin: 10 }}
+          <button
+            style={{ margin: 10, backgroundColor: 'green' }}
             text="Screenshare"
             onClick={() => this.publishOwnFeed({ audioRecv: false, videoRecv: false, audioSend: true, video: 'screen' })}
           />
-          <Button
-            intent="success"
-            style={{ margin: 10 }}
+          <button
+            style={{ margin: 10, backgroundColor: 'green' }}
             text="Un Publish"
             onClick={this.onUnPublishHandler}
           />
-          <Button
-            intent="danger"
-            style={{ margin: 10 }}
+          <button
+            style={{ margin: 10, backgroundColor: 'green' }}
             text="Close Call"
             onClick={this.onHangUp}
           />

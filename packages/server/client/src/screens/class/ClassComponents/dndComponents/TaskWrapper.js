@@ -2,6 +2,8 @@ import React, { useRef, useEffect } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
 import { getEmptyImage } from 'react-dnd-html5-backend';
 import Itemtype from './types';
+import { osFinder } from '../../helper-functions';
+
 
 export default (props) => {
   const ref = useRef(null);
@@ -66,7 +68,7 @@ export default (props) => {
   const [{ isDragging }, drag, preview] = useDrag({
     item: { type: Itemtype.TASK, id: task.id, draggableId, dropableId: task.boardColumnId, index },
     collect: monitor => ({
-      isDragging: monitor.isDragging(),
+      isDragging: osFinder(window) === 'Mobile' ? false : monitor.isDragging(),
     }),
     isDragging: (monitor) => {
       return task.id === monitor.getItem().id;

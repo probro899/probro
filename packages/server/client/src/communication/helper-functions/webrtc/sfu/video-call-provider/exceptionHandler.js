@@ -33,7 +33,7 @@ const screenShareBlockErrorHandler = (errorObj) => {
 };
 
 export default async (errorObj, props) => {
-  // console.log('video call error', errorObj);
+  console.log('video call error', errorObj);
   try {
     const { errorCode } = errorObj;
     if (errorCode) {

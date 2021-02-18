@@ -1,14 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
-// import { Button } from '@blueprintjs/core';
-// import Tooltip from 'react-tooltip';
 import { TiMediaRecord } from 'react-icons/ti';
 import { FiMic, FiCopy, FiVideo, FiPhone, FiMicOff } from 'react-icons/fi';
 import callUpgrader from '../helper-functions/callUpgrader';
 import { mediaRecorder } from '../../../helper-functions/webrtc/mesh';
 import { Button } from '../../../../common/utility-functions/Button/Button';
 import { Tooltip } from '../../../../common/Form/Tooltip';
+import getDeviceType from '../../../../common/utility-functions/getDeviceType';
 
 class Controllers extends React.Component {
   constructor(props) {
@@ -24,7 +23,8 @@ class Controllers extends React.Component {
         const { activeStatus } = Object.values(database.Board.byId).find(b => b.id === parseInt(connectionId, 10));
         // console.log('Board active status', activeStatus);
         if (!activeStatus) {
-          this.callReject('autoClose');
+          // this causes prolem in sfu call
+          // this.callReject('autoClose');
         }
       }
     }
@@ -74,6 +74,7 @@ class Controllers extends React.Component {
     // console.log('props in controller', this.props);
     const { webRtc, account } = this.props;
     const { showWhiteBoard, startRecording } = this.state;
+    const isDesktop = getDeviceType() === 'Desktop';
     return (
       <div className="controllers">
         {/* <Tooltip /> */}
@@ -82,7 +83,7 @@ class Controllers extends React.Component {
           <FiPhone size={20} />
         </Button> */}
         <Tooltip content="Call End" position="top">
-          < Button
+          <Button
             className="pc-control-btn"
             onClick={this.callReject}
             icon={<FiPhone size={20} />}
@@ -101,7 +102,7 @@ class Controllers extends React.Component {
           <FiVideo size={20} />
         </Button> */}
         <Tooltip content="Video" position="top">
-          < Button
+          <Button
             className={webRtc.localCallHistory.mediaType === 'video' ? 'pc-control-btn active' : 'pc-control-btn'}
             onClick={() => this.callUpGradeController('video')}
             icon={<FiVideo size={20} />}
@@ -118,18 +119,21 @@ class Controllers extends React.Component {
         >
           <FiCopy size={20} />
         </Button> */}
-        <Tooltip content="Screenshare" position="top">
-          < Button
-            className={webRtc.localCallHistory.mediaType === 'screenshare' ? 'pc-control-btn active' : 'pc-control-btn'}
-            onClick={() => this.callUpGradeController('screenshare')}
-            icon={<FiCopy size={20} />}
-            type="button"
-            buttonStyle="btn--circle-icons"
-            buttonSize="btn--small"
-          />
-        </Tooltip>
-
-        {/* 
+        {
+          isDesktop && (
+          <Tooltip content="Screenshare" position="top">
+            <Button
+              className={webRtc.localCallHistory.mediaType === 'screenshare' ? 'pc-control-btn active' : 'pc-control-btn'}
+              onClick={() => this.callUpGradeController('screenshare')}
+              icon={<FiCopy size={20} />}
+              type="button"
+              buttonStyle="btn--circle-icons"
+              buttonSize="btn--small"
+            />
+          </Tooltip>
+          )
+        }
+        {/*
         <Button
           data-tip="Recording"
           onClick={() => this.recordingHandler()}
@@ -138,7 +142,7 @@ class Controllers extends React.Component {
           <TiMediaRecord size={20} />
         </Button> */}
         <Tooltip content="Recording" position="top">
-          < Button
+          <Button
             className={startRecording ? 'pc-control-btn active record' : 'pc-control-btn'}
             onClick={() => this.recordingHandler()}
             icon={<TiMediaRecord size={20} />}

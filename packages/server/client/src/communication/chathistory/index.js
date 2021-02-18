@@ -7,7 +7,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
-// import { Button } from '@blueprintjs/core';
 import { MessageSender } from '../components';
 import { normalTimeStampSorting, getName } from '../../common/utility-functions';
 import { findChatHistory, markLastMessageRead } from './helper-function';

@@ -27,6 +27,7 @@ const HTML = ({ content, state, helmet, seo }) => {
         }}
         />
         <script src={`${webConfig.siteURL}/client_bundle.js`} />
+        {/* <script src={`${webConfig.siteURL}/1.client_bundle.js`} /> */}
       </body>
     </html>
   );

@@ -21,7 +21,4 @@ const updateBlog = async (api, data) => {
   }
 };
 
-export {
-  addBlog,
-  updateBlog,
-};
+export { addBlog, updateBlog };

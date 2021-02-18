@@ -44,7 +44,7 @@
         margin-right: 4px;
       }
       color: $backgroundColor;
-      padding: 0 10px 10px;
+      padding: 10px;
       cursor: pointer;
       &:hover {
         // opacity: 0.7;
@@ -69,11 +69,6 @@
   .pc-task-flag {
     display: flex;
     justify-content: space-between;
-    .pc-tag-view {
-      .pc-tag {
-        border-radius: 50%;
-      }
-    }
     .pc-deadline-view {
       color: $backgroundColor;
       p {
@@ -400,12 +395,37 @@
   width: 100%;
   margin: 5px 0px;
   background: $backgroundColor;
+  .pc-board-name-mobile {
+    padding-left: 8px;
+    margin-bottom: 5px;
+    color: $headingColor;
+    font-weight: 600;
+    font-size: 14px;
+  }
+  @media screen and (max-width: 767px) {
+    height: unset;
+  }
+  @media screen and (min-width: 768px) {
+    .pc-board-name-mobile {
+      display: none;
+    }
+  }
   .toolbar-container {
     height: 100%;
     padding: 2px;
     display: flex;
     align-items: center;
+    @media screen and (max-width: 767px) {
+      overflow: scroll;
+      // scrollbar-width: none; /* Firefox */
+      // -ms-overflow-style: none; /* IE 10+ */
+      // &::-webkit-scrollbar {
+      //   width: 0px;
+      //   background: transparent; /* Chrome/Safari/Webkit */
+      // }
+    }
     // justify-content: space-between;
+
     .left-tools {
       display: flex;
       flex-direction: row;
@@ -414,6 +434,7 @@
         padding: 0px 5px;
         display: flex;
         align-items: center;
+
         span:not(:first-child) {
           margin-left: 5px;
         }
@@ -423,6 +444,9 @@
         color: $headingColor;
         font-weight: 600;
         font-size: 20px;
+        @media screen and (max-width: 767px) {
+          display: none;
+        }
       }
       .user-list {
         // styling the short user popover content
@@ -459,6 +483,7 @@
     .right-tools {
       display: flex;
       margin-left: 5px;
+      margin-right: 5px;
       div:nth-child(2) {
         margin: 0 5px;
       }
@@ -522,6 +547,9 @@
         cursor: pointer;
         font-size: 16px;
       }
+    }
+    @media screen and (max-width: 767px) {
+      padding-top: 150px;
     }
   }
 }
@@ -596,17 +624,30 @@
       // padding: 7px 10px;
       // margin-left: -15px;
       // margin-right: -15px;
+      @media screen and (max-width: 480px) {
+        overflow: scroll;
+      }
+      @media screen and (max-width:576px){
+        flex-direction: column;
+      }
       .left-part {
         flex: 0.8;
         padding-left: 15px;
         padding-right: 15px;
+        @media screen and (max-width:576px){
+         order: 2;
+         padding-left: 0;
+         padding-right: 0;
+        }
         .pc-tags-and-deadline {
           display: flex;
           padding-top: 7px;
           justify-content: space-between;
-          .tag {
-            margin-right: 5px;
-            border-radius: 50%;
+          .task-tag-container {
+            display: inherit;
+            .pc-tag {
+              margin-right: 5px;
+            }
           }
           .pc-deadline-view {
             display: flex;
@@ -711,6 +752,7 @@
                   display: flex;
                   align-items: center;
                   justify-content: center;
+                  color: #fff;
                   svg {
                     fill: #fff;
                   }
@@ -896,6 +938,11 @@
         padding-right: 15px;
         padding-left: 15px;
         justify-content: flex-end;
+        @media screen and (max-width:576px){
+          justify-content: flex-start;
+          padding-left: 0;
+          padding-right: 0;
+        }
         .rt-in {
           padding: 5px;
           display: flex;
@@ -908,8 +955,16 @@
             display: flex;
             flex-direction: column;
             margin-bottom: 10px;
+            @media screen and (max-width:576px){
+              flex-direction: row;
+              flex-wrap: wrap;
+            }
             .bp3-popover-target {
               width: 100%;
+              @media screen and (max-width:576px){
+                margin-right: 10px;
+                width: unset;
+              }
               button {
                 width: 100%;
                 margin-bottom: 5px;
@@ -922,12 +977,23 @@
           .rt-actions {
             display: flex;
             flex-direction: column;
+            @media screen and (max-width:576px){
+              flex-direction: row;
+            }
             .bp3-popover-target {
               width: 100%;
+              @media screen and (max-width:576px){
+                margin-right: 10px;
+                width: unset;
+              }
             }
             button {
               width: 100%;
               margin-bottom: 5px;
+              @media screen and (max-width:576px){
+               margin-bottom: 0;
+               max-width: 120px;
+              }
               span {
                 justify-content: unset;
               }
@@ -973,8 +1039,9 @@
         display: flex;
         flex-direction: column;
         align-items: center;
+        overflow-x: scroll;
         .pc-graph-timeline {
-          width: 100%;
+        width: 100%;
           display: flex;
           padding-left: 10px;
           h3 {
@@ -1039,7 +1106,7 @@
         transition: transform 0.3s ease;
         font-size: 16px;
         font-weight: 500;
-        font-family: 'Montserrat', sans-serif;
+        // font-family: 'Montserrat', sans-serif;
         width: 50%;
         height: 100%;
         max-width: 160px;

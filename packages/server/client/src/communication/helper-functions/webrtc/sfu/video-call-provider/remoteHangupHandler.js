@@ -4,11 +4,11 @@ import onCloseHandler from './onCloseHandler';
 import exceptionHandler from './exceptionHandler';
 
 export default (props, state, msg) => {
-  // console.log('remote HangupHandler', msg);
+  console.log('remote HangupHandler', msg);
   try {
     const { webRtc } = store.getState();
     const { localCallHistory, isLive, showIncommingCall, communicationContainer } = webRtc;
-    if (isLive || showIncommingCall || (communicationContainer === 'connecting')) {
+    if ((isLive || showIncommingCall || (communicationContainer === 'connecting')) && localCallHistory.chatHistory) {
       const { type } = localCallHistory.chatHistory;
       if (type === 'user') {
         const { result } = msg;
@@ -24,6 +24,7 @@ export default (props, state, msg) => {
       }
     }
   } catch (e) {
+    console.log('Remote hangup error', e);
     exceptionHandler({ error: JSON.stringify(e), errorCode: 139 });
   }
 };

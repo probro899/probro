@@ -11,7 +11,7 @@ import OurStats from './OurStats';
 function HomePage() {
   store.dispatch(updateNav({ schema: 'mainNav', data: { name: 'properClass' } }));
   if (typeof document === 'object') {
-    // navigator.serviceWorker.register('sw.js').then(swRegistration => store.dispatch({ type: 'updateWebRtc', schema: 'swRegistration', payload: swRegistration }));
+    navigator.serviceWorker.register('sw.js').then(swRegistration => store.dispatch({ type: 'updateWebRtc', schema: 'swRegistration', payload: swRegistration }));
   }
 
   return (

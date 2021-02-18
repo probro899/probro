@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { Icon } from '@blueprintjs/core';
-import { IconNames } from '@blueprintjs/icons';
 import PropTypes from 'prop-types';
 import * as actions from '../../actions';
 import { AiOutlineProject } from "react-icons/ai";

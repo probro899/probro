@@ -1,11 +1,11 @@
 /* eslint-disable jsx-a11y/mouse-events-have-key-events */
 import React from 'react';
-import axios from 'axios';
 import PropTypes from 'prop-types';
 import FileInput from './FileInput';
 import { ENDPOINT } from '../../../../config';
 import RoundPicture from '../../../../components/RoundPicture';
 import { Spinner } from '../../../../common';
+import { uploadFile } from '../../../../common/utility-functions';
 
 
 class ProfilePic extends React.Component {
@@ -20,20 +20,8 @@ class ProfilePic extends React.Component {
       addDatabaseSchema,
     } = this.props;
     this.setState({ loading: true });
-    const formData = new FormData();
-    formData.append('data', JSON.stringify({ token: account.sessionId, fileType: 'image', content: 'profile', type: 'profilePic' }));
-    formData.append('file', data);
     try {
-      const res = await axios({
-        config: {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        },
-        method: 'post',
-        url: `${ENDPOINT}/web/upload-file`,
-        data: formData,
-      });
+      const res = await uploadFile("profile", data, account.sessionId);
       if (res.status === 200) {
         const response = await apis.updateUserDetails({
           userId: account.user.id,
@@ -61,7 +49,7 @@ class ProfilePic extends React.Component {
   render() {
     const { userDetail, account } = this.props;
     const { loading } = this.state;
-    const imgUrl = userDetail.image ? `${ENDPOINT}/assets/user/${10000000 + parseInt(account.user.id, 10)}/profile/${userDetail.image}` : '/assets/icons/512h/uploadicon512.png';
+    const imgUrl = userDetail.image ? `${ENDPOINT}/assets/user/${10000000 + parseInt(account.user.id, 10)}/profile/${userDetail.image}` : '/assets/graphics/user.svg';
     return (
       <div className="profilePic">
         <RoundPicture imgUrl={imgUrl} />

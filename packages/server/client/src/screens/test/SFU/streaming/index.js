@@ -1,7 +1,6 @@
 /* eslint-disable jsx-a11y/media-has-caption */
 /* eslint-disable react/prop-types */
 import React from 'react';
-import { Button } from '@blueprintjs/core';
 
 class Streaming extends React.Component {
   state = {};
@@ -51,9 +50,9 @@ class Streaming extends React.Component {
     console.log('props in streaming test', this.props);
     return (
       <div>
-        <Button intent="success" style={{ margin: 5 }} text="List Stream" onClick={this.listMountPoint} />
-        <Button intent="success" style={{ margin: 5 }} text="Get Stream Info" onClick={this.getStreamInfo} />
-        <Button intent="success" style={{ margin: 5 }} text="Watch Stream" onClick={this.watchStream} />
+        <button style={{ margin: 5, backgroundColor: 'green' }} text="List Stream" onClick={this.listMountPoint} />
+        <button style={{ margin: 5, backgroundColor: 'green' }} text="Get Stream Info" onClick={this.getStreamInfo} />
+        <button style={{ margin: 5, backgroundColor: 'green' }} text="Watch Stream" onClick={this.watchStream} />
         <video
           id="remote-stream"
           style={{ height: 200, width: 200, background: 'black' }}

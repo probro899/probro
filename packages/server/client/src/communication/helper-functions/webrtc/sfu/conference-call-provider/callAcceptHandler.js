@@ -3,7 +3,7 @@ import store from '../../../../../store';
 export default (props) => {
   const { updateWebRtc, account } = props;
   const { webRtc } = store.getState();
-  console.log('callAccept handler called', webRtc);
+  // console.log('callAccept handler called', webRtc);
   const { apis } = webRtc;
   const boardId = webRtc.localCallHistory.chatHistory.connectionId;
   updateWebRtc('isLive', true);

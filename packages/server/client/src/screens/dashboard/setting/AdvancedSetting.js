@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { SwitchButton } from '../../../common/Form/SwitchButton';
 import Organization from './organization';
-import OrganizationDashboard from '../organizationDashboard/index';
+
 class AdvancedSettings extends React.Component {
   state = {
     mentor: false,
@@ -38,7 +38,7 @@ class AdvancedSettings extends React.Component {
   }
 
   render() {
-    const { apis } = this.props;
+    const { apis, match, account } = this.props;
     const { mentor } = this.state;
     return (
       <div className="container-settings">
@@ -52,8 +52,7 @@ class AdvancedSettings extends React.Component {
             />
           </div>
         </div>
-        <Organization apis={apis} />
-        <OrganizationDashboard />
+        <Organization match={match} apis={apis} account={account} />
       </div>
     );
   }

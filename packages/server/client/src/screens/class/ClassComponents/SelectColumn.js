@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { HTMLSelect, Button, Spinner, Label } from '@blueprintjs/core';
-
+import {FormSelectField} from '../../../common/Form/FormSelectField';
+import ClipLoader from "react-spinners/ClipLoader";
+import {Button} from '../../../common/utility-functions/Button/Button';
 class SelectColumn extends React.Component {
   constructor(props) {
     super(props);
@@ -80,7 +81,7 @@ class SelectColumn extends React.Component {
         <div style={{ display: 'flex', flexDirection: 'column' }}>
           <div style={{ padding: '10px' }}>
             <p style={{ fontSize: '16px' }}>Class</p>
-            <HTMLSelect
+            <FormSelectField
               options={classeOptions}
               onChange={this.onClassChange}
               value={classVal}
@@ -88,7 +89,7 @@ class SelectColumn extends React.Component {
           </div>
           <div style={{ padding: '10px', marginBottom: '10px' }}>
             <p style={{ fontSize: '16px' }}>Column</p>
-            <HTMLSelect
+            <FormSelectField
               options={colOptions}
               onChange={this.onTaskChange}
               value={colVal}
@@ -96,16 +97,16 @@ class SelectColumn extends React.Component {
           </div>
           <div className="btn-group">
             <div style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', alignItems: 'center' }}>
-              {loading && <Spinner intent="primary" size={40} /> }
-              {error && <Label style={{ fontSize: 16, color: 'red' }}>{error}</Label>}
-              {message && <Label style={{ fontSize: 16, color: 'green' }}>{message}</Label>}
+              {loading && <ClipLoader size={40} /> }
+              {error && <div style={{ fontSize: 16, color: 'red', marginBottom:'15px',marginTop:'0' }}>{error}</div>}
+              {message && <div style={{ fontSize: 16, color: 'green',marginBottom:'15px',marginTop:'0' }}>{message}</div>}
             </div>
-            <Button
-              text="Submit"
-              onClick={this.submitForm}
-              intent="primary"
-              large
-              fill
+            <Button 
+            onClick={this.submitForm}
+            type="button"
+            buttonStyle="btn--primary--solid"
+            buttonSize="btn--medium"
+            title="Submit"
             />
           </div>
         </div>

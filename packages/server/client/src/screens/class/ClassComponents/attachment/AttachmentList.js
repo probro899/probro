@@ -2,7 +2,7 @@
 import React from 'react';
 import moment from 'moment';
 import { Link } from 'react-router-dom';
-import { Icon } from '@blueprintjs/core';
+import { AiOutlineClose } from "react-icons/ai";
 import { ENDPOINT } from '../../../../config';
 
 const SingleAttachment = ({ obj, user, getName, deleteAttachment }) => {
@@ -14,10 +14,9 @@ const SingleAttachment = ({ obj, user, getName, deleteAttachment }) => {
         <span>
           {obj.url.split('.')[1]}
         </span>
-        <Icon
-          iconSize={11}
+        <AiOutlineClose
+          size={11}
           style={{ cursor: 'pointer' }}
-          icon="cross"
           className="pc-attach-delete"
           onClick={() => deleteAttachment(obj.id, obj.url)}
         />
@@ -37,7 +36,7 @@ const SingleAttachment = ({ obj, user, getName, deleteAttachment }) => {
 };
 
 export default ({ attachments, Users, getName, deleteAttachment }) => {
-  // console.log('attachment data', attachments);
+  
   return (
     <div className="attach-container">
       {attachments.length !== 0 && <div className="attach-head">Attachments</div>}

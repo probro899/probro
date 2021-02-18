@@ -1,8 +1,6 @@
 import React from 'react';
 import { Button } from '@blueprintjs/core';
 
-// const file = require('../../../../../../../../../../.assets/icons/linkedin/linkedin.png');
-
 class LinkedinLogin extends React.Component {
   state = {};
 

@@ -1,8 +1,8 @@
+/* eslint-disable react/sort-comp */
 import React from 'react';
 // import ReactQuill from 'react-quill';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
-import axios from 'axios';
 import { ENDPOINT } from '../../config';
 import client from '../../socket';
 import * as actions from '../../actions';
@@ -11,6 +11,7 @@ import CoverImage from './CoverImage';
 import CustomToolbar from './CustomToolbar';
 import { addBlog, updateBlog } from './helper-functions';
 import { FormTextArea } from '../../common/Form/FormTextArea';
+import { uploadFile } from '../../common/utility-functions';
 
 class BlogCreate extends React.Component {
   constructor(props) {
@@ -24,7 +25,7 @@ class BlogCreate extends React.Component {
       blogId: null,
       coverImage: { actualFile: null, url: null, serverImageName: null },
     };
-    if (document) {
+    if (typeof document === 'object') {
       this.quil = require('react-quill');
     }
   }
@@ -112,16 +113,8 @@ class BlogCreate extends React.Component {
 
     const { account, addDatabaseSchema, updateDatabaseSchema } = this.props;
     if (coverImage.actualFile) {
-      const formData = new FormData();
-      formData.append('data', JSON.stringify({ token: account.sessionId, fileType: 'image', content: 'blog' }));
-      formData.append('file', coverImage.actualFile);
       try {
-        const res = await axios({
-          config: { headers: { 'Content-Type': 'multipart/form-data' } },
-          method: 'post',
-          url: `${ENDPOINT}/web/upload-file`,
-          data: formData,
-        });
+        const res = await uploadFile('blog', coverImage.actualFile, account.sessionId);
         if (res.status === 200) {
           uploadedUrl = res.data;
           this.setState({ coverImage: { ...coverImage, actualFile: null, serverImageName: uploadedUrl } });

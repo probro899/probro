@@ -4,7 +4,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Moment from 'react-moment';
 import _ from 'lodash';
-import { Spinner, Icon } from '@blueprintjs/core';
+import { BsArrowRepeat } from "react-icons/bs";
+import ClipLoader from "react-spinners/ClipLoader";
 import { ENDPOINT } from '../../config';
 import sendMessage from '../helper-functions/message/index';
 import { RoundPicture } from '../../components';
@@ -25,7 +26,7 @@ const findSeenUser = (props, seenStatus, own) => {
       user = boardUser.user.user;
       userDetails = boardUser.user.userDetail;
     }
-    userNameList.push(<div className="seen-user"><RoundPicture imgUrl={userDetails && userDetails.image ? `${ENDPOINT}/assets/user/${10000000 + parseInt(user.id, 10)}/profile/${userDetails.image}` : '/assets/icons/64w/uploadicon64.png'} /></div>);
+    userNameList.push(<div className="seen-user"><RoundPicture imgUrl={userDetails && userDetails.image ? `${ENDPOINT}/assets/user/${10000000 + parseInt(user.id, 10)}/profile/${userDetails.image}` : '/assets//graphics/user.svg'} /></div>);
   });
   return userNameList;
 };
@@ -43,7 +44,7 @@ const Message = ({ own, obj, props, type }) => {
     >
       {(obj.showImage && !own.isOwn) && (
         <div className="img-wrap">
-          <RoundPicture imgUrl={(own.user.userDetails && own.user.userDetails.image) ? `${ENDPOINT}/assets/user/${10000000 + parseInt(own.user.id, 10)}/profile/${own.user.userDetails.image}` : '/assets/icons/64w/uploadicon64.png'} />
+          <RoundPicture imgUrl={(own.user.userDetails && own.user.userDetails.image) ? `${ENDPOINT}/assets/user/${10000000 + parseInt(own.user.id, 10)}/profile/${own.user.userDetails.image}` : '/assets//graphics/user.svg'} />
         </div>
       )
       }
@@ -68,8 +69,8 @@ const Message = ({ own, obj, props, type }) => {
           </div>
         </div>
         <div style={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: 0 }}>
-          {obj.status === 'loading' && <Spinner size="15" intent="primary" />}
-          {obj.status === 'error' && <Icon icon="repeat" iconSize="15" style={{ cursor: 'pointer' }} onClick={() => sendMessage({ ...props, message: obj.message, resend: obj.id })} />}
+          {obj.status === 'loading' && <ClipLoader size="15" />}
+          {obj.status === 'error' && <BsArrowRepeat size="15" style={{ cursor: 'pointer' }} onClick={() => sendMessage({ ...props, message: obj.message, resend: obj.id })} />}
           <div style={{ marginTop: 2, display: 'flex', width: '100%', justifyContent: 'flex-end' }}>
             {findSeenUser(props, obj.seenStatus, own)}
           </div>

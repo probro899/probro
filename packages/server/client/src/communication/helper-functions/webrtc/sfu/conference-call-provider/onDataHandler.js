@@ -2,10 +2,10 @@
 import store from '../../../../../store';
 import callUpgrader from './callUpgrader';
 
-export default props => (data) => {
-  // console.log('Data in dataHandler', JSON.parse(data));
-  const { updateWebRtc } = props;
-  const { webRtc } = store.getState();
+export default (props) => (data) => {
+  // console.log('Data in dataHandler', JSON.parse(data), props);
+  const { updateWebRtc, updateDatabaseSchema } = props;
+  const { webRtc, database } = store.getState();
   const jsData = JSON.parse(data);
   const { uid, type, callType } = jsData;
   if (jsData.callType) {
@@ -18,6 +18,12 @@ export default props => (data) => {
       if (mediaType === 'video' || mediaType === 'screenshare') {
         callUpgrader(localCallHistory.chatHistory.connectionId, 'audio', true);
         updateWebRtc('localCallHistory', { ...webRtc.localCallHistory, mediaType: 'audio', callEnd: false });
+      }
+
+      // update activeUser in board if not updated
+      const currentActiveBoard = database.Board.byId[webRtc.localCallHistory.chatHistory.connectionId];
+      if (currentActiveBoard.activeStatus !== uid) {
+        updateDatabaseSchema('Board', { id: currentActiveBoard.id, activeStatus: uid });
       }
     }
     if (connectedUser) {

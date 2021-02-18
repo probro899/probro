@@ -1,12 +1,11 @@
 /* eslint-disable prefer-destructuring */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Icon } from '@blueprintjs/core';
 import { RoundPicture } from '../../../../components';
 import { ENDPOINT } from '../../../../config';
 import ScreenshareNotAllowedError from '../../error-screen/ScreenshareNotAllowedError';
 
-// const userIcon = require('../../../../../assets/icons/512h/uploadicon512.png');
+// const userIcon = require('../../../../../assets/graphics/user.svg');
 
 const ImageOnMainScreen = (props) => {
   const { webRtc, database, minimize } = props;
@@ -37,7 +36,7 @@ const ImageOnMainScreen = (props) => {
 
   if (type === 'user' && user && userDetail) {
     // const userDetail = Object.values(database.User.byId).find(o => o.userId === webRtc.localCallHistory.chatHistory.user.user.id);
-    imgUrl = userDetail && userDetail.image ? `${ENDPOINT}/assets/user/${10000000 + parseInt(user.id, 10)}/profile/${userDetail.image}` : '/assets/icons/512h/uploadicon512.png';
+    imgUrl = userDetail && userDetail.image ? `${ENDPOINT}/assets/user/${10000000 + parseInt(user.id, 10)}/profile/${userDetail.image}` : '/assets/graphics/user.svg';
     if (webRtc.connectedUsers[conId] && webRtc.connectedUsers[conId].type === 'audio') {
       showImage = true;
     }
@@ -57,7 +56,7 @@ const ImageOnMainScreen = (props) => {
     <div className="img-main-screen" style={{ display: minimize ? 'none' : 'flex' }}>
       <div className={type}>
         {
-          type === 'user' ? <RoundPicture imgUrl={imgUrl} /> : <Icon icon="application" iconSize={130} style={{ color: '#757575' }} />
+          type === 'user' ? <RoundPicture imgUrl={imgUrl} /> : <img src="/assets/graphics/classroom.svg"  style={{ height: '130px', width:'130px' }} />
         }
       </div>
     </div>

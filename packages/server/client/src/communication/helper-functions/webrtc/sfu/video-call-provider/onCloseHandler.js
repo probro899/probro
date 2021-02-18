@@ -2,7 +2,8 @@
 import store from '../../../../../store';
 import exceptionHandler from './exceptionHandler';
 
-export default props => async (data) => {
+export default (props) => async (data) => {
+  console.log('On close handler called', data);
   try {
     const { webRtc } = store.getState();
     const { updateWebRtc } = props;
@@ -36,6 +37,7 @@ export default props => async (data) => {
     await updateWebRtc('deviceNotAllowed', false);
     await updateWebRtc('recordedBlobs', []);
   } catch (e) {
+    console.log('on close handler', e);
     exceptionHandler({ error: JSON.stringify(e), errorCode: 147 });
   }
 };

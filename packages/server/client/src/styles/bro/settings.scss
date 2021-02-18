@@ -56,9 +56,10 @@
           .edit-icon {
             margin-left: 5px;
             vertical-align: baseline;
+            cursor: pointer;
             &:hover {
               svg {
-                fill: $skyBlueMain;
+                fill: $skyBlueMain ;
               }
             }
           }

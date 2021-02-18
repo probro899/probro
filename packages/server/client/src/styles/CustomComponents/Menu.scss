@@ -1,0 +1,73 @@
+@import "../config.scss";
+$danger-color: #c23030;
+
+.pc-menu {
+  background: #ffffff;
+  border-radius: 3px;
+  color: $headingColor;
+  list-style: none;
+  margin: 0;
+  min-width: 180px;
+  padding: 5px;
+  text-align: left;
+  li {
+    &:not(:last-child) {
+      border-bottom: 1px solid rgba(16, 22, 26, 0.15);
+    }
+
+    .pc-menu-item {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+      border-radius: 2px;
+      color: inherit;
+      align-items: center;
+      line-height: 20px;
+      padding: 5px 7px;
+      text-decoration: none;
+      user-select: none;
+      &:hover {
+        background-color: rgba(167, 182, 194, 0.3);
+        cursor: pointer;
+        text-decoration: none;
+      }
+      &.danger {
+        color: $danger-color;
+        &:hover {
+          background-color: $danger-color;
+          color: #fff;
+          .pc-menuitem-icon {
+            color: #fff;
+          }
+        }
+        .pc-menuitem-icon {
+          color: $danger-color;
+        }
+      }
+      &.active {
+        color: #fff;
+        background-color: #0056b8;
+        .pc-menuitem-icon {
+          color: #fff;
+        }
+      }
+      &.disabled{
+        cursor: not-allowed;
+        background-color: rgba(167, 182, 194, 0.3);
+        opacity: 0.4;
+        &:hover{
+            background-color:rgba(167, 182, 194, 0.3) ;
+        }
+      }
+      .pc-menuitem-icon {
+        color: #5c7080;
+        margin-top: 2px;
+        margin-right: 7px;
+        flex-grow: 0;
+      }
+      .pc-menuitem-text {
+        flex-grow: 1;
+      }
+    }
+  }
+}

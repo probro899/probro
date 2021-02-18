@@ -6,8 +6,9 @@ import createOffer from './createOffer';
 import publisherHandler from './publishersHandler';
 import exceptionHandler from './exceptionHandler';
 
-export default props => async (msg, jsep) => {
+export default (props) => async (msg, jsep) => {
   try {
+    // console.log('event listner in conference call', msg);
     const { updateWebRtc } = props;
     const { videoroom, error, error_code } = msg;
     const event = videoroom;
@@ -37,6 +38,7 @@ export default props => async (msg, jsep) => {
       throw error;
     }
   } catch (e) {
+    console.error('Error in event listner', e);
     exceptionHandler({ error: JSON.stringify(e), errorCode: 115 });
   }
 };

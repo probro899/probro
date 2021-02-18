@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Icon } from '@blueprintjs/core';
+import { MdEdit } from "react-icons/md";
 import BioForm from './BioForm';
 import { bioSchema } from '../structure';
 
@@ -58,7 +58,7 @@ class Bio extends React.Component {
         <div className="bio-info">
           {bio ? <p>{bio.bio}</p> : <p style={{ color: '#696969' }}>No bio added</p>}
           <p className="edit" style={{ cursor: 'pointer' }}>
-            <Icon icon="edit" onClick={this.togglePopover} />
+            <MdEdit onClick={this.togglePopover} size={20} />
           </p>
         </div>
         <BioForm

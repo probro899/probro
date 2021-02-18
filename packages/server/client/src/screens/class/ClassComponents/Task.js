@@ -5,9 +5,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import moment from 'moment';
-import { Tag } from '@blueprintjs/core';
 import { FaRegCommentAlt } from 'react-icons/fa';
 import { TiAttachmentOutline } from 'react-icons/ti';
+import Tag from '../../../common/Tag';
 
 class Task extends Component {
   constructor(props) {
@@ -56,9 +56,9 @@ class Task extends Component {
         tabIndex={0}
       >
         <div className="pc-task-flag">
-          <div className="pc-tag-view">
+          <div className="pc-tag-view" style={{ display: 'inherit' }}>
             {
-              allTags.map((obj, index) => <Tag className="pc-tag" key={index} intent={obj.tag} />)
+              allTags.map((obj, index) => <Tag size={20} key={index} color={obj.tag} />)
             }
           </div>
           <div className="pc-deadline-view">

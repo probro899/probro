@@ -1,22 +1,23 @@
-const OrganizationScheme = [
+export default [
     {
         id: 'name',
         fieldtype: 'input',
         name: 'Name',
-        placeholder: 'Test Organization',
+        placeholder: 'Eg, Fishtail Engineering College',
         required: true,
     },
     {
         id: 'headline',
         fieldtype: 'input',
         name: 'Headline',
-        placeholder: 'Engineering Institute',
+        placeholder: '.....',
     },
     {
-        id: 'profilepic',
-        fieldtype: 'input',
-        name: 'Profile Picture',
+        id: 'image',
+        fieldtype: 'image',
+        name: 'Emblem',
         placeholder: '',
+        // required: true,
     },
     {
         id: 'address',
@@ -26,24 +27,24 @@ const OrganizationScheme = [
         required: true,
     },
     {
-        id: 'supportnumber',
+        id: 'phoneNo',
         fieldtype: 'input',
-        name: 'Support Number',
+        name: 'Phone Number',
         placeholder: '+14 123 5489',
         required: true,
     },
     {
-        id: 'supportemail',
+        id: 'email',
         fieldtype: 'input',
-        name: 'Support Email',
+        name: 'Email',
         placeholder: 'test@support.com',
         required: true,
     },
     {
-        id: 'websiteurl',
+        id: 'websiteUrl',
         fieldtype: 'input',
-        name: 'Website URL',
-        placeholder: 'testorg.com',
+        name: 'Website',
+        placeholder: 'Eg, https://www.properclass.com',
         required: true,
     },
     {
@@ -56,4 +57,3 @@ const OrganizationScheme = [
         large: 'large',
     },
 ];
-export { OrganizationScheme };

@@ -780,19 +780,9 @@ body { margin: 0; padding: 0; background-color: #fff; font-family: "Gotham-Pro";
 
 .home-screen { margin: 0; padding: 0; }
 
-.bp3-button { border-radius: 0; }
-
-.bp3-input { border-radius: 0; }
-
-.bp3-select { border-radius: 0; }
-
-.pc-date-picker .bp3-input-action { top: 6px; right: 5px !important; }
-
 a, button, div { outline: none !important; }
 
 p { margin-bottom: 5px; }
-
-.bp3-dialog { margin-left: 5%; margin-right: 5%; background-color: #fff; }
 
 .tooltip { background: #fff; color: #1d4354; }
 

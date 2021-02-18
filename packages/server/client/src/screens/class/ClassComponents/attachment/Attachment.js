@@ -1,8 +1,7 @@
 import React from 'react';
-import axios from 'axios';
 import PropTypes from 'prop-types';
 import Form from '../../../../common/Form';
-import { ENDPOINT } from '../../../../config';
+import { uploadFile } from '../../../../common/utility-functions';
 
 const structure = [
   {
@@ -38,21 +37,8 @@ class Attachment extends React.Component {
       account, apis, addDatabaseSchema, boardId,
       task
     } = this.props;
-    // console.log('account value in Attachment', account);
     try {
-      const formData = new FormData();
-      formData.append('data', JSON.stringify({ token: account.sessionId, fileType: data.attachment.type.split('/')[0], content: 'board' }));
-      formData.append('file', data.attachment);
-      const res = await axios({
-        config: {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        },
-        method: 'post',
-        url: `${ENDPOINT}/web/upload-file`,
-        data: formData,
-      });
+      const res = await uploadFile('board', data.attachment, account.sessionId);
       if (res.status === 200) {
         const info = {
           userId: account.user.id,
@@ -61,8 +47,6 @@ class Attachment extends React.Component {
           boardColumnCardId: task.id,
           url: res.data,
         };
-        // const user = Object.values(database.User.byId).find(u => u.id === account.user.id);
-        // const userDetail = Object.values(database.user)
         const apiRes = await apis.addBoardColumnCardAttachment({ ...info, broadCastId: `Board-${boardId}` });
         addDatabaseSchema('BoardColumnCardAttachment', { ...info, id: apiRes, user: { user: account.user } });
       }

@@ -10,15 +10,17 @@ class RoundPicture extends React.Component {
   }
 
   checkOrientation = (imgUrl) => {
-    const img = new Image();
-    img.onload = () => {
-      if (img.height > img.width) {
-        this.setState({
-          portrait: true,
-        });
-      }
-    };
-    img.src = imgUrl;
+    if (typeof document === 'object') {
+      const img = new Image();
+      img.onload = () => {
+        if (img.height > img.width) {
+          this.setState({
+            portrait: true,
+          });
+        }
+      };
+      img.src = imgUrl;
+    }
   }
 
   componentWillReceiveProps = (nextProps) => {
@@ -33,7 +35,7 @@ class RoundPicture extends React.Component {
     const { portrait } = this.state;
     return (
       <img
-        className={portrait ? 'portrait' : 'landscape'}
+        className={`round-image ${portrait ? 'portrait' : 'landscape'}`}
         src={imgUrl}
         alt="Round representation"
       />

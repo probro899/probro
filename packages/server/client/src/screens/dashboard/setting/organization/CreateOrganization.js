@@ -1,8 +1,10 @@
 import React from 'react'
 import { Form } from '../../../../common/';
 import Popup from '../../../../common/Form/Popup';
-import { OrganizationScheme } from './structure';
+import { uploadFile } from '../../../../common/utility-functions';
+import OrganizationScheme from './structure';
 import { Button } from '../../../../common/utility-functions/Button/Button';
+
 
 export class CreateOrganization extends React.Component {
     state = {
@@ -16,10 +18,25 @@ export class CreateOrganization extends React.Component {
     }
 
     saveOrganization = async (data) => {
-        const { apis } = this.props;
+        const { apis, account } = this.props;
+        let imgUrl = null;
+        var orgData = data;
         try {
-            const res = await apis.addOrganization(data);
-            // console.log('res', res)
+            if (data.image instanceof File) {
+                const res = await uploadFile('organization', orgData.image, account.sessionId);
+                if (res.status === 200) {
+                    imgUrl = res.data
+                } else {
+                    return { response: 400, error: res.data };
+                };
+            }
+            delete orgData.headline;
+            delete orgData.websiteUrl;
+            orgData.image = imgUrl;
+            const res = await apis.addOrganization(
+                { ...orgData, uId: account.user.id },
+            );
+            // console.log("hello", res);
             return { response: 200, message: 'Changed successfully' };
         } catch (e) {
             // console.log("whats error", e);
@@ -28,7 +45,6 @@ export class CreateOrganization extends React.Component {
     }
 
     render() {
-        console.log("apis", this.props.apis);
         const { isOpen } = this.state;
         return (
             <>

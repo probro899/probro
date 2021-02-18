@@ -1,7 +1,7 @@
 /* eslint-disable import/no-cycle */
 import store from '../../../../../store';
 import exceptionHandler from './exceptionHandler';
-
+ 
 export default (pluginHandler, joinToken, room) => {
   // console.log('join room called', pluginHandler, joinToken, room);
   try {

@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Divider } from '@blueprintjs/core';
 import { GoGraph } from 'react-icons/go';
 import * as actions from '../../../../actions';
 import UserList from './UserList';
 import AddUser from './add-user';
 import Report from '../../report';
 import { Button } from '../../../../common/utility-functions/Button/Button';
+import { getDeviceType } from '../../../../common/utility-functions';
 import { Tooltip } from '../../../../common/Form/Tooltip';
 import { AiFillMessage } from "react-icons/ai";
 
@@ -25,12 +25,15 @@ class ToolBar extends React.Component {
     const {
       updateWebRtc,
       boardId,
+      webRtc,
     } = this.props;
-    updateWebRtc('showCommunication', boardId);
-    updateWebRtc('peerType', 'board');
-    updateWebRtc('communicationContainer', 'history');
-    updateWebRtc('minimize', false);
-    updateWebRtc('chatHistory', { type: 'board', user: { user: null }, connectionId: boardId });
+    if (!webRtc.localCallHistory.callType) {
+      updateWebRtc('showCommunication', boardId);
+      updateWebRtc('peerType', 'board');
+      updateWebRtc('communicationContainer', 'history');
+      updateWebRtc('minimize', false);
+      updateWebRtc('chatHistory', { type: 'board', user: { user: null }, connectionId: boardId });
+    }
   }
 
   generateReportHandler = () => {
@@ -52,22 +55,22 @@ class ToolBar extends React.Component {
       database,
       UserDetail,
     } = this.props;
-    // console.log('boardMember in tool bar', this.props);
     const extUser = Object.values(UserDetail.byId).find(obj => obj.userId === account.user.id);
     const board = Object.values(boards.byId).find(obj => obj.id === boardId);
     const { showReport } = this.state;
-    // const classCreator = Object.values(boardMembers.byId).find(o => o.boardId === boardId && o.fuserId === o.tuserId);
     return (
       <div className="tool-bar">
         <Report isOpen={showReport} onClose={this.reportCloseHandler} boardId={boardId} {...this.props} boards={boards} apis={apis} users={users} />
+        <div className="pc-board-name-mobile">
+          {board.name}
+        </div>
         <div className="toolbar-container">
+
           <div className="left-tools">
             <div className="class-name each-item">
               {board.name}
             </div>
-            <Divider />
             <UserList extUser={extUser} userList={users} boardId={boardId} boardMembers={boardMembers} apis={apis} account={account} />
-            <Divider />
           </div>
           <div className="right-tools">
             <Tooltip
@@ -84,11 +87,6 @@ class ToolBar extends React.Component {
             <Tooltip
               content={<span>Chat</span>}
             >
-              {/* <Button
-                minimal
-                icon="chat"
-                onClick={this.onChat}
-              /> */}
               <Button
                 onClick={this.onChat}
                 icon={<AiFillMessage size={15} />}
@@ -97,24 +95,19 @@ class ToolBar extends React.Component {
                 buttonSize="btn--small"
               />
             </Tooltip>
-
-            <Tooltip
-              content={<span>Generate Report</span>}
-            >
-              {/* <Button
-                minimal
-                onClick={this.generateReportHandler}
+            {getDeviceType() === 'Desktop' &&
+              (<Tooltip
+                content={<span>Generate Report</span>}
               >
-                <GoGraph size={20} />
-              </Button> */}
-              <Button
-                onClick={this.generateReportHandler}
-                icon={<GoGraph size={15} />}
-                type="button"
-                buttonStyle="btn-circle"
-                buttonSize="btn--small"
-              />
-            </Tooltip>
+                <Button
+                  onClick={this.generateReportHandler}
+                  icon={<GoGraph size={15} />}
+                  type="button"
+                  buttonStyle="btn-circle"
+                  buttonSize="btn--small"
+                />
+              </Tooltip>)
+            }
           </div>
         </div>
       </div>
@@ -131,10 +124,11 @@ ToolBar.propTypes = {
   updateWebRtc: PropTypes.func.isRequired,
   account: PropTypes.objectOf(PropTypes.any).isRequired,
   apis: PropTypes.objectOf(PropTypes.any).isRequired,
+  webRtc: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 const mapStateToProps = (state) => {
-  const { database, account } = state;
+  const { database, account, webRtc } = state;
   return {
     boards: database.Board,
     UserDetail: database.UserDetail,
@@ -142,6 +136,7 @@ const mapStateToProps = (state) => {
     boardMembers: database.BoardMember,
     account,
     database,
+    webRtc,
   };
 };
 export default connect(mapStateToProps, { ...actions })(ToolBar);

@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
-import { Card, Button } from '@blueprintjs/core';
+import {Button} from '../../../common/utility-functions/Button/Button';
 
 export default (props) => {
   const { webRtc, updateWebRtc, _callHandler } = props;
@@ -15,7 +15,7 @@ export default (props) => {
 
   if (screenShareNotAllowed) {
     return (
-      <Card style={{ width: '80%', zIndex: 5 }}>
+      <div style={{ width: '80%', zIndex: 5,background:'#fff', padding:'20px', borderRadius:'10px' }}>
         <h3>You must authorize screen sharing</h3>
         <span>Properclass is not able to enable screen sharing. It may come from your browser or OS authorizations.</span>
         <span>
@@ -27,13 +27,14 @@ export default (props) => {
         </span>
         <div style={{ width: '100%', display: 'flex', justifyContent: 'flex-end' }}>
           <Button
-            intent="danger"
-            style={{ height: 10 }}
-            onClick={dismissHandler}
-            text="dismiss"
+           onClick={dismissHandler}
+           type="button"
+           buttonStyle="btn--danger--solid"
+           buttonSize="btn--medium"
+           title="Dismiss"
           />
         </div>
-      </Card>
+      </div>
     );
   }
   return null;

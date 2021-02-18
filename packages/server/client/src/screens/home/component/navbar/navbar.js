@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link, Redirect } from 'react-router-dom';
-import { LazyLoadImage } from 'react-lazy-load-image-component';
 import PropTypes from 'prop-types';
-import { Menu, MenuItem, Icon } from '@blueprintjs/core';
+import { GiHamburgerMenu } from "react-icons/gi";
+import { AiOutlineDashboard,AiOutlineLogout } from "react-icons/ai";
+import {Menu, MenuItem} from '../../../../common/Menu';
 import MetaTags from 'react-meta-tags';
 import client from '../../../../socket';
 import * as actions from '../../../../actions';
@@ -31,7 +32,7 @@ const DropDownMenu = (onclick, logoutAction, loading, account) => {
           backgroundColor: '#175fc7'
         }}
         // className="dashboard-menu-items"
-        icon="dashboard"
+        icon={<AiOutlineDashboard size={20}/>}
         active
         // intent={Intent.PRIMARY}
         text="Go To Dashboard"
@@ -46,7 +47,7 @@ const DropDownMenu = (onclick, logoutAction, loading, account) => {
 
         }}
         disabled={loading || !account.user}
-        icon="log-out"
+        icon={<AiOutlineLogout size={20}/>}
         // intent={Intent.DANGER}
         text="Log Out"
         onClick={logoutAction}
@@ -153,10 +154,8 @@ class Navbar extends Component {
       profilePic = profile && profile.image ? `${ENDPOINT}/assets/user/${10000000 + parseInt(profile.userId, 10)}/profile/${profile.image}` : null;
     }
     const { apis, unreadNotis, lastNotifId, redirectDashboard, unreadMessage, loading, smallScreen, msgSound, notiSound } = this.state;
-    // console.log('navigation', navigate.mainNav);
     return (
       <div className={`navbar ${className}`}>
-        {/* <div>hlw test</div> */}
         {this.getMetaTags()}
         {redirectDashboard && <Redirect exact push to={`/dashboard/${account.user.slug}`} />}
         <div className="navbar-left">
@@ -165,7 +164,7 @@ class Navbar extends Component {
             className={navigate.mainNav.name === 'properClass' ? 'active' : null}
           >
             <div className="navbar-item" style={{ padding: '0px 5px' }}>
-              <LazyLoadImage width={200} alt="Proper Class Logo" src="/assets/graphics/realLogo.png" />
+              <img width={200} alt="Proper Class Logo" src="/assets/graphics/logo.svg" />
             </div>
           </Link>
         </div>
@@ -204,7 +203,7 @@ class Navbar extends Component {
 
         <div className="navbar-right">
 
-          <Icon icon="menu" height='40' width='40' className="more-icon" onClick={this.toggleSmallScreen} />
+          <GiHamburgerMenu size={40} className="more-icon" onClick={this.toggleSmallScreen} />
 
           <div className="right-most-elements">
             <SmallScreenMenu
@@ -212,10 +211,9 @@ class Navbar extends Component {
               open={smallScreen}
               account={account}
               apis={apis}
-              pcLogo='/assets/graphics/realLogo.png'
+              pcLogo='/assets/graphics/logo.svg'
             />
 
-            {/* Notifications in navigation */}
             {account.sessionId
               && (
                 <MessageNotification
@@ -234,17 +232,12 @@ class Navbar extends Component {
                   to="/login"
                   className={navigate.mainNav.name === 'login' ? 'active' : null}
                 >
-                  {/* <div className="navbar-item no-right-margin">
-                    <span className="login-btn">Login</span>
-                  </div> */}
                   <Button
                     onClick={() => { }}
                     type="button"
                     buttonStyle="btn--primary--solid"
                     buttonSize="btn--medium"
                     title="Login"
-                  // iconPosition="left"
-                  // icon={<FaBeer />}
                   />
                 </Link>
               )

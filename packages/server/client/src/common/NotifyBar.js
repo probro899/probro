@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Position, Toast, Toaster } from '@blueprintjs/core';
+import Toaster from '../common/Toast';
 
 class NotifyBar extends React.Component {
   state = {
@@ -19,20 +19,15 @@ class NotifyBar extends React.Component {
     const { dismiss } = this.state;
     const { message, intent } = this.props;
     return (
+      <>
       <Toaster
-        position={Position.TOP}
-      >
-        { !dismiss
-          && (
-            <Toast
-              message={message}
-              intent={intent}
-              onDismiss={this.onDismiss}
-              timeout={5000}
-            />
-          )
-        }
-      </Toaster>
+       onDismiss={this.onDismiss}
+       message={message}
+       intent={intent}
+       position="top"
+       timeOut="5000"
+      />
+      </>
     );
   }
 }

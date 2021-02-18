@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { Icon } from '@blueprintjs/core';
 import { BiMessage } from "react-icons/bi";
 import { Badge } from '../../../../components';
 import SoudComponent from '../../../../communication/components/SoundComponent';

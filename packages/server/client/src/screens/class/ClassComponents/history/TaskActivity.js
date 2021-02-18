@@ -7,7 +7,7 @@ import RoundPicture from '../../../../components/RoundPicture';
 export default ({ activity, color, columns }) => {
   // console.log('activity', activity);
   const { user, userDetail } = activity.user;
-  const imgUrl = userDetail && userDetail.image ? `${ENDPOINT}/assets/user/${10000000 + parseInt(user.id, 10)}/profile/${userDetail.image}` : '/assets/icons/64w/uploadicon64.png';
+  const imgUrl = userDetail && userDetail.image ? `${ENDPOINT}/assets/user/${10000000 + parseInt(user.id, 10)}/profile/${userDetail.image}` : '/assets//graphics/user.svg';
   const name = user.middleName ? `${user.firstName} ${user.middleName} ${user.lastName}` : `${user.firstName} ${user.lastName}`;
   switch (activity.message) {
     case 'createCard':

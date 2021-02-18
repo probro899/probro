@@ -18,7 +18,6 @@ import { SearchResult } from './home/component/search';
 import TakeTour from './home/take-a-tour';
 import { About, Privacy, Terms, Support, Career, Report, Business, Services } from '../common/footer/footer-links';
 import NotifyBar from '../common/NotifyBar';
-import ClassTemplate from './class/template';
 import SfuTest from './test/SFU/index';
 import ErrorPage from '../common/ErrorPage';
 import Pricing from '../screens/pricing';
@@ -27,14 +26,15 @@ import { OrganizationPublicView } from './organization';
 class MainScreen extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+    };
   }
 
   render() {
     const { user, popNotification, updateNav } = this.props;
     return (
       <Switch>
-        <div className="home-screen" style={{ fontFamily: 'Montserrat' }}>
+        <div className="home-screen">
           {popNotification.active && <NotifyBar onClose={() => updateNav({ schema: 'popNotification', data: { message: '', active: false, intent: '' } })} message={popNotification.message} intent={popNotification.intent} />}
           <Switch>
             <Route exact path="/" component={HomePage} />
@@ -55,7 +55,6 @@ class MainScreen extends React.Component {
             <Route path="/register" component={Registration} />
             <Route path="/forgot-password" component={Forget} />
             <Route path="/classroom/:userSlug/:classId" component={ClassManager} />
-            <Route path="/class-template/:userSlug/:classId" component={ClassTemplate} />
             <Route path="/edit-blog/:id/:blogId" component={CreateBlog} />
             <Route path="/create-blog/:id" component={CreateBlog} />
             <Route exact path="/reset/:token" component={Reset} />

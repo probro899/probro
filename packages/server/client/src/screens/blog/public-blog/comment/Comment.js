@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { TextArea } from '@blueprintjs/core';
+import {FormTextArea} from '../../../../common/Form/FormTextArea';
 import { RoundPicture } from '../../../../components';
 import { ENDPOINT } from '../../../../config';
 import { Button } from '../../../../common/utility-functions/Button/Button'
@@ -35,7 +35,7 @@ class Comment extends React.Component {
   render() {
     const { comment, user, account, saveComment, deleteComment } = this.props;
     const { editComment, commentText } = this.state;
-    const imgUrl = user.userDetail && user.userDetail.image ? `${ENDPOINT}/assets/user/${10000000 + parseInt(user.id, 10)}/profile/${user.userDetail.image}` : '/assets/icons/64w/uploadicon64.png';
+    const imgUrl = user.userDetail && user.userDetail.image ? `${ENDPOINT}/assets/user/${10000000 + parseInt(user.id, 10)}/profile/${user.userDetail.image}` : '/assets//graphics/user.svg';
     return (
       <div className="i-response">
         <div className="pc-profile-icon">
@@ -63,18 +63,12 @@ class Comment extends React.Component {
             {
               !editComment ? <p>{comment.comment}</p> : (
                 <div className="pc-comment-edit">
-                  <TextArea
+                  <FormTextArea
                     placeholder="Put your comments."
                     value={commentText}
                     onChange={this.commentChange}
                   />
                   <div className="btns">
-                    {/* <button
-                      className='cancel-btn'
-                      onClick={() => this.setState({ editComment: false })}
-                    >
-                      cancle
-                    </button> */}
                     <div className="cancel-btn">
                       <Button onClick={() => this.setState({ editComment: false })}
                         type="button"
@@ -84,12 +78,6 @@ class Comment extends React.Component {
                         disabled={false}
                         title="Cancel" />
                     </div>
-                    {/* <button
-                      className='comment-btn'
-                      onClick={() => { this.setState({ editComment: false }); saveComment(commentText, comment); }}
-                    >
-                      post
-                    </button> */}
                     <div className="post-cmt-btn">
                       <Button onClick={() => { this.setState({ editComment: false }); saveComment(commentText, comment); }}
                         type="button"

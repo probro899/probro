@@ -15,7 +15,7 @@ function Popular() {
     const { data, loading } = useQuery(GET_POPULAR);
     if (loading) return <Spinner />;
     return data.getPopular.users.map(obj => {
-      const imgUrl = obj.userDetail.image ? `${ENDPOINT}/assets/user/${10000000 + parseInt(obj.id, 10)}/profile/${obj.userDetail.image}` : '/assets/icons/512h/uploadicon512.png';
+      const imgUrl = obj.userDetail.image ? `${ENDPOINT}/assets/user/${10000000 + parseInt(obj.id, 10)}/profile/${obj.userDetail.image}` : '/assets/graphics/user.svg';
       return (
         <div className="card-wrapper">
           <div className="card card1">

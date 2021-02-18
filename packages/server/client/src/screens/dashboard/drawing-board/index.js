@@ -8,7 +8,6 @@ import Tools from './Tools';
 import { minimizeCanvas, maximizeCanvas } from './helper-functions';
 
 const fabric = require('fabric');
-// const pcLogo = require('../../../assets/logo.png');
 
 class DrawingBoard extends Component {
   constructor(props) {
@@ -58,10 +57,7 @@ class DrawingBoard extends Component {
       this.canvasObjectAltered(e);
     });
 
-    this.setState({
-      apis,
-      canvas,
-    });
+    this.setState({ apis, canvas });
 
     updateNav({
       schema: 'sideNav',
@@ -70,13 +66,13 @@ class DrawingBoard extends Component {
 
     // listen for escape when fullscreen
     document.getElementById('drawingWrapper').addEventListener('fullscreenchange', this.changeFullScreen);
-    window.addEventListener('resize', this.screenResize);
+    // window.addEventListener('resize', this.screenResize);
     this.screenResize();
   }
 
   componentWillUnmount() {
     document.getElementById('drawingWrapper').removeEventListener('fullscreenchange', this.changeFullScreen);
-    window.removeEventListener('resize', this.screenResize);
+    // window.removeEventListener('resize', this.screenResize);
   }
 
   toggleStraightLine = () => {
@@ -211,18 +207,6 @@ class DrawingBoard extends Component {
     });
   }
 
-  // drawPath = (ctx, e) => {
-  //   const { color } = this.state;
-  //   ctx.beginPath();
-  //   ctx.moveTo(this.previousPoint.x - 1, this.previousPoint.y - 1);
-  //   ctx.lineTo(e.pointer.x - 1, e.pointer.y - 1);
-  //   ctx.strokeStyle = color;
-  //   ctx.lineWidth = 1;
-  //   ctx.stroke();
-  //   ctx.closePath();
-  //   this.previousPoint = e.pointer;
-  // }
-
   drawRectangle = (e) => {
     const { canvas } = this.state;
     const w = Math.abs(e.pointer.x - this.previousPoint.x);
@@ -241,7 +225,7 @@ class DrawingBoard extends Component {
 
   addInitialAnimation = () => {
     const { canvas, screenSize } = this.state;
-    fabric.fabric.Image.fromURL('/assets/graphics/realLogo.png', (myImg) => {
+    fabric.fabric.Image.fromURL('/assets/graphics/logo.svg', (myImg) => {
       const img1 = myImg.set({ cacheKey: 'logo', left: screenSize.width - 130, top: screenSize.height - 50, scaleX: 0.2, scaleY: 0.2, selectable: false, opacity: 0.8 });
       canvas.add(img1);
     });
@@ -302,12 +286,16 @@ class DrawingBoard extends Component {
       cacheKey: 'text',
       fill: color,
     });
+    
+    textbox.on("editing:entered", () => this.textEditEntering(textbox));
+    textbox.on("editing:exited", () => this.textEditEntering(textbox));
+
     canvas.add(textbox).setActiveObject(textbox);
     canvas.renderAll();
-    // this.setState({
-    //   anyObjectActive: true,
-    //   text: false,
-    // });
+  }
+
+  textEditEntering = (obj) => {
+    console.log("entered", obj);
   }
 
   fileUpload = (e) => {

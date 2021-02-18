@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-// import { Button } from '@blueprintjs/core';
 import * as actions from '../../actions';
 import { DeletePopOver } from '../../common';
 import boardStructure from './ClassComponents/structure';

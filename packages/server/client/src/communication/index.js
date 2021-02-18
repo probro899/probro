@@ -5,7 +5,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Icon } from '@blueprintjs/core';
 import * as actions from '../actions';
 import client from '../socket';
 import { initJanus, closeHandler, sfuSocketListner, deviceTest } from './helper-functions/webrtc/sfu';
@@ -13,8 +12,7 @@ import ErrorBoundary from '../common/ErrorBoundary';
 import { updateChatList, updateUserActiveStatus, updateBoardActiveStatus } from './chatlist/helper-function';
 import exceptionReporter from './helper-functions/webrtc/sfu/exceptionReporter';
 import ScreenProvider from './screen-provider';
-import { AiOutlineClose } from "react-icons/ai";
-import swRegistration from '../common/service-worker/index'
+import { AiOutlineClose, AiOutlineMinus } from "react-icons/ai";
 
 class Communication extends React.Component {
   state = {
@@ -120,7 +118,7 @@ class Communication extends React.Component {
                 Messages
             </div>
               <div className="control-icons">
-                {/* <Icon iconSize={20} icon="small-cross" style={{ cursor: 'pointer' }} onClick={this.cutWindow} /> */}
+                <AiOutlineMinus size={20} style={{ cursor: 'pointer' }} onClick={this.toggleMinMax} />
                 <AiOutlineClose size={20} style={{ cursor: 'pointer' }} onClick={this.cutWindow} />
               </div>
             </div>

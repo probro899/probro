@@ -32,4 +32,4 @@ export default async (props) => {
   if (error) {
     exceptionHandler({ error, errorCode: 142 });
   }
-};
+}; 

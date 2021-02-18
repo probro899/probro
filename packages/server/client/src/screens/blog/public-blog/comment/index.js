@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { TextArea } from '@blueprintjs/core';
+import {FormTextArea} from '../../../../common/Form/FormTextArea';
 import { BiComment, BiLike } from 'react-icons/bi';
 import Comment from './Comment';
 import { DeletePopOver } from '../../../../common';
@@ -13,7 +13,7 @@ class CommentContainer extends React.Component {
     comment: '',
     liked: {},
     allComments: [],
-    allLikes: [],
+    allLikes: 0,
     deletePopover: false,
     commentToDelete: {},
   };
@@ -22,7 +22,7 @@ class CommentContainer extends React.Component {
     const { likes, account, comments } = this.props;
     this.setState({
       allComments: comments,
-      allLikes: likes,
+      allLikes: likes.filter(l => l.likeType === 'like').length,
     });
     if (account.user) {
       likes.filter((obj) => {
@@ -35,18 +35,16 @@ class CommentContainer extends React.Component {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
-    const { account, likes } = this.props;
-    if (nextProps.account.user) {
-      if (account.user !== nextProps.account.user) {
-        likes.filter((obj) => {
-          if (obj.userId === nextProps.account.user.id) {
-            this.setState({
-              liked: obj,
-            });
-          }
-        });
-      }
+  async getSnapshotBeforeUpdate(prevProps, prevState) {
+    const { account } = this.props;
+    if (account.user && account.user !== prevProps.account.user) {
+      likes.filter((obj) => {
+        if (obj.userId === account.user.id) {
+          this.setState({
+            liked: obj,
+          });
+        }
+      });
     }
   }
 
@@ -137,7 +135,7 @@ class CommentContainer extends React.Component {
           broadCastId: `Blog-${blogId}`,
         }, { id: liked.id }]);
         this.setState({
-          allLikes: allLikes.map(obj => (obj.id === liked.id ? { ...liked, likeType: 'unlike' } : obj)),
+          allLikes: allLikes - 1,
           liked: { ...liked, likeType: 'unlike' },
         });
       } else {
@@ -146,7 +144,7 @@ class CommentContainer extends React.Component {
           broadCastId: `Blog-${blogId}`,
         }, { id: liked.id }]);
         this.setState({
-          allLikes: allLikes.map(obj => (obj.id === liked.id ? { ...liked, likeType: 'like' } : obj)),
+          allLikes: allLikes + 1,
           liked: { ...liked, likeType: 'like' },
         });
       }
@@ -160,7 +158,7 @@ class CommentContainer extends React.Component {
       const res = await apis.addBlogLike({ ...data, broadCastId: `Blog-${blogId}` });
       this.setState({
         liked: res,
-        allLikes: [...allLikes, { ...data, id: res }],
+        allLikes: allLikes + 1,
       });
     }
   }
@@ -173,17 +171,14 @@ class CommentContainer extends React.Component {
       allLikes,
       deletePopover,
     } = this.state;
-    const { users, imgUrl, account } = this.props;
-    // console.log('all likes', allLikes, allComments);
-    const totalLikes = allLikes.filter(l => l.likeType === 'like').length;
+    const { account } = this.props;
     let isLiked = false;
     if (liked) {
       if (liked.likeType === 'like') {
         isLiked = true;
       }
     }
-    console.log("liked object", liked);
-    const image = (account.user && account.user.userDetails.image) ? `${ENDPOINT}/assets/user/${10000000 + parseInt(account.user.id, 10)}/profile/${account.user.userDetails.image}` : '/assets/icons/64w/uploadicon64.png';
+    const image = (account.user && account.user.userDetails.image) ? `${ENDPOINT}/assets/user/${10000000 + parseInt(account.user.id, 10)}/profile/${account.user.userDetails.image}` : '/assets//graphics/user.svg';
     return (
       <div className="response">
         <div className="left" />
@@ -202,7 +197,7 @@ class CommentContainer extends React.Component {
                 </button>
               ) : <button className='thumbs-up-btn'><BiLike color="black" /></button>}
               <span>
-                {` ${totalLikes} Likes`}
+                {` ${allLikes} Likes`}
               </span>
 
               <div style={{ display: 'flex', alignItems: 'center' }}>
@@ -219,7 +214,7 @@ class CommentContainer extends React.Component {
               <div className="profile-icon">
                 <RoundPicture imgUrl={image} />
               </div>
-              <TextArea
+              <FormTextArea
                 style={{
                   width: '100%'
                 }}
@@ -228,19 +223,13 @@ class CommentContainer extends React.Component {
                 onChange={this.setComment}
                 value={comment}
               >
-              </TextArea>
+              </FormTextArea>
             </div>
 
           )}
           {account.user && (
             <div className="cmt-btn-wrapper">
               <div className='post-btn'>
-                {/* <button
-              className='comment-btn'
-              onClick={this.submitComment}
-            >
-              Post
-            </button> */}
                 <Button
                   onClick={this.submitComment}
                   type="button"
@@ -249,8 +238,6 @@ class CommentContainer extends React.Component {
                   loading={false}
                   disabled={false}
                   title="Post"
-                // iconPosition="left"
-                // icon={<FaBeer />}
                 />
               </div>
             </div>

@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-// import { Button, TextArea } from '@blueprintjs/core';
 import { timeStampSorting } from '../../../../common/utility-functions';
 import DeletePopOver from '../../../../common/DeletePopOver';
 import CommentDesc from './CommentDesc';
@@ -9,7 +8,7 @@ import { ENDPOINT } from '../../../../config';
 import RoundPicture from '../../../../components/RoundPicture';
 import { FormTextArea } from '../../../../common/Form/FormTextArea';
 import { Button } from '../../../../common/utility-functions/Button/Button';
-// const profileIcon = require('../../../../assets/icons/64w/uploadicon64.png');
+// const profileIcon = require('../../../../assets//graphics/user.svg');
 import { AiOutlineClose, AiOutlineCheck } from "react-icons/ai";
 
 class TaskComment extends React.Component {
@@ -91,7 +90,7 @@ class TaskComment extends React.Component {
     if (com.message) return <TaskActivity color={color} userList={userList} userDetailList={userDetailList} columns={columns} key={`activity${com.id}`} activity={com} />;
     const userInfo = this.getCommentUser(com);
     const name = userInfo.user.middleName ? `${userInfo.user.firstName} ${userInfo.user.middleName} ${userInfo.user.lastName}` : `${userInfo.user.firstName} ${userInfo.user.lastName}`;
-    const imgUrl = userInfo.userDetail && userInfo.userDetail.image ? `${ENDPOINT}/assets/user/${10000000 + parseInt(userInfo.user.id, 10)}/profile/${userInfo.userDetail.image}` : '/assets/icons/64w/uploadicon64.png';
+    const imgUrl = userInfo.userDetail && userInfo.userDetail.image ? `${ENDPOINT}/assets/user/${10000000 + parseInt(userInfo.user.id, 10)}/profile/${userInfo.userDetail.image}` : '/assets//graphics/user.svg';
     return (
       <div className="s-comment" style={{ backgroundColor: color }} key={com.id}>
         <div className="img-con">

@@ -12,6 +12,7 @@ import SelectTask from './SelectTask';
 import { ENDPOINT } from '../../../config';
 import { Tooltip } from '../../../common/Form/Tooltip';
 import { Button } from '../../../common/utility-functions/Button/Button';
+import { uploadFile } from '../../../common/utility-functions';
 
 
 class Tools extends React.Component {
@@ -50,19 +51,7 @@ class Tools extends React.Component {
     }
     const file = new File([u8arr], 'canvas-shot.jpeg', { type: mime });
     try {
-      const formData = new FormData();
-      formData.append('data', JSON.stringify({ token: account.sessionId, fileType: 'image', content: 'board' }));
-      formData.append('file', file);
-      const res = await axios({
-        config: {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        },
-        method: 'post',
-        url: `${ENDPOINT}/web/upload-file`,
-        data: formData,
-      });
+      const res = await uploadFile('board', file, account.sessionId);
       if (res.status === 200) {
         const info = {
           userId: account.user.id,
@@ -71,8 +60,10 @@ class Tools extends React.Component {
           boardColumnCardId: parseInt(data.task, 10),
           url: res.data,
         };
-        const apiRes = await apis.addBoardColumnCardAttachment({ ...info, broadCastId: `Board-${data.class}` });
-        addDatabaseSchema('BoardColumnCardAttachment', { ...info, id: apiRes });
+        const apiRes = await apis.addBoardColumnCardAttachment(
+          { ...info, broadCastId: `Board-${data.class}` }
+        );
+        addDatabaseSchema('BoardColumnCardAttachment', { ...info, user: { user: account.user }, id: apiRes });
       }
       return { response: 200, message: 'Uploaded' };
     } catch (e) {

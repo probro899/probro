@@ -1,26 +1,59 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { TagInput, Label } from '@blueprintjs/core';
 
 class Taginput extends React.Component {
-  state = {};
+  state = { inputValue: '' };
+  myRef = React.createRef();
+
+  onKeyDown = (e) => {
+    const code = (e.keyCode ? e.keyCode : e.which);
+    if(code == 13) {
+        const { inputValue } = this.state;
+        const { onChange, data, value } = this.props;
+        onChange(data.id, [...value, inputValue])
+        this.setState({ inputValue: '' });
+    }
+  }
+
+  onChange = (e) => {
+    this.setState({ inputValue: e.target.value });
+  }
+
+  onClick = (e) => {
+    this.myRef.current.focus();
+  }
+
+  onDeleteTag = (idx) => {
+    const { onChange, value, data } = this.props;
+    onChange(data.id, value.filter((o, i) => i !== idx));
+  }
 
   render() {
-    const { data, onChange, value } = this.props;
-    // const separator = /[\s]/;
+    const { inputValue } = this.state;
+    const { data, value } = this.props;
     return (
-      <Label>
+      <p>
         <span className="label-text">{data.name}</span>
         {data.required && <span style={{ color: 'red' }}> *</span>}
-        <TagInput
-          onAdd={e => onChange(data.id, e)}
-          onChange={e => onChange(data.id, e)}
-          // separator={separator}
-          {...data}
-          className="tag-input"
-          values={value}
-        />
-      </Label>
+        <div className="tag-input" onClick={this.onClick}>
+          {
+            value.map((o, idx) => {
+              return (
+                <span className="each-tag">
+                  {o}
+                  <button onClick={() => this.onDeleteTag(idx)} className="tag-del-btn">x</button>
+                </span>
+              )
+            })
+          }
+          <input
+            ref={this.myRef}
+            onKeyDown={this.onKeyDown}
+            onChange={this.onChange}
+            value={inputValue}
+          />
+        </div>
+      </p>
     );
   }
 }

@@ -12,9 +12,9 @@ const ResultUser = (props) => {
   const { account, item } = props;
     const [redirect, redirectToLogin] = useState(false);
     const  userDetail  = item.userDetail || {};
-    let profilePic = '/assets/icons/64w/uploadicon64.png';
+    let profilePic = '/assets//graphics/user.svg';
     if (userDetail) {
-      profilePic = userDetail.image ? `${ENDPOINT}/assets/user/${10000000 + parseInt(item.id, 10)}/profile/${userDetail.image}` : '/assets/icons/64w/uploadicon64.png';
+      profilePic = userDetail.image ? `${ENDPOINT}/assets/user/${10000000 + parseInt(item.id, 10)}/profile/${userDetail.image}` : '/assets//graphics/user.svg';
     }
 
   const updateConnection = async () => {

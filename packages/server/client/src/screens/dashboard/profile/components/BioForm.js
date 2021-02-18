@@ -1,8 +1,8 @@
 import React from 'react';
-import { Dialog } from '@blueprintjs/core';
 import PropTypes from 'prop-types';
 import Form from '../../../../common/Form';
 import { bioSchema } from '../structure';
+import Popup from '../../../../common/Form/Popup';
 
 class BioForm extends React.Component {
   state = {};
@@ -19,7 +19,7 @@ class BioForm extends React.Component {
   render() {
     const { isOpen, onClose, callback } = this.props;
     return (
-      <Dialog
+      <Popup
         isOpen={isOpen}
         onClose={onClose}
       >
@@ -29,7 +29,7 @@ class BioForm extends React.Component {
           </div>
           <Form data={bioSchema} callback={callback} />
         </div>
-      </Dialog>
+      </Popup>
     );
   }
 }

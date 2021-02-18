@@ -6,7 +6,7 @@ import autoCloseHandler from '../../autoCloseHandler';
 import exceptionHandler from '../../conference-call-provider/exceptionHandler';
 
 const initCall = async (props, state, data, webRtc) => {
-  // console.log('call init', data);
+  // console.log('call init on offer', data);
   await offerInitialization(props, state, data);
   if (webRtc.showCommunication) {
     await offerOnCommunicationOpen(props, state, data);

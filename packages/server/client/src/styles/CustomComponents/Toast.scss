@@ -1,0 +1,69 @@
+@import "../config.scss";
+.pc-toast-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  left: 0;
+  overflow: hidden;
+  padding: 0 20px 20px;
+  pointer-events: none;
+  position: fixed;
+  right: 0;
+  top: 0;
+  height: 100%;
+  z-index: 28;
+  .pc-toast {
+    align-items: flex-start;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 0 0 1px rgb(16 22 26 / 10%), 0 2px 4px rgb(16 22 26 / 20%),
+      0 8px 24px rgb(16 22 26 / 20%);
+    display: flex;
+    margin: 20px 0 0;
+    max-width: 500px;
+    min-width: 300px;
+    pointer-events: all;
+    position: relative;
+    align-items: center;
+    &.pc-show-toaster {
+      animation: fromTop 0.5s;
+    }
+    &.pc-close-toast {
+      animation: toTop 0.5s;
+    }
+    &.pc-hide-toast {
+      top: -150px;
+    }
+    &.success {
+      background-color: #0f9960;
+      color: #fff;
+    }
+    .notification-title {
+      flex: 1 1 auto;
+      padding: 11px;
+      word-break: break-word;
+    }
+    .close-btn {
+      flex: 0 0 auto;
+      padding: 5px;
+      padding-left: 0;
+      cursor: pointer;
+    }
+  }
+}
+@keyframes fromTop {
+  0% {
+    top: -150px;
+  }
+  100% {
+    top: 0;
+  }
+}
+@keyframes toTop {
+  0% {
+    top: 0;
+  }
+  100% {
+    top: -150px;
+  }
+}

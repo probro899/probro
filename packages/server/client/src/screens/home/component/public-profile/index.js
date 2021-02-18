@@ -4,7 +4,7 @@ import moment from 'moment';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { Icon } from '@blueprintjs/core';
+import { BiCurrentLocation } from "react-icons/bi";
 import * as actions from '../../../../actions';
 import Navbar from '../navbar';
 import Footer from '../../../../common/footer';
@@ -115,7 +115,7 @@ class PublicProfile extends React.Component {
               <div className="top-section-wrapper">
                 <div className="profile-body">
                   <div className="profilePic">
-                    <RoundPicture imgUrl={userDetails.image ? `${ENDPOINT}/assets/user/${10000000 + parseInt(data.id, 10)}/profile/${userDetails.image}` : '/assets/icons/512h/uploadicon512.png'} />
+                    <RoundPicture imgUrl={userDetails.image ? `${ENDPOINT}/assets/user/${10000000 + parseInt(data.id, 10)}/profile/${userDetails.image}` : '/assets/graphics/user.svg'} />
                   </div>
 
                   <div className="connect-btns">
@@ -157,7 +157,7 @@ class PublicProfile extends React.Component {
                       <p>{userDetails.headLine}</p>
                     </div>
                     <div className="location">
-                      <Icon icon="locate" />
+                      <BiCurrentLocation size={20} />
                       <span className="country">
                         {' '}
                         {userDetails.address ? userDetails.address : 'Kathmandu, Nepal'}
@@ -181,7 +181,7 @@ class PublicProfile extends React.Component {
                         {
                           userEducation.map(obj => (
                             <div className="p-edu-list-i" key={obj.id}>
-                              <img src="/assets/icons/64w/school64.png" alt="school icon" />
+                              <img src="/assets/graphics/university.svg" alt="school icon" />
                               <div className="edu-details">
                                 <span className="p-name-i">{obj.degree}</span>
                                 <br />
@@ -209,7 +209,7 @@ class PublicProfile extends React.Component {
                         {
                           userWorkExperience.map(obj => (
                             <div className="p-exp-list-i" key={obj.id}>
-                              <img src="/assets/icons/64w/office64.png" alt="school icon" />
+                              <img src="/assets/graphics/office.svg" alt="school icon" />
                               <div className="exp-details">
                                 <span className="p-title-i">{obj.title}</span>
                                 <br />

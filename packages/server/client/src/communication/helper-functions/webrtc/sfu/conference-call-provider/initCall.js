@@ -11,8 +11,10 @@ import callUpgrader from './callUpgrader';
 import store from '../../../../../store';
 import exceptionHandler from './exceptionHandler';
 import isJanusConnected from '../isJanusConnected';
+import sfuPingPong from '../socket-listner/sfuPingPong';
 
 export default async (mediaType, props) => {
+  // console.log('init call called', mediaType);
   try {
     const isJanusConnectedRes = await isJanusConnected(props);
     if (isJanusConnectedRes) {
@@ -23,7 +25,7 @@ export default async (mediaType, props) => {
       const { webRtc, account } = store.getState();
       const userId = account.user.id;
       const { apis } = webRtc;
-      apis.sfuPingPong({ boardId: connectionId, userId: account.user.id });
+      // apis.sfuPingPong({ boardId: connectionId, userId: account.user.id });
       if (createOrJoin.type === 'create') {
         const conferenceCall = checkRoomCreated();
         if (conferenceCall) {
@@ -47,16 +49,37 @@ export default async (mediaType, props) => {
           }
         }
       }
+
       if (createOrJoin.type === 'join') {
-        const { joinToken } = createOrJoin;
-        const conferenceCall = checkRoomCreated();
-        joinRoom(conferenceCall, joinToken, connectionId);
+        const { isUserInLiveCall } = apis;
+
+        if (!webRtc.liveCallPingTimer) {
+          const { updateWebRtc } = props;
+          const liveCallPingTimer = setInterval(sfuPingPong, 5000);
+          updateWebRtc('liveCallPingTimer', liveCallPingTimer);
+        }
+
+        if (webRtc.localCallHistory.callType === 'Incoming') {
+          const { joinToken } = createOrJoin;
+          const conferenceCall = checkRoomCreated();
+          joinRoom(conferenceCall, joinToken, connectionId);
+        } else {
+          const isIamInCall = await isUserInLiveCall({ userId: account.user.id, boardId: connectionId });
+          console.log('is am in call', isIamInCall);
+          // start pingpong for live board call
+          if (!isIamInCall) {
+            const { joinToken } = createOrJoin;
+            const conferenceCall = checkRoomCreated();
+            joinRoom(conferenceCall, joinToken, connectionId);
+          }
+        }
       }
       if (createOrJoin.type === 'upgrade') {
         callUpgrader(connectionId, mediaType);
       }
     }
   } catch (e) {
+    console.log('execptoin in init call', e);
     exceptionHandler(e, props);
   }
 };

@@ -10,6 +10,10 @@ export default async (props, closeType) => {
     const { updateWebRtc } = props;
     const boardId = localCallHistory.chatHistory.connectionId;
     let isAnySubscriberNotDetach = null;
+    if (webRtc.liveCallPingTimer) {
+      clearInterval(webRtc.liveCallPingTimer);
+      updateWebRtc('liveCallPingTimer', null);
+    }
     if (webRtc.isLive || closeType === 'callReject') {
       if (webRtc.janus.remoteFeeds) {
         const allRemoteFeeds = Object.values(webRtc.janus.remoteFeeds);
@@ -74,7 +78,7 @@ export default async (props, closeType) => {
       if (publisherDetachRes && !isAnySubscriberNotDetach) {
         return true;
       }
-    }
+    } 
   } catch (e) {
     console.log('error in close handler', e);
     exceptionHandler({ error: JSON.stringify(e), errorCode: 122 });

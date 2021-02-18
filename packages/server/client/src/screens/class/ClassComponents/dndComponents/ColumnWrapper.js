@@ -3,6 +3,8 @@ import { useDrag, useDrop } from 'react-dnd';
 import { getEmptyImage } from 'react-dnd-html5-backend';
 import Itemtype from './types';
 import Column from '../Column';
+import { osFinder } from '../../helper-functions';
+
 
 export default (props) => {
   const ref = useRef(null);
@@ -47,7 +49,7 @@ export default (props) => {
   const [{ coor, isDragging }, drag, preview] = useDrag({
     item: { type: Itemtype.COLUMN, id: column.id, draggableId, index },
     collect: monitor => ({
-      isDragging: monitor.isDragging(),
+      isDragging: osFinder(window) === 'Mobile' ? false : monitor.isDragging(),
     }),
     begin: (monitor) => {
       // console.log("dragging", monitor);
@@ -68,7 +70,14 @@ export default (props) => {
   drop(ref);
 
   return (
-    <div onMouseMove={onMouseOverColumn} onMouseDown={(e) => onColumnClick('down', e)} onMouseUp={(e) => onColumnClick('up', e)} className="column-container" id={`id_column_${column.id}`} style={{ opacity: isDragging ? 0.1 : 1 }}>
+    <div
+      onMouseMove={onMouseOverColumn}
+      onMouseDown={(e) => onColumnClick('down', e)}
+      onMouseUp={(e) => onColumnClick('up', e)}
+      className="column-container"
+      id={`id_column_${column.id}`}
+      style={{ opacity: isDragging ? 0.1 : 1 }}
+    >
       <Column
         reference={ref}
         handle={drag}

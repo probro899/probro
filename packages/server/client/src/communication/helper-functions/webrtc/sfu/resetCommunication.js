@@ -1,4 +1,5 @@
 export default async (updateWebRtc) => {
+  console.log('reset communication called');
   const todoRes = [
     updateWebRtc('communicationContainer', 'history'),
     updateWebRtc('screenShareNotAllowed', false),

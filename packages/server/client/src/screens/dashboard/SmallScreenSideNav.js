@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { Collapse } from '@blueprintjs/core';
+import { Collapse } from '../../common/Collapse';
 import { Button } from '../../common/utility-functions/Button/Button';
 import { BsChevronDown, BsChevronUp } from "react-icons/bs";
 
@@ -60,15 +60,6 @@ class SmallScreenSideNav extends React.Component {
     return (
       <div className="pc-small-screen-sidenav">
         <div>
-          {/* <Button
-            onClick={this.toggleMenu}
-            className="nav-button"
-            text={navigate.sideNav.name}
-            fill
-            large
-            rightIcon={open ? 'chevron-up' : 'chevron-down'}
-            alignText="left"
-          /> */}
           <Button
             onClick={this.toggleMenu}
             type="button"
@@ -79,7 +70,7 @@ class SmallScreenSideNav extends React.Component {
             iconPosition="right"
           />
         </div>
-        <Collapse isOpen={open} keepChildrenMounted>
+        <Collapse isOpen={open}>
           <div className="pc-collapse-menu">
             {
               navElements.map((obj) => {

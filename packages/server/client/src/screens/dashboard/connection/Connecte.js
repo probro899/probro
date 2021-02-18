@@ -29,7 +29,7 @@ class Connecte extends React.Component {
   state = { loading: false, isOpen: false, deletePopover: false };
 
   getImage = (userDetail, user, activeStatus) => {
-    const imgUrl = userDetail && userDetail.image ? `${ENDPOINT}/assets/user/${10000000 + parseInt(userDetail.userId, 10)}/profile/${userDetail.image}` : '/assets/icons/64w/uploadicon64.png';
+    const imgUrl = userDetail && userDetail.image ? `${ENDPOINT}/assets/user/${10000000 + parseInt(userDetail.userId, 10)}/profile/${userDetail.image}` : '/assets//graphics/user.svg';
     return (
       <div className="img-con">
         <RoundPicture imgUrl={imgUrl} />

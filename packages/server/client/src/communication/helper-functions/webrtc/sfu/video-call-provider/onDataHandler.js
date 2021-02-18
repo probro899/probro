@@ -15,7 +15,7 @@ export default props => (data) => {
   const { updateWebRtc } = props;
   const { webRtc, account } = store.getState();
   const jsData = JSON.parse(data);
-  // console.log('Data in dataHandler', JSON.parse(data));
+  console.log('Data in dataHandler', JSON.parse(data));
   if (jsData.callType) {
     const { connectedUsers } = webRtc;
     const connectedUser = connectedUsers[jsData.uid];

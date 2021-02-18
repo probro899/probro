@@ -1,6 +1,5 @@
 import { connect } from 'react-redux';
 import React from 'react';
-import { Button } from '@blueprintjs/core';
 import EchoTest from './echo-test';
 import VideoCall from './videoCall';
 import VideoConference from './videoConference';
@@ -32,10 +31,10 @@ class Index extends React.Component {
     return (
       <div>
         <div style={{ display: 'flex' }}>
-          <Button style={{ margin: 10 }} intent="success" text="Echo server" onClick={() => this.setState({ currentTest: 'echo' })} />
-          <Button style={{ margin: 10 }} intent="success" text="Video Call" onClick={() => this.setState({ currentTest: 'videoCall' })} />
-          <Button style={{ margin: 10 }} intent="success" text="Video Conference" onClick={() => this.setState({ currentTest: 'videoConference' })} />
-          <Button style={{ margin: 10 }} intent="success" text="Streaming" onClick={() => this.setState({ currentTest: 'streaming' })} />
+          <button style={{ margin: 10, backgroundColor: 'green' }} text="Echo server" onClick={() => this.setState({ currentTest: 'echo' })} />
+          <button style={{ margin: 10, backgroundColor: 'green' }} text="Video Call" onClick={() => this.setState({ currentTest: 'videoCall' })} />
+          <button style={{ margin: 10, backgroundColor: 'green' }} text="Video Conference" onClick={() => this.setState({ currentTest: 'videoConference' })} />
+          <button style={{ margin: 10, backgroundColor: 'green' }} text="Streaming" onClick={() => this.setState({ currentTest: 'streaming' })} />
         </div>
         {this.renderTest()}
       </div>

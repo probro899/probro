@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Icon, Intent } from '@blueprintjs/core';
-import { IconNames } from '@blueprintjs/icons';
-
+import { IoMdAddCircle } from "react-icons/io";
+import { GrFormAdd } from "react-icons/gr";
 class FileInput extends React.Component {
   constructor(props) {
     super(props);
@@ -34,7 +33,7 @@ class FileInput extends React.Component {
         onFocus={this.changeStyle}
         className="image-upload-icon"
       >
-        <Icon icon={IconNames.PLUS} intent={Intent.PRIMARY} iconSize={20} color="white" />
+        <GrFormAdd size={20} />
         <input
           ref={this.fileInputRef}
           type="file"

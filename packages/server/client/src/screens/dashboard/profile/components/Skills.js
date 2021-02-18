@@ -1,6 +1,8 @@
 import React from 'react';
-import { Dialog, Button, Icon } from '@blueprintjs/core';
 import { Taginput } from '../../../../common';
+import { GrFormAdd } from "react-icons/gr";
+import Popup from '../../../../common/Form/Popup';
+import {Button} from '../../../../common/utility-functions/Button/Button';
 
 const PopoverContent = (props) => {
   const { data, value, onChange, callback } = props;
@@ -22,7 +24,16 @@ const PopoverContent = (props) => {
         <span>Add Skills</span>
       </div>
       <Taginput data={data} onChange={onChange} value={value} />
-      <Button onClick={callback} fill intent="primary" large text="Add Skills" />
+      {/* <Button
+       onClick={callback} fill intent="primary"
+        large text="Add Skills" /> */}
+        <Button
+         onClick={callback}
+         type="button"
+         buttonStyle="btn--primary--solid"
+         buttonSize="btn--medium"
+         title="Add Skills"
+        />
     </div>
   );
 };
@@ -124,7 +135,7 @@ class Skills extends React.Component {
     const data = { id: 'skills', name: 'Skills', placeholder: 'Type and press enter' };
     return (
       <div className="skills">
-        <Dialog
+        <Popup
           onClose={this.togglePopover}
           isOpen={openPopover}
         >
@@ -134,10 +145,10 @@ class Skills extends React.Component {
             data={data}
             callback={this.submitSkills}
           />
-        </Dialog>
+        </Popup>
         <h2 className="p-top">
           Skills
-          <Icon icon="plus" style={{ cursor: 'pointer' }} onClick={this.togglePopover} />
+          <GrFormAdd size={20} style={{ cursor: 'pointer' }} onClick={this.togglePopover} />
         </h2>
         {skill ? (
           <div className="skills-container">

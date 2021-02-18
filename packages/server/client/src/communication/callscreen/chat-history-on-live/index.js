@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Icon } from '@blueprintjs/core';
 import ChatHistory from '../../chathistory';
 import { BiChevronsRight } from "react-icons/bi";
 
@@ -13,7 +12,6 @@ const ScChatList = (props) => {
     <div className="sc-chat-history">
       <div className="sc-ch-header">
         <div className="icon-con">
-          {/* <Icon className="arrow-btn" onClick={() => onClose(null)} icon="double-chevron-right" /> */}
           <BiChevronsRight onClick={() => onClose(null)} size={20} />
         </div>
         <div className="sc-ch-title">

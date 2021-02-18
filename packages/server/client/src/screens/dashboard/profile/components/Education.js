@@ -1,15 +1,15 @@
 import React from 'react';
-import { Icon } from '@blueprintjs/core';
+import { MdEdit } from "react-icons/md";
+import { GrFormAdd } from "react-icons/gr";
 import moment from 'moment';
 import { PopoverForm } from '../../../../components';
 import { educationSchema } from '../structure';
 
-// const school = require('../../../../assets/icons/64w/school64.png');
 
 const SchoolInfo = ({ data, editPopover }) => {
   return (
     <div className="p-edu-list-i">
-      <img src="/assets/icons/64w/school64.png" alt="school icon" />
+      <img src="/assets/graphics/university.svg" alt="school icon" />
       <p>
         <span className="p-name-i">{data.degree}</span>
         <br />
@@ -17,7 +17,7 @@ const SchoolInfo = ({ data, editPopover }) => {
         <br />
         <span className="p-timeline">{`${moment(data.startTime, 'DD/MM/YYYY').format("MMM DD, YYYY")} - ${moment(data.endTime, 'DD/MM/YYYY').format("MMM DD, YYYY")}`}</span>
       </p>
-      <p><Icon style={{ cursor: 'pointer' }} icon="edit" onClick={() => editPopover(data)} /></p>
+      <p><MdEdit style={{ cursor: 'pointer' }} size={20} onClick={() => editPopover(data)} /></p>
     </div>
   );
 };
@@ -104,8 +104,8 @@ class Education extends React.Component {
         />
         <h2 className="p-top">
           Education
-          <Icon
-            icon="plus"
+          <GrFormAdd
+            size={20}
             onClick={() => this.editPopover({
               startTime: new Date(),
               endTime: new Date(),

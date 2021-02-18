@@ -44,6 +44,14 @@
 @import './organization//organization.scss';
 @import './organization/orgDashboard.scss';
 @import './PopularonPC.scss';
+@import './CustomComponents/drawer.scss';
+@import './CustomComponents/Toast.scss';
+@import './CustomComponents/tagInput.scss';
+@import './CustomComponents/radio.scss';
+@import './CustomComponents/Collapse.scss';
+@import './CustomComponents//Menu.scss';
+@import './CustomComponents/tag.scss';
+
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 
 // @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
@@ -89,12 +97,12 @@ ul {
   // font-stretch: extra-condensed;
   // font-style: normal;
 }
-@font-face {
-  font-family: 'Quicksand';
-  src: url('/assets/fonts/quicksand/Quicksand-Bold.ttf') format('truetype');
-  font-weight: 700;
-  font-style: normal;
-}
+// @font-face {
+//   font-family: 'Quicksand';
+//   src: url('/assets/fonts/quicksand/Quicksand-Bold.ttf') format('truetype');
+//   font-weight: 700;
+//   font-style: normal;
+// }
 @font-face {
   font-family: 'Mark Pro';
   src: url('/assets/fonts/mark-pro/Mark-Pro-Bold.ttf') format('truetype');
@@ -173,34 +181,17 @@ p {
   margin-bottom: 5px;
 }
 
-.bp3-dialog {
-  margin-left: 5%;
-  margin-right: 5%;
-  background-color: $backgroundColor;
-}
-
-// .tooltip {
-//   background: $backgroundColor;
-//   color: $darkBlue;
-// }
-
 // default round image css
+.round-image { background-color: #fff; }
 img.portrait {
   width: 100%;
   height: auto;
 }
+
 img.landscape {
   height: 100%;
   width: auto;
 }
-
-// .popover-form .btn--primary--solid {
-//   width: 100%;
-// }
-
-// .o-log-or-reg .btn--primary--solid {
-//   width: 100%;
-// }
 
 //pc-global-css
 .pc-container {
@@ -263,10 +254,6 @@ img.landscape {
   }
 }
 
-//text effect
-// .typicalWrapper {
-//   display: block;
-// }
 .typicalWrapper::after {
   content: '|';
   animation: blink 1s infinite step-start;

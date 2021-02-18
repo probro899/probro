@@ -17,6 +17,7 @@ export default (boardId, mediaType, doNotUpgrade) => {
           conferenceCall.unmuteAudio();
         }
       } else {
+        // console.log('conference call upgrade called');
         conferenceCall.createOffer(
           {
             media: janusMediaSelector(mediaType),
@@ -24,7 +25,7 @@ export default (boardId, mediaType, doNotUpgrade) => {
               if (!doNotUpgrade) {
                 conferenceCall.data({ text: JSON.stringify({ callType: localCallHistory.mediaType, uid: account.user.id, type: 'callUpgrade' }) });
               }
-              conferenceCall.send({ message: { request: 'configure' }, jsep });
+              conferenceCall.send({ message: { request: 'configure', bitrate: 512000 }, jsep });
             },
             error: (error) => {
               if (error.name) {

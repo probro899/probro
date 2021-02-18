@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import moment from 'moment';
-import { Icon } from '@blueprintjs/core';
 import { RoundPicture } from '../../../../components';
 import { ENDPOINT } from '../../../../config';
 import { timeStampSorting } from '../../../../common/utility-functions';
@@ -45,7 +44,7 @@ class NotificationContainer extends React.Component {
       case 'user':
         url = `user/${notification.user.user.slug}`;
         const { userDetail } = notification.user || {};
-        const imgUrl = userDetail && userDetail.image ? `${ENDPOINT}/assets/user/${10000000 + parseInt(notification.typeId, 10)}/profile/${userDetail.image}` : '/assets/icons/64w/uploadicon64.png';
+        const imgUrl = userDetail && userDetail.image ? `${ENDPOINT}/assets/user/${10000000 + parseInt(notification.typeId, 10)}/profile/${userDetail.image}` : '/assets//graphics/user.svg';
         imageIcon = (
           <div className="pc-noti-img">
             <RoundPicture imgUrl={imgUrl} />
@@ -64,7 +63,7 @@ class NotificationContainer extends React.Component {
       case 'blog':
         url = `blog/${account.user.slug}/${notification.blog.slug}`;
         const userDetails = notification.user.userDetail || {};
-        const imgUrls = userDetails && userDetails.image ? `${ENDPOINT}/assets/user/${10000000 + parseInt(notification.typeId, 10)}/profile/${userDetails.image}` : '/assets/icons/64w/uploadicon64.png';
+        const imgUrls = userDetails && userDetails.image ? `${ENDPOINT}/assets/user/${10000000 + parseInt(notification.typeId, 10)}/profile/${userDetails.image}` : '/assets//graphics/user.svg';
         imageIcon = (
           <div className="pc-noti-img">
             <RoundPicture imgUrl={imgUrls} />

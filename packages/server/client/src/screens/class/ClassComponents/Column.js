@@ -52,7 +52,7 @@ class Column extends Component {
   updateColumnName = async (data) => {
     const { api, updateDatabaseSchema, boardId } = this.props;
     const { id } = this.state;
-    await api.updateBoardColumn([{ ...data, boardId, broadCastId: `Board-${boardId}` }, { id }]);
+    await api.updateBoardColumn([{ ...data, todo: 'updateTitle', boardId, broadCastId: `Board-${boardId}` }, { id }]);
     updateDatabaseSchema('BoardColumn', { id, ...data });
     this.setState({
       id: '',

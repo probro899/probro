@@ -18,7 +18,7 @@
     background-color: rgba(16, 22, 26, 0.7);
     overflow: auto;
     user-select: none;
-    z-index: 50;
+    z-index: 20;
   }
   .pop-main-wrapper {
     position: absolute;
@@ -29,11 +29,17 @@
     pointer-events: none;
     user-select: none;
     width: 100%;
-    z-index: 99;
-    animation: zoominoutsinglefeatured 0.5s;
+    z-index: 20;
+    &.pop-up-open{
+      animation: zoomin 0.5s;
+    }
+    &.pop-up-closed{
+      animation: zoomout 0.5s;
+    }
+    &.hide-popup{
+      transform: scale(0);
+    }
     .popup-wrapper {
-      display: -webkit-box;
-      display: -ms-flexbox;
       display: flex;
       flex-direction: column;
       margin: 30px 0;
@@ -46,12 +52,10 @@
       background-color: $backgroundColor;
       border-radius: 10px;
       overflow: hidden;
-      // border: 1px solid #eee;
       position: relative;
       .pc-popup-header {
         display: flex;
         align-items: center;
-        // border-bottom: 1px solid #ddd;
         padding: 5px 10px;
         .pc-popup-icon {
           margin-right: 15px;
@@ -80,17 +84,27 @@
         justify-content: center;
         align-items: center;
         cursor: pointer;
-        z-index: 99;
+        z-index: 20;
       }
     }
   }
+ 
 }
 
-@keyframes zoominoutsinglefeatured {
+@keyframes zoomin {
   0% {
     transform: scale(0.5);
   }
   100% {
     transform: scale(1);
+  }
+}
+
+@keyframes zoomout {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(0);
   }
 }

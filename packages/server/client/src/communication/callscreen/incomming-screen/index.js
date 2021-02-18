@@ -1,14 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-// import { Button } from '@blueprintjs/core';
+import { AiOutlineClose } from "react-icons/ai";
+import { FaPhoneAlt, FaVideo } from "react-icons/fa";
 import RoundPicture from '../../../components/RoundPicture';
 import { SoundComponent } from '../../components';
 import { ENDPOINT } from '../../../config';
 import DeviceNotFoundError from '../error-screen/DeviceNotFoundError';
 import Notification from '../../../common/notification';
 import { Button } from '../../../common/utility-functions/Button/Button';
-import { FaPhoneAlt, FaVideo } from "react-icons/fa";
-import { AiOutlineClose } from "react-icons/ai";
 
 class IncomingCallScreen extends React.Component {
   state = {};
@@ -27,10 +26,10 @@ class IncomingCallScreen extends React.Component {
     await updateWebRtc('localCallHistory', { ...webRtc.localCallHistory, stream: null, mediaType, callType: 'Incoming' });
     await answerHandler(mediaType);
   }
-
+ 
   callReject = async () => {
     const { change, updateWebRtc, closeHandler } = this.props;
-    closeHandler();
+    closeHandler('callReject');
     updateWebRtc('showIncommingCall', false);
     change('history');
   }
@@ -52,10 +51,10 @@ class IncomingCallScreen extends React.Component {
       const { user, userDetail } = database.UserConnection.byId[webRtc.showCommunication].user;
       const userDetails = userDetail || {};
       displayName = `${user.firstName} ${user.lastName}`;
-      displayImageUrl = userDetails.image ? `${ENDPOINT}/assets/user/${10000000 + parseInt(user.id, 10)}/profile/${userDetails.image}` : '/assets/icons/128w/uploadicon128.png';
+      displayImageUrl = userDetails.image ? `${ENDPOINT}/assets/user/${10000000 + parseInt(user.id, 10)}/profile/${userDetails.image}` : '/assets/graphics/user.svg';
     } else {
       displayName = database.Board.byId[webRtc.showCommunication].name;
-      displayImageUrl = '/assets/icons/128w/uploadicon128.png';
+      displayImageUrl = '/assets/graphics/user.svg';
     }
     return (
       <div
@@ -94,32 +93,26 @@ class IncomingCallScreen extends React.Component {
             </div>
             <div className="controllers">
               {(!webRtc.deviceNotAllowed && isDeviceNotFound) ?
-                // <Button
-                //   icon="phone"
-                //   onClick={() => this.callAccept('audio')}
-                //   large intent="success"
-                // />
-                < Button
-                  onClick={() => this.callAccept('audio')}
-                  icon={<FaPhoneAlt />}
-                  type="button"
-                  buttonStyle="btn--circle-icons"
-                  buttonSize="btn--small"
-                />
+                (
+                  <Button
+                    onClick={() => this.callAccept('audio')}
+                    icon={<FaPhoneAlt />}
+                    type="button"
+                    buttonStyle="btn--circle-icons"
+                    buttonSize="btn--small"
+                  />
+                )
                 : null}
               {(!webRtc.deviceNotAllowed && isDeviceNotFound) ?
-                // <Button
-                //   icon="mobile-video"
-                //   onClick={() => this.callAccept('video')}
-                //   large intent="success"
-                // />
-                <Button
-                  icon={<FaVideo />}
-                  onClick={() => this.callAccept('video')}
-                  type="button"
-                  buttonStyle="btn--circle-icons"
-                  buttonSize="btn--small"
-                />
+                (
+                  <Button
+                    icon={<FaVideo />}
+                    onClick={() => this.callAccept('video')}
+                    type="button"
+                    buttonStyle="btn--circle-icons"
+                    buttonSize="btn--small"
+                  />
+                )
                 : null}
               <Button
                 icon={<AiOutlineClose />}

@@ -67,7 +67,7 @@ export class OrganizationPublicView extends Component {
                         <JoinedMembers />
                         <Support />
                     </div>
-                    <PopularOnPc maintitle="Popular on pc" secondTitle="popular mentors" data={data} />
+                    <PopularOnPc data={data} />
                 </div>
                 <Footer />
             </>

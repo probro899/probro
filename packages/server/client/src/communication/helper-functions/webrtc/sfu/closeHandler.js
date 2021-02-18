@@ -6,7 +6,8 @@ import conferenceCloseHandler from './conference-call-provider/closeHandler';
 import resetCommunication from './resetCommunication';
 import execeptionHandler from './conference-call-provider/exceptionHandler';
 
-export default props => async (closeType) => {
+export default (props) => async (closeType) => {
+  console.log('close handler called', closeType);
   try {
     const { webRtc } = store.getState();
     const { updateWebRtc } = props;
@@ -18,24 +19,26 @@ export default props => async (closeType) => {
     if (webRtc.localCallHistory.stream) {
       if (webRtc.localCallHistory.stream.active) {
         const allTracks = webRtc.localCallHistory.stream.getTracks();
-        allTracks.forEach(track => track.stop());
+        allTracks.forEach((track) => track.stop());
       }
     }
 
     // handle one to one closing
-    if (webRtc.localCallHistory.chatHistory.type === 'user') {
-      await oneToOneCallCloseHandler(props, closeType);
-    }
+    if (webRtc.localCallHistory.chatHistory) {
+      if (webRtc.localCallHistory.chatHistory.type === 'user') {
+        await oneToOneCallCloseHandler(props, closeType);
+      }
 
-    // handle conference closing
-    if (webRtc.localCallHistory.chatHistory.type === 'board') {
-      await conferenceCloseHandler(props, closeType);
+      // handle conference closing
+      if (webRtc.localCallHistory.chatHistory.type === 'board') {
+        await conferenceCloseHandler(props, closeType);
+      }
     }
 
     // Reset Store
     await resetCommunication(updateWebRtc);
-
   } catch (e) {
+    console.log('main close handler error', e);
     execeptionHandler({ error: JSON.stringify(e), errorCode: 123 });
   }
 };

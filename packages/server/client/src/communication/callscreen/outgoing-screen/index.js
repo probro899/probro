@@ -4,13 +4,11 @@ import PropTypes from 'prop-types';
 import _ from 'lodash';
 import { FaPhoneSlash } from 'react-icons/fa';
 import { MdHourglassEmpty } from 'react-icons/md';
-import { Icon } from '@blueprintjs/core';
 import RoundPicture from '../../../components/RoundPicture';
 import { ENDPOINT } from '../../../config';
 import SoundComponent from '../../components/SoundComponent';
 import DeviceNotFoundError from '../error-screen/DeviceNotFoundError';
 import { Button } from '../../../common/utility-functions/Button/Button';
-
 
 const IconOrImage = ({ isUser, database, webRtc }) => {
   let user;
@@ -42,14 +40,14 @@ const IconOrImage = ({ isUser, database, webRtc }) => {
   if (!isUser) {
     return (
       <div className="icon-container">
-        <Icon icon="application" iconSize={130} style={{ color: '#757575' }} />
+        <img src="/assets/graphics/classroom.svg"  style={{ height: '130px', width:'130px' }} />
       </div>
     );
   }
 
   return (
     <div className="img-container">
-      <RoundPicture imgUrl="/assets/icons/128w/uploadicon128.png" />
+      <RoundPicture imgUrl="/assets/graphics/user.svg" />
     </div>
   );
 };
@@ -101,6 +99,7 @@ class Index extends React.Component {
   }
 
   callReject = async () => {
+    console.log('Call Reject called in outgoing call');
     const { closeHandler, change } = this.props;
     await closeHandler('callReject');
     change('history');

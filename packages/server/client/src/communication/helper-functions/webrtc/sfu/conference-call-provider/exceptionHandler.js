@@ -6,6 +6,7 @@ import exceptionReport from '../exceptionReporter';
 import initJanus from '../init';
 
 const attachPlugInHandler = async (props) => {
+  // console.log('attach plugin called');
   await attachPlugin(props);
   const { webRtc } = store.getState();
   const { mediaType } = webRtc.localCallHistory;
@@ -37,6 +38,12 @@ export default async (errorObj, props) => {
     if (errorCode) {
       switch (errorCode) {
         case 107:
+          attachPlugInHandler(props);
+          break;
+        case 108:
+          attachPlugInHandler(props);
+          break;
+        case 109:
           attachPlugInHandler(props);
           break;
         case 200:

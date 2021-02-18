@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import moment from 'moment';
-import { Dialog, Tag, Icon } from '@blueprintjs/core';
 import PropTypes from 'prop-types';
+import Tag from '../../../common/Tag';
 import { timeStampSorting } from '../../../common/utility-functions';
 import TaskComment from './history/TaskComment';
 import TaskDetailRight from './TaskDetailRight';
@@ -216,8 +216,6 @@ class TaskOverlay extends Component {
         onClose={this.onClose}
         onOpening={this.getCardActivity}
         width="800px"
-      // className="overlay-container"
-      // style={{ width: '800px' }}
       >
         {!loading ? (
           <div className="task-detail-overlay">
@@ -251,23 +249,17 @@ class TaskOverlay extends Component {
                   )
                   : (
                     <div className="buttons-group">
-                      {/* <Icon
-                        className="edit-title"
-                        icon="edit"
-                        onClick={this.toggleElemTitle}
-                      /> */}
                       <AiOutlineEdit size={20} onClick={this.toggleElemTitle} />
                     </div>
                   )
                 }
               </div>
-              {/* <Button icon="cross" className="task-close" minimal onClick={this.onClose} /> */}
             </div>
             <div className="overlay-body">
               <div className="left-part">
                 <div className="pc-tags-and-deadline">
-                  <div className="pc-tag-view">
-                    {tags.map(obj => <Tag className="tag" key={obj.id} large intent={obj.tag} />)}
+                  <div className="task-tag-container">
+                    {tags.map(obj => <Tag key={obj.id} color={obj.tag} />)}
                   </div>
                   <div className="pc-deadline-view">
                     {task.Deadline ? (

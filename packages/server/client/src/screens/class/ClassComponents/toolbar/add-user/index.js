@@ -57,16 +57,13 @@ class AddUser extends React.Component {
 
   render() {
     return (
-      <Popover content={<PopoverContent callback={this.addUserToBoardHandler} />}>
+      <Popover minimal position="bottom" content={<PopoverContent callback={this.addUserToBoardHandler} />}>
         <Button
           type="button"
           buttonStyle="btn-circle"
           buttonSize="btn--small"
           icon={<FaUserPlus size={15} />}
         />
-        {/* <div className="add-user-btn pc-class-btn">
-          <FaUserPlus size={20} />
-        </div> */}
       </Popover>
     );
   }

@@ -12,6 +12,7 @@ import Connection from './connection';
 import Class from '../class/Class';
 import { Blog } from '../blog';
 import { Spinner } from '../../common';
+import OrganizationDashboard from './organizationDashboard';
 
 class HomePage extends Component {
   state = {};
@@ -45,6 +46,7 @@ class HomePage extends Component {
                 <Route exact path={`${match.path}/settings/advanced`} component={Setting} />
                 <Route exact path={`${match.path}/drawing-board`} component={DrawingBoard} />
                 <Route exact path={`${match.path}/connection`} component={Connection} />
+                <Route exact path={`${match.path}/organization/:orgId`} component={OrganizationDashboard} />
                 <Redirect to="/error" />
               </Switch>
             </div>

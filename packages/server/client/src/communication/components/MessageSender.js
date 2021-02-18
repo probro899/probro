@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Icon } from '@blueprintjs/core';
 import { sendMessage } from '../helper-functions/webrtc/mesh';
 import { FiSend } from "react-icons/fi";
 import { FormTextArea } from '../../common/Form/FormTextArea';
@@ -49,12 +48,6 @@ class MessageSender extends React.Component {
           value={message}
           onKeyPress={this.handleKeyPress}
         />
-        {/* <Button
-          disabled={isDeleted}
-          style={{ background: '#154155', color: 'white', width: '10%' }}
-          rightIcon={<Icon icon="direction-right" color="white" iconSize={25} />}
-          onClick={this.sendMessage}
-        /> */}
         <div className="pc-send-btn">
           <Button
             icon={<FiSend />}

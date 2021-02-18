@@ -1,19 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button, Menu, MenuItem, Popover } from '@blueprintjs/core';
+import { Popover } from '@blueprintjs/core';
+import {Menu, MenuItem} from '../common/Menu';
 import { FiMoreHorizontal } from 'react-icons/fi';
+import { MdEdit } from "react-icons/md";
+import { AiFillDelete } from "react-icons/ai";
+// import Popover from '../common/Form/Popover';
 // more button popover here id holds the id of the board
+
 const SmallMenu = (onclick, id) => {
   return (
     <Menu>
       <MenuItem
-        icon="edit"
+        icon={<MdEdit size={20}/>}
         text="Edit"
         onClick={() => onclick('edit', id)}
       />
-      <Menu.Divider />
       <MenuItem
-        icon="delete"
+        icon={<AiFillDelete size={20}/>}
         intent="danger"
         text="Delete"
         onClick={() => onclick('delete', id)}
@@ -34,10 +38,7 @@ class MoreButton extends React.Component {
         position="right"
         className="more-button"
       >
-        {/* <Button
-          icon="more"
-          minimal
-        /> */}
+        
         <FiMoreHorizontal size={25} color="#1d4354" />
       </Popover>
     );

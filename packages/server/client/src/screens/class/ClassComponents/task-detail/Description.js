@@ -1,5 +1,4 @@
 import React from 'react';
-// import { TextArea } from '@blueprintjs/core';
 import { matchUrl } from '../../../../common/utility-functions';
 import { FormTextArea } from '../../../../common/Form/FormTextArea';
 

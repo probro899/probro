@@ -1,5 +1,7 @@
 import getName from './getName';
 import matchUrl from './matchUrl';
+import uploadFile from './uploadFile';
+import getDeviceType from './getDeviceType';
 
 
 // for sorting both position as well as timestamp
@@ -37,4 +39,4 @@ const activitySorting = (a, b) => {
   return -1;
 }
 
-export { timeStampSorting, matchUrl, normalTimeStampSorting, getName, activitySorting };
+export { timeStampSorting, uploadFile, getDeviceType, matchUrl, normalTimeStampSorting, getName, activitySorting };

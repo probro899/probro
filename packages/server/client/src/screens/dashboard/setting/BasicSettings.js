@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import countryList from 'react-select-country-list';
-import { Icon } from '@blueprintjs/core';
+import { MdEdit } from "react-icons/md";
 import * as actions from '../../../actions';
 import { PopoverForm } from '../../../components';
 import getName from '../../../common/utility-functions/getName';
@@ -117,8 +117,8 @@ class BasicSettings extends React.Component {
           <div className="label">Full Name</div>
           <div className="value">
             {account.user && <span>{getName(user)}</span>}
-            <Icon
-              icon="edit"
+            <MdEdit
+             size={20}
               color="rgba(167, 182, 194, 1)"
               className="edit-icon"
               onClick={() => this.togglePopover('name', NameSchema, 'User')}
@@ -129,8 +129,8 @@ class BasicSettings extends React.Component {
           <div className="label">Gender</div>
           <div className="value">
             <span style={{ textTransform: 'capitalize' }}>{userDetail.gender}</span>
-            <Icon
-              icon="edit"
+            <MdEdit
+             size={20}
               color="rgba(167, 182, 194, 1)"
               className="edit-icon"
               onClick={() => this.togglePopover('gender', GenderSchema, 'UserDetails')}
@@ -141,8 +141,8 @@ class BasicSettings extends React.Component {
           <div className="label">Headline</div>
           <div className="value">
             <span>{userDetail.headLine}</span>
-            <Icon
-              icon="edit"
+            <MdEdit
+             size={20}
               color="rgba(167, 182, 194, 1)"
               className="edit-icon"
               onClick={() => this.togglePopover('headline', HeadlineSchema, 'UserDetails')}
@@ -153,8 +153,8 @@ class BasicSettings extends React.Component {
           <div className="label">Country</div>
           <div className="value">
             <span style={{ textTransform: 'capitalize' }}>{userDetail.country}</span>
-            <Icon
-              icon="edit"
+            <MdEdit
+             size={20}
               color="rgba(167, 182, 194, 1)"
               className="edit-icon"
               onClick={() => this.togglePopover('country', CountrySchema, 'UserDetails')}
@@ -165,8 +165,8 @@ class BasicSettings extends React.Component {
           <div className="label">Address</div>
           <div className="value">
             <span>{userDetail.address}</span>
-            <Icon
-              icon="edit"
+            <MdEdit
+             size={20}
               color="rgba(167, 182, 194, 1)"
               className="edit-icon"
               onClick={() => this.togglePopover('address', AddressSchema, 'UserDetails')}

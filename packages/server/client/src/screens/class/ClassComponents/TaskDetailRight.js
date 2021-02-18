@@ -1,39 +1,32 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Popover, Tag } from '@blueprintjs/core';
+import { Popover } from '@blueprintjs/core';
 import Form from '../../../common/Form';
 import DeletePopOver from '../../../common/DeletePopOver';
 import { Attachment } from './attachment';
 import SelectColumn from './SelectColumn';
 import { Button } from '../../../common/utility-functions/Button/Button';
 import { AiOutlineTags, AiOutlineFieldTime, AiOutlinePaperClip, AiFillCopy, AiTwotoneDelete } from "react-icons/ai";
+import Tag from '../../../common/Tag';
 
 const TagPopover = ({ tags, addTag }) => {
-  const tagNames = ['primary', 'warning', 'success', 'danger'];
+  const tagNames = ['red', 'green', 'blue', 'black', 'yellow'];
   return (
     <div style={{ padding: '5px', minWidth: '250px' }}>
       <div style={{ padding: '5px', textAlign: 'center', fontSize: '15px', fontWeight: 'bold' }}>
         <span>Select Tags</span>
       </div>
-      <div>
+      <div className="tagform">
         {
-          tagNames.map((type, index) => {
-            let tick = false;
-            tags.map((obj) => {
-              if (obj.tag === type) {
-                tick = true;
-              }
-            });
+        tagNames.map((obj, index) => {
+            const tick = tags.find(o => o.tag === obj);
             return (
               <Tag
+                type="flat"
+                color={obj}
+                tick={tick}
                 key={index}
-                onClick={() => addTag(type, tick)}
-                fill
-                large
-                intent={type}
-                interactive
-                style={{ margin: '5px 0px' }}
-                icon={tick ? 'tick' : null}
+                onClick={() => addTag(obj, tick)}
               />
             );
           })

@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-// import { TextArea, Button } from '@blueprintjs/core';
 import { FormTextArea } from '../../../common/Form/FormTextArea';
 import { Button } from '../../../common/utility-functions/Button/Button';
 

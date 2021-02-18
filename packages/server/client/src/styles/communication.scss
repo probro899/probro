@@ -7,7 +7,7 @@
   bottom: 0;
   right: 2px;
   background: $backgroundColor;
-  z-index: 15;
+  z-index: 19;
   box-shadow: 0 0 0 1px rgba(16, 22, 26, 0.1), 0 4px 8px rgba(16, 22, 26, 0.2),
     0 18px 46px 6px rgba(16, 22, 26, 0.2);
   border-top-left-radius: 5px;
@@ -40,6 +40,11 @@
       justify-content: flex-end;
       align-items: center;
       padding-right: 5px;
+      svg{
+        &:nth-child(2){
+          margin-left: 10px;
+        }
+      }
     }
   }
   .content {
@@ -213,6 +218,7 @@
       .chats {
         padding: 10px 10px 0;
         overflow-y: scroll;
+        overflow-x: hidden;
         height: 100%;
         background-color: $backgroundColor;
         .pc-date-indicator {
@@ -760,6 +766,7 @@
 
   &.pc-com-maximum {
     width: 100%;
+    z-index: 20;
     .content {
       .call-screen {
         .sc-chat-list {
@@ -783,6 +790,7 @@
       }
     }
   }
+  
   @keyframes rotate {
     0% {
       border-color: #ff0000;

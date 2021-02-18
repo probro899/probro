@@ -1,9 +1,7 @@
 /* eslint-disable jsx-a11y/media-has-caption */
 import React from 'react';
-import { InputGroup, Button, Intent } from '@blueprintjs/core';
 import adapter from 'webrtc-adapter';
 import Janus from '../janus';
-import mediaSelector from '../../../../communication/mediaSelector';
 
 class Index extends React.Component {
   constructor(props) {
@@ -220,14 +218,14 @@ class Index extends React.Component {
       <div>
         <h1>{currentState}</h1>
         <div style={{ width: '50%', marginTop: 10, padding: 10 }}>
-          <InputGroup onChange={e => this.onInputChange('username', e)} placeholder="Enter your name" />
-          <Button style={{ margin: 10 }} text="Register" intent="success" onClick={this.onUserRegister} />
-          <InputGroup placeholder="Enter remote user name" onChange={e => this.onInputChange('remoteUserName', e)} />
+          <input onChange={e => this.onInputChange('username', e)} placeholder="Enter your name" />
+          <button style={{ margin: 10 }} text="Register" intent="success" onClick={this.onUserRegister} />
+          <input placeholder="Enter remote user name" onChange={e => this.onInputChange('remoteUserName', e)} />
           <div>
-            <Button intent={Intent.SUCCESS} style={{ margin: 10 }} text="Audio Call" onClick={() => this.onCallHandler({ audio: true, videoSend: false, videoRecv: true })} />
-            <Button intent={Intent.SUCCESS} style={{ margin: 10 }} text="Video Call" onClick={() => this.onCallHandler({ video: true, audio: true })} />
-            <Button intent={Intent.SUCCESS} style={{ margin: 10 }} text="Screen Share" onClick={() => this.onCallHandler({ video: 'screen' })} />
-            <Button intent={Intent.DANGER} style={{ margin: 10 }} text="Close Call" onClick={this.callCloseHandler} />
+            <button style={{ margin: 10, backgroundColor: 'green' }} text="Audio Call" onClick={() => this.onCallHandler({ audio: true, videoSend: false, videoRecv: true })} />
+            <button style={{ margin: 10, backgroundColor: 'green' }} text="Video Call" onClick={() => this.onCallHandler({ video: true, audio: true })} />
+            <button style={{ margin: 10, backgroundColor: 'green' }} text="Screen Share" onClick={() => this.onCallHandler({ video: 'screen' })} />
+            <button style={{ margin: 10, backgroundColor: 'green' }} text="Close Call" onClick={this.callCloseHandler} />
           </div>
         </div>
         <div>

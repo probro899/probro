@@ -3,6 +3,7 @@ import closeHandler from '../closeHandler';
 import store from '../../../../../store';
 
 export default (props, state, time) => {
+  console.log('auto close handler called');
   const { updateWebRtc } = props;
   setTimeout(async () => {
     const { webRtc } = store.getState();

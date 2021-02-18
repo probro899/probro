@@ -4,7 +4,7 @@
   margin: $navbarHeight auto 0;
   min-height: calc(100vh - #{$navbarHeight} - #{$footerHeight});
   padding: 20px;
-  font-family: 'Montserrat';
+  // font-family: 'Montserrat';
   // background-color: #f8f7f7;
 
   @media screen and (max-width: 576px) {
@@ -390,13 +390,6 @@
 
       @media screen and (max-width: 480px) {
         display: block;
-
-        .auth-con {
-          display: block;
-          .author-detail {
-            justify-content: flex-start;
-          }
-        }
       }
     }
   }
@@ -545,7 +538,7 @@
           // line-height: 40px;
           margin-left: 10px;
           resize: none;
-          font-family: 'Montserrat';
+          // font-family: 'Montserrat';
           border-radius: 5px;
           display: flex;
           align-items: center;
@@ -628,7 +621,7 @@
                   font-size: 16px;
                   flex: 1;
                   height: 70px;
-                  font-family: 'Montserrat';
+                  // font-family: 'Montserrat';
                   border-radius: 5px;
                   border: 1px solid #e7e7e7;
                   outline: none !important;

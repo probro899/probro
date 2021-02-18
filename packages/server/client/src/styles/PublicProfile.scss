@@ -125,8 +125,12 @@
             cursor: pointer;
           }
           button {
+
             margin: 0px 10px;
             // border-radius: 5px;
+            @media screen and (max-width:576px) {
+              margin: 0 5px;
+            }
           }
         }
       }
@@ -210,12 +214,8 @@
     .experience {
       padding: 20px;
       @include genericBoxPattern;
-      // background-color: #fff;
       width: 100%;
       margin-bottom: 20px;
-      // border-radius: 10px;
-      // border: 1px solid #eee;
-
       .p-edu-list,
       .p-exp-list {
         margin-top: 10px;
@@ -223,13 +223,13 @@
         .p-exp-list-i {
           display: flex;
           align-items: center;
-          flex-wrap: wrap;
           padding: 2px;
           border-bottom: 1px solid #eee;
           padding-top: 10px;
           padding-bottom: 10px;
           img {
-            height: 35px;
+            height: 40px;
+            width: 40px;
           }
           .edu-details,
           .exp-details {
@@ -237,9 +237,11 @@
             span {
               line-height: 1.6;
             }
-            .p-name-i {
+            .p-name-i,
+            .p-title-i {
               font-weight: bold;
               line-height: 1.4;
+              color: $headingColor;
             }
             .address {
               font-size: 14px;

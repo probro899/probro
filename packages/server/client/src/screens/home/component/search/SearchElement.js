@@ -1,6 +1,6 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
-// import Typical from '../../../../components/textAnimation/react-typical';
+import Typical from '../../../../components/textAnimation/react-typical';
 
 
 const steps = [
@@ -36,8 +36,7 @@ class SearchElement extends React.Component {
 
         <div className="pc-jumbo">
           <h1 className="pc-jumbo-text">
-            Join our growing community and connect to
-             {/* <Typical wrapper="span" steps={steps} loop={Infinity} className="typicalWrapper" /> */}
+            Join our growing community and connect to  <Typical wrapper="span" steps={steps} loop={Infinity} className="typicalWrapper" />
           </h1>
           <p className="pc-jumbo-text-second">
             Do you want to acquire professional skills? Get started with proper class and learn from courses, blogs and project mentorship all from single platform.

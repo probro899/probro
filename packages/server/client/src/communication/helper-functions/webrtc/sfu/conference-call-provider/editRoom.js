@@ -11,7 +11,7 @@ export default async (id, conferenceCall) => {
     const joinToken = uuid();
     const boardName = database.Board.byId[id].name;
     const noOfmembers = Object.values(database.BoardMember.byId).filter(bm => bm.boardId === id).length;
-    const edit = { request: 'edit', description: boardName, room: id, publishers: noOfmembers, new_pin: joinToken };
+    const edit = { request: 'edit', description: boardName, room: id, publishers: noOfmembers, new_pin: joinToken, bitrate: 512000 };
     const editResult = await new Promise((resolve) => {
       conferenceCall.send({
         message: edit,
@@ -19,7 +19,7 @@ export default async (id, conferenceCall) => {
           resolve({ ...result, joinToken });
         },
         error: (err) => {
-          resolve({ error: JSON.stringify(err), error_code: 109 });
+          resolve({ error: JSON.stringify(err), errorCode: 109 });
         },
       });
     });

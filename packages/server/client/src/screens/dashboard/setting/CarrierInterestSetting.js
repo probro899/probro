@@ -1,7 +1,9 @@
 /* eslint-disable react/no-array-index-key */
 import React from 'react';
-import { Icon, Dialog, Button } from '@blueprintjs/core';
+import { MdEdit } from "react-icons/md";
 import { Taginput } from '../../../common';
+import Popup from '../../../common/Form/Popup';
+import {Button} from '../../../common/utility-functions/Button/Button';
 
 const PopoverContent = (props) => {
   const { data, value, onChange, callback } = props;
@@ -23,7 +25,13 @@ const PopoverContent = (props) => {
         <span>Carrier Interests</span>
       </div>
       <Taginput data={data} onChange={onChange} value={value} />
-      <Button onClick={callback} fill intent="success" large text="Save" />
+      <Button
+         onClick={callback}
+        type="button"
+        buttonStyle="btn--primary--solid"
+        buttonSize="btn--medium"
+        title="Save"
+      />
     </div>
   );
 };
@@ -86,7 +94,7 @@ class CarrierInterestSetting extends React.Component {
     return (
       <div className="basic">
         <div className="label">Carrier Interests</div>
-        <Dialog
+        <Popup
           onClose={this.togglePopover}
           isOpen={open}
         >
@@ -96,11 +104,11 @@ class CarrierInterestSetting extends React.Component {
             data={data}
             callback={this.editInterest}
           />
-        </Dialog>
+        </Popup>
         <div className="value">
           {this.getInterests()}
-          <Icon
-            icon="edit"
+          <MdEdit
+            size={20}
             color="rgba(167, 182, 194, 1)"
             className="edit-icon"
             onClick={() => this.togglePopover('career')}

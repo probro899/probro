@@ -1,7 +1,6 @@
 /* eslint-disable no-undef */
 /* eslint-disable import/no-cycle */
 import React from 'react';
-// import { Button } from '@blueprintjs/core';
 import PropTypes from 'prop-types';
 import { MdMessage } from 'react-icons/md';
 import { TiArrowMaximise, TiArrowMinimise } from 'react-icons/ti';
@@ -16,7 +15,6 @@ import ImageOnMainScreen from './components/ImageOnMainScreen';
 import CallTimer from './components/CallTimer';
 import { AiOutlineMenu } from "react-icons/ai";
 import { Button } from '../../../common/utility-functions/Button/Button';
-
 
 class LiveCallScreen extends React.Component {
   constructor(props) {
@@ -75,7 +73,7 @@ class LiveCallScreen extends React.Component {
   callReject = () => {
     const { closeHandler, change } = this.props;
     closeHandler();
-    change('history');
+    // change('history');
   }
 
   render() {

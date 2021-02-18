@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormGroup } from '@blueprintjs/core';
 import Input from './Input';
 import Button from './Button';
 import Taginput from './Taginput';
@@ -142,7 +141,7 @@ class Form extends React.Component {
       <form
         onSubmit={this.onSubmit}
       >
-        <FormGroup>
+         <div className="pc-form-group">
           {
             data.map((obj, idx) => (
               <Element
@@ -155,7 +154,7 @@ class Form extends React.Component {
               />
             ))
           }
-        </FormGroup>
+       </div>
       </form>
     );
   }

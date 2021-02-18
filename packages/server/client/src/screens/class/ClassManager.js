@@ -10,6 +10,8 @@ import checkColumnMove from './helper-functions/checkColumnMove';
 import { withinColumn, outsideColumn } from './helper-functions/checkTaskMove';
 import ClassWrapper from './ClassComponents/dndComponents/ClassWrapper';
 import Itemtype from './ClassComponents/dndComponents/types';
+// import { osFinder } from './helper-functions';
+
 
 class ClassManager extends Component {
   constructor(props) {
@@ -73,7 +75,7 @@ class ClassManager extends Component {
       if (item.index !== draggingInitialItem.index) {
         try {
           await apis.updateBoardColumn([
-            { position: columns.find(o => o.id === item.id).position, timeStamp: Date.now(), broadCastId: `Board-${classId}` }, { id: item.id }]);
+            { todo: 'moveColumn', position: columns.find(o => o.id === item.id).position, timeStamp: Date.now(), broadCastId: `Board-${classId}` }, { id: item.id }]);
         } catch (error) {
           console.log('Column movement Error', error);
         }

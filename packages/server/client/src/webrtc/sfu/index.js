@@ -15,6 +15,7 @@ export default async () => {
     const janus = new Janus(
       {
         server: 'wss://properclass.com:8989/janus',
+        // server: 'http://localhost:8088/janus',
         apisecret: 'properclassdotcom@654123',
         // iceServers: [{ urls: 'turn:properclass.com:3478?transport=tcp', username: 'properclass', credential: 'proper199201' }],
         success: () => {

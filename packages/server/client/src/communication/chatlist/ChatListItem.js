@@ -6,7 +6,6 @@
 
 import React from 'react';
 import moment from 'moment';
-import { Icon } from '@blueprintjs/core';
 import { ENDPOINT } from '../../config';
 import store from '../../store';
 import { incomingCallLogHandler, outgoingCallLogHandler } from '../chathistory/helper-function';
@@ -37,10 +36,9 @@ export default ({ clo, idx }) => {
       <div className="pc-chat-indi" style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
         <div className="pc-chat-user" style={{ display: 'flex', position: 'relative' }}>
           {isUser
-            ? <div className="profile-icon"><RoundPicture imgUrl={clo.user.userDetails && clo.user.userDetails.image ? `${ENDPOINT}/assets/user/${10000000 + parseInt(clo.user.user.id, 10)}/profile/${clo.user.userDetails.image}` : '/assets/icons/64w/uploadicon64.png'} /></div>
+            ? <div className="profile-icon"><RoundPicture imgUrl={clo.user.userDetails && clo.user.userDetails.image ? `${ENDPOINT}/assets/user/${10000000 + parseInt(clo.user.user.id, 10)}/profile/${clo.user.userDetails.image}` : '/assets//graphics/user.svg'} /></div>
             : <div className="class-icon">
               <img src="/assets/graphics/classroom.svg" alt="classroom logo" />
-              {/* <Icon icon="application" iconSize={40} /> */}
             </div>
           }
           {isUser && userActive.activeStatus && <div className="green-dot" />}

@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
-import { Dialog } from '@blueprintjs/core';
+import Popup from '../common/Form/Popup';
 
 class ErrorBoundary extends React.Component {
   constructor(props) {
@@ -28,14 +28,14 @@ class ErrorBoundary extends React.Component {
     const { children } = this.props;
     if (hasError) {
       return (
-        <Dialog
+        <Popup
           isOpen={hasError}
           onClose={this.closeDailogue}
           title="Error"
           hasBackdrop={false}
         >
           <h1>{`${error}`}</h1>
-        </Dialog>
+        </Popup>
       );
     }
     return children;

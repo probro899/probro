@@ -5,6 +5,7 @@
   padding: 5px;
   overflow: auto;
   background-color: $backgroundColor;
+  height: 100%;
   // styling individual notification wrapper as <a>
   .pc-noti-wrapper {
     padding: 5px;
@@ -12,6 +13,9 @@
     border-bottom: 1px solid $normalBorder;
     display: flex;
     flex-direction: row;
+    &:nth-child(3){
+      height: unset !important;
+    }
     .pc-noti-img {
       width: 55px;
       height: 55px;
@@ -45,6 +49,8 @@
         margin-bottom: 5px;
         word-break: break-word;
         color: $headingColor;
+        font-weight: 500;
+        
       }
       .pc-ago-date {
         font-size: 12px;

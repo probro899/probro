@@ -26,10 +26,8 @@ export const FormTextInput = ({
                     onChange={onChange}
                     value={value}
                     className={className}
-                // style={error && { border: 'solid 1px red' }}
+                
                 />
-                {/* {error && <p className="error-message">{error}</p>} */}
-                {/* <p className="left-icon">{leftIcon}</p> */}
                 <p className="right-icon">{rightElement}</p>
             </label>
         </>
