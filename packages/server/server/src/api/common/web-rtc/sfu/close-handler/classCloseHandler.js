@@ -3,9 +3,10 @@ import updateDatabaseCache from '../../../../../cache/database/update';
 import schema from '@probro/common/source/src/schema';
 import db from '../../../../../db';
 import { liveBoard } from '../../../../../cache';
- 
+
 export default async (callCloseDetail, session) => {
-  const { broadCastId, uid } = callCloseDetail;
+  try {
+    const { broadCastId, uid } = callCloseDetail;
   const board = liveBoard.getBoard(broadCastId);
   if (board) {
     if (board.users) {
@@ -37,4 +38,7 @@ export default async (callCloseDetail, session) => {
     },
   };
   updateDatabaseCache('BoardMessage', schema.add('BoardMessage', dataTobeUpdate.BoardMessage));
+  } catch (e) {
+    console.error('Error classCloseHandler', e);
+  }
 };

@@ -76,7 +76,7 @@ class Index extends React.Component {
           // console.log('connectionStatus', connectionStatus);
           if (connectionStatus) {
             this.setState({ callStatus: connectionStatus.status });
-            if (connectionStatus.status === 'busy' || connectionStatus.status === 'declined') {
+            if (connectionStatus.status === 'busy') {
               this.setState({ callStatus: connectionStatus.status });
               if (!autoClose) {
                 const autoTimeOut = setTimeout(this.callReject, 2000);
