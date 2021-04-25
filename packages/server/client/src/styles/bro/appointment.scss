@@ -1,0 +1,71 @@
+.appointment {
+    width: 100%;
+}
+.appointment-wrapper {
+    padding: pixel-to-rem(20);
+    max-width: pixel-to-rem(1024);
+    margin: 0 auto;
+    width: 100%;
+    @media screen and (max-width: pixel-to-rem(767)) {
+        padding: pixel-to-rem(10);
+    }
+}
+.appointment-list {
+    padding: pixel-to-rem(20);
+    margin-bottom: pixel-to-rem(30);
+    @include genericBoxPattern;
+    .appointment-table {
+        width: 100%;
+        border-spacing: 0 pixel-to-rem(10);
+    }
+    thead {
+        th {
+            text-align: left;
+            padding-left: pixel-to-rem(10);
+            color: $headingColor;
+        }
+    }
+    tbody {
+        tr {
+            background: #e6eef8;
+            border-radius: pixel-to-rem(10);
+            td {
+                padding: pixel-to-rem(10);
+                color: $headingColor;
+                &:first-child {
+                    border-top-left-radius: pixel-to-rem(5);
+                    border-bottom-left-radius: pixel-to-rem(5);
+                }
+                &:last-child {
+                    border-top-right-radius: pixel-to-rem(5);
+                    border-bottom-right-radius: pixel-to-rem(5);
+                }
+            }
+        }
+    }
+}
+
+.stats-wrapper {
+    display: flex;
+    margin-left: pixel-to-rem(-15);
+    margin-right: pixel-to-rem(-15);
+    margin-bottom:  pixel-to-rem(25);
+    .stats-container {
+        padding-left: pixel-to-rem(15);
+        padding-right: pixel-to-rem(15);
+        flex: 1;
+        .stats-card {
+            @include genericBoxPattern;
+            padding: pixel-to-rem(10) pixel-to-rem(15);
+            .stats-number {
+                font-size: pixel-to-rem(30);
+                font-weight: 600;
+                color: $headingColor;
+            }
+            .stats-title {
+                font-size: pixel-to-rem(14);
+                color: $subHeadColor;
+            }
+        }
+    }
+}

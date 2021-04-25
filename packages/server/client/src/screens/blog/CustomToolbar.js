@@ -21,42 +21,42 @@ export default ({ blogId, publish, onPublish, saveBlog, saveLoading }) => {
             </div>
             <div id="toolbar">
                 <div className="pc-blog-tools">
-                    <Tooltip content="Text Size" position="top">
-                        <select class="ql-size">
+                    <Tooltip content="Text Size" position="left">
+                        <select className="ql-size">
                             <option value="small"></option>
                             <option selected></option>
                             <option value="large"></option>
                             <option value="huge"></option>
                         </select>
                     </Tooltip>
-                    <Tooltip content="Alignment" position="top">
+                    <Tooltip content="Alignment" position="left">
                         <select className="ql-align" />
                     </Tooltip>
-                    <Tooltip content="Color" position="top">
+                    <Tooltip content="Color" position="left">
                         <select className="ql-color" />
                     </Tooltip>
-                    <Tooltip content="Background Color" position="top">
+                    <Tooltip content="Background Color" position="left">
                         <select className="ql-background" />
                     </Tooltip>
-                    <Tooltip content="Bold" position="top">
+                    <Tooltip content="Bold" position="left">
                         <button className="ql-bold"></button>
                     </Tooltip>
-                    <Tooltip content="Italic" position="top">
+                    <Tooltip content="Italic" position="left">
                         <button className="ql-italic"></button>
                     </Tooltip>
-                    <Tooltip content="Underline" position="top">
+                    <Tooltip content="Underline" position="left">
                         <button className="ql-underline"></button>
                     </Tooltip>
-                    <Tooltip content="Add Link" position="top">
+                    <Tooltip content="Add Link" position="left">
                         <button className="ql-link"></button>
                     </Tooltip>
-                    <Tooltip content="Add Image">
+                    <Tooltip content="Add Image" position="left">
                         <button className="ql-image"></button>
                     </Tooltip>
-                    <Tooltip content="Number List">
+                    <Tooltip content="Number List" position="left">
                         <button className="ql-list" value="ordered"></button>
                     </Tooltip>
-                    <Tooltip content="Bullet List">
+                    <Tooltip content="Bullet List" position="left">
                         <button className="ql-list" value="bullet"></button>
                     </Tooltip>
                 </div>

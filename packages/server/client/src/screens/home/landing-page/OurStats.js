@@ -17,7 +17,7 @@ function OurStats() {
                     </div>
                     <div className="pc-stat-col pc-col">
                         <div className="pc-no-mentors pc-stat-wrap">
-                            <h3>No of sessions: <span>40+</span></h3>
+                            <h3>No of courses: <span>40+</span></h3>
                         </div>
                     </div>
                 </div>

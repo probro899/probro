@@ -3,7 +3,7 @@ import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { register } from '../helper-functions';
-import { passwordStrength, emailValidator } from '../utility-functions';
+import { passwordStrength } from '../utility-functions';
 import * as actions from '../../../actions';
 import Register from './registration';
 import { Navbar } from '../../home/component';
@@ -15,9 +15,6 @@ class Registration extends Component {
 
   handleRegistration = async (data) => {
     const { updateNav } = this.props;
-    if (!emailValidator(data.email)) {
-      return { error: 'Please enter a valid email' };
-    }
     if (passwordStrength(data.password) === 'weak') {
       return { error: 'Please enter a stronger password' };
     }

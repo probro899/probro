@@ -1,6 +1,7 @@
 
 const findMessageSeenStatus = (msgId, type, messageSeenStatus) => {
-  const users = [];
+  try {
+    const users = [];
   if (type === 'board') {
     messageSeenStatus.forEach((obj) => {
       if (obj.bmId === msgId) {
@@ -17,5 +18,8 @@ const findMessageSeenStatus = (msgId, type, messageSeenStatus) => {
     });
   }
   return users;
+  } catch (e) {
+    console.error('Error in findMessageSeenStatus')
+  }
 };
 export default findMessageSeenStatus;

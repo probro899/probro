@@ -10,8 +10,9 @@ import deleteHandler from './common/delete';
 import updateHandler from './common/update';
 import getHandler from './common/get';
 import { createOffer, createAnswer, addICeCandidate, callClose, callStatusChange, onPcStatusChange, commPingPong } from './common/web-rtc/mesh';
-import { initSfuCall, closeSfuCall, sfuPingPong, sfuCallStatusChange, videoCallUserRegistration, isUserInLiveCall } from './common/web-rtc/sfu';
+import { initSfuCall, closeSfuCall, sfuPingPong, sfuCallStatusChange, videoCallUserRegistration, isUserInLiveCall, getCallId } from './common/web-rtc/sfu';
 import errorReportHandlers from './common/error';
+import { addVideoDescription } from './vimeo';
 
 const mentor = createScope('Mentor', () => {
  
@@ -54,6 +55,8 @@ mentor(sfuPingPong);
 mentor(sfuCallStatusChange);
 mentor(videoCallUserRegistration);
 mentor(isUserInLiveCall);
+mentor(getCallId);
+mentor(addVideoDescription);
 
 mentee(createOffer);
 mentee(createAnswer);
@@ -68,6 +71,8 @@ mentee(sfuPingPong);
 mentee(sfuCallStatusChange);
 mentee(videoCallUserRegistration);
 mentee(isUserInLiveCall);
+mentee(getCallId);
+mentee(addVideoDescription);
 
 mentor(logout);
 mentor(updateUserDetails);

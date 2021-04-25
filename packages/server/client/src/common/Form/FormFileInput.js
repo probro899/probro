@@ -11,23 +11,13 @@ export const FormFileInput = ({
     isRequired
 }) => {
     return (
-        <>
-            <label className="formLabel" htmlFor={name}>
-                <p className="label-text">{label} {isRequired && <span style={{ color: 'red' }}> *</span>} </p>
-                <div className="pc-file-wrap">
-                <input
-                    type={type}
-                    id={name}
-                    onChange={onInputChange}
-                    style={{display:'none'}}
-                />
-                <span className="pc-file-upload">
-                    {text}
-                </span>
-                </div>
-                
-            </label>
-        </>
+        <label className="formLabel" htmlFor={name}>
+            <p className="label-text">{label} {isRequired && <span style={{ color: 'red' }}> *</span>} </p>
+            <div className="pc-file-wrap">
+                <input type={type} id={name} onChange={onInputChange} style={{display:'none'}} />
+                <span className="pc-file-upload">{text}</span>
+            </div>
+        </label>
     )
 }
 

@@ -1,7 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import axios from 'axios';
-import { Popover } from '@blueprintjs/core';
 import { BsCardImage, BsSquare, BsPencil } from "react-icons/bs";
 import { HiOutlineArrowNarrowRight } from "react-icons/hi";
 import { BiText, BiUndo, BiRedo } from "react-icons/bi";
@@ -9,11 +7,10 @@ import { AiFillDelete, AiOutlineSave, AiFillTool } from "react-icons/ai";
 import { FiMaximize2, FiMinimize2 } from "react-icons/fi";
 import { GrClearOption } from "react-icons/gr";
 import SelectTask from './SelectTask';
-import { ENDPOINT } from '../../../config';
 import { Tooltip } from '../../../common/Form/Tooltip';
 import { Button } from '../../../common/utility-functions/Button/Button';
 import { uploadFile } from '../../../common/utility-functions';
-
+import Popover from '../../../common/Popover';
 
 class Tools extends React.Component {
   constructor(props) {
@@ -51,7 +48,7 @@ class Tools extends React.Component {
     }
     const file = new File([u8arr], 'canvas-shot.jpeg', { type: mime });
     try {
-      const res = await uploadFile('board', file, account.sessionId);
+      const res = await uploadFile('board', file, account.sessionId, false);
       if (res.status === 200) {
         const info = {
           userId: account.user.id,
@@ -240,7 +237,13 @@ class Tools extends React.Component {
               </Tooltip>
             </div>
             <div className="save-wrapper pc-draw-btn-wrapper">
-              <Popover content={<SelectTask getCardsApi={apis.getCard} callback={this.saveImage} database={database} />}>
+              <Popover
+                content={<SelectTask getCardsApi={apis.getCard} callback={this.saveImage} database={database} />}
+                hPosition="left"
+                xAlign="left"
+                yAlign="bottom"
+                vPosition="top"
+              >
                 <Tooltip content="Save" position="left">
                   <Button
                     // title="save"
@@ -406,7 +409,13 @@ class Tools extends React.Component {
                 </Tooltip>
               </div>
               <div className="save-wrapper pc-draw-btn-wrapper">
-                <Popover content={<SelectTask getCardsApi={apis.getCard} callback={this.saveImage} database={database} />}>
+                <Popover
+                  content={<SelectTask getCardsApi={apis.getCard} callback={this.saveImage} database={database} />}
+                  hPosition="left"
+                  xAlign="left"
+                  yAlign="bottom"
+                  vPosition="top"
+                >
                   <Tooltip content="save" position="top">
                     <Button
                       // title="save"

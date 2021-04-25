@@ -1,10 +1,8 @@
-@import '../config.scss';
-
 .create-blog {
   margin-top: $navbarHeight;
-  margin-bottom: 10px;
+  margin-bottom: pixel-to-rem(10);
   div[contenteditable]:focus {
-    outline: 0px solid transparent;
+    outline: 0 solid transparent;
   }
   // just to put the default placeholder
   [contenteditable]:empty::before {
@@ -15,21 +13,20 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    // margin-bottom: 10px;
     flex-wrap: wrap;
     position: fixed;
-    top: 90px;
+    top: $navbarHeight;
     left: 0;
     right: 0;
     z-index: 2;
     background-color: $backgroundColor;
-    padding: 10px 32px;
-    box-shadow: 0px 1px 2px $normalShadowColor;
-    @media screen and (max-width: 767px) {
+    padding: pixel-to-rem(10) pixel-to-rem(32);
+    box-shadow: 0 pixel-to-rem(1) pixel-to-rem(2) $normalShadowColor;
+    @media screen and (max-width: pixel-to-rem(767)) {
       justify-content: flex-end;
     }
-    @media screen and (max-width: 480px) {
-      padding: 10px;
+    @media screen and (max-width: pixel-to-rem(480)) {
+      padding: pixel-to-rem(10);
     }
     .left {
       .pc-publish-btn {
@@ -41,16 +38,16 @@
           font-weight: 600;
         }
         .switch-container {
-          margin-left: 10px;
+          margin-left: pixel-to-rem(10);
         }
       }
-      @media screen and (max-width: 767px) {
+      @media screen and (max-width: pixel-to-rem(767)) {
         order: 2;
-        margin-right: 30px;
+        margin-right: pixel-to-rem(30);
       }
     }
     .right {
-      @media screen and (max-width: 767px) {
+      @media screen and (max-width: pixel-to-rem(767)) {
         order: 3;
       }
     }
@@ -58,20 +55,17 @@
 
   .pc-create-blog-wrapper {
     margin-top: 165px;
-    @media screen and (max-width: 767px) {
-      margin-top: 205px;
+    @media screen and (max-width: pixel-to-rem(767)) {
+      margin-top: pixel-to-rem(205);
     }
     .img-upload-container {
-      // padding: 20px 0px 0px 0px;
       position: relative;
       .blog-cover-img {
         display: flex;
         justify-content: center;
-        // padding: 0 20px;
-        max-height: 300px;
-        // padding: 0 20px;
+        max-height: pixel-to-rem(300);
         overflow: hidden;
-        border-radius: 10px;
+        border-radius: pixel-to-rem(10);
         img {
           width: 100%;
           object-fit: cover;
@@ -81,45 +75,42 @@
         position: absolute;
         display: flex;
         justify-content: flex-end;
-        // opacity: 0.7;
         cursor: pointer;
         bottom: 0;
         width: 100%;
-        // &:hover {
-        //   opacity: 1;
-        // }
         .pc-img-upload {
           display: flex;
-          padding: 5px;
-          background-color: #000;
-          opacity: 0.6;
-          border-radius: 5px;
-          margin-right: 10px;
+          padding: pixel-to-rem(5);
+          background-color: rgba(0, 0, 0, 0.4);
+          border-radius: pixel-to-rem(5);
+          margin-right: pixel-to-rem(10);
           svg {
             fill: #fff;
+          }
+          &:hover {
+            background-color: rgba(0, 0, 0, 0.6);
           }
         }
       }
     }
     .title {
-      margin: 10px 0;
+      margin: pixel-to-rem(10) 0;
       .formLabel {
         textarea {
-          font-size: 45px;
+          font-size: pixel-to-rem(45);
           border: transparent;
           color: $headingColor;
           font-weight: 800;
         }
         ::placeholder {
-          font-size: 45px;
-          color: $headingColor;
+          font-size: pixel-to-rem(45);
           font-weight: 800;
         }
       }
     }
     .quill {
       .ql-container.ql-snow {
-        border-radius: 10px;
+        border-radius: pixel-to-rem(10);
         min-height: calc(100vh - 370px);
         background-color: #fff;
         border: transparent;
@@ -129,7 +120,7 @@
         min-height: calc(100vh - 370px);
         p,
         li {
-          font-size: 20px;
+          font-size: pixel-to-rem(20);
           color: $subHeadColor;
         }
       }
@@ -140,13 +131,13 @@
     max-width: 60%;
     flex: 0 0 60%;
     background-color: #fff;
-    border-radius: 10px;
+    border-radius: pixel-to-rem(10);
     @include genericBoxPattern;
     border: none;
-    @media screen and (max-width: 767px) {
+    @media screen and (max-width: pixel-to-rem(767)) {
       max-width: 100%;
       flex: 0 0 100%;
-      margin-bottom: 10px;
+      margin-bottom: pixel-to-rem(10);
     }
     .pc-blog-tools {
       display: flex;
@@ -157,10 +148,10 @@
   .toolbar {
     position: fixed;
     z-index: 2;
-    height: 60px;
+    height: pixel-to-rem(60);
     display: flex;
     width: 100%;
-    padding: 10px;
+    padding: pixel-to-rem(10);
     background-color: $fadedBackground;
     justify-content: space-between;
     .left {
@@ -171,7 +162,7 @@
         margin-right: 0;
       }
       label {
-        margin-bottom: 0px;
+        margin-bottom: 0;
       }
     }
     .right {
@@ -182,22 +173,21 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      // flex-wrap: wrap;
     }
     button {
-      margin: 3px;
+      margin: pixel-to-rem(3);
     }
   }
 
   .editor-container {
-    padding: 5px 10px 5px 10px;
+    padding: pixel-to-rem(5) pixel-to-rem(10);
     #editor {
       background-color: $backgroundColor;
-      min-height: 500px;
-      padding: 10px;
-      font-size: 25px;
+      min-height: pixel-to-rem(500);
+      padding: pixel-to-rem(10);
+      font-size: pixel-to-rem(25);
       p {
-        font-size: 30px;
+        font-size: pixel-to-rem(30);
       }
       img {
         max-width: 100%;
@@ -206,49 +196,24 @@
   }
 }
 .blogs {
-  padding: 5px;
+  padding: pixel-to-rem(5);
   width: 100%;
-  @media screen and (max-width: 576px) {
+  @media screen and (max-width: pixel-to-rem(576)) {
     padding: 0;
   }
   .blog-wrapper {
-    padding: 20px;
-    padding: 20px;
-    max-width: 1024px;
+    padding: pixel-to-rem(20);
+    max-width: pixel-to-rem(1024);
     margin: 0 auto;
     width: 100%;
-    // background: #fff;
-    // border-radius: 10px;
-    // border: 1px solid #eee;
-    @media screen and (max-width: 767px) {
-      padding: 10px;
-    }
-    .header {
-      margin-bottom: 10px;
-      padding: 10px;
-      // position: sticky;
-      // top: 92px;
-      // z-index: 10;
-      background-color: $backgroundColor;
-      .title {
-        font-size: 24px;
-        // color: $textColor;
-        font-weight: bold;
-      }
-      small {
-        color: $lightTextColor;
-        @media screen and (max-width: 767px) {
-          display: block;
-        }
-      }
-      display: flex;
-      justify-content: space-between;
+    @media screen and (max-width: pixel-to-rem(767)) {
+      padding: pixel-to-rem(10);
     }
     .blog-list {
       display: flex;
       flex-wrap: wrap;
-      margin-left: -15px;
-      margin-right: -15px;
+      margin-left: pixel-to-rem(-15);
+      margin-right: pixel-to-rem(-15);
       .pc-no-blogs {
         width: 100%;
         height: 50vh;
@@ -260,24 +225,18 @@
         }
       }
       .blog-container {
-        // margin: 10px;
-        // max-width: 250px;
-        // max-height: 340px;
         max-width: 33.33%;
         flex: 0 0 33.33%;
-        padding-left: 15px;
-        padding-right: 15px;
+        padding-left: pixel-to-rem(15);
+        padding-right: pixel-to-rem(15);
         position: relative;
-        // box-shadow: 0px 1px 2px 1px $normalShadowColor;
-        // border-radius: 10px;
-        // overflow: hidden;
-        margin-bottom: 30px;
+        margin-bottom: pixel-to-rem(30);
 
-        @media screen and (max-width: 1199px) {
+        @media screen and (max-width: pixel-to-rem(1199)) {
           max-width: 50%;
           flex: 0 0 50%;
         }
-        @media screen and (max-width: 767px) {
+        @media screen and (max-width: pixel-to-rem(767)) {
           max-width: 100%;
           flex: 0 0 100%;
         }
@@ -289,10 +248,8 @@
 
           .img-container {
             max-width: 100%;
-            height: 250px;
             position: relative;
             display: flex;
-            overflow: hidden;
             justify-content: center;
 
             .more-button {
@@ -303,9 +260,22 @@
             }
             figure {
               position: relative;
-              padding-bottom: 30%;
+              padding-bottom: 60%;
               z-index: 1;
               width: 100%;
+              &::before {
+                content: "";
+                background: rgba(0, 0, 0, 0.2);
+                width: 100%;
+                height: 100%;
+                display: block;
+                position: absolute;
+                top: 0;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                z-index: 2;
+              }
               img {
                 display: block;
                 position: absolute;
@@ -314,21 +284,18 @@
                 width: 100%;
                 height: 100%;
                 object-fit: cover;
-                // border-top-left-radius: 10px;
-                // border-top-right-radius: 10px;
               }
+            }
+            .pc-popover-container {
+              position: absolute;
+              top: 0;
+              right: pixel-to-rem(10);
+              z-index: 10;
+              cursor: pointer;
             }
           }
           .detail-container {
-            // height: 90px;
-            padding: 10px 15px;
-            // background-color: #fff;
-            // border-bottom-right-radius: 10px;
-            // border-bottom-left-radius: 10px;
-            // border: 1px solid #eee;
-            // display: flex;
-            // flex-direction: column-reverse;
-            // align-items: center;
+            padding: pixel-to-rem(10) pixel-to-rem(15);
             .blog-title {
               p {
                 margin-bottom: 0;
@@ -336,24 +303,22 @@
                   color: #58646d;
                 }
                 &.title {
-                  // text-align: end;
                   overflow: hidden;
                   text-overflow: ellipsis;
                   white-space: nowrap;
-                  font-size: 18px;
+                  font-size: pixel-to-rem(18);
                   font-weight: 800;
                 }
                 .pc-date {
-                  font-size: 12px;
+                  font-size: pixel-to-rem(12);
                   color: $lightTextColor;
                 }
               }
             }
             .blog-author {
               display: flex;
-              // justify-content: flex-end;
               a {
-                font-size: 16px;
+                font-size: pixel-to-rem(16);
                 font-weight: 500;
               }
             }
@@ -367,5 +332,5 @@
 .bp3-button.bp3-intent-success.create-btn {
   background-color: #175fc7;
   box-shadow: unset;
-  border-radius: 5px;
+  border-radius: pixel-to-rem(5);
 }

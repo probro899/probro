@@ -8,6 +8,7 @@ class Taginput extends React.Component {
   onKeyDown = (e) => {
     const code = (e.keyCode ? e.keyCode : e.which);
     if(code == 13) {
+        e.preventDefault();
         const { inputValue } = this.state;
         const { onChange, data, value } = this.props;
         onChange(data.id, [...value, inputValue])
@@ -39,19 +40,14 @@ class Taginput extends React.Component {
           {
             value.map((o, idx) => {
               return (
-                <span className="each-tag">
+                <span key={`item-${idx}`} className="each-tag">
                   {o}
                   <button onClick={() => this.onDeleteTag(idx)} className="tag-del-btn">x</button>
                 </span>
               )
             })
           }
-          <input
-            ref={this.myRef}
-            onKeyDown={this.onKeyDown}
-            onChange={this.onChange}
-            value={inputValue}
-          />
+          <input ref={this.myRef} onKeyDown={this.onKeyDown} onChange={this.onChange} value={inputValue} />
         </div>
       </p>
     );

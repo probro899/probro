@@ -1,8 +1,8 @@
 import React from 'react';
-import { Slider } from '@blueprintjs/core';
+import RangeSlider from '../../../../common/RangeSlider';
 import { uploadFile } from '../../../../common/utility-functions';
 import { Button } from '../../../../common/utility-functions/Button/Button';
-
+import { AiOutlineClose, AiOutlineCheck } from "react-icons/ai";
 import { ENDPOINT } from '../../../../config';
 
 const fabric = require('fabric');
@@ -59,10 +59,7 @@ class Cropper extends React.Component {
     canvas._objects[0].scaleX = e;
     canvas._objects[0].scaleY = e;
     canvas.renderAll();
-    this.setState({
-      canvas,
-      zoomValue: e,
-    });
+    this.setState({ zoomValue: e });
   }
 
   saveImage = async () => {
@@ -108,6 +105,9 @@ class Cropper extends React.Component {
       alert('Sorry your task could not be performed.');
     }
   }
+  cancelReposition = () => {
+    //cancel reposition
+  }
 
   render() {
     const { minScale, zoomValue, loading } = this.state;
@@ -118,16 +118,21 @@ class Cropper extends React.Component {
         <canvas id="mainCanvas" height={400} width={1200} />
         <div className="edit-cover">
           <Button
+            onClick={this.cancelReposition}
+            icon={<AiOutlineClose size={20}/>}
+            buttonStyle="btn--danger--solid"
+            buttonSize="btn--small"
+            loading={loading}
+          />
+          <Button
             onClick={this.saveImage}
-            title="Save"
+            icon={<AiOutlineCheck size={20}/>}
             buttonSize="btn--small"
             loading={loading}
           />
         </div>
         <div className="pc-zoom-slider">
-          <Slider
-            id="pcZoom"
-            labelRenderer={false}
+          <RangeSlider
             onChange={this.onZoom}
             max={minScale + 3}
             min={minScale}

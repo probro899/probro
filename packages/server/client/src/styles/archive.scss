@@ -1,11 +1,8 @@
-@import './config.scss';
+@import "./config.scss";
 .archive {
-  // max-width: 1140px;
   margin: $navbarHeight auto 0;
   min-height: calc(100vh - #{$navbarHeight} - #{$footerHeight});
   padding: 20px;
-  // font-family: 'Montserrat';
-  // background-color: #f8f7f7;
 
   @media screen and (max-width: 576px) {
     padding: 10px;
@@ -19,7 +16,6 @@
   }
 
   .ar-top {
-    // padding: 5px;
     h2 {
       color: $headingColor;
       font-size: 16px;
@@ -27,14 +23,6 @@
       text-transform: capitalize;
       margin-bottom: 10px;
       position: relative;
-      // &:after {
-      //   content: '';
-      //   display: block;
-      //   width: 290px;
-      //   height: 2px;
-      //   background-color: #{$primaryColor};
-      //   margin-top: 6px;
-      // }
     }
   }
   .ar-content {
@@ -57,10 +45,7 @@
     .ar-right {
       width: 30%;
       @include genericBoxPattern;
-      // background: #fff;
       padding: 20px 13px;
-      // border-radius: 10px;
-      // border: 1px solid #eee;
       height: 50%;
       position: sticky;
       top: 110px;
@@ -78,29 +63,18 @@
           .popular-blog {
             display: flex;
             flex-direction: row;
-            // align-items: center;
             margin-bottom: 10px;
             margin-top: 10px;
             border-bottom: 1px solid #d1d1d1;
             padding-bottom: 10px;
-            // width: 300px;
             .ar-i-img {
               min-height: 100px;
-              // max-height: 100px;
               min-width: 130px;
-              // max-width: 130px;
               background-size: cover !important;
-              // object-fit: cover;
               background-position: center;
-              // img {
-              //   width: 100%;
-              //   height: 100%;
-              //   object-fit: cover;
-              // }
             }
             .ar-i-detail {
               padding-left: 10px;
-              // box-shadow: 0 8px 12px 0 rgba(0,0,0,0.2);
               line-height: 1.6;
 
               a {
@@ -117,8 +91,6 @@
                 line-height: 1.6;
                 text-transform: capitalize;
               }
-              // .blog-author {
-              // }
               .pc-date {
                 color: $lightTextColor;
               }
@@ -153,7 +125,6 @@
             padding-bottom: 10px;
             display: flex;
             align-items: center;
-            // align-items: center;
             .user-image {
               width: 60px;
               height: 60px;
@@ -163,7 +134,6 @@
               margin-right: 10px;
             }
             .user-detail {
-              // margin-left: 5px;
               padding-top: 5px;
               text-align: left;
               max-width: 50%;
@@ -172,13 +142,13 @@
               .name {
                 font-size: 15px;
                 font-weight: bold;
-                margin-bottom: 7px;
                 line-height: 1.6;
               }
               .user-bio {
                 font-size: 12px;
-                color: #747474;
-                margin-top: 5px;
+                color: $headingColor;
+                margin-bottom: 2px;
+                font-weight: bold;
               }
             }
             .follow-mentor-btn {
@@ -209,14 +179,6 @@
         }
       }
     }
-    // @media screen and (min-height: 768px) and (max-width: 800px) {
-    //   .ar-left {
-    //     width: 60%;
-    //   }
-    //   .ar-right {
-    //     width: 40%;
-    //   }
-    // }
     @media screen and (max-width: 767px) {
       .ar-left {
         width: 100%;
@@ -231,28 +193,14 @@
 }
 
 // styling single archive element to make it global
-// .ar-left-i:nth-of-type(1) {
-//   padding-top: 10px !important;
-// }
 .ar-left-i {
-  // margin: 10px 0px;
   padding-left: 0px;
   display: flex;
   flex-direction: row;
-  // border-radius: 15px;
   width: 100%;
   margin-bottom: 20px;
-  // border-bottom: 1px solid #d1d1d1;
-  // height: 200px;
-  // width: 770px;
-  // background: #fff;
   padding: 20px 15px;
-  // border-radius: 10px;
-  // border: 1px solid #eee;
   @include genericBoxPattern;
-  // background-color: red;
-
-  // border-bottom: 1px solid $normalBorder;
   .ar-i-img {
     min-height: 189px;
     max-height: 189px;
@@ -267,19 +215,10 @@
   .ar-i-detail {
     flex-direction: column;
     padding-left: 20px;
-    // background-color: white;
-    // height: 250px;
-    // overflow: hidden;
-    // box-shadow: 0 8px 8px 0 rgba(0,0,0,0.2);
-
-    // line-height: 1.9;
     p {
       display: flex;
       align-items: center;
-      // margin-bottom: 8px;
-      // margin-top: -10px;
       color: rgb(0, 0, 0);
-      // font-weight: bold;
       font-size: 8px;
     }
     .author {
@@ -292,7 +231,6 @@
     .pc-date {
       font-size: 12px;
       color: $subHeadColor;
-      // margin-top: 5px;
       margin-left: 10px;
       display: block;
     }
@@ -300,15 +238,12 @@
   .ar-i-title {
     color: $headingColor;
     font-size: 22px;
-    // margin-bottom: 20px;
     display: block;
     font-weight: bold;
     margin-bottom: 5px;
     text-transform: capitalize;
-    // line-height: 1.6;
   }
   .pc-blog-desc {
-    // padding: 13px 0px;
     word-break: break-word;
     line-height: 1.6;
     color: $subHeadColor !important;
@@ -337,7 +272,6 @@
   min-height: calc(100vh - #{$navbarHeight} - #{$footerHeight});
   max-width: 1140px;
   padding: 20px;
-  // background-color: #fff;
   @include genericBoxPattern;
   .public-blog-title {
     padding-top: 20px;
@@ -454,13 +388,13 @@
       }
       strong {
         font-size: 22px !important;
-        font-family: 'Eina' !important;
+        font-family: "Eina" !important;
       }
 
       span {
         word-break: break-word !important;
         font-size: 20px !important;
-        font-family: 'Eina' !important;
+        font-family: "Eina" !important;
       }
       img {
         max-width: 100%;
@@ -469,16 +403,8 @@
   }
   .response {
     display: flex;
-    // font-family: sans-serif;
-    // width: 80%;
-    // margin: 0 auto;
-
     .top-label {
-      // font-family: GuardianTextEgyptian, "Guardian Text Egyptian Web", Georgia, serif;
-      // font-variant-ligatures: common-ligatures;
-      // margin-top: 50px;
       margin-bottom: 20px;
-      // font-size: 15px !important;
       display: flex;
       h1 {
         font-size: 22px;
@@ -503,7 +429,6 @@
         .thumbs-up-btn {
           border: 1px solid white;
           font-size: 22px;
-          // background-color: #242424 !important;
           color: black;
           background-color: white;
         }
@@ -519,26 +444,20 @@
       .comment-area {
         display: flex;
         position: relative;
-        // align-items: center;
         margin-bottom: 10px;
         .profile-icon {
           width: 60px;
           height: 60px;
-          // position: absolute;
           border-radius: 50%;
           overflow: hidden;
-          /* top: 11px; */
-          // left: 5px;
         }
 
         textarea {
           font-size: 16px;
           flex: 1;
           height: 100px;
-          // line-height: 40px;
           margin-left: 10px;
           resize: none;
-          // font-family: 'Montserrat';
           border-radius: 5px;
           display: flex;
           align-items: center;
@@ -551,15 +470,6 @@
         justify-content: flex-end;
         .post-btn {
           button {
-            // font-size: 16px;
-            // height: 36px;
-            // background-color: $primaryColor;
-            // border-radius: 5px;
-            // border: none;
-            // color: white;
-            // width: 90px;
-            // margin-left: auto;
-            // cursor: pointer;
             span {
               display: flex;
             }
@@ -572,7 +482,6 @@
           font-size: 16px;
           margin-top: 40px;
           width: 130px;
-          // border-bottom: 1px solid #d6d6d6;
           h3 {
             margin-bottom: 1px !important;
             text-decoration: underline;
@@ -581,9 +490,6 @@
         .i-response {
           margin: 20px 0;
           display: flex;
-          // font-family: sans-serif;
-          // border: 1px solid #ececec;
-          // padding: 10px;
           .pc-profile-icon {
             width: 40px;
             height: 40px;
@@ -598,7 +504,6 @@
             padding: 20px;
             background: $backgroundColor;
             width: 100%;
-            // border: 1px solid #d4d4d4;
             border-radius: 5px;
 
             a {
@@ -612,7 +517,6 @@
               p {
                 color: black;
                 font-size: 17px;
-                // font-family: sans-serif;
               }
               .pc-comment-edit {
                 display: flex;
@@ -621,7 +525,6 @@
                   font-size: 16px;
                   flex: 1;
                   height: 70px;
-                  // font-family: 'Montserrat';
                   border-radius: 5px;
                   border: 1px solid #e7e7e7;
                   outline: none !important;
@@ -633,18 +536,6 @@
                   .btn--danger--outline {
                     margin-right: 5px;
                   }
-                  // button {
-                  //   font-size: 16px;
-                  //   height: 36px;
-                  //   border-radius: 5px;
-                  //   border: none;
-                  //   width: 90px;
-                  //   // margin-left: auto;
-                  //   cursor: pointer;
-                  //   // span {
-                  //   //   display: flex;
-                  //   // }
-                  // }
                   .cancel-btn {
                     background-color: $backgroundColor;
                     color: black;
@@ -656,10 +547,6 @@
                   }
                 }
               }
-              // span {
-              //   color: #786a6c;
-              //   font-size: 12px;
-              // }
               .com-date {
                 color: #786a6c;
                 font-size: 10px !important;
@@ -673,8 +560,6 @@
                 u {
                   text-decoration: none;
                   color: #786a6c;
-                  // color: $primaryColor;
-                  // font-weight: bold;
                 }
                 &.danger u {
                   &:hover {
@@ -690,7 +575,7 @@
             }
           }
           .comment-content::before {
-            content: '';
+            content: "";
             position: absolute;
             width: 0;
             height: 0;
@@ -705,7 +590,6 @@
 
     @media screen and (max-width: 768px) {
       .top-label {
-        // font-size: 10px !important;
         display: flex;
         flex-direction: column;
       }
@@ -732,9 +616,6 @@
   .ar-left {
     width: 100% !important;
     padding-right: 0px !important;
-    .ar-left-i {
-      // padding: 0px;
-    }
     .ar-i-detail {
       width: 100%;
     }
@@ -753,7 +634,6 @@
     display: grid;
     grid-template-columns: auto;
     grid-gap: 20px;
-    // padding-left: 0px !important;
 
     .ar-i-img {
       min-height: 100%;

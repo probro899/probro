@@ -35,7 +35,13 @@ const reducer = combineReducers({
     'UserCarrierInterest',
     'BoardMessageSeenStatus',
     'UserMessageSeenStatus',
-    'NotificationReadStatus'
+    'NotificationReadStatus',
+    'Organization',
+    'OrganizationMember',
+    'Course',
+    'Section',
+    'Lecture',
+    'CourseCompleteHistory'
   ),
 });
 

@@ -1,4 +1,4 @@
-@import './config.scss';
+@import "./config.scss";
 
 // styling the communication window here
 .communicate {
@@ -40,8 +40,8 @@
       justify-content: flex-end;
       align-items: center;
       padding-right: 5px;
-      svg{
-        &:nth-child(2){
+      svg {
+        &:nth-child(2) {
           margin-left: 10px;
         }
       }
@@ -61,10 +61,6 @@
         .pc-chat-indi {
           align-items: center;
           .pc-chat-user {
-            .profile-icon {
-            }
-            .green-dot {
-            }
             .pc-chat-user-detail {
               justify-content: center;
               .pc-chat-username {
@@ -74,8 +70,6 @@
                 }
               }
             }
-          }
-          .pc-chat-time {
           }
         }
       }
@@ -156,7 +150,6 @@
         padding: 8px 10px;
         border-bottom: 1px solid $normalBorder;
         .pc-back-btn {
-          // margin-left: 15px;
           display: flex;
           align-items: center;
           justify-content: center;
@@ -197,16 +190,6 @@
               }
             }
           }
-          // svg {
-          //   fill: #2e3d49;
-          //   cursor: pointer;
-          //   &:nth-child(2) {
-          //     margin-left: 10px;
-          //   }
-          // }
-          // button {
-          //   margin: 0px 1px;
-          // }
         }
       }
       .seen-user {
@@ -225,7 +208,7 @@
           time {
             position: relative;
             &::after {
-              content: '';
+              content: "";
               width: 150px;
               height: 1px;
               background-color: #ddd;
@@ -235,7 +218,7 @@
               top: 14px;
             }
             &::before {
-              content: '';
+              content: "";
               width: 150px;
               height: 1px;
               background-color: #ddd;
@@ -250,7 +233,6 @@
           margin: 0;
           display: flex;
           time {
-            // margin: 0px 10px;
             font-size: 9px;
             color: $lightTextColor;
             font-weight: bold;
@@ -290,11 +272,6 @@
               flex-direction: column;
               align-items: flex-end;
               margin-bottom: 5px;
-              // .text {
-              //   // .pc-message {
-              //   //   color: #fff;
-              //   // }
-              // }
             }
             .text {
               margin: 0px 10px;
@@ -322,17 +299,7 @@
           position: absolute;
           top: calc(50% - 20px);
           right: 5px;
-          button {
-          }
         }
-        // display: flex;
-        // textarea {
-        //   flex: 0.8;
-        //   resize: none;
-        // }
-        // button {
-        //   flex: 0.2;
-        // }
       }
     }
     // design the
@@ -421,8 +388,6 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        // padding: 5px 0px;
-        // border-bottom: 1px solid $normalBorder;
         .pc-menu-live {
           margin-left: 15px;
         }
@@ -467,7 +432,6 @@
             flex-shrink: 0;
             width: 100px;
             height: 100px;
-            // background-color: $backgroundColor;
             justify-content: center;
             align-items: center;
             flex-direction: column;
@@ -476,7 +440,7 @@
             overflow: hidden;
             position: relative;
             &::before {
-              content: '';
+              content: "";
               position: absolute;
               left: 0;
               right: 0;
@@ -539,7 +503,6 @@
           padding: 5px;
           z-index: 3;
           .pc-control-btn {
-            // background: $darkBlue;
             color: $backgroundColor;
             height: 40px;
             width: 40px;
@@ -581,8 +544,6 @@
             width: 40px;
             font-size: 27px;
             border-radius: 40px;
-            // color: $backgroundColor;
-            // background: $darkBlue;
             display: flex;
 
             &.bg-red {
@@ -643,9 +604,6 @@
           border-radius: 50%;
           overflow: hidden;
           align-self: center;
-          // border-width: 3px;
-          // border-style: solid;
-          // border-color: $backgroundColor;
           border: solid 10px rgba(41, 98, 255, 0.3);
           animation: play 2s ease infinite;
         }
@@ -718,9 +676,6 @@
           border-radius: 50%;
           overflow: hidden;
           align-self: center;
-          // border-width: 3px;
-          // border-style: solid;
-          // border-color: $backgroundColor;
           border: solid 10px rgba(41, 98, 255, 0.3);
           animation: play 2s ease infinite;
         }
@@ -790,7 +745,7 @@
       }
     }
   }
-  
+
   @keyframes rotate {
     0% {
       border-color: #ff0000;

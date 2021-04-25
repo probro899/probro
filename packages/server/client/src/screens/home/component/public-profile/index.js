@@ -19,6 +19,8 @@ import BlogSection from './blogSection';
 import { GET_USER } from '../../../../queries';
 import clientQuery from '../../../../clientConfig';
 import { VerifiedBadge } from '../../../../common/VerifiedBadge';
+import ReadMoreReadLess from '../../../../common/ReadMoreReadLess';
+import CourseSection from './courseSection';
 
 class PublicProfile extends React.Component {
   constructor(props) {
@@ -97,6 +99,7 @@ class PublicProfile extends React.Component {
     const { userEducation, userWorkExperience } = data;
     const imgUrl = userDetails.coverImage ? `${ENDPOINT}/assets/user/${10000000 + parseInt(data.id, 10)}/profile/${userDetails.coverImage}` : '/assets/graphics/default-cover.jpg';
     const editCoverUrl = userDetails.coverEdit && `${ENDPOINT}/assets/user/${10000000 + parseInt(data.id, 10)}/profile/${userDetails.coverEdit}`;
+    // console.log("data", data);
     return (
       <>
         <Navbar />
@@ -152,7 +155,7 @@ class PublicProfile extends React.Component {
                 </div>
                 <div className="top-details">
                   <div className="desc">
-                    <div className="name">{getName(data)} <VerifiedBadge /></div>
+                    <div className="name">{getName(data)} {data.type === 'verified' && <VerifiedBadge />}</div>
                     <div className="title">
                       <p>{userDetails.headLine}</p>
                     </div>
@@ -164,13 +167,12 @@ class PublicProfile extends React.Component {
                       </span>
                     </div>
                     <div className="bio">
-                      {userDetails.bio ? <p>{userDetails.bio}</p> : <p style={{ color: '#696969' }}>No bio added</p>}
+                      {userDetails.bio ? <p><ReadMoreReadLess>{userDetails.bio}</ReadMoreReadLess></p> : <p style={{ color: '#696969' }}>No bio added</p>}
                     </div>
                   </div>
                 </div>
               </div>
               <div className="main-body">
-
                 <div className="education">
                   <h2 className="p-top">
                     Education
@@ -215,9 +217,13 @@ class PublicProfile extends React.Component {
                                 <br />
                                 <span className="p-company-i">{obj.company}</span>
                                 <br />
-                                <span className="p-timeline">{`${moment(obj.startTime, 'DD/MM/YYYY').format("MMM DD, YYYY")} - ${obj.endTime ? moment(obj.endTime, 'DD/MM/YYYY').format("MMM DD, YYYY") : 'Currently working'}`}</span>
+                                <span className="p-timeline">{`${moment(obj.startTime, 'DD/MM/YYYY').format("MMM DD, YYYY")} - ${obj.currentWorking ? 'Currently working' : moment(obj.endTime, 'DD/MM/YYYY').format("MMM DD, YYYY")}`}</span>
                                 <br />
-                                <span>{obj.summary}</span>
+                                <span>
+                                  <ReadMoreReadLess>
+                                    {obj.summary}
+                                  </ReadMoreReadLess>
+                                </span>
                               </div>
                             </div>
                           ))
@@ -243,6 +249,7 @@ class PublicProfile extends React.Component {
           </div>
           <div className="main-lt-section">
             <div className="mentor-blogs-wrapper">
+              <CourseSection />
               <BlogSection data={data} />
             </div>
           </div>

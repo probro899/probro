@@ -24,6 +24,6 @@ export default async function Delete(table, record) {
     });
     return res;
   } catch (e) {
-    console.log(e);
+    console.log('Error in main Delete', e);
   }
 }

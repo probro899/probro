@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Form from '../../../../common/Form';
+import { Form } from '../../../../common';
 import { bioSchema } from '../structure';
 import Popup from '../../../../common/Form/Popup';
 

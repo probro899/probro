@@ -10,7 +10,7 @@ function deletePackageDescription(record) {
   const res = Delete.call(this, 'PackageDescription', record);
   return res;
 }
-
+ 
 export default [
   deletePackage,
   deletePackageDescription,

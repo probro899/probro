@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { MdLibraryAdd } from 'react-icons/md';
 import posSorting from '../../../common/utility-functions';
 import * as actions from '../../../actions';
 import { PopoverForm } from '../../../components';
@@ -62,7 +61,7 @@ class NewColumn extends Component {
         />
         <div role="button" tabIndex={0} onKeyDown={this.handlePopOverForm} className="title" onClick={this.handlePopOverForm}>
           <AiOutlineAppstoreAdd />
-          <span>New Column</span>
+          <span>New Bucket</span>
         </div>
       </div>
     );

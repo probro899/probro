@@ -1,11 +1,11 @@
 import React from 'react';
-import { Popover } from '@blueprintjs/core';
 import PropTypes from 'prop-types';
 import { FaUserPlus } from 'react-icons/fa';
 import addUserToBoard from './structure';
 import { getName } from '../../../../../common/utility-functions';
 import { Form } from '../../../../../common';
 import { Button } from '../../../../../common/utility-functions/Button/Button';
+import Popover from '../../../../../common/Popover';
 
 const PopoverContent = ({ callback }) => {
   return (
@@ -57,7 +57,13 @@ class AddUser extends React.Component {
 
   render() {
     return (
-      <Popover minimal position="bottom" content={<PopoverContent callback={this.addUserToBoardHandler} />}>
+      <Popover
+        content={<PopoverContent callback={this.addUserToBoardHandler} />}
+        xAlign="left"
+        yAlign="bottom"
+        vPosition="bottom"
+        hPosition="center"
+      >
         <Button
           type="button"
           buttonStyle="btn-circle"

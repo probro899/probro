@@ -5,7 +5,8 @@ import cacheDatabase from '../../../../../cache/database/cache';
 import sendNotification from '../../../sendNotification';
 
 export default async (context, record, type) => {
-  // console.log('blog send notificationc calld', record, type);
+  try {
+     // console.log('blog send notificationc calld', record, type);
   const { session } = context;
   let emailObj = {};
   let notiData = {};
@@ -51,5 +52,8 @@ export default async (context, record, type) => {
   if (remoteUserSession) {
     // console.log('remote session found');
     sendNotification(context, emailObj, notiData, [remoteUserSession]);
+  }
+  } catch (e) {
+    console.error('Error in sendBlog notification', e)
   }
 };

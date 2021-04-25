@@ -9,7 +9,7 @@ export default () => {
     const { apis } = webRtc;
     if (webRtc.localCallHistory.chatHistory) {
       if (webRtc.localCallHistory.chatHistory.type === 'board' && webRtc.localCallHistory.chatHistory.connectionId) {
-        apis.commPingPong({ userId: account.user.id, boardId: webRtc.localCallHistory.chatHistory.connectionId });
+        apis.sfuPingPong({ userId: account.user.id, boardId: webRtc.localCallHistory.chatHistory.connectionId });
       }
     }
   } catch (e) {

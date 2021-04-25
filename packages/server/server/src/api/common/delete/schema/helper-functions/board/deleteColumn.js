@@ -2,7 +2,8 @@ import deleteBoardColumnCard from './deleteBoardColumnCard';
 import db from '../../../../../../db';
 
 export default async function deleteColumn(Delete, record) {
-  console.log('deleteColumn', Delete, record, this);
+  try {
+    console.log('deleteColumn', Delete, record, this);
   const { broadCastId } = record;
   const boardColumnId = await db.execute(async ({ find }) => {
     const boardColumn = await find('BoardColumn', { boardId: record.boardId });
@@ -17,4 +18,7 @@ export default async function deleteColumn(Delete, record) {
     return true;
   }
   return true;
+  } catch (e) {
+    console.error('Error in deleteColumn', e);
+  }
 }

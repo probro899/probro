@@ -7,7 +7,6 @@ import * as actions from '../../../actions';
 import BasicSettings from './BasicSettings';
 import AdvancedSettings from './AdvancedSetting';
 
-
 class Setting extends Component {
   state = {
     apis: {},
@@ -25,7 +24,7 @@ class Setting extends Component {
 
   render() {
     const { apis } = this.state;
-    const { database, account, match } = this.props;
+    const { database, account, match, addDatabaseSchema } = this.props;
     const menu = match.path.split("/");
     const activeTab = menu[menu.length - 1]
     return (
@@ -46,7 +45,7 @@ class Setting extends Component {
             </Link>
           </div>
           {activeTab === 'basic' && <BasicSettings apis={apis} account={account} database={database} />}
-          {activeTab === 'advanced' && <AdvancedSettings match={match} apis={apis} database={database} account={account} />}
+          {activeTab === 'advanced' && <AdvancedSettings match={match} apis={apis} database={database} account={account} addDatabaseSchema={addDatabaseSchema}/>}
         </div>
 
       </div>
@@ -59,5 +58,6 @@ Setting.propTypes = {
   database: PropTypes.objectOf(PropTypes.any).isRequired,
   account: PropTypes.objectOf(PropTypes.any).isRequired,
 };
+
 const mapStateToProps = state => state;
 export default connect(mapStateToProps, { ...actions })(Setting);

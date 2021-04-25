@@ -4,6 +4,7 @@ import EchoTest from './echo-test';
 import VideoCall from './videoCall';
 import VideoConference from './videoConference';
 import Streaming from './streaming';
+import ApiTest from './api-test';
 
 class Index extends React.Component {
   constructor(props) {
@@ -22,19 +23,24 @@ class Index extends React.Component {
         return <VideoConference />;
       case 'streaming':
         return <Streaming {...this.props} />;
+      case 'apiTest':
+        return <ApiTest {...this.props} />;
       default:
         return null;
     }
   }
 
   render() {
+    console.log('props in test', this.props);
     return (
       <div>
         <div style={{ display: 'flex' }}>
-          <button style={{ margin: 10, backgroundColor: 'green' }} text="Echo server" onClick={() => this.setState({ currentTest: 'echo' })} />
-          <button style={{ margin: 10, backgroundColor: 'green' }} text="Video Call" onClick={() => this.setState({ currentTest: 'videoCall' })} />
-          <button style={{ margin: 10, backgroundColor: 'green' }} text="Video Conference" onClick={() => this.setState({ currentTest: 'videoConference' })} />
-          <button style={{ margin: 10, backgroundColor: 'green' }} text="Streaming" onClick={() => this.setState({ currentTest: 'streaming' })} />
+          <button style={{ margin: 10, backgroundColor: 'green' }} text="Echo server" onClick={() => this.setState({ currentTest: 'echo' })} >Echo server</button>
+          <button style={{ margin: 10, backgroundColor: 'green' }} text="Video Call" onClick={() => this.setState({ currentTest: 'videoCall' })}>Video Call</button>
+          <button style={{ margin: 10, backgroundColor: 'green' }} text="Video Conference" onClick={() => this.setState({ currentTest: 'videoConference' })} >Video Conference</button>
+          <button style={{ margin: 10, backgroundColor: 'green' }} text="Streaming" onClick={() => this.setState({ currentTest: 'streaming' })}>Streaming</button>
+          <button style={{ margin: 10, backgroundColor: 'green' }} text="Streaming" onClick={() => this.setState({ currentTest: 'streaming' })}>Streaming</button>
+          <button style={{ margin: 10, backgroundColor: 'green' }} onClick={() => this.setState({ currentTest: 'apiTest'})}>Api Test</button>
         </div>
         {this.renderTest()}
       </div>

@@ -1,0 +1,22 @@
+$z-index: (
+  popover: 100,
+  popup: 90,
+  overlay: 80,
+  tooltip: 70,
+  drawer: 60,
+  toast: 50,
+  header: 40,
+  chat: 330,
+);
+
+@function z-index($key) {
+  @return map-get($z-index, $key);
+}
+
+@mixin z-index($key) {
+  z-index: z-index($key);
+}
+
+// .navigation {
+//   @include z-index(navigation);
+// }

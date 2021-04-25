@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { IoMdAddCircle } from "react-icons/io";
 import { GrFormAdd } from "react-icons/gr";
+
 class FileInput extends React.Component {
   constructor(props) {
     super(props);

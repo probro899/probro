@@ -27,10 +27,10 @@ function Popular() {
                 <Link to={`/user/${obj.slug}`}>
                   {getName(obj)}
                 </Link>
-                <VerifiedBadge />
+                {obj.type === 'verified' && <VerifiedBadge />}
               </div>
-              <div className="courses">{obj.userDetail.headLine || 'Mentor at Proper Class'}</div>
-              {/* <div className="sub-title">{obj.userDetail.address}</div> */}
+              <div className="courses">{obj.userDetail.headLine || ''}</div>
+              <div className="sub-title">{obj.userDetail.address ? `${obj.userDetail.address}, ` : ''}{obj.userDetail.country || ''}</div>
               <div className="ratings">
                 <IoMdStar color="#222" size='18' />
                 <IoMdStar color="#222" size='18' />

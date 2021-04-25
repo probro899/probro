@@ -1,0 +1,43 @@
+//alert
+.alert-info-wrapper {
+	.alert-info {
+		background-color: #80abdc;
+		color: #003c81;
+		border-color: transparent;
+		display: flex;
+	}
+	.alert {
+		padding: pixel-to-rem(16);
+		margin-bottom: pixel-to-rem(21);
+		border: pixel-to-rem(1) solid transparent;
+		text-align: left;
+		position: relative;
+		&.success {
+			background-color: #e6f2f5;
+			color: #003440;
+		}
+		&.danger {
+			background-color: #f3a89b;
+			color: #612012;
+		}
+		&.warning {
+			background-color: #f3ca8c;
+			color: #4d3105;
+		}
+	}
+	.close-alert {
+		position: absolute;
+		right: pixel-to-rem(8);
+		color: inherit;
+		opacity: 0.5;
+		cursor: pointer;
+	}
+
+	.info-icons {
+		padding: pixel-to-rem(2);
+		margin-top: pixel-to-rem(-1);
+	}
+	.content {
+		padding: 0 pixel-to-rem(15);
+	}
+}

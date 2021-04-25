@@ -1,23 +1,23 @@
-@import '../config.scss';
+@import "../config.scss";
 
 .pc-tag {
-    cursor: pointer;
-    margin: 5px 0;
-    &:hover{
-        opacity: 0.85;
+  cursor: pointer;
+  margin: 5px 0;
+  &:hover {
+    opacity: 0.85;
+  }
+  &.flat-tag {
+    position: relative;
+    border-radius: 5px;
+    .tag-icon {
+      position: absolute;
+      top: calc(50% - 10px);
+      left: 10px;
     }
-    &.flat-tag {
-        position: relative;
-        border-radius: 5px;
-        .tag-icon {
-            position: absolute;
-            top: calc(50% - 10px);
-            left: 10px;
-        }
-    }
-    &.circle-tag {
-        height: 25px;
-        width: 25px;
-        border-radius: 50%;
-    }
+  }
+  &.circle-tag {
+    height: 25px;
+    width: 25px;
+    border-radius: 50%;
+  }
 }

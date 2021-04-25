@@ -60,7 +60,7 @@ IconOrImage.propTypes = {
 
 class Index extends React.Component {
   state = { autoClose: null, callStatus: 'connecting' };
-
+ 
   async componentWillReceiveProps(nextProps) {
     // console.log('Out going call', nextProps);
     const { webRtc } = this.props;
@@ -74,10 +74,9 @@ class Index extends React.Component {
           const { user } = chatHistory.user;
           const connectionStatus = nextProps.webRtc.connectedUsers[user.id] || {};
           // console.log('connectionStatus', connectionStatus);
-          if (connectionStatus) {
+          if (connectionStatus.status === 'ringing' || connectionStatus.status === 'busy') {
             this.setState({ callStatus: connectionStatus.status });
             if (connectionStatus.status === 'busy') {
-              this.setState({ callStatus: connectionStatus.status });
               if (!autoClose) {
                 const autoTimeOut = setTimeout(this.callReject, 2000);
                 this.setState({ autoClose: autoTimeOut });

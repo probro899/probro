@@ -35,99 +35,109 @@ function updateUserMessage(record) {
 }
 
 async function updateUserConnection(record) {
-  const { session } = this;
-  const { status, mId, userId } = record[0];
-  const { id } = record[1];
-  const updateRes = await update.call(this, 'UserConnection', ...record);
-  // console.log('update User connection called', updateRes, record);
-  if ((status === 'connected' || status === 'pending' || status === 'deleted') && updateRes) {
-    const allDbUsers = databaseCache.get('User');
-    let fUserDetail = {};
-    let tUserDetail = {};
-    const htmlStringValue = await mailBody();
-    let emailObj = {};
-    let notiData = {};
-    if (status === 'pending') {
-      const currentUserId = session.values.user.id;
-      const fuserId = currentUserId;
-      const tuserId = userId === currentUserId ? mId : userId;
-      fUserDetail = allDbUsers.find(u => u.id === fuserId);
-      tUserDetail = allDbUsers.find(u => u.id === tuserId);
+  try {
+    const { session } = this;
+    const { status, mId, userId } = record[0];
+    const { id } = record[1];
+    const updateRes = await update.call(this, 'UserConnection', ...record);
+    // console.log('update User connection called', updateRes, record);
+    if ((status === 'connected' || status === 'pending' || status === 'deleted') && updateRes) {
+      const allDbUsers = databaseCache.get('User');
+      let fUserDetail = {};
+      let tUserDetail = {};
+      const htmlStringValue = await mailBody();
+      let emailObj = {};
+      let notiData = {};
+      if (status === 'pending') {
+        const currentUserId = session.values.user.id;
+        const fuserId = currentUserId;
+        const tuserId = userId === currentUserId ? mId : userId;
+        fUserDetail = allDbUsers.find(u => u.id === fuserId);
+        tUserDetail = allDbUsers.find(u => u.id === tuserId);
 
-      emailObj = {
-        email: tUserDetail.email,
-        html: htmlStringValue.friendRequestHtmlString(fUserDetail, tUserDetail),
-        subject: `Friend request from ${fUserDetail.firstName} `,
-      };
-
-      notiData = {
-        userId: tUserDetail.id,
-        timeStamp: Date.now(),
-        body: `You have friend request from ${fUserDetail.firstName}`,
-        title: 'Friend request',
-        type: 'user',
-        typeId: fUserDetail.id,
-        viewStatus: false,
-        imageUrl: null,
-      };
-
-      const mainchannel = session.getChannel(`UserConnection-${mId}`);
-      const remoteUserSession = mainchannel.find(s => s.values.user.id === tUserDetail.id);
-      if (remoteUserSession) {
-        sendNotification(this, emailObj, notiData, [remoteUserSession]);
-        const dataTobeUpdateConnection = {
-          UserConnection: { id, status, mId, userId },
+        emailObj = {
+          email: tUserDetail.email,
+          html: htmlStringValue.friendRequestHtmlString(fUserDetail, tUserDetail),
+          subject: `Friend request from ${fUserDetail.firstName} `,
         };
-        updateUserCache(dataTobeUpdateConnection, remoteUserSession, 'update');
-      } else {
-        sendNotification(this, emailObj, notiData);
-      }
-    } else {
-      const currentUserId = session.values.user.id;
-      const fuserId = currentUserId;
-      const tuserId = userId === currentUserId ? mId : userId;
-      fUserDetail = allDbUsers.find(u => u.id === fuserId);
-      tUserDetail = allDbUsers.find(u => u.id === tuserId);
-      // console.log('fuserDetails and tUserDetail', fUserDetail, tUserDetail, status);
-      emailObj = {
-        email: tUserDetail.email,
-        html: htmlStringValue.friendRequestAcceptHtmlString(tUserDetail, fUserDetail),
-        subject: `${fUserDetail.firstName} accept your friend request`,
-      };
 
-      notiData = {
-        userId: tUserDetail.id,
-        timeStamp: Date.now(),
-        body: `${fUserDetail.firstName} accept your friend request`,
-        title: 'Friend request',
-        type: 'user',
-        typeId: fUserDetail.id,
-        viewStatus: false,
-        imageUrl: null,
-      };
-      const mainchannel = session.getChannel(`UserConnection-${mId}`);
-      const remoteUserSession = mainchannel.find(s => s.values.user.id === tUserDetail.id);
-      if (remoteUserSession) {
-        if (status !== 'deleted') {
+        notiData = {
+          userId: tUserDetail.id,
+          timeStamp: Date.now(),
+          body: `You have friend request from ${fUserDetail.firstName}`,
+          title: 'Friend request',
+          type: 'user',
+          typeId: fUserDetail.id,
+          viewStatus: false,
+          imageUrl: null,
+        };
+
+        const mainchannel = session.getChannel(`UserConnection-${mId}`);
+        const remoteUserSession = mainchannel.find(s => s.values.user.id === tUserDetail.id);
+        if (remoteUserSession) {
           sendNotification(this, emailObj, notiData, [remoteUserSession]);
+          const dataTobeUpdateConnection = {
+            UserConnection: { id, status, mId, userId },
+          };
+          updateUserCache(dataTobeUpdateConnection, remoteUserSession, 'update');
+        } else {
+          sendNotification(this, emailObj, notiData);
         }
-        const dataTobeUpdateConnection = {
-          UserConnection: { id, status },
-        };
-        updateUserCache(dataTobeUpdateConnection, remoteUserSession, 'update');
       } else {
-        sendNotification(this, emailObj, notiData);
-      }
-    }
+        const currentUserId = session.values.user.id;
+        const fuserId = currentUserId;
+        const tuserId = userId === currentUserId ? mId : userId;
+        fUserDetail = allDbUsers.find(u => u.id === fuserId);
+        tUserDetail = allDbUsers.find(u => u.id === tuserId);
+        // console.log('fuserDetails and tUserDetail', fUserDetail, tUserDetail, status);
+        emailObj = {
+          email: tUserDetail.email,
+          html: htmlStringValue.friendRequestAcceptHtmlString(tUserDetail, fUserDetail),
+          subject: `${fUserDetail.firstName} accept your friend request`,
+        };
 
-    session.subscribe(`UserConnection-${tUserDetail.id}`);
-    session.subscribe(`UserConnection-${fUserDetail.id}`);
+        notiData = {
+          userId: tUserDetail.id,
+          timeStamp: Date.now(),
+          body: `${fUserDetail.firstName} accept your friend request`,
+          title: 'Friend request',
+          type: 'user',
+          typeId: fUserDetail.id,
+          viewStatus: false,
+          imageUrl: null,
+        };
+        const mainchannel = session.getChannel(`UserConnection-${mId}`);
+        const remoteUserSession = mainchannel.find(s => s.values.user.id === tUserDetail.id);
+        if (remoteUserSession) {
+          if (status !== 'deleted') {
+            sendNotification(this, emailObj, notiData, [remoteUserSession]);
+          }
+          const dataTobeUpdateConnection = {
+            UserConnection: { id, status },
+          };
+          updateUserCache(dataTobeUpdateConnection, remoteUserSession, 'update');
+        } else {
+          sendNotification(this, emailObj, notiData);
+        }
+      }
+
+      session.subscribe(`UserConnection-${tUserDetail.id}`);
+      session.subscribe(`UserConnection-${fUserDetail.id}`);
+    }
+    return updateRes;
+  } catch (e) {
+    console.error('Error in updateUserConnection', e);
   }
-  return updateRes;
 }
 
 function updateUserCarrierInterest(record) {
   update.call(this, 'UserCarrierInterest', record);
+}
+
+export async function verifyUser(params) {
+  const { userId } = params;
+  const res = await update('User', { type: 'verified' }, { id: userId });
+  return res;
 }
 
 export default [
@@ -139,4 +149,5 @@ export default [
   updateUserCarrierInterest,
   updateUserMessage,
   updateUser,
+  verifyUser,
 ];

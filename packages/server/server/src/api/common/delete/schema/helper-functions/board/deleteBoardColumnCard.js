@@ -13,22 +13,26 @@ const flat = (arr) => {
 };
 
 export default async function deleteBoardColumnCard(Delete, record) {
-  // console.log('deleteBoardColumnCard Helper', record);
-  const { broadCastId } = record[0];
-  await db.execute(async ({ find }) => {
-    const allboardColumnCardPromises = [];
-    record.forEach((e) => {
-      allboardColumnCardPromises.push(find('BoardColumnCard', { boardColumnId: e.boardColumnId }));
-    });
+  try {
+    // console.log('deleteBoardColumnCard Helper', record);
+    const { broadCastId } = record[0];
+    await db.execute(async ({ find }) => {
+      const allboardColumnCardPromises = [];
+      record.forEach((e) => {
+        allboardColumnCardPromises.push(find('BoardColumnCard', { boardColumnId: e.boardColumnId }));
+      });
 
-    const allboardColumnCardIdArr = await Promise.all(allboardColumnCardPromises);
-    flat(allboardColumnCardIdArr).map(obj => obj.id).forEach(async (cardId) => {
-      await Delete('BoardColumnCardAttachment', { boardColumnCardId: cardId, broadCastId });
-      await Delete('BoardColumnCardComment', { boardColumnCardId: cardId, broadCastId });
-      await Delete('BoardColumnCardDescription', { boardColumnCardId: cardId, broadCastId });
+      const allboardColumnCardIdArr = await Promise.all(allboardColumnCardPromises);
+      flat(allboardColumnCardIdArr).map(obj => obj.id).forEach(async (cardId) => {
+        await Delete('BoardColumnCardAttachment', { boardColumnCardId: cardId, broadCastId });
+        await Delete('BoardColumnCardComment', { boardColumnCardId: cardId, broadCastId });
+        await Delete('BoardColumnCardDescription', { boardColumnCardId: cardId, broadCastId });
+      });
     });
-  });
-  record.forEach(async (rec) => {
-    await Delete('BoardColumnCard', rec);
-  });
+    record.forEach(async (rec) => {
+      await Delete('BoardColumnCard', rec);
+    });
+  } catch (e) {
+    console.error('Error in deleteBoardColumnCard', e);
+  }
 }

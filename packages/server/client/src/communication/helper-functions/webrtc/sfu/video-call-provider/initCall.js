@@ -25,12 +25,20 @@ export default async (mediaType, props) => {
     } else {
       const { jsep, error, oneToOneCall } = await createOffer(mediaType, props);
       if (jsep) {
-        const { callId } = Object.values(database.UserConnection.byId).find(c => c.user.user.id === userId)
-        const body = { request: 'call', username: `${callId}` };
-        oneToOneCall.data({ text: JSON.stringify({ callType: mediaType, uid: account.user.id }) });
-        oneToOneCall.send({ message: body, jsep });
+        const { callId } = Object.values(database.UserConnection.byId).find(c => c.user.user.id === userId);
+        if (callId) {
+          const body = { request: 'call', username: `${callId}` };
+          oneToOneCall.data({ text: JSON.stringify({ callType: mediaType, uid: account.user.id }) });
+          oneToOneCall.send({ message: body, jsep });
+        } else {
+          // ask for callId
+          const { apis } = webRtc;
+          const callId =  await apis.getCallId({ userId });
+          const body = { request: 'call', username: `${callId}` };
+          oneToOneCall.data({ text: JSON.stringify({ callType: mediaType, uid: account.user.id }) });
+          oneToOneCall.send({ message: body, jsep });
+        }
       }
-
       if (error) {
         throw error;
       }

@@ -3,55 +3,50 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import { Navbar } from '../home/component';
-import SmallScreenSideNav from './SmallScreenSideNav';
-import SideNav from './SideNav';
+import SmallScreenSideNav from './sidenav/SmallScreenSideNav';
+import SideNav from './sidenav';
 import Profile from './profile';
 import Setting from './setting';
 import DrawingBoard from './drawing-board';
 import Connection from './connection';
 import Class from '../class/Class';
+import Appointment from './appointment';
 import { Blog } from '../blog';
 import { Spinner } from '../../common';
 import OrganizationDashboard from './organizationDashboard';
+import Courses from './course';
 
 class HomePage extends Component {
   state = {};
 
   render() {
-    // console.log('props in HomePage', this.props);
     const { account, match } = this.props;
-    if (!account.sessionId) {
-      return <Redirect to="/" />;
-    }
-    if (!account.user) {
-      return (
-        <Spinner />
-      );
-    }
+
+    if (!account.sessionId) return <Redirect to="/" />;
+    if (!account.user) return <Spinner />;
+    if (account.user.slug !== match.params.id) return <Redirect to="/" />;
 
     return (
-      account.user.slug !== match.params.id ? <Redirect to="/" />
-        : (
-          <div>
-            {/* redirect to home page if not logged in  */}
-            <Navbar />
-            <div className="broWrapper">
-              <SmallScreenSideNav match={match} />
-              <SideNav match={match} />
-              <Switch>
-                <Route exact path={`${match.path}`} component={Profile} />
-                <Route exact path={`${match.path}/classes`} component={Class} />
-                <Route exact path={`${match.path}/blog`} component={Blog} />
-                <Route exact path={`${match.path}/settings/basic`} component={Setting} />
-                <Route exact path={`${match.path}/settings/advanced`} component={Setting} />
-                <Route exact path={`${match.path}/drawing-board`} component={DrawingBoard} />
-                <Route exact path={`${match.path}/connection`} component={Connection} />
-                <Route exact path={`${match.path}/organization/:orgId`} component={OrganizationDashboard} />
-                <Redirect to="/error" />
-              </Switch>
-            </div>
-          </div>
-        )
+      <>
+        <Navbar />
+        <div className="broWrapper">
+          <SmallScreenSideNav match={match} />
+          <SideNav match={match} />
+          <Switch>
+            <Route exact path={`${match.path}`} component={Profile} />
+            <Route exact path={`${match.path}/classes`} component={Class} />
+            <Route exact path={`${match.path}/blog`} component={Blog} />
+            <Route exact path={`${match.path}/courses`} component={Courses} />
+            <Route exact path={`${match.path}/settings/basic`} component={Setting} />
+            <Route exact path={`${match.path}/settings/advanced`} component={Setting} />
+            <Route exact path={`${match.path}/drawing-board`} component={DrawingBoard} />
+            <Route exact path={`${match.path}/connection`} component={Connection} />
+            <Route exact path={`${match.path}/appointment`} component={Appointment} />
+            <Route path={`${match.path}/organization/:orgId`} component={OrganizationDashboard} />
+            <Redirect to="/error" />
+          </Switch>
+        </div>
+      </>
     );
   }
 }

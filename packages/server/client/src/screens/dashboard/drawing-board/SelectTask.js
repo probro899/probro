@@ -86,8 +86,13 @@ class SelectTask extends React.Component {
       name,
       loading, message,
     } = this.state;
+
+    console.log(classeOptions);
+
+
+
     return (
-      <div style={{ padding: '10px', maxWidth: 300 }}>
+      <div style={{ padding: '10px', maxWidth: 300, minWidth:180 }}>
         <div style={{ padding: '5px 0px' }}>
           <span style={{ fontSize: '18px', fontWeight: 'bold' }}>Select a Task</span>
         </div>

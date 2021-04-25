@@ -10,7 +10,7 @@ import _ from 'lodash';
 import { MessageSender } from '../components';
 import { normalTimeStampSorting, getName } from '../../common/utility-functions';
 import { findChatHistory, markLastMessageRead } from './helper-function';
-import autoCloseHandler from '../helper-functions/webrtc/mesh/autoCloseHandler';
+import autoCloseHandler from '../helper-functions/webrtc/sfu/autoCloseHandler';
 import fetchedChatHistory from './helper-function/fetchChatHistory';
 import isJanusActive from './helper-function/isJanusActive';
 import messageTypeProvider from './helper-function/messageTypeProvider';
@@ -93,7 +93,7 @@ class ChatHistory extends React.Component {
     const { change } = this.props;
     change('list');
   }
-
+ 
   toCallScreen = async (mediaType) => {
     try {
       const { _callHandler, change, updateWebRtc, webRtc, account } = this.props;
@@ -102,6 +102,7 @@ class ChatHistory extends React.Component {
       await updateWebRtc('isConnecting', true);
       await updateWebRtc('connectedUsers', { ...webRtc.connectedUsers, [account.user.id]: { streams: [], type: mediaType } });
       await updateWebRtc('localCallHistory', { chatHistory: webRtc.chatHistory, stream: null, mediaType, callType: 'Outgoing', callEnd: false });
+      await updateWebRtc('showOutgoingCall', true);
       autoCloseHandler(this.props, { apis }, 62000);
       _callHandler(mediaType);
       change('connecting');

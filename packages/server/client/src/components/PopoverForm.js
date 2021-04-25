@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Form, DeletePopOver } from '../common';
 import { Button } from '../common/utility-functions/Button/Button';
 import Popup from '../common/Form/Popup';
+import { AiOutlineKey } from "react-icons/ai";
 
 class PopoverForm extends React.Component {
   state = { deletePopover: false };
@@ -28,12 +29,10 @@ class PopoverForm extends React.Component {
       <Popup
         isOpen={isOpen}
         onClose={onClose}
-        // onOpening={() => console.log("what sup open")}
+        title="Enter the credentials"
+        icon={<AiOutlineKey size={20} />}
       >
         <div className="popover-form">
-          <div className="top">
-            Enter the Credentials
-          </div>
           <Form data={structure} callback={callback} />
           {del && (
             <div className="pc-pop-delete-button">

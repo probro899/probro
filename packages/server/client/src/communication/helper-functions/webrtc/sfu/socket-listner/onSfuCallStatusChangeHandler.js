@@ -2,7 +2,7 @@ import store from '../../../../../store';
 import exceptionHandler from '../conference-call-provider/exceptionHandler';
 
 export default (props, state, data) => {
-  // console.log('update sfu call status called', data);
+  console.log('update sfu call status called', data);
   try {
     const { uid, type } = data;
     const { updateWebRtc } = props;

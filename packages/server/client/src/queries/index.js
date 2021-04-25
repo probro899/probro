@@ -29,9 +29,13 @@ query {
       lastName
       middleName
       slug
+      type
       userDetail {
         id
         image
+        address
+        country
+        headLine
       }
     }
   }
@@ -58,6 +62,9 @@ query($sessionId: String) {
           userDetail {
             id
             image
+            address
+            country
+            headLine
           }
         }
         blogLike {
@@ -97,6 +104,9 @@ query($sessionId: String) {
           userDetail {
             id
             image
+            address
+            country
+            headLine
           }
         }
 
@@ -129,6 +139,9 @@ query($sessionId: String) {
           id
           image
           country
+          address
+          country
+          headLine
         }
 
       }
@@ -156,6 +169,9 @@ query ($keyword: String,$country: String, $industry: String, $skill: String, $se
           userDetail {
             id
             image
+            country
+            address
+            headLine
           }
         }
         blogLike {
@@ -185,6 +201,8 @@ query ($keyword: String,$country: String, $industry: String, $skill: String, $se
           id
           image
           country
+          address
+          headLine
         }
       }
       popularUsers {
@@ -197,6 +215,8 @@ query ($keyword: String,$country: String, $industry: String, $skill: String, $se
           id
           image
           country
+          address
+          headLine
         }
 
       }
@@ -267,6 +287,7 @@ query ($userSlug: String!) {
     firstName
     middleName
     lastName
+    type
     userDetail {
       id
       coverImage
@@ -292,6 +313,7 @@ query ($userSlug: String!) {
       company
       startTime
       endTime
+      currentWorking
     }
     userSkill {
       id
@@ -306,3 +328,116 @@ query ($userSlug: String!) {
     }
   }
 }`;
+
+
+export const GET_COURSE = gql`
+  query($type: String) {
+    getCourse(type: $type) {
+    id
+    createdBy
+    title
+    subTitle
+    description
+    skill
+    createdAt
+    updatedAt
+    duration
+    status
+    level
+    domain
+    subDomain
+    logo
+    remarks
+    rating{
+      avgRating
+      noOfRating
+    }
+      creator {
+        id
+        firstName
+        middleName
+        lastName
+        slug
+        userDetail {
+          id
+          country
+          image
+        }
+      }
+    } 
+}`;
+
+export const GET_COURSE_DETAILS = gql`
+query($courseId: Int) {
+	getCourseDetails(couseId: $courseId) {
+    id
+  createdBy
+  title
+  subTitle
+  description
+  skill
+  createdAt
+  updatedAt
+  duration
+  status
+  level
+  domain
+  subDomain
+  logo
+  remarks
+  reviews {
+    id
+    userId
+    review
+    noOfStar
+    createdAt
+    updatedAt
+    userDetails {
+      id
+      firstName
+      lastName
+      middleName
+      slug
+      userDetail {
+        type
+        country
+        image
+      }
+    }
+   
+  }
+  rating{
+    avgRating
+    noOfRating
+  }
+    creator {
+      id
+      firstName
+      middleName
+      lastName
+      userDetail {
+        id
+      	country
+        image
+      }
+    }
+  courseSection {
+    id
+    courseId
+    title
+    objective
+    createdAt
+    updatedAt
+    lectures {
+      id
+      title
+      description
+      duration
+      createdAt
+      updatedAt
+    }
+  }
+
+  }
+}
+`;

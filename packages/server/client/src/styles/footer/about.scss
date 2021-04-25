@@ -1,32 +1,30 @@
-@import '../config.scss';
-
 .pc-about {
   margin-top: $navbarHeight;
   min-height: calc(100vh - #{$navbarHeight} - #{$footerHeight});
   .pc-about-wrapper {
-    padding: 40px 0;
+    padding: pixel-to-rem(40) 0;
     .pc-about-header {
       text-align: center;
-      margin-bottom: 30px;
+      margin-bottom: pixel-to-rem(30);
       h1 {
-        font-size: 56px;
-        line-height: 59px;
-        margin-bottom: 10px;
+        font-size: pixel-to-rem(56);
+        line-height: pixel-to-rem(59);
+        margin-bottom: pixel-to-rem(10);
       }
       p {
-        font-size: 20px;
+        font-size: pixel-to-rem(20);
         color: $subHeadColor;
       }
     }
     .pc-about-content {
       h2 {
-        font-size: 24px;
+        font-size: pixel-to-rem(24);
         color: $headingColor;
-        margin-bottom: 10px;
+        margin-bottom: pixel-to-rem(10);
       }
       p {
         color: $subHeadColor;
-        margin-bottom: 10px;
+        margin-bottom: pixel-to-rem(10);
       }
     }
   }

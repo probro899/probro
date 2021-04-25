@@ -1,5 +1,5 @@
 /* eslint-disable react/no-array-index-key */
-import React from 'react';
+import React, { useState } from 'react';
 import { MdEdit } from "react-icons/md";
 import { Taginput } from '../../../common';
 import Popup from '../../../common/Form/Popup';
@@ -7,11 +7,16 @@ import {Button} from '../../../common/utility-functions/Button/Button';
 
 const PopoverContent = (props) => {
   const { data, value, onChange, callback } = props;
+  const [state, setMessage] = useState({});
+
+  const submit = async () => {
+    const res = await callback();
+    setMessage(res);
+  }
+
   return (
     <div
-      style={{
-        padding: '10px 10px 0 10px',
-      }}
+      style={{ padding: '10px 10px 0 10px' }}
     >
       <div
         style={{
@@ -25,13 +30,19 @@ const PopoverContent = (props) => {
         <span>Carrier Interests</span>
       </div>
       <Taginput data={data} onChange={onChange} value={value} />
-      <Button
-         onClick={callback}
-        type="button"
-        buttonStyle="btn--primary--solid"
-        buttonSize="btn--medium"
-        title="Save"
-      />
+      <div className="btn-group">
+        <div style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', alignItems: 'center' }}>
+          {state.error && <p style={{ fontSize: 16, color: 'red' }}>{state.error}</p>}
+          {state.message && <p style={{ fontSize: 16, color: 'green' }}>{state.message}</p>}
+        </div>
+        <Button
+          onClick={submit.bind(this)}
+          type="button"
+          buttonStyle="btn--primary--solid"
+          buttonSize="btn--medium"
+          title="Save"
+        />
+      </div>
     </div>
   );
 };

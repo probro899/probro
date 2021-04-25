@@ -9,51 +9,49 @@ import { PopularOnPc } from '../../common/PopularOnPc';
 import Footer from '../../common/footer';
 
 const data = {
-    blogData: [
-        {
-            id: 1,
-            name: "Test Blog 1",
-            author: 'Bikal Shrestha',
-            date: 'Tue Jan 26 2021',
-            image: '/assets/graphics/blog-img.jpg',
+  blogData: [
+    {
+      id: 1,
+      name: "Test Blog 1",
+      author: 'Bikal Shrestha',
+      date: 'Tue Jan 26 2021',
+      image: '/assets/graphics/blog-img.jpg',
+    },
+    {
+      id: 2,
+      name: "Test Blog 2",
+      author: 'Bikal Shrestha',
+      date: 'Tue Jan 26 2020',
+      image: '/assets/graphics/blog-img.jpg',
 
-        },
-        {
-            id: 2,
-            name: "Test Blog 2",
-            author: 'Bikal Shrestha',
-            date: 'Tue Jan 26 2020',
-            image: '/assets/graphics/blog-img.jpg',
-
-        },
-        {
-            id: 3,
-            name: "Test Blog 3",
-            author: 'Bikal Shrestha',
-            date: 'Tue Jan 16 2021',
-            image: '/assets/graphics/blog-img.jpg',
-
-        }
-    ],
-    userData: [
-        {
-            id: 1,
-            name: 'Bikal Shrestha',
-            country: 'Nepal',
-            connected: true,
-            image: 'http://localhost:3000/assets/user/10000003/profile/thumbnail-1607482166799.jpeg'
-        },
-        {
-            id: 2,
-            name: 'Ram Shrestha',
-            country: 'Nepal',
-            connected: false,
-            image: 'http://localhost:3000/assets/user/10000003/profile/thumbnail-1607482166799.jpeg'
-        },
-    ]
+    },
+    {
+      id: 3,
+      name: "Test Blog 3",
+      author: 'Bikal Shrestha',
+      date: 'Tue Jan 16 2021',
+      image: '/assets/graphics/blog-img.jpg',
+    },
+  ],
+  userData: [
+    {
+        id: 1,
+        name: 'Bikal Shrestha',
+        country: 'Nepal',
+        connected: true,
+        image: 'http://localhost:3000/assets/user/10000003/profile/thumbnail-1607482166799.jpeg'
+    },
+    {
+        id: 2,
+        name: 'Ram Shrestha',
+        country: 'Nepal',
+        connected: false,
+        image: 'http://localhost:3000/assets/user/10000003/profile/thumbnail-1607482166799.jpeg'
+    },
+  ]
 }
 
-export class OrganizationPublicView extends Component {
+export default class OrganizationPublicView extends Component {
     state = {};
     render() {
         return (

@@ -1,4 +1,4 @@
-@import '../config.scss';
+@import "../config.scss";
 
 //generic button
 $primary: #0056b8; //#4f6df5  //#0056B8
@@ -9,43 +9,38 @@ $white: #fdfdfd;
 $dark: #181717;
 
 .btn {
-  border-radius: 20px;
+  border-radius: pixel-to-rem(20);
   display: inline-block;
   cursor: pointer;
   position: relative;
   transition: transform 0.3s ease;
-  font-size: 16px;
+  font-family: font-family(secondary);
+  font-size: pixel-to-rem(16);
   font-weight: 500;
-  font-family: 'Montserrat', sans-serif;
   width: 100%;
   height: 100%;
   border: none;
   span {
-    font-size: 16px;
+    font-size: pixel-to-rem(16);
   }
   .loader-wrapper {
     position: absolute;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    // .css-8f3tnb {
-    //   color: #fff;
-    // }
   }
   span {
     display: flex;
     align-items: center;
     justify-content: center;
     svg {
-      margin-right: 5px;
+      margin-right: pixel-to-rem(5);
     }
   }
-  // &:hover {
-  //   transform: translateY(-3px);
-  // }
   &:disabled {
     opacity: 0.3;
     color: #666666;
+    cursor: not-allowed;
   }
 }
 
@@ -53,7 +48,7 @@ $dark: #181717;
   span {
     flex-direction: row-reverse;
     svg {
-      margin-left: 5px;
+      margin-left: pixel-to-rem(5);
     }
   }
 }
@@ -75,6 +70,9 @@ $dark: #181717;
   background-color: $primary;
   color: $white;
   border: none;
+  &:disabled {
+    color: #fff;
+  }
 }
 
 .btn--warning--solid {
@@ -92,11 +90,14 @@ $dark: #181717;
   background-color: $danger;
   color: $white;
   border: none;
+  &:disabled {
+    color: #fff;
+  }
 }
 .btn-circle {
   background-color: transparent;
   color: #286090;
-  border: 1px solid #286090;
+  border: pixel-to-rem(1) solid #286090;
   &:hover {
     background-color: $primary;
     color: $white;
@@ -107,8 +108,8 @@ $dark: #181717;
 }
 .btn--circle-icons {
   border-radius: 50%;
-  height: 40px;
-  width: 40px;
+  height: pixel-to-rem(40);
+  width: pixel-to-rem(40);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -120,58 +121,57 @@ $dark: #181717;
 .btn--primary--outline {
   background-color: transparent;
   color: $primary;
-  // border: 1px solid $primary;
-  box-shadow: inset 0 0 0 1px $primary;
+  box-shadow: inset 0 0 0 pixel-to-rem(1) $primary;
   &:hover {
-    box-shadow: inset 0 0 0 1.3px $primary;
+    box-shadow: inset 0 0 0 pixel-to-rem(1.5) $primary;
   }
 }
 
 .btn--warning--outline {
   background-color: transparent;
   color: $warning;
-  box-shadow: inset 0 0 0 1px $warning;
+  box-shadow: inset 0 0 0 pixel-to-rem(1) $warning;
   &:hover {
-    box-shadow: inset 0 0 0 1.3px $warning;
+    box-shadow: inset 0 0 0 pixel-to-rem(1.5) $warning;
   }
 }
 .btn--success--outline {
   background-color: transparent;
   color: $success;
-  box-shadow: inset 0 0 0 1px $success;
+  box-shadow: inset 0 0 0 pixel-to-rem(1) $success;
   &:hover {
-    box-shadow: inset 0 0 0 1.3px $success;
+    box-shadow: inset 0 0 0 pixel-to-rem(1.5) $success;
   }
 }
 
 .btn--danger--outline {
   background-color: transparent;
   color: $danger;
-  box-shadow: inset 0 0 0 1px $danger;
+  box-shadow: inset 0 0 0 pixel-to-rem(1) $danger;
   &:hover {
-    box-shadow: inset 0 0 0 1.3px $danger;
+    box-shadow: inset 0 0 0 pixel-to-rem(1.5) $danger;
   }
 }
 
 .btn--small {
-  padding: 6px 12px;
-  font-size: 16px;
+  padding: pixel-to-rem(6) pixel-to-rem(12);
+  font-size: pixel-to-rem(16);
 }
 
 .btn--medium {
-  padding: 10px 20px;
-  font-size: 18px;
-  @media screen and (max-width: 767px) {
-    padding: 10px 15px;
-    font-size: 16px;
+  padding: pixel-to-rem(10) pixel-to-rem(20);
+  font-size: pixel-to-rem(18);
+  @media screen and (max-width: pixel-to-rem(767)) {
+    padding: pixel-to-rem(10) pixel-to-rem(15);
+    font-size: pixel-to-rem(16);
   }
 }
 
 .btn--large {
-  padding: 15px 30px;
-  font-size: 20px;
-  @media screen and (max-width: 767px) {
-    padding: 10px 15px;
-    font-size: 16px;
+  padding: pixel-to-rem(15) pixel-to-rem(30);
+  font-size: pixel-to-rem(20);
+  @media screen and (max-width: pixel-to-rem(767)) {
+    padding: pixel-to-rem(10) pixel-to-rem(15);
+    font-size: pixel-to-rem(16);
   }
 }

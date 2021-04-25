@@ -11,7 +11,7 @@ import { Button } from '../../../common/utility-functions/Button/Button';
 
 class IncomingCallScreen extends React.Component {
   state = {};
-
+ 
   callAccept = async (mediaType) => {
     const {
       answerHandler,

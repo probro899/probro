@@ -34,8 +34,6 @@ class Communication extends React.Component {
       // updating device info microphone and webcam
       await deviceTest(updateWebRtc);
       sfuSocketListner(this.props, this.state, this.remoteCallEndMinimizer);
-      // const swRegistration = await navigator.serviceWorker.register('sw.js');
-      // this.setState({ swRegistration: swRegistration })
     } catch (e) {
       exceptionReporter({ error: e, errorCode: 148 });
     }

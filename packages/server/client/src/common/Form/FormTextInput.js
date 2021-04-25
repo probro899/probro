@@ -11,32 +11,30 @@ export const FormTextInput = ({
     label,
     isRequired,
     leftIcon,
-    rightElement
+    rightElement,
+    hasError
 }) => {
 
     return (
-        <>
-            <label className="formLabel" htmlFor={name}>
-                <p className="label-text">{label} {isRequired && <span style={{ color: 'red' }}> *</span>} </p>
-                <input
-                    id={name}
-                    name={name}
-                    type={type}
-                    placeholder={placeholder}
-                    onChange={onChange}
-                    value={value}
-                    className={className}
-                
-                />
-                <p className="right-icon">{rightElement}</p>
-            </label>
-        </>
+        <label className="formLabel" htmlFor={name}>
+            <p className="label-text">{label} {isRequired && <span style={{ color: 'red' }}> *</span>} </p>
+            <input
+                id={name}
+                name={name}
+                type={type}
+                placeholder={placeholder}
+                onChange={onChange}
+                value={value}
+                className={`pc-input-group ${hasError ? 'has-error' : ''}`}
+            />
+            <p className="right-icon">{rightElement}</p>
+        </label>
     )
 }
 
 FormTextInput.defaultProps = {
     type: "text",
-    className: ""
+    hasError: false
 }
 
 FormTextInput.propTypes = {

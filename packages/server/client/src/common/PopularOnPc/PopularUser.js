@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { MdMyLocation } from 'react-icons/md';
 import { BsPersonCheck, BsPersonPlus } from "react-icons/bs";
 import { RoundPicture } from '../../components';
 import { Button } from '../../common/utility-functions/Button/Button';
@@ -15,21 +14,18 @@ const PopularUser = ({ obj }) => {
                 </div>
                 <div className="user-detail">
                     <div className="name">
-                        <Link to="#">
-                            {name}
-                        </Link>
+                        <Link to="#">{name}</Link>
+                    </div>
+                    <div className='user-bio'>
+                        Mentor at Proper Class
                     </div>
                     <div style={{ opacity: 0.8, marginBottom: 3, display: 'flex', alignItems: 'center' }}>
-                        <MdMyLocation />
-                        {' '}
-                        <span style={{ fontSize: 12, marginLeft: 2 }}>
+                        <span style={{ fontSize: 12}}>
                             {' '}
                             {country}
                         </span>
                     </div>
-                    <div className='user-bio'>
 
-                    </div>
                 </div>
                 <div className="follow-mentor-btn">
                     <Link to="#" className="followMentorBtn">

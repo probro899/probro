@@ -1,16 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Popover } from '@blueprintjs/core';
-import Form from '../../../common/Form';
+import { Form } from '../../../common';
 import DeletePopOver from '../../../common/DeletePopOver';
 import { Attachment } from './attachment';
 import SelectColumn from './SelectColumn';
 import { Button } from '../../../common/utility-functions/Button/Button';
 import { AiOutlineTags, AiOutlineFieldTime, AiOutlinePaperClip, AiFillCopy, AiTwotoneDelete } from "react-icons/ai";
 import Tag from '../../../common/Tag';
+import Popover from '../../../common/Popover';
 
 const TagPopover = ({ tags, addTag }) => {
-  const tagNames = ['red', 'green', 'blue', 'black', 'yellow'];
+  const tagNames = ['red', 'green', 'blue','yellow'];
   return (
     <div style={{ padding: '5px', minWidth: '250px' }}>
       <div style={{ padding: '5px', textAlign: 'center', fontSize: '15px', fontWeight: 'bold' }}>
@@ -86,7 +86,6 @@ class TaskDetailRight extends React.Component {
       task,
       tags,
     } = this.props;
-    console.log('description', description);
     try {
       await apis.copyBoardColumnCard({
         card: { ...task, userId: account.user.id, timeStamp: Date.now() },
@@ -159,6 +158,8 @@ class TaskDetailRight extends React.Component {
   }
 
   render() {
+    // console.log('screen width', this.getScreenWidth());
+    const screenWidth = screen.width;
     const { deleteCardPopover } = this.state;
     const {
       task, tags, addDatabaseSchema, apis,
@@ -172,8 +173,10 @@ class TaskDetailRight extends React.Component {
           <div className="tool-header">Tools</div>
           <div className="rt-tools">
             <Popover
+              yAlign="bottom"
+              xAlign={screenWidth < 580 ? "left" : "right"}
+              hPosition={screenWidth < 580 ? "right" : "left"}
               content={<TagPopover addTag={this.addTag} tags={tags} />}
-              position="left-top"
             >
               <Button
                 type="button"
@@ -184,8 +187,10 @@ class TaskDetailRight extends React.Component {
               />
             </Popover>
             <Popover
+              yAlign="bottom"
+              xAlign="right"
+              hPosition={screenWidth < 580 ? "center" : "left"}
               content={<DeadLinePopOver callback={this.uploadDeadLine} />}
-              position="left-top"
             >
               <Button
                 icon={<AiOutlineFieldTime />}
@@ -196,6 +201,9 @@ class TaskDetailRight extends React.Component {
               />
             </Popover>
             <Popover
+              yAlign="bottom"
+              xAlign={screenWidth < 430 ? "left" : "right"}
+              hPosition={screenWidth < 430 ? "right" : "left"}
               content={(
                 <Attachment
                   boardId={boardId}
@@ -206,7 +214,6 @@ class TaskDetailRight extends React.Component {
                   database={database}
                 />
               )}
-              position="left-top"
             >
               <Button
                 icon={<AiOutlinePaperClip />}
@@ -219,7 +226,13 @@ class TaskDetailRight extends React.Component {
           </div>
           <div className="tool-header">Actions</div>
           <div className="rt-actions">
-            <Popover content={<SelectColumn callback={this.copyCard} database={database} />}>
+            <Popover
+              content={<SelectColumn callback={this.copyCard} database={database} />}
+              yAlign="top"
+              xAlign={screenWidth < 580 ? "right" : "left"}
+              vPosition="center"
+              hPosition={screenWidth < 580 ? "right": "left"}
+            >
               <Button
                 icon={<AiFillCopy />}
                 title="Copy"

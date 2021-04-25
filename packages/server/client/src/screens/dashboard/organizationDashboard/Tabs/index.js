@@ -1,68 +1,60 @@
-import React, { useEffect, useState } from 'react'
-import TabPane from './TabPane';
-const Tabs = (props) => {
-    const { children } = props;
-    const [tabHeader, setTabHeader] = useState([]);
-    const [childContent, setChildConent] = useState({});
-    const [active, setActive] = useState("");
-    useEffect(() => {
-        const headers = [];
-        const childCnt = {};
-        React.Children.forEach(children, (element) => {
-            if (!React.isValidElement(element)) return;
-            const { name } = element.props;
-            headers.push(name);
-            childCnt[name] = element.props.children;
-        });
-        setTabHeader(headers);
-        setActive(headers[0]);
-        setChildConent({ ...childCnt });
-        console.log(childCnt);
-    }, [props, children]);
+import React from 'react';
+import { Route, Switch, Link } from 'react-router-dom';
+import Home from '../Home';
+import Roles from '../Roles';
+import Members from '../Members';
+import Classrooms from '../Classrooms';
+import Requests from '../Requests';
 
-    const changeTab = (name) => {
-        setActive(name);
+class Tabs extends React.Component {
+    state = {
+        tabHeader: ['Home', 'Roles', 'Members', 'Requests', 'Classrooms'],
+        active: "",
     };
 
-    return (
-        <div className="pc-tabs">
-            <ul className="pc-tab-header">
-                {tabHeader.map((item, index) => (
-                    <li
-                        onClick={() => changeTab(item)}
-                        key={index}
-                        className={item === active ? "active" : ""}
-                    >
-                        {item}
-                    </li>
-                ))}
-            </ul>
-            <div className="pc-tab-content">
-                {Object.keys(childContent).map((key) => {
-                    if (key === active) {
-                        return <div className="tab-child">{childContent[key]}</div>;
-                    } else {
-                        return null;
-                    }
-                })}
-            </div>
-        </div>
-    );
-};
+    setActiveHeader = (head) => this.setState({ active: head });
 
-Tabs.propTypes = {
-    children: function (props, propName, componentName) {
-        const prop = props[propName];
-        let error = null;
-        React.Children.forEach(prop, function (child) {
-            if (child.type !== TabPane) {
-                error = new Error(
-                    "`" + componentName + "` children should be of type `TabPane`."
-                );
-            }
-        });
-        return error;
+    render() {
+        const { match, account, orgObj, database, apis } = this.props;
+        const { tabHeader, active } = this.state;
+        return (
+            <div className="pc-tabs">
+                <ul className="pc-tab-header">
+                    {tabHeader.map((item, index) => (
+                      <Link to={`/dashboard/${account.user.slug}/organization/${orgObj.id}/${item.toLowerCase()}`}>
+                        <li
+                            key={index}
+                            className={item.toLowerCase() === active ? "active" : ""}
+                        >
+                          {item}
+                        </li>
+                      </Link>
+                    ))}
+                </ul>
+                <div className="pc-tab-content">
+                    <div className="tab-child">
+                        <Switch> 
+                            <Route exact path={`${match.path}/home`}>
+                                <Home setActiveHeader={this.setActiveHeader} database={database} orgObj={orgObj} />
+                            </Route>
+                            <Route exact path={`${match.path}/roles`}>
+                                <Roles apis={apis} setActiveHeader={this.setActiveHeader} database={database} orgObj={orgObj} />
+                            </Route>
+                            <Route exact path={`${match.path}/members`}>
+                                <Members setActiveHeader={this.setActiveHeader} orgObj={orgObj} {...this.props} />
+                            </Route>
+                            <Route exact path={`${match.path}/classrooms`}>
+                                <Classrooms setActiveHeader={this.setActiveHeader} database={database} orgObj={orgObj}/>
+                            </Route>
+                            <Route exact path={`${match.path}/requests`}>
+                                <Requests setActiveHeader={this.setActiveHeader} database={database} orgObj={orgObj}/>
+                            </Route>
+                        </Switch>
+                    </div>
+                </div>
+            </div>
+        );
     }
-};
+}
 
 export default Tabs;

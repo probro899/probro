@@ -13,9 +13,9 @@ export const FormTextArea = ({
     rows,
     onFocus,
     onBlur,
-    disabled
+    disabled,
+    error,
 }) => {
-    // console.log(rows)
     return (
         <>
             <label className="formLabel" htmlFor={name}>
@@ -32,11 +32,10 @@ export const FormTextArea = ({
                     value={value}
                     rows={rows}
                     className={className}
-                    style={resizable ? {
-                        resize: 'vertical',
-                    } : {
-                            resize: 'none',
-                        }}
+                    style={{
+                      resize: resizable ? 'vertical' : 'none',
+                      border: error ? '1px solid red' : 'none',
+                    }}
                 />
             </label>
         </>

@@ -1,4 +1,4 @@
-@import '../config.scss';
+@import "../config.scss";
 
 .popup-container {
   overflow: auto;
@@ -7,7 +7,7 @@
   left: 0;
   right: 0;
   top: 0;
-  z-index: 20;
+  @include z-index(popup);
   .popup-overlay {
     bottom: 0;
     left: 0;
@@ -18,7 +18,7 @@
     background-color: rgba(16, 22, 26, 0.7);
     overflow: auto;
     user-select: none;
-    z-index: 20;
+    @include z-index(overlay);
   }
   .pop-main-wrapper {
     position: absolute;
@@ -29,14 +29,14 @@
     pointer-events: none;
     user-select: none;
     width: 100%;
-    z-index: 20;
-    &.pop-up-open{
+    @include z-index(popup);
+    &.pop-up-open {
       animation: zoomin 0.5s;
     }
-    &.pop-up-closed{
+    &.pop-up-closed {
       animation: zoomout 0.5s;
     }
-    &.hide-popup{
+    &.hide-popup {
       transform: scale(0);
     }
     .popup-wrapper {
@@ -51,7 +51,7 @@
       margin-right: 5%;
       background-color: $backgroundColor;
       border-radius: 10px;
-      overflow: hidden;
+      // overflow-y: scroll;
       position: relative;
       .pc-popup-header {
         display: flex;
@@ -88,7 +88,6 @@
       }
     }
   }
- 
 }
 
 @keyframes zoomin {

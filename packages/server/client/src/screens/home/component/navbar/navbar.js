@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import { Link, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { GiHamburgerMenu } from "react-icons/gi";
-import { AiOutlineDashboard,AiOutlineLogout } from "react-icons/ai";
-import {Menu, MenuItem} from '../../../../common/Menu';
+import { AiOutlineDashboard, AiOutlineLogout } from "react-icons/ai";
+import { Menu, MenuItem } from '../../../../common/Menu';
 import MetaTags from 'react-meta-tags';
 import client from '../../../../socket';
 import * as actions from '../../../../actions';
@@ -32,10 +32,10 @@ const DropDownMenu = (onclick, logoutAction, loading, account) => {
           backgroundColor: '#175fc7'
         }}
         // className="dashboard-menu-items"
-        icon={<AiOutlineDashboard size={20}/>}
+        icon={<AiOutlineDashboard size={20} />}
         active
         // intent={Intent.PRIMARY}
-        text="Go To Dashboard"
+        text="Dashboard"
         onClick={onclick}
         disabled={!account.user}
 
@@ -47,7 +47,7 @@ const DropDownMenu = (onclick, logoutAction, loading, account) => {
 
         }}
         disabled={loading || !account.user}
-        icon={<AiOutlineLogout size={20}/>}
+        icon={<AiOutlineLogout size={20} />}
         // intent={Intent.DANGER}
         text="Log Out"
         onClick={logoutAction}
@@ -170,6 +170,14 @@ class Navbar extends Component {
         </div>
         <div className="navbar-center">
           <Link
+            to="/courses"
+            className={navigate.mainNav.name === 'courses' ? 'active' : null}
+          >
+            <div className="navbar-item">
+              <span>Courses</span>
+            </div>
+          </Link>
+          <Link
             to="/archive"
             className={navigate.mainNav.name === 'archive' ? 'active' : null}
           >
@@ -194,9 +202,7 @@ class Navbar extends Component {
             className={navigate.mainNav.name === 'pricing' ? 'active' : null}
           >
             <div className="navbar-item">
-              <span>
-                Pricing
-              </span>
+              <span>Pricing</span>
             </div>
           </Link>
         </div>

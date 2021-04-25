@@ -10,10 +10,7 @@ class Connection extends React.Component {
   constructor(props) {
     super(props);
     const { updateNav } = this.props;
-    updateNav({
-      schema: 'sideNav',
-      data: { name: 'Connections' },
-    });
+    updateNav({ schema: 'sideNav', data: { name: 'Connections' } });
     this.state = { apis: {} };
   }
 
@@ -43,9 +40,8 @@ class Connection extends React.Component {
     } = this.props;
     const connectionIds = Object.values(database.UserConnection.byId).filter(c => c.status !== 'deleted');
     const { apis } = this.state;
-    if (!account.user) {
-      return (<div className="bro-right" style={{ position: 'relative' }}><Spinner /></div>);
-    }
+
+    if (!account.user) { return (<div className="bro-right" style={{ position: 'relative' }}><Spinner /></div>); }
     return (
       <div className="connection bro-right">
         <div className="connection-wrapper">
@@ -54,7 +50,7 @@ class Connection extends React.Component {
               <span className="title">Connections </span>
               <small>Mange your connections</small>
             </div>
-            <div>Total Connections: {connectionIds.length}</div>
+            <div className="total-connection"><strong>Total Connections:</strong> {connectionIds.length}</div>
           </div>
           <div className="con-list">
             {

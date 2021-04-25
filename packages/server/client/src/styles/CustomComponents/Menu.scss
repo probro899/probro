@@ -51,12 +51,12 @@ $danger-color: #c23030;
           color: #fff;
         }
       }
-      &.disabled{
+      &.disabled {
         cursor: not-allowed;
         background-color: rgba(167, 182, 194, 0.3);
         opacity: 0.4;
-        &:hover{
-            background-color:rgba(167, 182, 194, 0.3) ;
+        &:hover {
+          background-color: rgba(167, 182, 194, 0.3);
         }
       }
       .pc-menuitem-icon {

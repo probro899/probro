@@ -1,10 +1,20 @@
 import db from '../../db';
 import database from './cache';
 
-const tableList = ['User', 'UserDetail', 'Board', 'BoardColumn', 'BoardColumnCard', 'BoardColumnCardAttachment',
-  'BoardColumnCardComment', 'BoardColumnCardDescription', 'BoardColumnCardTag', 'Blog', 'BlogComment', 'BlogLike', 'BoardMember',
-  'UserEducation', 'UserWorkExperience', 'UserPortal', 'UserSkill', 'UserCarrierInterest', 'BoardMessage', 'BoardMessageSeenStatus', 'UserConnection',
-  'UserMessage', 'UserMessageSeenStatus', 'Notification', 'NotificationReadStatus'];
+const tableList = [
+  'User', 'UserDetail', 'UserEducation', 'UserWorkExperience', 'UserPortal',
+  'UserSkill', 'UserCarrierInterest',
+  'Board', 'BoardColumn', 'BoardColumnCard', 'BoardColumnCardAttachment', 'BoardColumnCardComment',
+  'BoardColumnCardDescription', 'BoardColumnCardTag', 'BoardMember',
+  'Blog', 'BlogComment', 'BlogLike',
+  'BoardMessage', 'BoardMessageSeenStatus',
+  'UserMessage', 'UserMessageSeenStatus', 'UserConnection',
+  'Notification', 'NotificationReadStatus',
+  'Organization', 'OrganizationMember',
+  'Package', 'PackageDescription', 'SellPackage',
+  'Course', 'Section', 'Lecture', 'Resource', 'CourseEnroll', 'CoursePrice', 'StarRating', 'CourseCompleteHistory',
+  'Appointment',
+];
 
 async function initCacheDB() {
   try {

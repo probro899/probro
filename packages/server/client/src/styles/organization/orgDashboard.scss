@@ -1,4 +1,4 @@
-@import '../config.scss';
+@import "../config.scss";
 
 .pc-organization-dashboard {
   margin-left: 250px;
@@ -56,14 +56,26 @@
       border-top-left-radius: unset;
       border-top-right-radius: unset;
       margin-bottom: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      a {
+        text-decoration: none;
+        font-weight: 600;
+        color: $headingColor;
+        &:not(:first-child) {
+          margin-left: 20px;
+          @media screen and (max-width: 767px) {
+            margin-left: 10px;
+          }
+        }
+      }
       li {
-        display: inline;
         padding: 7px 0;
         line-height: 35px;
         cursor: pointer;
         font-size: 18px;
-        &:not(:first-child) {
-          margin-left: 20px;
+        @media screen and (max-width: 767px) {
+          font-size: 16px;
         }
         &.active,
         &:hover {
@@ -76,16 +88,247 @@
       @include genericBoxPattern;
       width: 100%;
       position: relative;
+      padding: 20px;
       min-height: calc(100vh - 295px);
       @media screen and (max-width: 855px) {
         min-height: calc(100vh - 308px);
+        padding: 10px;
       }
       .tab-child {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
+        .pc-org-overview {
+          margin-bottom: 30px;
+          .pc-overview-title {
+            margin-bottom: 10px;
+          }
+          .pc-overview-cards {
+            display: flex;
+            flex-wrap: wrap;
+            margin-left: -15px;
+            margin-right: -15px;
+            .pc-card-container {
+              max-width: 33.33%;
+              flex: 0 0 33.33%;
+              padding-right: 15px;
+              padding-left: 15px;
+              @media screen and (max-width: 767px) {
+                max-width: 100%;
+                flex: 0 0 100%;
+                margin-bottom: 15px;
+              }
+              .pc-card-wrapper {
+                @include genericBoxPattern;
+                padding: 10px;
+                .pc-card-title {
+                  margin-bottom: 5px;
+                }
+              }
+            }
+          }
+        }
+        .pc-card {
+          margin-bottom: 20px;
+          @include genericBoxPattern;
+          padding: 15px;
+          .pc-card-title {
+            margin-bottom: 10px;
+          }
+          .pc-card-details {
+            padding: 10px;
+            background-color: #f4f6f8;
+            .pc-sub-header {
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              margin-bottom: 10px;
+              .pc-header-detail {
+                .pc-sub-name {
+                  margin-bottom: 10px;
+                }
+              }
+            }
+            .pc-plan-action {
+              display: flex;
+              align-items: center;
+              .pc-sub-cancel {
+                margin-left: 10px;
+              }
+            }
+          }
+        }
+        .pc-role-header-wrapper {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          margin-bottom: 10px;
+          .pc-role-title-wrapper {
+            display: flex;
+            .pc-role-header-title {
+              margin-right: 10px;
+              @media screen and (max-width: 767px) {
+                font-size: 16px;
+              }
+            }
+            .pc-role-count {
+              height: 20px;
+              width: 20px;
+              color: #fff;
+              background: $primary;
+              display: flex;
+              justify-content: center;
+              border-radius: 50%;
+              font-size: 14px;
+            }
+          }
+          .pc-head-right {
+            display: flex;
+            align-items: center;
+            .pc-badge {
+              margin-right: 10px;
+              .pc-badge-count {
+                width: 20px;
+                height: 20px;
+                background-color: #db3737;
+                border-radius: 50%;
+                line-height: 20px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: #fff;
+                font-size: 14px;
+              }
+            }
+          }
+        }
+        .pc-user-list {
+          display: block;
+          width: 100%;
+          overflow-x: auto;
+          .pc-user-list-table {
+            width: 100%;
+            max-width: 100%;
+            margin-bottom: 20px;
+            thead {
+              tr {
+                th {
+                  min-width: 100px;
+                  padding: 12px;
+                  color: $headingColor;
+                  text-align: left;
+                  svg {
+                    vertical-align: bottom;
+                  }
+                }
+              }
+            }
+            tbody {
+              tr {
+                background: #e6eef8;
+                border-radius: 10px;
+                td {
+                  min-width: 100px;
+                  padding: 12px;
+                  color: $subHeadColor;
+                  .pc-click-name {
+                    cursor: pointer;
+                    &:hover {
+                      text-decoration: underline;
+                    }
+                  }
+                  .pc-action-pill {
+                    .tooltip {
+                      &:not(:first-child) {
+                        margin-left: 10px;
+                      }
+                      .pc-action-icon {
+                        cursor: pointer;
+                      }
+                    }
+                  }
+                  .pc-req-action {
+                    display: flex;
+                    button {
+                      &:first-child {
+                        margin-right: 10px;
+                      }
+                    }
+                  }
+                  input[type="checkbox"] {
+                    cursor: pointer;
+                    width: 15px;
+                    height: 15px;
+                  }
+                  .add-user-btn {
+                    cursor: pointer;
+                  }
+                }
+              }
+              .pc-status {
+                padding: 3px 8px;
+                border-radius: 50%;
+                color: #fff;
+                display: block;
+                width: 20px;
+                height: 20px;
+
+                &.active {
+                  background-color: #0f9960;
+                }
+                &.inactive {
+                  background-color: #db3737;
+                }
+              }
+            }
+          }
+          .pc-change-active {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            span {
+              color: $subHeadColor;
+              font-size: 14px;
+            }
+          }
+        }
+
+        .pc-actions {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          @media screen and (max-width: 576px) {
+            flex-wrap: wrap;
+            justify-content: center;
+          }
+          .pc-req-action {
+            max-width: 300px;
+            display: flex;
+            button {
+              &:first-child {
+                margin-right: 10px;
+              }
+            }
+            @media screen and (max-width: 576px) {
+              margin-bottom: 10px;
+            }
+          }
+        }
+        .pc-role-filter {
+          display: flex;
+          max-width: 350px;
+          margin-left: auto;
+          .formLabel {
+            margin-left: 10px;
+          }
+        }
       }
     }
+  }
+}
+
+.list-pagination {
+  position: relative;
+  .pc-pagination-container {
+    position: absolute;
+    right: 0;
   }
 }

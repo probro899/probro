@@ -1,7 +1,5 @@
-@import '../config.scss';
-
 .pc-main-banner-container {
-  margin: 110px auto 30px;
+  margin: pixel-to-rem(110) auto pixel-to-rem(30);
   .pc-banner-row {
     display: flex;
     align-items: center;
@@ -14,72 +12,72 @@
       .search-box-container {
         .pc-jumbo {
           .search-form {
-            margin-top: 30px;
+            margin-top: pixel-to-rem(30);
             input {
               text-align: left;
-              height: 45px;
-              width: 300px;
-              line-height: 40px;
-              font-size: 16px;
-              border-width: 0.5px;
+              height: pixel-to-rem(45);
+              width: pixel-to-rem(300);
+              line-height: pixel-to-rem(40);
+              font-size: pixel-to-rem(16);
+              border-width: pixel-to-rem(0.5);
               vertical-align: middle;
               border: none;
               outline: none;
-              padding: 0px 20px;
-              border-top-left-radius: 5px;
-              border-bottom-left-radius: 5px;
-              box-shadow: 0 0 8px 0 rgba(17, 22, 26, 0.16),
-                0 4px 8px 0 rgba(17, 22, 26, 0.08),
-                0 8px 16px 0 rgba(17, 22, 26, 0.08);
-              @media (max-width: 991px) {
-                width: 220px;
+              padding: 0 pixel-to-rem(20);
+              border-top-left-radius: pixel-to-rem(5);
+              border-bottom-left-radius: pixel-to-rem(5);
+              box-shadow: 0 0 pixel-to-rem(8) 0 rgba(17, 22, 26, 0.16),
+                0 pixel-to-rem(4) pixel-to-rem(8) 0 rgba(17, 22, 26, 0.08),
+                0 pixel-to-rem(8) pixel-to-rem(16) 0 rgba(17, 22, 26, 0.08);
+              @media (max-width: pixel-to-rem(991)) {
+                width: pixel-to-rem(220);
               }
             }
 
             ::placeholder {
               text-align: left !important;
-              font-size: 16px;
+              font-size: pixel-to-rem(16);
             }
 
             button {
               background: #0056b8;
               color: white;
               vertical-align: middle;
-              height: 45px;
-              width: 90px;
-              padding: 3px;
-              font-size: 16px;
+              height: pixel-to-rem(45);
+              width: pixel-to-rem(90);
+              padding: pixel-to-rem(3);
+              font-size: pixel-to-rem(16);
               border: none;
-              border-top-right-radius: 5px;
-              border-bottom-right-radius: 5px;
-              box-shadow: 0 0 8px 0 rgba(17, 22, 26, 0.16),
-                0 4px 8px 0 rgba(17, 22, 26, 0.08),
-                0 8px 16px 0 rgba(17, 22, 26, 0.08);
+              border-top-right-radius: pixel-to-rem(5);
+              border-bottom-right-radius: pixel-to-rem(5);
+              box-shadow: 0 0 pixel-to-rem(8) 0 rgba(17, 22, 26, 0.16),
+                0 pixel-to-rem(4) pixel-to-rem(8) 0 rgba(17, 22, 26, 0.08),
+                0 pixel-to-rem(8) pixel-to-rem(16) 0 rgba(17, 22, 26, 0.08);
               &:hover {
                 cursor: pointer;
               }
             }
           }
           .pc-jumbo-text {
-            font-size: 48px;
-            line-height: 55px;
+            font-size: pixel-to-rem(48);
+            line-height: pixel-to-rem(55);
             color: $headingColor;
-            letter-spacing: 1px;
-            margin-bottom: 15px;
-            @media (max-width: 1199px) {
-              font-size: 43px;
-              line-height: 48px;
+            letter-spacing: pixel-to-rem(1);
+            margin-bottom: pixel-to-rem(15);
+            @media (max-width: pixel-to-rem(1199)) {
+              font-size: pixel-to-rem(43);
+              line-height: pixel-to-rem(48);
             }
-            @media (max-width: 991px) {
-              font-size: 32px;
-              line-height: 40px;
+            @media (max-width: pixel-to-rem(991)) {
+              font-size: pixel-to-rem(32);
+              line-height: pixel-to-rem(40);
             }
           }
           .pc-jumbo-text-second {
             color: $subHeadColor;
             line-height: 1.4;
-            max-width: 512px;
-            font-size: 18px;
+            max-width: pixel-to-rem(512);
+            font-size: pixel-to-rem(18);
           }
         }
       }
@@ -93,7 +91,7 @@
       }
     }
   }
-  @media screen and (max-width: 767px) {
+  @media screen and (max-width: pixel-to-rem(767)) {
     .pc-banner-row {
       .pc-banner-col {
         max-width: 100%;
@@ -113,11 +111,11 @@
       }
     }
   }
-  @media screen and (max-width: 575px) {
+  @media screen and (max-width: pixel-to-rem(575)) {
     .pc-jumbo {
       text-align: center;
       .pc-jumbo-text {
-        font-size: 28px !important;
+        font-size: pixel-to-rem(28) !important;
       }
     }
   }

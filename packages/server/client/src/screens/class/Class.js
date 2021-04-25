@@ -7,11 +7,10 @@ import { DeletePopOver } from '../../common';
 import boardStructure from './ClassComponents/structure';
 import client from '../../socket';
 import { PopoverForm, MoreButton } from '../../components';
-// import ClassTemplate from './template/ClassTemplate';
 import { timeStampSorting, activitySorting, getName } from '../../common/utility-functions';
 import { Button } from '../../common/utility-functions/Button/Button';
 import { AiOutlinePlus, AiOutlineArrowRight } from "react-icons/ai";
-// import { Popover } from '../../common/Form/Popover';
+
 class Class extends Component {
   state = {
     // create holds bool for the add new class popover
@@ -136,7 +135,6 @@ class Class extends Component {
   getRecentClassrooms = () => {
     const { database } = this.props;
     const privateBoards = Object.values(database.Board.byId).filter(o => o.type === 'private').sort(activitySorting);
-    console.log("private classes", privateBoards);
     return privateBoards.slice(0, 3);
   }
 

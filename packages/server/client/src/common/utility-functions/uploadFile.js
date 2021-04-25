@@ -3,12 +3,12 @@ import imageCompressor from './imageCompressor';
 import { ENDPOINT } from '../../config';
 
 
-export default async (content, file, sessionId) => {
+export default async (content, file, sessionId, compress=true) => {
     const formData = new FormData();
     var type = file.type.split('/')[0]
     if (type === 'text') { type = 'application' }
     formData.append('data', JSON.stringify({ token: sessionId, fileType: type, content: content }));
-    if (type === 'image') {
+    if (type === 'image' && compress) {
         let compressedImage = await imageCompressor(file)
         formData.append('file', compressedImage);
     } else {

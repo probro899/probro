@@ -5,12 +5,8 @@ import { uploadFile } from '../../../../common/utility-functions';
 import OrganizationScheme from './structure';
 import { Button } from '../../../../common/utility-functions/Button/Button';
 
-
 export class CreateOrganization extends React.Component {
-    state = {
-        isOpen: false,
-
-    }
+    state = { isOpen: false };
 
     togglePopover = () => {
         const { isOpen } = this.state;
@@ -18,28 +14,26 @@ export class CreateOrganization extends React.Component {
     }
 
     saveOrganization = async (data) => {
-        const { apis, account } = this.props;
+        const { apis, account, addDatabaseSchema } = this.props;
         let imgUrl = null;
-        var orgData = data;
+       
         try {
             if (data.image instanceof File) {
-                const res = await uploadFile('organization', orgData.image, account.sessionId);
+                const res  = await uploadFile('organization', data.image, account.sessionId);
                 if (res.status === 200) {
                     imgUrl = res.data
                 } else {
                     return { response: 400, error: res.data };
                 };
             }
-            delete orgData.headline;
-            delete orgData.websiteUrl;
-            orgData.image = imgUrl;
             const res = await apis.addOrganization(
-                { ...orgData, uId: account.user.id },
+                { ...data, image: imgUrl, uId: account.user.id },
             );
-            // console.log("hello", res);
-            return { response: 200, message: 'Changed successfully' };
+            if (res) {
+                addDatabaseSchema('Organization', {...data, image: imgUrl, uId: account.user.id, id: res })
+            }
+            return { response: 200, message: 'Created successfully' };
         } catch (e) {
-            // console.log("whats error", e);
             return { response: 400, error: 'Internal server error' };
         }
     }
@@ -50,7 +44,7 @@ export class CreateOrganization extends React.Component {
             <>
                 <div className="pc-organization-section">
                     <div className="pc-organizarion-header">
-                        <h3>Organization</h3>
+                        <h3>Organizations</h3>
                         <div className="pc-create-org">
                             <div className="pc-create-org-btn">
                                 <Button
@@ -64,7 +58,7 @@ export class CreateOrganization extends React.Component {
                         </div>
                     </div>
                 </div>
-                <Popup isOpen={isOpen} onClose={this.togglePopover}>
+                <Popup title="Add Organization" isOpen={isOpen} onClose={this.togglePopover}>
                     <Form data={OrganizationScheme} callback={this.saveOrganization} />
                 </Popup>
             </>

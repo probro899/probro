@@ -34,10 +34,8 @@ class TaskOverlay extends Component {
   };
 
   componentWillReceiveProps(nextProps) {
-    const {
-      taskId,
-      database,
-    } = nextProps;
+    const { taskId, database } = nextProps;
+    const { editDesc } = this.state;
 
     const task = Object.values(database.BoardColumnCard.byId).find(o => o.id === taskId);
     if (!task) {
@@ -47,47 +45,43 @@ class TaskOverlay extends Component {
     // filter deleted
     const commentsCard = Object.values(database.BoardColumnCardComment.byId).filter(obj => taskId === obj.boardColumnCardId && !obj.deleteStatus).sort(timeStampSorting);
     const attachmentsCard = Object.values(database.BoardColumnCardAttachment.byId).filter(obj => taskId === obj.boardColumnCardId && !obj.deleteStatus).sort(timeStampSorting);
-    // finding the latest description
-    const latestDesription = Object.values(database.BoardColumnCardDescription.byId).filter(obj => taskId === obj.boardColumnCardId).sort(timeStampSorting)[0];
     // finding all the tags here
     const allTags = Object.values(database.BoardColumnCardTag.byId).filter(obj => taskId === obj.boardColumnCardId && !obj.deleteStatus);
-
-    const desc = latestDesription ? latestDesription.title : '';
-    this.setState({
+    // finding the latest description
+    const latestDesription = Object.values(database.BoardColumnCardDescription.byId).filter(obj => taskId === obj.boardColumnCardId).sort(timeStampSorting)[0];
+    let newState = {
       comments: commentsCard,
       attachments: attachmentsCard,
       tags: allTags,
       description: latestDesription,
       title: task.name,
-      desc,
       task,
-    });
+    }
+    if (!editDesc) {
+      const newDesc = latestDesription ? latestDesription.title : '';
+      newState['desc'] = newDesc;
+    }
+    this.setState(newState);
   }
 
   // on overlay close
   onClose = () => {
     const { onClose, taskId } = this.props;
     onClose(taskId);
-    this.setState({
-      editHead: false,
-      loading: true,
-      editDesc: false,
-      comment: '',
-    });
+    this.setState({ editHead: false, loading: true, editDesc: false, comment: '', });
   };
 
   // toggle between the element of title
-  toggleElemTitle = () => {
-    const { editHead } = this.state;
-    this.setState({ editHead: !editHead });
-  };
+  toggleElemTitle = () => this.setState({ editHead: !this.state.editHead })
 
   // changing title of the task
-  titleChange = (e) => {
-    this.setState({
-      title: e.target.value,
-    });
-  }
+  titleChange = (e) => this.setState({ title: e.target.value })
+  
+  // description change of the task
+  descChange = (val) => this.setState({ desc: val });
+
+  // toggle between the element of description
+  toggleElemDesc = () => this.setState({ editDesc: !this.state.editDesc }); 
 
   saveTitle = async () => {
     try {
@@ -104,19 +98,8 @@ class TaskOverlay extends Component {
     }
   }
 
-  // toggle between the element of description
-  toggleElemDesc = () => {
-    const { editDesc } = this.state;
-    this.setState({ editDesc: !editDesc });
-  };
-
-  // description change of the task
-  descChange = (val) => {
-    this.setState({
-      desc: val,
-    });
-  }
-
+  
+  
   saveDesc = async () => {
     try {
       const { apis, account, boardId, addDatabaseSchema } = this.props;
@@ -154,22 +137,14 @@ class TaskOverlay extends Component {
     const { apis, deleteDatabaseSchema, account, boardId } = this.props;
     try {
       await axios.post(`${ENDPOINT}/web/delete-file`, { token: account.sessionId, content: 'board', fileName: url });
-      await apis.deleteBoardColumnCardAttachment({
-        id,
-        broadCastId: `Board-${boardId}`,
-        cardId: task.id,
-      });
+      await apis.deleteBoardColumnCardAttachment({ id, broadCastId: `Board-${boardId}`, cardId: task.id });
       deleteDatabaseSchema('BoardColumnCardAttachment', { id });
     } catch (e) {
       console.log('Error');
     }
   }
 
-  writeComment = (name) => {
-    this.setState({
-      comment: name,
-    });
-  }
+  writeComment = (name) => this.setState({ comment: name })
 
   getCardActivity = async () => {
     try {
@@ -209,7 +184,6 @@ class TaskOverlay extends Component {
       isOpen,
       database,
     } = this.props;
-    // console.log('state value in task overlay', this.state);
     return (
       <Popup
         isOpen={isOpen}
@@ -222,11 +196,7 @@ class TaskOverlay extends Component {
             <div className="overlay-title">
               <div className="head">
                 {editHead ? <FormTextArea value={title} onChange={e => this.titleChange(e)} />
-                  : (
-                    <span className="title">
-                      {task.name}
-                    </span>
-                  )
+                  : <span className="title">{task.name}</span>
                 }
                 {editHead
                   ? (

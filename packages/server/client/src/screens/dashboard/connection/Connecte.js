@@ -9,7 +9,7 @@ import { ENDPOINT } from '../../../config';
 import { Button } from '../../../common/utility-functions/Button/Button';
 import { BiMessageAlt } from "react-icons/bi";
 import { RiUserFollowFill, RiUserUnfollowFill } from "react-icons/ri";
-import Popover from '../../../common/Form/Popover';
+import Popover from '../../../common/Popover';
 
 const DeleteButtonContainer = ({ callback }) => {
   return (
@@ -134,8 +134,14 @@ class Connecte extends React.Component {
           title="Message"
           icon={<BiMessageAlt />}
         />
-        <Popover content={<DeleteButtonContainer callback={this.toggleDeletePopover} />} isOpen={this.state.isOpen}>
-          <div className="add-user-btn" onClick={this.tooggleOpen} >
+        <Popover
+          content={<DeleteButtonContainer callback={this.toggleDeletePopover} />}
+          vPosition="top"
+          hPosition="left"
+          xAlign="right"
+          yAlign="top"
+        >
+          <div className="add-user-btn"  >
             <div className="pc-rm-btn">
               <FiMoreHorizontal size={30} color="#1d4354" />
             </div>

@@ -3,7 +3,7 @@ import store from '../../../../store';
 
 export default (props, state, time) => {
   const { updateWebRtc } = props;
-  // console.log('auto close handler called');
+  console.log('auto close handler called mesh');
   setTimeout(async () => {
     const { webRtc } = store.getState();
     if (!webRtc.isLive && !webRtc.localCallHistory.callEnd) {

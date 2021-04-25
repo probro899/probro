@@ -1,8 +1,12 @@
-import React from 'react'
+import React, { useState } from 'react'
 
-function Popover({ content, children, isOpen }) {
+function Popover({ content, children, className }) {
+    const [isOpen, setIsOpen] = useState(false);
+    const tooggleOpen = () => {
+        setIsOpen(!isOpen);
+    }
     return (
-        <div className="pc-popover-container">
+        <div className={`pc-popover-container ${className}`}>
             <div className="pc-popover-wrapper">
                 {isOpen && <div className="pc-content-container">
                     <div className="pc-popover">
@@ -11,9 +15,8 @@ function Popover({ content, children, isOpen }) {
                             {content}
                         </div>
                     </div>
-
                 </div>}
-                <div className="pc-popover-button">
+                <div className="pc-popover-button" onClick={tooggleOpen}>
                     {children}
                 </div>
             </div>

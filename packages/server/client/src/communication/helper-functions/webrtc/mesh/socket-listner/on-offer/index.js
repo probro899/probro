@@ -13,7 +13,7 @@ const initCall = async (props, state, data, webRtc) => {
     await offerOnCommunicationNotOpen(props, state, data);
   }
 };
-
+ 
 const declineCall = async (status, props, state, data, webRtc) => {
   // console.log('call decline', status, state, props, state, data, webRtc);
   const { account } = props;

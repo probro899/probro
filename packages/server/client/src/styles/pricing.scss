@@ -40,10 +40,6 @@
       margin-bottom: 30px;
       .pc-price-containers {
         @include genericBoxPattern;
-        // border: 1px solid #bbb;
-        // &:hover {
-        //   border-color: rgba(0, 86, 184, 0.5);
-        // }
         .pc-price-name-and-desc {
           text-align: center;
           h4 {
@@ -89,6 +85,7 @@
             .pc-price {
               font-size: 40px;
               font-weight: 600;
+              color: $headingColor;
             }
             .pc-plan-month-user {
               margin-left: 8px;

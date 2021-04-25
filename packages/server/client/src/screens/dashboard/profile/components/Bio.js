@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import { MdEdit } from "react-icons/md";
 import BioForm from './BioForm';
 import { bioSchema } from '../structure';
+import ReadMoreReadLess from '../../../../common/ReadMoreReadLess';
+
 
 class Bio extends React.Component {
-  state = {
-    bioEditPopover: false,
-  };
+  state = { bioEditPopover: false };
 
   editBio = async (data) => {
     const {
@@ -36,30 +36,18 @@ class Bio extends React.Component {
     }
   }
 
-  togglePopover = () => {
-    const { bioEditPopover } = this.state;
-    this.setState({
-      bioEditPopover: !bioEditPopover,
-    });
-  }
+  togglePopover = () => this.setState({ bioEditPopover: !this.state.bioEditPopover });
 
   render() {
     const { bioEditPopover } = this.state;
-    const {
-      database, account, apis,
-      deleteDatabaseSchema,
-      updateDatabaseSchema,
-      addDatabaseSchema,
-    } = this.props;
+    const { database, account, apis, deleteDatabaseSchema, updateDatabaseSchema, addDatabaseSchema } = this.props;
     const bio = Object.values(database.UserDetail.byId).find(obj => account.user.id === obj.userId);
     return (
       <div className="bio">
         <p className="bio-content">About</p>
         <div className="bio-info">
-          {bio ? <p>{bio.bio}</p> : <p style={{ color: '#696969' }}>No bio added</p>}
-          <p className="edit" style={{ cursor: 'pointer' }}>
-            <MdEdit onClick={this.togglePopover} size={20} />
-          </p>
+          {bio ? <p><ReadMoreReadLess>{bio.bio}</ReadMoreReadLess></p> : <p style={{ color: '#696969' }}>No bio added</p>}
+          <p className="edit" style={{ cursor: 'pointer' }}><MdEdit onClick={this.togglePopover} size={20} /></p>
         </div>
         <BioForm
           deleteDatabaseSchema={deleteDatabaseSchema}

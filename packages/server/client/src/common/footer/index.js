@@ -45,7 +45,7 @@ class Footer extends React.Component {
 
         <footer>
           <div className="container">
-            @2020 Proper Class. All Rights Reserved.
+            &copy; 2018 - {new Date().getFullYear()} Proper Class. All Rights Reserved.
         </div>
         </footer>
 

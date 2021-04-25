@@ -13,21 +13,19 @@ class RoundPicture extends React.Component {
     if (typeof document === 'object') {
       const img = new Image();
       img.onload = () => {
-        if (img.height > img.width) {
-          this.setState({
-            portrait: true,
-          });
-        }
+        if (img.height > img.width) this.setState({ portrait: true });
       };
       img.src = imgUrl;
     }
   }
 
-  componentWillReceiveProps = (nextProps) => {
+  getSnapshotBeforeUpdate(prevProps, prevState) {
     const { imgUrl } = this.props;
-    if (nextProps.imgUrl !== imgUrl) {
-      this.checkOrientation(nextProps.imgUrl);
+    if (prevProps.imgUrl !== imgUrl) {
+      this.checkOrientation(imgUrl);
+      return false;
     }
+    return true;
   }
 
   render() {

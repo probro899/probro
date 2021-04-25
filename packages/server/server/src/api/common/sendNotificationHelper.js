@@ -2,7 +2,7 @@
 import sendNotification from './sendNotification';
 import mainBody from '../../mailer/html/mailBody';
 import databaseCache from '../../cache/database/cache';
-
+ 
 const dataPropvider = (table, id) => {
   return databaseCache.get(table).find(b => b.id === id);
 };
@@ -10,17 +10,17 @@ const dataPropvider = (table, id) => {
 const messageBody = (message, record) => {
   const user = dataPropvider('User', parseInt(record.userId, 10));
   const board = dataPropvider('Board', parseInt(record.boardId, 10));
-  const boardColumn = dataPropvider('BoardColumn', parseInt(record.columnId, 10));
+  const boardColumn = dataPropvider('BoardColumn', parseInt(record.columnId || record.id, 10));
   const card = dataPropvider('BoardColumnCard', parseInt(record.cardId, 10));
   switch (message) {
     case 'createColumn':
       return {
-        body: `${user.firstName} created "${boardColumn ? boardColumn.name : null}" in class ${board.name}`,
+        body: `${user.firstName} created bucket "${boardColumn ? boardColumn.name : null}" in class ${board.name}`,
         title: 'Create Coulumn',
       };
     case 'createCard':
       return {
-        body: `${user.firstName} created "${card.name}" in class ${board.name}`,
+        body: `${user.firstName} created task"${card.name}" in class ${board.name}`,
         title: 'Create Card',
       };
     case 'createAttachment':
@@ -48,11 +48,16 @@ const messageBody = (message, record) => {
         body: `${user.firstName} updated class name "${board.name}"`,
         title: 'Update Class',
       };
-    case 'updateColumn':
+    case 'updateTitle':
       return {
-        body: `${user.firstName} changed title to "${boardColumn ? boardColumn.name : null}" in class ${board.name}"`,
+        body: `${user.firstName} changed bucket title to "${boardColumn ? boardColumn.name : null}" in class ${board.name}`,
         title: 'Update Column',
       };
+    case 'moveColumn':
+      return {
+        body: `${user.firstName} moved bucket "${boardColumn ? boardColumn.name : null}" in class ${board.name}"`,
+        title: 'Move Column'
+      }
     case 'outsideColumn':
       return {
         body: `${user.firstName} moved "${card.name}" from ${dataPropvider('BoardColumn', parseInt(record.fColId, 10)).name} to ${dataPropvider('BoardColumn', parseInt(record.tColId, 10)).name} in class ${board.name}`,
@@ -70,7 +75,7 @@ const messageBody = (message, record) => {
       };
     case 'deleteColumn':
       return {
-        body: `${user.firstName} deleted column "${boardColumn.name}" in class ${board.name}`,
+        body: `${user.firstName} deleted bucket "${boardColumn.name}" in class ${board.name}`,
         title: 'Delete Column',
       };
     case 'deleteCard':

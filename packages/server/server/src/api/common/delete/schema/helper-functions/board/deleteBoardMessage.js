@@ -1,7 +1,8 @@
 import db from '../../../../../../db';
 
 export default async function deleteBoardMessage(Delete, record) {
-  const boardMessageseenPromises = [];
+  try {
+    const boardMessageseenPromises = [];
   const { broadCastId } = record;
 
   const boardMessageRes = await db.execute(async ({ find }) => {
@@ -13,4 +14,7 @@ export default async function deleteBoardMessage(Delete, record) {
   });
   await Promise.all(boardMessageseenPromises);
   await Delete('BoardMessage', { boardId: record.broadId, broadCastId });
+  } catch (e) {
+    console.error('Error in deleteBoardMessage', e);
+  }
 }

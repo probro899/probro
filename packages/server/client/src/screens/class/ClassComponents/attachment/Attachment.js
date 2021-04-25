@@ -1,30 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Form from '../../../../common/Form';
+import { Form } from '../../../../common';
 import { uploadFile } from '../../../../common/utility-functions';
-
-const structure = [
-  {
-    id: 'name',
-    fieldtype: 'input',
-    name: 'Name',
-    required: true,
-    placeholder: 'Title',
-  },
-  {
-    id: 'attachment',
-    fieldtype: 'image',
-    name: 'Attachment',
-  },
-  {
-    id: 'submit',
-    fieldtype: 'button',
-    text: 'Upload',
-    fill: 'fill',
-    intent: 'success',
-    large: 'large',
-  },
-];
+import structure from './structure';
 
 class Attachment extends React.Component {
   state = {};
@@ -38,7 +16,7 @@ class Attachment extends React.Component {
       task
     } = this.props;
     try {
-      const res = await uploadFile('board', data.attachment, account.sessionId);
+      const res = await uploadFile('board', data.attachment, account.sessionId, false);
       if (res.status === 200) {
         const info = {
           userId: account.user.id,

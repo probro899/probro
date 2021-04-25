@@ -1,0 +1,7 @@
+@function pixel-to-rem($pixel) {
+    $base: 16;
+    @if unit($pixel) == px {
+        $base: 16px;
+    }
+    @return $pixel / $base * 1rem;
+}

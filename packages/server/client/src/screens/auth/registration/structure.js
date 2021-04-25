@@ -23,6 +23,7 @@ export default [
     id: 'email',
     fieldtype: 'input',
     name: 'Email',
+    specialType: 'email',
     placeholder: 'Eg, alex@gmail.com',
     required: true,
   },

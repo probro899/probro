@@ -6,6 +6,7 @@ export default async (updateWebRtc) => {
     updateWebRtc('deviceNotAllowed', false),
     updateWebRtc('outGoingCallType', null),
     updateWebRtc('showOutgoingCall', false),
+    updateWebRtc('showIncommingCall', false),
     updateWebRtc('peerConnections', {}),
     updateWebRtc('pendingOffers', {}),
     updateWebRtc('remoteStream', {}),

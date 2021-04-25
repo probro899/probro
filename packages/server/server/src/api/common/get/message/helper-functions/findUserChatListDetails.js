@@ -2,7 +2,7 @@ import findMessageSeenStatus from './findMessageSeenStatus';
 import findUserDetails from '../../../findUserDetails';
 
 const findUserChatListDetails = (arr, connectionsList, userMessageSeenSatatus, id) => {
-
+  try {
   const arrWithSeenStatus = arr.map(umd => ({ ...umd, seenStatus: findMessageSeenStatus(umd.id, 'user', userMessageSeenSatatus) }));
   const arrWithSeenStatusReverse = arrWithSeenStatus.reverse();
   const unseenMsg = arrWithSeenStatusReverse.findIndex(obj => obj.seenStatus.find(o => o.userId === id));
@@ -30,9 +30,11 @@ const findUserChatListDetails = (arr, connectionsList, userMessageSeenSatatus, i
     userId = msgObj.fuserId;
     type = 'fuserId';
   }
-
   const { user, userDetail } = findUserDetails(userId);
   const connection = connectionsList.find(c => c.id === msgObj.connectionId);
   return { connectionId: connection ? connection.id : null, type: 'user', user: { user, userDetails: userDetail }, unSeenNo, timeStamp: arrWithSeenStatus[0].timeStamp, lastMessage: arrWithSeenStatus[0], lastMessageId };
+  } catch (e) {
+    console.error('Error in findUserChatListDetails', e);
+  }
 };
 export default findUserChatListDetails;

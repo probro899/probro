@@ -1,30 +1,10 @@
-@import '../config.scss';
+@import "../config.scss";
 .connection {
   width: 100%;
   .connection-wrapper {
-    // background-color: #fff;
-    // border-radius: 10px;
-    // border: 1px solid #eee;
-    // padding: 20px;
     max-width: 1024px;
     width: 100%;
     margin: 0 auto;
-    .header {
-      margin-bottom: 10px;
-      // @include genericBoxPattern;
-      padding: 15px 10px;
-      .top-head-title {
-        margin-bottom: 5px;
-        .title {
-          font-size: 24px;
-          color: $textColor;
-          font-weight: bold;
-        }
-        small {
-          color: $lightTextColor;
-        }
-      }
-    }
     .con-list {
       display: flex;
       flex-wrap: wrap;
@@ -47,16 +27,14 @@
         min-width: 280px;
         max-width: 425px;
         flex: 1 1 100%;
-        // max-width: 25%;
-        // flex: 0 0 25%;
-        // @media screen and (max-width: 1400px) {
-        //   max-width: 50%;
-        //   flex: 0 0 50%;
-        // }
-        // @media screen and (max-width: 767px) {
-        //   max-width: 50%;
-        //   flex: 0 0 50%;
-        // }
+        position: relative;
+        .pc-popover-container {
+          position: absolute;
+          top: 0;
+          right: 10px;
+          z-index: 10;
+          cursor: pointer;
+        }
         @media screen and (max-width: 576px) {
           max-width: 100%;
           flex: 0 0 100%;
@@ -74,9 +52,6 @@
               0 16px 24px 0 rgba(17, 22, 26, 0.08);
           }
           @include genericBoxPattern;
-          // border-radius: 10px;
-          // border: 1px solid #eee;
-          // width: 25%;
           .img-con {
             width: 50px;
             height: 50px;
@@ -119,9 +94,6 @@
                   margin-left: 10px;
                 }
                 .add-user-btn {
-                  // position: absolute;
-                  // top: 0;
-                  // right: 10px;
                   cursor: pointer;
                 }
               }

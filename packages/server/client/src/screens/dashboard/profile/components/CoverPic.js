@@ -1,13 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Popover} from '@blueprintjs/core';
 import { MdEdit } from "react-icons/md";
 import {Menu, MenuItem} from '../../../../common/Menu';
 import { ENDPOINT } from '../../../../config';
 import Cropper from './Cropper';
 import { Spinner } from '../../../../common';
 import { uploadFile } from '../../../../common/utility-functions';
-
+import Popover from '../../../../common/Popover';
 
 const SmallMenu = (onClick, userDetail) => (
   <Menu>

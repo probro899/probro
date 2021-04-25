@@ -1,10 +1,10 @@
 /* eslint-disable import/no-cycle */
 import store from '../../../../../store';
-import autoCloseHandler from './autoCloseHandler';
+import autoCloseHandler from '../autoCloseHandler';
 import exceptionHandler from './exceptionHandler';
 
 export default async (props, state, msg, jsep) => {
-
+ 
   try {
     const { updateWebRtc } = props;
     const { webRtc, database, account } = store.getState();
@@ -38,7 +38,7 @@ export default async (props, state, msg, jsep) => {
           callType: webRtc.localCallHistory.callType || 'Incoming',
         });
         await updateWebRtc('showIncommingCall', true);
-        autoCloseHandler(props, state);
+        autoCloseHandler(props, state, 60000); 
       } else {
         apis.sfuCallStatusChange({
           callStatusDetails: {

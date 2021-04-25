@@ -14,11 +14,11 @@
     position: absolute;
     top: 0;
     z-index: -1;
-    &:checked ~  .pc-radio-indicator{
-        background-color: $primary;
+    &:checked ~ .pc-radio-indicator {
+      background-color: $primary;
     }
-    &:checked ~  .pc-radio-indicator::before{
-        background-image: radial-gradient(#ffffff, #ffffff 28%, transparent 32%);
+    &:checked ~ .pc-radio-indicator::before {
+      background-image: radial-gradient(#ffffff, #ffffff 28%, transparent 32%);
     }
   }
   .pc-radio-indicator {

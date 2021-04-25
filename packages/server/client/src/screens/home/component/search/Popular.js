@@ -6,6 +6,7 @@ export default ({ data, database, account }) => {
     const con = account.user && Object.values(database.UserConnection.byId).find(o => obj.id === o.user.user.id);
     return <PopularUser connected={con} obj={obj} key={index} />;
   });
+  
   return (
     <div className="popular-on-pc">
       <div className="users-head">Popular on PC</div>

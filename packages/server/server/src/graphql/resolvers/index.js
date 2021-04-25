@@ -1,4 +1,4 @@
-import { getUser, getBlog } from './helper-functions';
+import { getUser, getBlog, getCourse, getCourseDetails, getOrganizationDetails } from './helper-functions';
 import getPopular from '../../api/common/getPopular';
 import getArchive from '../../api/common/search/getArchive';
 import doSearch from '../../api/common/search/globalSearch';
@@ -61,5 +61,28 @@ export default {
     const finalPopularUsers = popularUsers.map(u => ({ ...u.user, userDetail: u.userDetail }));
     // console.log('final popular users', finalPopularUsers);
     return { blogs: finalBlogs, users: finalUsers, popularUsers: finalPopularUsers };
+  },
+
+  getCourse: async (contex, args) => {
+    // console.log('get course argument', args.body.variables);
+    const { variables } = args.body;
+    const courses = getCourse(variables);
+    return courses;
+  },
+
+  getCourseDetails: async (context, args) => {
+    const { variables } = args.body;
+    const { courseId, sessionId } = variables;
+    console.log('get COurse detais called', courseId, sessionId);
+    const result = getCourseDetails(courseId, sessionId);
+    return result;
+  },
+
+  getOrganizationDetails: async (context, args) => {
+    const { variables } = args.body;
+    console.log('getOrganizationDetails called', variables);
+    const { orgId } = variables;
+    const result = getOrganizationDetails(orgId);
+    return result;
   },
 };

@@ -27,15 +27,14 @@ class PublicBlog extends React.Component {
   async componentDidMount() {
     const { account, match, updateNav } = this.props;
     try {
-      let apis = {};
       if (account.user) {
-        apis = await client.scope('Mentee');
+        const apis = await client.scope('Mentee');
+        this.setState({ apis });
       }
       const res = await clientQuery.query({ query: GET_BLOG, variables: { blogSlug: match.params.blogSlug, userSlug: match.params.userSlug }, fetchPolicy: 'network-only' });
       if (res) {
         this.setState({
           data: res.data.getBlog,
-          apis,
           blogId: res.data.getBlog.id,
           loading: false,
         });

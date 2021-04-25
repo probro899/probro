@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {FormSelectField} from '../../../common/Form/FormSelectField';
+import { FormSelectField } from '../../../common/Form/FormSelectField';
 import ClipLoader from "react-spinners/ClipLoader";
 import {Button} from '../../../common/utility-functions/Button/Button';
+
 class SelectColumn extends React.Component {
   constructor(props) {
     super(props);
@@ -76,7 +77,7 @@ class SelectColumn extends React.Component {
     return (
       <div style={{ padding: '10px' }}>
         <div style={{ padding: '5px' }}>
-          <span style={{ fontSize: '18px', fontWeight: 'bold' }}>Choose a Target Column</span>
+          <span style={{ fontSize: '18px', fontWeight: 'bold' }}>Choose a Target Bucket</span>
         </div>
         <div style={{ display: 'flex', flexDirection: 'column' }}>
           <div style={{ padding: '10px' }}>
@@ -88,7 +89,7 @@ class SelectColumn extends React.Component {
             />
           </div>
           <div style={{ padding: '10px', marginBottom: '10px' }}>
-            <p style={{ fontSize: '16px' }}>Column</p>
+            <p style={{ fontSize: '16px' }}>Bucket</p>
             <FormSelectField
               options={colOptions}
               onChange={this.onTaskChange}

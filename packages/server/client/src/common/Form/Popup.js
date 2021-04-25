@@ -1,5 +1,6 @@
 import React from 'react';
 import { AiOutlineClose } from "react-icons/ai";
+
 class Popup extends React.Component {
     state = {
         close: false,

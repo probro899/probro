@@ -32,13 +32,24 @@ export default async function initUser(id) {
 
     // subscribing in related channel and send the data that is collected
     channelData = await getChannelIds(id);
-    const { allBoard, allBlogs, connectionList, allBoardColumns, allBoardMembers } = channelData;
+    const {
+      allBoard,
+      allBlogs,
+      connectionList,
+      allBoardColumns,
+      allBoardMembers,
+      allOrganization,
+      allOrganizationMembers,
+    } = channelData;
 
     // subscribe to all Related board
     allBoard.forEach(bg => session.subscribe(`Board-${bg.id}`));
 
     // subscribe to all the connections
     _.uniq(flat(connectionList.map(obj => [obj.mId, obj.userId]))).forEach(uid => session.subscribe(`UserConnection-${uid}`));
+
+    // subscribe to all related organization
+    allOrganization.forEach((og) => session.subscribe(`Organization-${og.id}`));
 
     // subscribe to all related blog for comment and like broadcast
     allBlogs.forEach(blog => session.subscribe(`Blog-${blog.id}`));
@@ -47,7 +58,8 @@ export default async function initUser(id) {
     session.dispatch(schema.init('BoardColumn', allBoardColumns));
     session.dispatch(schema.init('BoardMember', allBoardMembers));
     session.dispatch(schema.init('Blog', allBlogs));
-
+    session.dispatch(schema.init('Organization', allOrganization));
+    session.dispatch(schema.init('OrganizationMember', allOrganizationMembers));
     // updating boardmember active status
     const allBoardMemberWithActiveStatus = userPresentorHelper(session.getChannel('Main'), allBoardMembers);
     const boardMemberActiveStatusToUpdate = allBoardMemberWithActiveStatus.map(bma => ({ id: bma.id, activeStatus: bma.activeStatus, boardId: bma.boardId, userId: bma.user.user.id }));

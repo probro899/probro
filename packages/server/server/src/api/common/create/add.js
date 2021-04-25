@@ -6,7 +6,8 @@ import addUserInRecordHelper from './addUserInRecordHelper';
 
 export default async function add(table, record) {
   // console.log('add api called', table, record);
-  const { session } = this;
+  try {
+    const { session } = this;
   const { broadCastId, broadCastUserList } = record;
   delete record.broadCastId;
   delete record.broadCastUserList;
@@ -44,4 +45,7 @@ export default async function add(table, record) {
     return recordId;
   });
   return res;
+  } catch (e) {
+    console.error('Error in main add', e)
+  }
 }

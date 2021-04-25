@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { Popover } from '@blueprintjs/core';
 import { IoIosMore } from 'react-icons/io';
 import { MdDeleteForever } from 'react-icons/md';
 import { getName } from '../../../../common/utility-functions';
+import Popover from '../../../../common/Popover';
 
 const UserDetail = (props) => {
   const { detail } = props;
@@ -75,6 +75,7 @@ class UserList extends React.Component {
     return thisBoardMembers.map((o, index) => {
       return (
         <Popover
+          hPosition="right"
           content={<UserDetail detail={o.user} />}
           key={index}
         >
@@ -94,8 +95,7 @@ class UserList extends React.Component {
       <div className="each-item user-list">
         {this.getSmallList()}
         <Popover
-          position="bottom"
-          minimal
+          hPosition="center"
           content={
             (
               <AllUsers

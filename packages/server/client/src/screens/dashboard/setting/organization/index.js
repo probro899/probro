@@ -1,12 +1,12 @@
 import React from 'react'
 import { CreateOrganization } from './CreateOrganization';
-import { OrganizationList } from './OrganizationList';
+import OrganizationList from './OrganizationList';
 
-export default ({ apis, match, account }) => {
+export default (props) => {
     return (
         <>
-            <CreateOrganization apis={apis} account={account} />
-            <OrganizationList match={match} />
+            <CreateOrganization {...props} />
+            <OrganizationList {...props} />
         </>
     )
 }

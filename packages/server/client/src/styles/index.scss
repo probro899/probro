@@ -1,59 +1,66 @@
-@import './config.scss';
-@import './main-page/slider.scss';
-@import './navbar.scss';
-@import './login-or-reg/regLog.scss';
-@import './main-page/posts.scss';
-@import './main-page/banner.scss';
-@import './main-page/popular.scss';
-@import './bro/sideNav.scss';
-@import './bro/profile.scss';
-@import './bro/classes.scss';
-@import './bro/settings.scss';
-@import './bro/blogs.scss';
-@import './notification.scss';
-@import './components.scss';
-@import './communication.scss';
-@import './archive.scss';
-@import './PublicProfile.scss';
-@import './searchResult.scss';
-@import './footer/footer.scss';
-@import './drawingBoard.scss';
-@import './main-page/takeTour.scss';
-@import './bro/connection.scss';
-@import './footer/about.scss';
-@import './footer/privacy.scss';
-@import './footer/terms.scss';
-@import './footer/support.scss';
-@import './footer/career.scss';
-@import './footer/report.scss';
-@import './footer/business.scss';
-@import './footer/services.scss';
-@import './blueprint.css';
-@import './react-datetime.css';
-@import './quill.snow.css';
-@import './CustomComponents/button.scss';
-@import './CustomComponents/formFields.scss';
-@import './CustomComponents/tooltip.scss';
-@import './CustomComponents/Popup.scss';
-@import './CustomComponents//popover.scss';
-@import './main-page/mainbanner.scss';
-@import './main-page/OurStats.scss';
-@import './CustomComponents//switchbutton.scss';
-@import './pricing.scss';
-@import './organization//organization.scss';
-@import './organization/orgDashboard.scss';
-@import './PopularonPC.scss';
-@import './CustomComponents/drawer.scss';
-@import './CustomComponents/Toast.scss';
-@import './CustomComponents/tagInput.scss';
-@import './CustomComponents/radio.scss';
-@import './CustomComponents/Collapse.scss';
-@import './CustomComponents//Menu.scss';
-@import './CustomComponents/tag.scss';
+@import './settings/';
+@import "./tools";
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+@import "./config.scss";
+@import "./z-index";
+@import "./main-page/slider.scss";
+@import "./navbar.scss";
+@import "./login-or-reg/regLog.scss";
+@import "./main-page/posts.scss";
+@import "./main-page/banner.scss";
+@import "./main-page/popular.scss";
+@import "./bro/sideNav.scss";
+@import "./bro/profile.scss";
+@import "./bro/classes.scss";
+@import "./bro/settings.scss";
+@import "./bro/blogs.scss";
+@import "./bro/appointment.scss";
+@import "./bro/dashboardHeader.scss";
+@import "./notification.scss";
+@import "./components.scss";
+@import "./communication.scss";
+@import "./archive.scss";
+@import "./PublicProfile.scss";
+@import "./searchResult.scss";
+@import "./footer/footer.scss";
+@import "./drawingBoard.scss";
+@import "./main-page/takeTour.scss";
+@import "./bro/connection.scss";
+@import "./footer/about.scss";
+@import "./footer/privacy.scss";
+@import "./footer/terms.scss";
+@import "./footer/support.scss";
+@import "./footer/career.scss";
+@import "./footer/report.scss";
+@import "./footer/business.scss";
+@import "./footer/services.scss";
+@import "./CustomComponents/button.scss";
+@import "./CustomComponents/formFields.scss";
+@import "./CustomComponents/tooltip.scss";
+@import "./CustomComponents/Popup.scss";
+@import "./CustomComponents//popover.scss";
+@import "./main-page/mainbanner.scss";
+@import "./main-page/OurStats.scss";
+@import "./CustomComponents/switchbutton.scss";
+@import "./pricing.scss";
+@import "./organization//organization.scss";
+@import "./organization/orgDashboard.scss";
+@import "./PopularonPC.scss";
+@import "./CustomComponents/drawer.scss";
+@import "./CustomComponents/Toast.scss";
+@import "./CustomComponents/tagInput.scss";
+@import "./CustomComponents/radio.scss";
+@import "./CustomComponents/Collapse.scss";
+@import "./CustomComponents//Menu.scss";
+@import "./CustomComponents/tag.scss";
+@import "./CustomComponents/portal.scss";
+@import "./CustomComponents//Pagination.scss";
+@import "./courses/";
+@import "./CustomComponents/Accordion.scss";
+@import "./CustomComponents/norecordfound.scss";
+@import "./createCourses/";
+@import "./CustomComponents/Alert.scss";
 
-// @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 body,
 div,
 h1,
@@ -80,6 +87,17 @@ figure {
   margin: 0px;
   padding: 0px;
 }
+a:hover,
+a:focus {
+  text-decoration: underline;
+  color: #106ba3;
+  cursor: pointer;
+}
+
+a {
+  color: #106ba3;
+  text-decoration: none;
+}
 
 * {
   box-sizing: border-box;
@@ -89,39 +107,10 @@ ul {
   list-style: none;
 }
 
-@font-face {
-  font-family: 'Montserrat';
-  src: url('/assets/fonts/montserrat/Montserrat-Regular.ttf') format('truetype');
-  // font-weight: 200;
-  // font-stretch: extra-condensed;
-  // font-style: normal;
-}
-// @font-face {
-//   font-family: 'Quicksand';
-//   src: url('/assets/fonts/quicksand/Quicksand-Bold.ttf') format('truetype');
-//   font-weight: 700;
-//   font-style: normal;
-// }
-@font-face {
-  font-family: 'Mark Pro';
-  src: url('/assets/fonts/mark-pro/Mark-Pro-Bold.ttf') format('truetype');
-  font-weight: 700;
-  font-style: normal;
-}
-@font-face {
-  font-family: 'Eina';
-  src: url('/assets/fonts/eina/Eina01-Regular.ttf') format('truetype');
-  font-weight: 400;
-  font-style: normal;
-}
-
 body {
   background-color: $backgroundColor;
-  font-family: 'Eina';
-  // font-family: 'Montserrat';
-  // font-family: 'Inter', sans-serif;
+  font-family: font-family();
   font-size: 16px;
-  // font-family: 'Gotham-pro';
 }
 h1,
 h2,
@@ -129,8 +118,7 @@ h3,
 h4,
 h5,
 h6 {
-  // font-family: 'Quicksand', sans-serif;
-  font-family: 'Mark Pro';
+  font-family: font-family(secondary);
   color: $headingColor;
 }
 
@@ -151,7 +139,6 @@ p {
 }
 
 .bp3-button {
-  // box-shadow: none;
   border-radius: 0;
 }
 
@@ -181,7 +168,9 @@ p {
 }
 
 // default round image css
-.round-image { background-color: #fff; }
+.round-image {
+  background-color: #fff;
+}
 img.portrait {
   width: 100%;
   height: auto;
@@ -254,7 +243,7 @@ img.landscape {
 }
 
 .typicalWrapper::after {
-  content: '|';
+  content: "|";
   animation: blink 1s infinite step-start;
 }
 

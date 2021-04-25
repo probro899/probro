@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS Organization(
   address TEXT,
   email TEXT,
   phoneNo TEXT,
-  image TEXT,
+  image TEXT, 
   timeStamp INTEGER,
 
   --CONSTRAINT

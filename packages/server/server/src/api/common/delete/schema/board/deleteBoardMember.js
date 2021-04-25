@@ -9,7 +9,8 @@ import update from '../../../update/update';
 import sendNotification from '../../../sendNotification';
 
 async function deleteBoardMember(record, leave) {
-  // console.log('delete Board member called', record);
+  try {
+    // console.log('delete Board member called', record);
   const { session } = this;
   const { userId, id, boardId } = record;
 
@@ -124,5 +125,8 @@ async function deleteBoardMember(record, leave) {
     throw new Error('User Not Found');
   }
   return { status: 200, data: 'User Remove Succefully' };
+  } catch (e) {
+    console.error('Error in deleteBoardMember', e);
+  }
 }
 export default deleteBoardMember;

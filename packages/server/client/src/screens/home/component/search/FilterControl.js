@@ -3,6 +3,7 @@ import { BsSearch } from 'react-icons/bs';
 import { BiChevronUp } from 'react-icons/bi';
 import countryList from 'react-select-country-list';
 import { Button } from '../../../../common/utility-functions/Button/Button';
+import { Collapse } from '../../../../common/Collapse';
 
 class FilterControl extends React.Component {
     constructor(props) {
@@ -10,6 +11,7 @@ class FilterControl extends React.Component {
         const { allParams } = props;
         this.state = {
             isCollapsed: false,
+            open: false,
             form: {
                 searchKey: allParams.searchKey,
                 country: allParams.country,
@@ -18,6 +20,13 @@ class FilterControl extends React.Component {
             },
             countries: countryList().getData().map(obj => ({ label: obj.label, value: obj.label })),
         };
+    }
+
+    toggleMenu = () => {
+        const { open } = this.state;
+        this.setState({
+            open: !open,
+        });
     }
 
     toggleButton = () => {
@@ -35,10 +44,9 @@ class FilterControl extends React.Component {
     }
 
     rotateIcon = () => {
-        const { isCollapsed } = this.state;
+        const { open } = this.state;
         return {
-            transform: isCollapsed ? 'rotate(180deg)' : 'rotate(0deg)',
-            // marginTop: isCollapsed ? '0px' : '20px'
+            transform: open ? 'rotate(180deg)' : 'rotate(0deg)',
         }
     }
 
@@ -64,7 +72,50 @@ class FilterControl extends React.Component {
                 <div className='filter'>
                     Search Filter
                 </div>
-                <div style={this.showOrHide()} className="filter-inputs">
+                <Collapse isOpen={this.state.open}>
+                    <div style={this.showOrHide()} className="filter-inputs">
+
+                        <div className='search'>
+                            <BsSearch className="search-icon" />
+                            <input name="searchKey" type="search" onChange={this.onChange} value={form.searchKey} placeholder='Search...' />
+                        </div>
+
+                        <div className='input-group'>
+                            <div className="select-country">
+                                <select value={form.country} name="country" onChange={this.onChange}>
+                                    <option value="">Select country</option>
+                                    {
+                                        countries.map(obj => {
+                                            return (
+                                                <option value={obj.value}>{obj.label}</option>
+                                            )
+                                        })
+                                    }
+                                </select>
+                            </div>
+
+                            <div className='select-industry'>
+                                <select name="industry" value={form.industry} onChange={this.onChange}>
+                                    <option value="">Industry Stack</option>
+                                    <option value="engineering">Engineering</option>
+                                    <option value="medicine">Medicine</option>
+                                    <option value="politics">Accounting</option>
+                                    <option value="loksewa">Loksewa</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div className='select-language'>
+                            <select name="skill" value={form.skill} onChange={this.onChange}>
+                                <option value="">Skill</option>
+                                <option value="JavaScript">Javascript</option>
+                                <option value="Python">Python</option>
+                                <option value="Wordpress">Wordpress</option>
+                            </select>
+                        </div>
+                    </div>
+                </Collapse>
+                <div className="filter-inputs pc-desktop-filter">
 
                     <div className='search'>
                         <BsSearch className="search-icon" />
@@ -105,11 +156,7 @@ class FilterControl extends React.Component {
                         </select>
                     </div>
                 </div>
-
                 <div>
-                    {/* <button style={this.showOrHide()} onClick={this.applyFilter} className='filter-apply-btn'>
-                        Apply filter
-                </button> */}
                     <Button onClick={this.applyFilter}
                         type="button"
                         buttonStyle="btn--primary--solid"
@@ -119,7 +166,7 @@ class FilterControl extends React.Component {
                         title="Apply Filter" />
                 </div>
 
-                <span style={this.rotateIcon()} onClick={this.toggleButton} className='arrow-icon'>
+                <span style={this.rotateIcon()} onClick={this.toggleMenu} className='arrow-icon'>
                     <BiChevronUp />
                 </span>
             </div>

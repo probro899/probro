@@ -16,7 +16,7 @@ $normalBorder: #e0e0e0;
 $pcGreen: rgb(113, 249, 113);
 $normalShadowColor: rgba(57, 73, 76, 0.35);
 $lightTextColor: #696969;
-$footerHeight: 125px;
+$footerHeight: pixel-to-rem(125);
 // new design properties here
 $primary: #2572d1;
 $dropPrimary: #58affc;
@@ -24,9 +24,9 @@ $primaryHover: rgba(78, 185, 240, 1);
 $dropPrimaryHover: rgba(30, 110, 220, 1);
 $shadowColor: #383535;
 // navbar height
-$navbarHeight: 90px;
+$navbarHeight: pixel-to-rem(90);
 $boardColor: #88e0e9;
-$toolbarHeight: 50px;
+$toolbarHeight: pixel-to-rem(50);
 $blue: rgba(19, 124, 189, 1);
 $silver: rgb(182, 182, 182);
 $albaster: #f8f8f8;
@@ -36,12 +36,19 @@ $borderColor: #d6d9d9;
 $headingColor: #2e3d49; //#2e3d49 //#657482
 $subHeadColor: #58646d;
 
+//star  color
+$star-color: #fdcc0d;
+
 //mixins
 @mixin genericBoxPattern {
   background: #fff;
-  border-radius: 10px;
-  // border: 1px solid #eee;
-  // box-shadow: 0 0 8px 0 rgba(17, 22, 26, 0.16),
-  //   0 4px 8px 0 rgba(17, 22, 26, 0.08), 0 8px 16px 0 rgba(17, 22, 26, 0.08);
-  box-shadow: 0 6px 12px -1px rgba(0, 32, 128, 0.1), 0 0 0 1px #f0f2f7;
+  border-radius: pixel-to-rem(10);
+  box-shadow: 0 pixel-to-rem(6) pixel-to-rem(12) pixel-to-rem(-1) rgba(0, 32, 128, 0.1), 0 0 0 pixel-to-rem(1) #f0f2f7;
+}
+
+//flex
+@mixin flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

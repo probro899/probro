@@ -4,6 +4,8 @@ import BlogApi from './blog';
 import UserApi from './user';
 import OrganizationAPi from './organization';
 import PackageApis from './package';
+import CoursesApis from './course';
+import AppointmentApis from './appointment';
 
 export default [
   ...BoardApi,
@@ -11,4 +13,6 @@ export default [
   ...UserApi,
   ...OrganizationAPi,
   ...PackageApis,
+  ...CoursesApis,
+  ...AppointmentApis,
 ];

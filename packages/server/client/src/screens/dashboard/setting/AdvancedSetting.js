@@ -38,7 +38,6 @@ class AdvancedSettings extends React.Component {
   }
 
   render() {
-    const { apis, match, account } = this.props;
     const { mentor } = this.state;
     return (
       <div className="container-settings">
@@ -52,7 +51,7 @@ class AdvancedSettings extends React.Component {
             />
           </div>
         </div>
-        <Organization match={match} apis={apis} account={account} />
+        <Organization {...this.props} />
       </div>
     );
   }

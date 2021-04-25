@@ -4,6 +4,7 @@ import { GrFormAdd } from "react-icons/gr";
 import moment from 'moment';
 import { PopoverForm } from '../../../../components';
 import { experienceSchema } from '../structure';
+import ReadMoreReadLess from '../../../../common/ReadMoreReadLess';
 
 const ExperienceInfo = ({ data, editPopover }) => {
   return (
@@ -14,9 +15,13 @@ const ExperienceInfo = ({ data, editPopover }) => {
         <br />
         <span className="p-company-i">{data.company}</span>
         <br />
-        <span className="p-timeline">{`${moment(data.startTime, 'DD/MM/YYYY').format("MMM DD, YYYY")} - ${data.endTime ? moment(data.endTime, 'DD/MM/YYYY').format("MMM DD, YYYY") : 'Currently working'}`}</span>
+        <span className="p-timeline">{`${moment(data.startTime, 'DD/MM/YYYY').format("MMM DD, YYYY")} - ${data.currentWorking ? 'Currently working' : moment(data.endTime, 'DD/MM/YYYY').format("MMM DD, YYYY")}`}</span>
         <br />
-        <span>{data.summary}</span>
+        <span>
+          <ReadMoreReadLess >
+            {data.summary}
+          </ReadMoreReadLess>
+        </span>
       </p>
       <p><MdEdit style={{ cursor: 'pointer' }} size={20} onClick={() => editPopover(data)} /></p>
     </div>
@@ -31,6 +36,7 @@ class Experience extends React.Component {
   };
 
   editPopover = (obj) => {
+    console.log("object edit", obj, obj.currentWorking ? true : false);
     experienceSchema.map((i) => {
       switch (i.id) {
         case 'title':
@@ -40,7 +46,7 @@ class Experience extends React.Component {
           i['val'] = obj.company;
           return i;
         case 'current':
-          i['val'] = obj.endTime ? true : false;
+          i['val'] = obj.currentWorking ? true : false;
           i['onChange'] = this.currentWorkToggle;
           return i;
         case 'summary':
@@ -50,8 +56,8 @@ class Experience extends React.Component {
           i['val'] = moment(obj.startTime, 'DD/MM/YYYY').format("MMM DD, YYYY");
           return i;
         case 'endTime':
-          i['hidden'] = obj.endTime ? false: true;
-          i['val'] = obj.endTime ? moment(obj.endTime, 'DD/MM/YYYY').format("MMM DD, YYYY") : null;
+          i['hidden'] = obj.currentWorking ? true : false;
+          i['val'] = obj.currentWorking ? null : moment(obj.endTime, 'DD/MM/YYYY').format("MMM DD, YYYY");
           return i;
         default:
           return i;
@@ -68,10 +74,10 @@ class Experience extends React.Component {
     const info = {
       ...data,
       startTime: data.startTime.toLocaleString('en-IN').split(',')[0],
-      endTime: current ? null : data.endTime.toLocaleString('en-IN').split(',')[0],
+      endTime: current ? Date.now() : data.endTime.toLocaleString('en-IN').split(',')[0],
+      currentWorking: current,
       userId: account.user.id,
     };
-    console.log("experience edit", info);
     if (editObj) {
       await apis.updateUserWorkExperience([{ ...info }, { id: editObj.id }]);
       updateDatabaseSchema('UserWorkExperience', { ...info, id: editObj.id });

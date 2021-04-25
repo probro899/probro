@@ -1,9 +1,8 @@
-@import './config.scss';
+@import "./config.scss";
 
 .public-profile {
   min-height: calc(100vh - #{$navbarHeight} - #{$footerHeight});
   display: flex;
-  // flex-direction: column;
   padding-top: 10px;
   position: relative;
   max-width: 1140px;
@@ -21,9 +20,19 @@
       z-index: 1;
       border-top-right-radius: 10px;
       border-top-left-radius: 10px;
-      // to prevent overflow of unedited cover
-      // height: calc((100vw * 0.86) * 0.33);
-      // height: 40vh;
+      &::before {
+        content: "";
+        background: rgba(0, 0, 0, 0.2);
+        width: 100%;
+        height: 100%;
+        display: block;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 2;
+      }
       img {
         display: block;
         position: absolute;
@@ -38,8 +47,6 @@
       border: 1px solid $normalBorder;
       box-shadow: 0px 0px 5px 1px $normalShadowColor;
       border-radius: 50%;
-      // width: calc((100vw * 0.86 * 0.33) * 0.55);
-      // height: calc((100vw * 0.86 * 0.33) * 0.55);
       height: 130px;
       width: 130px;
       overflow: hidden;
@@ -48,14 +55,7 @@
       border: 2px solid white;
     }
     .top-details {
-      // background-color: #fff;
-      // border-bottom-right-radius: 10px;
-      // border-bottom-left-radius: 10px;
       padding: 10px 20px;
-      // margin-bottom: 20px;
-      // border-bottom: 1px solid #eee;
-      // margin-top: 120px;
-
       .name {
         font-size: 25px;
         font-weight: bold;
@@ -86,12 +86,17 @@
           margin-bottom: 7px;
         }
         .location {
-          margin-bottom: 10px;
+          margin-bottom: 5px;
           display: flex;
-          // align-items: center;
           .country {
             margin-left: 5px;
           }
+        }
+        .user-bio {
+          font-size: 16px;
+          color: $headingColor;
+          margin: 5px 0;
+          font-weight: bold;
         }
         .bio {
           p {
@@ -107,7 +112,6 @@
         div {
           display: flex;
           justify-content: center;
-          // padding: 20px;
           .connect-btn {
             background-color: $primaryColor;
             padding: 8px 16px;
@@ -125,56 +129,34 @@
             cursor: pointer;
           }
           button {
-
             margin: 0px 10px;
-            // border-radius: 5px;
-            @media screen and (max-width:576px) {
+            @media screen and (max-width: 576px) {
               margin: 0 5px;
             }
           }
         }
       }
     }
-    .bio {
-      // text-align: center;
-      // width: 100%;
-      // padding: 20px 0px;
-      p {
-        // font-family: 'Oxygen', sans-serif;
-        // font-size: 16px;
-        // word-wrap: break-word;
-      }
-    }
 
     // adv-body style
     .adv-body {
-      // display: flex;
-      // height: 420px;
-
       .top-section-wrapper {
         background-color: #fff;
         margin-bottom: 20px;
         border-bottom-right-radius: 10px;
         border-bottom-left-radius: 10px;
-        box-shadow: 0 0 8px 0 rgba(17, 22, 26, 0.16),
-          0 4px 8px 0 rgba(17, 22, 26, 0.08),
+        box-shadow: 0 0 8px 0 rgba(17, 22, 26, 0.16), 0 4px 8px 0 rgba(17, 22, 26, 0.08),
           0 8px 16px 0 rgba(17, 22, 26, 0.08);
         .profile-body {
           width: 100%;
-          // background:#efefef;
-          // background: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.7));
-          // background-color: #ececec;
           padding: 0 24px;
-          // background-color: #fff;
           background-color: none;
           color: white;
           text-align: center;
           height: 60px;
-          // padding: 0px 20px;
           position: relative;
           display: flex;
           align-items: center;
-          // bottom: 100px;
 
           .following {
             display: none;
@@ -197,8 +179,6 @@
 
       .main-body {
         width: 100%;
-        // padding: 20px;
-        // overflow-y: scroll;
       }
       @media screen and (max-width: 720px) {
         flex-direction: column;
@@ -222,7 +202,6 @@
         .p-edu-list-i,
         .p-exp-list-i {
           display: flex;
-          align-items: center;
           padding: 2px;
           border-bottom: 1px solid #eee;
           padding-top: 10px;
@@ -261,11 +240,8 @@
     .skills {
       padding: 20px;
       @include genericBoxPattern;
-      // background-color: #fff;
       width: 100%;
       margin-bottom: 20px;
-      // border-radius: 10px;
-      // border: 1px solid #eee;
       .skills-container {
         padding: 5px 5px 5px 0px;
         display: flex;
@@ -279,43 +255,51 @@
         }
       }
     }
-
-    // @media screen and (max-width: 600px) {
-    //   margin: $navbarHeight 5%;
-    //   .cover-pic {
-    //     height: calc((100vw * 0.9) * 0.33);
-    //   }
-    //   .profilePic {
-    //     width: calc((100vw * 0.9 * 0.33) * 0.55);
-    //     height: calc((100vw * 0.9 * 0.33) * 0.55);
-    //     top: calc((100vw * 0.9) * 0.33 * 0.4);
-    //   }
-    // }
   }
   .main-lt-section {
     max-width: 30%;
     flex: 0 0 30%;
-    // background-color: #fff;
     @include genericBoxPattern;
     height: 50%;
     padding: 20px;
     position: sticky;
     top: 100px;
-    // border-radius: 10px;
-    // border: 1px solid #eee;
     .mentor-blogs-wrapper {
+      .p-title {
+        margin-top: 10px;
+      }
       .popular-blog {
         display: flex;
-        align-items: center;
         padding: 10px 0;
         border-bottom: 1px solid #eee;
         .blog-description {
           padding-left: 10px;
+          a {
+            font-size: 14px;
+          }
+          .course-rating {
+            margin-top: 5px;
+          }
         }
         .blog-thumbnail {
           height: 100px;
           width: 100px;
           min-width: 100px;
+          border: 1px solid #d1d7dc;
+          position: relative;
+          &::before {
+            content: "";
+            background: rgba(0, 0, 0, 0.2);
+            width: 100%;
+            height: 100%;
+            display: block;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 2;
+          }
           img {
             width: 100%;
             height: 100%;

@@ -11,3 +11,4 @@ export default function getUser(variables) {
     userWorkExperience: findUserDetailsRes.userWorkExperience,
   };
 }
+ 

@@ -1,12 +1,10 @@
-/* eslint-disable react/no-did-update-set-state */
-/* eslint-disable react/prop-types */
-/* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import { FaRegCommentAlt } from 'react-icons/fa';
 import { TiAttachmentOutline } from 'react-icons/ti';
+import { CgDetailsMore } from 'react-icons/cg';
 import Tag from '../../../common/Tag';
 
 class Task extends Component {
@@ -73,6 +71,13 @@ class Task extends Component {
         </div>
         <p className="pc-task-name">{task.name}</p>
         <div className="task-footer">
+          {
+            task.description && task.description.trim().length > 0 && (
+              <div className="pc-item">
+                <CgDetailsMore size="1em" className="pc-icon" />
+              </div>
+            )
+          }
           {
             comments > 0 && (
               <div className="pc-item">

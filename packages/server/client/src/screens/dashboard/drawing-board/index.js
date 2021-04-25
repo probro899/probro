@@ -225,10 +225,19 @@ class DrawingBoard extends Component {
 
   addInitialAnimation = () => {
     const { canvas, screenSize } = this.state;
-    fabric.fabric.Image.fromURL('/assets/graphics/logo.svg', (myImg) => {
-      const img1 = myImg.set({ cacheKey: 'logo', left: screenSize.width - 130, top: screenSize.height - 50, scaleX: 0.2, scaleY: 0.2, selectable: false, opacity: 0.8 });
-      canvas.add(img1);
-    });
+    const url = '/assets/graphics/logo.svg';
+    fabric.fabric.loadSVGFromURL(url, function(objects) {
+      var group = new fabric.fabric.Group(objects, {
+        left: screenSize.width - 80,
+        top: screenSize.height - 30,
+        scaleX: 0.2,
+        scaleY: 0.2,
+        opacity: 0.8,
+        selectable: false,
+        cacheKey: "logo",
+      });
+      canvas.add(group);
+    });    
   }
 
   removeInitialAnimation = () => {

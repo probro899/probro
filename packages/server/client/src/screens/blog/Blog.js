@@ -59,24 +59,13 @@ EachBlog.propTypes = {
 };
 
 class Blogs extends Component {
-  state = {
-    createBlog: false,
-    editBlog: false,
-    deletePopOverIsOpen: false,
-    blogId: null,
-    apis: {},
-  };
+  state = { createBlog: false, editBlog: false, deletePopOverIsOpen: false, blogId: null, apis: {} };
 
   async componentDidMount() {
     const { updateNav } = this.props;
     const apis = await client.scope('Mentor');
-    this.setState({
-      apis,
-    });
-    updateNav({
-      schema: 'sideNav',
-      data: { name: 'Blog' },
-    });
+    this.setState({ apis });
+    updateNav({ schema: 'sideNav', data: { name: 'Blog' } });
   }
 
   deleteBlog = async (type) => {
@@ -84,37 +73,25 @@ class Blogs extends Component {
     const { deleteDatabaseSchema } = this.props;
     if (type === 'confirm') {
       await apis.deleteBlog({ id: blogId });
-      this.setState({
-        deletePopOverIsOpen: false,
-        blogId: '',
-      });
+      this.setState({ deletePopOverIsOpen: false, blogId: '' });
       deleteDatabaseSchema('Blog', { id: blogId });
       return;
     }
-    this.setState({
-      deletePopOverIsOpen: false,
-    });
+    this.setState({ deletePopOverIsOpen: false });
   }
 
   // handles the edit and delete of the blog
   onMore = (type, id) => {
     if (type === 'delete') {
-      this.setState({
-        deletePopOverIsOpen: true,
-        blogId: id,
-      });
+      this.setState({ deletePopOverIsOpen: true, blogId: id });
     } else if (type === 'edit') {
-      this.setState({
-        editBlog: true,
-        blogId: id,
-      });
+      this.setState({ editBlog: true, blogId: id });
     }
   }
 
   render() {
     const { createBlog, deletePopOverIsOpen, blogId, editBlog } = this.state;
-    const { account } = this.props;
-    const { database } = this.props;
+    const { account, database } = this.props;
     return (
       <div className="blogs bro-right">
         <div className="blog-wrapper">
@@ -131,12 +108,6 @@ class Blogs extends Component {
               <small>Manage your blogs here</small>
             </div>
             <div>
-              {/* <Button
-                className="create-btn"
-                text="Create Blog"
-                intent="success"
-                onClick={() => this.setState({ createBlog: !createBlog })}
-              /> */}
               <Button
                 onClick={() => this.setState({ createBlog: !createBlog })}
                 type="button"

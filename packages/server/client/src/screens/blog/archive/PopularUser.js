@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { BiCurrentLocation } from "react-icons/bi";
 import { BsPersonCheck, BsPersonPlus } from "react-icons/bs";
 import { ENDPOINT } from '../../../config';
 import { RoundPicture } from '../../../components';
@@ -20,17 +19,16 @@ const PopularUser = ({ obj, connected }) => {
             {getName(obj)}
           </Link>
         </div>
+        <div className='user-bio'>
+          {obj.userDetail.headLine || ''}
+        </div>
         <div style={{ opacity: 0.8, marginBottom: 3, display: 'flex', alignItems: 'center' }}>
-          <BiCurrentLocation />
-          {' '}
-          <span style={{ fontSize: 12, marginLeft: 2 }}>
-            {' '}
-            {obj.userDetail.country}
+          <span style={{ fontSize: 12}}>
+            {obj.userDetail.address ? `${obj.userDetail.address}, ` : ''}
+            {obj.userDetail.country || ''}
           </span>
         </div>
-        <div className='user-bio'>
-          {obj.userDetail.headLine}
-        </div>
+        
       </div>
       <div className="follow-mentor-btn">
         <Link to={`/user/${obj.slug}/`} className="followMentorBtn">

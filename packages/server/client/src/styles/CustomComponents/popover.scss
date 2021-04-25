@@ -1,10 +1,6 @@
 @import '../config.scss';
 
 .pc-popover-container {
-  position: absolute;
-  top: 0;
-  right: 10px;
-  z-index: 10;
   .pc-popover-wrapper {
     position: relative;
     .pc-content-container {
@@ -13,12 +9,13 @@
       right: 0;
       .pc-popover {
         padding: 10px 20px;
-        border-radius: 5px;
+        border-radius: 10px;
         background-color: #fff;
         box-shadow: 0 0 8px 0 rgba(17, 22, 26, 0.16),
           0 4px 8px 0 rgba(17, 22, 26, 0.08),
           0 8px 16px 0 rgba(17, 22, 26, 0.08);
         .pc-popover-arrow {
+          display: none;
           height: 10px;
           position: absolute;
           width: 15px;

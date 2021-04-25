@@ -1,7 +1,7 @@
-@import '../config.scss';
+@import "../config.scss";
 
 .banner-container {
-  padding: 10px 25px;
+  padding: pixel-to-rem(10) pixel-to-rem(25);
   margin: 0 auto;
   .banner-head {
     display: flex;
@@ -10,22 +10,22 @@
     align-items: center;
     .page-sub-heading {
       color: $subHeadColor;
-      font-size: 16px;
+      font-size: pixel-to-rem(16);
       font-weight: 600;
       text-transform: uppercase;
-      margin-bottom: 10px;
-      @media screen and (max-width: 767px) {
-        font-size: 14px;
+      margin-bottom: pixel-to-rem(10);
+      @media screen and (max-width: pixel-to-rem(767)) {
+        font-size: pixel-to-rem(14);
       }
     }
     .page-heading {
       color: $headingColor;
-      font-size: 32px;
+      font-size: pixel-to-rem(32);
       font-weight: 600;
       text-transform: uppercase;
       margin: 0;
-      @media screen and (max-width: 767px) {
-        font-size: 26px;
+      @media screen and (max-width: pixel-to-rem(767)) {
+        font-size: pixel-to-rem(26);
       }
     }
   }
@@ -34,25 +34,25 @@
       display: flex;
       align-items: center;
       flex-wrap: wrap;
-      margin-left: -15px;
-      margin-right: -15px;
-      margin-bottom: 40px;
-      @media screen and (max-width: 767px) {
-        margin-bottom: 20px;
+      margin-left: pixel-to-rem(-15);
+      margin-right: pixel-to-rem(-15);
+      margin-bottom: pixel-to-rem(40);
+      @media screen and (max-width: pixel-to-rem(767)) {
+        margin-bottom: pixel-to-rem(20);
       }
       .banner-image {
         max-width: 50%;
         flex: 0 0 50%;
-        padding-left: 15px;
-        padding-right: 15px;
+        padding-left: pixel-to-rem(15);
+        padding-right: pixel-to-rem(15);
         img {
           height: 100%;
           width: 100%;
         }
       }
       .banner-content {
-        padding-left: 15px;
-        padding-right: 15px;
+        padding-left: pixel-to-rem(15);
+        padding-right: pixel-to-rem(15);
         display: flex;
         justify-content: center;
         flex-direction: column;
@@ -61,44 +61,44 @@
         text-align: left;
         .banner-title {
           h3 {
-            margin: 0 0 5px 0;
-            font-size: 32px;
+            margin: 0 0 pixel-to-rem(5) 0;
+            font-size: pixel-to-rem(32);
             font-weight: 400;
             line-height: 1.6;
             text-transform: capitalize;
             color: $headingColor;
             text-align: left;
             font-weight: 600;
-            @media screen and (max-width: 1199px) {
-              font-size: 27px;
+            @media screen and (max-width: pixel-to-rem(1199)) {
+              font-size: pixel-to-rem(27);
             }
-            @media screen and (max-width: 991px) {
-              font-size: 23px;
+            @media screen and (max-width: pixel-to-rem(991)) {
+              font-size: pixel-to-rem(23);
             }
-            @media screen and (max-width: 767px) {
-              font-size: 20px;
+            @media screen and (max-width: pixel-to-rem(767)) {
+              font-size: pixel-to-rem(20);
             }
           }
         }
         .banner-description {
           .pc-desc-list {
             li {
-              margin-bottom: 5px;
-              margin-left: 15px;
+              margin-bottom: pixel-to-rem(5);
+              margin-left: pixel-to-rem(15);
               position: relative;
               color: $subHeadColor;
               &::before {
-                content: '✓';
+                content: "✓";
                 display: block;
-                height: 15px;
-                width: 15px;
+                height: pixel-to-rem(15);
+                width: pixel-to-rem(15);
                 position: absolute;
-                left: -15px;
+                left: pixel-to-rem(-15);
                 font-weight: 700;
                 color: $subHeadColor;
               }
-              @media screen and (max-width: 767px) {
-                font-size: 14px;
+              @media screen and (max-width: pixel-to-rem(767)) {
+                font-size: pixel-to-rem(14);
               }
             }
           }
@@ -107,7 +107,7 @@
               vertical-align: sub;
             }
             color: #444343;
-            font-size: 16px;
+            font-size: pixel-to-rem(16);
             font-weight: 400;
             line-height: 1.8;
           }
@@ -118,13 +118,13 @@
       flex-direction: row-reverse;
     }
   }
-  @media screen and (max-width: 767px) {
+  @media screen and (max-width: pixel-to-rem(767)) {
     .banners {
       .banner {
         .banner-image {
           max-width: 100%;
           flex: 0 0 100%;
-          margin-bottom: 15px;
+          margin-bottom: pixel-to-rem(15);
         }
         .banner-content {
           max-width: 100%;

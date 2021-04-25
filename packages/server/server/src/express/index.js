@@ -10,6 +10,9 @@ import deleteFile from './request-handler/deleteFile';
 import getIndex from './request-handler/getIndex';
 import getErrorReport from './request-handler/getErrorReport';
 import deleteError from './request-handler/deleteError';
+import verifyUser from './request-handler/verifyUser';
+import getAdminUsers from './request-handler/adminGetUser';
+import updateAdminUser from './request-handler/adminUpdateUser';
 
 export default function (app) {
   // app.use((req, res, next) => {
@@ -35,5 +38,8 @@ export default function (app) {
   app.post('/web/get-index', getIndex);
   app.post('/web/admin/error-report', getErrorReport);
   app.post('/web/admin/error-delete', deleteError);
+  app.post('/web/admin/verify-user', verifyUser);
+  app.post('/web/admin/get-users', getAdminUsers);
+  app.post('/web/admin/update-user', updateAdminUser);
   app.use(express.static(path.resolve(__dirname, '..', 'public')));
 }

@@ -4,12 +4,13 @@ import oneToOnePlugAttachment from './attachPlugin';
 import exceptionHandler from './exceptionHandler';
 
 export default async (props, closeType) => {
-  console.log(' video callCloseHandler called', closeType);
+  // console.log(' video callCloseHandler called', closeType);
   try {
     const { webRtc, database, account } = store.getState();
     const { apis, janus } = webRtc;
     const { oneToOneCall } = janus;
     if (oneToOneCall) {
+      // console.log('oneToOneCall hangup execute');
       oneToOneCall.hangup();
       if (closeType !== 'callReject') {
         if (webRtc.localCallHistory.chatHistory) {
@@ -33,9 +34,23 @@ export default async (props, closeType) => {
             },
             userList: [{ userId }],
           });
+          const detachRes = await new Promise((resolve, reject) => {
+            oneToOneCall.detach({
+              success: () => {
+                resolve(true);
+              },
+              error: (e) => {
+                reject(e);
+              },
+            });
+          });
+          if (detachRes) {
+            oneToOnePlugAttachment(props);
+          }
         }
       } else {
         // detach and attach plugi[n again
+        console.log('plugin attach and detach called');
         const detachRes = await new Promise((resolve, reject) => {
           oneToOneCall.detach({
             success: () => {

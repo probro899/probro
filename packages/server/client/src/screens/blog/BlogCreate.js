@@ -1,6 +1,5 @@
-/* eslint-disable react/sort-comp */
 import React from 'react';
-// import ReactQuill from 'react-quill';
+import _ from 'lodash';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { ENDPOINT } from '../../config';
@@ -23,6 +22,7 @@ class BlogCreate extends React.Component {
       title: '',
       description: '',
       blogId: null,
+      titleError: false,
       coverImage: { actualFile: null, url: null, serverImageName: null },
     };
     if (typeof document === 'object') {
@@ -75,8 +75,19 @@ class BlogCreate extends React.Component {
     });
   }
 
-  onChangeTitle = (e) => this.setState({ title: e.target.value });
-  onChangeDesc = (value) => this.setState({ description: value });
+  onChangeTitle = (e) => {
+    this.setState({ title: e.target.value, titleError: false });
+    this.autoSaveBlog();
+  }
+
+  onChangeDesc = (value) => {
+    this.setState({ description: value });
+    this.autoSaveBlog();
+  }
+
+  autoSaveBlog = _.debounce(() => {
+    this.saveBlog();
+  }, 2000);
 
   publish = async (e) => {
     const { blogId, apis, title, description } = this.state;
@@ -108,6 +119,7 @@ class BlogCreate extends React.Component {
     const { apis, title, description, blogId, publish, coverImage } = this.state;
     let uploadedUrl = null;
 
+    if (title.replace(/\s/g, '').length === 0) { this.setState({ titleError: true }); return; }
     // for loading while saving blog
     this.setState({ saveLoading: true });
 
@@ -124,7 +136,6 @@ class BlogCreate extends React.Component {
       }
     }
     if (!blogId) {
-      if (title.replace(/\s/g, '').length === 0) { this.setState({ saveLoading: false }); return; }
       const res = await addBlog(apis.addBlog,
         {
           userId: account.user.id,
@@ -172,7 +183,7 @@ class BlogCreate extends React.Component {
 
 
   render() {
-    const { blogId, coverImage, title, saveLoading, description, publish } = this.state;
+    const { blogId, coverImage, title, titleError, saveLoading, description, publish } = this.state;
     const { account } = this.props;
     const ReactQuill = this.quil;
     return (
@@ -195,17 +206,11 @@ class BlogCreate extends React.Component {
                 placeholder="Headline"
                 onChange={this.onChangeTitle}
                 rows="1"
+                error={titleError}
                 value={title}
               />
             </div>
-            {ReactQuill && (
-            <ReactQuill
-              modules={BlogCreate.modules}
-              value={description}
-              onChange={this.onChangeDesc}
-            />
-            )
-            }
+            {ReactQuill && <ReactQuill modules={BlogCreate.modules} value={description} onChange={this.onChangeDesc} />}
           </div>
         </div>
       </div>

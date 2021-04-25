@@ -17,7 +17,10 @@ const HTML = ({ content, state, helmet, seo }) => {
     ${helmet.meta.toString()}
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
     <link rel="shortcut icon" href="${webConfig.siteURL}/assets/graphics/favicon.ico">
-    <link rel="preload" href="${webConfig.siteURL}/assets/css/index.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="stylesheet" href="${webConfig.siteURL}/assets/css/index.css" as="style">
+    <link rel="preload" href="${webConfig.siteURL}/assets/css/quill.snow.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="${webConfig.siteURL}/assets/css/react-datetime.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+
     `}}
       />
       <body {...bodyAttrs}>
@@ -26,7 +29,7 @@ const HTML = ({ content, state, helmet, seo }) => {
           __html: `window.__APOLLO_STATE__=${JSON.stringify(state).replace(/</g, '\\u003c')};`,
         }}
         />
-        <script src={`${webConfig.siteURL}/client_bundle.js`} />
+        <script src={`${webConfig.siteURL}/main.bundle.js`} />
         {/* <script src={`${webConfig.siteURL}/1.client_bundle.js`} /> */}
       </body>
     </html>
