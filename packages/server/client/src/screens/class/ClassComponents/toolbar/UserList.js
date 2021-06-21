@@ -34,7 +34,7 @@ const deleteBoardMember = (record, apis) => {
 const AllUsers = ({ extUser, boardMembers, boardId, apis, account }) => {
   return (
     <div className="all-users">
-      <div className="header">Members</div>
+      <div className="users-header">Members</div>
       <div className="user-con">
         {
           Object.values(boardMembers.byId).filter(o => o.boardId === boardId).filter(obj => !obj.deleteStatus && obj.tuserId !== account.user.id).map((o) => {

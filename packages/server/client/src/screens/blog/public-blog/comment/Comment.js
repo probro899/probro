@@ -66,7 +66,9 @@ class Comment extends React.Component {
                   <FormTextArea
                     placeholder="Put your comments."
                     value={commentText}
+                    className="pc-text-area"
                     onChange={this.commentChange}
+                    resizable
                   />
                   <div className="btns">
                     <div className="cancel-btn">

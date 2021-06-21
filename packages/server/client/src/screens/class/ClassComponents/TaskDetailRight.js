@@ -1,16 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Form } from '../../../common';
 import DeletePopOver from '../../../common/DeletePopOver';
 import { Attachment } from './attachment';
 import SelectColumn from './SelectColumn';
 import { Button } from '../../../common/utility-functions/Button/Button';
-import { AiOutlineTags, AiOutlineFieldTime, AiOutlinePaperClip, AiFillCopy, AiTwotoneDelete } from "react-icons/ai";
+import { AiOutlineTags, AiOutlinePaperClip, AiFillCopy, AiTwotoneDelete } from "react-icons/ai";
 import Tag from '../../../common/Tag';
 import Popover from '../../../common/Popover';
+import AddParticipant from './task-detail/AddParticipant';
+import Deadline from './task-detail/Deadline';
 
 const TagPopover = ({ tags, addTag }) => {
-  const tagNames = ['red', 'green', 'blue','yellow'];
+  const tagNames = ['red', 'green', 'blue', 'yellow'];
   return (
     <div style={{ padding: '5px', minWidth: '250px' }}>
       <div style={{ padding: '5px', textAlign: 'center', fontSize: '15px', fontWeight: 'bold' }}>
@@ -20,15 +21,7 @@ const TagPopover = ({ tags, addTag }) => {
         {
         tagNames.map((obj, index) => {
             const tick = tags.find(o => o.tag === obj);
-            return (
-              <Tag
-                type="flat"
-                color={obj}
-                tick={tick}
-                key={index}
-                onClick={() => addTag(obj, tick)}
-              />
-            );
+            return <Tag type="flat" color={obj} tick={tick} key={`tag-${index}`} onClick={() => addTag(obj, tick)} />
           })
         }
       </div>
@@ -36,56 +29,19 @@ const TagPopover = ({ tags, addTag }) => {
   );
 };
 
-const DeadLinePopOver = ({ callback }) => {
-  const structure = [
-    {
-      id: 'deadline',
-      fieldtype: 'date',
-      name: 'Deadline',
-    },
-    {
-      id: 'submit',
-      fieldtype: 'button',
-      type: 'submit',
-      text: 'ADD',
-      fill: 'fill',
-      intent: 'success',
-      large: 'large',
-    },
-  ];
-  return (
-    <div style={{ padding: '5px', minWidth: '300px' }}>
-      <Form callback={callback} data={structure} />
-    </div>
-  );
-};
-
-DeadLinePopOver.propTypes = {
-  callback: PropTypes.func.isRequired,
-};
-
 class TaskDetailRight extends React.Component {
-  state = {
-    deleteCardPopover: false,
-  };
+  state = { deleteCardPopover: false };
 
   uploadDeadLine = async (data) => {
     const { apis, task, updateDatabaseSchema, boardId } = this.props;
-    const deadline = new Date(data.deadline).getTime();
+    const deadline = data.deadline ? data.deadline.valueOf() : data.deadline;
     await apis.updateBoardColumnCard([{ Deadline: deadline, broadCastId: `Board-${boardId}` }, { id: task.id }]);
     updateDatabaseSchema('BoardColumnCard', { id: task.id, Deadline: deadline });
     return { response: 200, message: 'Deadline added' };
   }
 
   copyCard = async (arg) => {
-    const {
-      apis,
-      account,
-      description,
-      attachments,
-      task,
-      tags,
-    } = this.props;
+    const { apis, account, description, attachments, task, tags } = this.props;
     try {
       await apis.copyBoardColumnCard({
         card: { ...task, userId: account.user.id, timeStamp: Date.now() },
@@ -102,24 +58,10 @@ class TaskDetailRight extends React.Component {
   }
 
   addTag = async (name, aord) => {
-    const {
-      task, apis, tags, addDatabaseSchema,
-      deleteDatabaseSchema,
-      account,
-      boardId,
-    } = this.props;
+    const { task, apis, tags, addDatabaseSchema, deleteDatabaseSchema, account, boardId } = this.props;
     if (aord) {
-      let tag;
-      tags.map((obj) => {
-        if (obj.tag === name) {
-          tag = obj;
-        }
-      });
-      await apis.deleteBoardColumnCardTag({
-        broadCastId: `Board-${boardId}`,
-        id: tag.id,
-        cardId: task.id,
-      });
+      const tag = tags.find(o => o.tag === name);
+      await apis.deleteBoardColumnCardTag({ broadCastId: `Board-${boardId}`, id: tag.id, cardId: task.id });
       deleteDatabaseSchema('BoardColumnCardTag', { id: tag.id });
       return;
     }
@@ -133,13 +75,7 @@ class TaskDetailRight extends React.Component {
   }
 
   deleteCard = async (type) => {
-    const {
-      apis,
-      deleteDatabaseSchema,
-      boardId,
-      task,
-      onClose,
-    } = this.props;
+    const { apis, deleteDatabaseSchema, boardId, task, onClose } = this.props;
     if (type === 'confirm') {
       this.toggleDeleteCard();
       await apis.deleteBoardColumnCard({ id: task.id, broadCastId: `Board-${boardId}` });
@@ -152,26 +88,29 @@ class TaskDetailRight extends React.Component {
 
   toggleDeleteCard = () => {
     const { deleteCardPopover } = this.state;
-    this.setState({
-      deleteCardPopover: !deleteCardPopover,
-    });
+    this.setState({ deleteCardPopover: !deleteCardPopover });
   }
 
   render() {
-    // console.log('screen width', this.getScreenWidth());
     const screenWidth = screen.width;
     const { deleteCardPopover } = this.state;
-    const {
-      task, tags, addDatabaseSchema, apis,
-      account,
-      boardId,
-      database,
-    } = this.props;
+    const { task, participants, tags, addDatabaseSchema, deleteDatabaseSchema, apis, account, boardId, database } = this.props;
     return (
       <div className="right-part">
         <div className="rt-in">
           <div className="tool-header">Tools</div>
           <div className="rt-tools">
+            <AddParticipant
+              apis={apis}
+              task={task}
+              account={account}
+              addDatabaseSchema={addDatabaseSchema}
+              deleteDatabaseSchema={deleteDatabaseSchema}
+              screenWidth={screenWidth}
+              classId={boardId}
+              members={Object.values(database.BoardMember.byId).filter(o=>o.boardId === boardId && !o.deleteStatus)}
+              participants={participants}
+            />
             <Popover
               yAlign="bottom"
               xAlign={screenWidth < 580 ? "left" : "right"}
@@ -186,20 +125,7 @@ class TaskDetailRight extends React.Component {
                 icon={<AiOutlineTags />}
               />
             </Popover>
-            <Popover
-              yAlign="bottom"
-              xAlign="right"
-              hPosition={screenWidth < 580 ? "center" : "left"}
-              content={<DeadLinePopOver callback={this.uploadDeadLine} />}
-            >
-              <Button
-                icon={<AiOutlineFieldTime />}
-                title="Deadline"
-                type="button"
-                buttonStyle="btn--primary--outline"
-                buttonSize="btn--medium"
-              />
-            </Popover>
+            <Deadline task={task} screenWidth={screenWidth} uploadDeadLine={this.uploadDeadLine} />
             <Popover
               yAlign="bottom"
               xAlign={screenWidth < 430 ? "left" : "right"}

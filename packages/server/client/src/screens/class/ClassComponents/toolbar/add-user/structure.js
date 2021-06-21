@@ -1,4 +1,3 @@
-
 export default [
   {
     id: 'user',
@@ -8,6 +7,7 @@ export default [
     ],
     required: true,
     name: 'Add new member',
+    label: 'Add new member',
   },
   {
     id: 'submit',

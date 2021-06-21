@@ -4,7 +4,7 @@ $danger-color: #c23030;
 .pc-menu {
   background: #ffffff;
   border-radius: 3px;
-  color: $headingColor;
+  color: color-get(text-dark);
   list-style: none;
   margin: 0;
   min-width: 180px;
@@ -46,7 +46,7 @@ $danger-color: #c23030;
       }
       &.active {
         color: #fff;
-        background-color: #0056b8;
+        background-color: color-get();
         .pc-menuitem-icon {
           color: #fff;
         }

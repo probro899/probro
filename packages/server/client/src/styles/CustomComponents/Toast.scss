@@ -15,9 +15,8 @@
   .pc-toast {
     align-items: flex-start;
     background-color: #ffffff;
-    border-radius: 10px;
-    box-shadow: 0 0 0 1px rgb(16 22 26 / 10%), 0 2px 4px rgb(16 22 26 / 20%),
-      0 8px 24px rgb(16 22 26 / 20%);
+    border-radius: 3px;
+    box-shadow: 0 0 0 1px rgb(16 22 26 / 10%), 0 2px 4px rgb(16 22 26 / 20%), 0 8px 24px rgb(16 22 26 / 20%);
     display: flex;
     margin: 20px 0 0;
     max-width: 500px;
@@ -25,18 +24,28 @@
     pointer-events: all;
     position: relative;
     align-items: center;
-    &.pc-show-toaster {
+    top: -150px;
+    &.pc-show-toast {
       animation: fromTop 0.5s;
-    }
-    &.pc-close-toast {
-      animation: toTop 0.5s;
-    }
-    &.pc-hide-toast {
-      top: -150px;
+      top: 0px;
     }
     &.success {
-      background-color: #0f9960;
-      color: #fff;
+      background-color: color-get(success, 100);
+      color: color-get(success, 500);
+      border: 1px solid color-get(success, 300);
+      border-left: 5px solid;
+    }
+    &.error {
+      background-color: color-get(error, 100);
+      color: color-get(error, 500);
+      border: 1px solid color-get(error, 300);
+      border-left: 5px solid;
+    }
+    &.warning {
+      background-color: color-get(warn, 100);
+      color: color-get(warn, 500);
+      border: 1px solid color-get(warn, 300);
+      border-left: 5px solid;
     }
     .notification-title {
       flex: 1 1 auto;
@@ -51,19 +60,8 @@
     }
   }
 }
+
 @keyframes fromTop {
-  0% {
-    top: -150px;
-  }
-  100% {
-    top: 0;
-  }
-}
-@keyframes toTop {
-  0% {
-    top: 0;
-  }
-  100% {
-    top: -150px;
-  }
+  0% { top: -150px; }
+  100% { top: 0; }
 }

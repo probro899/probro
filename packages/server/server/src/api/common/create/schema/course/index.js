@@ -1,9 +1,10 @@
 /* eslint-disable import/no-cycle */
 import urlSlug from 'url-slug';
 import add from '../../add';
- 
+import createProject from './createProject';
+
 async function addCourse(record) {
-  console.log('record in course add api', record);
+  // console.log('record in course add api', record);
   const { title } = record;
   const tempSlug = urlSlug(title);
   const slug = `${tempSlug}-${Date.now()}`;
@@ -15,7 +16,7 @@ async function addCourseSection(params) {
   const res = await add.call(this, 'Section', { ...params, createdAt: Date.now() });
   return res;
 }
-
+ 
 async function addSectionLecture(params) {
   const res = await add.call(this, 'Lecture', { ...params, createdAt: Date.now() });
   return res;
@@ -25,9 +26,10 @@ async function addResource(params) {
   const res = await add.call(this, 'Resource', { ...params, createdAt: Date.now() });
   return res;
 }
-
+ 
 async function addCourseEnroll(params) {
   const res = await add.call(this, 'CourseEnroll', { ...params, createdAt: Date.now() });
+  createProject(this, { id: res, ...params });
   return res;
 }
 

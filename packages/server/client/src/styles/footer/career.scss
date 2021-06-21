@@ -1,7 +1,6 @@
 @import '../config.scss';
 
 .pc-career-section {
-  margin-top: $navbarHeight;
   min-height: calc(100vh - #{$navbarHeight} - #{$footerHeight});
   .pc-career-wrapper {
     .pc-hero-section {
@@ -20,7 +19,7 @@
         p {
           font-size: 26px;
           line-height: 34px;
-          color: $subHeadColor;
+          color: color-get(text-light);
         }
       }
       .pc-current-opening-button {
@@ -33,7 +32,7 @@
         text-align: center;
         p {
           font-size: 20px;
-          color: $subHeadColor;
+          color: color-get(text-light);
         }
       }
     }

@@ -3,21 +3,24 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import { Navbar } from '../home/component';
-import SmallScreenSideNav from './sidenav/SmallScreenSideNav';
-import SideNav from './sidenav';
 import Profile from './profile';
 import Setting from './setting';
 import DrawingBoard from './drawing-board';
 import Connection from './connection';
 import Class from '../class/Class';
 import Appointment from './appointment';
-import { Blog } from '../blog';
+import Blog from './blog';
 import { Spinner } from '../../common';
 import OrganizationDashboard from './organizationDashboard';
 import Courses from './course';
+import SmallScreenSideNav from './sidenav/SmallScreenSideNav';
+import SideNav from './sidenav';
 
 class HomePage extends Component {
-  state = {};
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
 
   render() {
     const { account, match } = this.props;
@@ -25,7 +28,6 @@ class HomePage extends Component {
     if (!account.sessionId) return <Redirect to="/" />;
     if (!account.user) return <Spinner />;
     if (account.user.slug !== match.params.id) return <Redirect to="/" />;
-
     return (
       <>
         <Navbar />

@@ -5,7 +5,7 @@ import _ from 'lodash';
 import client from '../../../socket';
 import * as actions from '../../../actions';
 import Tools from './Tools';
-import { minimizeCanvas, maximizeCanvas } from './helper-functions';
+import { minimizeElement, maximizeElement } from './helper-functions';
 
 const fabric = require('fabric');
 
@@ -26,10 +26,7 @@ class DrawingBoard extends Component {
       canvasHistory: [],
       canvasDeleteHistory: [],
       redoing: false,
-      screenSize: {
-        height: 500,
-        width: 500,
-      }
+      screenSize: { height: 500, width: 500 },
     };
     this.previousPoint = { x: 0, y: 0 };
   }
@@ -49,20 +46,10 @@ class DrawingBoard extends Component {
       this.onMouseUp(e);
     });
 
-    canvas.on('object:added', (e) => {
-      this.canvasObjectAltered(e);
-    });
-
-    canvas.on('object:modified', (e) => {
-      this.canvasObjectAltered(e);
-    });
-
+    canvas.on('object:added', (e) => this.canvasObjectAltered(e));
+    canvas.on('object:modified', (e) => this.canvasObjectAltered(e));
     this.setState({ apis, canvas });
-
-    updateNav({
-      schema: 'sideNav',
-      data: { name: 'Drawing Board' },
-    });
+    updateNav({ schema: 'sideNav', data: { name: 'Drawing Board' } });
 
     // listen for escape when fullscreen
     document.getElementById('drawingWrapper').addEventListener('fullscreenchange', this.changeFullScreen);
@@ -369,9 +356,9 @@ class DrawingBoard extends Component {
   toggleMaximization = () => {
     const { maximize } = this.state;
     if (!maximize) {
-      maximizeCanvas(document.getElementById("drawingWrapper"));
+      maximizeElement(document.getElementById("drawingWrapper"));
     } else {
-      minimizeCanvas();
+      minimizeElement();
     }
     this.setState({ maximize: !maximize });
   }
@@ -432,7 +419,7 @@ class DrawingBoard extends Component {
       apis, rect, maximize,
       screenSize,
     } = this.state;
-    const { database, account, addDatabaseSchema } = this.props;
+    const { database, account, addDatabaseSchema, updateNav } = this.props;
     return (
       <div className="drawing-board bro-right">
         <div className="drawing-wrapper" id="drawingWrapper">
@@ -467,6 +454,7 @@ class DrawingBoard extends Component {
               fileUpload={this.fileUpload}
               canvas={canvas}
               maximize={maximize}
+              updateNav={updateNav}
               addDatabaseSchema={addDatabaseSchema}
             />
           </div>

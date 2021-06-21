@@ -1,7 +1,6 @@
 import lodash from 'lodash';
 import db from '../../../db';
 import findUserDetail from '../findUserDetails';
-import findBlogDetails from '../findBlogDetails';
 import getPopular from '../getPopular';
 import getEmptySearch from './getEmptySearch';
 import validateToken from '../../../auth/validateToken';
@@ -27,14 +26,10 @@ export default async (keyword, country, industry, skill, sessionId) => {
     // console.log('all keyword', keywordArrtemp);
     const keywordArr = keywordArrtemp.filter(key => key.length > 0);
     // console.log('keywordArr', keywordArr);
-    let finalBlogDetals = [];
+    let finalOrganization = [];
     const res = await db.execute(async ({ exec }) => {
-      if (!country && !industry) {
-        const allBlogResult = await exec(`SELECT * FROM Blog WHERE title LIKE '%${keyword}%' AND [saveStatus]=?`, ['publish']);
-        const allBologDetailsPrmises = [];
-        allBlogResult.forEach(b => allBologDetailsPrmises.push(findBlogDetails(b.id, b.userId)));
-        const allBlogDetails = await Promise.all(allBologDetailsPrmises);
-        finalBlogDetals = allBlogResult.map((blog, idx) => ({ blog, ...allBlogDetails[idx] })) || [];
+      if (!industry) {
+        finalOrganization = await exec(`SELECT * FROM Organization WHERE name LIKE '%${keyword}%'`, []);
       }
 
       // console.log('Search Resuslt for Blog', allBlogResult);
@@ -120,7 +115,6 @@ export default async (keyword, country, industry, skill, sessionId) => {
       finalUsers.filter(u => u).forEach(id => finalUserListPromises.push(findUserDetail(id, 'all')));
       const finalUserList = await Promise.all(finalUserListPromises);
       let allUserResult = [];
-      let allBlogResult = [];
       let popularUsers = [];
 
       if (finalUserList.length > 0) {
@@ -136,20 +130,14 @@ export default async (keyword, country, industry, skill, sessionId) => {
         // allUserResult = popular.users;
       }
 
-      if (finalBlogDetals.length > 0) {
-        allBlogResult = finalBlogDetals;
-      } else {
-        const popular = await getPopular();
-        allBlogResult = popular.blogs;
-      }
-      if (sessionId) { 
+      if (sessionId) {
         const user = validateToken(sessionId);
         allUserResult = allUserResult.filter(u => u.user.id !== user.id);
         popularUsers = popularUsers.filter(u => u.user.id !== user.id);
-        allBlogResult = allBlogResult.filter(b => b.blog.userId !== user.id);
+        // allBlogResult = allBlogResult.filter(b => b.blog.userId !== user.id);
       }
-      const finalVerifiedBlogs = allBlogResult.filter(b => b.blog.user.type === 'verified');
-      return { blogs: finalVerifiedBlogs, users: allUserResult, popularUsers };
+      finalOrganization = finalOrganization.filter(o => !o.deleteStatus && o.slug);
+      return { organizations: finalOrganization, users: allUserResult, popularUsers };
     });
     // console.log('search response', res);
     return res;

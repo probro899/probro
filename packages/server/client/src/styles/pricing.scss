@@ -1,29 +1,8 @@
-@import './config.scss';
+@import "./config.scss";
 
 .pc-pricing-plan {
-  margin-top: 100px;
   padding-top: 40px;
   min-height: calc(100vh - #{$navbarHeight} - #{$footerHeight});
-  .pc-price-header-wrapper {
-    text-align: center;
-    margin-bottom: 20px;
-    .pc-price-header {
-      @media screen and (max-width: 767px) {
-        display: none;
-      }
-    }
-
-    .pc-price-subheader {
-      color: $subHeadColor;
-      font-size: 16px;
-      font-weight: 600;
-      text-transform: uppercase;
-      margin-bottom: 10px;
-    }
-    @media screen and (min-width: 768px) {
-      margin-bottom: 50px;
-    }
-  }
   .pc-cardlist-wrapper {
     display: flex;
     flex-wrap: wrap;
@@ -43,33 +22,46 @@
         .pc-price-name-and-desc {
           text-align: center;
           h4 {
-            padding-top: 32px;
             font-size: 32px;
             font-weight: 600;
             text-transform: capitalize;
+            margin-bottom: rem(5);
           }
           p {
-            min-height: 68px;
-            min-width: 286px;
-            padding: 8px 32px 0;
+            min-height: rem(42);
           }
         }
         .pc-plan-feature-list {
-          margin: 16px 0;
-          padding: 16px;
+          margin: rem(10) 0;
+          padding: rem(12);
           background-color: #fafbfc;
           ul {
             li {
               display: flex;
-              margin: 4px;
+              margin: rem(4) 0;
+              position: relative;
+              padding-left: rem(15);
+              padding-right: rem(15);
               img {
-                margin-right: 4px;
+                margin-right: rem(6);
                 margin-top: 2px;
                 width: 15px;
                 height: 15px;
+                position: absolute;
+                left: 0;
               }
-              p {
-                font-size: 14px;
+              .price-info {
+                display: flex;
+                justify-content: space-between;
+                p {
+                  font-size: rem(14);
+                  margin-left: rem(3);
+                }
+                .price-stats {
+                  font-weight: 600;
+                  position: absolute;
+                  right: 0;
+                }
               }
             }
           }
@@ -77,7 +69,6 @@
         .pc-price-and-submit {
           display: flex;
           flex-direction: column;
-          margin-bottom: 8px;
           .pc-plan-price {
             display: flex;
             justify-content: center;
@@ -85,7 +76,7 @@
             .pc-price {
               font-size: 40px;
               font-weight: 600;
-              color: $headingColor;
+              color: color-get(text-dark);
             }
             .pc-plan-month-user {
               margin-left: 8px;
@@ -96,10 +87,13 @@
             margin: 8px;
           }
         }
+        .pc-card {
+          padding: rem(16);
+        }
       }
 
       @media screen and (min-width: 544px) {
-        max-width: 320px;
+        max-width: 340px;
       }
     }
   }

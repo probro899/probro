@@ -1,13 +1,13 @@
 import React from 'react';
 import axios from 'axios';
 import PropTypes from 'prop-types';
+import { AiOutlineBarChart } from 'react-icons/ai';
 import captureCanvas from './captureCanvas';
 import DrawChart from './drawChart';
 import Table from '../../../common/Table';
 import findTableData from './helper-functions/findTableData';
 import { ENDPOINT } from '../../../config';
 import Popup from '../../../common/Form/Popup';
-import { AiOutlineBarChart } from "react-icons/ai";
 import { Button } from '../../../common/utility-functions/Button/Button';
 import Spinner from '../../../common/spinner';
 
@@ -32,7 +32,6 @@ class Report extends React.Component {
     this.setState({ loading: true });
     const cvs = document.getElementById('report-chart');
     const response = await captureCanvas({ ...this.props, canvas: cvs, boardDetail, tableData });
-    console.log('response pdf', response);
     response.images.map(async (obj) => {
       try {
         await axios.post(`${ENDPOINT}/web/delete-file`, { token: account.sessionId, content: 'report', fileName: obj });
@@ -47,9 +46,10 @@ class Report extends React.Component {
   }
 
   render() {
-    const { isOpen, onClose, boardId, boards, users, boardMembers } = this.props;
+    // console.log('Props in report', this.props);
+    const { isOpen, onClose, boardId, boards, boardMembers, board } = this.props;
     const { boardActivities, error, boardCommunicationActivities, loading, pdfUrl } = this.state;
-    const boardName = boards.byId[boardId].name;
+    const boardName = board ? board.name : (boardId && boards.byId[boardId].name);
     const boardMemberList = Object.values(boardMembers.byId).filter(bm => bm.boardId === boardId && !bm.deleteStatus);
     const tableData = boardActivities ? boardMemberList.map(u => findTableData(u.user.user, boardActivities, boardCommunicationActivities)) : [];
     return (

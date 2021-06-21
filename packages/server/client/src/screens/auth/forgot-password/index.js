@@ -12,15 +12,16 @@ class Forget extends Component {
         <Navbar />
         <div className="o-log-or-reg">
           <div className="log-or-reg">
-            <div className="reg-box-header">
-              <h1>Recover your password</h1>
-
-            </div>
-            <Forgot />
-            <p className="login-in-link">
-              Already have an account?
+            <div className="pc-card">
+              <div className="reg-box-header">
+                <h1>Recover your password</h1>
+              </div>
+              <Forgot />
+              <p className="login-in-link">
+                Already have an account?
               <Link to="/login">Log in</Link>
-            </p>
+              </p>
+            </div>
           </div>
         </div>
         <Footer />

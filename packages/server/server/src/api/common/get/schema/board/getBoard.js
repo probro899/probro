@@ -16,6 +16,7 @@ export default async function getBoard(boardId) {
       boardColumnCardDescription,
       boardColumnCardTag,
       boardMember,
+      taskParticipant,
     } = getBoardRes;
 
     const boardMemeberWithActiveStatus = isUsersActiveStatus(session.getChannel('Main'), boardMember);
@@ -27,8 +28,10 @@ export default async function getBoard(boardId) {
     session.dispatch(schema.add('BoardColumnCardDescription', boardColumnCardDescription));
     session.dispatch(schema.add('BoardColumnCardTag', boardColumnCardTag));
     session.dispatch(schema.add('BoardMember', boardMemeberWithActiveStatus));
+    session.dispatch(schema.add('TaskParticipant', taskParticipant));
     return { api: 'getBoard', boardId, status: 200 };
   } catch (e) {
     console.error('Error in getBoard', e);
   }
 }
+ 

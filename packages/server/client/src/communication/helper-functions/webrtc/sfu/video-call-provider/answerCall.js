@@ -9,6 +9,7 @@ export default async (mediaType, props) => {
     const janusObj = webRtc.janus;
     if (janusObj) {
       const { oneToOneCall } = janusObj;
+      // console.log('janusObj', janusObj);
       if (oneToOneCall) {
         const createAnswerRes = await new Promise((resolve, reject) => {
           oneToOneCall.createAnswer(
@@ -17,12 +18,14 @@ export default async (mediaType, props) => {
               media: janusMediaSelector(mediaType),
               iceRestart: true,
               success: (jsep) => {
+                console.log('answer success');
                 const body = { request: 'accept' };
                 oneToOneCall.send({ message: body, jsep });
                 oneToOneCall.data({ text: JSON.stringify({ callType: mediaType, uid: account.user.id }) });
                 resolve({ jsep, oneToOneCall });
               },
               error: (error) => {
+                console.error('error in answer', error);
                 reject(error);
               },
             }

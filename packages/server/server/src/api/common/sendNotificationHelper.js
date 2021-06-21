@@ -2,7 +2,7 @@
 import sendNotification from './sendNotification';
 import mainBody from '../../mailer/html/mailBody';
 import databaseCache from '../../cache/database/cache';
- 
+
 const dataPropvider = (table, id) => {
   return databaseCache.get(table).find(b => b.id === id);
 };
@@ -97,6 +97,31 @@ const messageBody = (message, record) => {
       return {
         body: `${user.firstName} deleted tag on card "${card.name}" in class ${board.name}`,
         title: 'Delete Tag',
+      };
+    case 'createParticipant':
+      return {
+        body: `${user.firstName} add participant on card "${card.name}" in class ${board.name}`,
+        title: 'ADD Participant',
+      };
+    case 'deleteParticipant':
+      return {
+        body: `${user.firstName} delete participant on card "${card.name}" in class ${board.name}`,
+        title: 'Delete Participant',
+      };
+    case 'createAppointment':
+      return {
+        body: `${user.firstName} Add Appointment in class ${board.name}`,
+        title: 'Add Appointment',
+      };
+    case 'updateAppointment':
+      return {
+        body: `${user.firstName} Update Appointment in class ${board.name}`,
+        title: 'Update Appointment',
+      };
+    case 'deleteAppointment':
+      return {
+        body: `${user.firstName} Delete Appointment in class ${board.name}`,
+        title: 'Delete Appointment',
       };
     default:
       return null;

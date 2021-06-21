@@ -1,16 +1,3 @@
-@font-face {
-    font-family: "Mark Pro";
-    src: url("/assets/fonts/mark-pro/Mark-Pro-Bold.ttf") format("truetype");
-    font-weight: 700;
-    font-style: normal;
-}
-@font-face {
-    font-family: "Eina";
-    src: url("/assets/fonts/eina/Eina01-Regular.ttf") format("truetype");
-    font-weight: 400;
-    font-style: normal;
-}
-
 $fonts: (
     primary: (
         family: (
@@ -80,6 +67,25 @@ $text-styles: (
         line-height: 16px,
     ),
 );
+
+@font-face {
+    font-family: "Mark Pro";
+    src: url("/assets/fonts/mark-pro/Mark-Pro-Bold.ttf") format("truetype");
+    font-weight: 700;
+    font-style: normal;
+}
+@font-face {
+    font-family: "Rza";
+    src: url("/assets/fonts/rza/rza-regular.ttf") format("truetype");
+    font-weight: 700;
+    font-style: normal;
+}
+@font-face {
+    font-family: "Eina";
+    src: url("/assets/fonts/eina/Eina01-Regular.ttf") format("truetype");
+    font-weight: 400;
+    font-style: normal;
+}
 
 @function font-weight($weight, $type: primary) {
     $font: map-get($fonts, $type);

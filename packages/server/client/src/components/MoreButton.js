@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Menu, MenuItem } from '../common/Menu';
 import { FiMoreHorizontal } from 'react-icons/fi';
-import { MdEdit } from "react-icons/md";
-import { AiFillDelete } from "react-icons/ai";
+import { MdEdit } from 'react-icons/md';
+import { AiFillDelete } from 'react-icons/ai';
+import { Menu, MenuItem } from '../common/Menu';
 import Popover from '../common/Popover';
 // more button popover here id holds the id of the board
 
@@ -34,13 +34,23 @@ const SmallMenu = (onclick, toggleOpen, id) => {
 class MoreButton extends React.Component {
   state = { isOpen: false };
 
-  toggleOpen = () => {
+  shouldComponentUpdate(nextProps, nextState) {
+    if (nextState.isOpen === this.state.isOpen && nextProps.id === this.props.id) {
+      return false;
+    }
+    return true;
+  }
+
+  toggleOpen = (popover=null, prev=null) => {
     const { isOpen } = this.state;
-    this.setState({ isOpen: !isOpen });
+    if (popover) {
+      this.setState({ isOpen: prev });
+    } else {
+      this.setState({ isOpen: !isOpen });
+    }
   }
 
   render() {
-    // here id is the identifier of the container
     const { onMore, id } = this.props;
     const { isOpen } = this.state;
     return (

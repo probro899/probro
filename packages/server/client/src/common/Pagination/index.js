@@ -1,6 +1,6 @@
 import React from 'react';
-import { Button } from '../../common/utility-functions/Button/Button';
 import { FiChevronRight, FiChevronLeft } from "react-icons/fi";
+import { Button } from '../../common/utility-functions/Button/Button';
 
 function Pagination(props) {
     const range = [];
@@ -29,7 +29,7 @@ function Pagination(props) {
                                     type="button"
                                     buttonStyle={props.page === i ? "btn--primary--solid" : "btn--primary--outline"}
                                     buttonSize="btn--small"
-                                    title={i}
+                                    title={String(i)}
                                 />
                             </li>)
                     }

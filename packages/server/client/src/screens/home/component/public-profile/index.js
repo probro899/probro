@@ -15,102 +15,81 @@ import { Spinner } from '../../../../common';
 import RoundPicture from '../../../../components/RoundPicture';
 import getName from '../../../../common/utility-functions/getName';
 import { Button } from '../../../../common/utility-functions/Button/Button';
-import BlogSection from './blogSection';
 import { GET_USER } from '../../../../queries';
 import clientQuery from '../../../../clientConfig';
 import { VerifiedBadge } from '../../../../common/VerifiedBadge';
 import ReadMoreReadLess from '../../../../common/ReadMoreReadLess';
-import CourseSection from './courseSection';
+import PopularOnPc from '../../../../common/PopularOnPc';
+import ReactHelmet from '../../../../common/react-helmet';
 
 class PublicProfile extends React.Component {
   constructor(props) {
     super(props);
-    const { updateNav } = this.props;
-    updateNav({ schema: 'mainNav', data: { name: '' } });
-    this.state = {
-      apis: null,
-      loading: true,
-      data: {},
-    };
+    this.state = { apis: null, loading: true, data: {} };
   }
 
-  async componentDidMount() {
-    const { match, account, updateNav } = this.props;
+  componentDidMount() {
+    const { account } = this.props;
+    this.loadData();
+    if (account.user) {
+      this.loadApis();
+    }
+  }
+
+  componentWillReceiveProps(nextProps, nextState) {
+    const { match, account } = this.props;
+    const { apis } = this.state;
+    if (nextProps.match.params.userId !== match.params.userId) {
+      this.loadData();
+    }
+    if (nextProps.account.user !== account.user) {
+      this.loadData();
+    }
+    if (nextProps.account.user && !apis) this.loadApis();
+  }
+
+  loadApis = async () => {
     try {
-      if (account.user) {
-        const apis = await client.scope('Mentee');
-        this.setState({ apis })
-      }
+      const apis = await client.scope('Mentee');
+      this.setState({ apis });
+    } catch (e) {
+      console.info('server error');
+    }
+  }
+
+  loadData = async () => {
+    const { match } = this.props;
+    this.setState({ loading: true });
+    try {
       const { data, loading, error } = await clientQuery.query({ query: GET_USER, variables: { userSlug: match.params.userId } });
       if (data) {
-        this.setState({
-          data: data.getUser,
-          loading: false,
-        });
-        updateNav({ schema: 'page', data: { title: getName(data.getUser) } });
+        console.info('get user', data);
+        const { firstName, lastName, middleName, slug, id } = data.getUser;
+        const userObj = { firstName, lastName, middleName, slug, id };
+        this.setState({ data: { ...data.getUser, blogs: data.getUser.blogs.map(o => ({ ...o, user: userObj })) }, loading: false });
       }
     } catch (e) {
       console.log('Error', e);
     }
   }
 
-  async componentWillReceiveProps(nextProps, nextState) {
-    const { match, updateNav } = this.props;
-    const { apis, isLogin } = this.state;
-    if (nextProps.match.params.userId !== match.params.userId) {
-      this.setState({
-        loading: true,
-      });
-      try {
-        const { data, loading, error } = await clientQuery.query({ query: GET_USER, variables: { userSlug: match.params.userId } });
-        if (data) {
-          this.setState({
-            data: data.getUser,
-            loading: false,
-          });
-          updateNav({ schema: 'page', data: { title: getName(data.getUser) } });
-        }
-      } catch (e) {
-        console.log('Error', e);
-      }
-    }
-
-    if (nextProps.account.user && !apis) {
-      const apis = await client.scope('Mentee');
-      this.setState({ apis })
-    }
-  }
-
-  componentWillUnmount() {
-    const { updateNav } = this.props;
-    updateNav({ schema: 'page', data: { title: 'Proper Class' } });
-  }
-
   render() {
-    const {
-      account,
-      database, updateWebRtc, addDatabaseSchema,
-      updateDatabaseSchema,
-      webRtc,
-    } = this.props;
+    const { account, database, updateWebRtc, addDatabaseSchema, updateDatabaseSchema, webRtc, match } = this.props;
     const { loading, data, apis } = this.state;
     if (loading) return <Spinner />;
     const userDetails = data.userDetail || {};
     const { userEducation, userWorkExperience } = data;
     const imgUrl = userDetails.coverImage ? `${ENDPOINT}/assets/user/${10000000 + parseInt(data.id, 10)}/profile/${userDetails.coverImage}` : '/assets/graphics/default-cover.jpg';
     const editCoverUrl = userDetails.coverEdit && `${ENDPOINT}/assets/user/${10000000 + parseInt(data.id, 10)}/profile/${userDetails.coverEdit}`;
-    // console.log("data", data);
     return (
       <>
+        <ReactHelmet match={match} headerData={{ firstName: data.firstName, lastName: data.lastName, middleName: data.middleName, type: data.type }} />
         <Navbar />
         <div className="public-profile">
           <div className="main-rt-section">
             <div className="cover-pic">
-              {
-                editCoverUrl ? <img alt="cover profile of the user" src={editCoverUrl} />
-                  : (
-                    <img alt="cover profile of the user" src={imgUrl} />
-                  )
+              {editCoverUrl ? <img alt="cover profile" src={editCoverUrl} />
+                : <img alt="cover profile" src={imgUrl} />
               }
             </div>
 
@@ -138,19 +117,18 @@ class PublicProfile extends React.Component {
                         />
                       )
                     }
-                    {!account.user
-                      && (
-                        <div className="con">
-                          <Link to="/login">
-                            <Button
-                              type="button"
-                              buttonSize="btn--medium"
-                              buttonStyle="btn--primary--outline"
-                              title="Connect"
-                            />
-                          </Link>
-                        </div>
-                      )}
+                    {!account.user && (
+                      <div className="con">
+                        <Link to="/login">
+                          <Button
+                            type="button"
+                            buttonSize="btn--medium"
+                            buttonStyle="btn--primary--outline"
+                            title="Connect"
+                          />
+                        </Link>
+                      </div>
+                    )}
                   </div>
                 </div>
                 <div className="top-details">
@@ -162,35 +140,33 @@ class PublicProfile extends React.Component {
                     <div className="location">
                       <BiCurrentLocation size={20} />
                       <span className="country">
-                        {' '}
-                        {userDetails.address ? userDetails.address : 'Kathmandu, Nepal'}
+                        {' '}{userDetails.address ? userDetails.address : '---'}
                       </span>
                     </div>
                     <div className="bio">
-                      {userDetails.bio ? <p><ReadMoreReadLess>{userDetails.bio}</ReadMoreReadLess></p> : <p style={{ color: '#696969' }}>No bio added</p>}
+                      {userDetails.bio ? <p><ReadMoreReadLess text={userDetails.bio} /></p> : <p style={{ color: '#696969' }}>No bio added</p>}
                     </div>
                   </div>
                 </div>
               </div>
               <div className="main-body">
                 <div className="education">
-                  <h2 className="p-top">
-                    Education
-                  </h2>
+                  <div className="pc-content-header">
+                    <h2 className="pc-content-header__title">
+                      Education
+                    </h2>
+                  </div>
                   <div className="p-edu-list">
                     {userEducation.length !== 0 ? (
                       <div className="p-edu-list">
                         {
                           userEducation.map(obj => (
-                            <div className="p-edu-list-i" key={obj.id}>
-                              <img src="/assets/graphics/university.svg" alt="school icon" />
-                              <div className="edu-details">
-                                <span className="p-name-i">{obj.degree}</span>
-                                <br />
-                                <span className="address">{obj.address}</span>
-                                <br />
-                                <span className="p-timeline">{`${moment(obj.startTime, 'DD/MM/YYYY').format("MMM DD, YYYY")} - ${moment(obj.endTime, 'DD/MM/YYYY').format("MMM DD, YYYY")}`}</span>
-                                <br />
+                            <div className="pc-content-list" key={`ed-${obj.id}`}>
+                              <img src="/assets/graphics/university.svg" alt="school icon" className="pc-content-list__image" />
+                              <div className="pc-list-details">
+                                <h3 className="pc-list-details__title">{obj.degree}</h3>
+                                <p className="pc-list-details__company">{obj.address}</p>
+                                <p className="pc-list-details__timeline">{`${moment(obj.startTime, 'DD/MM/YYYY').format("MMM DD, YYYY")} - ${moment(obj.endTime, 'DD/MM/YYYY').format("MMM DD, YYYY")}`}</p>
                               </div>
                             </div>
                           ))
@@ -202,28 +178,23 @@ class PublicProfile extends React.Component {
                   </div>
                 </div>
                 <div className="experience">
-                  <h2 className="p-top">
-                    Experience
-                  </h2>
+                  <div className="pc-content-header">
+                    <h2 className="pc-content-header__title">
+                      Experience
+                    </h2>
+                  </div>
                   <div className="p-exp-list">
                     {userWorkExperience.length !== 0 ? (
                       <div className="p-edu-list">
                         {
                           userWorkExperience.map(obj => (
-                            <div className="p-exp-list-i" key={obj.id}>
-                              <img src="/assets/graphics/office.svg" alt="school icon" />
-                              <div className="exp-details">
-                                <span className="p-title-i">{obj.title}</span>
-                                <br />
-                                <span className="p-company-i">{obj.company}</span>
-                                <br />
-                                <span className="p-timeline">{`${moment(obj.startTime, 'DD/MM/YYYY').format("MMM DD, YYYY")} - ${obj.currentWorking ? 'Currently working' : moment(obj.endTime, 'DD/MM/YYYY').format("MMM DD, YYYY")}`}</span>
-                                <br />
-                                <span>
-                                  <ReadMoreReadLess>
-                                    {obj.summary}
-                                  </ReadMoreReadLess>
-                                </span>
+                            <div className="pc-content-list" key={`exp-${obj.id}`}>
+                              <img src="/assets/graphics/office.svg" alt="school icon" className="pc-content-list__image" />
+                              <div className="pc-list-details">
+                                <h3 className="pc-list-details__title">{obj.title}</h3>
+                                <p className="pc-list-details__company">{obj.company}</p>
+                                <p className="pc-list-details__timeline">{`${moment(obj.startTime, 'DD/MM/YYYY').format("MMM DD, YYYY")} - ${obj.currentWorking ? 'Currently working' : moment(obj.endTime, 'DD/MM/YYYY').format("MMM DD, YYYY")}`}</p>
+                                <p className="pc-list-details__description"><ReadMoreReadLess text={obj.summary} /></p>
                               </div>
                             </div>
                           ))
@@ -234,25 +205,20 @@ class PublicProfile extends React.Component {
                   </div>
                 </div>
                 <div className="skills">
-                  <h2 className="p-top">
-                    Skills
-                  </h2>
+                  <h2 className="p-top">Skills</h2>
                   <div className="skills-container">
-                    {
-                      data.userSkill.length === 0 ? 'No Skills Added' : JSON.parse(data.userSkill[0].skill).map((skill, idx) => <span key={idx}>{skill}</span>)
-                    }
+                    {data.userSkill.length === 0 ? 'No Skills Added' : JSON.parse(data.userSkill[0].skill).map((skill, idx) => <span key={`sk-${idx}`}>{skill}</span>)}
                   </div>
                 </div>
-                {/* <Activities /> */}
               </div>
             </div>
           </div>
-          <div className="main-lt-section">
-            <div className="mentor-blogs-wrapper">
-              <CourseSection />
-              <BlogSection data={data} />
-            </div>
-          </div>
+          <PopularOnPc
+            blogs={data.blogs}
+            mentors={data.popularMentors}
+            courses={data.courses || []}
+            user={data}
+          />
         </div>
         <Footer />
       </>

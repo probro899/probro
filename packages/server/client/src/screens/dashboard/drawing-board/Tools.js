@@ -21,22 +21,12 @@ class Tools extends React.Component {
     this.fileInputRef = React.createRef();
   }
 
-  uploadImage = () => {
-    this.fileInputRef.current.click();
-  }
-
-  toggleTools = () => {
-    this.setState({
-      showTools: !this.state.showTools,
-    })
-  }
+  uploadImage = () => this.fileInputRef.current.click();
+  toggleTools = () => this.setState({ showTools: !this.state.showTools });
 
   saveImage = async (data) => {
-    const { canvas, account, addDatabaseSchema, apis } = this.props;
-    const dataUrl = canvas.toDataURL({
-      format: 'jpeg',
-      quality: 1,
-    });
+    const { canvas, account, addDatabaseSchema, apis, updateNav } = this.props;
+    const dataUrl = canvas.toDataURL({ format: 'jpeg', quality: 1 });
     const arr = dataUrl.split(',');
     const mime = arr[0].match(/:(.*?);/)[1];
     const bstr = window.atob(arr[1]);
@@ -57,10 +47,9 @@ class Tools extends React.Component {
           boardColumnCardId: parseInt(data.task, 10),
           url: res.data,
         };
-        const apiRes = await apis.addBoardColumnCardAttachment(
-          { ...info, broadCastId: `Board-${data.class}` }
-        );
+        const apiRes = await apis.addBoardColumnCardAttachment({ ...info, broadCastId: `Board-${data.class}` });
         addDatabaseSchema('BoardColumnCardAttachment', { ...info, user: { user: account.user }, id: apiRes });
+        updateNav({ schema: 'popNotification', data: { active: true, message: 'Congratulations! You have attached the current snapshot of Drawing Board', intent: 'success' } });
       }
       return { response: 200, message: 'Uploaded' };
     } catch (e) {
@@ -69,33 +58,12 @@ class Tools extends React.Component {
   }
 
   render() {
-    const {
-      draw,
-      drawActive,
-      clear,
-      textToggle,
-      anyObjectActive,
-      onDelete,
-      color,
-      colorChange,
-      fileUpload,
-      addRect,
-      text,
-      drawStraight,
-      straightLine,
-      toggleMaximization,
-      maximize,
-      rect,
-      database,
-      canvasUndo,
-      canvasRedo,
-      apis,
+    const { draw, drawActive, clear, textToggle, anyObjectActive, onDelete, color, colorChange,
+      fileUpload, addRect, text, drawStraight, straightLine, toggleMaximization,
+      maximize, rect, database, canvasUndo, canvasRedo, apis,
     } = this.props;
     return (
       <div className="draw-tools pc-draw-col">
-        {/* <div className="tool-label">
-          <span>Tools</span>
-        </div> */}
         <div className="tool-container pc-desktop">
           <div className="pc-create-tool pc-tool-group">
             <div className="pc-draw-btn-wrapper pc-draw-btn">

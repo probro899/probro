@@ -4,7 +4,7 @@ import database from './cache';
 const tableList = [
   'User', 'UserDetail', 'UserEducation', 'UserWorkExperience', 'UserPortal',
   'UserSkill', 'UserCarrierInterest',
-  'Board', 'BoardColumn', 'BoardColumnCard', 'BoardColumnCardAttachment', 'BoardColumnCardComment',
+  'Board', 'BoardColumn', 'BoardColumnCard', 'BoardColumnCardAttachment', 'BoardColumnCardComment', 'TaskParticipant',
   'BoardColumnCardDescription', 'BoardColumnCardTag', 'BoardMember',
   'Blog', 'BlogComment', 'BlogLike',
   'BoardMessage', 'BoardMessageSeenStatus',
@@ -14,6 +14,9 @@ const tableList = [
   'Package', 'PackageDescription', 'SellPackage',
   'Course', 'Section', 'Lecture', 'Resource', 'CourseEnroll', 'CoursePrice', 'StarRating', 'CourseCompleteHistory',
   'Appointment',
+  'CallForAction',
+  'OurPartner',
+  'BlogBookmark',
 ];
 
 async function initCacheDB() {

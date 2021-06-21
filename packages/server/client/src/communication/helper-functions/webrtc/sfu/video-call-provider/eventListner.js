@@ -8,11 +8,12 @@ import remoteHangupHandler from './remoteHangupHandler';
 import exceptionHandler from './exceptionHandler';
 import reRegistration from './userRegistration';
 import registrationInformer from './registrationInformer';
+import callUpgrader from './callUpgrader';
 
 export default (props, state) => (msg, jsep) => {
   try {
     const { webRtc } = store.getState();
-    console.log('on message event called', msg, jsep);
+    // console.log('on message event called', msg, jsep);
     const { localCallHistory } = webRtc;
     const { updateWebRtc } = props;
     const { janus } = webRtc;
@@ -29,15 +30,20 @@ export default (props, state) => (msg, jsep) => {
               registrationInformer(props, myusername);
             } else if (event === 'calling') {
               if (localCallHistory.chatHistory) {
-                console.log('calling event handler', webRtc);
                 const userId = localCallHistory.chatHistory.user.user.id;
                 updateWebRtc('connectedUsers', { ...webRtc.connectedUsers, [userId]: { ...webRtc.connectedUsers[userId], streams: [], status: 'ringing' } });
               }
             } else if (event === 'incomingcall') {
               inCommingCallHandler(props, state, msg, jsep);
             } else if (event === 'accepted') {
+              // console.log('accepted event fire', webRtc.hasMediaError);
+              // Temp fix Error in Audio call chrome
+              if (webRtc.hasMediaError) {
+                updateWebRtc('hasMediaError', false);
+                callUpgrader('audio');
+              }
               // setting bit rate after 2 sec call accepted
-              setTimeout(() => oneToOneCall.send({ message: { request: 'set', bitrate: 256000 } }), 2000);
+              setTimeout(() => oneToOneCall.send({ message: { request: 'set', bitrate: 512000 } }), 2000);
 
               // arrange ui by calling call accept func
               callAcceptHandler(props, msg);

@@ -1,27 +1,24 @@
 @import "../config.scss";
 
 //generic button
-$primary: #0056b8; //#4f6df5  //#0056B8
-$warning: #ec971f;
-$danger: #c9302c;
-$success: #449d44;
 $white: #fdfdfd;
 $dark: #181717;
 
 .btn {
-  border-radius: pixel-to-rem(20);
+  border-radius: rem(5);
   display: inline-block;
   cursor: pointer;
   position: relative;
   transition: transform 0.3s ease;
   font-family: font-family(secondary);
-  font-size: pixel-to-rem(16);
+  font-size: rem(16);
   font-weight: 500;
   width: 100%;
   height: 100%;
   border: none;
+  text-transform: capitalize;
   span {
-    font-size: pixel-to-rem(16);
+    font-size: rem(16);
   }
   .loader-wrapper {
     position: absolute;
@@ -34,7 +31,7 @@ $dark: #181717;
     align-items: center;
     justify-content: center;
     svg {
-      margin-right: pixel-to-rem(5);
+      margin-right: rem(5);
     }
   }
   &:disabled {
@@ -48,7 +45,7 @@ $dark: #181717;
   span {
     flex-direction: row-reverse;
     svg {
-      margin-left: pixel-to-rem(5);
+      margin-left: rem(5);
     }
   }
 }
@@ -57,7 +54,7 @@ $dark: #181717;
   border: none;
 }
 .btn-drawing-icon-danger {
-  background-color: #c9302c;
+  background-color: color-get(error);
   border: none;
   color: #fff;
 }
@@ -67,7 +64,7 @@ $dark: #181717;
 }
 
 .btn--primary--solid {
-  background-color: $primary;
+  background-color: color-get();
   color: $white;
   border: none;
   &:disabled {
@@ -75,19 +72,28 @@ $dark: #181717;
   }
 }
 
-.btn--warning--solid {
-  background-color: $warning;
+.btn--default--solid {
+  background-color: #fff;
   color: $dark;
+  border: none;
+  &:disabled {
+    color: lightgray;
+  }
+}
+
+.btn--warning--solid {
+  background-color: color-get(warn);
+  color: #fff;
   border: none;
 }
 .btn--success--solid {
-  background-color: $success;
+  background-color: color-get(success);
   color: $white;
   border: none;
 }
 
 .btn--danger--solid {
-  background-color: $danger;
+  background-color: color-get(error);
   color: $white;
   border: none;
   &:disabled {
@@ -96,10 +102,10 @@ $dark: #181717;
 }
 .btn-circle {
   background-color: transparent;
-  color: #286090;
-  border: pixel-to-rem(1) solid #286090;
+  color: color-get(primary);
+  border: rem(1) solid color-get(primary);
   &:hover {
-    background-color: $primary;
+    background-color: color-get();
     color: $white;
   }
   svg {
@@ -108,70 +114,70 @@ $dark: #181717;
 }
 .btn--circle-icons {
   border-radius: 50%;
-  height: pixel-to-rem(40);
-  width: pixel-to-rem(40);
+  height: rem(40);
+  width: rem(40);
   display: flex;
   justify-content: center;
   align-items: center;
   color: $white;
   border: none;
-  background-color: $primary;
+  background-color: color-get();
 }
 
 .btn--primary--outline {
   background-color: transparent;
-  color: $primary;
-  box-shadow: inset 0 0 0 pixel-to-rem(1) $primary;
+  color: color-get();
+  box-shadow: inset 0 0 0 rem(1) color-get();
   &:hover {
-    box-shadow: inset 0 0 0 pixel-to-rem(1.5) $primary;
+    box-shadow: inset 0 0 0 rem(1.5) color-get();
   }
 }
 
 .btn--warning--outline {
   background-color: transparent;
-  color: $warning;
-  box-shadow: inset 0 0 0 pixel-to-rem(1) $warning;
+  color: color-get(warn);
+  box-shadow: inset 0 0 0 rem(1) color-get(warn);
   &:hover {
-    box-shadow: inset 0 0 0 pixel-to-rem(1.5) $warning;
+    box-shadow: inset 0 0 0 rem(1.5) color-get(warn);
   }
 }
 .btn--success--outline {
   background-color: transparent;
-  color: $success;
-  box-shadow: inset 0 0 0 pixel-to-rem(1) $success;
+  color: color-get(success);
+  box-shadow: inset 0 0 0 rem(1) color-get(success);
   &:hover {
-    box-shadow: inset 0 0 0 pixel-to-rem(1.5) $success;
+    box-shadow: inset 0 0 0 rem(1.5) color-get(success);
   }
 }
 
 .btn--danger--outline {
   background-color: transparent;
-  color: $danger;
-  box-shadow: inset 0 0 0 pixel-to-rem(1) $danger;
+  color: color-get(error);
+  box-shadow: inset 0 0 0 rem(1) color-get(error);
   &:hover {
-    box-shadow: inset 0 0 0 pixel-to-rem(1.5) $danger;
+    box-shadow: inset 0 0 0 rem(1.5) color-get(error);
   }
 }
 
 .btn--small {
-  padding: pixel-to-rem(6) pixel-to-rem(12);
-  font-size: pixel-to-rem(16);
+  padding: rem(6) rem(12);
+  font-size: rem(16);
 }
 
 .btn--medium {
-  padding: pixel-to-rem(10) pixel-to-rem(20);
-  font-size: pixel-to-rem(18);
-  @media screen and (max-width: pixel-to-rem(767)) {
-    padding: pixel-to-rem(10) pixel-to-rem(15);
-    font-size: pixel-to-rem(16);
+  padding: rem(10) rem(20);
+  font-size: rem(18);
+  @media screen and (max-width: rem(767)) {
+    padding: rem(10) rem(15);
+    font-size: rem(16);
   }
 }
 
 .btn--large {
-  padding: pixel-to-rem(15) pixel-to-rem(30);
-  font-size: pixel-to-rem(20);
-  @media screen and (max-width: pixel-to-rem(767)) {
-    padding: pixel-to-rem(10) pixel-to-rem(15);
-    font-size: pixel-to-rem(16);
+  padding: rem(15) rem(30);
+  font-size: rem(20);
+  @media screen and (max-width: rem(767)) {
+    padding: rem(10) rem(15);
+    font-size: rem(16);
   }
 }

@@ -2,17 +2,16 @@ import React, { useEffect } from 'react';
 
 export default ({ content, rect, onClick, hPosition, vPosition, xAlign, yAlign }) => {
     const ref = React.createRef();
-
     useEffect(() => {
-        const click = (e) => {
-            if (!ref.current.contains(e.target)) {
-                onClick();
-            }
+      const click = (e) => {
+        if (!ref.current.contains(e.target)) {
+          onClick();
         }
-        document.addEventListener('mouseup', click);
-        return function cleanup() {
-          document.removeEventListener('mouseup', click);
-        };
+      }
+      document.addEventListener('mouseup', click);
+      return function cleanup() {
+        document.removeEventListener('mouseup', click);
+      };
     });
 
     let tx = '0', ty = '0';

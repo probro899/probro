@@ -1,7 +1,7 @@
 @import "../config.scss";
 
 .banner-container {
-  padding: pixel-to-rem(10) pixel-to-rem(25);
+  padding: rem(10) rem(25);
   margin: 0 auto;
   .banner-head {
     display: flex;
@@ -9,23 +9,23 @@
     justify-content: center;
     align-items: center;
     .page-sub-heading {
-      color: $subHeadColor;
-      font-size: pixel-to-rem(16);
+      color: color-get(text-light);
+      font-size: rem(16);
       font-weight: 600;
       text-transform: uppercase;
-      margin-bottom: pixel-to-rem(10);
-      @media screen and (max-width: pixel-to-rem(767)) {
-        font-size: pixel-to-rem(14);
+      margin-bottom: rem(10);
+      @media screen and (max-width: rem(767)) {
+        font-size: rem(14);
       }
     }
     .page-heading {
-      color: $headingColor;
-      font-size: pixel-to-rem(32);
+      color: color-get(text-dark);
+      font-size: rem(32);
       font-weight: 600;
       text-transform: uppercase;
       margin: 0;
-      @media screen and (max-width: pixel-to-rem(767)) {
-        font-size: pixel-to-rem(26);
+      @media screen and (max-width: rem(767)) {
+        font-size: rem(26);
       }
     }
   }
@@ -34,25 +34,25 @@
       display: flex;
       align-items: center;
       flex-wrap: wrap;
-      margin-left: pixel-to-rem(-15);
-      margin-right: pixel-to-rem(-15);
-      margin-bottom: pixel-to-rem(40);
-      @media screen and (max-width: pixel-to-rem(767)) {
-        margin-bottom: pixel-to-rem(20);
+      margin-left: rem(-15);
+      margin-right: rem(-15);
+      margin-bottom: rem(40);
+      @media screen and (max-width: rem(767)) {
+        margin-bottom: rem(20);
       }
       .banner-image {
         max-width: 50%;
         flex: 0 0 50%;
-        padding-left: pixel-to-rem(15);
-        padding-right: pixel-to-rem(15);
+        padding-left: rem(15);
+        padding-right: rem(15);
         img {
           height: 100%;
           width: 100%;
         }
       }
       .banner-content {
-        padding-left: pixel-to-rem(15);
-        padding-right: pixel-to-rem(15);
+        padding-left: rem(15);
+        padding-right: rem(15);
         display: flex;
         justify-content: center;
         flex-direction: column;
@@ -61,44 +61,44 @@
         text-align: left;
         .banner-title {
           h3 {
-            margin: 0 0 pixel-to-rem(5) 0;
-            font-size: pixel-to-rem(32);
+            margin: 0 0 rem(5) 0;
+            font-size: rem(32);
             font-weight: 400;
             line-height: 1.6;
             text-transform: capitalize;
-            color: $headingColor;
+            color: color-get(text-dark);
             text-align: left;
             font-weight: 600;
-            @media screen and (max-width: pixel-to-rem(1199)) {
-              font-size: pixel-to-rem(27);
+            @media screen and (max-width: rem(1199)) {
+              font-size: rem(27);
             }
-            @media screen and (max-width: pixel-to-rem(991)) {
-              font-size: pixel-to-rem(23);
+            @media screen and (max-width: rem(991)) {
+              font-size: rem(23);
             }
-            @media screen and (max-width: pixel-to-rem(767)) {
-              font-size: pixel-to-rem(20);
+            @media screen and (max-width: rem(767)) {
+              font-size: rem(20);
             }
           }
         }
         .banner-description {
           .pc-desc-list {
             li {
-              margin-bottom: pixel-to-rem(5);
-              margin-left: pixel-to-rem(15);
+              margin-bottom: rem(5);
+              margin-left: rem(15);
               position: relative;
-              color: $subHeadColor;
+              color: color-get(text-light);
               &::before {
                 content: "✓";
                 display: block;
-                height: pixel-to-rem(15);
-                width: pixel-to-rem(15);
+                height: rem(15);
+                width: rem(15);
                 position: absolute;
-                left: pixel-to-rem(-15);
+                left: rem(-15);
                 font-weight: 700;
-                color: $subHeadColor;
+                color: color-get(text-light);
               }
-              @media screen and (max-width: pixel-to-rem(767)) {
-                font-size: pixel-to-rem(14);
+              @media screen and (max-width: rem(767)) {
+                font-size: rem(14);
               }
             }
           }
@@ -107,7 +107,7 @@
               vertical-align: sub;
             }
             color: #444343;
-            font-size: pixel-to-rem(16);
+            font-size: rem(16);
             font-weight: 400;
             line-height: 1.8;
           }
@@ -118,13 +118,13 @@
       flex-direction: row-reverse;
     }
   }
-  @media screen and (max-width: pixel-to-rem(767)) {
+  @media screen and (max-width: rem(767)) {
     .banners {
       .banner {
         .banner-image {
           max-width: 100%;
           flex: 0 0 100%;
-          margin-bottom: pixel-to-rem(15);
+          margin-bottom: rem(15);
         }
         .banner-content {
           max-width: 100%;

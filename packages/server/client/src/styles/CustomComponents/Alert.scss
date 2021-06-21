@@ -1,43 +1,47 @@
 //alert
 .alert-info-wrapper {
 	.alert-info {
-		background-color: #80abdc;
-		color: #003c81;
+		background-color: color-get(info, 100);
+		color: color-get(info, 500);
 		border-color: transparent;
 		display: flex;
 	}
 	.alert {
-		padding: pixel-to-rem(16);
-		margin-bottom: pixel-to-rem(21);
-		border: pixel-to-rem(1) solid transparent;
+		padding: rem(16);
+		margin-bottom: rem(21);
+		border: rem(1) solid transparent;
 		text-align: left;
+		border-bottom: rem(3);
 		position: relative;
 		&.success {
-			background-color: #e6f2f5;
-			color: #003440;
+			background-color: color-get(success, 100);
+			color: color-get(success, 500);
+			border: rem(1) solid color-get(success, 300);
 		}
 		&.danger {
-			background-color: #f3a89b;
-			color: #612012;
+			background-color: color-get(error, 100);
+			color: color-get(error, 500);
+			border: rem(1) solid color-get(error, 300);
 		}
 		&.warning {
-			background-color: #f3ca8c;
-			color: #4d3105;
+			background-color: color-get(warn, 100);
+			color: color-get(warn, 500);
+			border: rem(1) solid color-get(warn, 300);
 		}
 	}
 	.close-alert {
 		position: absolute;
-		right: pixel-to-rem(8);
+		right: rem(8);
 		color: inherit;
 		opacity: 0.5;
 		cursor: pointer;
 	}
 
 	.info-icons {
-		padding: pixel-to-rem(2);
-		margin-top: pixel-to-rem(-1);
+		padding: rem(2);
+		margin-top: rem(-1);
 	}
 	.content {
-		padding: 0 pixel-to-rem(15);
+		padding: 0 rem(15);
 	}
 }

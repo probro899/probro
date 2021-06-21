@@ -7,7 +7,7 @@
   text-transform: none;
   margin-right: 20px;
   padding-left: 26px;
-  color: $headingColor;
+  color: color-get(text-dark);
   input {
     left: 0;
     opacity: 0;

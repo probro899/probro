@@ -1,0 +1,118 @@
+// Color configuration
+//
+// Colors are ascending from lightest to darkest(100 to 900).
+// 100 is the lightest, 500 is normal, and 900 being the darkest.
+
+$proper-class-colors: (
+    primary: (
+        100: #d3e3f6,
+        200: #a8c7ed,
+        300: #7caae3,
+        400: #518eda,
+        500: #2572d1,
+        600: #1e5ba7,
+        700: #175bb1,
+        800: #0f2e54,
+        900: #07172a,
+    ),
+    secondary: (
+        100: #ccebfa,
+        200: #99d7f6,
+        300: #66c3f1,
+        400: #33afed,
+        500: #009be8,
+        600: #007cba,
+        700: #005d8b,
+        800: #003e5d,
+        900: #001f2e,
+    ),
+    tertiary: (
+        100: #ccf2f8,
+        200: #99e5f0,
+        300: #66d7e9,
+        400: #33cae1,
+        500: #00bdda,
+        600: #0097ae,
+        700: #007183,
+        800: #004c57,
+        900: #00262c,
+    ),
+    text-dark: (
+        100: #eaeaec,
+        200: #aaacb1,
+        300: #7f828b,
+        400: #6a6d77,
+        500: #2a2f3d,
+    ),
+    text-light: (
+        100: #dee0e2,
+        200: #bcc1c5,
+        300: #9ba2a7,
+        400: #79838a,
+        500: #58646d,
+    ),
+    border: (
+        100: #f8f9f9,
+        200: #f2f2f3,
+        300: #ebecec,
+        400: #e5e5e6,
+        500: #d1d1d1,
+    ),
+    success: (
+        100: #f2fff7,
+        200: #a6d5ba,
+        300: #7ac098,
+        400: #4dab75,
+        500: #219653,
+        600: #1a7842,
+        700: #145a32,
+        800: #0d3c21,
+        900: #071e11,
+    ),
+    error: (
+        100: #fff6f6,
+        200: #f9b3b7,
+        300: #f58e94,
+        400: #f26870,
+        500: #ef424c,
+        600: #bf353d,
+        700: #8f282e,
+        800: #601a1e,
+        900: #300d0f,
+    ),
+    info: (
+        100: #f5f8ff,
+        200: #a9bdee,
+        300: #7e9de5,
+        400: #537cdd,
+        500: #285bd4,
+        600: #2049aa,
+        700: #18377f,
+        800: #102455,
+        900: #08122a,
+    ),
+    warn: (
+        100: #fffcf5,
+        200: #fadea1,
+        300: #f8cd71,
+        400: #f5bd42,
+        500: #f3ac13,
+        600: #c28a0f,
+        700: #92670b,
+        800: #614508,
+        900: #312204,
+    ),
+) !default;
+
+@function color-get($name: primary, $shade: 500) {
+    $set: map-get($proper-class-colors, $name);
+
+    @if not $shade {
+        $shade: 500;
+    }
+
+    @if not $set {
+        @error 'Name not found in colors';
+    }
+    @return map-get($set, $shade);
+}

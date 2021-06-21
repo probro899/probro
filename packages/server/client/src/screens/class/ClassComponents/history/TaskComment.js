@@ -1,4 +1,5 @@
 import React from 'react';
+import moment from 'moment';
 import PropTypes from 'prop-types';
 import { timeStampSorting } from '../../../../common/utility-functions';
 import DeletePopOver from '../../../../common/DeletePopOver';
@@ -8,24 +9,18 @@ import { ENDPOINT } from '../../../../config';
 import RoundPicture from '../../../../components/RoundPicture';
 import { FormTextArea } from '../../../../common/Form/FormTextArea';
 import { Button } from '../../../../common/utility-functions/Button/Button';
-// const profileIcon = require('../../../../assets//graphics/user.svg');
-import { AiOutlineClose, AiOutlineCheck } from "react-icons/ai";
 
 class TaskComment extends React.Component {
-  state = { deletePopover: false, editCommentId: null, comment: '', activeComment: {} };
+  constructor(props) {
+    super(props);
+    this.state = { deletePopover: false, editCommentId: null, comment: '', activeComment: {} };
+  }
 
   editComment = (com) => {
-    this.setState({
-      editCommentId: com.id,
-      comment: com.comment,
-    });
+    this.setState({ editCommentId: com.id, comment: com.comment });
   }
 
-  commentChange = (e) => {
-    this.setState({
-      comment: e.target.value,
-    });
-  }
+  commentChange = (e) => this.setState({ comment: e.target.value });
 
   saveComment = async () => {
     try {
@@ -33,9 +28,7 @@ class TaskComment extends React.Component {
       const { apis, updateDatabaseSchema, boardId } = this.props;
       await apis.updateBoardColumnCardComment([{ comment, broadCastId: `Board-${boardId}` }, { id: editCommentId }]);
       updateDatabaseSchema('BoardColumnCardComment', { comment, id: editCommentId });
-      this.setState({
-        editCommentId: null,
-      });
+      this.setState({ editCommentId: null });
     } catch (e) {
       console.error('Comment update error', e);
     }
@@ -52,12 +45,7 @@ class TaskComment extends React.Component {
     commentReply(`@${name} `);
   }
 
-  togglePopover = (com) => {
-    this.setState({
-      deletePopover: true,
-      activeComment: com,
-    });
-  }
+  togglePopover = (com) => this.setState({ deletePopover: true, activeComment: com })
 
   deleteComment = async (type) => {
     try {
@@ -67,19 +55,13 @@ class TaskComment extends React.Component {
         await apis.deleteBoardColumnCardComment({ id: activeComment.id, cardId: activeComment.boardColumnCardId, broadCastId: `Board-${boardId}` });
         deleteDatabaseSchema('BoardColumnCardComment', { id: activeComment.id });
       }
-      this.setState({
-        deletePopover: false,
-        activeComment: {},
-      });
+      this.setState({ deletePopover: false, activeComment: {} });
     } catch (e) {
       console.error('delete Comment error', e);
     }
   }
 
   getCommentUser = (com) => {
-    // const { userList, userDetailList } = this.props;
-    // const user = Object.values(userList.byId).find(obj => obj.id === com.userId);
-    // const userDetail = Object.values(userDetailList.byId).find(obj => obj.userId === com.userId);
     const { user, userDetail } = com.user;
     return { user, userDetail };
   }
@@ -92,18 +74,14 @@ class TaskComment extends React.Component {
     const name = userInfo.user.middleName ? `${userInfo.user.firstName} ${userInfo.user.middleName} ${userInfo.user.lastName}` : `${userInfo.user.firstName} ${userInfo.user.lastName}`;
     const imgUrl = userInfo.userDetail && userInfo.userDetail.image ? `${ENDPOINT}/assets/user/${10000000 + parseInt(userInfo.user.id, 10)}/profile/${userInfo.userDetail.image}` : '/assets//graphics/user.svg';
     return (
-      <div className="s-comment" style={{ backgroundColor: color }} key={com.id}>
-        <div className="img-con">
-          <RoundPicture imgUrl={imgUrl} />
-        </div>
+      <div className="s-comment" style={{ backgroundColor: color }} key={`com-${com.id}`}>
+        <div className="img-con"><RoundPicture imgUrl={imgUrl} /></div>
         <div className="com-con">
           <div className="com-auth">
-            <span style={{ fontSize: '16px', fontWeight: 'bold' }}>
-              {name}
-            </span>
+            <span style={{ fontSize: '16px', fontWeight: 'bold' }}>{name}</span>
             <small style={{ opacity: 0.8 }}>
               {' '}
-              {new Date(com.timeStamp).toDateString()}
+              {moment(com.timeStamp).format('DD MMM YYYY hh:mm A')}
             </small>
           </div>
           <div className="com-desc">
@@ -113,31 +91,31 @@ class TaskComment extends React.Component {
                   <div className="pc-comment-box">
                     <FormTextArea
                       fill
+                      resizable
                       small
                       style={{ fontSize: 16, padding: '2px' }}
                       placeholder="Put your comments."
                       value={comment}
+                      className="pc-text-area"
                       onChange={e => this.commentChange(e)}
                     />
                   </div>
                   <span className="buttons-group">
                     <Button
-                      icon={<AiOutlineCheck size={20} />}
                       type="button"
-                      buttonStyle="btn--success--outline"
+                      buttonStyle="btn--primary--outline"
                       buttonSize="btn--small"
+                      title="Save"
                       onClick={this.saveComment}
                     />
                     <Button
-                      icon={<AiOutlineClose size={20} />}
                       type="button"
                       buttonStyle="btn--danger--outline"
                       buttonSize="btn--small"
+                      title="Cancel"
                       onClick={() => this.setState({ editCommentId: null })}
                     />
                   </span>
-                  {/* <Button icon="tick" style={{ margin: '0px 5px' }} onClick={this.saveComment} intent="success" />
-                  <Button icon="cross" onClick={() => this.setState({ editCommentId: null })} /> */}
                 </div>
               )
             }
@@ -148,18 +126,18 @@ class TaskComment extends React.Component {
                 {
                   account.user.id === com.userId ? (
                     <div>
-                      <small className="primary" role="menu" tabIndex="0" onKeyDown={() => false} onClick={() => this.editComment(com)}>
+                      <small className="primary" onClick={() => this.editComment(com)}>
                         <u>Edit</u>
                       </small>
-                      <small className="danger" role="menu" tabIndex="0" onKeyDown={() => false} onClick={() => this.togglePopover(com)}>
+                      <small className="danger" onClick={() => this.togglePopover(com)}>
                         <u>Delete</u>
                       </small>
                     </div>
                   ) : (
-                      <small className="primary" role="menu" tabIndex="0" onKeyDown={() => false} onClick={() => this.replyComment(com)}>
-                        <u>Reply</u>
-                      </small>
-                    )
+                    <small className="primary" onClick={() => this.replyComment(com)}>
+                      <u>Reply</u>
+                    </small>
+                  )
                 }
               </div>
             )}
@@ -171,7 +149,6 @@ class TaskComment extends React.Component {
   render() {
     const { comments } = this.props;
     const { deletePopover } = this.state;
-    // console.log('coments in task comment component', comments);
     return (
       <div className="comments">
         <DeletePopOver isOpen={deletePopover} name="Comment" action={this.deleteComment} />

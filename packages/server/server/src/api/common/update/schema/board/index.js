@@ -1,11 +1,17 @@
 /* eslint-disable import/no-cycle */
+import _ from 'lodash';
 import update from '../../update';
 import db from '../../../../../db';
 import addBoardActivity from '../../../addBoardActivity';
+import orgClassHandler from './orgClassHandler';
 
-function updateBoard(records) {
+async function updateBoard(records) {
   try {
     const { session } = this;
+    if (!_.isArray(records)) {
+      const res = await orgClassHandler(this, records);
+      return res;
+    }
     // console.log('updateBoard func', records, session.values);
     const boardId = records[1].id;
     const record = records[0];
@@ -77,14 +83,15 @@ function updateBoardColumnCardComment(records) {
 }
 
 function updateBoardColumnCardDescription(records) {
+ 
   try {
     const { session } = this;
-  const broadCastArr = records[0].broadCastId.split('-');
-  const boardId = broadCastArr[broadCastArr.length - 1];
-  const record = records[0];
-  const { boardColumnCardId } = record;
-  update.call(this, 'BoardColumnCardDescription', record, records[1]);
-  addBoardActivity(this, db, { userId: session.values.user.id, boardId, message: 'updateDescription', descriptionId: records[1].id, cardId: boardColumnCardId, timeStamp: Date.now() });
+    const broadCastArr = records[0].broadCastId.split('-');
+    const boardId = broadCastArr[broadCastArr.length - 1];
+    const record = records[0];
+    const { boardColumnCardId } = record;
+    update.call(this, 'BoardColumnCardDescription', record, records[1]);
+    addBoardActivity(this, db, { userId: session.values.user.id, boardId, message: 'updateDescription', descriptionId: records[1].id, cardId: boardColumnCardId, timeStamp: Date.now() });
   } catch (e) {
     console.error('Error in updateBoardColumnCardDescription', e);
   }

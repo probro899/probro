@@ -2,14 +2,15 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { FiMoreHorizontal } from 'react-icons/fi';
+import { BiMessageAlt } from 'react-icons/bi';
+import { RiUserFollowFill, RiUserUnfollowFill } from 'react-icons/ri';
 import { getName } from '../../../common/utility-functions';
 import { DeletePopOver } from '../../../common';
 import { RoundPicture } from '../../../components';
 import { ENDPOINT } from '../../../config';
 import { Button } from '../../../common/utility-functions/Button/Button';
-import { BiMessageAlt } from "react-icons/bi";
-import { RiUserFollowFill, RiUserUnfollowFill } from "react-icons/ri";
 import Popover from '../../../common/Popover';
+import Card from '../../../common/Card';
 
 const DeleteButtonContainer = ({ callback }) => {
   return (
@@ -29,7 +30,7 @@ class Connecte extends React.Component {
   state = { loading: false, isOpen: false, deletePopover: false };
 
   getImage = (userDetail, user, activeStatus) => {
-    const imgUrl = userDetail && userDetail.image ? `${ENDPOINT}/assets/user/${10000000 + parseInt(userDetail.userId, 10)}/profile/${userDetail.image}` : '/assets//graphics/user.svg';
+    const imgUrl = userDetail && userDetail.image ? `${ENDPOINT}/assets/user/${10000000 + parseInt(user.user.id, 10)}/profile/${userDetail.image}` : '/assets//graphics/user.svg';
     return (
       <div className="img-con">
         <RoundPicture imgUrl={imgUrl} />
@@ -81,11 +82,7 @@ class Connecte extends React.Component {
       if (status === 'pending') {
         return (
           <div className="con-buttons">
-            <Button
-              title="pending"
-              // onClick={this.deleteRequest}
-              buttonSize="btn--small"
-            />
+            <Button title="pending" buttonSize="btn--small" />
             <Button
               title="cancel"
               buttonSize="btn--small"
@@ -147,7 +144,7 @@ class Connecte extends React.Component {
             </div>
           </div>
         </Popover>
-      </div >
+      </div>
     );
   }
 
@@ -169,26 +166,24 @@ class Connecte extends React.Component {
     const { deletePopover } = this.state;
     return (
       <div className="i-wrapper">
-        <DeletePopOver
-          isOpen={deletePopover}
-          action={this.removeConnection}
-          name={`${user.user.firstName} as your connection`}
-        />
-        <div className="i-result">
-          {this.getImage(userDetail, user, activeStatus)}
-          <div className="desc-con">
-            <p className="name">
-              {
-              }
-              <Link to={`/user/${user.user.slug}/`}>
-                {getName(user.user)}
-              </Link>
-            </p>
-            <p className="position">{userDetail && userDetail.headLine}</p>
-            <p className="location">{userDetail && userDetail.address ? userDetail.address : 'Kathmandu, Nepal'}</p>
-            <div className="con-config">{this.getConfigButtons()}</div>
+        <Card>
+          <DeletePopOver
+            isOpen={deletePopover}
+            action={this.removeConnection}
+            name={`${user.user.firstName} as your connection`}
+          />
+          <div className="i-result">
+            {this.getImage(userDetail, user, activeStatus)}
+            <div className="desc-con">
+              <p className="name">
+                <Link to={`/user/${user.user.slug}/`}>{getName(user.user)}</Link>
+              </p>
+              <p className="position">{userDetail && userDetail.headLine}</p>
+              <p className="location">{userDetail && userDetail.address ? userDetail.address : 'Kathmandu, Nepal'}</p>
+              <div className="con-config">{this.getConfigButtons()}</div>
+            </div>
           </div>
-        </div>
+        </Card>
       </div>
     );
   }
@@ -206,6 +201,5 @@ Connecte.propTypes = {
   mId: PropTypes.number.isRequired,
   status: PropTypes.string.isRequired,
 };
-
 
 export default Connecte;

@@ -1,10 +1,11 @@
 import React from 'react';
 
-const OverviewDescription = ({ title, content }) => {
+const OverviewDescription = ({ title, children }) => {
     return (
         <div className="course-overview-row description">
             <div className="row-title">{title}</div>
-            <div className="row-detail" dangerouslySetInnerHTML={{ __html: content }}>
+            <div className="row-detail">
+                {children}
             </div>
         </div>
     )

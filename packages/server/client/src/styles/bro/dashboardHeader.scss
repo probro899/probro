@@ -9,7 +9,7 @@
     .title {
         font-size: 24px;
         font-weight: bold;
-        color: $headingColor;
+        color: color-get(primary);
     }
     small {
         color: $lightTextColor;
@@ -18,7 +18,7 @@
         }
     }
     .total-connection{
-        color: $headingColor;
+        color: color-get(text-dark);
     }
 }
 

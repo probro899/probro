@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Drawer from '../../../../common/drawer';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import * as actions from '../../../../actions';
 
 const logOutHandler = (apis) => {
@@ -14,23 +14,24 @@ const logOutHandler = (apis) => {
   }
 };
 
-const DropMenu = ({ account, activeNav, smallScreenToggle, apis }) => {
+const DropMenu = ({ account, smallScreenToggle, apis }) => {
   return (
     <div className="pc-drop-menu">
-      <Link onClick={smallScreenToggle} to="/" className={activeNav === 'properClass' ? 'pc-drop-menu-link active' : 'pc-drop-menu-link'}>Home</Link>
-      <Link onClick={smallScreenToggle} to="/archive" className={activeNav === 'archive' ? 'pc-drop-menu-link active' : 'pc-drop-menu-link'}>Archive</Link>
-      <Link onClick={smallScreenToggle} to="/search" className={activeNav === 'search' ? 'pc-drop-menu-link active' : 'pc-drop-menu-link'}>Find Mentor</Link>
+      <NavLink exact onClick={smallScreenToggle} to="/" className='pc-drop-menu-link'>Home</NavLink>
+      <NavLink onClick={smallScreenToggle} to="/courses" className='pc-drop-menu-link'>Courses</NavLink>
+      <NavLink onClick={smallScreenToggle} to="/archive" className='pc-drop-menu-link'>Archive</NavLink>
+      <NavLink onClick={smallScreenToggle} to="/search" className='pc-drop-menu-link'>Find Mentor</NavLink>
+      <NavLink onClick={smallScreenToggle} to="/pricing" className='pc-drop-menu-link'>Pricing</NavLink>
       {!account.sessionId ? (
-        <Link onClick={smallScreenToggle} to="/login" className="pc-drop-menu-link">Login</Link>
+        <NavLink onClick={smallScreenToggle} to="/login" className="pc-drop-menu-link">Login</NavLink>
       ) : (
-          <Link to="#" onClick={(e) => { logOutHandler(apis); smallScreenToggle() } } className="pc-drop-menu-link">Logout</Link>
+          <NavLink to="#" onClick={(e) => { logOutHandler(apis); smallScreenToggle() } } className="pc-drop-menu-link">Logout</NavLink>
         )}
     </div>
   );
 };
 
 DropMenu.propTypes = {
-  activeNav: PropTypes.string.isRequired,
   account: PropTypes.objectOf(PropTypes.any).isRequired,
   apis: PropTypes.objectOf(PropTypes.any).isRequired,
 };
@@ -44,7 +45,7 @@ class SmallScreenMenu extends React.Component {
   }
 
   render() {
-    const { open, smallScreenToggle, account, pcLogo, navigate, apis } = this.props;
+    const { open, smallScreenToggle, account, pcLogo, apis } = this.props;
     return (
       <Drawer
         isOpen={open}
@@ -53,12 +54,12 @@ class SmallScreenMenu extends React.Component {
         backdropOpacity={0.5}
         hasBackdrop
         title={
-          <Link to="/" onClick={this.onClick}>
+          <NavLink to="/" onClick={this.onClick}>
             <img alt="Proper Class Logo" style={{ objectFit: 'cover', width: 200 }} src={pcLogo} />
-          </Link>
+          </NavLink>
         }
       >
-        <DropMenu smallScreenToggle={smallScreenToggle} account={account} activeNav={navigate.mainNav.name} apis={apis} />
+        <DropMenu smallScreenToggle={smallScreenToggle} account={account} apis={apis} />
       </Drawer>
     );
   }
@@ -70,8 +71,6 @@ SmallScreenMenu.propTypes = {
   account: PropTypes.objectOf(PropTypes.any).isRequired,
   apis: PropTypes.objectOf(PropTypes.any).isRequired,
   pcLogo: PropTypes.string.isRequired,
-  navigate: PropTypes.objectOf(PropTypes.any).isRequired,
-
 };
 
 const mapStateToProps = state => state;

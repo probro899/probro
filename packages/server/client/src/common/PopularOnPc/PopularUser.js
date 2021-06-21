@@ -1,45 +1,64 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { BsPersonCheck, BsPersonPlus } from "react-icons/bs";
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { BsPersonCheck, BsPersonPlus } from 'react-icons/bs';
 import { RoundPicture } from '../../components';
-import { Button } from '../../common/utility-functions/Button/Button';
+import { Button } from '../utility-functions/Button/Button';
+import { getName } from '../utility-functions';
+import { ENDPOINT } from '../../config';
 
-const PopularUser = ({ obj }) => {
-    const { name, country, connected, image } = obj;
-    return (
-        <>
-            <div className="popular-user">
-                <div className="user-image">
-                    <RoundPicture imgUrl={`${image}`} />
-                </div>
-                <div className="user-detail">
-                    <div className="name">
-                        <Link to="#">{name}</Link>
-                    </div>
-                    <div className='user-bio'>
-                        Mentor at Proper Class
-                    </div>
-                    <div style={{ opacity: 0.8, marginBottom: 3, display: 'flex', alignItems: 'center' }}>
-                        <span style={{ fontSize: 12}}>
-                            {' '}
-                            {country}
-                        </span>
-                    </div>
-
-                </div>
-                <div className="follow-mentor-btn">
-                    <Link to="#" className="followMentorBtn">
-                        <Button
-                            type="button"
-                            buttonStyle={connected ? "btn--success--outline" : "btn--primary--outline"}
-                            buttonSize="btn--small"
-                            icon={connected ? <BsPersonCheck /> : <BsPersonPlus />}
-                        />
-                    </Link>
-                </div>
-            </div>
-        </>
-    );
+const PopularUser = ({ obj, account, UserConnection }) => {
+  const isConnected = (userId) => {
+    if (!account.user) return false;
+    const con = Object.values(UserConnection.byId).find((o) => o.user.user.id === userId);
+    if (con && con.status === 'connected') return true;
+    return false;
+  };
+  const { id, slug } = obj;
+  const connected = isConnected(obj.id);
+  const { country, image, headLine } = obj.userDetail;
+  const imgUrl = image ? `${ENDPOINT}/assets/user/${10000000 + parseInt(id, 10)}/profile/${image}` : '/assets//graphics/user.svg';
+  return (
+    <div className="popular-user">
+      <div className="user-detail-wrapper">
+        <div className="user-image">
+          <RoundPicture imgUrl={`${imgUrl}`} />
+        </div>
+        <div className="user-detail">
+          <div className="name">
+            <Link to={`/user/${obj.slug}/`}>{getName(obj)}</Link>
+          </div>
+          <div className="user-bio">
+            {headLine}
+          </div>
+          <div className="user-location">
+            <span>
+              {' '}
+              {country}
+            </span>
+          </div>
+        </div>
+      </div>
+      <div className="follow-mentor-btn">
+        <Link to={`/user/${slug}/`} className="followMentorBtn">
+          <Button
+            type="button"
+            buttonStyle={connected ? 'btn--success--outline' : 'btn--primary--outline'}
+            buttonSize="btn--small"
+            icon={connected ? <BsPersonCheck /> : <BsPersonPlus />}
+          />
+        </Link>
+      </div>
+    </div>
+  );
 };
 
-export default PopularUser;
+PopularUser.propTypes = {
+  account: PropTypes.objectOf(PropTypes.any).isRequired,
+  obj: PropTypes.objectOf(PropTypes.any).isRequired,
+  UserConnection: PropTypes.objectOf(PropTypes.any).isRequired,
+};
+
+const mapsStatetoProps = ({ database, account }) => ({ account, UserConnection: database.UserConnection });
+export default connect(mapsStatetoProps)(PopularUser);

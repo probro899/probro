@@ -9,16 +9,16 @@ top attachment etc.
   grid-template-columns: repeat(3, 1fr);
   align-items: center;
   position: fixed;
-  padding: 0 pixel-to-rem(32);
+  padding: 0 rem(32);
   width: 100%;
   height: $navbarHeight;
   flex-wrap: nowrap;
   background-color: $backgroundColor;
-  box-shadow: 0 pixel-to-rem(1) pixel-to-rem(2) $normalShadowColor;
+  box-shadow: 0 rem(1) rem(2) $normalShadowColor;
   z-index: 20; // above all putting navbar at the top of the heap.
   &.pcm-nav {
     box-shadow: none;
-    border: pixel-to-rem(1) solid $normalBorder;
+    border: rem(1) solid color-get(border);
   }
   .navbar-left {
     display: flex;
@@ -31,7 +31,7 @@ top attachment etc.
     justify-self: center;
 
     a {
-      margin: 0 pixel-to-rem(20);
+      margin: 0 rem(15);
       text-decoration: none;
     }
   }
@@ -47,10 +47,10 @@ top attachment etc.
       display: flex;
       align-items: center;
       .navbar-profile {
-        height: pixel-to-rem(60);
+        height: rem(60);
       }
       .navbar-item {
-        margin: 0 pixel-to-rem(20);
+        margin: 0 rem(20);
         &.no-right-margin {
           margin-right: 0;
         }
@@ -64,48 +64,48 @@ top attachment etc.
     .navbar-item .login-btn {
       background-color: $primaryColor;
       color: white;
-      padding: pixel-to-rem(10) pixel-to-rem(20);
-      border-radius: pixel-to-rem(5);
+      padding: rem(10) rem(20);
+      border-radius: rem(5);
     }
   }
   .navbar-item {
-    font-size: pixel-to-rem(16);
+    font-size: rem(16);
     font-weight: 800;
-    color: $headingColor;
+    color: color-get(text-dark);
     position: relative;
     text-transform: capitalize;
     .bell-icon {
-      font-size: pixel-to-rem(25);
+      font-size: rem(25);
     }
     .message-icon {
-      font-size: pixel-to-rem(25);
+      font-size: rem(25);
     }
     .profile-icon {
-      width: pixel-to-rem(60);
-      height: pixel-to-rem(60);
+      width: rem(60);
+      height: rem(60);
       border-radius: 50%;
       overflow: hidden;
-      border: pixel-to-rem(3) solid $primaryColor;
+      border: rem(3) solid $primaryColor;
       object-fit: cover;
     }
     &.pc-dashboard-icon {
       display: flex;
       flex-direction: row-reverse;
-      margin-left: pixel-to-rem(5);
+      margin-left: rem(5);
       border-radius: 50%;
       .pc-dot {
         position: absolute;
-        right: pixel-to-rem(5);
-        height: pixel-to-rem(7);
-        width: pixel-to-rem(7);
-        border-radius: pixel-to-rem(3);
+        right: rem(5);
+        height: rem(7);
+        width: rem(7);
+        border-radius: rem(3);
         z-index: 10;
       }
       .pc-dashboard {
         display: flex;
         align-items: center;
-        margin-left: pixel-to-rem(5);
-        font-size: pixel-to-rem(12);
+        margin-left: rem(5);
+        font-size: rem(12);
         color: white;
       }
     }
@@ -129,13 +129,13 @@ top attachment etc.
     }
   }
 
-  @media screen and (max-width: pixel-to-rem(767)) {
+  @media screen and (max-width: rem(767)) {
     .navbar-center {
       display: none;
     }
     .navbar-item {
       .login-btn {
-        padding: pixel-to-rem(10) pixel-to-rem(15);
+        padding: rem(10) rem(15);
       }
     }
     .navbar-left {
@@ -148,28 +148,28 @@ top attachment etc.
       width: 100%;
       .more-icon {
         display: block;
-        color: $headingColor;
+        color: color-get(text-dark);
         svg {
-          width: pixel-to-rem(30) !important;
-          height: pixel-to-rem(40) !important;
-          margin-left: pixel-to-rem(10);
+          width: rem(30) !important;
+          height: rem(40) !important;
+          margin-left: rem(10);
         }
       }
     }
-    padding: pixel-to-rem(10);
+    padding: rem(10);
 
     grid-template-columns: repeat(1, 1fr);
   }
 
-  @media screen and (max-width: pixel-to-rem(575)) {
+  @media screen and (max-width: rem(575)) {
     .navbar-more-container {
       .more-icon {
         display: block;
       }
       svg {
         fill: $darkBlue;
-        height: pixel-to-rem(27);
-        width: pixel-to-rem(27);
+        height: rem(27);
+        width: rem(27);
       }
     }
   }
@@ -179,13 +179,13 @@ top attachment etc.
 .pc-drop-menu {
   display: flex;
   flex-direction: column;
-  padding: pixel-to-rem(10);
+  padding: rem(10);
   .pc-drop-menu-link {
-    padding: pixel-to-rem(20) pixel-to-rem(10);
+    padding: rem(20) rem(10);
     text-transform: uppercase;
     color: black;
     font-weight: 500;
-    border-bottom: pixel-to-rem(1) solid $normalBorder;
+    border-bottom: rem(1) solid $normalBorder;
     &.active {
       color: $primaryColor;
     }
@@ -195,8 +195,8 @@ top attachment etc.
 .pc-dropdown-drawer {
   .bp3-drawer-header {
     h4 {
-      margin-right: pixel-to-rem(25);
-      margin-top: pixel-to-rem(20);
+      margin-right: rem(25);
+      margin-top: rem(20);
     }
     button {
       position: absolute;

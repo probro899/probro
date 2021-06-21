@@ -36,8 +36,18 @@ async function addBlogLike(record) {
   }
 }
 
+async function addBlogBookmark(params) {
+  try {
+    const res = await add.call(this, 'BlogBookmark', { ...params, createdAt: Date.now() });
+    return res;
+  } catch (e) {
+    console.error('Error in addBlogLike', e);
+  }
+}
+
 export default [
   addBlog,
   addBlogComment,
   addBlogLike,
+  addBlogBookmark,
 ];

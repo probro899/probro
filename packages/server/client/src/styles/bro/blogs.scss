@@ -1,14 +1,6 @@
 .create-blog {
   margin-top: $navbarHeight;
-  margin-bottom: pixel-to-rem(10);
-  div[contenteditable]:focus {
-    outline: 0 solid transparent;
-  }
-  // just to put the default placeholder
-  [contenteditable]:empty::before {
-    content: attr(datatext);
-    color: $lightTextColor;
-  }
+  margin-bottom: rem(10);
   .pc-create-blog-toolbar {
     display: flex;
     justify-content: space-between;
@@ -20,13 +12,13 @@
     right: 0;
     z-index: 2;
     background-color: $backgroundColor;
-    padding: pixel-to-rem(10) pixel-to-rem(32);
-    box-shadow: 0 pixel-to-rem(1) pixel-to-rem(2) $normalShadowColor;
-    @media screen and (max-width: pixel-to-rem(767)) {
+    padding: rem(10) rem(32);
+    box-shadow: 0 rem(1) rem(2) $normalShadowColor;
+    @media screen and (max-width: rem(767)) {
       justify-content: flex-end;
     }
-    @media screen and (max-width: pixel-to-rem(480)) {
-      padding: pixel-to-rem(10);
+    @media screen and (max-width: rem(480)) {
+      padding: rem(10);
     }
     .left {
       .pc-publish-btn {
@@ -34,20 +26,20 @@
         align-items: center;
         label {
           font-size: 18px;
-          color: $headingColor;
+          color: color-get(text-dark);
           font-weight: 600;
         }
         .switch-container {
-          margin-left: pixel-to-rem(10);
+          margin-left: rem(10);
         }
       }
-      @media screen and (max-width: pixel-to-rem(767)) {
+      @media screen and (max-width: rem(767)) {
         order: 2;
-        margin-right: pixel-to-rem(30);
+        margin-right: rem(30);
       }
     }
     .right {
-      @media screen and (max-width: pixel-to-rem(767)) {
+      @media screen and (max-width: rem(767)) {
         order: 3;
       }
     }
@@ -55,17 +47,17 @@
 
   .pc-create-blog-wrapper {
     margin-top: 165px;
-    @media screen and (max-width: pixel-to-rem(767)) {
-      margin-top: pixel-to-rem(205);
+    @media screen and (max-width: rem(767)) {
+      margin-top: rem(205);
     }
     .img-upload-container {
       position: relative;
       .blog-cover-img {
         display: flex;
         justify-content: center;
-        max-height: pixel-to-rem(300);
+        max-height: rem(300);
         overflow: hidden;
-        border-radius: pixel-to-rem(10);
+        border-radius: rem(10);
         img {
           width: 100%;
           object-fit: cover;
@@ -80,10 +72,10 @@
         width: 100%;
         .pc-img-upload {
           display: flex;
-          padding: pixel-to-rem(5);
+          padding: rem(5);
           background-color: rgba(0, 0, 0, 0.4);
-          border-radius: pixel-to-rem(5);
-          margin-right: pixel-to-rem(10);
+          border-radius: rem(5);
+          margin-right: rem(10);
           svg {
             fill: #fff;
           }
@@ -94,34 +86,45 @@
       }
     }
     .title {
-      margin: pixel-to-rem(10) 0;
+      margin: rem(10) 0;
       .formLabel {
-        textarea {
-          font-size: pixel-to-rem(45);
-          border: transparent;
-          color: $headingColor;
+        .pc-text-area {
+          font-size: rem(45);
+          color: color-get(text-dark);
           font-weight: 800;
+          margin-bottom: 0;
+          font-family: font-family(secondary);
+          min-height: rem(73);
+          max-height: rem(150);
         }
         ::placeholder {
-          font-size: pixel-to-rem(45);
+          font-size: rem(45);
           font-weight: 800;
+          font-family: font-family(secondary);
         }
       }
     }
     .quill {
       .ql-container.ql-snow {
-        border-radius: pixel-to-rem(10);
+        border-radius: rem(10);
         min-height: calc(100vh - 370px);
         background-color: #fff;
         border: transparent;
         box-shadow: 0 0.4rem 0.8rem -0.1rem rgb(0 32 128 / 10%), 0 0 0 1px #f0f2f7;
       }
+      // please dont remove .ql-clipboard styling
+      .ql-clipboard {
+        position: fixed;
+        display: none;
+        left: 50%;
+        top: 50%;
+      }
       .ql-editor {
         min-height: calc(100vh - 370px);
         p,
         li {
-          font-size: pixel-to-rem(20);
-          color: $subHeadColor;
+          font-size: rem(20);
+          color: rgba(41, 41, 41, 1);
         }
       }
     }
@@ -131,13 +134,13 @@
     max-width: 60%;
     flex: 0 0 60%;
     background-color: #fff;
-    border-radius: pixel-to-rem(10);
+    border-radius: rem(10);
     @include genericBoxPattern;
     border: none;
-    @media screen and (max-width: pixel-to-rem(767)) {
+    @media screen and (max-width: rem(767)) {
       max-width: 100%;
       flex: 0 0 100%;
-      margin-bottom: pixel-to-rem(10);
+      margin-bottom: rem(10);
     }
     .pc-blog-tools {
       display: flex;
@@ -148,10 +151,10 @@
   .toolbar {
     position: fixed;
     z-index: 2;
-    height: pixel-to-rem(60);
+    height: rem(60);
     display: flex;
     width: 100%;
-    padding: pixel-to-rem(10);
+    padding: rem(10);
     background-color: $fadedBackground;
     justify-content: space-between;
     .left {
@@ -175,19 +178,19 @@
       align-items: center;
     }
     button {
-      margin: pixel-to-rem(3);
+      margin: rem(3);
     }
   }
 
   .editor-container {
-    padding: pixel-to-rem(5) pixel-to-rem(10);
+    padding: rem(5) rem(10);
     #editor {
       background-color: $backgroundColor;
-      min-height: pixel-to-rem(500);
-      padding: pixel-to-rem(10);
-      font-size: pixel-to-rem(25);
+      min-height: rem(500);
+      padding: rem(10);
+      font-size: rem(25);
       p {
-        font-size: pixel-to-rem(30);
+        font-size: rem(30);
       }
       img {
         max-width: 100%;
@@ -196,130 +199,159 @@
   }
 }
 .blogs {
-  padding: pixel-to-rem(5);
+  padding: rem(5);
   width: 100%;
-  @media screen and (max-width: pixel-to-rem(576)) {
+  @media screen and (max-width: rem(576)) {
     padding: 0;
   }
   .blog-wrapper {
-    padding: pixel-to-rem(20);
-    max-width: pixel-to-rem(1024);
-    margin: 0 auto;
-    width: 100%;
-    @media screen and (max-width: pixel-to-rem(767)) {
-      padding: pixel-to-rem(10);
+    padding: rem(20);
+    @media screen and (max-width: rem(767)) {
+      padding: rem(10);
     }
-    .blog-list {
-      display: flex;
-      flex-wrap: wrap;
-      margin-left: pixel-to-rem(-15);
-      margin-right: pixel-to-rem(-15);
-      .pc-no-blogs {
-        width: 100%;
-        height: 50vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        p {
-          color: $lightTextColor;
-        }
+    .blog-list-wrapper {
+      h2 {
+        margin-bottom: rem(15);
+        font-size: rem(18);
+        text-transform: uppercase;
+        letter-spacing: rem(1.5);
+        line-height: rem(24);
       }
-      .blog-container {
-        max-width: 33.33%;
-        flex: 0 0 33.33%;
-        padding-left: pixel-to-rem(15);
-        padding-right: pixel-to-rem(15);
-        position: relative;
-        margin-bottom: pixel-to-rem(30);
-
-        @media screen and (max-width: pixel-to-rem(1199)) {
-          max-width: 50%;
-          flex: 0 0 50%;
+      .blog-list {
+        display: flex;
+        flex-wrap: wrap;
+        margin-left: rem(-15);
+        margin-right: rem(-15);
+        .pc-no-blogs {
+          width: 100%;
+          height: 50vh;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          p {
+            color: $lightTextColor;
+          }
         }
-        @media screen and (max-width: pixel-to-rem(767)) {
-          max-width: 100%;
-          flex: 0 0 100%;
-        }
-
-        .each-blog-wrapper {
-          @include genericBoxPattern;
-          overflow: hidden;
+        .blog-container {
+          max-width: 25%;
+          flex: 0 0 25%;
+          padding-left: rem(15);
+          padding-right: rem(15);
           position: relative;
-
-          .img-container {
+          margin-bottom: rem(30);
+          @media screen and (min-width: rem(1400)) {
+            max-width: 20%;
+            flex: 0 0 20%;
+          }
+          @media screen and (max-width: rem(1199)) {
+            max-width: 33.33%;
+            flex: 0 0 33.33%;
+          }
+          @media screen and (max-width: rem(767)) {
+            max-width: 50%;
+            flex: 0 0 50%;
+          }
+          @media screen and (max-width: rem(480)) {
             max-width: 100%;
+            flex: 0 0 100%;
+          }
+          .pc-card {
+            padding: rem(10) rem(15);
+          }
+          .each-blog-wrapper {
+            overflow: hidden;
             position: relative;
-            display: flex;
-            justify-content: center;
 
-            .more-button {
-              position: absolute;
-              top: 0;
-              right: 0;
-              z-index: 2;
-            }
-            figure {
+            .img-container {
+              max-width: 100%;
               position: relative;
-              padding-bottom: 60%;
-              z-index: 1;
-              width: 100%;
-              &::before {
-                content: "";
-                background: rgba(0, 0, 0, 0.2);
-                width: 100%;
-                height: 100%;
-                display: block;
+              display: flex;
+              justify-content: center;
+
+              .more-button {
                 position: absolute;
                 top: 0;
-                bottom: 0;
-                left: 0;
                 right: 0;
                 z-index: 2;
               }
-              img {
-                display: block;
-                position: absolute;
-                top: 0;
-                left: 0;
+              figure {
+                position: relative;
+                padding-bottom: 60%;
+                z-index: 1;
                 width: 100%;
-                height: 100%;
-                object-fit: cover;
+                border-bottom: rem(1) solid #d1d7dc;
+                background-color: #000;
+                overflow: hidden;
+                border-radius: rem(6) rem(6) 0 0;
+                img {
+                  display: block;
+                  position: absolute;
+                  top: 0;
+                  left: 0;
+                  width: 100%;
+                  height: 100%;
+                  object-fit: cover;
+                  transition: opacity linear 100ms;
+                  opacity: 0.8;
+                }
+              }
+              .pc-popover-container {
+                position: absolute;
+                top: 5px;
+                right: rem(10);
+                z-index: 10;
+                cursor: pointer;
+                .pc-popover-trigger {
+                  background: rgba(0, 0, 0, 0.2);
+                  padding: 0 5px;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  &:hover {
+                    background: rgba(0, 0, 0, 0.4);
+                  }
+                  svg {
+                    color: #fff !important;
+                  }
+                }
               }
             }
-            .pc-popover-container {
-              position: absolute;
-              top: 0;
-              right: pixel-to-rem(10);
-              z-index: 10;
-              cursor: pointer;
-            }
-          }
-          .detail-container {
-            padding: pixel-to-rem(10) pixel-to-rem(15);
-            .blog-title {
-              p {
-                margin-bottom: 0;
-                a {
-                  color: #58646d;
-                }
-                &.title {
+            .detail-container {
+              @include genericBoxPattern;
+              padding: rem(10) rem(15);
+              border-top: none;
+              border-radius: 0 0 rem(6) rem(6);
+              min-height: rem(107);
+              .blog-title {
+                font-family: font-family();
+                .title {
+                  margin-bottom: 0;
+                  font-size: rem(18);
+                  font-weight: 800;
+                  text-transform: capitalize;
+                  font-family: font-family(secondary);
+                  display: -webkit-box;
+                  -webkit-line-clamp: 2;
+                  -webkit-box-orient: vertical;
+                  white-space: normal;
                   overflow: hidden;
                   text-overflow: ellipsis;
-                  white-space: nowrap;
-                  font-size: pixel-to-rem(18);
-                  font-weight: 800;
-                }
-                .pc-date {
-                  font-size: pixel-to-rem(12);
-                  color: $lightTextColor;
+                  a {
+                    color: color-get(primary);
+                  }
                 }
               }
-            }
-            .blog-author {
-              display: flex;
-              a {
-                font-size: pixel-to-rem(16);
-                font-weight: 500;
+              .pc-date {
+                font-size: rem(12);
+                color: $lightTextColor;
+              }
+              .blog-author {
+                display: flex;
+                a {
+                  font-size: rem(14);
+                  font-weight: 500;
+                  color: color-get(text-dark);
+                }
               }
             }
           }
@@ -332,5 +364,29 @@
 .bp3-button.bp3-intent-success.create-btn {
   background-color: #175fc7;
   box-shadow: unset;
-  border-radius: pixel-to-rem(5);
+  border-radius: rem(5);
+}
+
+.bookmarked-blog-list {
+  h2 {
+    margin-bottom: rem(15);
+    font-size: rem(18);
+    text-transform: uppercase;
+    letter-spacing: rem(1.5);
+    line-height: rem(24);
+  }
+  .bookmarked-list {
+    @media screen and (min-width: rem(1440)) {
+      display: flex;
+      flex-wrap: wrap;
+      margin-left: rem(-15);
+      margin-right: rem(-15);
+      .pc-card {
+        max-width: 45%;
+        flex: 0 0 45%;
+        margin-right: rem(15);
+        margin-left: rem(15);
+      }
+    }
+  }
 }

@@ -52,7 +52,6 @@ export default (props) => {
       isDragging: osFinder(window) === 'Mobile' ? false : monitor.isDragging(),
     }),
     begin: (monitor) => {
-      // console.log("dragging", monitor);
       const itm = { type: Itemtype.COLUMN, id: column.id, draggableId, index };
       setDraggingContent('start', itm);
       dragStartEnd('start', itm, monitor.getInitialSourceClientOffset(), monitor.getInitialClientOffset());
@@ -92,7 +91,6 @@ export default (props) => {
         addDatabaseSchema={addDatabaseSchema}
         updateDatabaseSchema={updateDatabaseSchema}
         deleteDatabaseSchema={deleteDatabaseSchema}
-        // passing it for the task overlay open
         onTaskClick={onTaskClick}
       />
     </div>

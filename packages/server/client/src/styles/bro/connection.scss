@@ -2,9 +2,6 @@
 .connection {
   width: 100%;
   .connection-wrapper {
-    max-width: 1024px;
-    width: 100%;
-    margin: 0 auto;
     .con-list {
       display: flex;
       flex-wrap: wrap;
@@ -21,17 +18,30 @@
         }
       }
       .i-wrapper {
-        padding-right: 15px;
-        padding-left: 15px;
-        margin-bottom: 30px;
-        min-width: 280px;
-        max-width: 425px;
-        flex: 1 1 100%;
         position: relative;
+        max-width: 33.33%;
+        flex: 0 0 33.33%;
+        padding-left: rem(15);
+        padding-right: rem(15);
+        &:hover {
+            text-decoration: none;
+        }
+        @media screen and (min-width: rem(1400)) {
+            max-width: 25%;
+            flex: 0 0 25%;
+        }
+        @media screen and (max-width: rem(1199)) {
+            max-width: 50%;
+            flex: 0 0 50%;
+        }
+        @media screen and (max-width: rem(576)) {
+            max-width: 100%;
+            flex: 0 0 100%;
+        }
         .pc-popover-container {
           position: absolute;
           top: 0;
-          right: 10px;
+          right: rem(25);
           z-index: 10;
           cursor: pointer;
         }
@@ -40,18 +50,8 @@
           flex: 0 0 100%;
         }
         .i-result {
-          margin-top: 5px;
           width: 100%;
           display: flex;
-          padding: 15px;
-          position: relative;
-
-          &:hover {
-            box-shadow: 0 4px 16px 4px rgba(17, 22, 26, 0.16),
-              0 4px 8px 0 rgba(17, 22, 26, 0.08),
-              0 16px 24px 0 rgba(17, 22, 26, 0.08);
-          }
-          @include genericBoxPattern;
           .img-con {
             width: 50px;
             height: 50px;
@@ -64,7 +64,12 @@
               background-color: $pcGreen;
               border-radius: 50%;
               top: 50px;
-              left: 54px;
+              left: 80px;
+            }
+            .round-image{
+              width: 100%;
+              height: 100%;
+              object-fit: cover;
             }
           }
           .desc-con {

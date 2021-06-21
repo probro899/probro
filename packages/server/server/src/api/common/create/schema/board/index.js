@@ -20,7 +20,7 @@ async function addBoard(record) {
     console.error('Error in addBoard', e);
   }
 }
-
+ 
 async function addBoardColumn(record) {
   try {
     const res = await add.call(this, 'BoardColumn', record);
@@ -69,6 +69,7 @@ async function addBoardColumnCardComment(record) {
 }
 
 async function addBoardColumnCardDescription(record) {
+ 
   try {
     const broadCastArr = record.broadCastId.split('-');
     const boardId = broadCastArr[broadCastArr.length - 1];
@@ -76,7 +77,7 @@ async function addBoardColumnCardDescription(record) {
     addBoardActivity(this, db, { descriptionId: res, userId: record.userId, timeStamp: Date.now(), boardId, cardId: record.boardColumnCardId, message: 'createDescription' });
     return res;
   } catch (e) {
-    console.error('Error in addBoardColumnCardDescription')
+    console.error('Error in addBoardColumnCardDescription', e);
   }
 }
 
@@ -85,7 +86,7 @@ async function addBoardMessageSeenStatus(record) {
     const res = await add.call(this, 'BoardMessageSeenStatus', record);
     return res;
   } catch (e) {
-    console.error('Error in addBoardMessageSeenStatus', e)
+    console.error('Error in addBoardMessageSeenStatus', e);
   } 
 }
 
@@ -106,7 +107,7 @@ async function addBoardColumnCardTag(record) {
     addBoardActivity(this, db, { tagId: res, userId: record.userId, timeStamp: Date.now(), boardId, cardId: record.boardColumnCardId, message: 'createTag' });
     return res;
   } catch (e) {
-    console.error('Error in addBoardColumnCardTag', e)
+    console.error('Error in addBoardColumnCardTag', e);
   }
 }
 
@@ -123,6 +124,19 @@ async function generateReport(record) {
   }
 }
 
+async function addTaskParticipant(record) {
+  console.log('addTaskParticipant called', record);
+  try {
+    const broadCastArr = record.broadCastId.split('-');
+    const boardId = broadCastArr[broadCastArr.length - 1];
+    const res = await add.call(this, 'TaskParticipant', { ...record, timeStamp: Date.now() });
+    addBoardActivity(this, db, { participantId: res, userId: record.userId, timeStamp: Date.now(), boardId, cardId: record.taskId, message: 'createParticipant' });
+    return res;
+  } catch (e) {
+    console.error('Error in addBoardColumnCardTag', e);
+  }
+}
+
 export default [
   addBoard,
   addBoardColumn,
@@ -136,4 +150,5 @@ export default [
   addBoardMessageSeenStatus,
   copyBoardColumnCard,
   generateReport,
+  addTaskParticipant,
 ];

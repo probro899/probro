@@ -22,7 +22,7 @@ export default async (url) => {
       const coverImageUrl = `assets/user/${10000000 + userRes.id}/blog/${result.coverImage}`;
       return { ...result, coverImage: coverImageUrl };
     });
-    const stringContent = currentBlog.content.replace(/<[^>]+>/g, '');
+    const stringContent = currentBlog.content.replace(/<[^>]+>/g, '').slice(0, 200);
     return `<title>${currentBlog.title}</title>
     <meta property="og:image" content="${siteURL}/${currentBlog.coverImage}"/>
     <meta property="og:image:secure_url" content="${siteURL}/images/${currentBlog.coverImage}"/>

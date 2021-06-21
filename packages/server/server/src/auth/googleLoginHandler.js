@@ -1,4 +1,5 @@
 import uuid from 'uuid';
+import urlSlug from 'url-slug';
 import schema from '@probro/common/src/schema';
 import googleTokenVerifier from 'google-id-token-verifier';
 import database from '../cache/database';
@@ -24,7 +25,7 @@ const googleLogin = async (grec) => {
       }
     });
   });
-
+ 
   const { email } = googleInfo;
   const res = await db.execute(async ({ findOne, insert }) => {
     const rec = await findOne('User', { email });
@@ -34,7 +35,7 @@ const googleLogin = async (grec) => {
     }
     const firstNameLowerCase = `${givenName}`.toLowerCase();
     const lastNameLowerCase = `${familyName}`.toLowerCase();
-    const slug = `${firstNameLowerCase}-${lastNameLowerCase}-${Date.now()}`;
+    const slug = urlSlug(`${firstNameLowerCase}-${lastNameLowerCase}-${Date.now()}`);
     const randomPassword = uuid();
     const addUserRes = await insert('User', { firstName: givenName, lastName: familyName, middleName: '', password: randomPassword, email, verificationToken: null, verify: 1, slug });
     database.update('User', schema.add('User', { id: addUserRes, firstName: givenName, lastName: familyName, middleName: '', password: randomPassword, email, verificationToken: null, verify: 1, slug }));

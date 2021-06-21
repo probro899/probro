@@ -1,7 +1,6 @@
 @import '../config.scss';
 
 .pc-services {
-  margin-top: $navbarHeight;
   min-height: calc(100vh - #{$navbarHeight} - #{$footerHeight});
   .pc-services-content {
     padding-top: 40px;
@@ -12,7 +11,7 @@
       text-align: center;
     }
     p {
-      color: $subHeadColor;
+      color: color-get(text-light);
     }
   }
 }

@@ -1,21 +1,16 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import * as actions from '../../../actions';
 import { Navbar } from '../../../screens/home/component';
 import Footer from '..';
 import { Spinner } from '../..';
+import HeaderBanner from '../../HeaderBanner';
+import ReactHelmet from '../../react-helmet';
 
 class Report extends React.Component {
   state = { loading: true };
 
   componentDidMount() {
-    const { updateNav } = this.props;
-    updateNav({
-      schema: 'mainNav',
-      data: { name: '' },
-    });
     this.setState({
       loading: false,
     });
@@ -24,15 +19,19 @@ class Report extends React.Component {
 
   render() {
     const { loading } = this.state;
-    if (loading) {
-      return <Spinner />;
-    }
+    const { match } = this.props;
+    if (loading) { return <Spinner wClass="spinner-wrapper" />; }
     return (
       <div>
+        <ReactHelmet match={match} headerData={{ title: 'Report' }} />
         <Navbar />
+        <HeaderBanner
+          title="Report"
+          subTitle="Please tell us what you're going through"
+          bgColor="#0F2E54"
+        />
         <div className="pc-report pc-container">
           <div className="pc-report-content">
-            <h1>Report</h1>
             <p>
               If you find any sort of malfunction, bug or if you find anything abusive.
               <br />
@@ -49,8 +48,7 @@ class Report extends React.Component {
 }
 
 Report.propTypes = {
-  updateNav: PropTypes.func.isRequired,
+  match: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
-const mapStateToProps = state => state;
-export default connect(mapStateToProps, { ...actions })(Report);
+export default Report;

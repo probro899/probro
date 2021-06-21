@@ -15,7 +15,6 @@ import CustomDragLayer from './ClassComponents/dndComponents/CustomDragLayer';
 import ErrorBoundry from '../../common/ErrorBoundary';
 import { osFinder } from './helper-functions';
 
-
 class Index extends React.Component {
   state = { loading: true, apis: null, draggingContent: null };
 
@@ -35,8 +34,11 @@ class Index extends React.Component {
   }
 
   setDraggingContent = (event, item) => {
-    if (osFinder(window) === 'Mobile') { return; } // prevent for mobile platforms
-    if (event === 'end') { this.setState({ draggingContent: null }); return; }
+    if (osFinder(window) === 'Mobile') return;
+    if (event === 'end') {
+      this.setState({ draggingContent: null });
+      return;
+    }
     this.setState({
       draggingContent: document.getElementById(item.type === Itemtype.TASK ? `id_task_${item.id}` : `id_column_${item.id}`),
     });

@@ -8,28 +8,23 @@ import BasicSettings from './BasicSettings';
 import AdvancedSettings from './AdvancedSetting';
 
 class Setting extends Component {
-  state = {
-    apis: {},
-  }
+  state = { apis: {} }
 
   async componentDidMount() {
     const { updateNav } = this.props;
     const apis = await client.scope('Mentee');
     this.setState({ apis });
-    updateNav({
-      schema: 'sideNav',
-      data: { name: 'Settings' },
-    });
+    updateNav({ schema: 'sideNav', data: { name: 'Settings' } });
   }
 
   render() {
     const { apis } = this.state;
-    const { database, account, match, addDatabaseSchema } = this.props;
+    const { match, addDatabaseSchema } = this.props;
     const menu = match.path.split("/");
-    const activeTab = menu[menu.length - 1]
+    const activeTab = menu[menu.length - 1];
     return (
       <div className="settings bro-right">
-        <div className="setting-wrapper">
+        <div className="setting-wrapper pc-container">
           <div className="setting-types">
             <Link
               to={`/dashboard/${match.params.id}/settings/basic`}
@@ -44,8 +39,8 @@ class Setting extends Component {
               Advanced
             </Link>
           </div>
-          {activeTab === 'basic' && <BasicSettings apis={apis} account={account} database={database} />}
-          {activeTab === 'advanced' && <AdvancedSettings match={match} apis={apis} database={database} account={account} addDatabaseSchema={addDatabaseSchema}/>}
+          {activeTab === 'basic' && <BasicSettings apis={apis} />}
+          {activeTab === 'advanced' && <AdvancedSettings match={match} apis={apis} addDatabaseSchema={addDatabaseSchema} {...this.props} />}
         </div>
 
       </div>
@@ -59,5 +54,4 @@ Setting.propTypes = {
   account: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
-const mapStateToProps = state => state;
-export default connect(mapStateToProps, { ...actions })(Setting);
+export default connect({}, { ...actions })(Setting);

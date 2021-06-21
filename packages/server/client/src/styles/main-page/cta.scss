@@ -1,0 +1,14 @@
+.pc-cta {
+    padding: rem(25) 0;
+    background-color: color-get(primary, 700);
+    position: relative;
+    .cta-wrapper {
+        text-align: center;
+        .cta-title {
+            font-size: rem(24);
+            line-height: rem(30);
+            margin-bottom: rem(20);
+            color: #fff;
+        }
+    }
+}

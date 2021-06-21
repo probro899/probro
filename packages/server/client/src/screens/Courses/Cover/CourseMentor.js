@@ -1,13 +1,18 @@
 import React from 'react';
 import TopInstructorBadge from '../components/TopInstructorBadge';
+import { getName } from '../../../common/utility-functions';
+import { RoundPicture } from '../../../components';
+import { ENDPOINT } from '../../../config';
 
-const CourseMentor = () => {
+const CourseMentor = ({ creator }) => {
+    const imgUrl = creator.userDetail.image ? `${ENDPOINT}/assets/user/${10000000 + parseInt(creator.id, 10)}/profile/${creator.userDetail.image}` : '/assets/graphics/user.svg';
+
     return (
         <div className="pc-course-mentor">
             <figure className="mentor-img-wrapper">
-                <img src="https://properclass.com/assets/user/10000066/profile/image-1611537258246.jpg" alt="course mentor" className="mentor-img" />
+                <RoundPicture  imgUrl={imgUrl} />
             </figure>
-            <p className="mentor-name">Bikal Shrestha</p>
+            <p className="mentor-name">{getName(creator)}</p>
             <TopInstructorBadge title="top instructor" content="top instructor" />
         </div>
     )

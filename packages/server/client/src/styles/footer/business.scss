@@ -1,7 +1,6 @@
 @import '../config.scss';
 
 .pc-business {
-  margin-top: $navbarHeight;
   min-height: calc(100vh - #{$navbarHeight} - #{$footerHeight});
   .pc-business-content {
     padding-top: 40px;

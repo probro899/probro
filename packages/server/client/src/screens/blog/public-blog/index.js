@@ -5,27 +5,22 @@ import PropTypes from 'prop-types';
 import Navbar from '../../home/component/navbar';
 import CommentContainer from './comment';
 import Footer from '../../../common/footer';
-import client from '../../../socket';
+import client from '../../../socket'; 
 import { ENDPOINT } from '../../../config';
-import { Spinner, SocialShare } from '../../../common';
+import { Spinner, SocialShare } from '../../../common'; 
 import { getName } from '../../../common/utility-functions';
 import { RoundPicture } from '../../../components';
 import BlogCoverImage from './BlogCoverImage';
 import * as actions from '../../../actions';
 import clientQuery from '../../../clientConfig';
 import { GET_BLOG } from '../../../queries';
-
+import ReactHelmet from '../../../common/react-helmet';
 
 class PublicBlog extends React.Component {
-  state = {
-    blogId: null,
-    apis: {},
-    data: {},
-    loading: true,
-  };
+  state = { blogId: null, apis: {}, data: {}, loading: true };
 
   async componentDidMount() {
-    const { account, match, updateNav } = this.props;
+    const { account, match } = this.props;
     try {
       if (account.user) {
         const apis = await client.scope('Mentee');
@@ -33,18 +28,13 @@ class PublicBlog extends React.Component {
       }
       const res = await clientQuery.query({ query: GET_BLOG, variables: { blogSlug: match.params.blogSlug, userSlug: match.params.userSlug }, fetchPolicy: 'network-only' });
       if (res) {
-        this.setState({
-          data: res.data.getBlog,
-          blogId: res.data.getBlog.id,
-          loading: false,
-        });
-        updateNav({ schema: 'page', data: { title: res.data.getBlog.title } });
+        this.setState({ data: res.data.getBlog, blogId: res.data.getBlog.id, loading: false });
       }
     } catch (e) {
       console.log('Error', e);
     }
   }
-  
+
   async getSnapshotBeforeUpdate(prevProps, prevState) {
     const { account } = this.props;
     if (account.user && account.user !== prevProps.account.user) {
@@ -57,46 +47,32 @@ class PublicBlog extends React.Component {
     }
   }
 
-  componentWillUnmount() {
-    const { updateNav } = this.props;
-    updateNav({ schema: 'page', data: { title: 'Proper Class' } });
-  }
-
   createMarkup = (val) => {
     return { __html: val };
   }
 
   render() {
     const { blogId, apis, data, loading } = this.state;
-    if (loading) {
-      return <Spinner />;
-    }
-    const { account } = this.props;
+    if (loading) return <Spinner wClass="spinner-wrapper" />;
+    const { account, match } = this.props;
     const { user } = data;
 
     const imgUrl = user.userDetail && user.userDetail.image ? `${ENDPOINT}/assets/user/${10000000 + parseInt(user.id, 10)}/profile/${user.userDetail.image}` : '/assets//graphics/user.svg';
     const { userDetails } = user;
     return (
       <>
+        <ReactHelmet match={match} headerData={{ title: data.title, description: data.content.replace(/<[^>]+>/g, '').slice(0, 200) }} />
         <Navbar />
         <div className="public-blog">
           <BlogCoverImage blog={data} />
           <div className="public-blog-title">
-            <h1>
-              {
-                data.title
-              }
-            </h1>
+            <h1>{data.title}</h1>
             <div className="author-user">
               <div className="auth-con">
-                <div className="profile-icon">
-                  <RoundPicture imgUrl={imgUrl} />
-                </div>
+                <div className="profile-icon"><RoundPicture imgUrl={imgUrl} /></div>
                 <div className="author-detail">
                   <Link key={user.id} to={`/user/${user.slug}`}>{getName(user)}</Link>
-                  <span>
-                    {new Date(parseInt(data.timeStamp, 10)).toDateString()}
-                  </span>
+                  <span>{new Date(parseInt(data.timeStamp, 10)).toDateString()}</span>
                 </div>
               </div>
               <SocialShare url={window.location.href} />
@@ -108,7 +84,6 @@ class PublicBlog extends React.Component {
               // eslint-disable-next-line react/no-danger
               dangerouslySetInnerHTML={this.createMarkup(data.content)}
             />
-
           </div>
           <CommentContainer
             imgUrl={imgUrl}
@@ -131,5 +106,9 @@ PublicBlog.propTypes = {
   account: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
-const mapStateToProps = state => state;
+const mapStateToProps = ({ account }) => {
+  return { account };
+};
+
 export default connect(mapStateToProps, { ...actions })(PublicBlog);
+ 

@@ -1,38 +1,34 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import * as actions from '../../../actions';
 import { Navbar } from '../../../screens/home/component';
 import Footer from '..';
 import { Spinner } from '../..';
+import HeaderBanner from '../../HeaderBanner';
+import ReactHelmet from '../../react-helmet';
 
 class Privacy extends React.Component {
   state = { loading: true };
 
   componentDidMount() {
-    const { updateNav } = this.props;
-    updateNav({
-      schema: 'mainNav',
-      data: { name: '' },
-    });
-    this.setState({
-      loading: false,
-    });
-    window.scrollTo(0, 0);
+    this.setState({ loading: false });
   }
 
   render() {
     const { loading } = this.state;
-    if (loading) {
-      return <Spinner />;
-    }
+    const { match } = this.props;
+    if (loading) { return <Spinner wClass="spinner-wrapper" />; }
     return (
-      <div>
+      <>
+        <ReactHelmet match={match} headerData={{ title: 'Privacy Policy' }} />
         <Navbar />
+        <HeaderBanner
+          title="Privacy Policy"
+          subTitle="Read to find our about our policies"
+          bgColor="#0F2E54"
+        />
         <div className="pc-privacy pc-container">
           <div className="pc-privacy-content">
-            <h1>Privacy Policy</h1>
             <p>
               We use your personal information only for providing services and improving the Site.
               By using the site, you agree to the collection and use of information in accordance
@@ -103,14 +99,13 @@ class Privacy extends React.Component {
           </div>
         </div>
         <Footer />
-      </div>
+      </>
     );
   }
 }
 
 Privacy.propTypes = {
-  updateNav: PropTypes.func.isRequired,
+  match: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
-const mapStateToProps = state => state;
-export default connect(mapStateToProps, { ...actions })(Privacy);
+export default Privacy;

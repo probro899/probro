@@ -6,12 +6,11 @@ export const FormTextInput = ({
     type,
     placeholder,
     onChange,
-    className,
     value,
     label,
     isRequired,
-    leftIcon,
     rightElement,
+    leftElement,
     hasError
 }) => {
 
@@ -25,22 +24,24 @@ export const FormTextInput = ({
                 placeholder={placeholder}
                 onChange={onChange}
                 value={value}
-                className={`pc-input-group ${hasError ? 'has-error' : ''}`}
+                className={`pc-input-group ${hasError ? 'has-error' : ''} ${leftElement ? 'left-icon' : ''} `}
             />
-            <p className="right-icon">{rightElement}</p>
+            <p className="icon left">{leftElement}</p>
+            <p className="icon right">{rightElement}</p>
         </label>
     )
 }
 
 FormTextInput.defaultProps = {
     type: "text",
-    hasError: false
+    hasError: false,
+    placeholder: '',
 }
 
 FormTextInput.propTypes = {
     name: PropTypes.string.isRequired,
     type: PropTypes.string,
-    placeholder: PropTypes.string.isRequired,
+    placeholder: PropTypes.string,
     className: PropTypes.string,
     value: PropTypes.any,
     onChange: PropTypes.func.isRequired

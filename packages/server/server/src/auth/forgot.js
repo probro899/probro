@@ -22,7 +22,7 @@ export default async function forgot(username) {
 
   cache.users.set(resetToken, user.id, RESET_TOKEN_AGE);
   mailer({
-    from: 'ProperClass<noreply@properclass.com>',
+    from: 'Proper Class<noreply@properclass.com>',
     to: user.email,
     subject: 'Password reset',
     text: `Please use the following link to reset your password ${domain}/reset/${resetToken}`

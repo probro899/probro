@@ -2,7 +2,6 @@ import React from 'react';
 import PopularUser from './PopularUser';
 import PopularBlog from './PopularBlog';
 
-
 export default ({ data, account, database }) => {
   const blogs = data.blogs.map((obj, index) => <PopularBlog obj={obj} key={index} />);
   const users = data.users.map((obj, index) => {

@@ -1,22 +1,21 @@
 /* eslint-disable no-console */
 import React from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { SwitchButton } from '../../../common/Form/SwitchButton';
 import Organization from './organization';
 
 class AdvancedSettings extends React.Component {
-  state = {
-    mentor: false,
-  };
+  constructor(props) {
+    super(props);
+    this.state = { mentor: false };
+  }
 
   componentDidMount() {
-    const { account, database } = this.props;
-    // console.log('check database', database);
-    Object.values(database.UserDetail.byId).map((obj) => {
+    const { account, UserDetail } = this.props;
+    Object.values(UserDetail.byId).map((obj) => {
       if (account.user.id === obj.userId && obj.type === 'mentor') {
-        this.setState({
-          mentor: true,
-        });
+        this.setState({ mentor: true });
       }
     });
   }
@@ -29,9 +28,7 @@ class AdvancedSettings extends React.Component {
         userId: account.user.id,
         type: mentor ? 'mentee' : 'mentor',
       });
-      this.setState({
-        mentor: !mentor,
-      });
+      this.setState({ mentor: !mentor });
     } catch (e) {
       console.log(e);
     }
@@ -63,4 +60,5 @@ AdvancedSettings.propTypes = {
   database: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
-export default AdvancedSettings;
+const mapStateToProps = ({ account, database }) => ({ account, UserDetail: database.UserDetail });
+export default connect(mapStateToProps)(AdvancedSettings);

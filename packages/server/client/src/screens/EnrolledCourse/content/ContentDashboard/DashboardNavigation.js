@@ -1,38 +1,30 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
-const navMenus = [
-    {
-        name: 'Overview',
-    },
-    {
-        name: 'Q&A',
-    },
-    {
-        name: 'Notes',
-    },
-    {
-        name: 'Announcements',
-    },
-]
+const DashboardNavigation = ({ setCurrent, current, lecture, courseNavigator }) => {
+  let navMenus = [{ title: 'Overview', name: 'overview' }];
+  if (lecture.resources && lecture.resources.filter(o => o.type === 'video').length > 0) {
+    navMenus = [{ title: 'Description', name: 'description' }, ...navMenus];
+  }
+  if (courseNavigator) {
+    navMenus = [{ title: 'Course content', name: 'courseContent' }, ...navMenus];
+  }
 
-const DashboardNavigation = () => {
-    const url = "/enrolled";
-    return (
-        <div className="section-nav-menu">
-            <nav className="section-nav">
-                <ul className="nav-ul">
-                    {
-                        navMenus.map((navMenu) => (
-                            <li className="nav-item">
-                                <NavLink to={`${url}/${navMenu.name.toLowerCase()}`} activeClassName='is-active' >{navMenu.name}</NavLink >
-                            </li>
-                        ))
-                    }
-                </ul>
-            </nav>
-        </div>
-    )
+  return (
+    <div className="section-nav-menu">
+      <nav className="section-nav">
+        <ul className="nav-ul">
+            {
+              navMenus.map((navMenu, idx) => (
+                <li className={`nav-item ${current === navMenu.name ? 'active' : ''}`} key={`nav-${idx}`}>
+                  <Link to="#" onClick={() => setCurrent(navMenu.name)}>{navMenu.title}</Link >
+                </li>
+              ))
+            }
+        </ul>
+      </nav>
+    </div>
+  )
 }
 
 export default DashboardNavigation;

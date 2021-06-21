@@ -1,20 +1,15 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import * as actions from '../../../actions';
 import { Navbar } from '../../../screens/home/component';
 import Footer from '..';
 import { Spinner } from '../..';
+import HeaderBanner from '../../HeaderBanner';
+import ReactHelmet from '../../react-helmet';
 
 class Terms extends React.Component {
   state = { loading: true };
 
   componentDidMount() {
-    const { updateNav } = this.props;
-    updateNav({
-      schema: 'mainNav',
-      data: { name: '' },
-    });
     this.setState({
       loading: false,
     });
@@ -23,15 +18,18 @@ class Terms extends React.Component {
 
   render() {
     const { loading } = this.state;
-    if (loading) {
-      return <Spinner />;
-    }
+    const { match } = this.props;
+    if (loading) { return <Spinner wClass="spinner-wrapper" />; }
     return (
       <div>
+        <ReactHelmet match={match} headerData={{ title: 'Terms and Conditions' }} />
         <Navbar />
+        <HeaderBanner
+          title="Terms and Conditions"
+          subTitle="coming soon..."
+        />
         <div className="pc-terms pc-container">
           <div className="pc-terms-content">
-            <h1>Terms and Conditions</h1>
             <p>
               Terms and Conditions Coming Soon....
             </p>
@@ -44,8 +42,7 @@ class Terms extends React.Component {
 }
 
 Terms.propTypes = {
-  updateNav: PropTypes.func.isRequired,
+  match: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
-const mapStateToProps = state => state;
-export default connect(mapStateToProps, { ...actions })(Terms);
+export default Terms;

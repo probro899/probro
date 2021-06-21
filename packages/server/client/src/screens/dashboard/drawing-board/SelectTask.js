@@ -3,14 +3,14 @@ import PropTypes from 'prop-types';
 import Button from '../../../common/Button';
 import { FormSelectField } from '../../../common/Form/FormSelectField';
 import { FormTextInput } from '../../../common/Form/FormTextInput';
-import { timeStampSorting } from '../../../common/utility-functions';
+import { reverseTimestampSort } from '../../../common/utility-functions';
 
 
 class SelectTask extends React.Component {
   constructor(props) {
     super(props);
     const { database } = this.props;
-    const classes = Object.values(database.Board.byId).filter(o => o.type === 'private').sort(timeStampSorting).map(obj => ({ label: obj.name.substring(0, 50), value: obj.id }));
+    const classes = Object.values(database.Board.byId).filter(o => o.type === 'private').sort(reverseTimestampSort).map(obj => ({ label: obj.name.substring(0, 50), value: obj.id }));
     this.state = {
       error: null,
       message: null,
@@ -27,7 +27,7 @@ class SelectTask extends React.Component {
     const { classVal } = this.state;
     const { getCardsApi } = this.props;
     const res = await getCardsApi({ boardId: classVal });
-    const taskOptions = res.sort(timeStampSorting).map(obj => ({ label: obj.name.substring(0, 50), value: obj.id }));
+    const taskOptions = res.sort(reverseTimestampSort).map(obj => ({ label: obj.name.substring(0, 50), value: obj.id }));
     this.setState({
       taskOptions,
       taskVal: taskOptions[0].value,
@@ -42,7 +42,7 @@ class SelectTask extends React.Component {
       const res = await getCardsApi({ boardId: parseInt(val, 10) });
       this.setState({
         classVal: parseInt(val, 10),
-        taskOptions: res.sort(timeStampSorting).map(obj => ({ label: obj.name.substring(0, 50), value: obj.id })),
+        taskOptions: res.sort(reverseTimestampSort).map(obj => ({ label: obj.name.substring(0, 50), value: obj.id })),
         taskVal: res[0] && res[0].id,
         loading: false,
       });
@@ -52,11 +52,7 @@ class SelectTask extends React.Component {
     }
   }
 
-  onTaskChange = (e) => {
-    this.setState({
-      taskVal: e.target.value,
-    });
-  }
+  onTaskChange = (e) => this.setState({ taskVal: e.target.value });
 
   submitForm = async () => {
     const { callback } = this.props;
@@ -79,18 +75,7 @@ class SelectTask extends React.Component {
   };
 
   render() {
-    const {
-      classeOptions, taskOptions, taskVal,
-      classVal,
-      error,
-      name,
-      loading, message,
-    } = this.state;
-
-    console.log(classeOptions);
-
-
-
+    const { classeOptions, taskOptions, taskVal, classVal, error, name, loading, message } = this.state;
     return (
       <div style={{ padding: '10px', maxWidth: 300, minWidth:180 }}>
         <div style={{ padding: '5px 0px' }}>
@@ -111,7 +96,7 @@ class SelectTask extends React.Component {
             />
           </div>
           <div style={{ padding: '10px 0px' }}>
-            <p style={{ fontSize: '16px' }}>Class</p>
+            <p style={{ fontSize: '16px' }}>Classroom</p>
             <FormSelectField
               options={classeOptions}
               onChange={this.onClassChange}

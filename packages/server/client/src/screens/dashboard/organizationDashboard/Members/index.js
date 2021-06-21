@@ -10,26 +10,25 @@ class Members extends React.Component {
   }
 
   getMembers = () => {
-    const { database, orgObj } = this.props;
-    return Object.values(database.OrganizationMember.byId).filter(o => o.oId === orgObj.id);
+    const { orgObj, database } = this.props;
+    return Object.values(database.OrganizationMember.byId).filter(o => o.oId === orgObj.id).filter(m => m.status === 'active' && m.type === 'student');
   }
 
   render() {
     const members = this.getMembers();
-    console.log('Props in members tab', this.props);
     return (
-          <>
-            <Header
-              header="Members List"
-              totalUser={members.length}
-              popupContent={<AddNewMembers {...this.props}/>}
-              buttonText="Add Members"
-              popupTitle="Add new members"
-              addButton
-            />
-            <Filter />
-            <MembersList users={members} />
-          </>
+      <div className="pc-table-wrapper">
+        <Header
+          header="Members List"
+          totalUser={members.length}
+          popupContent={<AddNewMembers {...this.props} />}
+          buttonText="Add Members"
+          popupTitle="Add new members"
+          addButton
+        />
+        <Filter />
+        <MembersList users={members} props={this.props} />
+      </div>
     );
   }
 }

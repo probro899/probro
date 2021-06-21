@@ -3,9 +3,10 @@ import { UPDATE_NAV } from '../actions/types';
 const initialState = {
   sideNav: { name: '' },
   mainNav: { name: '' },
-  popNotification: { message: 'Welcome to Properclass', active: false, intent: 'Success' },
+  popNotification: { message: 'Welcome to Properclass', active: false, intent: 'success' },
   search: { key: '', country: '', industry: '' },
   page: { title: 'Proper Class' },
+  progress: { percent: 0 },
 };
 
 export default (state = initialState, action) => {

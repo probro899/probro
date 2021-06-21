@@ -1,0 +1,3 @@
+--Up
+ALTER TABLE Board ADD COLUMN lecId INTEGER;
+-- Down

@@ -10,40 +10,34 @@ $pcLightRed: rgba(255, 0, 0, 0.336);
 $darkBlue: rgba(29, 67, 84, 1);
 $pcLightBlue: rgba(29, 67, 84, 0.7);
 $borderOnDarkBlue: #2b5468;
-$backgroundColor: #f6f7fd; //#fafbfc -new1 #F3F7F7 - new2  //f3f2ef -old  //#f6f7fd //very new
+$backgroundColor: #f1f2f4; //#fafbfc -new1 #F3F7F7 - new2  //f3f2ef -old  //#f6f7fd //very new //#F6F8FA
 $fadedBackground: #f9f9f9;
 $normalBorder: #e0e0e0;
 $pcGreen: rgb(113, 249, 113);
 $normalShadowColor: rgba(57, 73, 76, 0.35);
 $lightTextColor: #696969;
-$footerHeight: pixel-to-rem(125);
+$footerHeight: rem(125);
 // new design properties here
 $primary: #2572d1;
+$secondary: #00bdda;
 $dropPrimary: #58affc;
 $primaryHover: rgba(78, 185, 240, 1);
 $dropPrimaryHover: rgba(30, 110, 220, 1);
 $shadowColor: #383535;
 // navbar height
-$navbarHeight: pixel-to-rem(90);
+$navbarHeight: rem(90);
 $boardColor: #88e0e9;
-$toolbarHeight: pixel-to-rem(50);
+$toolbarHeight: rem(50);
 $blue: rgba(19, 124, 189, 1);
 $silver: rgb(182, 182, 182);
 $albaster: #f8f8f8;
 $borderColor: #d6d9d9;
 
-//new
-$headingColor: #2e3d49; //#2e3d49 //#657482
-$subHeadColor: #58646d;
-
-//star  color
-$star-color: #fdcc0d;
-
 //mixins
 @mixin genericBoxPattern {
   background: #fff;
-  border-radius: pixel-to-rem(10);
-  box-shadow: 0 pixel-to-rem(6) pixel-to-rem(12) pixel-to-rem(-1) rgba(0, 32, 128, 0.1), 0 0 0 pixel-to-rem(1) #f0f2f7;
+  border-radius: rem(6);
+  box-shadow: 0 rem(6) rem(12) rem(-1) rgba(0, 32, 128, 0.1), 0 0 0 rem(1) #f0f2f7;
 }
 
 //flex
@@ -52,3 +46,5 @@ $star-color: #fdcc0d;
   justify-content: center;
   align-items: center;
 }
+
+

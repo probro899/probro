@@ -7,9 +7,6 @@
   width: 100%;
   .drawing-wrapper {
     background: #f6f7fd;
-    max-width: 1024px;
-    margin: 0 auto;
-    width: 100%;
     .draw-title {
       text-align: center;
       text-transform: uppercase;
@@ -27,7 +24,6 @@
       #canvasWrapper {
         width: 100%;
         height: calc(100vh - 100px - 25px);
-        border-radius: 10px;
         overflow: hidden;
         @include genericBoxPattern;
         margin-bottom: 10px;

@@ -29,6 +29,7 @@ import validateToken from './server/src/auth/validateToken';
 import { initUser } from './server/src/api';
 import client from './client/src/clientConfig';
 import { PORT as CPORT } from './client/src/config';
+import generateSitemap from './site-map/sitemapGenerator';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -46,6 +47,9 @@ app.use(bodyParser.json({ limit: '50mb', extended: true }));
 app.use(cookieParser());
 app.use(compression());
 
+// generating site map
+generateSitemap();
+
 app.use('/', express.static('build/public'));
 try {
   run(async () => {
@@ -53,7 +57,12 @@ try {
     await dbinit();
 
     // Initializing cache database
-    initCachDB();
+    await initCachDB();
+
+
+    // generating site map
+    generateSitemap();
+
 
     // Gaphql handler intialization
     app.use('/graphql', graphqlHTTP({

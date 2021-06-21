@@ -1,31 +1,25 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Popup from '../common/Form/Popup';
-import { Button } from '../common/utility-functions/Button/Button';
+import Popup from './Form/Popup';
+import { Button } from './utility-functions/Button/Button';
 
 class DeletePopOver extends React.Component {
-  state = {};
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
 
   render() {
     const { action, isOpen, name } = this.props;
     return (
-      <Popup
-        isOpen={isOpen}
-        onClose={() => action('cancle')}
-      >
+      <Popup isOpen={isOpen} onClose={() => action('cancle')}>
         <div className="delete-popover">
           <div className="top">
             Are you sure you want to delete
-            {' '}
-            <span style={{ color: 'red' }}>{name}</span>
+            <span style={{ color: 'red' }}> {name}</span>
             ?
           </div>
           <div className="popover-button">
-            {/* <Button
-              text="Delete"
-              intent="danger"
-              onClick={() => action('confirm')}
-            /> */}
             <Button
               onClick={() => action('confirm')}
               type="button"

@@ -12,6 +12,7 @@ class Select extends React.Component {
         onChange={e => onChange(data.id, e.target.value)}
         type={data.fieldtype}
         name={data.name}
+        label={data.label}
         value={value}
         isRequired={data.required}
         options={data.options.sort((a, b) => (a.value > b.value ? 1 : -1))}

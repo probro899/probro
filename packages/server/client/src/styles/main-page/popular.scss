@@ -1,118 +1,125 @@
 .popularContainer {
-  margin: pixel-to-rem(40) auto pixel-to-rem(40);
-  @media screen and (max-width: pixel-to-rem(576)) {
-    margin-bottom: pixel-to-rem(20);
-    margin-top: pixel-to-rem(20);
+  margin: rem(40) auto rem(40);
+  @media screen and (max-width: rem(576)) {
+    margin-bottom: rem(20);
+    margin-top: rem(20);
   }
-  padding: 0 pixel-to-rem(20);
   .popularHeader {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
+    margin-bottom: rem(20);
     p {
       text-align: center;
       color: $darkBlue;
-      font-size: pixel-to-rem(40);
+      font-size: rem(40);
       font-weight: 600;
     }
     .page-sub-heading {
-      color: $subHeadColor;
-      font-size: pixel-to-rem(16);
+      color: color-get(text-light);
+      font-size: rem(16);
       font-weight: 600;
       text-transform: uppercase;
-      margin-bottom: pixel-to-rem(10);
-    }
-    .page-heading {
-      color: $headingColor;
-      font-size: pixel-to-rem(32);
-      font-weight: 600;
-      text-transform: uppercase;
-      text-align: center;
-      margin-bottom: pixel-to-rem(20);
-      @media screen and (max-width: pixel-to-rem(767)) {
-        font-size: pixel-to-rem(26);
-      }
+      margin-bottom: rem(10);
     }
   }
 
   .popularCover {
     position: relative;
     display: flex;
-    margin-left: pixel-to-rem(-15);
-    margin-right: pixel-to-rem(-15);
+    margin-left: rem(-15);
+    margin-right: rem(-15);
     flex-flow: row wrap;
-    justify-content: center;
-    @media screen and (max-width: pixel-to-rem(576)) {
+    .card-wrapper {
+      width: 100%;
+    }
+    @media screen and (max-width: rem(576)) {
       margin-right: 0;
       margin-left: 0;
     }
     .card-wrapper {
-      padding-right: pixel-to-rem(15);
-      padding-left: pixel-to-rem(15);
-      max-width: 25%;
-      flex: 0 0 25%;
-      overflow: hidden;
-      margin-bottom: pixel-to-rem(30);
-      @media screen and (max-width: pixel-to-rem(767)) {
+      @media screen and (min-width: rem(992)) {
         max-width: 50%;
         flex: 0 0 50%;
-        margin-bottom: pixel-to-rem(20);
+        padding-right: rem(15);
+        padding-left: rem(15);
       }
-      @media screen and (max-width: pixel-to-rem(576)) {
-        max-width: 100%;
-        flex: 0 0 100%;
+      .pc-card {
+        padding: rem(10) rem(15);
       }
 
-      .card {
-        .card-image {
-          width: 100%;
-          position: relative;
-          margin: 0 auto;
-          z-index: 1;
-          max-width: pixel-to-rem(130);
-
-          img {
-            width: pixel-to-rem(130);
-            height: pixel-to-rem(130);
-            object-fit: cover;
-            border-radius: 50%;
+      .mentor-card {
+        @include genericBoxPattern;
+        margin-bottom: 50px;
+        @media screen and (max-width: rem(767)) {
+          margin-bottom: rem(20);
+        }
+        .mentor-profile {
+          @media screen and (min-width: rem(992)) {
+            display: flex;
+            padding: rem(33) rem(21);
+            align-items: center;
+          }
+          @media screen and (max-width: rem(991)) {
+            text-align: center;
+            padding: rem(33) rem(21);
           }
         }
-        .card-desc {
-          padding: pixel-to-rem(10);
-          text-align: center;
-          width: 100%;
-          .title {
-            font-size: pixel-to-rem(18);
-            display: flex;
-            justify-content: center;
-            a {
-              color: $headingColor;
-              font-weight: 600;
-            }
-            .pc-verified-badge {
-              margin-left: pixel-to-rem(5);
+        .mentor-image {
+          img {
+            height: 160px;
+            width: 160px;
+            border-radius: 50%;
+            object-fit: cover;
+          }
+        }
+        @media screen and (min-width: rem(992)) {
+          .mentor-desc {
+            padding-left: rem(24);
+          }
+        }
+        .title {
+          font-size: rem(22);
+          color: color-get(primary);
+          font-weight: 600;
+          .tooltip {
+            margin-left: rem(5);
+          }
+        }
+        .headline {
+          margin-bottom: rem(3);
+        }
+        .headline,
+        .address {
+          color: color-get(text-light);
+          font-size: rem(14);
+        }
+        .details {
+          line-height: 24px;
+          margin-top: 12px;
+        }
+      }
+      .mentor-content {
+        padding: 0 rem(40) rem(30);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        .left-content {
+          ul {
+            li {
+              display: inline-block;
+              color: color-get(text-light);
+              margin-right: rem(8);
+              font-size: rem(15);
+              svg {
+                fill: color-get(primary);
+              }
             }
           }
-          .sub-title {
-            font-size: pixel-to-rem(14);
-            color: #4e4e4e;
-          }
-          .courses {
-            margin-top: pixel-to-rem(10);
-            color: #707070;
-            cursor: pointer;
-            margin-bottom: pixel-to-rem(5);
-          }
-          .ratings {
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            justify-content: center;
-            margin-top: pixel-to-rem(10);
-            svg {
-              fill: $star-color;
-            }
+        }
+        .right-content {
+          a {
+            color: color-get(primary);
           }
         }
       }

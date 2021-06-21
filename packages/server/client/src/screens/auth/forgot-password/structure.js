@@ -4,6 +4,7 @@ export default [
     fieldtype: 'input',
     name: 'Email',
     placeholder: 'Eg, alex@gmail.com',
+    specialType: 'email',
     required: true,
   },
   {

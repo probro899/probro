@@ -56,7 +56,7 @@ class SmallScreenSideNav extends React.Component {
             iconPosition="right"
           />
         </div>
-        <Collapse isOpen={open}>
+        <Collapse isOpen={open} height={390}>
           <div className="pc-collapse-menu">
             {
               navElements.map((obj) => {

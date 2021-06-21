@@ -1,23 +1,19 @@
-@import './config.scss';
+@import "./config.scss";
 
 .search-result {
   // this is for footer
   min-height: calc(100vh - #{$navbarHeight} - #{$footerHeight});
   max-width: 1140px;
-  margin: 100px auto 50px;
-  padding: 20px;
+  margin-top: rem(30);
+  margin-bottom: rem(50);
   .filter-toolbar {
     min-height: $toolbarHeight;
-    @include genericBoxPattern;
-    padding: 15px 20px;
-    margin-bottom: 25px;
     width: 100%;
     position: sticky;
     top: $navbarHeight;
     z-index: 2;
 
     .filter-control {
-      
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -29,70 +25,44 @@
       }
       .filter-inputs {
         display: flex;
-        align-items: center;
         justify-content: space-between;
         max-width: 85%;
         flex: 0 0 85%;
-        input,
-        select {
-          border: 1px solid rgb(202, 202, 202);
-          margin: 0px 5px;
-          padding: 5px 10px;
-          outline: none;
-          border-radius: 5px;
-          background-color: transparent;
-          cursor: pointer;
-          option {
-            background-color: white !important;
-            &:hover {
-              background-color: $primaryColor !important;
-              color: white;
-            }
+        .formLabel {
+          margin-bottom: 0;
+          @media screen and (max-width: rem(991)) {
+            margin-bottom: rem(5);
+          }
+          select {
+            margin-bottom: 0;
           }
         }
-        .search {
-          display: flex;
-          align-items: center;
-          position: relative;
-          max-width: 25%;
-          flex: 0 0 25%;
-          input {
-            padding-left: 30px !important;
-            width: 100%;
-            margin: 0;
-          }
-          .search-icon {
-            position: absolute;
-            left: 12px;
-          }
-        }
-
         .input-group {
           display: flex;
           align-items: center;
-          justify-content: space-between;
           max-width: 50%;
           flex: 0 0 50%;
           margin-left: 10px;
+
           .select-country {
             width: 48%;
             select {
               width: 100%;
-              margin: 0;
             }
           }
           .select-industry {
             width: 48%;
+            @media screen and (min-width: rem(992)) {
+              margin-left: rem(10);
+            }
             select {
               width: 100%;
-              margin: 0;
             }
           }
         }
         .select-language {
           max-width: 25%;
           flex: 0 0 25%;
-          margin-left: 12px;
           select {
             width: 100%;
           }
@@ -116,29 +86,18 @@
         font-weight: bold;
         cursor: pointer;
       }
-      .pc-collapse{
+      .pc-collapse {
         display: none;
-        @media screen and (max-width:767px){
+        @media screen and (max-width: rem(991)) {
           display: block;
           background-color: #fff;
         }
       }
     }
-    .pc-input-group {
-      margin: 0px 15px !important;
-    }
     .pc-filter-button {
       background-color: white;
       color: black;
       border: none;
-    }
-    label {
-      margin-bottom: 0px !important;
-    }
-    .filter-label {
-      font-size: 18px;
-      font-weight: bold;
-      opacity: 0.8;
     }
     .btn-group {
       margin-left: 90px;
@@ -153,22 +112,7 @@
         }
       }
     }
-    select#country {
-      max-width: 200px;
-      border: 1px solid rgb(90, 90, 90);
-      background-color: white;
-      outline: none;
-      border-radius: 5px;
-      color: rgb(90, 90, 90);
-    }
     input#key {
-      border: 1px solid rgb(90, 90, 90);
-      background-color: white;
-      outline: none;
-      border-radius: 5px;
-      color: rgb(90, 90, 90);
-    }
-    select#industry {
       border: 1px solid rgb(90, 90, 90);
       background-color: white;
       outline: none;
@@ -182,7 +126,9 @@
       opacity: 1;
       font-weight: bold;
       font-size: 16px;
+      color: color-get(text-dark);
       text-transform: uppercase;
+      margin-bottom: rem(10);
     }
 
     .i-result {
@@ -223,7 +169,7 @@
         }
         .user-bio {
           font-size: 14px;
-          color: $headingColor;
+          color: color-get(text-dark);
           margin-bottom: 2px;
           font-weight: bold;
         }
@@ -255,6 +201,9 @@
           margin-left: 10px;
         }
       }
+      &:last-child {
+        border-bottom: 0;
+      }
     }
   }
 
@@ -266,10 +215,6 @@
       padding-right: 30px;
       .result-wrapper {
         margin-bottom: 20px;
-        .result-list {
-          @include genericBoxPattern;
-          padding: 20px;
-        }
       }
     }
     .search-content-right {
@@ -284,51 +229,13 @@
 
       .users-head {
         font-weight: 700;
+        color: color-get(text-dark);
       }
 
       .search-content-right-top {
         font-weight: bold;
         text-transform: uppercase;
         font-size: 14px;
-      }
-      .popular-user {
-        margin: 10px 0px;
-        padding: 10px 0px;
-        border-bottom: 1px solid #ececec;
-        display: flex;
-        align-items: center;
-        .user-image {
-          width: 60px;
-          height: 60px;
-          border-radius: 50%;
-          overflow: hidden;
-          flex-shrink: 0;
-          margin-right: 10px;
-          background-position: center;
-          img {
-            height: 100%;
-            width: 100%;
-            object-fit: cover;
-          }
-        }
-        .user-detail {
-          padding-top: 5px;
-          text-align: left;
-          max-width: 50%;
-          flex: 0 0 50%;
-          margin-right: 20px;
-          .name {
-            font-size: 15px;
-            font-weight: bold;
-            line-height: 1.6;
-          }
-          .user-bio {
-            font-size: 12px;
-            color: $headingColor;
-            margin-bottom: 2px;
-            font-weight: bold;
-          }
-        }
       }
     }
     @media screen and (max-width: 1199px) {
@@ -352,15 +259,7 @@
     }
   }
 
-  @media screen and (min-width: 768px) and (max-width: 1199px) {
-    .popular-user-wrapper {
-      display: flex;
-      flex-wrap: wrap;
-    }
-  }
-
-  @media screen and (max-width: 767px) {
-    margin-top: $navbarHeight;
+  @media screen and (max-width: rem(991)) {
     margin-bottom: 25px;
     .filter-toolbar {
       position: relative;
@@ -378,7 +277,6 @@
           .search {
             max-width: 100%;
             flex: 0 0 100%;
-            margin-bottom: 10px;
           }
           .input-group {
             max-width: 100%;
@@ -388,7 +286,6 @@
             .select-country,
             .select-industry {
               width: 100%;
-              margin-bottom: 10px;
             }
           }
           .select-language {
@@ -400,13 +297,12 @@
               margin: 0;
             }
           }
-          &.pc-desktop-filter{
+          &.pc-desktop-filter {
             display: block;
-            @media screen and (max-width:767px){
+            @media screen and (max-width: rem(991)) {
               display: none;
             }
           }
-         
         }
         .filter {
           display: block;

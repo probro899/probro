@@ -1,99 +1,114 @@
-import React, { useState, useEffect } from 'react';
-import { GoChevronDown } from "react-icons/go";
-import { Button } from '../../../../common/utility-functions/Button/Button';
-import Popover from '../../../../common/Form/Popover';
-import Pagination from '../../../../common/Pagination';
-import NoRecordFound from '../../../../common/NoRecordFound';
-import { FiMoreHorizontal } from 'react-icons/fi';
+import { AiOutlineClose } from 'react-icons/ai';
+import PropTypes from 'prop-types';
+import Moment from 'react-moment';
+import { CgStack } from 'react-icons/cg';
+import React, { useState, useEffect, useRef } from 'react';
+import Table from '../../../../common/Table/index';
+import DeletePopOver from '../../../../common/DeletePopOver';
 
-const DeleteButtonContainer = ({ callback }) => {
-  return (
-    <div className="pc-del-btn">
-      <Button
-        onClick={callback}
-        type="button"
-        buttonStyle="btn--danger--solid"
-        buttonSize="btn--small"
-        title="Remove"
-      />
-    </div>
-  );
-};
-
-const MembersList = ({ users }) => {
-
-  // for pagination
-  const [countPerPage] = useState(4);
-  const [page, setPage] = useState(1);
-  const [data, setData] = useState([]);
-
-  const pageCount = Math.ceil(users.length / countPerPage);
+const MembersList = ({ users, props }) => {
+  const previousRef = useRef();
+  const [actionIds, setIds] = useState([]);
+  const [loading, changeLoding] = useState(false);
+  const [memDeletePopOver, toggleDeletePopover] = useState(false);
 
   useEffect(() => {
-    setData(users.slice(countPerPage * page - countPerPage, countPerPage * page));
-  }, [page, countPerPage]);
+    previousRef.current = actionIds;
+  });
+
+  // for checkbox
+  const toggleCheck = (user) => {
+    const { updateDatabaseSchema } = props;
+    updateDatabaseSchema('OrganizationMember', { id: user.id, checked: !user.checked });
+    const hasId = previousRef.current.find((i) => i === user.id);
+    if (hasId) {
+      setIds(previousRef.current.filter((i) => i !== user.id));
+    } else {
+      setIds([...previousRef.current, user.id]);
+    }
+  };
 
   const sortNames = () => {
     console.log('sort');
   };
 
+  const toggleDeletePopoverHandler = () => {
+    toggleDeletePopover(!memDeletePopOver);
+  };
+
+  const deleteHandler = async (e) => {
+    const { apis, orgObj, updateNav, deleteDatabaseSchema, updateDatabaseSchema } = props;
+    try {
+      changeLoding(true);
+      const res = await apis.deleteOrganizationMember({ ids: actionIds, oId: orgObj.id });
+      changeLoding(false);
+      toggleDeletePopoverHandler();
+      if (res.status === 200) {
+        updateNav({ schema: 'popNotification', data: { active: true, message: 'Record deleted successfully', intent: 'success' } });
+        actionIds.forEach((id) => deleteDatabaseSchema('OrganizationMember', { id }));
+        actionIds.forEach((id) => updateDatabaseSchema('OrganizationMember', { id, checked: false }));
+      }
+      if (res.status === 201) {
+        updateNav({ schema: 'popNotification', data: { active: true, message: res.data, intent: 'error' } });
+      }
+    } catch (e) {
+      toggleDeletePopoverHandler();
+      updateNav({ schema: 'popNotification', data: { active: true, message: 'Record deletion faild', intent: 'error' } });
+      console.error('Error in Change Role handler', e);
+    }
+  };
+
+  const deleteActionHandler = (type) => {
+    if (type === 'confirm') {
+      deleteHandler();
+    } else {
+      toggleDeletePopoverHandler();
+    }
+  };
+
+  // console.log('state value in members', props);
   return (
     <>
-      <div className="pc-user-list">
-        <table className="pc-user-list-table" cellpadding="0" cellspacing="0">
-          <thead>
-            <tr>
-              <th>Name {<GoChevronDown size="20" onClick={sortNames} />} </th>
-              <th>Email</th>
-              <th>Joined Date</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {
-              users.length ? users.map((user) => (
-                <tr>
-                  <td>
-                    {user.name}
-                  </td>
-                  <td>{user.email}</td>
-                  <td>{user.doj}</td>
-                  <td>
-                    <Popover
-                      content={<DeleteButtonContainer callback={() => { }} />}
-                      vPosition="top"
-                      hPosition="left"
-                      xAlign="right"
-                      yAlign="top"
-                    >
-                      <div className="add-user-btn"  >
-                        <div className="pc-rm-btn">
-                          <FiMoreHorizontal size={20} color="#1d4354" />
-                        </div>
-                      </div>
-                    </Popover>
-                  </td>
-                </tr>
-              )) : <tr>
-                <td colSpan="4">
-                  <NoRecordFound />
-                </td>
-              </tr>
-            }
-          </tbody>
-        </table>
-      </div>
-      {
-        users.length > 0 && <div className="list-pagination">
-          <Pagination
-            pageCount={pageCount}
-            page={page}
-            setPage={setPage}
-          />
-        </div>
-      }
+      <Table
+        headers={{ icon: <CgStack size={20} />, name: 'Name', email: 'Email', type: 'Type', timeStamp: 'Join Date' }}
+        data={users.map((user) => ({
+          ...user,
+          name: user.user.user.firstName,
+          checked: false,
+          timeStamp: <Moment format="YYYY-MM-DD">{user.timeStamp}</Moment>,
+          icon: <input checked={user.checked} type="checkbox" id={user.id} name={user.name} value={user.id} onChange={() => toggleCheck(user)} />,
+        }))}
+        actions={[
+          {
+            onClick: (e) => toggleDeletePopoverHandler(),
+            buttonStyle: 'btn--danger--solid',
+            icon: <AiOutlineClose size={20} />,
+            title: 'Delete',
+            disabled: actionIds.length === 0,
+            loading,
+          },
+        ]}
+        pagination={{
+          page: 1,
+          pageCount: 4,
+        }}
+      />
+      <DeletePopOver
+        isOpen={memDeletePopOver}
+        action={(type) => deleteActionHandler(type)}
+        name="Member"
+      />
     </>
   );
 };
 
 export default MembersList;
+MembersList.propTypes = {
+  props: PropTypes.objectOf(PropTypes.any).isRequired,
+  users: PropTypes.arrayOf(PropTypes.any).isRequired,
+  apis: PropTypes.objectOf(PropTypes.any).isRequired,
+  orgObj: PropTypes.objectOf(PropTypes.any).isRequired,
+  updateNav: PropTypes.func.isRequired,
+  deleteDatabaseSchema: PropTypes.func.isRequired,
+  updateDatabaseSchema: PropTypes.func.isRequired,
+};

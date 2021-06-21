@@ -8,13 +8,8 @@ class Attachment extends React.Component {
   state = {};
 
   uploadAttachment = async (data) => {
-    if (!data.attachment) {
-      return { response: 400, error: 'Choose a file' };
-    }
-    const {
-      account, apis, addDatabaseSchema, boardId,
-      task
-    } = this.props;
+    if (!data.attachment) return { response: 400, error: 'Choose a file' };
+    const { account, apis, addDatabaseSchema, boardId, task } = this.props;
     try {
       const res = await uploadFile('board', data.attachment, account.sessionId, false);
       if (res.status === 200) {
@@ -30,7 +25,7 @@ class Attachment extends React.Component {
       }
       return { response: 200, message: 'Uploaded' };
     } catch (e) {
-      return { response: 400, error: 'Network issues' };
+      return { response: 400, error: 'Please, make sure you select an attachment' };
     }
   }
 

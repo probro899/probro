@@ -49,7 +49,7 @@
       width: 100%;
       margin-left: 5%;
       margin-right: 5%;
-      background-color: $backgroundColor;
+      background-color: #fff;
       border-radius: 10px;
       // overflow-y: scroll;
       position: relative;
@@ -60,12 +60,12 @@
         .pc-popup-icon {
           margin-right: 15px;
           svg {
-            fill: #0056b8;
+            fill: color-get();
           }
         }
         .pc-popup-title {
           font-size: 18px;
-          color: $headingColor;
+          color: color-get(text-dark);
         }
       }
       .close-btn {

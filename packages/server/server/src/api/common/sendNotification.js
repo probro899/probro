@@ -6,10 +6,10 @@ import findUserDetails from './findUserDetails';
 import databaseCache from '../../cache/database/cache';
 
 export default async (context, emailObj, notiObj, sessions) => {
-  // console.log('send notificaiton called');
+  // console.log('send notificaiton called', notiObj);
   try {
     const { html, subject, email } = emailObj;
-
+ 
     if (notiObj) {
       const notiId = await add.call(context, 'Notification', notiObj);
       let dataTobeupdateAllUser;
@@ -32,7 +32,7 @@ export default async (context, emailObj, notiObj, sessions) => {
           Notification: { id: notiId, ...notiObj, blog, user: findUserDetails(notiObj.typeId) },
         };
       }
-
+ 
       if (notiObj.type === 'organization') {
         const organization = databaseCache.get('Organization').find(o => o.id === notiObj.boardId);
         dataTobeupdateAllUser = {
@@ -44,7 +44,7 @@ export default async (context, emailObj, notiObj, sessions) => {
         sessions.forEach((s) => {
           updateUserCache(dataTobeupdateAllUser, s, 'add');
           mailer({
-            from: 'ProperClass<noreply@properclass.com>',
+            from: 'Proper Class<noreply@properclass.com>',
             to: `<${s.values.user.email}>`,
             subject,
             text: 'No reply',
@@ -53,7 +53,7 @@ export default async (context, emailObj, notiObj, sessions) => {
         });
       } else {
         mailer({
-          from: 'ProperClass<noreply@properclass.com>',
+          from: 'Proper Class<noreply@properclass.com>',
           to: `<${email}>`,
           subject,
           text: 'No reply',
@@ -62,7 +62,7 @@ export default async (context, emailObj, notiObj, sessions) => {
       }
     } else {
       mailer({
-        from: 'ProperClass<noreply@properclass.com>',
+        from: 'Proper Class<noreply@properclass.com>',
         to: `<${email}>`,
         subject,
         text: 'No reply',

@@ -2,43 +2,54 @@
     width: 100%;
 }
 .appointment-wrapper {
-    padding: pixel-to-rem(20);
-    max-width: pixel-to-rem(1024);
-    margin: 0 auto;
-    width: 100%;
-    @media screen and (max-width: pixel-to-rem(767)) {
-        padding: pixel-to-rem(10);
+    padding: rem(20);
+    @media screen and (max-width: rem(767)) {
+        padding: rem(10);
     }
 }
-.appointment-list {
-    padding: pixel-to-rem(20);
-    margin-bottom: pixel-to-rem(30);
+.appointment-table-wrapper {
     @include genericBoxPattern;
-    .appointment-table {
-        width: 100%;
-        border-spacing: 0 pixel-to-rem(10);
-    }
-    thead {
-        th {
-            text-align: left;
-            padding-left: pixel-to-rem(10);
-            color: $headingColor;
-        }
-    }
-    tbody {
-        tr {
-            background: #e6eef8;
-            border-radius: pixel-to-rem(10);
-            td {
-                padding: pixel-to-rem(10);
-                color: $headingColor;
-                &:first-child {
-                    border-top-left-radius: pixel-to-rem(5);
-                    border-bottom-left-radius: pixel-to-rem(5);
+    .appointment-list {
+        tbody {
+            tr {
+                td {
+                    &:last-child {
+                        padding-right: rem(24);
+                        .action-icons {
+                            display: flex;
+                            justify-content: center;
+                            background: color-get(primary, 100);
+                            border-radius: rem(10);
+                            padding: rem(3) 0;
+                            cursor: pointer;
+                            .edit-icon {
+                                svg {
+                                    fill: color-get(primary, 500);
+                                }
+                            }
+                            .delete-icon {
+                                margin-left: rem(5);
+                                svg {
+                                    fill: color-get(error);
+                                }
+                            }
+                        }
+                    }
+                    .status {
+                        width: rem(15);
+                        height: rem(15);
+                        border-radius: 50%;
+                        background: color-get(primary);
+                        &.green {
+                            background: color-get(success);
+                        }
+                        &.grey {
+                            background: color-get(border);
+                        }
+                    }
                 }
-                &:last-child {
-                    border-top-right-radius: pixel-to-rem(5);
-                    border-bottom-right-radius: pixel-to-rem(5);
+                &:hover {
+                    background-color: rgba(0, 0, 0, 0.075);
                 }
             }
         }
@@ -47,24 +58,47 @@
 
 .stats-wrapper {
     display: flex;
-    margin-left: pixel-to-rem(-15);
-    margin-right: pixel-to-rem(-15);
-    margin-bottom:  pixel-to-rem(25);
+    margin-left: rem(-15);
+    margin-right: rem(-15);
+    margin-bottom: rem(25);
     .stats-container {
-        padding-left: pixel-to-rem(15);
-        padding-right: pixel-to-rem(15);
+        padding-left: rem(15);
+        padding-right: rem(15);
         flex: 1;
         .stats-card {
-            @include genericBoxPattern;
-            padding: pixel-to-rem(10) pixel-to-rem(15);
+            border-radius: rem(3);
+            padding: rem(10) rem(15);
+            background-color: color-get(secondary, 100);
+            border: rem(1) solid color-get(secondary, 500);
             .stats-number {
-                font-size: pixel-to-rem(30);
+                font-size: rem(30);
                 font-weight: 600;
-                color: $headingColor;
+                color: color-get(secondary);
             }
             .stats-title {
-                font-size: pixel-to-rem(14);
-                color: $subHeadColor;
+                font-size: rem(14);
+                color: color-get(secondary, 500);
+                font-weight: 600;
+            }
+        }
+        &:nth-child(2) {
+            .stats-card {
+                background-color: color-get(success, 100);
+                border-color: color-get(success, 500);
+                .stats-number,
+                .stats-title {
+                    color: color-get(success, 500);
+                }
+            }
+        }
+        &:nth-child(3) {
+            .stats-card {
+                background-color: color-get(primary, 500);
+                background-color: color-get(primary, 100);
+                .stats-number,
+                .stats-title {
+                    color: color-get(primary);
+                }
             }
         }
     }

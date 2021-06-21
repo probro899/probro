@@ -40,6 +40,7 @@ class NotificationContainer extends React.Component {
     const { account } = this.props;
     let url;
     let imageIcon;
+    // console.log("user notification", notification.user, notification, account.user);
     switch (notification.type) {
       case 'user':
         url = `user/${notification.user.user.slug}`;
@@ -61,12 +62,22 @@ class NotificationContainer extends React.Component {
         );
         break;
       case 'blog':
+        // console.log("blog type", notification, account);
         url = `blog/${account.user.slug}/${notification.blog.slug}`;
         const userDetails = notification.user.userDetail || {};
         const imgUrls = userDetails && userDetails.image ? `${ENDPOINT}/assets/user/${10000000 + parseInt(notification.typeId, 10)}/profile/${userDetails.image}` : '/assets//graphics/user.svg';
         imageIcon = (
           <div className="pc-noti-img">
             <RoundPicture imgUrl={imgUrls} />
+          </div>
+        );
+        break;
+      case 'organization':
+        url = `organization/${notification.organization.slug}`;
+        const imageUrl = notification.organization.image ? `${ENDPOINT}/assets/user/1000000${notification.organization.uId}/organization/${notification.organization.image}` : '/assets/graphics/organization.svg';
+        imageIcon = (
+          <div className="pc-noti-img">
+            <RoundPicture imgUrl={imageUrl} />
           </div>
         );
         break;

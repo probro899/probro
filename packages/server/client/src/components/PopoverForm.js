@@ -11,19 +11,12 @@ class PopoverForm extends React.Component {
   toggleDeletePopup = (type) => {
     const { deletePopover } = this.state;
     const { onDelete } = this.props;
-    this.setState({
-      deletePopover: !deletePopover,
-    });
-    if (type === 'confirm') {
-      onDelete();
-    }
+    this.setState({ deletePopover: !deletePopover });
+    if (type === 'confirm') onDelete();
   }
 
   render() {
-    const {
-      isOpen, onClose, structure, callback,
-      del,
-    } = this.props;
+    const { isOpen, onClose, structure, callback, del } = this.props;
     const { deletePopover } = this.state;
     return (
       <Popup
@@ -33,7 +26,7 @@ class PopoverForm extends React.Component {
         icon={<AiOutlineKey size={20} />}
       >
         <div className="popover-form">
-          <Form data={structure} callback={callback} />
+          {isOpen && <Form data={structure} callback={callback} />}
           {del && (
             <div className="pc-pop-delete-button">
               <DeletePopOver

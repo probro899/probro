@@ -13,28 +13,17 @@ export default class Popover extends React.Component {
     constructor(props) {
         super(props);
         this.ref = React.createRef();
-        this.state = { open: false };
-    }
-
-    shouldComponentUpdate(nextProps, nextState) {
-        if (nextState.open === this.state.open && nextProps.isOpen === this.props.isOpen) {
-            return false;
-        }
-        return true;
+        this.state = { open: false, uniqId: Math.floor(Math.random() * 1000 ) + 1000 };
     }
     
     onClick = _.debounce(() => {
-        const { open } = this.state;
-        const { toggleOpen } = this.props;
-        if (toggleOpen) {
-            toggleOpen();
-            return;
-        }
-        if (!open) {
-            this.setState({ open: true });
-            return;
-        }
-        this.setState({ open: false });
+      const { open } = this.state;
+      const { toggleOpen, isOpen } = this.props;
+      if (toggleOpen) {
+        toggleOpen('prev', !isOpen);
+        return;
+      }
+      this.setState({ open: !open });
     }, 80);
 
     render() {

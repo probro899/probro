@@ -1,9 +1,11 @@
 import React from 'react';
+import { ENDPOINT } from '../../config';
 
-export const ProfilePicture = () => {
-    return (
-        <div className="pc-profilePic">
-            <img className="landscape" src="http://localhost:3000/assets/user/10000003/profile/thumbnail-1607482166799.jpeg" alt="Round representation" />
-        </div>
-    )
-}
+export default ({ image, uId, name }) => {
+  const imageUrl = image ? `${ENDPOINT}/assets/user/1000000${uId}/organization/${image}` : '/assets/graphics/organization.svg';
+  return (
+    <div className="pc-profilePic">
+      <img className="landscape" src={imageUrl} alt={name} />
+    </div>
+  );
+};

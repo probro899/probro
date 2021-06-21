@@ -1,4 +1,4 @@
-@import '../config.scss';
+@import "../config.scss";
 
 .pc-organization-public-profile {
   display: flex;
@@ -20,10 +20,11 @@
       overflow: hidden;
       width: 100%;
       position: relative;
-      padding-bottom: 30%;
+      padding-bottom: 20%;
       z-index: 1;
       border-top-right-radius: 10px;
       border-top-left-radius: 10px;
+      background-image: linear-gradient(90deg, rgb(0, 45, 114), rgb(0, 94, 184));
       img {
         display: block;
         position: absolute;
@@ -39,8 +40,8 @@
       margin-bottom: 20px;
       border-bottom-right-radius: 10px;
       border-bottom-left-radius: 10px;
-      box-shadow: 0 0 8px 0 rgba(17, 22, 26, 0.16),
-        0 4px 8px 0 rgba(17, 22, 26, 0.08), 0 8px 16px 0 rgba(17, 22, 26, 0.08);
+      box-shadow: 0 0 8px 0 rgba(17, 22, 26, 0.16), 0 4px 8px 0 rgba(17, 22, 26, 0.08),
+        0 8px 16px 0 rgba(17, 22, 26, 0.08);
       .pc-profile-body {
         width: 100%;
         padding: 0 24px;
@@ -58,7 +59,8 @@
           overflow: hidden;
           margin-top: -105px;
           z-index: 1;
-          border: 2px solid white;
+          border: 2px solid #fff;
+          background: #fff;
           @media screen and (max-width: 1199px) {
             height: 80px;
             width: 80px;
@@ -69,19 +71,15 @@
           }
         }
         .pc-connect-btns {
+          max-width: rem(240);
           margin-left: auto;
-          max-width: 240px;
-          width: 100%;
           .pc-con {
             display: flex;
             justify-content: center;
-            button {
-              margin: 0px 10px;
+            a {
+              margin-left: rem(10);
             }
           }
-        }
-        @media screen and (max-width: 480px) {
-          padding-right: 0;
         }
       }
       .pc-top-details {
@@ -92,7 +90,7 @@
             font-weight: bold;
             margin-bottom: 5px;
             display: block;
-            color: $headingColor;
+            color: color-get(text-dark);
           }
           .pc-location {
             display: flex;
@@ -100,6 +98,10 @@
             margin-bottom: 5px;
             svg {
               margin-right: 5px;
+              color: color-get(text-light, 300);
+            }
+            .pc-city {
+              color: color-get(text-light);
             }
           }
         }
@@ -131,12 +133,11 @@
           .pc-hightlight-wrap {
             padding-bottom: 20px;
             .pc-joined-people-number {
-              color: $subHeadColor;
-              margin-bottom: 5px;
+              color: color-get(text-light);
+              margin-bottom: rem(10);
             }
             .pc-joined-list {
               display: flex;
-              align-items: center;
               list-style-type: none;
               line-height: 0;
               li {
@@ -145,17 +146,18 @@
                   width: 40px;
                   height: 40px;
                   border-radius: 50%;
+                  border: rem(1) solid color-get(primary);
                 }
                 .pc-more-members {
                   width: 40px;
                   height: 40px;
                   border-radius: 50%;
-                  border: 1px solid $subHeadColor;
+                  border: 1px solid color-get(primary);
                   display: flex;
                   align-items: center;
                   justify-content: center;
                   .pc-more-number {
-                    color: $subHeadColor;
+                    color: color-get(primary);
                   }
                 }
               }

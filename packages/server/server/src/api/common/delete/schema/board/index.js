@@ -1,14 +1,21 @@
+/* eslint-disable consistent-return */
 /* eslint-disable import/no-cycle */
 import update from '../../../update/update';
 import db from '../../../../../db';
 import addBoardActivity from '../../../addBoardActivity';
 import deleteBoardMember from './deleteBoardMember';
 import databaseCache from '../../../../../cache/database/cache';
+import deleteAccordingToActionType from './deleteAccordingToActionType';
 
 async function deleteBoard(record) {
+  // console.log('Delete Board called', record);
   try {
     const { session } = this;
-    // console.log('delete board called', record);
+    const { action } = record;
+    if (action) {
+      const res = await deleteAccordingToActionType(this, record);
+      return res;
+    }
     const isYourBoard = session.values.user.id === databaseCache.get('Board').find(b => b.id === parseInt(record.id, 10)).userId;
     if (isYourBoard) {
       const res = await update.call(this, 'Board', { deleteStatus: true, broadCastId: record.broadCastId }, { id: record.id });
@@ -28,8 +35,8 @@ async function deleteBoardColumn(record) {
     const res = await update.call(this, 'BoardColumn', { deleteStatus: true, broadCastId: record.broadCastId }, { id: record.id });
     addBoardActivity(this, db, { userId: session.values.user.id, timeStamp: Date.now(), boardId: record.boardId, columnId: record.id, message: 'deleteColumn' });
     return res;
-  } catch (e){
-    console.error('Error deleteBoardColumn', e)
+  } catch (e) {
+    console.error('Error deleteBoardColumn', e);
   }
 }
 
@@ -85,21 +92,37 @@ async function deleteBordColumnDescription(record) {
     addBoardActivity(this, db, { descriptionId: record.id, userId: session.values.user.id, timeStamp: Date.now(), boardId, cardId: record.id, message: 'deleteDescripion' });
     return res;
   } catch (e) {
-    console.error('Error in deleteBordColumnDescription', e)
+    console.error('Error in deleteBordColumnDescription', e);
   }
 }
 
- async function deleteBoardColumnCardTag(record) {
+async function deleteBoardColumnCardTag(record) {
   try {
-  const { session } = this;
-  const broadCastArr = record.broadCastId.split('-');
-  const boardId = broadCastArr[broadCastArr.length - 1];
-  // Delete.call(this, 'BoardColumnCardTag', record);
-  const res = await update.call(this, 'BoardColumnCardTag', { deleteStatus: true, broadCastId: record.broadCastId }, { id: record.id });
-  addBoardActivity(this, db, { tagId: record.id, userId: session.values.user.id, timeStamp: Date.now(), boardId, cardId: record.cardId, message: 'deleteTag' });
-  return res;
+    const { session } = this;
+    const broadCastArr = record.broadCastId.split('-');
+    const boardId = broadCastArr[broadCastArr.length - 1];
+    // Delete.call(this, 'BoardColumnCardTag', record);
+    const res = await update.call(this, 'BoardColumnCardTag', { deleteStatus: true, broadCastId: record.broadCastId }, { id: record.id });
+    addBoardActivity(this, db, { tagId: record.id, userId: session.values.user.id, timeStamp: Date.now(), boardId, cardId: record.cardId, message: 'deleteTag' });
+    return res;
   } catch (e) {
-    console.error('Error in deleteBoardColumnCardTag', e)
+    console.error('Error in deleteBoardColumnCardTag', e);
+  }
+}
+
+
+async function deleteTaskParticipant(record) {
+  // console.log('Delete Participant called', record);
+  try {
+    const { session } = this;
+    const broadCastArr = record.broadCastId.split('-');
+    const boardId = broadCastArr[broadCastArr.length - 1];
+    // Delete.call(this, 'BoardColumnCardTag', record);
+    const res = await update.call(this, 'TaskParticipant', { deleteStatus: true, broadCastId: record.broadCastId }, { id: record.id });
+    addBoardActivity(this, db, { participantId: record.id, userId: session.values.user.id, timeStamp: Date.now(), boardId, cardId: record.taskId, message: 'deleteParticipant' });
+    return res;
+  } catch (e) {
+    console.error('Error in deleteBoardColumnCardTag', e);
   }
 }
 
@@ -112,4 +135,5 @@ export default [
   deleteBordColumnDescription,
   deleteBoardColumnCardTag,
   deleteBoardMember,
+  deleteTaskParticipant,
 ];

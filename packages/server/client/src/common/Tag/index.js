@@ -4,10 +4,10 @@ import { HiCheck } from 'react-icons/hi';
 import { IconContext } from 'react-icons';
 
 const COLORS = {
-    red: '#db3737',
-    blue: '#137cbd',
-    green: '#0f9960',
-    yellow: '#d9822b',
+    red: '#ef424c',
+    blue: '#285bd4',
+    green: '#219653',
+    yellow: '#f3ac13',
 };
 
 const Tag = ({ color, tick, type, onClick, size }) => {

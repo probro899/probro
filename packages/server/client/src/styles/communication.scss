@@ -8,8 +8,7 @@
   right: 2px;
   background: $backgroundColor;
   z-index: 19;
-  box-shadow: 0 0 0 1px rgba(16, 22, 26, 0.1), 0 4px 8px rgba(16, 22, 26, 0.2),
-    0 18px 46px 6px rgba(16, 22, 26, 0.2);
+  box-shadow: 0 0 0 1px rgba(16, 22, 26, 0.1), 0 4px 8px rgba(16, 22, 26, 0.2), 0 18px 46px 6px rgba(16, 22, 26, 0.2);
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
   overflow: hidden;
@@ -19,11 +18,11 @@
       fill: $darkBlue;
     }
   }
-  .header {
+  .com-header {
     height: 40px;
     font-size: 16px;
     display: flex;
-    background-color: #286090;
+    background-color: color-get(primary, 500);
     cursor: pointer;
 
     color: $backgroundColor;
@@ -66,7 +65,7 @@
               .pc-chat-username {
                 margin-bottom: 2px;
                 span {
-                  color: $headingColor;
+                  color: color-get(text-dark);
                 }
               }
             }
@@ -77,7 +76,7 @@
       .last-text {
         font-size: 14px;
         max-width: 200px;
-        color: $subHeadColor;
+        color: color-get(text-light);
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
@@ -100,9 +99,6 @@
         align-items: center;
         border-radius: 50%;
         overflow: hidden;
-        img {
-          object-fit: contain;
-        }
       }
       .class-icon {
         height: 50px;
@@ -178,11 +174,11 @@
         .call-control {
           display: flex;
           button {
-            background-color: #06cd91;
+            background-color: color-get(success, 400);
 
             &:nth-child(2) {
               margin-left: 5px;
-              background-color: #1789fb;
+              background-color: color-get(secondary, 600);
             }
             span {
               svg {
@@ -260,8 +256,7 @@
               border-top-right-radius: 10px;
               border-bottom-right-radius: 10px;
               border-bottom-left-radius: 10px;
-              box-shadow: 0 0.4rem 0.8rem -0.1rem rgba(0, 32, 128, 0.1),
-                0 0 0 1px #f0f2f7;
+              box-shadow: 0 0.4rem 0.8rem -0.1rem rgba(0, 32, 128, 0.1), 0 0 0 1px #f0f2f7;
             }
           }
           &.right {
@@ -286,13 +281,18 @@
       .chat-box {
         position: relative;
         .formLabel {
-          textarea {
+          margin-bottom: 0;
+          .label-text {
+            margin-bottom: 0;
+          }
+          .pc-text-area {
             background-color: #eef3f8;
             padding-right: 36px;
             border-top: 1px solid #e0e0e0;
             border-right: transparent;
             border-left: transparent;
             border-bottom: transparent;
+            margin-bottom: 0;
           }
         }
         .pc-send-btn {
@@ -393,14 +393,14 @@
         }
         svg {
           cursor: pointer;
-          fill: $headingColor;
+          fill: color-get(text-dark);
         }
         height: 35px;
         .op-name {
           display: flex;
           flex-direction: column;
           justify-content: center;
-          color: $headingColor;
+          color: color-get(text-dark);
           font-weight: bold;
           font-size: 16px;
         }
@@ -551,7 +551,7 @@
             }
             &.active {
               background: #fff;
-              color: $headingColor;
+              color: color-get(text-dark);
             }
             &.record {
               border-width: 2px;
@@ -685,7 +685,7 @@
           display: flex;
           justify-content: space-around;
           button {
-            background-color: #c9302c;
+            background-color: color-get(error, 500);
             svg {
               margin-right: 0;
             }
@@ -790,12 +790,10 @@
       box-shadow: 0 0 0 5px rgba(41, 98, 255, 0.3);
     }
     25% {
-      box-shadow: 0 0 0 10px rgba(41, 98, 255, 0.3),
-        0 0 0 20px rgba(41, 98, 255, 0.15);
+      box-shadow: 0 0 0 10px rgba(41, 98, 255, 0.3), 0 0 0 20px rgba(41, 98, 255, 0.15);
     }
     25% {
-      box-shadow: 0 0 0 15px rgba(41, 98, 255, 0.3),
-        0 0 0 30px rgba(41, 98, 255, 0.15);
+      box-shadow: 0 0 0 15px rgba(41, 98, 255, 0.3), 0 0 0 30px rgba(41, 98, 255, 0.15);
     }
   }
 

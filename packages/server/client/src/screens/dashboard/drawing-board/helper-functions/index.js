@@ -1,4 +1,4 @@
-const minimizeCanvas = () => {
+const minimizeElement = () => {
     if (document.exitFullscreen) {
         document.exitFullscreen();
     } else if (document.webkitExitFullscreen) { /* Safari */
@@ -8,7 +8,7 @@ const minimizeCanvas = () => {
     }
 }
 
-const maximizeCanvas = (elem) => {
+const maximizeElement = (elem) => {
     if (elem.requestFullscreen) {
       elem.requestFullscreen();
     } else if (elem.webkitRequestFullscreen) { /* Safari */
@@ -18,4 +18,4 @@ const maximizeCanvas = (elem) => {
     }
 }
 
-export { minimizeCanvas,  maximizeCanvas };
+export { minimizeElement,  maximizeElement };

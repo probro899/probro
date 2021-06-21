@@ -9,7 +9,10 @@ export default (courseId, userId) => {
   if (lastLectureHistory) {
     lastLectureDetail = databaseCache.get('Lecture').find(l => l.id === lastLectureHistory.lectureId);
     lastSectionDetail = databaseCache.get('Section').find(s => s.id === lastLectureDetail.sectionId);
+    return { lastSectionDetail: { id: lastSectionDetail.id, title: lastSectionDetail.title }, lastLectureDetail: { id: lastLectureDetail.id, title: lastLectureDetail.title } };
   }
+  lastSectionDetail = databaseCache.get('Section').find(s => s.courseId === courseId);
+  lastLectureDetail = databaseCache.get('Lecture').find(l => l.sectionId === lastSectionDetail.id);
 
- return { lastSectionDetail: { id: lastSectionDetail.id, title: lastSectionDetail.title }, lastLectureDetail: { id: lastLectureDetail.id, title: lastLectureDetail.title } };
+  return { lastSectionDetail: { id: lastSectionDetail.id, title: lastSectionDetail.title }, lastLectureDetail: { id: lastLectureDetail.id, title: lastLectureDetail.title } };
 };

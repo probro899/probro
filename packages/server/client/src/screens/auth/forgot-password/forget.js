@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import * as actions from '../../../actions';
 import { Form } from '../../../common';
-import { emailValidator } from '../utility-functions';
 import forgotForm from './structure';
 import { forgot } from '../helper-functions';
 
@@ -11,9 +10,6 @@ class Forgot extends Component {
   state = {}
 
   forgotPassword = async (data) => {
-    if (!emailValidator(data.email)) {
-      return { error: 'Please enter a valid email' };
-    }
     const { updateNav } = this.props;
     const res = await forgot(data);
     if (res.response === 200) {

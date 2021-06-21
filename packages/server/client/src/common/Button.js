@@ -4,7 +4,6 @@ import { Button } from './utility-functions/Button/Button';
 
 const CustomButton = (props) => {
   const { onSubmit, data, state } = props;
-
   return (
     <div className="btn-group">
       <div style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', alignItems: 'center' }}>

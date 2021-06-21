@@ -1,37 +1,21 @@
-const filterSchema = [
-  {
-    id: 'country',
-    fieldtype: 'select',
-    options: [
-      { label: '---', value: 'countries' },
-    ],
-    val: '',
-  },
-  {
-    id: 'key',
-    fieldtype: 'input',
-    placeholder: 'Ex, CEO, Professor',
-  },
-  {
-    id: 'industry',
-    fieldtype: 'select',
-    options: [
-      { label: '---', value: 'industries' },
-      { label: 'Engineering', value: 'engineering' },
-      { label: 'Accounting', value: 'accounting' },
-      { label: 'Medical', value: 'medical' },
-      { label: 'Management', value: 'management' },
-      { label: 'Information Technology', value: 'informationTechnology' },
-      { label: 'Astronomy', value: 'astronomy' },
-    ],
-    val: '',
-  },
-  {
-    id: 'apply',
-    text: 'Apply',
-    fieldtype: 'button',
-    type: 'submit',
-  },
-];
+import countryList from 'react-select-country-list';
 
-export default filterSchema;
+export default () => ({
+  countryOptions: countryList().getData().map(obj => ({ label: obj.label, value: obj.label })),
+  industryOptions: [
+    { label: 'Pick Expertise', value: '' },
+    { label: 'Software Engineering', value: 'softwareEngineering' },
+    { label: 'Software Designing', value: 'softwareDesigning' },
+    { label: 'Machine Learning', value: 'machineLearning' },
+    { label: 'System Engineer', value: 'systemEngineer' },
+    { label: 'Database Engineer', value: 'databaseEngineer' },
+  ],
+  skillOptions: [
+    { label: 'Pick Skill', value: '' },
+    { label: 'Python', value: 'python' },
+    { label: 'Javascript', value: 'javascript' },
+    { label: 'Web Development', value: 'webDevelopment' },
+    { label: 'Data Science', value: 'dataScience' },
+    { label: 'Mobile Development', value: 'mobileDevelopment' },
+  ]
+});

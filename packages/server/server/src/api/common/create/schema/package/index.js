@@ -1,3 +1,5 @@
+/* eslint-disable consistent-return */
+/* eslint-disable import/no-cycle */
 import uuid from 'uuid';
 import add from '../../add';
 
@@ -6,13 +8,13 @@ async function addPackage(record) {
     const res = await add.call(this, 'Package', { ...record, timeStamp: Date.now() });
     return res;
   } catch (e) {
-    console.error('Error in addPackage', e)
+    console.error('Error in addPackage', e);
   }
 }
 
 async function addPackageDescription(record) {
   try {
-    const res = await add.call('PackageDescription', { ...record, timeStamp: Date.now() });
+    const res = await add.call(this, 'PackageDescription', { ...record, timeStamp: Date.now() });
     return res;
   } catch (e) {
     console.error('Error in addPackageDescription', e);
@@ -20,12 +22,14 @@ async function addPackageDescription(record) {
 }
 
 async function addSellPackage(record) {
+  // console.log('addSellPackage called', record);
   try {
     const referenceCode = await uuid();
-    const res = await add.call('SellPakcage', { ...record, timeStamp: Date.now(), referenceCode });
-    return { res, referenceCode };
+    const res = await add.call(this, 'SellPackage', { ...record, timeStamp: Date.now(), referenceCode });
+    return { res, referenceCode, status: 200, message: 'Subscription Successfull' };
   } catch (e) {
-    console.error('Error in addSellPackage', e)
+    console.error('Error in addSellPackage', e);
+    return { status: 201, message: 'Subscription Faild' };
   }
 }
 

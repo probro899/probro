@@ -13,6 +13,9 @@ import deleteError from './request-handler/deleteError';
 import verifyUser from './request-handler/verifyUser';
 import getAdminUsers from './request-handler/adminGetUser';
 import updateAdminUser from './request-handler/adminUpdateUser';
+import addPackage from './request-handler/addPackage';
+import addPackageDescription from './request-handler/addPackageDescription';
+import addCallForAction from './request-handler/addCallForAction';
 
 export default function (app) {
   // app.use((req, res, next) => {
@@ -41,5 +44,8 @@ export default function (app) {
   app.post('/web/admin/verify-user', verifyUser);
   app.post('/web/admin/get-users', getAdminUsers);
   app.post('/web/admin/update-user', updateAdminUser);
+  app.post('/web/admin/add-package', addPackage);
+  app.post('/web/admin/add-package-description', addPackageDescription);
+  app.post('/web/add-call-for-action', addCallForAction);
   app.use(express.static(path.resolve(__dirname, '..', 'public')));
 }

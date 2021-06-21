@@ -1,14 +1,13 @@
-/* eslint-disable react/prop-types */
-/* eslint-disable no-case-declarations */
 import React from 'react';
+import moment from 'moment';
 import { ENDPOINT } from '../../../../config';
+import getName from '../../../../common/utility-functions/getName';
 import RoundPicture from '../../../../components/RoundPicture';
 
 export default ({ activity, color, columns }) => {
-  // console.log('activity', activity);
   const { user, userDetail } = activity.user;
   const imgUrl = userDetail && userDetail.image ? `${ENDPOINT}/assets/user/${10000000 + parseInt(user.id, 10)}/profile/${userDetail.image}` : '/assets//graphics/user.svg';
-  const name = user.middleName ? `${user.firstName} ${user.middleName} ${user.lastName}` : `${user.firstName} ${user.lastName}`;
+  const name = getName(user);
   switch (activity.message) {
     case 'createCard':
       return (
@@ -23,7 +22,9 @@ export default ({ activity, color, columns }) => {
               created this card
             </div>
             <div>
-              <small style={{ opacity: 0.8 }}>{new Date(activity.timeStamp).toDateString()}</small>
+              <small style={{ opacity: 0.8 }}>
+                {moment(activity.timeStamp).format('DD MMM YYYY hh:mm A')}
+              </small>
             </div>
           </div>
         </div>
@@ -50,7 +51,9 @@ export default ({ activity, color, columns }) => {
               {' '}
             </div>
             <div>
-              <small style={{ opacity: 0.8 }}>{new Date(activity.timeStamp).toDateString()}</small>
+              <small style={{ opacity: 0.8 }}>
+                {moment(activity.timeStamp).format('DD MMM YYYY hh:mm A')}
+              </small>
             </div>
           </div>
         </div>

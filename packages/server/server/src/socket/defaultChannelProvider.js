@@ -29,7 +29,7 @@ export default function createDefaultProvider() {
       } else {
         const newList = list.map(s => (s.values.user.id === session.values.user.id ? session : s));
         channels[channelId] = newList;
-        console.log('user session is already in channel');
+        // console.log('user session is already in channel');
       }
       // console.log('ALll channels', channels);
       return true;

@@ -8,7 +8,7 @@ export default (table, record) => {
       }
       return { ...record, user: findUserDetails(record.userId) };
     }
-  return record;
+    return record;
   } catch (e) {
     console.error('Error in addUserInRecordHelper', e);
   }

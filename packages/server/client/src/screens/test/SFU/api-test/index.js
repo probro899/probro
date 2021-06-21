@@ -2,6 +2,8 @@
 import React from 'react';
 import Organization from './Organization';
 import Course from './Course';
+import Package from './Package';
+import Class from './board';
 
 export default class ApiTest extends React.Component {
   constructor(props) {
@@ -10,11 +12,12 @@ export default class ApiTest extends React.Component {
   }
 
   render() {
-    console.log('Apis in api test', this.state);
     return (
       <div>
         <Course {...this.props} />
         <Organization {...this.props} />
+        <Package {...this.props} />
+        <Class {...this.props} />
       </div>
     );
   }

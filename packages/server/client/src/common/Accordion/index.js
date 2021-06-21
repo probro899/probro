@@ -1,42 +1,30 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Chevron from "./Chevron";
 
-function Accordion(props) {
-    const [setActive, setActiveState] = useState("");
-    const [setHeight, setHeightState] = useState("0px");
-    const [setRotate, setRotateState] = useState("accordion-icon");
+const Accordion = ({ expandAll, content, title, idx }) => {
+  const ref = useRef(null);
+  const [expand, setExpand] = useState(false);
+  const toggleAccordion = () => setExpand(!expand);
 
-    const content = useRef(null);
+  useEffect(() => {
+    setExpand(expandAll);
+  }, [expandAll]);
 
-    function toggleAccordion() {
-        setActiveState(setActive === "" ? "active" : "");
-        setHeightState(
-            setActive === "active" ? "0px" : `${content.current.scrollHeight}px`
-        );
-        setRotateState(
-            setActive === "active" ? "accordion-icon" : "accordion-icon rotate"
-        );
-    }
-
-    return (
-        <div className="accordion-section">
-            <button className={`accordion ${setActive}`} onClick={toggleAccordion}>
-                <p className="accordion-title">{props.title}</p>
-                <Chevron className={`${setRotate}`} width={10} fill={"#777"} />
-            </button>
-            <div
-                ref={content}
-                style={{ maxHeight: `${setHeight}` }}
-                className="accordion-content"
-            >
-                <div
-                    className="accordion-content"
-                >
-                    {props.content}
-                </div>
-            </div>
-        </div>
-    );
+  return (
+    <div className="accordion-section">
+      <button className={`accordion ${expand && 'active'}`} onClick={toggleAccordion}>
+        <h3 className="accordion-title ellipsis ellipsis--secondary">Chapter {idx} - {title}</h3>
+        <Chevron className={`accordion-icon ${expand && 'rotate'}`} width={10} fill={"#777"} />
+      </button>
+      <div
+        ref={ref}
+        style={{ maxHeight: `${expand ? ref.current.scrollHeight : 0}px` }}
+        className="accordion-content"
+      >
+        <div className="accordion-content">{content}</div>
+      </div>
+    </div>
+  );
 }
 
 export default Accordion;

@@ -1,7 +1,6 @@
 @import '../config.scss';
 
 .pc-privacy {
-  margin-top: $navbarHeight;
   min-height: calc(100vh - #{$navbarHeight} - #{$footerHeight});
   .pc-privacy-content {
     padding: 40px 0;
@@ -12,19 +11,19 @@
       text-align: center;
     }
     p {
-      color: $subHeadColor;
+      color: color-get(text-light);
       margin-bottom: 10px;
     }
     h3 {
       font-size: 18px;
       margin-bottom: 10px;
-      color: $headingColor;
+      color: color-get(text-dark);
     }
     ul {
       margin-bottom: 10px;
       li {
         margin-bottom: 5px;
-        color: $subHeadColor;
+        color: color-get(text-light);
       }
     }
   }

@@ -4,6 +4,7 @@ import flat from '../../../flat';
 import cacheDataBase from '../../../../cache/database/cache';
 import findUserDetails from '../../findUserDetails';
 import getChannelIds from '../../getChannelIds';
+import getOrganizations from '../schema/organization/getOrganizations';
 import { timeStampSorting } from '../../../../../../client/src/common/utility-functions';
 
 export default async function getNotifications(params) {
@@ -33,12 +34,21 @@ export default async function getNotifications(params) {
     const blogNotificationWithUser = blogNotification.map(n => ({ ...n, user: findUserDetails(n.typeId), blog: allDbBlogs.find(b => b.id === n.boardId) }));
 
     // getting all Organization Notification
-    const organizationNotification = allDbNotifications.filter(n => n.userId === id && n.type === 'organization');
-    const orgNotiWithMoreDetails = organizationNotification.map(n => ({ ...n, organization: allDbOrganization.find(o => o.id === n.typeId) }))
+    const allOrganizations = getOrganizations(id);
+    const allOrgNotificationsRequest = allOrganizations.map((og) => {
+      if (og.role === 'admin' || og.role === 'manager') {
+        return allDbNotifications.filter(n => n.type === 'organization' && n.boardId === og.id && n.title === 'Organization Request');
+      }
+      return [];
+    });
+    const finalRequestTypeNotifications = flat(allOrgNotificationsRequest);
+    const organizationNotification = allDbNotifications.filter(n => n.userId === id && n.type === 'organization' && n.title === 'Organization Invitation');
+    const finalOrgNotis = [...finalRequestTypeNotifications, ...organizationNotification];
+    const orgNotiWithMoreDetails = finalOrgNotis.map(n => ({ ...n, organization: allDbOrganization.find(o => o.id === n.typeId) }));
     // combining all
     const Notification = [
-      ...boardNotificationWithBoardDetail, 
-      ...userNotificationWithUserDetail, 
+      ...boardNotificationWithBoardDetail,
+      ...userNotificationWithUserDetail,
       ...blogNotificationWithUser,
       ...orgNotiWithMoreDetails,
     ];

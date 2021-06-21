@@ -4,9 +4,7 @@ import { FormTextArea } from '../../../common/Form/FormTextArea';
 import { Button } from '../../../common/utility-functions/Button/Button';
 
 class CommentBox extends React.Component {
-  state = {
-    isFocused: false,
-  };
+  state = { isFocused: false };
 
   commentChange = (e) => {
     const { writeComment } = this.props;
@@ -14,11 +12,7 @@ class CommentBox extends React.Component {
   }
 
   setFocus = () => {
-    if (!this.state.isFocused) {
-      this.setState({
-        isFocused: true,
-      });
-    }
+    if (!this.state.isFocused) this.setState({ isFocused: true });
   }
 
   componentDidMount() {
@@ -33,44 +27,25 @@ class CommentBox extends React.Component {
     const { isFocused } = this.state;
     const { comment } = this.props;
     if (this.node.contains(e.target)) return;
-    if (isFocused && comment.length === 0) {
-      this.setState({
-        isFocused: false,
-      });
-    }
+    if (isFocused && comment.length === 0) this.setState({ isFocused: false });
   }
 
   saveComment = async () => {
-    const {
-      apis, writeComment, task, account, boardId, addDatabaseSchema,
-      comment, database
-    } = this.props;
-    if (comment.replace(/\s/g, '').length === 0) {
-      return;
-    }
-    const res = await apis.addBoardColumnCardComment({
+    const { apis, writeComment, task, account, boardId, addDatabaseSchema, comment, database } = this.props;
+    if (comment.replace(/\s/g, '').length === 0) return;
+    const commentObj = {
       boardColumnCardId: task.id,
       comment,
       timeStamp: Date.now(),
       userId: account.user.id,
       broadCastId: `Board-${boardId}`,
-    });
+    }
+    const res = await apis.addBoardColumnCardComment(commentObj);
     const userDetail = Object.values(database.UserDetail.byId).find(ud => ud.userId === account.user.id);
-    addDatabaseSchema('BoardColumnCardComment', {
-      id: res,
-      boardColumnCardId: task.id,
-      comment,
-      timeStamp: Date.now(),
-      userId: account.user.id,
-      user: { user: account.user, userDetail },
-    });
+    addDatabaseSchema('BoardColumnCardComment', { ...commentObj, id: res, user: { user: account.user, userDetail } });
     writeComment('');
     //remove focus
-    if (this.state.isFocused) {
-      this.setState({
-        isFocused: false,
-      });
-    }
+    if (this.state.isFocused) this.setState({ isFocused: false });
   }
 
   render() {
@@ -97,7 +72,6 @@ class CommentBox extends React.Component {
             />
           </div>
         </div>
-
       </div>
     );
   }

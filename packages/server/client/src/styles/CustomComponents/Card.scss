@@ -1,0 +1,10 @@
+.pc-card {
+    @include genericBoxPattern;
+    padding: rem(16) rem(24);
+    margin-bottom: rem(30);
+    // border: rem(1) solid color-get(border);
+    // box-shadow: none;
+    @media screen and (max-width: rem(576)) {
+        margin-bottom: rem(20);
+    }
+}

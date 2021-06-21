@@ -1,12 +1,27 @@
 #bottom {
-  background-color: #f7f7f8;
+  background-color: color-get(primary, 800);
   height: 100%;
-
+  position: relative;
+  z-index: 2;
+  h3,
+  p,
+  a {
+    color: #fff !important;
+  }
   ul {
     padding-left: 0;
   }
-  a {
-    color: $subHeadColor;
+  &::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 253px;
+    background-image: url("/assets/graphics/bg-house.png");
+    background-repeat: repeat;
+    background-position: 50%;
+    z-index: 1;
   }
 }
 
@@ -14,20 +29,22 @@
   display: flex;
   justify-content: space-evenly;
   align-content: center;
-  padding: pixel-to-rem(20);
+  padding: rem(20);
   max-width: 1140px;
   width: 100%;
   margin: 0 auto;
+  position: relative;
+  z-index: 2;
 
   .properClass {
-    font-size: pixel-to-rem(25);
+    font-size: rem(25);
     text-transform: uppercase;
   }
 }
 
 #bottom .container div {
-  width: pixel-to-rem(340);
-  margin: pixel-to-rem(20) pixel-to-rem(20) pixel-to-rem(20) 0;
+  width: rem(340);
+  margin: rem(20) rem(20) rem(20) 0;
 }
 
 #bottom .container div:nth-child(1) {
@@ -37,7 +54,7 @@
 }
 
 #bottom .container div:nth-child(1) img {
-  height: pixel-to-rem(50);
+  height: rem(50);
   width: auto;
 }
 
@@ -47,36 +64,36 @@
 }
 
 #bottom div:nth-child(1) i {
-  margin-right: pixel-to-rem(10);
+  margin-right: rem(10);
 }
 
 #bottom div:nth-child(1) p {
-  font-size: pixel-to-rem(14);
+  font-size: rem(14);
   line-height: 1.9;
   font-weight: 500;
-  color: $subHeadColor;
-  margin-top: pixel-to-rem(10);
+  color: color-get(text-light);
+  margin-top: rem(10);
   width: 100%;
 }
 
 #bottom h3 {
-  margin-bottom: pixel-to-rem(20);
+  margin-bottom: rem(20);
   padding-bottom: 0;
-  color: $headingColor;
+  color: color-get(text-dark);
 }
 
 #bottom li {
   list-style-type: none;
-  margin: pixel-to-rem(20) 0;
-  font-size: pixel-to-rem(14);
+  margin: rem(20) 0;
+  font-size: rem(14);
   font-weight: 500;
-  color: $subHeadColor;
+  color: color-get(text-light);
 }
 
 footer {
   position: relative;
   background-color: #f7f7f8;
-  height: pixel-to-rem(45);
+  height: rem(45);
 
   .container {
     margin: 0 auto;
@@ -85,17 +102,17 @@ footer {
     align-items: center;
     width: 100%;
     height: 100%;
-    color: $headingColor;
-    font-size: pixel-to-rem(16);
+    color: color-get(text-dark);
+    font-size: rem(16);
     font-weight: 600;
     position: relative;
-    @media screen and (max-width: pixel-to-rem(767)) {
-      font-size: pixel-to-rem(14);
+    @media screen and (max-width: rem(767)) {
+      font-size: rem(14);
     }
   }
 }
 
-@media screen and (max-width: pixel-to-rem(768)) {
+@media screen and (max-width: rem(768)) {
   #bottom .container {
     flex-direction: column;
     align-items: center;
@@ -103,9 +120,9 @@ footer {
     overflow-x: hidden;
     width: 100%;
     div {
-      margin: pixel-to-rem(10) 0px;
+      margin: rem(10) 0px;
       width: 100%;
-      padding: pixel-to-rem(10);
+      padding: rem(10);
     }
     div:nth-child(1) {
       margin-right: 0%;

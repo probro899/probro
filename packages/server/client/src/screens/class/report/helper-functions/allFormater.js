@@ -1,5 +1,4 @@
 export default (arr, todoFunc) => {
-  console.log('allFormater value', arr);
   if (arr.length > 0) {
     let dayFlag = arr[0].timeStamp;
     const finalArr = [];

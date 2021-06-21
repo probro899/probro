@@ -28,6 +28,7 @@ export default async (mediaType, props) => {
             }
           );
         });
+        // console.log('create offfer', createOfferRes);
         return createOfferRes;
       }
       exceptionHandler({ error: 'videocall plugin not found during creating offer', errorCode: 136 }, props);

@@ -1,8 +1,9 @@
 import React from 'react';
 import { Taginput } from '../../../../common';
-import { GrFormAdd } from "react-icons/gr";
+import { GrAdd } from "react-icons/gr";
 import Popup from '../../../../common/Form/Popup';
-import {Button} from '../../../../common/utility-functions/Button/Button';
+import { Button } from '../../../../common/utility-functions/Button/Button';
+import Card from '../../../../common/Card';
 
 const PopoverContent = (props) => {
   const { data, value, onChange, callback } = props;
@@ -27,13 +28,13 @@ const PopoverContent = (props) => {
       {/* <Button
        onClick={callback} fill intent="primary"
         large text="Add Skills" /> */}
-        <Button
-         onClick={callback}
-         type="button"
-         buttonStyle="btn--primary--solid"
-         buttonSize="btn--medium"
-         title="Add Skills"
-        />
+      <Button
+        onClick={callback}
+        type="button"
+        buttonStyle="btn--primary--solid"
+        buttonSize="btn--medium"
+        title="Add Skills"
+      />
     </div>
   );
 };
@@ -135,37 +136,43 @@ class Skills extends React.Component {
     const data = { id: 'skills', name: 'Skills', placeholder: 'Type and press enter' };
     return (
       <div className="skills">
-        <Popup
-          onClose={this.togglePopover}
-          isOpen={openPopover}
-        >
-          <PopoverContent
-            onChange={this.onChageSkill}
-            value={value}
-            data={data}
-            callback={this.submitSkills}
-          />
-        </Popup>
-        <h2 className="p-top">
-          Skills
-          <GrFormAdd size={20} style={{ cursor: 'pointer' }} onClick={this.togglePopover} />
-        </h2>
-        {skill ? (
-          <div className="skills-container">
-            {
-              skill.map((i, index) => {
-                return (
-                  <span key={index}>{i}</span>
-                );
-              })
-            }
+        <Card>
+          <Popup
+            onClose={this.togglePopover}
+            isOpen={openPopover}
+          >
+            <PopoverContent
+              onChange={this.onChageSkill}
+              value={value}
+              data={data}
+              callback={this.submitSkills}
+            />
+          </Popup>
+          <div className="pc-content-header">
+            <h2 className="pc-content-header__title">
+              Skills
+            </h2>
+            <span className="pc-content-header__icon">
+              <GrAdd size={20} style={{ cursor: 'pointer' }} onClick={this.togglePopover} />
+            </span>
           </div>
-        )
-          : (
-            <div style={{ color: '#696969' }}>
-              No skills added
+          {skill ? (
+            <div className="skills-container">
+              {
+                skill.map((i, index) => {
+                  return (
+                    <span key={index}>{i}</span>
+                  );
+                })
+              }
             </div>
-          )}
+          )
+            : (
+              <div style={{ color: '#696969' }}>
+                No skills added
+              </div>
+            )}
+        </Card>
       </div>
     );
   }

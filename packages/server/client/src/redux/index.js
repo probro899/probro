@@ -4,11 +4,13 @@ import { reducer as schemaReducer } from './schema';
 import { reducer as accountReducer } from './account';
 import navReducer from './navReducer';
 import webRtcReducer from './webRtcReducer';
+import courseReducer from './courseReducer';
 
 const reducer = combineReducers({
   account: accountReducer(),
   webRtc: webRtcReducer,
   navigate: navReducer,
+  course: courseReducer,
   database: schemaReducer(
     'User',
     'UserDetail',
@@ -41,7 +43,8 @@ const reducer = combineReducers({
     'Course',
     'Section',
     'Lecture',
-    'CourseCompleteHistory'
+    'TaskParticipant',
+    'BlogBookmark'
   ),
 });
 

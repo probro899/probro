@@ -15,11 +15,13 @@ type User {
   userEducation: [UserEducation]!
   userWorkExperience: [UserWorkExperience]!
   blogs: [Blog]
+  courses: [Course]
+  popularMentors: [User]!
 }
 
 type UserDetail {
-  id: Int!
-  userId: Int!
+  id: Int
+  userId: Int
   phoneNumber: Int
   gender: String
   degree: String
@@ -87,7 +89,7 @@ type UserWorkExperience {
   remarks: String
   currentWorking: String
 }
-
+ 
 type Blog {
   id: Int!
   userId: Int!
@@ -99,8 +101,15 @@ type Blog {
   slug: String
   coverImage: String
   blogLike: [BlogLike]!
+  noOfLikes: Int
   blogComment: [BlogComment]!
+  noOfComments: Int
   userDetail: [User]!
+  bookmark: BlogBookmark
+}
+
+type BlogBookmark {
+  id: Int
 }
 
 type BlogLike {
@@ -120,10 +129,11 @@ type BlogComment{
   timeStamp: String!
   blogId: Int!
 }
-
+ 
 type Popular {
   blogs: [Blog]!
   users: [User]!
+  organizations: [Organization!]
   popularUsers: [User]!
 }
 
@@ -156,6 +166,8 @@ type Course {
   priceDetails: CoursePrice
   noOfCourseEnroll: Int
   courseCompleteHistory: [CourseCompleteHistory]
+  noOfLearnersOfThisCreator: Int
+  noOfCoursesByThisCreator: Int
 }
 
 type CourseEnroll {
@@ -193,6 +205,11 @@ type CourseCompleteHistory {
 type Rating {
   avgRating: String
   noOfRating: String
+  oneStar: Int
+  twoStar: Int
+  threeStar: Int
+  fourStar: Int
+  fiveStar: Int
 }
 
 type Review {
@@ -229,6 +246,15 @@ type Lecture {
   createdAt: String
   updatedAt: String
   remarks: String
+  resources: [Resource]
+}
+
+type Resource {
+  id: Int!
+  lecId: Int
+  type: String
+  name: String
+  createdAt: String
 }
 
 type Organization {
@@ -246,6 +272,8 @@ type Organization {
   remarks: String
   members: [OrganizationMember]
   noOfMembers: Int
+  joinStatus: OrganizationMember
+  slug: String
 }
 
 type OrganizationMember {
@@ -261,14 +289,73 @@ type OrganizationMember {
   email: String
 }
 
+type Package {
+  id: Int!
+  noOfClass: Int
+  price: Int
+  descrition: String
+  type: String
+  classType: String
+  timeStamp: String
+  isSubscribe: SellPackage
+  packageDescription: PackageDescription
+}
+
+type PackageDescription {
+  id: Int!
+  packageId: Int!
+  oneToOneChat: Int
+  oneToOneCall: Int
+  groupChat: Int
+  groupCall: Int
+  screensharing: Int
+  callRecording: Int
+  noOfUserInclassRoom: Int
+  drawingBoard: Int
+  blogging: Int
+  reporting: Int
+  notificationOfAllClassActivity: Int
+  descrition: String
+  projectManagementTool: Int
+  classType: String
+
+  remarks: String
+}
+
+type SellPackage {
+  id: Int!
+  oId: Int
+  uId: Int
+  packageId: Int!
+  type: String
+  timeStamp: String
+  referenceCode: String
+  remarks: String
+}
+
+type Summary {
+  noOfCourses: Int
+  noOfMentors: Int
+  noOfReviews: Int
+}
+
+type OurPartner {
+  logo: String
+}
+
 type Query {
  getUser(userSlug: String!): User!
  getBlog(blogSlug: String!, userSlug: String!): Blog!
  getPopular: Popular!
- getArchive(sessionId: String): Archive!
+ getArchive(sessionId: String): [Blog!]
  doSearch(keyword: String, country: String, industry: String, skill: String, sessionId: String): Popular!
  getCourse(type: String): [Course!]
  getCourseDetails(courseId: Int, sessionId: String): Course!
- getOrganizationDetails(orgId: Int): Organization!
+ getOrganizationDetails(orgId: String, sessionId: String): Organization!
+ getPackage(sessionId: String, orgId: Int): [Package]!
+ getSummary: Summary!
+ getOurPartner: [OurPartner]!
+ courseSearch(keyword: String, topic: String, sessionId: String): [Course!]
+ blogSearch(keyword: String, topic: String, sessionId: String): [Blog!]
 }
 `);

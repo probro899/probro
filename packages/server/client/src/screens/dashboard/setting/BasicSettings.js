@@ -1,27 +1,28 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import countryList from 'react-select-country-list';
-import { MdEdit } from "react-icons/md";
+import { MdEdit } from 'react-icons/md';
 import * as actions from '../../../actions';
 import { PopoverForm } from '../../../components';
 import getName from '../../../common/utility-functions/getName';
 import { NameSchema, GenderSchema, AddressSchema, CountrySchema, HeadlineSchema } from './structure';
 import CarrierInterestSetting from './CarrierInterestSetting';
+import BasicSettingContainer from './BasicSettingContainer';
 
 class BasicSettings extends React.Component {
-  state={
+  state = {
     popover: {
       schema: null,
       open: false,
       structure: null,
       table: null,
-    }
+    },
   };
 
   togglePopover = (schema, structure, table) => {
     const { popover } = this.state;
     if (popover.open) {
-      this.setState({ popover: { open: false, structure: null, schema: null, table: null }})
+      this.setState({ popover: { open: false, structure: null, schema: null, table: null } })
       return;
     }
     this.setState({
@@ -36,11 +37,11 @@ class BasicSettings extends React.Component {
 
   getPopoverStructure = () => {
     const { popover } = this.state;
-    const { database, account } = this.props;
-    const user = Object.values(database.User.byId).find((obj) => {
+    const { User, UserDetail, account } = this.props;
+    const user = Object.values(User.byId).find((obj) => {
       return obj.id === account.user.id;
     });
-    const userDetail = Object.values(database.UserDetail.byId).find((obj) => {
+    const userDetail = Object.values(UserDetail.byId).find((obj) => {
       return obj.userId === account.user.id;
     }) || {};
     switch (popover.schema) {
@@ -88,7 +89,7 @@ class BasicSettings extends React.Component {
         await apis[`update${popover.table}`]([
           { ...data },
           { id: account.user.id },
-        ]); 
+        ]);
       } else {
         await apis[`update${popover.table}`](
           { ...data, userId: account.user.id }
@@ -101,87 +102,97 @@ class BasicSettings extends React.Component {
   }
 
   render() {
-    const { account, database, updateDatabaseSchema, apis } = this.props;
+    const { account, User, UserDetail, updateDatabaseSchema, apis } = this.props;
     const { popover } = this.state;
-    const user = Object.values(database.User.byId).find(u => u.id === account.user.id);
-    let userDetail = Object.values(database.UserDetail.byId).find(obj => user.id === obj.userId) || {};
+    const user = Object.values(User.byId).find(u => u.id === account.user.id);
+    let userDetail = Object.values(UserDetail.byId).find(obj => user.id === obj.userId) || {};
     return (
-      <div className="container-settings">
-        <PopoverForm
-          isOpen={popover.open}
-          structure={this.getPopoverStructure()}
-          callback={this.submitChange}
-          onClose={() => this.togglePopover(popover.schema)}
-        />
-        <div className="basic">
-          <div className="label">Full Name</div>
-          <div className="value">
-            {account.user && <span>{getName(user)}</span>}
-            <MdEdit
-             size={20}
-              color="rgba(167, 182, 194, 1)"
-              className="edit-icon"
-              onClick={() => this.togglePopover('name', NameSchema, 'User')}
-            />
-          </div>
+      <>
+        <div className="basic-setting-wrappers">
+          <BasicSettingContainer title="Full Name" subtitle="Change your name" />
+          <BasicSettingContainer title="Gender" subtitle="Change your gender" />
+          <BasicSettingContainer title="Headline" subtitle="Change your headline" />
+          <BasicSettingContainer title="Country" subtitle="Change your country" />
+          <BasicSettingContainer title="Address" subtitle="Change your address" />
         </div>
-        <div className="basic">
-          <div className="label">Gender</div>
-          <div className="value">
-            <span style={{ textTransform: 'capitalize' }}>{userDetail.gender}</span>
-            <MdEdit
-             size={20}
-              color="rgba(167, 182, 194, 1)"
-              className="edit-icon"
-              onClick={() => this.togglePopover('gender', GenderSchema, 'UserDetails')}
-            />
+        <div className="container-settings">
+          <PopoverForm
+            isOpen={popover.open}
+            structure={this.getPopoverStructure()}
+            callback={this.submitChange}
+            onClose={() => this.togglePopover(popover.schema)}
+          />
+          <div className="basic">
+            <div className="label">Full Name</div>
+            <div className="value">
+              {account.user && <span>{getName(user)}</span>}
+              <MdEdit
+                size={20}
+                color="rgba(167, 182, 194, 1)"
+                className="edit-icon"
+                onClick={() => this.togglePopover('name', NameSchema, 'User')}
+              />
+            </div>
           </div>
-        </div>
-        <div className="basic">
-          <div className="label">Headline</div>
-          <div className="value">
-            <span>{userDetail.headLine}</span>
-            <MdEdit
-             size={20}
-              color="rgba(167, 182, 194, 1)"
-              className="edit-icon"
-              onClick={() => this.togglePopover('headline', HeadlineSchema, 'UserDetails')}
-            />
+          <div className="basic">
+            <div className="label">Gender</div>
+            <div className="value">
+              <span style={{ textTransform: 'capitalize' }}>{userDetail.gender}</span>
+              <MdEdit
+                size={20}
+                color="rgba(167, 182, 194, 1)"
+                className="edit-icon"
+                onClick={() => this.togglePopover('gender', GenderSchema, 'UserDetails')}
+              />
+            </div>
           </div>
-        </div>
-        <div className="basic">
-          <div className="label">Country</div>
-          <div className="value">
-            <span style={{ textTransform: 'capitalize' }}>{userDetail.country}</span>
-            <MdEdit
-             size={20}
-              color="rgba(167, 182, 194, 1)"
-              className="edit-icon"
-              onClick={() => this.togglePopover('country', CountrySchema, 'UserDetails')}
-            />
+          <div className="basic">
+            <div className="label">Headline</div>
+            <div className="value">
+              <span>{userDetail.headLine}</span>
+              <MdEdit
+                size={20}
+                color="rgba(167, 182, 194, 1)"
+                className="edit-icon"
+                onClick={() => this.togglePopover('headline', HeadlineSchema, 'UserDetails')}
+              />
+            </div>
           </div>
-        </div>
-        <div className="basic">
-          <div className="label">Address</div>
-          <div className="value">
-            <span>{userDetail.address}</span>
-            <MdEdit
-             size={20}
-              color="rgba(167, 182, 194, 1)"
-              className="edit-icon"
-              onClick={() => this.togglePopover('address', AddressSchema, 'UserDetails')}
-            />
+          <div className="basic">
+            <div className="label">Country</div>
+            <div className="value">
+              <span style={{ textTransform: 'capitalize' }}>{userDetail.country}</span>
+              <MdEdit
+                size={20}
+                color="rgba(167, 182, 194, 1)"
+                className="edit-icon"
+                onClick={() => this.togglePopover('country', CountrySchema, 'UserDetails')}
+              />
+            </div>
           </div>
+          <div className="basic">
+            <div className="label">Address</div>
+            <div className="value">
+              <span>{userDetail.address}</span>
+              <MdEdit
+                size={20}
+                color="rgba(167, 182, 194, 1)"
+                className="edit-icon"
+                onClick={() => this.togglePopover('address', AddressSchema, 'UserDetails')}
+              />
+            </div>
+          </div>
+          <CarrierInterestSetting
+            updateDatabaseSchema={updateDatabaseSchema}
+            userDetail={userDetail}
+            apis={apis}
+          />
         </div>
-        <CarrierInterestSetting
-          updateDatabaseSchema={updateDatabaseSchema}
-          userDetail={userDetail}
-          apis={apis}
-        />
-      </div>
+
+      </>
     );
   }
 }
 
-const mapStateToProps = state => state;
+const mapStateToProps = ({ account, database }) => ({ account, User: database.User, UserDetail: database.UserDetail });
 export default connect(mapStateToProps, { ...actions })(BasicSettings);

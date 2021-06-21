@@ -5,6 +5,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { AiOutlineClose, AiOutlineMinus } from 'react-icons/ai';
 import * as actions from '../actions';
 import client from '../socket';
 import { initJanus, closeHandler, sfuSocketListner, deviceTest } from './helper-functions/webrtc/sfu';
@@ -12,13 +13,12 @@ import ErrorBoundary from '../common/ErrorBoundary';
 import { updateChatList, updateUserActiveStatus, updateBoardActiveStatus } from './chatlist/helper-function';
 import exceptionReporter from './helper-functions/webrtc/sfu/exceptionReporter';
 import ScreenProvider from './screen-provider';
-import { AiOutlineClose, AiOutlineMinus } from "react-icons/ai";
 
 class Communication extends React.Component {
-  state = {
-    apis: null,
-    maximize: false,
-  };
+  constructor(props) {
+    super(props);
+    this.state = { apis: null, maximize: false };
+  }
 
   async componentDidMount() {
     const { updateWebRtc } = this.props;
@@ -39,10 +39,10 @@ class Communication extends React.Component {
     }
   }
 
-  componentWillReceiveProps(newProps) {
-    updateChatList(newProps, this.props);
-    updateUserActiveStatus(newProps, this.props);
-    updateBoardActiveStatus(newProps, this.props);
+  componentDidUpdate(prevProps) {
+    updateChatList(this.props, prevProps);
+    updateUserActiveStatus(this.props, prevProps);
+    updateBoardActiveStatus(this.props, prevProps);
   }
 
   remoteCallEndMinimizer = () => {
@@ -86,18 +86,11 @@ class Communication extends React.Component {
   }
 
   render() {
-    // console.log('Props in communications', this.props);
     const { maximize, apis } = this.state;
     let height = '75%';
-    if (maximize) {
-      height = '100%';
-    }
-    const {
-      webRtc,
-    } = this.props;
-    if (webRtc.minimize) {
-      height = '40px';
-    }
+    if (maximize) height = '100%';
+    const { webRtc } = this.props;
+    if (webRtc.minimize) height = '40px';
     return (
       (webRtc.showIncommingCall || webRtc.showCommunication) && apis && (
         <ErrorBoundary>
@@ -111,10 +104,10 @@ class Communication extends React.Component {
               }
             }
           >
-            <div className="header">
+            <div className="com-header">
               <div className="win-title" onClick={this.toggleMinMax}>
                 Messages
-            </div>
+              </div>
               <div className="control-icons">
                 <AiOutlineMinus size={20} style={{ cursor: 'pointer' }} onClick={this.toggleMinMax} />
                 <AiOutlineClose size={20} style={{ cursor: 'pointer' }} onClick={this.cutWindow} />
@@ -141,12 +134,11 @@ class Communication extends React.Component {
 }
 
 Communication.propTypes = {
-  webRtc: PropTypes.objectOf(PropTypes.any).isRequired,
-  database: PropTypes.objectOf(PropTypes.any).isRequired,
   account: PropTypes.objectOf(PropTypes.any).isRequired,
+  database: PropTypes.objectOf(PropTypes.any).isRequired,
+  webRtc: PropTypes.objectOf(PropTypes.any).isRequired,
   updateWebRtc: PropTypes.func.isRequired,
-  addDatabaseSchema: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = state => state;
+const mapStateToProps = ({ webRtc, database, account }) => ({ webRtc, database, account });
 export default connect(mapStateToProps, { ...actions })(Communication);

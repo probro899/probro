@@ -30,8 +30,8 @@ async function updateOrganizationMember(record) {
       }
     }
 
-    const res = await update.call(this, 'OrganizationMember', ...record);
-    return res;
+    await update.call(this, 'OrganizationMember', ...record);
+    return { status: 200, data: 'Update successfull' };
   } catch (e) {
     console.error('Error in deleteOrganizationMember', e);
     return { status: 201, data: 'Record updation faild' };

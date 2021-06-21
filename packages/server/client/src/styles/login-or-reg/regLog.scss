@@ -13,8 +13,6 @@
     max-width: 450px;
     width: 100%;
     margin: 0 auto;
-    padding: 20px;
-    @include genericBoxPattern;
     position: relative;
     .btn-group {
       margin-top: 40px !important;
@@ -29,13 +27,14 @@
         font-size: 24px;
         font-weight: 700;
         margin-bottom: 10px;
+        line-height: 30px;
       }
     }
     .auth-footer {
       padding: 0 0 0 10px;
       .forgot-password {
         position: absolute;
-        bottom: 39%;
+        bottom: 43%;
         right: 20px;
       }
       .register-link {
@@ -47,10 +46,6 @@
     }
     div div label {
       margin-bottom: 10px;
-      .label-text {
-        font-size: 18px;
-        font-weight: 300;
-      }
     }
     .login-in-link {
       text-align: right;

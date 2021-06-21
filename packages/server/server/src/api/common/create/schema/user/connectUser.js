@@ -5,7 +5,7 @@ import updateUserCache from '../../../updateUserCache';
 import add from '../../add';
 import cacheDatabase from '../../../../../cache/database/cache';
 import sendNotification from '../../../sendNotification';
-
+ 
 async function connectUser(record) {
   try {
     const { session } = this;
@@ -56,8 +56,8 @@ async function connectUser(record) {
     session.subscribe(`UserConnection-${fUserDetails.id}`);
     session.subscribe(`UserConnection-${tUserDetails.id}`);
     return connectRes;
-    } catch (e) {
-      console.error('Error in connectUser', e);
-    }
+  } catch (e) {
+    console.error('Error in connectUser', e);
+  }
 }
 export default connectUser;

@@ -12,6 +12,7 @@ function createFolder(params) {
     console.log('GetVideo details', error, body, status_code, error, headers);
   });
 }
+
 // createFolder();
 
 function deleteFolder(params) {
@@ -27,7 +28,6 @@ function deleteFolder(params) {
   });
 }
 // deleteFolder();
-
 
 function editFolder(params) {
   client.request({

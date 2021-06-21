@@ -5,6 +5,7 @@ import * as actions from '../../../actions';
 import Connecte from './Connecte';
 import client from '../../../socket';
 import { Spinner } from '../../../common';
+import NotFound from '../../../common/NotFound';
 
 class Connection extends React.Component {
   constructor(props) {
@@ -28,19 +29,11 @@ class Connection extends React.Component {
     });
     return connectionIds;
   }
-
+ 
   render() {
-    const {
-      database,
-      account,
-      updateWebRtc,
-      updateDatabaseSchema,
-      deleteDatabaseSchema,
-      webRtc
-    } = this.props;
+    const { database, account, updateWebRtc, updateDatabaseSchema, deleteDatabaseSchema, webRtc } = this.props;
     const connectionIds = Object.values(database.UserConnection.byId).filter(c => c.status !== 'deleted');
     const { apis } = this.state;
-
     if (!account.user) { return (<div className="bro-right" style={{ position: 'relative' }}><Spinner /></div>); }
     return (
       <div className="connection bro-right">
@@ -53,15 +46,9 @@ class Connection extends React.Component {
             <div className="total-connection"><strong>Total Connections:</strong> {connectionIds.length}</div>
           </div>
           <div className="con-list">
+            {connectionIds.length === 0 && <div className="pc-no-cons"><NotFound message="No connections to show" /></div>}
             {
-              connectionIds.length === 0 && (
-                <div className="pc-no-cons">
-                  <p>You do not have any connections at the moment.</p>
-                </div>
-              )
-            }
-            {
-              connectionIds.map(con => (
+              connectionIds.map((con) => (
                 <Connecte
                   updateWebRtc={updateWebRtc}
                   deleteDatabaseSchema={deleteDatabaseSchema}
@@ -91,5 +78,5 @@ Connection.propTypes = {
   updateWebRtc: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = state => state;
+const mapStateToProps = (state) => state;
 export default connect(mapStateToProps, { ...actions })(Connection);

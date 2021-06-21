@@ -1,6 +1,7 @@
 .pc-pagination-container {
   .pc-pagination {
     display: flex;
+    justify-content: flex-end;
     .page-item {
       &:not(:first-child) {
         margin-left: 5px;

@@ -1,0 +1,18 @@
+--Up
+CREATE TABLE IF NOT EXISTS BlogBookmark(
+  id INTEGER PRIMARY KEY,
+  blogId INTEGER NOT NULL,
+  userId INTEGER NOT NULL,
+  createdAt INTEGER,
+  updatedAt INTEGER,
+  status TEXT,
+  deleteStatus INTEGER,
+  remarks TEXT,
+
+  --CONTRAINT
+  CONSTRAINT BlogBookmark_fk_blogId FOREIGN KEY (blogId) REFERENCES Blog(id) ON DELETE CASCADE
+);
+
+ALTER TABLE Board ADD COLUMN cId INTEGER;
+ALTER TABLE Board ADD COLUMN status TEXT;
+-- Down

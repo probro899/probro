@@ -1,49 +1,54 @@
-@import "../config.scss";
-$border-color: #dedfe0;
-
 .formLabel {
   position: relative;
   display: block;
+  margin-bottom: rem(15);
   width: 100%;
   .label-text {
-    margin-bottom: 5px;
+    margin-bottom: rem(5);
     font-size: 14px;
+    color: color-get(text-dark);
+    font-weight: 600;
   }
   .pc-input-group {
     display: block;
     width: 100%;
-    padding: 7px 10px;
-    border-radius: 5px;
-    border: 1px solid $border-color;
-    margin-bottom: 10px;
-    color: $subHeadColor;
+    padding: rem(10) rem(19);
+    border: 1px solid color-get(border);
+    min-height: rem(40);
+    color: color-get(text-dark);
+    border-radius: rem(3);
     &:hover,
     &:focus {
       outline: none;
-      border: 1px solid $border-color;
+      border: rem(1) solid color-get(primary);
+    }
+    &:hover {
+      background: color-get(text-dark, 100);
+    }
+    &.left-icon {
+      padding-left: rem(28);
     }
   }
   .pc-file-wrap {
     cursor: pointer;
-    height: 30px;
+    min-height: rem(40);
     position: relative;
     margin-bottom: 10px;
     .pc-file-upload {
       appearance: none;
       background: #ffffff;
       border-radius: 5px;
-      border: 1px solid $border-color;
+      border: 1px solid color-get(border);
       font-size: 14px;
       font-weight: 400;
-      height: 30px;
-      line-height: 30px;
       outline: none;
-      padding: 0 10px;
+      padding: rem(10) rem(19);
+      min-height: rem(40);
       vertical-align: middle;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
-      color: rgba(92, 112, 128, 0.6);
+      color: color-get(text-dark);
       left: 0;
       padding-right: 80px;
       position: absolute;
@@ -64,7 +69,7 @@ $border-color: #dedfe0;
         word-wrap: normal;
         border-radius: 3px;
         line-height: 24px;
-        margin-top: 2px;
+        margin-top: rem(7);
         margin-right: 2px;
         position: absolute;
         right: 0;
@@ -72,60 +77,62 @@ $border-color: #dedfe0;
         top: 0;
         width: 70px;
       }
+      &:hover,
+      &:focus {
+        outline: none;
+        border: rem(1) solid color-get(primary);
+      }
+      &:hover {
+        background: color-get(text-dark, 100);
+      }
     }
   }
 
   .pc-text-area {
     width: 100%;
-    border: 1px solid $border-color;
+    border: 1px solid color-get(border);
     border-radius: 5px;
     padding: 7px 10px;
     margin-bottom: 15px;
     min-height: 50px;
-    color: $subHeadColor;
+    color: color-get(text-light);
     &:hover,
     &:focus {
       outline: none;
-      border: 1px solid $border-color;
+      border: rem(1) solid color-get(primary);
     }
-  }
-  textarea {
-    width: 100%;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    padding: 7px 10px;
-    box-shadow: 0 0.4rem 0.8rem -0.1rem rgba(0, 32, 128, 0.1), 0 0 0 1px #f0f2f7;
-    min-height: 40px;
-    outline: none;
-    color: $subHeadColor;
+    &:hover {
+      background: color-get(text-dark, 100);
+    }
   }
   .pc-select-field {
     padding: 7px 10px;
-    color: $subHeadColor;
-    border: 1px solid $border-color;
+    color: color-get(text-light);
+    border: 1px solid color-get(border);
     width: 100%;
+    min-height: rem(40);
     border-radius: 5px;
     margin-bottom: 10px;
 
     &:hover,
     &:focus {
       outline: none;
-      border: 1px solid $border-color;
+      border: 1px solid color-get(border);
     }
     option {
       font-size: 16px;
     }
   }
-
-  .left-icon {
+  .icon {
     position: absolute;
-    top: 27px;
-    left: 6px;
-  }
-  .right-icon {
-    position: absolute;
-    right: 0;
-    margin-top: -35px;
+    margin-top: rem(-30);
+    cursor: pointer;
+    &.right {
+      right: rem(5);
+    }
+    &.left {
+      left: rem(5);
+    }
   }
 }
 
@@ -138,29 +145,33 @@ $border-color: #dedfe0;
 }
 
 ::placeholder {
-  color: #999;
-  font-size: 12px;
+  color: color-get(text-light, 300);
+  font-size: 14px;
 }
 
 .date-field {
+  margin-bottom: rem(15);
   .label-text {
-    margin-bottom: 5px;
-    color: $subHeadColor;
+    margin-bottom: rem(5);
     font-size: 14px;
+    color: color-get(text-dark);
+    font-weight: 600;
     display: block;
   }
   .rdt {
     input {
       width: 100%;
       padding: 7px 10px;
-      border: 1px solid #eee;
+      border: 1px solid color-get(border);
       border-radius: 5px;
       margin-bottom: 5px;
-      color: $subHeadColor;
+      padding: rem(10) rem(19);
+      min-height: rem(40);
+      color: color-get(text-light);
       &:hover,
       &:focus {
         outline: none;
-        border: 1px solid $border-color;
+        border: 1px solid color-get(border);
       }
     }
   }

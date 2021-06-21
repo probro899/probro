@@ -78,13 +78,12 @@ export default class Course extends React.Component {
     const { apis } = webRtc;
     const uId = account.user.id;
     const res = await apis.addSectionLecture({
-      sectionId: 1,
+      sectionId: 2,
       title: 'Lecture title',
       description: 'Lecture description',
       duration: 10000,
       remarks: 'remarks in lecture',
     });
-    console.log('Add section lecture', res);
   }
 
   updateSectionLecture =  async () => {
@@ -94,7 +93,6 @@ export default class Course extends React.Component {
       { title: 'Lecture title udated' },
       { id: 1 }
     ]);
-    console.log('updateSectionLecture res', res);
   }
 
   deleteSectionLecture = async () => {
@@ -252,7 +250,6 @@ export default class Course extends React.Component {
   }
 
   render() {
-    console.log('Props in Courese api test', this.props);
     return (
       <div>
         <h4>Course Api test</h4>

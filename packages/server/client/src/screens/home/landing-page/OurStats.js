@@ -1,25 +1,41 @@
 import React from 'react'
 
+const stats = [
+    {
+        imageUrl: '/assets/graphics/online-course.svg',
+        value: '100+',
+        title: 'Classes'
+    },
+    {
+        imageUrl: '/assets/graphics/rating.svg',
+        value: '100+',
+        title: 'Reviews'
+    },
+    {
+        imageUrl: '/assets/graphics/online.svg',
+        value: '10+',
+        title: 'Mentors'
+    }
+]
+
 function OurStats() {
     return (
         <div className="pc-stat-wrapper">
             <div className="pc-stat-container pc-container">
                 <div className="pc-stat-row pc-row">
-                    <div className="pc-stat-col pc-col">
-                        <div className="pc-no-mentors pc-stat-wrap">
-                            <h3>No of Mentors: <span>20+</span></h3>
-                        </div>
-                    </div>
-                    <div className="pc-stat-col pc-col">
-                        <div className="pc-no-stars pc-stat-wrap">
-                            <h3>100+ <img src="/assets/graphics/Stars_sharp.svg" alt="stars" /> reviews.</h3>
-                        </div>
-                    </div>
-                    <div className="pc-stat-col pc-col">
-                        <div className="pc-no-mentors pc-stat-wrap">
-                            <h3>No of courses: <span>40+</span></h3>
-                        </div>
-                    </div>
+                    {
+                        stats && stats.map((stat, idx) => (
+                            <div key={`stat-${idx}`} className="pc-stat-col pc-col">
+                                <div className="pc-no-mentors pc-stat-wrap">
+                                    <div className="count-num">
+                                        <img src={stat.imageUrl} alt={stat.value} className="stats-img" />
+                                        <h2 className="stats-value">{stat.value}</h2>
+                                    </div>
+                                    <p className="stats-subtitle">{stat.title}</p>
+                                </div>
+                            </div>
+                        ))
+                    }
                 </div>
             </div>
         </div>

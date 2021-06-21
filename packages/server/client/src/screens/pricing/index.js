@@ -1,78 +1,78 @@
 import React from 'react'
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import * as actions from '../../actions';
 import { Navbar } from '../home/component';
 import PriceCard from './PriceCard';
+import { Spinner } from '../../common';
 import Footer from '../../common/footer';
-
-const freePlanData = [
-    "Free Plan 1",
-    "Free Plan 2",
-    "Free Plan 3",
-    "Free Plan 4",
-    "Free Plan 5",
-]
-const individualPlan = [
-    "Individual Plan 1",
-    "Individual Plan 2",
-    "Individual Plan 3",
-    "Individual Plan 4",
-    "Individual Plan 5",
-]
-const organizationPlan = [
-    "Organization Plan 1",
-    "Organization Plan 2",
-    "Organization Plan 3",
-    "Organization Plan 4",
-    "Organization Plan 5",
-
-]
+import { GET_PACKAGE } from '../../queries';
+import clientQuery from '../../clientConfig';
+import HeaderBanner from '../../common/HeaderBanner';
+import ReactHelmet from '../../common/react-helmet';
 
 class Pricing extends React.Component {
-    state = {};
+  state = {};
 
-    componentDidMount() {
-        const { updateNav } = this.props;
-        updateNav({ schema: 'mainNav', data: { name: 'pricing' } });
+  async componentDidMount() {
+    const { account, match, updateNav } = this.props;
+    try {
+      const res = await clientQuery.query({ query: GET_PACKAGE, variables: { orgId: parseInt(match.params.orgId, 10), sessionId: account.sessionId }, fetchPolicy: 'network-only' });
+      if (res) {
+        this.setState({ data: res.data.getPackage });
+      }
+    } catch (e) {
+      console.log('Error', e);
     }
+  }
 
-    render() {
-        return (
-            <>
-                <Navbar />
-                <div className="pc-pricing-plan pc-container">
-                    <div className="pc-price-header-wrapper">
-                        <h3 className="pc-price-subheader">Choose a plan</h3>
-                        <h1 className="pc-price-header">Pick a plan for your team</h1>
-                    </div>
-                    <div className="pc-cardlist-wrapper">
-                        <PriceCard
-                            planPrice="0"
-                            priceDescription="add some description about the plan"
-                            priceName="Single" buttonText="Join for free"
-                            data={freePlanData}
-                        />
-                        <PriceCard
-                            planPrice="4"
-                            priceDescription="add some description about the plan"
-                            priceName="Individual"
-                            buttonText="Join with Individual"
-                            data={individualPlan}
-                        />
-                        <PriceCard
-                            planPrice="10"
-                            priceDescription="add some description about the plan"
-                            priceName="Organization"
-                            buttonText="Join with Organization"
-                            data={organizationPlan}
-                        />
-                    </div>
-                </div>
-                <Footer />
-            </>
-        )
+  changeData = (updatedData) => {
+    const { packageId, isSubscribe } = updatedData;
+    const { data } = this.state;
+    const dataTobeUpdate = data.map((p) => (p.id === packageId ? { ...p, isSubscribe } : p));
+    this.setState({ data: dataTobeUpdate });
+  }
+
+  render() {
+    // console.log('props in pricing', this.props, this.state);
+    const { data } = this.state;
+    if (!data) {
+      return <Spinner wClass="spinner-wrapper" />;
     }
+    return (
+      <>
+        <ReactHelmet {...this.props} />
+        <Navbar />
+        <HeaderBanner title="Choose a plan" subTitle="Pick a plan for your team" />
+        <div className="pc-pricing-plan pc-container">
+          <div className="pc-cardlist-wrapper">
+            {data.map(p => (
+              <PriceCard
+                planPrice={p.price}
+                priceDescription={p.descrition}
+                packageType={p.type}
+                buttonText="Start Free Trial"
+                data={{ ...p.packageDescription, noOfClass: p.noOfClass }}
+                isSubscribe={p.isSubscribe}
+                packageId={p.id}
+                changeData={this.changeData}
+                packageDetail={p}
+                {...this.props}
+              />
+            ))}
+          </div>
+        </div>
+        <Footer />
+      </>
+    );
+  }
 }
 
 const mapStateToProps = state => state;
 export default connect(mapStateToProps, { ...actions })(Pricing);
+Pricing.propTypes = {
+  account: PropTypes.objectOf(PropTypes.any).isRequired,
+  match: PropTypes.objectOf(PropTypes.any).isRequired,
+  updateNav: PropTypes.func.isRequired,
+};
+

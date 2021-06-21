@@ -1,7 +1,6 @@
 @import '../config.scss';
 
 .pc-report {
-  margin-top: $navbarHeight;
   min-height: calc(100vh - #{$navbarHeight} - #{$footerHeight});
   .pc-report-content {
     padding-top: 40px;

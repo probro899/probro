@@ -6,13 +6,14 @@ class Fileinput extends React.Component {
   state = { fileInputText: 'Choose a file...' };
 
   render() {
-    const { data, onChange, value } = this.props;
+    const { data, onChange, value,  } = this.props;
     const { fileInputText } = this.state;
     return (
         <FormFileInput 
           onInputChange={e => onChange(data.id, e.target.files[0])}
           label={data.name}
           text={value.name || fileInputText}
+          {...this.props}
         />
     );
   }

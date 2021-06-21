@@ -8,6 +8,7 @@ import * as actions from '../../../actions';
 import Register from './registration';
 import { Navbar } from '../../home/component';
 import Footer from '../../../common/footer';
+import Card from '../../../common/Card';
 
 
 class Registration extends Component {
@@ -34,19 +35,21 @@ class Registration extends Component {
   render() {
     const { redirect } = this.state;
     return (
-     <>
+      <>
         <Navbar />
         <div className="o-log-or-reg">
           {redirect && <Redirect to="/login" />}
           <div className="log-or-reg">
-            <div className="reg-box-header">
-              <h1> Create Account </h1>
-            </div>
-            <Register handleRegistration={this.handleRegistration} />
-            <p className="login-in-link">
-              Already have an account?
+            <Card>
+              <div className="reg-box-header">
+                <h1> Create Account </h1>
+              </div>
+              <Register handleRegistration={this.handleRegistration} />
+              <p className="login-in-link">
+                Already have an account?
               <Link to="/login">Log in</Link>
-            </p>
+              </p>
+            </Card>
           </div>
         </div>
         <Footer />

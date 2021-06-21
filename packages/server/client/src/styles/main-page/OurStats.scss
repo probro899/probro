@@ -1,9 +1,9 @@
 .pc-stat-wrapper {
-  background-color: #f7f7f8;
-  padding: pixel-to-rem(30) 0;
-  margin-top: 10px;
-  margin-bottom: pixel-to-rem(30);
-  @media screen and (max-width: pixel-to-rem(767)) {
+  // background-color: color-get(secondary);
+  margin-bottom: rem(50);
+  @media screen and (max-width: rem(767)) {
+    margin-bottom: rem(25);
+    padding-bottom: 0;
     display: none;
   }
   .pc-stat-container {
@@ -11,25 +11,54 @@
       justify-content: space-between;
       .pc-stat-col {
         .pc-stat-wrap {
-          h3 {
-            font-size: pixel-to-rem(24);
-            font-weight: bold;
-            color: $headingColor;
+          text-align: left;
+          .count-num {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            margin-bottom: rem(5);
+            .stats-img {
+              height: rem(40);
+            }
+            .stats-value {
+              font-size: rem(42);
+              line-height: rem(50);
+              font-weight: bold;
+              color: color-get(secondary);
+              margin-left: rem(15);
+              position: relative;
+              &::after {
+                background: color-get(secondary);
+                border-radius: 50%;
+                position: absolute;
+                content: "";
+                top: 0;
+                width: rem(10);
+                height: rem(10);
+              }
+            }
+          }
+          .stats-subtitle {
+            font-size: rem(22);
+            font-weight: 700;
+            line-height: rem(25);
+            text-transform: uppercase;
+            color:color-get(secondary);
           }
         }
       }
     }
   }
-  @media screen and (max-width: pixel-to-rem(991)) {
+  @media screen and (max-width: rem(991)) {
     .pc-stat-container {
       .pc-stat-row {
         .pc-stat-col {
-          margin-bottom: pixel-to-rem(20);
+          margin-bottom: rem(20);
         }
       }
     }
   }
-  @media screen and (max-width: pixel-to-rem(767)) {
+  @media screen and (max-width: rem(767)) {
     .pc-stat-container {
       .pc-stat-row {
         justify-content: center;

@@ -2,33 +2,23 @@ import React from 'react';
 import { AiOutlineClose } from "react-icons/ai";
 
 class Popup extends React.Component {
-    state = {
-        close: false,
-    };
+    state = { close: false };
 
     onDrawerClose = () => {
-       this.setState({
-           close:true,
-       })
+        this.setState({ close:true });
         setTimeout(() => {
-          this.props.onClose();
-          this.setState({
-             close:false,
-         })
+            this.props.onClose();
+            this.setState({ close:false });
         }, 500);
-      }
+    }
 
     componentDidMount() {
         this.changeBodyOverflow();
     }
 
     getSnapshotBeforeUpdate(prevProps, prevState) {
-        if (!prevProps.isOpen && this.props.isOpen) {
-            this.props.onOpening && this.props.onOpening();
-        }
-        if (prevProps.isOpen !== this.props.isOpen) {
-            this.changeBodyOverflow();
-        }
+        if (!prevProps.isOpen && this.props.isOpen) this.props.onOpening && this.props.onOpening();
+        if (prevProps.isOpen !== this.props.isOpen) this.changeBodyOverflow();
         return null;
     }
 
@@ -44,10 +34,9 @@ class Popup extends React.Component {
         if (this.state.close) {
             cssClasses.push("pop-up-closed");
             cssClasses.push('hide-popup');
-          }
-          else{
+        } else {
             cssClasses.push( isOpen && 'pop-up-open');
-          }
+        }
         return (
             <div className="popup-container">
                 <div className="popup-overlay" onClick={this.onDrawerClose}></div>

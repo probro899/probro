@@ -3,8 +3,10 @@ import store from '../../../../../store';
 import exceptionHandler from './exceptionHandler';
 import callUpgrader from './callUpgrader';
 import createOffer from './createOffer';
+import chromeAudioCallErrorFix from './chromeAudioCallErrorFix';
 
 export default async (mediaType, props) => {
+  const tempMedia = chromeAudioCallErrorFix(props, mediaType);
   try {
     const { webRtc, account, database } = store.getState();
     const { localCallHistory } = webRtc;
@@ -23,7 +25,7 @@ export default async (mediaType, props) => {
     if (webRtc.isCallUpgraded) {
       callUpgrader(mediaType, props);
     } else {
-      const { jsep, error, oneToOneCall } = await createOffer(mediaType, props);
+      const { jsep, error, oneToOneCall } = await createOffer(tempMedia || mediaType, props);
       if (jsep) {
         const { callId } = Object.values(database.UserConnection.byId).find(c => c.user.user.id === userId);
         if (callId) {
@@ -33,7 +35,7 @@ export default async (mediaType, props) => {
         } else {
           // ask for callId
           const { apis } = webRtc;
-          const callId =  await apis.getCallId({ userId });
+          const callId = await apis.getCallId({ userId });
           const body = { request: 'call', username: `${callId}` };
           oneToOneCall.data({ text: JSON.stringify({ callType: mediaType, uid: account.user.id }) });
           oneToOneCall.send({ message: body, jsep });

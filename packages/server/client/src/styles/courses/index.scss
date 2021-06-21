@@ -1,32 +1,62 @@
-@import "../config.scss";
 @import "./enrolledCourses.scss";
 
+.pc-course-detail-page-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  margin-left: rem(-15);
+  margin-right: rem(-15);
+}
 .pc-course-detail-page,
 .course-list-view {
-  margin-top: pixel-to-rem(100);
-  min-height: calc(100vh - 90px - 1pixel-to-rem(25));
-  margin-bottom: pixel-to-rem(40);
+  margin-top: rem(30);
+  min-height: calc(100vh - 90px - 125px);
+  margin-bottom: rem(40);
+  .pcc-right-section {
+    max-width: 70%;
+    flex: 0 0 70%;
+    padding-left: rem(15);
+    padding-right: rem(15);
+    @media screen and (max-width: rem(991)) {
+      max-width: 100%;
+      flex: 0 0 100%;
+    }
+  }
+  .search-course {
+    margin-bottom: rem(30);
+  }
+
   .pc-course-cover-wrapper {
-    background-image: linear-gradient(90deg, rgb(0, 53, 107), rgb(221, 221, 221));
-    border-top-left-radius: pixel-to-rem(10);
-    border-top-right-radius: pixel-to-rem(10);
+    background-image: linear-gradient(90deg, rgb(0, 45, 114), rgb(0, 94, 184));
+    border-top-left-radius: rem(10);
+    border-top-right-radius: rem(10);
     .pc-course-cover-container {
-      min-height: pixel-to-rem(250);
-      padding: pixel-to-rem(30) pixel-to-rem(20);
+      min-height: rem(220);
+      padding: rem(20);
       .pc-course-content {
         .course-title {
           color: #fff;
-          margin-bottom: pixel-to-rem(15);
-          font-size: pixel-to-rem(34);
-          line-height: pixel-to-rem(40);
-          @media screen and (max-width: pixel-to-rem(576)) {
-            font-size: pixel-to-rem(30);
-            line-height: pixel-to-rem(34);
+          margin-bottom: rem(10);
+          font-size: rem(34);
+          line-height: rem(38);
+          @media screen and (max-width: rem(576)) {
+            font-size: rem(30);
+            line-height: rem(34);
           }
+        }
+        .course-objective {
+          color: #fff;
+          margin-bottom: rem(10);
+          display: block !important;
+          display: -webkit-box !important;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: normal;
         }
       }
       .course-rating {
-        margin-bottom: pixel-to-rem(15);
+        margin-bottom: rem(15);
         .review-stat-wrapper {
           display: flex;
           align-items: center;
@@ -35,18 +65,18 @@
             display: flex;
 
             .rating-number {
-              margin: 0 pixel-to-rem(10);
-              color: $star-color;
+              margin: 0 rem(10);
+              color: color-get(warn, 500);
               font-weight: 600;
             }
           }
           .satisfaction-rating {
             display: flex;
             .ratings-separator {
-              margin: 0 pixel-to-rem(10);
+              margin: 0 rem(10);
             }
             .sat-percentage {
-              margin-left: pixel-to-rem(3);
+              margin-left: rem(3);
             }
           }
         }
@@ -54,42 +84,34 @@
       .pc-course-mentor {
         display: flex;
         align-items: center;
-        margin-bottom: pixel-to-rem(25);
+        margin-bottom: rem(25);
         .mentor-img-wrapper {
-          width: pixel-to-rem(36);
-          height: pixel-to-rem(36);
-          .mentor-img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            border-radius: 50%;
-          }
+          width: rem(36);
+          height: rem(36);
+          border-radius: 50%;
+          overflow: hidden;
         }
         .mentor-name {
-          margin: 0 pixel-to-rem(10);
+          margin: 0 rem(10);
           color: #fff;
         }
       }
       .join-course-btn {
-        max-width: pixel-to-rem(150);
-        button {
-          background-color: #fff;
-          color: #000;
-        }
+        max-width: rem(150);
       }
     }
   }
 
   .section-about-container {
-    padding: pixel-to-rem(5) pixel-to-rem(15);
-    margin-bottom: pixel-to-rem(30);
+    padding: rem(5) rem(15);
+    margin-bottom: rem(30);
     .course-description {
-      margin-bottom: pixel-to-rem(20);
+      margin-bottom: rem(20);
       .show-more {
         text-transform: uppercase;
         color: $primary;
         font-weight: 600;
-        font-size: pixel-to-rem(14);
+        font-size: rem(14);
         cursor: pointer;
         &:hover {
           text-decoration: underline;
@@ -97,90 +119,88 @@
       }
     }
     .skills-to-learn {
-      padding: pixel-to-rem(15);
-      border: pixel-to-rem(1) solid #ddd;
-      border-radius: pixel-to-rem(10);
+      padding: rem(15);
+      border: rem(1) solid #ddd;
+      border-radius: rem(10);
       .skill-heading {
         text-transform: uppercase;
-        font-size: pixel-to-rem(14);
-        color: $subHeadColor;
-        margin-bottom: pixel-to-rem(15);
+        font-size: rem(14);
+        color: color-get(text-light);
+        margin-bottom: rem(15);
       }
       .skills-pills {
         display: flex;
         flex-wrap: wrap;
         .skill-pill {
-          padding: pixel-to-rem(4) pixel-to-rem(18);
-          margin-bottom: pixel-to-rem(6);
+          padding: rem(4) rem(18);
+          margin-bottom: rem(6);
           background: $primary;
-          border-radius: pixel-to-rem(30);
+          border-radius: rem(30);
           color: #fff;
           font-weight: 600;
-          font-size: pixel-to-rem(14);
-          letter-spacing: pixel-to-rem(0.5);
-          margin-right: pixel-to-rem(5);
+          font-size: rem(14);
+          letter-spacing: rem(0.5);
+          margin-right: rem(5);
         }
       }
     }
   }
   .instructor-container {
-    padding: pixel-to-rem(5) pixel-to-rem(15);
-    margin-bottom: pixel-to-rem(30);
+    margin-bottom: rem(30);
+    .instructor-heading {
+      margin-bottom: rem(20);
+    }
     .instructor-details {
-      margin-top: pixel-to-rem(20);
+      margin-top: rem(20);
       display: flex;
       align-items: center;
-      @media screen and (max-width: pixel-to-rem(576)) {
+      @media screen and (max-width: rem(576)) {
         display: block;
       }
       .img-wrapper {
-        width: pixel-to-rem(112);
-        height: pixel-to-rem(112);
-        margin-right: pixel-to-rem(25);
-        @media screen and (max-width: pixel-to-rem(576)) {
+        width: rem(112);
+        height: rem(112);
+        margin-right: rem(25);
+        @media screen and (max-width: rem(576)) {
           margin-right: 0;
-          margin-bottom: pixel-to-rem(25);
+          margin-bottom: rem(25);
         }
-        img {
-          width: 100%;
-          height: 100%;
-          object-fit: contain;
-          border-radius: 50%;
-        }
+        border-radius: 50%;
+        overflow: hidden;
       }
       .detail-content {
         .name-badge {
           display: flex;
           align-items: center;
           .instructor-name {
-            margin-right: pixel-to-rem(10);
+            margin-right: rem(10);
           }
         }
         .instructor-department {
-          margin: pixel-to-rem(5) 0;
+          margin: rem(5) 0;
         }
         .instructor-expertise {
           .learners-count {
             display: flex;
             align-items: center;
-            margin-bottom: pixel-to-rem(5);
+            margin-bottom: rem(5);
             svg {
-              fill: $headingColor;
+              fill: color-get(text-dark);
             }
             span {
-              margin-left: pixel-to-rem(5);
-              color: $headingColor;
+              margin-left: rem(5);
+              color: color-get(text-dark);
             }
           }
           .courses-count {
             display: flex;
             align-items: center;
             svg {
-              fill: $headingColor;
+              fill: color-get(text-dark);
             }
             span {
-              margin-left: pixel-to-rem(5);
-              color: $headingColor;
+              margin-left: rem(5);
+              color: color-get(text-dark);
             }
           }
         }
@@ -188,25 +208,25 @@
     }
   }
   .syllabus-container {
-    padding: pixel-to-rem(5) pixel-to-rem(15);
-    margin-bottom: pixel-to-rem(30);
+    padding: rem(5) rem(15);
+    margin-bottom: rem(30);
     .syllabus-subhead {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: pixel-to-rem(20);
-      @media screen and (max-width: pixel-to-rem(767)) {
+      margin-bottom: rem(20);
+      @media screen and (max-width: rem(767)) {
         flex-direction: column;
         align-items: flex-start;
       }
       .subhead-left {
         .syllabus-content-length {
-          color: $subHeadColor;
+          color: color-get(text-light);
         }
       }
       .syllabus-expand-collapse {
-        @media screen and (max-width: pixel-to-rem(767)) {
-          margin-top: pixel-to-rem(10);
+        @media screen and (max-width: rem(767)) {
+          margin-top: rem(10);
         }
         span {
           color: $primary;
@@ -218,9 +238,9 @@
       }
     }
     .content-list {
-      padding: pixel-to-rem(10) pixel-to-rem(15);
+      padding: rem(10) rem(15);
       li {
-        margin-bottom: pixel-to-rem(10);
+        margin-bottom: rem(10);
         .preview-item {
           .item-content {
             width: 100%;
@@ -229,13 +249,13 @@
             .item-content-title {
               display: flex;
               align-items: center;
-              color: $headingColor;
+              color: color-get(text-dark);
               span {
-                margin-left: pixel-to-rem(10);
+                margin-left: rem(10);
               }
             }
             .content-time {
-              color: $subHeadColor;
+              color: color-get(text-light);
             }
           }
         }
@@ -243,93 +263,89 @@
     }
   }
   .review-container {
-    padding: pixel-to-rem(5) pixel-to-rem(15);
-    margin-bottom: pixel-to-rem(40);
+    margin-bottom: rem(40);
     .review-title {
-      margin-bottom: pixel-to-rem(10);
+      margin-bottom: rem(10);
     }
     .reviews-wrapper {
-      display: flex;
-      flex-wrap: wrap;
-      @media screen and (max-width: pixel-to-rem(767)) {
-        flex-direction: column;
-      }
       .review-left-section {
-        max-width: 33.33%;
-        flex: 0 0 33.33%;
-        @media screen and (max-width: pixel-to-rem(767)) {
-          max-width: 100%;
-          flex: 0 0 100%;
+        display: flex;
+        width: 100%;
+        flex-direction: row;
+        align-items: center;
+        margin-bottom: rem(25);
+        @media screen and (max-width: rem(767)) {
+          flex-direction: column;
+          align-items: flex-start;
         }
         .star-reviews-top {
-          display: flex;
-          align-items: center;
-          margin-bottom: pixel-to-rem(20);
+          max-width: 20%;
+          flex: 0 0 20%;
+          text-align: center;
+          padding-right: rem(24);
+          @media screen and (max-width: rem(767)) {
+            max-width: 100%;
+            flex: 0 0 100%;
+            text-align: left;
+            margin-bottom: rem(15);
+          }
           .review-rate {
-            font-size: pixel-to-rem(32);
-            color: $headingColor;
+            font-size: rem(42);
+            color: color-get(warn, 400);
             font-weight: 600;
           }
           .total-course-reviews {
-            margin-left: pixel-to-rem(10);
+            margin-left: rem(10);
             .total-reviews {
-              margin-top: pixel-to-rem(3);
+              margin-top: rem(3);
             }
           }
         }
         .star-reviews-bottom {
+          max-width: 80%;
+          flex: 0 0 80%;
+          @media screen and (max-width: rem(767)) {
+            max-width: 100%;
+            flex: 0 0 100%;
+            width: 100%;
+          }
           .indi-star-stat {
             .graph-item {
               display: flex;
               align-items: center;
-              margin-bottom: pixel-to-rem(5);
+              margin-bottom: rem(5);
               .star-bar-label {
-                color: $subHeadColor;
-                margin-right: pixel-to-rem(10);
+                color: color-get(text-light);
+                margin-right: rem(10);
               }
               .bar-graph-bar {
-                max-width: pixel-to-rem(170);
-                flex: 0 0 pixel-to-rem(170);
-                margin-right: pixel-to-rem(15);
-                height: pixel-to-rem(10);
+                max-width: 60%;
+                flex: 60%;
+                margin-right: rem(15);
+                height: rem(10);
                 background-color: rgb(234, 234, 234);
                 .bar {
-                  height: pixel-to-rem(10);
-                  background-color: $star-color;
+                  height: rem(10);
+                  background-color: color-get(warn, 500);
                 }
               }
               .num-rating {
-                color: $subHeadColor;
+                color: color-get(text-light);
               }
             }
           }
         }
       }
       .review-right-section {
-        max-width: 66.66%;
-        flex: 0 0 66.66%;
-        @media screen and (max-width: pixel-to-rem(767)) {
-          max-width: 100%;
-          flex: 0 0 100%;
-        }
         .written-review-title {
-          margin-bottom: pixel-to-rem(10);
-          text-transform: uppercase;
+          margin-bottom: rem(15);
+          text-transform: capitalize;
+          font-size: rem(16);
+          letter-spacing: rem(0.5);
         }
-        .top-review-wrapper {
-          margin-bottom: pixel-to-rem(10);
-          .rating-star {
-            margin-bottom: pixel-to-rem(5);
-          }
-          .top-review-item-info {
-            margin-bottom: pixel-to-rem(5);
-            span {
-              color: $subHeadColor;
-            }
-          }
-        }
+
         .view-all-review {
-          max-width: pixel-to-rem(250);
+          max-width: rem(180);
           margin: 0 auto;
         }
       }
@@ -337,13 +353,67 @@
   }
 }
 
+.top-review-wrapper {
+  display: flex;
+  flex-direction: row;
+  .avatar-wrapper {
+    padding-right: rem(24);
+    @media screen and (max-width: rem(767)) {
+      display: none;
+    }
+    .avatar-content {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      object-fit: cover;
+      color: #fff;
+      width: rem(42);
+      height: rem(42);
+      background: color-get(tertiary, 600);
+    }
+    .avatar-initials {
+      font-weight: 600;
+      line-height: 1.2;
+      font-size: rem(16);
+      font-family: font-family(secondary);
+    }
+  }
+  .review-details {
+    min-width: rem(1);
+    .reviewer-name {
+      font-family: font-family(secondary);
+      font-size: rem(18);
+      color: color-get(text-dark);
+    }
+    .rating-star {
+      margin-bottom: rem(5);
+    }
+    .top-review-item-info {
+      display: flex;
+      align-items: center;
+      flex-direction: row;
+      margin-bottom: rem(5);
+      .date {
+        color: color-get(text-light);
+        font-size: rem(14);
+        margin-left: rem(10);
+      }
+    }
+  }
+}
+
+.pc-course-detail-page {
+  margin-top: rem(100);
+}
+
 .mentor-badge {
   background-color: $primary;
-  border: pixel-to-rem(1) solid #fff;
-  padding: pixel-to-rem(2) pixel-to-rem(5);
-  border-radius: pixel-to-rem(5);
+  border: rem(1) solid #fff;
+  padding: rem(2) rem(5);
+  border-radius: rem(5);
   color: #fff;
-  font-size: pixel-to-rem(10);
+  font-size: rem(10);
   text-transform: uppercase;
   cursor: pointer;
 }
@@ -351,18 +421,21 @@
 .rating-star {
   .star {
     svg {
-      fill: $star-color;
+      fill: color-get(warn, 500);
     }
   }
 }
 
 //course listing page
 .banner-section {
-  padding: pixel-to-rem(150) pixel-to-rem(80);
+  padding: rem(100) rem(80);
   // background-image: linear-gradient(90deg, rgb(19, 41, 75), rgb(19, 41, 75));
   background-image: url("https://cdn.pixabay.com/photo/2015/09/06/00/46/yellow-926728_960_720.jpg");
-  border-radius: pixel-to-rem(10);
-  margin-bottom: pixel-to-rem(30);
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-radius: rem(10);
+  margin-bottom: rem(30);
   background-position: bottom;
   background-repeat: no-repeat;
   background-size: cover;
@@ -386,31 +459,40 @@
     }
     .banner-subtitle {
       color: #fff;
-      font-size: pixel-to-rem(18);
+      font-size: rem(18);
     }
   }
 }
 
 //section nav
 .section-nav-menu {
-  padding: pixel-to-rem(10) pixel-to-rem(15);
+  padding: rem(10) rem(15);
   @include genericBoxPattern;
   border-top-left-radius: 0;
   border-top-right-radius: 0;
-  margin-bottom: pixel-to-rem(30);
+  margin-bottom: rem(30);
   position: sticky;
   z-index: 1;
   top: $navbarHeight;
   .section-nav {
     .nav-ul {
       display: flex;
+      flex-wrap: wrap;
       .nav-item {
+        &.active {
+          a {
+            color: color-get(primary);
+          }
+        }
         &:not(:first-child) {
-          margin-left: pixel-to-rem(15);
+          margin-left: rem(15);
         }
         a {
-          color: $headingColor;
+          color: color-get(text-dark);
           font-weight: 600;
+          @media screen and (max-width: rem(576)) {
+            font-size: rem(14);
+          }
           &.is-active {
             color: $primary;
           }
@@ -422,14 +504,126 @@
 
 //review form
 .review-form {
-  @include genericBoxPattern;
-  padding: pixel-to-rem(15);
-  margin-bottom: pixel-to-rem(15);
   .review-form-wrapper {
-    margin-bottom: pixel-to-rem(15);
+    margin-bottom: rem(15);
+    .formLabel {
+      .pc-text-area {
+        margin-bottom: 0;
+      }
+    }
   }
   .post-comment-btn {
-    max-width: pixel-to-rem(80);
+    max-width: rem(80);
     margin-left: auto;
+  }
+}
+
+//sidebar
+.pcc-left-section {
+  max-width: 30%;
+  flex: 0 0 30%;
+  padding-left: rem(15);
+  padding-right: rem(15);
+  position: sticky;
+  top: rem(100);
+  height: 50%;
+
+  .pcc-enroll-btn {
+    margin-bottom: rem(10);
+  }
+  .pcc-money-back {
+    margin-bottom: rem(10);
+    text-align: center;
+    .money-back {
+      color: color-get(text-light);
+      font-size: rem(12);
+    }
+  }
+  .pcc-include-section {
+    .sec-heading {
+      font-size: rem(16);
+      margin-bottom: rem(5);
+    }
+    .list-content {
+      display: flex;
+      align-items: center;
+      font-size: rem(14);
+      margin-bottom: rem(5);
+      span {
+        margin-left: rem(5);
+      }
+    }
+  }
+  @media screen and (max-width: rem(991)) {
+    max-width: 100%;
+    flex: 0 0 100%;
+  }
+  @media screen and (max-width: rem(576)) {
+    display: none;
+  }
+}
+
+.pcc-thumbnail {
+  position: relative;
+  padding-bottom: 60%;
+  z-index: 1;
+  width: 100%;
+  margin-bottom: rem(15);
+  img {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+.pcc-price-section {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  flex-wrap: wrap;
+  color: color-get(text-dark, 500);
+  font-family: font-family(secondary);
+  margin-bottom: rem(5);
+  .pcc-discount-price {
+    font-size: rem(26);
+    line-height: rem(32);
+    font-weight: 600;
+    margin-right: rem(10);
+    letter-spacing: rem(1);
+  }
+  .pcc-original-price {
+    margin-right: rem(10);
+    color: color-get(text-light);
+  }
+}
+.pcc-discount-expiration {
+  display: flex;
+  align-items: center;
+  color: color-get(error, 500);
+  font-size: rem(14);
+  margin-bottom: rem(10);
+  span {
+    margin-left: rem(10);
+  }
+}
+
+@media screen and (min-width: rem(576)) {
+  .mobile-only {
+    display: none;
+  }
+}
+.mobile-course-fixed {
+  position: fixed;
+  bottom: 0;
+  z-index: 3;
+  width: 100%;
+  .pcc-thumbnail {
+    padding-bottom: 40%;
+  }
+  .pc-card {
+    margin-bottom: 0;
   }
 }

@@ -14,9 +14,5 @@ export default [
   {
     id: 'submit',
     fieldtype: 'button',
-    text: 'Upload',
-    fill: 'fill',
-    intent: 'success',
-    large: 'large',
   },
 ];

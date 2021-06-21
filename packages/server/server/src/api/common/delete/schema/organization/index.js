@@ -1,6 +1,7 @@
 /* eslint-disable import/no-cycle */
 import _ from 'lodash';
 import update from '../../../update/update';
+import Delete from '../../delete';
 import databaseCache from '../../../../../cache/database/cache';
 
 async function deleteOrganization(record) {
@@ -22,13 +23,21 @@ async function deleteOrganizationMember(record) {
   // console.log('deleteOrganization Member', record);
   try {
     const { session } = this;
-    const { ids, oId } = record;
+    const { ids, oId, action } = record;
     const userId = session.values.user.id;
     const memberRecord = databaseCache.get('OrganizationMember').find(om => om.uId === userId && om.oId === oId);
     const isAuthorize = memberRecord.type === 'admin';
 
     if (isAuthorize) {
       if (_.isArray(ids)) {
+        if (action === 'delete') {
+          const updatePromises = ids.map(i => Delete.call(this, 'OrganizationMember', { id: i }));
+          await Promise.all(updatePromises);
+          return {
+            status: 200,
+            data: 'Records deleted successffull',
+          };
+        }
         const updatePromises = ids.map(i => update.call(this, 'OrganizationMember', { deleteStatus: true }, { id: i }));
         await Promise.all(updatePromises);
         return {

@@ -1,0 +1,16 @@
+.section-header {
+    margin-bottom: rem(25);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    .section-heading {
+        color: color-get(primary);
+        font-size: rem(32);
+        font-weight: 600;
+        text-transform: capitalize;
+        @media screen and (max-width: rem(767)) {
+            font-size: rem(26);
+        }
+    }
+}

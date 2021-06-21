@@ -1,10 +1,10 @@
 import React from 'react';
 import { Button } from '../../../../common/utility-functions/Button/Button';
-import { AiOutlineExpandAlt, AiOutlineExpand } from 'react-icons/ai';
+import { AiOutlineExpandAlt } from 'react-icons/ai';
 import { GoReport } from 'react-icons/go';
 import { Tooltip } from '../../../../common/Form/Tooltip';
 
-const Toolbar = () => {
+const Toolbar = ({ toggleMaximization }) => {
     return (
         <div className="lecture-tools-container">
             <div className="tools-wrapper">
@@ -19,20 +19,11 @@ const Toolbar = () => {
                 </Tooltip>
                 <Tooltip content="Fullscreen">
                     <Button
-                        onClick={() => { }}
+                        onClick={toggleMaximization}
                         type="button"
                         buttonStyle="btn-drawing-icon"
                         buttonSize="btn--small"
                         icon={<AiOutlineExpandAlt size={20} />}
-                    />
-                </Tooltip>
-                <Tooltip content="Expand">
-                    <Button
-                        onClick={() => { }}
-                        type="button"
-                        buttonStyle="btn-drawing-icon"
-                        buttonSize="btn--small"
-                        icon={<AiOutlineExpand size={20} />}
                     />
                 </Tooltip>
             </div>

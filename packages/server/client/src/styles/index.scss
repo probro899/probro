@@ -1,6 +1,5 @@
-@import './settings/';
+@import "./settings/";
 @import "./tools";
-
 @import "./config.scss";
 @import "./z-index";
 @import "./main-page/slider.scss";
@@ -9,6 +8,10 @@
 @import "./main-page/posts.scss";
 @import "./main-page/banner.scss";
 @import "./main-page/popular.scss";
+@import "./main-page/howitworks.scss";
+@import "./main-page/cta.scss";
+@import "./main-page/sectionheader.scss";
+@import "./main-page/partnerSection.scss";
 @import "./bro/sideNav.scss";
 @import "./bro/profile.scss";
 @import "./bro/classes.scss";
@@ -39,6 +42,8 @@
 @import "./CustomComponents/tooltip.scss";
 @import "./CustomComponents/Popup.scss";
 @import "./CustomComponents//popover.scss";
+@import "./CustomComponents/table.scss";
+@import "./CustomComponents/progressbar.scss";
 @import "./main-page/mainbanner.scss";
 @import "./main-page/OurStats.scss";
 @import "./CustomComponents/switchbutton.scss";
@@ -55,11 +60,14 @@
 @import "./CustomComponents/tag.scss";
 @import "./CustomComponents/portal.scss";
 @import "./CustomComponents//Pagination.scss";
+@import "./CustomComponents/HeaderBanner.scss";
 @import "./courses/";
 @import "./CustomComponents/Accordion.scss";
 @import "./CustomComponents/norecordfound.scss";
 @import "./createCourses/";
 @import "./CustomComponents/Alert.scss";
+@import "./CustomComponents//StarRating.scss";
+@import "./CustomComponents//Card.scss";
 
 body,
 div,
@@ -119,23 +127,24 @@ h4,
 h5,
 h6 {
   font-family: font-family(secondary);
-  color: $headingColor;
+  color: color-get(text-dark);
 }
 
 h1 {
   font-size: 48px;
   line-height: 55px;
-  color: $headingColor;
+  color: color-get(text-dark);
   letter-spacing: 1px;
 }
 
 p {
-  color: $subHeadColor;
+  color: color-get(text-light);
 }
 
 .home-screen {
   margin: 0;
   padding: 0;
+  position: relative;
 }
 
 .bp3-button {
@@ -174,11 +183,13 @@ p {
 img.portrait {
   width: 100%;
   height: auto;
+  object-fit: cover;
 }
 
 img.landscape {
   height: 100%;
-  width: auto;
+  width: 100%;
+  object-fit: cover;
 }
 
 //pc-global-css
@@ -251,4 +262,21 @@ img.landscape {
   50% {
     opacity: 0;
   }
+}
+
+.ellipsis {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  white-space: normal;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  &--secondary {
+    -webkit-line-clamp: 2;
+  }
+}
+
+.spinner-wrapper {
+  height: 100vh;
+  position: relative;
 }

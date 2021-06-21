@@ -10,30 +10,27 @@ import Navbar from '../navbar';
 import ResultList from './ResultList';
 import Footer from '../../../../common/footer';
 import { Spinner } from '../../../../common';
-import BlogResult from './BlogResult';
+import HeaderBanner from '../../../../common/HeaderBanner';
 import clientConfig from '../../../../clientConfig';
-import Popular from './Popular';
 import cookies from '../../../../redux/account/cookies';
+import PopularOnPc from '../../../../common/PopularOnPc';
+import { getUrlParams, setUrlParams } from '../../../../common/utility-functions/getSetUrlParams';
+import ReactHelmet from '../../../../common/react-helmet';
 
 class SearchResult extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { allParams: {}, apis: {}, loading: true, data: {}, changeStyle: false };
+    const initialParams = { country: 'Nepal', searchKey: '', industry: '', skill: '' };
+    const params = getUrlParams();
+    this.state = { allParams: { ...initialParams, ...params }, apis: {}, loading: true, data: {}, changeStyle: false };
   }
 
   async componentDidMount() {
     window.addEventListener('scroll', this.fireScroll, { passive: true });
     const { updateNav, account } = this.props;
-    const urlParams = new URLSearchParams(window.location.search);
-
-    let allParams = {};
-    for (let key of urlParams.keys()) {
-      allParams[key] = urlParams.get(key);
-    }
-
+    const { allParams } = this.state;
     const apis = account.user ? await client.scope('Mentee') : {};
-    this.setState({ allParams, apis });
-
+    this.setState({ apis });
     updateNav({ schema: 'mainNav', data: { name: 'search' } });
     this.getSearchResult(allParams);
   }
@@ -46,20 +43,11 @@ class SearchResult extends React.Component {
   }
 
   getSearchResult = async (obj) => {
-    var url = new URL(window.location.href);
-    var search_params = url.searchParams;
-    Object.keys(obj).map(o => {
-      search_params.set(o, obj[o]);
-    });
-    window.history.replaceState(null, null, `?${search_params.toString()}`);
+    setUrlParams(obj);
     try {
       const sessionId = await cookies.get('pc-session');
-      console.log('session id', sessionId);
       const { data } = await clientConfig.query({ query: DO_SEARCH, variables: { sessionId, keyword: obj.searchKey || '', country: obj.country, industry: obj.industry, skill: obj.skill } });
-      this.setState({
-        data,
-        loading: false,
-      });
+      this.setState({ data, loading: false });
     } catch (e) {
       console.log('Error', e);
     }
@@ -67,45 +55,40 @@ class SearchResult extends React.Component {
 
   fireScroll = () => {
     const { changeStyle } = this.state;
-    if (window.scrollY > 65 && !changeStyle) {
-      this.setState({
-        changeStyle: true,
-      });
-    }
-    if (window.scrollY < 65 && changeStyle) {
-      this.setState({
-        changeStyle: false,
-      });
-    }
+    if (window.scrollY > 65 && !changeStyle) this.setState({ changeStyle: true });
+    if (window.scrollY < 65 && changeStyle) this.setState({ changeStyle: false });
   }
 
   filterSearch = (data) => {
-    const { updateNav } = this.props;
-    updateNav({ schema: 'search', data });
     this.getSearchResult(data);
     return { response: 200 };
   }
 
   render() {
     const { loading, data, changeStyle, apis, allParams } = this.state;
-    const { database, account } = this.props;
-    return loading ? <Spinner /> : (
+    const { match } = this.props;
+    if (loading) return <Spinner wClass="spinner-wrapper" />;
+    return (
       <>
+        <ReactHelmet match={match} />
         <Navbar className={!changeStyle ? 'pcm-nav' : ''} />
-        <div className="search-result">
-          <FilterToolbar allParams={allParams} filterSearch={this.filterSearch} />
-          <div className='search-content'>
+        <HeaderBanner
+          title="Make Connections"
+          subTitle="Connect with the professional mentors."
+          bgColor="#0f2e54"
+        />
+        <div className="search-result pc-container">
+          <FilterToolbar allParams={allParams} callback={this.filterSearch} />
+          <div className="search-content">
             <div className="search-content-left">
               <div className="result-wrapper">
-                <ResultList apis={apis} data={data.doSearch.users}  {...this.props}/>
-              </div>
-              <div className="popular-blog-wrapper">
-                <BlogResult data={data.doSearch.blogs} />
+                <ResultList apis={apis} data={data.doSearch.users} { ...this.props } />
               </div>
             </div>
-            <div className='search-content-right'>
-              <Popular database={database} account={account} data={data.doSearch.popularUsers} />
-            </div>
+            <PopularOnPc
+              mentors={data.doSearch.popularUsers}
+              organizations={data.doSearch.organizations}
+            />
           </div>
         </div>
         <Footer />
@@ -118,5 +101,5 @@ SearchResult.propTypes = {
   updateNav: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = state => state;
+const mapStateToProps = (state) => state;
 export default connect(mapStateToProps, { ...actions })(SearchResult);

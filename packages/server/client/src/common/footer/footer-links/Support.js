@@ -1,21 +1,16 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import * as actions from '../../../actions';
 import { Navbar } from '../../../screens/home/component';
 import Footer from '..';
 import { Spinner } from '../..';
+import HeaderBanner from '../../HeaderBanner';
+import ReactHelmet from '../../react-helmet';
 
 class Support extends React.Component {
   state = { loading: true };
 
   componentDidMount() {
-    const { updateNav } = this.props;
-    updateNav({
-      schema: 'mainNav',
-      data: { name: '' },
-    });
     this.setState({
       loading: false,
     });
@@ -24,15 +19,18 @@ class Support extends React.Component {
 
   render() {
     const { loading } = this.state;
-    if (loading) {
-      return <Spinner />;
-    }
+    const { match } = this.props;
+    if (loading) { return <Spinner wClass="spinner-wrapper" />; }
     return (
       <div>
+        <ReactHelmet match={match} headerData={{ title: 'Support' }} />
         <Navbar />
+        <HeaderBanner
+          title="Support"
+          subTitle="Let us know your concern"
+        />
         <div className="pc-support pc-container">
           <div className="pc-support-content">
-            <h1>Support</h1>
             <p>
               Please make sure you need it before you write us.
               <br />
@@ -49,8 +47,7 @@ class Support extends React.Component {
 }
 
 Support.propTypes = {
-  updateNav: PropTypes.func.isRequired,
+  match: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
-const mapStateToProps = state => state;
-export default connect(mapStateToProps, { ...actions })(Support);
+export default Support;

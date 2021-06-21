@@ -9,9 +9,6 @@
     padding: 5px 15px;
   }
   .pc-org-dashboard-wrapper {
-    max-width: 1024px;
-    width: 100%;
-    margin: 0 auto;
     .pc-org-header {
       padding: 10px;
       @include genericBoxPattern;
@@ -40,12 +37,16 @@
         margin-left: 10px;
         .pc-org-name {
           margin-bottom: 5px;
+          font-family: font-family();
         }
         .pc-org-location {
-          opacity: 0.8;
           margin-bottom: 3px;
           display: flex;
           align-items: center;
+          color: color-get(text-light);
+          svg {
+            margin-right: rem(5);
+          }
         }
       }
     }
@@ -55,13 +56,13 @@
       @include genericBoxPattern;
       border-top-left-radius: unset;
       border-top-right-radius: unset;
-      margin-bottom: 20px;
+      margin-bottom: 30px;
       display: flex;
       flex-wrap: wrap;
       a {
         text-decoration: none;
         font-weight: 600;
-        color: $headingColor;
+        color: color-get(text-dark);
         &:not(:first-child) {
           margin-left: 20px;
           @media screen and (max-width: 767px) {
@@ -85,81 +86,65 @@
       }
     }
     .pc-tab-content {
-      @include genericBoxPattern;
       width: 100%;
       position: relative;
-      padding: 20px;
       min-height: calc(100vh - 295px);
       @media screen and (max-width: 855px) {
         min-height: calc(100vh - 308px);
         padding: 10px;
       }
       .tab-child {
+        .pc-table-wrapper {
+          @include genericBoxPattern;
+          margin-bottom: rem(20);
+        }
         .pc-org-overview {
-          margin-bottom: 30px;
+          margin-bottom: rem(30);
           .pc-overview-title {
             margin-bottom: 10px;
           }
-          .pc-overview-cards {
-            display: flex;
-            flex-wrap: wrap;
-            margin-left: -15px;
-            margin-right: -15px;
-            .pc-card-container {
-              max-width: 33.33%;
-              flex: 0 0 33.33%;
-              padding-right: 15px;
-              padding-left: 15px;
-              @media screen and (max-width: 767px) {
-                max-width: 100%;
-                flex: 0 0 100%;
-                margin-bottom: 15px;
+        }
+        .pc-sub-pay {
+          margin-bottom: rem(30);
+          .pc-card {
+            margin-bottom: rem(5);
+            @include genericBoxPattern;
+            padding: 15px;
+            .pc-card-title {
+              margin-bottom: 10px;
+            }
+            .pc-card-details {
+              padding: 10px;
+              .pc-sub-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 10px;
+                .pc-header-detail {
+                  .pc-sub-name {
+                    margin-bottom: 10px;
+                  }
+                }
               }
-              .pc-card-wrapper {
-                @include genericBoxPattern;
-                padding: 10px;
-                .pc-card-title {
-                  margin-bottom: 5px;
+              .pc-plan-action {
+                display: flex;
+                align-items: center;
+                .pc-sub-cancel {
+                  margin-left: 10px;
                 }
               }
             }
           }
         }
-        .pc-card {
-          margin-bottom: 20px;
-          @include genericBoxPattern;
-          padding: 15px;
-          .pc-card-title {
-            margin-bottom: 10px;
-          }
-          .pc-card-details {
-            padding: 10px;
-            background-color: #f4f6f8;
-            .pc-sub-header {
-              display: flex;
-              justify-content: space-between;
-              align-items: center;
-              margin-bottom: 10px;
-              .pc-header-detail {
-                .pc-sub-name {
-                  margin-bottom: 10px;
-                }
-              }
-            }
-            .pc-plan-action {
-              display: flex;
-              align-items: center;
-              .pc-sub-cancel {
-                margin-left: 10px;
-              }
-            }
-          }
+        .copy-to-clipboard {
+          margin-bottom: rem(30);
         }
         .pc-role-header-wrapper {
           display: flex;
           align-items: center;
           justify-content: space-between;
-          margin-bottom: 10px;
+          padding: rem(16) rem(24);
+          border-bottom: rem(1) solid color-get(border);
           .pc-role-title-wrapper {
             display: flex;
             .pc-role-header-title {
@@ -201,19 +186,13 @@
         }
         .pc-user-list {
           display: block;
+          white-space: nowrap;
           width: 100%;
           overflow-x: auto;
           .pc-user-list-table {
-            width: 100%;
-            max-width: 100%;
-            margin-bottom: 20px;
             thead {
               tr {
                 th {
-                  min-width: 100px;
-                  padding: 12px;
-                  color: $headingColor;
-                  text-align: left;
                   svg {
                     vertical-align: bottom;
                   }
@@ -222,12 +201,7 @@
             }
             tbody {
               tr {
-                background: #e6eef8;
-                border-radius: 10px;
                 td {
-                  min-width: 100px;
-                  padding: 12px;
-                  color: $subHeadColor;
                   .pc-click-name {
                     cursor: pointer;
                     &:hover {
@@ -261,6 +235,9 @@
                     cursor: pointer;
                   }
                 }
+                &:hover {
+                  background-color: rgba(0, 0, 0, 0.075);
+                }
               }
               .pc-status {
                 padding: 3px 8px;
@@ -285,7 +262,7 @@
             justify-content: space-between;
             margin-bottom: 15px;
             span {
-              color: $subHeadColor;
+              color: color-get(text-light);
               font-size: 14px;
             }
           }
@@ -295,9 +272,9 @@
           display: flex;
           align-items: center;
           justify-content: space-between;
+          padding: rem(16) rem(24);
           @media screen and (max-width: 576px) {
             flex-wrap: wrap;
-            justify-content: center;
           }
           .pc-req-action {
             max-width: 300px;
@@ -316,6 +293,7 @@
           display: flex;
           max-width: 350px;
           margin-left: auto;
+          padding: rem(16) rem(24) rem(1);
           .formLabel {
             margin-left: 10px;
           }
@@ -325,10 +303,138 @@
   }
 }
 
+.pc-overview-cards {
+  display: flex;
+  flex-wrap: wrap;
+  margin-left: -15px;
+  margin-right: -15px;
+  .pc-card-container {
+    flex: 1;
+    padding-right: 15px;
+    padding-left: 15px;
+    @media screen and (max-width: rem(1199)) {
+      max-width: 50%;
+      flex: 0 0 50%;
+      margin-bottom: 15px;
+    }
+    @media screen and (max-width: rem(767)) {
+      max-width: 100%;
+      flex: 0 0 100%;
+      margin-bottom: 15px;
+    }
+    .pc-card-body {
+      @include genericBoxPattern;
+      padding: rem(16) rem(24);
+      .pc-card-header {
+        align-items: center;
+        display: flex;
+        margin-bottom: rem(15);
+      }
+      .card-count {
+        font-size: rem(18);
+        margin-left: auto;
+      }
+      .pc-card-info {
+        .pc-card-title {
+          margin-bottom: rem(10);
+        }
+        .card-progress {
+          height: rem(6);
+          display: flex;
+          overflow: hidden;
+          line-height: 0;
+          font-size: rem(12);
+          background-color: #e9ecef;
+          border-radius: 0.25rem;
+          .pc-progress-bar {
+            width: 50%;
+            flex-direction: column;
+            justify-content: center;
+            color: #fff;
+            text-align: center;
+            white-space: nowrap;
+            transition: width 0.6s ease;
+          }
+        }
+      }
+      &.dark-blue {
+        svg {
+          color: color-get(primary, 500);
+        }
+        .pc-progress-bar {
+          background-color: color-get(primary, 500);
+        }
+      }
+      &.green {
+        svg {
+          color: color-get(success, 500);
+        }
+        .pc-progress-bar {
+          background-color: color-get(success, 500);
+        }
+      }
+      &.red {
+        svg {
+          color: color-get(error, 500);
+        }
+        .pc-progress-bar {
+          background-color: color-get(error, 500);
+        }
+      }
+      &.light-blue {
+        svg {
+          color: color-get(secondary, 500);
+        }
+        .pc-progress-bar {
+          background-color: color-get(secondary, 500);
+        }
+      }
+    }
+  }
+}
+
 .list-pagination {
+  padding: rem(16) rem(24);
   position: relative;
-  .pc-pagination-container {
-    position: absolute;
-    right: 0;
+}
+.pagination-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.class-members-wrapper {
+  border-top: rem(1) solid color-get(border);
+  padding-top: rem(15);
+  .classroom-members {
+    .cm-item {
+      display: flex;
+      align-items: center;
+      margin-bottom: rem(15);
+      .cm-image {
+        .img-con {
+          width: rem(40);
+          height: rem(40);
+          img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+            border: rem(2) solid color-get(primary);
+          }
+        }
+      }
+      .cm-name {
+        padding-left: rem(15);
+      }
+    }
+  }
+}
+
+.all-members {
+  display: flex;
+  align-items: center;
+  .member-count {
+    margin-left: rem(5);
   }
 }

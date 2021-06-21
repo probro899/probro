@@ -103,6 +103,7 @@
     "react-responsive-carousel": "^3.1.51",
     "react-router-config": "5.0.0",
     "react-router-dom": "^4.3.1",
+    "react-router-sitemap": "^1.2.0",
     "react-scripts": "2.1.1",
     "react-scroll-to-bottom": "^1.3.2",
     "react-select-country-list": "^2.1.2",

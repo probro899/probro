@@ -1,3 +1,4 @@
+/* eslint-disable prefer-destructuring */
 
 // import { Vimeo } from 'vimeo';
 
@@ -10,3 +11,4 @@ const accessToken = '40d4d4c09ac3d0404bde392971bb465a';
 const client = new Vimeo(clientId, clientSecrete, accessToken);
 
 module.exports = client;
+ 

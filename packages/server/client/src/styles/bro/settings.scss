@@ -6,12 +6,10 @@
   flex-direction: column;
   width: 100%;
   .setting-wrapper {
-    border-radius: 10px;
-    height: 100vh;
     padding: 20px;
-    max-width: 1024px;
+    margin-left: auto;
+    margin-right: auto;
     width: 100%;
-    margin: 0 auto;
     .setting-types {
       display: flex;
       flex-direction: row;
@@ -23,12 +21,17 @@
         width: 100%;
         padding: 10px;
         text-align: center;
-        color: $headingColor;
+        color: color-get(text-dark);
         text-decoration: none;
       }
       .active {
-        color: $skyBlueMain;
-        border-bottom: 5px solid $skyBlueMain;
+        color: color-get(primary, 500);
+        border-bottom: rem(5) solid color-get(primary, 500);
+        background: color-get(primary, 100);
+        border-radius: rem(3) rem(3) 0 0;
+        border-top: rem(1) solid color-get(border);
+        border-right: rem(1) solid color-get(border);
+        border-left: rem(1) solid color-get(border);
       }
     }
     .container-settings {
@@ -70,17 +73,6 @@
               margin-right: 2px;
             }
           }
-          .skills-container {
-            display: flex;
-            flex-wrap: wrap;
-            span {
-              margin: 5px;
-              padding: 10px;
-              color: #f6f7fd;
-              background: #175fc7;
-              border-radius: 20px;
-            }
-          }
         }
       }
       .switch-adv-con {
@@ -118,7 +110,7 @@
         margin-left: -15px;
         margin-right: -15px;
         .no-organization-title {
-          color: $subHeadColor;
+          color: color-get(text-light);
           font-size: 20px;
           width: 100%;
           text-align: left;
@@ -131,6 +123,10 @@
           padding-right: 15px;
           position: relative;
           margin-bottom: 30px;
+          @media screen and (min-width: rem(1400)) {
+            max-width: 25%;
+            flex: 0 0 25%;
+          }
           @media screen and (max-width: 1199px) {
             max-width: 50%;
             flex: 0 0 50%;
@@ -139,63 +135,77 @@
             max-width: 100%;
             flex: 0 0 100%;
           }
+          .pc-card {
+            padding: rem(10) rem(15);
+          }
           .pc-each-org-wrapper {
             overflow: hidden;
             position: relative;
-            @include genericBoxPattern;
+            background-color: #fff;
+            border: rem(1) solid color-get(border);
+            border-radius: rem(10);
+            .cover-gradient {
+              min-height: rem(60);
+              background-color: #2a2a72;
+              background-image: linear-gradient(315deg, #2a2a72 0%, #009ffd 74%);
+            }
             .pc-org-img-container {
-              max-width: 100%;
-              height: 250px;
-              position: relative;
               display: flex;
-              overflow: hidden;
-              justify-content: center;
-              span {
-                position: absolute;
-                top: 0;
-                right: 0;
-                z-index: 2;
-              }
-              figure {
-                position: relative;
-                padding-bottom: 30%;
-                z-index: 1;
-                width: 100%;
-                &::before {
-                  content: "";
-                  background: rgba(0, 0, 0, 0.2);
-                  width: 100%;
-                  height: 100%;
-                  display: block;
-                  position: absolute;
-                  top: 0;
-                  bottom: 0;
-                  left: 0;
-                  right: 0;
-                  z-index: 2;
-                }
+              justify-content: space-between;
+              align-items: center;
+              margin-bottom: rem(10);
+              .organization-display-image {
+                width: rem(70);
+                height: rem(70);
+                margin-top: rem(-45);
+                background-color: #fff;
+                margin-left: rem(15);
                 img {
-                  display: block;
-                  position: absolute;
-                  top: 0;
-                  left: 0;
                   width: 100%;
                   height: 100%;
                   object-fit: cover;
                 }
               }
               .pc-popover-container {
-                position: absolute;
-                top: 0;
-                right: 10px;
-                z-index: 10;
+                margin-right: rem(15);
                 cursor: pointer;
               }
             }
             .pc-org-detail-container {
-              padding: 10px 15px;
+              padding: 0 rem(15);
               .pc-org-name {
                 margin-bottom: 5px;
+                font-size: rem(18);
+                font-family: font-family(secondary);
+                a {
+                  text-transform: capitalize;
+                  color: color-get(primary);
+                }
+              }
+            }
+            .organizarion-basic-stats {
+              margin-bottom: rem(10);
+              padding: 0 rem(15);
+              .data-wrap {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                .title {
+                  color: color-get(text-light);
+                }
+                .data {
+                  color: color-get(primary);
+                }
+              }
+            }
+            .view-stat-link {
+              min-height: rem(40);
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              border-top: rem(1) solid color-get(border);
+              a {
+                font-size: rem(18);
               }
             }
           }
@@ -204,6 +214,84 @@
     }
     @media screen and (max-width: 855px) {
       padding: 5px 15px;
+    }
+  }
+}
+
+.basic-setting-wrappers {
+  margin-top: rem(10);
+  width: 100%;
+  .basic-setting-container {
+    .settings-wrapper {
+      width: 100%;
+      padding: rem(10) rem(15);
+      border: rem(1) solid color-get(border);
+      border-bottom: 0;
+      background-color: #fff;
+    }
+    .setting-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      .left-section {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        .skills-container {
+          display: flex;
+          flex-wrap: wrap;
+          span {
+            margin: rem(5);
+            padding: rem(5) rem(8);
+            color: #f6f7fd;
+            background: color-get(primary);
+            border-radius: rem(5);
+          }
+        }
+      }
+      .right-section {
+        padding-left: rem(15);
+        button {
+          svg {
+            margin-right: 0;
+          }
+        }
+      }
+    }
+    .content-show {
+      padding-bottom: rem(10);
+    }
+    .setting-title {
+      color: color-get(text-light);
+      max-width: 40%;
+      flex: 0 0 40%;
+      @media screen and (max-width: rem(576)) {
+        font-size: rem(14);
+      }
+    }
+    .setting-description {
+      max-width: 60%;
+      flex: 0 0 60%;
+      text-transform: capitalize;
+      @media screen and (max-width: rem(576)) {
+        font-size: rem(14);
+      }
+    }
+    .setting-edit-container {
+      border: rem(1) solid color-get(border, 400);
+      padding: rem(10);
+      border-radius: rem(5);
+      .btn-group {
+        max-width: rem(200);
+        margin-left: auto;
+      }
+    }
+    &:last-child {
+      border-bottom: rem(1) solid color-get(border);
+      .settings-wrapper {
+        border-radius: 0 0 rem(3) rem(3);
+      }
     }
   }
 }

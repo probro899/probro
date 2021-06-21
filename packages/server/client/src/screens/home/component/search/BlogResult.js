@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { SingleArchive } from '../../../blog/archive';
+import SingleArchive from '../../../blog/archive/SingleArchive';
 
 class BlogResult extends React.Component {
   state={};

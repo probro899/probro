@@ -1,7 +1,5 @@
 const addBlog = async (api, data) => {
-  if (data.title.replace(/\s/g, '').length === 0) {
-    return;
-  }
+  if (data.title.replace(/\s/g, '').length === 0) return;
   try {
     const res = await api(data);
     return res;
@@ -11,9 +9,7 @@ const addBlog = async (api, data) => {
 };
 
 const updateBlog = async (api, data) => {
-  if (data[0].title.replace(/\s/g, '').length === 0) {
-    return;
-  }
+  if (data[0].title.replace(/\s/g, '').length === 0) return;
   try {
     await api(data);
   } catch (e) {

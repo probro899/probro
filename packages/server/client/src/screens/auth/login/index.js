@@ -8,12 +8,13 @@ import GoogleLogin from './GoogleLogin';
 import { login } from '../helper-functions';
 import { Navbar } from '../../home/component'
 import Footer from '../../../common/footer'
+import Card from '../../../common/Card';
 
 class Login extends Component {
   state = { redirect: false, slug: '', loading: false, showContent: false };
 
   componentDidMount() {
-  this.setState({ showContent: true });
+    this.setState({ showContent: true });
   }
 
   loginHandler = async (data) => {
@@ -57,24 +58,26 @@ class Login extends Component {
         <Navbar />
         <div className="o-log-or-reg">
           <div className="log-or-reg">
-            <div className="reg-box-header">
-              <h1>Welcome Back</h1>
-            </div>
-            {
-              redirect || account.user ? <Redirect push to={`/dashboard/${slug || account.user.slug}`} /> : <Log loginHandler={this.loginHandler} />
-            }
-            <div className="auth-with-others">
-              {typeof document !== 'undefined' ? <GoogleLogin loading={loading} googleLogin={this.googleLogin} /> : null}
-            </div>
-            <div className="auth-footer">
-              <p className="forgot-password">
-                <Link to="/forgot-password">Forgot password?</Link>
-              </p>
-              <p className="register-link"> Don't have an account?
+            <Card>
+              <div className="reg-box-header">
+                <h1>Welcome Back</h1>
+              </div>
+              {
+                redirect || account.user ? <Redirect push to={`/dashboard/${slug || account.user.slug}`} /> : <Log loginHandler={this.loginHandler} />
+              }
+              <div className="auth-with-others">
+                {typeof document !== 'undefined' ? <GoogleLogin loading={loading} googleLogin={this.googleLogin} /> : null}
+              </div>
+              <div className="auth-footer">
+                <p className="forgot-password">
+                  <Link to="/forgot-password">Forgot password?</Link>
+                </p>
+                <p className="register-link"> Don't have an account?
                 <Link to="/register">Register</Link>
-              </p>
+                </p>
 
-            </div>
+              </div>
+            </Card>
           </div>
         </div>
         <Footer />

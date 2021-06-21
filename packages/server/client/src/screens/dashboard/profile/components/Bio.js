@@ -2,33 +2,21 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { MdEdit } from "react-icons/md";
 import BioForm from './BioForm';
-import { bioSchema } from '../structure';
 import ReadMoreReadLess from '../../../../common/ReadMoreReadLess';
-
+import Card from '../../../../common/Card';
 
 class Bio extends React.Component {
   state = { bioEditPopover: false };
 
   editBio = async (data) => {
-    const {
-      apis, account, updateDatabaseSchema, addDatabaseSchema, database,
-    } = this.props;
+    const { apis, account, updateDatabaseSchema, addDatabaseSchema, database } = this.props;
     try {
-      const res = await apis.updateUserDetails({
-        userId: account.user.id,
-        ...data,
-      });
+      const res = await apis.updateUserDetails({ ...data, userId: account.user.id });
       const userDetail = Object.values(database.UserDetail.byId).find(obj => obj.userId === account.user.id);
       if (userDetail) {
-        updateDatabaseSchema('UserDetail', {
-          id: userDetail.id,
-          ...data,
-        });
+        updateDatabaseSchema('UserDetail', { ...data, id: userDetail.id });
       } else {
-        addDatabaseSchema('UserDetail', {
-          id: res,
-          ...data,
-        });
+        addDatabaseSchema('UserDetail', { ...data, id: res });
       }
       return { response: 200, message: "Successfully Updated" };
     } catch {
@@ -40,27 +28,23 @@ class Bio extends React.Component {
 
   render() {
     const { bioEditPopover } = this.state;
-    const { database, account, apis, deleteDatabaseSchema, updateDatabaseSchema, addDatabaseSchema } = this.props;
+    const { database, account } = this.props;
     const bio = Object.values(database.UserDetail.byId).find(obj => account.user.id === obj.userId);
     return (
       <div className="bio">
-        <p className="bio-content">About</p>
-        <div className="bio-info">
-          {bio ? <p><ReadMoreReadLess>{bio.bio}</ReadMoreReadLess></p> : <p style={{ color: '#696969' }}>No bio added</p>}
-          <p className="edit" style={{ cursor: 'pointer' }}><MdEdit onClick={this.togglePopover} size={20} /></p>
-        </div>
-        <BioForm
-          deleteDatabaseSchema={deleteDatabaseSchema}
-          updateDatabaseSchema={updateDatabaseSchema}
-          addDatabaseSchema={addDatabaseSchema}
-          database={database}
-          account={account}
-          apis={apis}
-          isOpen={bioEditPopover}
-          structure={bioSchema}
-          callback={this.editBio}
-          onClose={() => this.togglePopover()}
-        />
+        <Card>
+          <h2 className="bio-content">About</h2>
+          <div className="bio-info">
+            {bio ? <p><ReadMoreReadLess text={bio.bio} /></p> : <p style={{ color: '#696969' }}>No bio added</p>}
+            <p className="edit" style={{ cursor: 'pointer' }}><MdEdit onClick={this.togglePopover} size={20} /></p>
+          </div>
+          <BioForm
+            bio={bio ? bio.bio : ''}
+            isOpen={bioEditPopover}
+            callback={this.editBio}
+            onClose={() => this.togglePopover()}
+          />
+        </Card>
       </div>
     );
   }

@@ -1,19 +1,19 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { AiOutlinePlus } from 'react-icons/ai';
 import * as actions from '../../actions';
 import { DeletePopOver } from '../../common';
-import boardStructure from './ClassComponents/structure';
+import NotFound from '../../common/NotFound';
+import getboardStructure from './ClassComponents/structure';
 import client from '../../socket';
-import { PopoverForm, MoreButton } from '../../components';
-import { timeStampSorting, activitySorting, getName } from '../../common/utility-functions';
+import { PopoverForm } from '../../components';
+import { timeStampSorting, activitySorting } from '../../common/utility-functions';
 import { Button } from '../../common/utility-functions/Button/Button';
-import { AiOutlinePlus, AiOutlineArrowRight } from "react-icons/ai";
+import ClassroomListItem from './ClassComponents/ClassroomListItem';
 
 class Class extends Component {
   state = {
-    // create holds bool for the add new class popover
     createBool: false,
     deleteClass: { id: 0, name: '', deletePopOverBool: false },
     updateClass: { id: 0, updateClassBool: false },
@@ -27,16 +27,13 @@ class Class extends Component {
     updateNav({ schema: 'sideNav', data: { name: 'Classes' } });
   }
 
-  // create new class from here
   createNewClass = async (arg) => {
-    const data = arg;
-    const { account, addDatabaseSchema, database } = this.props;
+    const { account, addDatabaseSchema, User } = this.props;
     const { api } = this.state;
-    data.userId = account.user.id;
-    data.timeStamp = Date.now();
+    const data = { ...arg, userId: account.user.id, timeStamp: Date.now() };
     try {
       const res = await api.addBoard(data);
-      let user = Object.values(database.User.byId).find(obj => obj.id === account.user.id);
+      let user = Object.values(User.byId).find((obj) => obj.id === account.user.id);
       data.user = { user };
       data.lastActivity = Date.now();
       addDatabaseSchema('Board', { ...data, type: 'private', id: res.boardId });
@@ -51,42 +48,15 @@ class Class extends Component {
   // toggle the create new class popover
   newClass = () => {
     const { createBool } = this.state;
-    boardStructure.map((obj) => {
-      if (obj.id === 'name') {
-        obj.val = '';
-      }
-    });
-    this.setState({
-      createBool: !createBool,
-    });
+    this.setState({ createBool: !createBool });
   }
 
   // this is more button handle function
   onMore = async (action, id) => {
     const { deleteClass, updateClass } = this.state;
-    const { database } = this.props;
-    if (action === 'delete') {
-      this.setState({
-        deleteClass: {
-          id,
-          name: database.Board.byId[id].name,
-          deletePopOverBool: !deleteClass.deletePopOverBool,
-        },
-      });
-    }
-    if (action === 'edit') {
-      boardStructure.map((obj) => {
-        if (obj.id === 'name') {
-          obj.val = database.Board.byId[id].name;
-        }
-      });
-      this.setState({
-        updateClass: {
-          id,
-          updateClassBool: !updateClass.updateClassBool,
-        },
-      });
-    }
+    const { Board } = this.props;
+    if (action === 'delete') this.setState({ deleteClass: { id, name: Board.byId[id].name, deletePopOverBool: !deleteClass.deletePopOverBool } });
+    if (action === 'edit') this.setState({ updateClass: { id, updateClassBool: !updateClass.updateClassBool } });
   }
 
   // handle delete of the boards
@@ -98,11 +68,7 @@ class Class extends Component {
       deleteDatabaseSchema('Board', { id: deleteClass.id });
     }
     this.setState({
-      deleteClass: {
-        id: 0,
-        name: '',
-        deletePopOverBool: !deleteClass.deletePopOverBool,
-      },
+      deleteClass: { id: 0, name: '', deletePopOverBool: !deleteClass.deletePopOverBool },
     });
   }
 
@@ -112,35 +78,30 @@ class Class extends Component {
     const { updateDatabaseSchema } = this.props;
     await api.updateBoard([{ ...data, broadCastId: `Board-${updateClass.id}` }, { id: updateClass.id }]);
     updateDatabaseSchema('Board', { id: updateClass.id, ...data });
-    this.setState({
-      updateClass: {
-        id: 0,
-        updateClassBool: false,
-      },
-    });
+    this.setState({ updateClass: { id: 0, updateClassBool: false } });
     return { response: 200 };
   }
 
   // zoom out popover
   cancleUpdate = () => {
     const { updateClass } = this.state;
-    this.setState({
-      updateClass: {
-        id: 0,
-        updateClassBool: !updateClass.updateClassBool,
-      },
-    });
+    this.setState({ updateClass: { id: 0, updateClassBool: !updateClass.updateClassBool } });
   }
 
   getRecentClassrooms = () => {
-    const { database } = this.props;
-    const privateBoards = Object.values(database.Board.byId).filter(o => o.type === 'private').sort(activitySorting);
+    const { Board } = this.props;
+    const privateBoards = Object.values(Board.byId).filter((o) => !o.cId && o.type === 'private').sort(activitySorting);
     return privateBoards.slice(0, 3);
   }
 
   render() {
-    const { account, database } = this.props;
+    const { account, Board, Organization } = this.props;
     const { createBool, deleteClass, updateClass } = this.state;
+    let classInstance = null;
+    if (updateClass.updateClassBool) classInstance = Board.byId[updateClass.id];
+    const boardStructure = getboardStructure(Object.values(Organization.byId), classInstance);
+    const allClassrooms = Object.values(Board.byId).filter((o) => !o.cId && o.type === 'private').sort(timeStampSorting);
+    const recentClassrooms = this.getRecentClassrooms();
     return (
       <div className="classes bro-right">
         <DeletePopOver
@@ -152,7 +113,7 @@ class Class extends Component {
           <div className="header">
             <div className="title-header">
               <span className="title">Classrooms </span>
-              <small>Your classrooms</small>
+              <small>Manage your classrooms</small>
             </div>
             <div className="add-new-class">
               <Button
@@ -168,94 +129,26 @@ class Class extends Component {
             </div>
           </div>
           <div className="content-list">
-            <div className="pc-classroom pc-recent-class">
-              <h2 className="pc-activity">Recent Classrooms</h2>
-              <ol>
-                {this.getRecentClassrooms().map(obj => {
-                  return (
-                    <li className="pc-class-card">
-                      <Link to={`/classroom/${account.user.slug}/${obj.id}`} className="content-link">
-                        <div className="pc-card-content pc-latest-activity">
-                          <div className="pc-latest-left">
-                            <div className="pc-card-header">
-                              <span>
-                                <img src="/assets/graphics/classroom.svg" alt="classroom logo" />
-                                <h3 className="pc-class-subhead">ClassRoom</h3>
-                              </span>
-                              <h4 className="pc-class-title">{obj.name}</h4>
-                            </div>
-                            <div className="pc-card-summary">
-                              <span className="pc-author">{getName(obj.user.user)}</span>
-                              <span className="pc-date">{new Date(obj.timeStamp).toDateString()}</span>
-                            </div>
-                          </div>
-                          <div className="pc-latest-right">
-                            <div className="pc-card-action">
-                              <Button
-                                // onClick={() => { }}
-                                type="button"
-                                buttonStyle="btn--primary--solid"
-                                buttonSize="btn--medium"
-                                title="Continue"
-                                iconPosition="right"
-                                icon={<AiOutlineArrowRight />}
-                              />
-                            </div>
-                          </div>
-                        </div>
-                      </Link>
-                    </li>
-                  );
-                })}
-              </ol>
-            </div>
+            {recentClassrooms.length > 0 && (
+              <div className="pc-classroom pc-recent-class">
+                <h2 className="pc-activity">Recent Classrooms</h2>
+                <ol>
+                  {recentClassrooms.map((obj) => <ClassroomListItem key={`rci-${obj.id}`} type="recent" obj={obj} account={account} />)}
+                </ol>
+              </div>
+            )}
             <div className="pc-classroom">
               <h2 className="pc-activity">All Classrooms</h2>
-              <ol>
-                {
-                 Object.values(database.Board.byId).filter(o => o.type === 'private').sort(timeStampSorting).map((obj, index) => {
-                    return (
-                      // eslint-disable-next-line react/no-array-index-key
-                      <>
-                        <li className="pc-class-card" key={index}>
-                          <MoreButton onMore={this.onMore} id={obj.id} />
-                          <Link to={`/classroom/${account.user.slug}/${obj.id}`} className="content-link">
-                            <div className="pc-card-content">
-                              <div className="pc-latest-left">
-                                <div className="pc-card-header">
-                                  <span>
-                                    <img src="/assets/graphics/classroom.svg" alt="classroom logo" />
-                                    <h3 className="pc-class-subhead">ClassRoom</h3>
-                                  </span>
-                                  <h4 className="pc-class-title">{obj.name}</h4>
-                                </div>
-                                <div className="pc-card-summary">
-                                  <span className="pc-author">{getName(obj.user.user)}</span>
-                                  <span className="pc-date">{new Date(obj.timeStamp).toDateString()}</span>
-                                </div>
-                              </div>
-                              <div className="pc-latest-right">
-                                <div className="pc-card-action">
-                                  <span></span>
-                                  <Button
-                                    // onClick={() => { }}
-                                    type="button"
-                                    buttonStyle="btn--primary--outline"
-                                    buttonSize="btn--medium"
-                                    title="Classroom"
-                                    iconPosition="right"
-                                    icon={<AiOutlineArrowRight />}
-                                  />
-                                </div>
-                              </div>
-                            </div>
-                          </Link>
-                        </li>
-                      </>
-                    );
-                  })
-                }
-              </ol>
+              {
+                allClassrooms.length > 0 && (
+                  <ol>
+                    {allClassrooms.map((obj) => <ClassroomListItem onMore={this.onMore} key={`ci-${obj.id}`} obj={obj} account={account} />)}
+                  </ol>
+                )
+              }
+              {
+                allClassrooms.length < 1 && <NotFound message="You are not in any classrooms yet" />
+              }
             </div>
           </div>
           <PopoverForm
@@ -278,12 +171,14 @@ class Class extends Component {
 
 Class.propTypes = {
   account: PropTypes.objectOf(PropTypes.any).isRequired,
-  database: PropTypes.objectOf(PropTypes.any).isRequired,
   updateNav: PropTypes.func.isRequired,
   addDatabaseSchema: PropTypes.func.isRequired,
   updateDatabaseSchema: PropTypes.func.isRequired,
   deleteDatabaseSchema: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = state => state;
+const mapStateToProps = ({ database, account }) => {
+  const { User, Board, Organization } = database;
+  return { User, Board, Organization, account };
+};
 export default connect(mapStateToProps, { ...actions })(Class);

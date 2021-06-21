@@ -3,7 +3,7 @@ import store from '../../../../../store';
 import createOffer from './createOffer';
 import exceptionHandler from './exceptionHandler';
 
-export default async (mediaType, props) => {
+export default async (mediaType) => {
   // console.log('callUpgrade called', mediaType);
   try {
     const { webRtc, account } = store.getState();
@@ -20,7 +20,7 @@ export default async (mediaType, props) => {
       if (jsep) {
         oneToOneCall.data({ text: JSON.stringify({ callType: mediaType, uid: account.user.id }) });
         oneToOneCall.send({ message: { request: 'set' }, jsep });
-        oneToOneCall.send({ message: { request: 'set', bitrate: 256000 }});
+        oneToOneCall.send({ message: { request: 'set', bitrate: 512000 }});
       }
 
       if (error) {

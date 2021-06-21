@@ -7,27 +7,14 @@ import Popup from '../../../../common/Form/Popup';
 class BioForm extends React.Component {
   state = {};
 
-  componentDidMount() {
-    const { database, account } = this.props;
-    Object.values(database.UserDetail.byId).map((obj) => {
-      if (account.user.id === obj.userId) {
-        bioSchema[0].val = obj.bio;
-      }
-    });
-  }
-
   render() {
-    const { isOpen, onClose, callback } = this.props;
+    const { isOpen, onClose, callback, bio } = this.props;
+    const schema = bioSchema(bio);
     return (
-      <Popup
-        isOpen={isOpen}
-        onClose={onClose}
-      >
+      <Popup isOpen={isOpen} onClose={onClose}>
         <div className="popover-form bio">
-          <div className="top">
-            Write Bio
-          </div>
-          <Form data={bioSchema} callback={callback} />
+          <div className="top">Write Bio</div>
+          <Form data={schema} callback={callback} />
         </div>
       </Popup>
     );

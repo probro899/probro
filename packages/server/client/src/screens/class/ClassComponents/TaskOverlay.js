@@ -3,24 +3,24 @@ import { connect } from 'react-redux';
 import axios from 'axios';
 import moment from 'moment';
 import PropTypes from 'prop-types';
+import { MdEdit } from "react-icons/md";
+import * as actions from '../../../actions';
 import Tag from '../../../common/Tag';
-import { timeStampSorting } from '../../../common/utility-functions';
+import { timeStampSorting, getProfileImage } from '../../../common/utility-functions';
 import TaskComment from './history/TaskComment';
 import TaskDetailRight from './TaskDetailRight';
 import { ENDPOINT } from '../../../config';
 import CommentBox from './CommentBox';
 import { AttachmentList } from './attachment';
 import Spinner from '../../../common/spinner';
-import Description from './task-detail/Description';
 import Popup from '../../../common/Form/Popup';
 import { FormTextArea } from '../../../common/Form/FormTextArea';
 import { Button } from '../../../common/utility-functions/Button/Button';
-import { AiOutlineEdit, AiOutlineClose, AiOutlineCheck } from "react-icons/ai";
+import TaskDescription from './task-detail/TaskDescription';
 
 class TaskOverlay extends Component {
   state = {
     editHead: false,
-    editDesc: false,
     loading: true,
     task: {},
     comments: [],
@@ -28,15 +28,12 @@ class TaskOverlay extends Component {
     attachments: [],
     tags: [],
     title: '',
-    desc: '',
     comment: '',
     activities: [],
   };
 
   componentWillReceiveProps(nextProps) {
     const { taskId, database } = nextProps;
-    const { editDesc } = this.state;
-
     const task = Object.values(database.BoardColumnCard.byId).find(o => o.id === taskId);
     if (!task) {
       this.setState({ loading: true });
@@ -49,6 +46,11 @@ class TaskOverlay extends Component {
     const allTags = Object.values(database.BoardColumnCardTag.byId).filter(obj => taskId === obj.boardColumnCardId && !obj.deleteStatus);
     // finding the latest description
     const latestDesription = Object.values(database.BoardColumnCardDescription.byId).filter(obj => taskId === obj.boardColumnCardId).sort(timeStampSorting)[0];
+    // get all the participants
+    const participants = Object.values(database.TaskParticipant.byId).filter(o => o.taskId === taskId && !o.deleteStatus).map(o => {
+      const memberObj = database.BoardMember.byId[o.participantId];
+      return { ...o, userDetail: memberObj.user.userDetail || {} }
+    });
     let newState = {
       comments: commentsCard,
       attachments: attachmentsCard,
@@ -56,10 +58,7 @@ class TaskOverlay extends Component {
       description: latestDesription,
       title: task.name,
       task,
-    }
-    if (!editDesc) {
-      const newDesc = latestDesription ? latestDesription.title : '';
-      newState['desc'] = newDesc;
+      participants,
     }
     this.setState(newState);
   }
@@ -76,12 +75,6 @@ class TaskOverlay extends Component {
 
   // changing title of the task
   titleChange = (e) => this.setState({ title: e.target.value })
-  
-  // description change of the task
-  descChange = (val) => this.setState({ desc: val });
-
-  // toggle between the element of description
-  toggleElemDesc = () => this.setState({ editDesc: !this.state.editDesc }); 
 
   saveTitle = async () => {
     try {
@@ -97,40 +90,6 @@ class TaskOverlay extends Component {
       console.error(e)
     }
   }
-
-  
-  
-  saveDesc = async () => {
-    try {
-      const { apis, account, boardId, addDatabaseSchema } = this.props;
-      const { task, desc } = this.state;
-      const res = await apis.addBoardColumnCardDescription({
-        boardColumnCardId: task.id,
-        title: desc,
-        timeStamp: Date.now(),
-        userId: account.user.id,
-        broadCastId: `Board-${boardId}`,
-      });
-      addDatabaseSchema('BoardColumnCardDescription', {
-        boardColumnCardId: task.id,
-        title: desc,
-        timeStamp: Date.now(),
-        userId: account.user.id,
-        id: res,
-      });
-      this.toggleElemDesc();
-    } catch (e) {
-      console.error(e);
-    }
-  }
-
-  getName = (id) => {
-    const { userList } = this.props;
-    const user = userList.byId[id];
-    return user.middleName
-      ? `${user.firstName} ${user.middleName} ${user.lastName}`
-      : `${user.firstName} ${user.lastName}`;
-  };
 
   deleteAttachment = async (id, url) => {
     const { task } = this.state;
@@ -161,28 +120,10 @@ class TaskOverlay extends Component {
   }
 
   render() {
-    const {
-      editHead,
-      editDesc,
-      task,
-      comments,
-      attachments,
-      title,
-      description,
-      desc,
-      tags,
-      comment,
-      activities,
-      loading,
-    } = this.state;
+    const { editHead, participants, task, comments, attachments, title, description, tags, comment, activities, loading } = this.state;
     const {
       userList, apis, boardId, onClose,
-      deleteDatabaseSchema,
-      updateDatabaseSchema,
-      addDatabaseSchema,
-      account,
-      isOpen,
-      database,
+      deleteDatabaseSchema, updateDatabaseSchema, addDatabaseSchema, account, isOpen, database,
     } = this.props;
     return (
       <Popup
@@ -195,87 +136,54 @@ class TaskOverlay extends Component {
           <div className="task-detail-overlay">
             <div className="overlay-title">
               <div className="head">
-                {editHead ? <FormTextArea value={title} onChange={e => this.titleChange(e)} />
-                  : <span className="title">{task.name}</span>
-                }
-                {editHead
-                  ? (
+                {editHead ? (
+                  <>
+                    <FormTextArea value={title} resizable className="pc-text-area" onChange={e => this.titleChange(e)} />
                     <div className="buttons-group">
-                      <Button
-                        icon={<AiOutlineCheck size={20} />}
-                        type="button"
-                        buttonStyle="btn--success--outline"
-                        buttonSize="btn--small"
-                        onClick={this.saveTitle}
-                      />
-                      <Button
-                        icon={<AiOutlineClose size={20} />}
-                        type="button"
-                        buttonStyle="btn--danger--outline"
-                        buttonSize="btn--small"
-                        onClick={this.toggleElemTitle}
-                      />
+                      <Button type="button" buttonStyle="btn--primary--solid" buttonSize="btn--small" title="save" onClick={this.saveTitle} />
+                      <Button type="button" buttonStyle="btn--danger--outline" buttonSize="btn--small" title="cancel" onClick={this.toggleElemTitle} />
                     </div>
-                  )
-                  : (
-                    <div className="buttons-group">
-                      <AiOutlineEdit size={20} onClick={this.toggleElemTitle} />
-                    </div>
-                  )
-                }
+                  </>
+                ) : <span className="title">{task.name}</span>}
+                {!editHead && (
+                  <div className="edit-icon">
+                    <MdEdit size={20} onClick={this.toggleElemTitle} />
+                  </div>
+                )}
               </div>
             </div>
             <div className="overlay-body">
               <div className="left-part">
                 <div className="pc-tags-and-deadline">
                   <div className="task-tag-container">
-                    {tags.map(obj => <Tag key={obj.id} color={obj.tag} />)}
+                    {tags.map((obj) => <Tag key={obj.id} color={obj.tag} />)}
                   </div>
-                  <div className="pc-deadline-view">
-                    {task.Deadline ? (
-                      <p
-                        className={task.Deadline < new Date() ? 'expire' : 'no-expire'}
-                      >
-                        {`Deadline: ${moment(task.Deadline).format('YYYY-MM-DD')}`}
-                      </p>
-                    ) : ' '}
-                  </div>
-                </div>
-                <div className="overlay-description">
-                  <div className="desc-head">
-                    <span>Description</span>
-                    {editDesc
-                      ? (
-                        <span className="buttons-group">
-                          <Button
-                            icon={<AiOutlineCheck size={20} />}
-                            type="button"
-                            buttonStyle="btn--success--outline"
-                            buttonSize="btn--small"
-                            onClick={this.saveDesc}
-                          />
-                          <Button
-                            icon={<AiOutlineClose size={20} />}
-                            type="button"
-                            buttonStyle="btn--danger--outline"
-                            buttonSize="btn--small"
-                            onClick={this.toggleElemDesc}
-                          />
-                        </span>
-                      )
-                      : (
-                        <div className="buttons-group">
-                          <AiOutlineEdit size={20} onClick={this.toggleElemDesc} />
-                        </div>
-                      )
+                  <ul className="participant-view">
+                    {
+                      participants.map((o) => (
+                        <li key={`participate-${o.id}`}>
+                          <figure className="participant-image">
+                            <img src={getProfileImage(o.userDetail)} alt="participant avatar" />
+                          </figure>
+                        </li>
+                      ))
                     }
+                  </ul>
+                  <div className="pc-deadline-view">
+                    {task.Deadline && <p className={task.Deadline < new Date() ? 'expire' : 'no-expire'}>{`Deadline: ${moment(task.Deadline).format('YYYY-MM-DD')}`}</p>}
                   </div>
-                  <Description editDesc={editDesc} value={desc} onChange={this.descChange} description={description} />
                 </div>
+                <TaskDescription
+                  description={description}
+                  apis={apis}
+                  account={account}
+                  boardId={boardId}
+                  task={task}
+                  addDatabaseSchema={addDatabaseSchema}
+                  updateDatabaseSchema={updateDatabaseSchema}
+                />
                 <AttachmentList
                   attachments={attachments}
-                  getName={this.getName}
-                  Users={database.User}
                   deleteAttachment={this.deleteAttachment}
                 />
                 <CommentBox
@@ -311,6 +219,7 @@ class TaskOverlay extends Component {
                 database={database}
                 description={description}
                 attachments={attachments}
+                participants={participants}
                 deleteDatabaseSchema={deleteDatabaseSchema}
                 updateDatabaseSchema={updateDatabaseSchema}
                 addDatabaseSchema={addDatabaseSchema}
@@ -345,4 +254,5 @@ const mapStateToProps = (state) => {
   const { database, account } = state;
   return { userList: database.User, account, database };
 };
-export default connect(mapStateToProps)(TaskOverlay);
+
+export default connect(mapStateToProps, { ...actions })(TaskOverlay);

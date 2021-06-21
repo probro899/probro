@@ -1,23 +1,15 @@
 @import "./config.scss";
 .archive {
-  margin: $navbarHeight auto 0;
   min-height: calc(100vh - #{$navbarHeight} - #{$footerHeight});
-  padding: 20px;
+  margin-top: rem(30);
 
   @media screen and (max-width: 576px) {
-    padding: 10px;
-  }
-
-  .archive-wrapper {
-    margin-top: 25px;
-    @media screen and (max-width: 767px) {
-      margin-top: 0;
-    }
+    margin-top: rem(10);
   }
 
   .ar-top {
     h2 {
-      color: $headingColor;
+      color: color-get(text-dark);
       font-size: 16px;
       font-weight: 600;
       text-transform: capitalize;
@@ -33,150 +25,32 @@
     @media screen and (max-width: 576px) {
       margin-bottom: 25px;
     }
-
     .ar-left {
       width: 70%;
       padding-right: 30px;
+      position: relative;
       @media screen and (max-width: 1199px) {
         width: 100%;
         padding-right: 0;
       }
+      .blog-search {
+        position: sticky;
+        top: rem(90);
+        z-index: 2;
+        .icon.right {
+          @media screen and (min-width: rem(1200)) {
+            display: none;
+          }
+        }
+      }
     }
     .ar-right {
-      width: 30%;
-      @include genericBoxPattern;
-      padding: 20px 13px;
-      height: 50%;
-      position: sticky;
-      top: 110px;
-      @media screen and (max-width: 1199px) {
-        width: 100%;
-      }
+      padding: 0;
       p.ar-right-top {
         font-size: 14px;
         font-weight: bold;
         text-transform: uppercase;
-        color: $headingColor;
-      }
-      .popular-on-pc {
-        .popular-blog-wrapper {
-          .popular-blog {
-            display: flex;
-            flex-direction: row;
-            margin-bottom: 10px;
-            margin-top: 10px;
-            border-bottom: 1px solid #d1d1d1;
-            padding-bottom: 10px;
-            .ar-i-img {
-              min-height: 100px;
-              min-width: 130px;
-              background-size: cover !important;
-              background-position: center;
-            }
-            .ar-i-detail {
-              padding-left: 10px;
-              line-height: 1.6;
-
-              a {
-                font-weight: bold;
-              }
-
-              .blog-title {
-                font-size: 16px;
-                font-weight: 600;
-                margin-top: 2px;
-                margin-bottom: 2px;
-                display: block;
-                color: $headingColor;
-                line-height: 1.6;
-                text-transform: capitalize;
-              }
-              .pc-date {
-                color: $lightTextColor;
-              }
-            }
-          }
-          @media screen and (min-width: 768px) and (max-width: 1199px) {
-            display: flex;
-            flex-wrap: wrap;
-            margin-left: -15px;
-            margin-right: -15px;
-            .popular-blog {
-              padding-right: 15px;
-              padding-left: 15px;
-              border-bottom: none;
-              max-width: 50%;
-              flex: 0 0 50%;
-            }
-          }
-        }
-
-        .users-head {
-          margin-top: 20px;
-          font-size: 14px;
-          font-weight: bold;
-          text-transform: uppercase;
-          color: $headingColor;
-        }
-        .popular-user-wrapper {
-          .popular-user {
-            margin: 10px 0px;
-            border-bottom: 1px solid #d1d1d1;
-            padding-bottom: 10px;
-            display: flex;
-            align-items: center;
-            .user-image {
-              width: 60px;
-              height: 60px;
-              border-radius: 50%;
-              overflow: hidden;
-              flex-shrink: 0;
-              margin-right: 10px;
-            }
-            .user-detail {
-              padding-top: 5px;
-              text-align: left;
-              max-width: 50%;
-              flex: 0 0 50%;
-              margin-right: 20px;
-              .name {
-                font-size: 15px;
-                font-weight: bold;
-                line-height: 1.6;
-              }
-              .user-bio {
-                font-size: 12px;
-                color: $headingColor;
-                margin-bottom: 2px;
-                font-weight: bold;
-              }
-            }
-            .follow-mentor-btn {
-              .followMentorBtn {
-                .btn {
-                  span {
-                    svg {
-                      margin-right: 0 !important;
-                    }
-                  }
-                }
-              }
-            }
-          }
-          @media screen and (min-width: 768px) and (max-width: 1199px) {
-            display: flex;
-            flex-wrap: wrap;
-            margin-left: -15px;
-            margin-right: -15px;
-            .popular-user {
-              padding-left: 15px;
-              padding-right: 15px;
-              max-width: 50%;
-              flex: 0 0 50%;
-              border-bottom: none;
-            }
-          }
-        }
+        color: color-get(text-dark);
       }
     }
     @media screen and (max-width: 767px) {
@@ -198,14 +72,29 @@
   display: flex;
   flex-direction: row;
   width: 100%;
-  margin-bottom: 20px;
-  padding: 20px 15px;
-  @include genericBoxPattern;
+  position: relative;
+  .bookmark-icon {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    cursor: pointer;
+    &.bookmarked {
+      svg {
+        color: color-get(text-dark);
+      }
+    }
+    svg {
+      color: color-get(text-light, 300);
+      &:hover {
+        color: color-get(text-dark);
+      }
+    }
+  }
   .ar-i-img {
-    min-height: 189px;
-    max-height: 189px;
-    min-width: 189px;
-    max-width: 189px;
+    min-height: 150px;
+    max-height: 150px;
+    min-width: 150px;
+    max-width: 150px;
     img {
       width: 100%;
       height: 100%;
@@ -225,18 +114,18 @@
       font-size: 14px;
     }
     .author-name {
-      font-size: 16px;
+      font-size: rem(14);
       font-weight: bold;
     }
     .pc-date {
       font-size: 12px;
-      color: $subHeadColor;
+      color: color-get(text-light);
       margin-left: 10px;
       display: block;
     }
   }
   .ar-i-title {
-    color: $headingColor;
+    color: color-get(text-dark);
     font-size: 22px;
     display: block;
     font-weight: bold;
@@ -246,7 +135,7 @@
   .pc-blog-desc {
     word-break: break-word;
     line-height: 1.6;
-    color: $subHeadColor !important;
+    color: color-get(text-light) !important;
     font-size: 16px !important;
     margin-bottom: 12px;
   }
@@ -257,11 +146,11 @@
       color: #747474;
       font-size: 18px;
       .count {
-        margin-right: 5px;
-        font-weight: bolder;
+        margin-left: 5px;
+        font-size: rem(16);
       }
       svg {
-        fill: #4080ff;
+        fill: color-get(text-light, 300);
       }
     }
   }
@@ -355,24 +244,46 @@
     position: relative;
 
     #blogContent {
-      font-size: 20px !important;
-      line-height: 1.6;
       pre {
         white-space: pre-wrap;
+        &.ql-syntax {
+          background: #272822;
+          color: #f8f8f2;
+          padding: rem(16) rem(24);
+          margin: rem(10) 0;
+        }
       }
+
       p {
-        font-size: 20px !important;
         word-break: break-word;
-        color: $subHeadColor !important;
+        color: rgba(41, 41, 41, 1) !important;
+        .ql-size-small {
+          font-size: rem(15);
+        }
+        .ql-size-large {
+          font-size: rem(30);
+        }
+        .ql-size-huge {
+          font-size: rem(50);
+        }
+      }
+      .ql-align-right {
+        text-align: right;
+      }
+      .ql-align-center {
+        text-align: center;
+      }
+      .ql-align-justify {
+        text-align: justify;
       }
       a {
-        color: $primaryColor !important;
+        color: color-get(primary) !important;
       }
       b {
-        color: $subHeadColor !important;
+        color: rgba(41, 41, 41, 1) !important;
       }
       li {
-        color: $subHeadColor;
+        color: rgba(41, 41, 41, 1);
         list-style-position: inside !important;
         padding-left: 16px;
       }
@@ -386,18 +297,10 @@
           list-style: decimal;
         }
       }
-      strong {
-        font-size: 22px !important;
-        font-family: "Eina" !important;
-      }
-
-      span {
-        word-break: break-word !important;
-        font-size: 20px !important;
-        font-family: "Eina" !important;
-      }
       img {
-        max-width: 100%;
+        width: 100%;
+        object-fit: cover;
+        height: 100%;
       }
     }
   }
@@ -451,18 +354,12 @@
           border-radius: 50%;
           overflow: hidden;
         }
-
-        textarea {
-          font-size: 16px;
-          flex: 1;
-          height: 100px;
-          margin-left: 10px;
-          resize: none;
-          border-radius: 5px;
-          display: flex;
-          align-items: center;
-          border: 1px solid #e7e7e7;
-          outline: none !important;
+        .formLabel {
+          margin-bottom: 0;
+          margin-left: rem(10);
+          .pc-text-area {
+            margin-bottom: 0;
+          }
         }
       }
       .cmt-btn-wrapper {
@@ -521,13 +418,13 @@
               .pc-comment-edit {
                 display: flex;
                 flex-direction: column;
-                textarea {
-                  font-size: 16px;
-                  flex: 1;
-                  height: 70px;
-                  border-radius: 5px;
-                  border: 1px solid #e7e7e7;
-                  outline: none !important;
+                .formLabel {
+                  margin-bottom: 0;
+                  .pc-text-area {
+                    font-size: 16px;
+                    flex: 1;
+                    margin-bottom: 0;
+                  }
                 }
                 .btns {
                   margin-top: 10px;
@@ -580,7 +477,7 @@
             width: 0;
             height: 0;
             border-top: 10px solid transparent;
-            border-right: 36px solid #fafbfc;
+            border-right: 36px solid $backgroundColor;
             border-bottom: 10px solid transparent;
             margin: -10px 0 0 -40px;
           }
@@ -643,6 +540,128 @@
     }
     .ar-i-detail {
       padding: 0px;
+    }
+  }
+}
+
+//blog tags
+.blog-tags {
+  display: inline-block;
+  vertical-align: top;
+  color: color-get(text-light);
+  padding: rem(6) rem(15);
+  margin: 0 rem(5) rem(5) 0;
+  cursor: pointer;
+  border-radius: rem(18);
+  border: rem(1) solid color-get(border);
+  background-color: color-get(border, 100);
+  &__title {
+    text-transform: lowercase;
+  }
+}
+
+.topics {
+  &__header {
+    border-bottom: rem(1) solid color-get(border);
+    height: rem(52);
+    padding-left: rem(14);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  &__filter {
+    padding: rem(12) rem(14) rem(0);
+  }
+  &__body {
+    padding: rem(0) rem(14) rem(12);
+    height: rem(300);
+    overflow-y: scroll;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+}
+.topic-list {
+  &__item {
+    padding: rem(10) rem(12);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    &--active {
+      background: color-get(text-light, 100);
+    }
+    svg {
+      color: color-get(text-light, 300);
+    }
+    &:hover {
+      background: color-get(text-dark, 100);
+    }
+  }
+}
+.topic-filter-icon {
+  position: relative;
+  width: rem(48);
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  &:hover {
+    background: color-get(text-dark, 100);
+  }
+  svg {
+    color: color-get(text-light, 300);
+  }
+  &__count {
+    position: absolute;
+    top: rem(6);
+    left: rem(4);
+    width: rem(20);
+    height: rem(20);
+    background: color-get(primary);
+    border-radius: 50%;
+    font-size: rem(12);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+.no-blog {
+  padding: rem(16) rem(24);
+  width: 100%;
+  &__figure {
+    width: rem(200);
+    height: rem(150);
+    margin: 0 auto;
+    margin-bottom: rem(10);
+    img {
+      width: 100%;
+      height: 100%;
+    }
+  }
+  &__info {
+    text-align: center;
+    font-weight: 600;
+    color: color-get(text-dark);
+  }
+}
+
+.mobile-topic-section {
+  @include genericBoxPattern;
+  max-width: rem(340);
+  min-width: rem(320);
+  position: absolute;
+  right: 0;
+  z-index: 2;
+  border: rem(1) solid color-get(border);
+  .topic-filter-icon {
+    @media screen and (max-width: rem(1199)) {
+      display: none;
     }
   }
 }

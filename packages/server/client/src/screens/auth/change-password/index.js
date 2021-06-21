@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { changeForm, forgetForm } from './structure';
 import ChangePassword from './ChangePassword';
+import { Navbar } from '../../home/component'
+import Footer from '../../../common/footer'
 
 class Reset extends Component {
   state = {}
@@ -10,15 +12,26 @@ class Reset extends Component {
   render() {
     const { type, match } = this.props;
     return (
-      <div className="o-log-or-reg">
-        <div className="log-or-reg">
-          <div className="reg-box-header">
-            <p> Reset your password </p>
-            <Link to="/login"><u>or Login</u></Link>
+      <>
+        <Navbar />
+        <div className="o-log-or-reg">
+          <div className="log-or-reg">
+            <div className="pc-card">
+              <div className="reg-box-header">
+                <div className="reg-box-header">
+                  <h1>Reset your password</h1>
+                </div>
+              </div>
+              <ChangePassword token={match.params.token} pForm={type === 'change' ? changeForm : forgetForm} />
+              <p className="login-in-link">
+                Already have an account?
+              <Link to="/login">Log in</Link>
+              </p>
+            </div>
           </div>
-          <ChangePassword token={match.params.token} pForm={type === 'change' ? changeForm : forgetForm} />
         </div>
-      </div>
+        <Footer />
+      </>
     );
   }
 }

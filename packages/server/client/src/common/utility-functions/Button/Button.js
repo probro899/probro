@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 
 const STYLES = [
     "btn--primary--solid",
+    "btn--default--solid",
     "btn--warning--solid",
     "btn--danger--solid",
     "btn--success--solid",
@@ -30,11 +31,11 @@ export const Button = ({
     title,
     icon,
     iconPosition,
-    className
+    className,
+    onMouseEnter,
+    onMouseLeave
 }) => {
-    const checkButtonStyle = STYLES.includes(buttonStyle)
-        ? buttonStyle
-        : STYLES[0];
+    const checkButtonStyle = STYLES.includes(buttonStyle) ? buttonStyle : STYLES[0];
     const checkButtonSize = SIZES.includes(buttonSize) ? buttonSize : SIZES[0];
     const checkIconPosition = ICON_POSITION.includes(iconPosition) ? iconPosition : ICON_POSITION[0];
     return (
@@ -44,6 +45,8 @@ export const Button = ({
             type={type}
             loading={loading}
             disabled={disabled || loading}
+            onMouseEnter={onMouseEnter}
+            onMouseLeave={onMouseLeave}
         >
             {
                 loading && <div className="loader-wrapper">

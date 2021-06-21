@@ -39,7 +39,6 @@ export default async function initUser(id) {
       allBoardColumns,
       allBoardMembers,
       allOrganization,
-      allOrganizationMembers,
     } = channelData;
 
     // subscribe to all Related board
@@ -58,8 +57,7 @@ export default async function initUser(id) {
     session.dispatch(schema.init('BoardColumn', allBoardColumns));
     session.dispatch(schema.init('BoardMember', allBoardMembers));
     session.dispatch(schema.init('Blog', allBlogs));
-    session.dispatch(schema.init('Organization', allOrganization));
-    session.dispatch(schema.init('OrganizationMember', allOrganizationMembers));
+
     // updating boardmember active status
     const allBoardMemberWithActiveStatus = userPresentorHelper(session.getChannel('Main'), allBoardMembers);
     const boardMemberActiveStatusToUpdate = allBoardMemberWithActiveStatus.map(bma => ({ id: bma.id, activeStatus: bma.activeStatus, boardId: bma.boardId, userId: bma.user.user.id }));

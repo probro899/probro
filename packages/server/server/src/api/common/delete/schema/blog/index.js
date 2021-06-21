@@ -7,16 +7,24 @@ function deleteBlog(record) {
   deleteBlogHelper(dbDelete, record);
 }
 
-function deleteBlogComment(record) {
-  Delete.call(this, 'BlogComment', record);
+async function deleteBlogComment(record) {
+  const res = await Delete.call(this, 'BlogComment', record);
+  return res;
 }
 
-function deleteBlogLike(record) {
-  Delete.call(this, 'BlogLike', record);
+async function deleteBlogLike(record) {
+  const res = await Delete.call(this, 'BlogLike', record);
+  return res;
+}
+
+async function deleteBlogBookmark(record) {
+  const res = await Delete.call(this, 'BlogBookmark', record);
+  return res;
 }
 
 export default [
   deleteBlog,
   deleteBlogComment,
   deleteBlogLike,
+  deleteBlogBookmark,
 ];

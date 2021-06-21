@@ -10,7 +10,7 @@ import cache from '../cache';
 import database from '../cache/database';
 
 const RESET_TOKEN_AGE = 7 * 24 * 60 * 60 * 1000; // 7 days
-
+ 
 export default async (record) => {
   try {
     const token = await uuid();
@@ -23,7 +23,7 @@ export default async (record) => {
       const hasPassword = await genHashPassword(record.password);
       const firstNameLowerCase = urlSlug(`${record.firstName}`);
       const lastNameLowerCase = urlSlug(`${record.lastName}`);
-      const slug = `${firstNameLowerCase}-${lastNameLowerCase}-${Date.now()}`;
+      const slug = urlSlug(`${firstNameLowerCase}-${lastNameLowerCase}-${Date.now()}`);
       const insertRes = await insert('User', { ...record, password: hasPassword, verify: false, verificationToken: token, slug });
       database.update('User', schema.add('User', { id: insertRes, ...record, password: hasPassword, verify: false, verificationToken: token, slug }));
       if (insertRes) {

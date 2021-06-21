@@ -1,21 +1,19 @@
 import React from 'react';
 
-export const Collapse = ({ children, isOpen }) => {
-    const cssClasses = ['pc-collapse'];
-    if (isOpen) {
-        cssClasses.push('open');
-    } else {
-        cssClasses.push('close');
-    }
-    return (
-        <>
-            <div className={cssClasses.join(' ')}>
-                <div className='pc-collapse-body'>
-                    {children}
-                </div>
-            </div>
-        </>
-    )
+export const Collapse = ({ children, isOpen, height=200 }) => {
+  return (
+    <div
+      className="pc-collapse"
+      style={
+        {
+          animation: isOpen ? `slidedown${height} 0.5s` : `slideup${height} 0.5s`,
+          height: isOpen ? height : 0,
+        }
+      }
+    >
+      <div className='pc-collapse-body'>{children}</div>
+    </div>
+  )
 }
 
 

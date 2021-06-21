@@ -1,47 +1,32 @@
 import React from 'react';
-import { FormTextInput } from '../../../common/Form/FormTextInput';
-import { FormSelectField } from '../../../common/Form/FormSelectField';
-import DateField from '../../../common/DateField';
-import { Button } from '../../../common/utility-functions/Button/Button';
+import { Form } from '../../../common';
+import structure from './structure';
 
-const AddAppointments = () => {
-    const classrooms = [
-        {
-            value: 'class',
-            label: 'class'
-        },
-        {
-            value: 'classroom',
-            label: 'classroom'
-        },
-        {
-            value: 'classroom',
-            label: 'classroom'
-        },
+class AddAppointments extends React.Component {
+    state = {};
 
-    ]
-    return (
-        <div className="add-appointment">
-            <FormTextInput label="Name" name="name" />
-            <FormSelectField
-                options={classrooms}
-                onChange={() => { }}
-                name="Select Classroom"
-                value={'test'}
-            />
-            <DateField onChange={() => { }} data={{ name: 'From' }} />
-            <DateField onChange={() => { }} data={{ name: 'To' }} />
-            <div className="submit-btn">
-                <Button
-                    onClick={() => { }}
-                    type="button"
-                    buttonStyle="btn--primary--solid"
-                    buttonSize="btn--small"
-                    title='Add'
-                />
+    submit = async (data) => {
+        const { callback } = this.props;
+        const finalData = {
+            ...data,
+            startDate: data.startDate.valueOf(),
+            endDate: data.endDate ? data.endDate.valueOf() : null,
+        }
+        await callback(finalData);
+        if (this._isMounted) {
+            return { response: 200, message: 'Successfully Created' };
+        }
+    }
+
+    render() {
+        const { classrooms, instance } = this.props;
+        const formSchema = structure(classrooms, instance);
+        return (
+            <div className="add-appointment">
+                <Form data={formSchema} callback={this.submit} />
             </div>
-        </div>
-    )
+        )
+    }
 }
 
 export default AddAppointments;

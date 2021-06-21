@@ -50,20 +50,23 @@ class Profile extends Component {
                   updateDatabaseSchema={updateDatabaseSchema}
                   addDatabaseSchema={addDatabaseSchema}
                 />
-                <div className="empty-div"></div>
+                <div className="empty-div" />
               </div>
               <div className="top-details">
                 <h2 className="name">
-                  {getName(user)} < VerifiedBadge />
+                  {getName(user)}
+                  {' '}
+                  <VerifiedBadge />
                 </h2>
                 <p className="mentor-position">{userDetail.headLine}</p>
-                <div className="pc-locate">
-                  <BiCurrentLocation size={20} />
-                  <span className="country">
-                    {' '}
-                    {userDetail.address}
-                  </span>
-                </div>
+                {
+                  userDetail.address && (
+                    <div className="pc-locate">
+                      <BiCurrentLocation size={20} />
+                      <span className="country">{userDetail.address}</span>
+                    </div>
+                  )
+                }
               </div>
             </div>
             <Bio
@@ -90,7 +93,6 @@ class Profile extends Component {
               addDatabaseSchema={addDatabaseSchema}
               deleteDatabaseSchema={deleteDatabaseSchema}
             />
-
             <Skills
               account={account}
               apis={apis}

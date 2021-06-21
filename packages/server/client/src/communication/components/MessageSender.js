@@ -39,13 +39,14 @@ class MessageSender extends React.Component {
     const isDeleted = connetion.status === 'deleted' || connetion.status === 'pending';
 
     return (
-      <div className="chat-box" style={{ marginTop: 10, marginBottom: 0 }}>
+      <div className="chat-box" style={{marginBottom: 0 }}>
         <FormTextArea
           rows={2}
           disabled={isDeleted}
           placeholder="Enter your message here..."
           onChange={this.onMessageType}
           value={message}
+          className="pc-text-area"
           onKeyPress={this.handleKeyPress}
         />
         <div className="pc-send-btn">

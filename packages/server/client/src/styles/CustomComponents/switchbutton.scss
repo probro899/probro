@@ -12,11 +12,11 @@
       height: 0;
     }
     input:checked + .slider {
-      background-color: $primary;
+      background-color: color-get(primary, 400);
     }
 
     input:focus + .slider {
-      box-shadow: 0 0 1px $primary;
+      box-shadow: 0 0 1px color-get(primary, 400);
     }
 
     input:checked + .slider:before {

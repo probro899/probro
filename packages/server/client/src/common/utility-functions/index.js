@@ -1,4 +1,5 @@
 import getName from './getName';
+import { getProfileImage } from './getName';
 import matchUrl from './matchUrl';
 import uploadFile from './uploadFile';
 import getDeviceType from './getDeviceType';
@@ -25,6 +26,14 @@ const timeStampSorting = (a, b) => {
   return -1;
 };
 
+const reverseTimestampSort = (a, b) => {
+  // this receives the integer inputs
+  if (a.timeStamp < b.timeStamp) {
+    return 1;
+  }
+  return -1;
+}
+
 // for normal timestamp (message type)
 const normalTimeStampSorting = (a, b) => {
   if (a.timeStamp > b.timeStamp) {
@@ -40,4 +49,4 @@ const activitySorting = (a, b) => {
   return -1;
 }
 
-export { timeStampSorting, uploadFile, getDeviceType, matchUrl, normalTimeStampSorting, getName, activitySorting, newLineSolver };
+export { reverseTimestampSort, timeStampSorting, uploadFile, getDeviceType, matchUrl, normalTimeStampSorting, getName, getProfileImage, activitySorting, newLineSolver };

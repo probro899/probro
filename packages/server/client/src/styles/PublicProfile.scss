@@ -80,7 +80,7 @@
           font-weight: bold;
           margin-bottom: 10px;
           display: block;
-          color: $headingColor;
+          color: color-get(text-dark);
         }
         .title {
           margin-bottom: 7px;
@@ -94,7 +94,7 @@
         }
         .user-bio {
           font-size: 16px;
-          color: $headingColor;
+          color: color-get(text-dark);
           margin: 5px 0;
           font-weight: bold;
         }
@@ -196,46 +196,6 @@
       @include genericBoxPattern;
       width: 100%;
       margin-bottom: 20px;
-      .p-edu-list,
-      .p-exp-list {
-        margin-top: 10px;
-        .p-edu-list-i,
-        .p-exp-list-i {
-          display: flex;
-          padding: 2px;
-          border-bottom: 1px solid #eee;
-          padding-top: 10px;
-          padding-bottom: 10px;
-          img {
-            height: 40px;
-            width: 40px;
-          }
-          .edu-details,
-          .exp-details {
-            margin-left: 15px;
-            span {
-              line-height: 1.6;
-            }
-            .p-name-i,
-            .p-title-i {
-              font-weight: bold;
-              line-height: 1.4;
-              color: $headingColor;
-            }
-            .address {
-              font-size: 14px;
-            }
-            .p-timeline {
-              font-weight: bold;
-              color: $lightTextColor;
-              font-size: 14px;
-            }
-            svg {
-              fill: $skyBlueMain;
-            }
-          }
-        }
-      }
     }
     .skills {
       padding: 20px;
@@ -264,64 +224,6 @@
     padding: 20px;
     position: sticky;
     top: 100px;
-    .mentor-blogs-wrapper {
-      .p-title {
-        margin-top: 10px;
-      }
-      .popular-blog {
-        display: flex;
-        padding: 10px 0;
-        border-bottom: 1px solid #eee;
-        .blog-description {
-          padding-left: 10px;
-          a {
-            font-size: 14px;
-          }
-          .course-rating {
-            margin-top: 5px;
-          }
-        }
-        .blog-thumbnail {
-          height: 100px;
-          width: 100px;
-          min-width: 100px;
-          border: 1px solid #d1d7dc;
-          position: relative;
-          &::before {
-            content: "";
-            background: rgba(0, 0, 0, 0.2);
-            width: 100%;
-            height: 100%;
-            display: block;
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            z-index: 2;
-          }
-          img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-          }
-        }
-        .blog-description {
-          .blog-title {
-            display: block;
-            line-height: 1.6;
-            font-size: 16px;
-            font-weight: 600;
-            margin-top: 2px;
-            margin-bottom: 2px;
-            display: block;
-            color: #333333;
-            line-height: 1.6;
-            text-transform: capitalize;
-          }
-        }
-      }
-    }
   }
 
   @media screen and (max-width: 1199px) {
